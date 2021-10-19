@@ -1,8 +1,28 @@
+const gatsbyRemarkPlugins = [
+  {
+    resolve: 'gatsby-remark-copy-linked-files',
+    options: {
+      ignoreFileExtensions: []
+    }
+  }
+];
+
 module.exports = {
   plugins: [
-    'gatsby-plugin-mdx',
-    'gatsby-transformer-remark',
+    '@chakra-ui/gatsby-plugin',
     'gatsby-plugin-react-helmet',
+    {
+      resolve: 'gatsby-plugin-mdx',
+      options: {
+        gatsbyRemarkPlugins
+      }
+    },
+    {
+      resolve: 'gatsby-transformer-remark',
+      options: {
+        plugins: gatsbyRemarkPlugins
+      }
+    },
     {
       resolve: 'gatsby-source-filesystem',
       options: {
