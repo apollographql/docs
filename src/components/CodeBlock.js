@@ -1,10 +1,11 @@
 import Highlight, {defaultProps} from 'prism-react-renderer';
 import PropTypes from 'prop-types';
-import React, {Children} from 'react';
+import React from 'react';
 import fenceparser from 'fenceparser';
+import rangeParser from 'parse-numeric-range';
 
 export default function CodeBlock({children}) {
-  const [child] = Children.toArray(children);
+  const [child] = Array.isArray(children) ? children : [children];
   const {
     className = 'language-text',
     children: innerChildren,
@@ -12,14 +13,22 @@ export default function CodeBlock({children}) {
     'data-meta': dataMeta
   } = child.props;
 
-  const [code] = Children.toArray(innerChildren);
-  const language = className.replace(/language-/, '');
   const meta = metastring || dataMeta;
   const {title, highlight} = meta ? fenceparser(meta) : {};
+  const linesToHighlight = highlight
+    ? rangeParser(Object.keys(highlight).toString())
+    : [];
+
+  const [code] = Array.isArray(innerChildren) ? innerChildren : [innerChildren];
+
   return (
     <div>
       {title && <div>{title}</div>}
-      <Highlight {...defaultProps} code={code.trim()} language={language}>
+      <Highlight
+        {...defaultProps}
+        code={code.trim()}
+        language={className.replace(/language-/, '')}
+      >
         {({className, style, tokens, getLineProps, getTokenProps}) => (
           <pre className={className} style={{...style}}>
             {tokens.map((line, i) => (
@@ -29,7 +38,7 @@ export default function CodeBlock({children}) {
                   line,
                   key: i,
                   style: {
-                    background: highlight?.[i + 1] && 'tomato'
+                    background: linesToHighlight.includes(i + 1) && 'tomato'
                   }
                 })}
               >

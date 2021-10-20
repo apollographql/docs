@@ -1,13 +1,16 @@
 import CodeBlock from '../components/CodeBlock';
 import ExpansionPanel from '../components/ExpansionPanel';
+import Layout from '../components/Layout';
 import PropTypes from 'prop-types';
 import React, {Fragment, createElement} from 'react';
 import RelativeLink, {PathContext} from '../components/RelativeLink';
 import Wrapper from '../components/Wrapper';
 import rehypeReact from 'rehype-react';
 import {
+  Box,
   Button,
   Code,
+  Divider,
   Heading,
   ListItem,
   OrderedList,
@@ -47,23 +50,31 @@ const renderAst = new rehypeReact({
 export default function PageTemplate({data, uri}) {
   const {childMdx, childMarkdownRemark} = data.file;
   const {frontmatter} = childMdx || childMarkdownRemark;
-  const {title} = frontmatter;
+  const {title, description} = frontmatter;
   return (
-    <div>
+    <Layout>
       <Helmet title={title} />
-      <Heading>{title}</Heading>
-      <PathContext.Provider
-        value={data.file.name === 'index' ? uri : dirname(uri)}
-      >
-        {childMdx ? (
-          <MDXProvider components={mdxComponents}>
-            <MDXRenderer>{childMdx.body}</MDXRenderer>
-          </MDXProvider>
-        ) : (
-          <Wrapper>{renderAst(childMarkdownRemark.htmlAst)}</Wrapper>
+      <Box px="10" py="12">
+        <Heading size="2xl">{title}</Heading>
+        {description && (
+          <Heading mt="2" size="lg" fontWeight="medium">
+            {description}
+          </Heading>
         )}
-      </PathContext.Provider>
-    </div>
+        <Divider my="8" />
+        <PathContext.Provider
+          value={data.file.name === 'index' ? uri : dirname(uri)}
+        >
+          {childMdx ? (
+            <MDXProvider components={mdxComponents}>
+              <MDXRenderer>{childMdx.body}</MDXRenderer>
+            </MDXProvider>
+          ) : (
+            <Wrapper>{renderAst(childMarkdownRemark.htmlAst)}</Wrapper>
+          )}
+        </PathContext.Provider>
+      </Box>
+    </Layout>
   );
 }
 
@@ -80,12 +91,14 @@ export const pageQuery = graphql`
         body
         frontmatter {
           title
+          description
         }
       }
       childMarkdownRemark {
         htmlAst
         frontmatter {
           title
+          description
         }
       }
     }

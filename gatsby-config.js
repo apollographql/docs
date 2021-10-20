@@ -10,6 +10,7 @@ const gatsbyRemarkPlugins = [
 
 module.exports = {
   plugins: [
+    'gatsby-plugin-svgr',
     '@chakra-ui/gatsby-plugin',
     'gatsby-plugin-react-helmet',
     {
