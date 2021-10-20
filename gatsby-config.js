@@ -4,7 +4,8 @@ const gatsbyRemarkPlugins = [
     options: {
       ignoreFileExtensions: []
     }
-  }
+  },
+  'gatsby-remark-mermaid'
 ];
 
 module.exports = {
@@ -34,7 +35,7 @@ module.exports = {
       resolve: 'gatsby-source-git',
       options: {
         remote: 'https://github.com/apollographql/apollo-server.git',
-        name: 'server',
+        name: 'apollo-server',
         branch: 'tb/experimental-docs',
         patterns: 'docs/source/**'
       }

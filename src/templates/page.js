@@ -1,15 +1,19 @@
+import CodeBlock from '../components/CodeBlock';
 import ExpansionPanel from '../components/ExpansionPanel';
 import PropTypes from 'prop-types';
 import React from 'react';
 import RelativeLink, {PathContext} from '../components/RelativeLink';
 import rehypeReact from 'rehype-react';
 import {Button} from '@chakra-ui/react';
+import {Helmet} from 'react-helmet';
 import {MDXProvider} from '@mdx-js/react';
 import {MDXRenderer} from 'gatsby-plugin-mdx';
 import {graphql} from 'gatsby';
 
 const components = {
-  a: RelativeLink
+  a: RelativeLink,
+  code: CodeBlock,
+  pre: 'div'
 };
 
 const mdxComponents = {
@@ -24,16 +28,18 @@ const renderAst = new rehypeReact({
 }).Compiler;
 
 export default function PageTemplate({data, path}) {
-  const [{body, htmlAst}] = data.file.children;
+  const {childMdx, childMarkdownRemark} = data.file;
+  const {frontmatter} = childMdx || childMarkdownRemark;
   return (
     <div>
+      <Helmet title={frontmatter.title} />
       <PathContext.Provider value={path}>
-        {body ? (
+        {childMdx ? (
           <MDXProvider components={mdxComponents}>
-            <MDXRenderer>{body}</MDXRenderer>
+            <MDXRenderer>{childMdx.body}</MDXRenderer>
           </MDXProvider>
         ) : (
-          renderAst(htmlAst)
+          renderAst(childMarkdownRemark.htmlAst)
         )}
       </PathContext.Provider>
     </div>
@@ -48,12 +54,16 @@ PageTemplate.propTypes = {
 export const pageQuery = graphql`
   query GetPage($id: String!) {
     file(id: {eq: $id}) {
-      children {
-        ... on Mdx {
-          body
+      childMdx {
+        body
+        frontmatter {
+          title
         }
-        ... on MarkdownRemark {
-          htmlAst
+      }
+      childMarkdownRemark {
+        htmlAst
+        frontmatter {
+          title
         }
       }
     }
