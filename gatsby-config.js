@@ -14,6 +14,23 @@ module.exports = {
     '@chakra-ui/gatsby-plugin',
     'gatsby-plugin-react-helmet',
     {
+      resolve: 'gatsby-plugin-webfonts',
+      options: {
+        fonts: {
+          google: [
+            {
+              family: 'Source Sans Pro',
+              variants: ['400', '600', '700']
+            },
+            {
+              family: 'Source Code Pro',
+              variants: ['400', '600']
+            }
+          ]
+        }
+      }
+    },
+    {
       resolve: 'gatsby-plugin-mdx',
       options: {
         gatsbyRemarkPlugins
