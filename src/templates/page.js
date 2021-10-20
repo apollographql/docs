@@ -14,6 +14,7 @@ import {
   Heading,
   ListItem,
   OrderedList,
+  Text,
   UnorderedList
 } from '@chakra-ui/react';
 import {Helmet} from 'react-helmet';
@@ -25,6 +26,7 @@ import {graphql} from 'gatsby';
 const components = {
   a: RelativeLink,
   pre: CodeBlock,
+  p: Text,
   ul: UnorderedList,
   ol: OrderedList,
   li: ListItem

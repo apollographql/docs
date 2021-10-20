@@ -5,9 +5,10 @@ import {Box} from '@chakra-ui/react';
 export default function Wrapper({children}) {
   return (
     <Box
+      fontSize="lg"
       sx={{
         '>*:not(style)~*:not(style)': {
-          mt: 5
+          mt: 6
         }
       }}
     >
