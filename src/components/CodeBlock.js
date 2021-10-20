@@ -1,26 +1,25 @@
 import Highlight, {defaultProps} from 'prism-react-renderer';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {Children} from 'react';
 import fenceparser from 'fenceparser';
 
-export default function CodeBlock({
-  className,
-  children,
-  metastring,
-  'data-meta': dataMeta
-}) {
-  const code = Array.isArray(children) ? children[0] : children;
-  const language = className?.replace(/language-/, '');
-  const meta = metastring || dataMeta || '';
-  const {title, highlight} = fenceparser(meta);
+export default function CodeBlock({children}) {
+  const [child] = Children.toArray(children);
+  const {
+    className = 'language-text',
+    children: innerChildren,
+    metastring,
+    'data-meta': dataMeta
+  } = child.props;
+
+  const [code] = Children.toArray(innerChildren);
+  const language = className.replace(/language-/, '');
+  const meta = metastring || dataMeta;
+  const {title, highlight} = meta ? fenceparser(meta) : {};
   return (
     <div>
       {title && <div>{title}</div>}
-      <Highlight
-        {...defaultProps}
-        code={code.trim()}
-        language={language || 'text'}
-      >
+      <Highlight {...defaultProps} code={code.trim()} language={language}>
         {({className, style, tokens, getLineProps, getTokenProps}) => (
           <pre className={className} style={{...style}}>
             {tokens.map((line, i) => (
@@ -47,8 +46,5 @@ export default function CodeBlock({
 }
 
 CodeBlock.propTypes = {
-  children: PropTypes.node.isRequired,
-  className: PropTypes.string.isRequired,
-  metastring: PropTypes.string,
-  'data-meta': PropTypes.string
+  children: PropTypes.node.isRequired
 };

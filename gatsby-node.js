@@ -7,7 +7,7 @@ exports.onCreateNode = ({node, getNode, actions}) => {
     const filePath = createFilePath({
       node,
       getNode,
-      basePath: 'docs/source'
+      basePath: 'docs'
     });
 
     const parent = getNode(node.parent);

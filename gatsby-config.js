@@ -34,10 +34,19 @@ module.exports = {
     {
       resolve: 'gatsby-source-git',
       options: {
-        remote: 'https://github.com/apollographql/apollo-server.git',
+        remote: 'https://github.com/apollographql/apollo-server',
         name: 'apollo-server',
         branch: 'tb/experimental-docs',
-        patterns: 'docs/source/**'
+        patterns: 'docs/**'
+      }
+    },
+    {
+      resolve: 'gatsby-source-git',
+      options: {
+        remote: 'https://github.com/apollographql/apollo-server',
+        name: 'apollo-server/v2',
+        branch: 'tb/experimental-v2',
+        patterns: 'docs/**'
       }
     }
   ]

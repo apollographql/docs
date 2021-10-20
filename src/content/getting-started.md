@@ -9,4 +9,9 @@ const foo = 123;
 const parser = new Parser(foo);
 ```
 
+- here
+- is
+- a
+- list
+
 [schema](/schema)
