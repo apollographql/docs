@@ -13,6 +13,7 @@ module.exports = {
     'gatsby-plugin-svgr',
     '@chakra-ui/gatsby-plugin',
     'gatsby-plugin-react-helmet',
+    'gatsby-transformer-json',
     {
       resolve: 'gatsby-plugin-webfonts',
       options: {

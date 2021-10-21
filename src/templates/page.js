@@ -11,17 +11,20 @@ import {
   Button,
   Code,
   Divider,
+  Grid,
   Heading,
+  Link,
+  List,
   ListItem,
   OrderedList,
   Text,
   UnorderedList
 } from '@chakra-ui/react';
+import {Link as GatsbyLink, graphql} from 'gatsby';
 import {Helmet} from 'react-helmet';
 import {MDXProvider} from '@mdx-js/react';
 import {MDXRenderer} from 'gatsby-plugin-mdx';
-import {dirname} from 'path-browserify';
-import {graphql} from 'gatsby';
+import {dirname, join} from 'path-browserify';
 
 const components = {
   a: RelativeLink,
@@ -49,46 +52,73 @@ const renderAst = new rehypeReact({
   }
 }).Compiler;
 
-export default function PageTemplate({data, uri}) {
-  const {childMdx, childMarkdownRemark} = data.file;
+export default function PageTemplate({data, uri, pageContext}) {
+  const {gitRemote, childMdx, childMarkdownRemark} = data.file;
   const {frontmatter} = childMdx || childMarkdownRemark;
   const {title, description} = frontmatter;
+  const {sidebar} = pageContext;
   return (
     <Layout>
       <Helmet title={title} />
-      <Box px="10" py="12">
-        <Heading size="2xl">{title}</Heading>
-        {description && (
-          <Heading mt="2" size="lg" fontWeight="medium">
-            {description}
-          </Heading>
-        )}
-        <Divider my="8" />
-        <PathContext.Provider
-          value={data.file.name === 'index' ? uri : dirname(uri)}
-        >
-          {childMdx ? (
-            <MDXProvider components={mdxComponents}>
-              <MDXRenderer>{childMdx.body}</MDXRenderer>
-            </MDXProvider>
-          ) : (
-            <Wrapper>{renderAst(childMarkdownRemark.htmlAst)}</Wrapper>
+      <Grid templateColumns="300px 1fr">
+        <Box as="aside">
+          {sidebar && (
+            <List>
+              {Object.entries(sidebar).map(([key, value], index) =>
+                typeof value === 'string' ? (
+                  <ListItem key={index}>
+                    <Link
+                      as={GatsbyLink}
+                      to={join('/', gitRemote?.sourceInstanceName || '', value)}
+                    >
+                      {key}
+                    </Link>
+                  </ListItem>
+                ) : (
+                  <div key={index}>{key}</div>
+                )
+              )}
+            </List>
           )}
-        </PathContext.Provider>
-      </Box>
+        </Box>
+        <Box px="10" py="12" as="main">
+          <Heading size="2xl">{title}</Heading>
+          {description && (
+            <Heading mt="2" size="lg" fontWeight="medium">
+              {description}
+            </Heading>
+          )}
+          <Divider my="8" />
+          <PathContext.Provider
+            value={data.file.name === 'index' ? uri : dirname(uri)}
+          >
+            {childMdx ? (
+              <MDXProvider components={mdxComponents}>
+                <MDXRenderer>{childMdx.body}</MDXRenderer>
+              </MDXProvider>
+            ) : (
+              <Wrapper>{renderAst(childMarkdownRemark.htmlAst)}</Wrapper>
+            )}
+          </PathContext.Provider>
+        </Box>
+      </Grid>
     </Layout>
   );
 }
 
 PageTemplate.propTypes = {
   data: PropTypes.object.isRequired,
-  uri: PropTypes.string.isRequired
+  uri: PropTypes.string.isRequired,
+  pageContext: PropTypes.object.isRequired
 };
 
 export const pageQuery = graphql`
   query GetPage($id: String!) {
     file(id: {eq: $id}) {
       name
+      gitRemote {
+        sourceInstanceName
+      }
       childMdx {
         body
         frontmatter {

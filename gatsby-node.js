@@ -28,9 +28,12 @@ exports.onCreateNode = ({node, getNode, actions}) => {
 exports.createPages = async ({actions, graphql}) => {
   const {data} = await graphql(`
     {
-      allFile(filter: {extension: {in: ["md", "mdx"]}}) {
+      pages: allFile(filter: {extension: {in: ["md", "mdx"]}}) {
         nodes {
           id
+          gitRemote {
+            sourceInstanceName
+          }
           children {
             ... on Mdx {
               fields {
@@ -45,16 +48,34 @@ exports.createPages = async ({actions, graphql}) => {
           }
         }
       }
+      sidebars: allFile(filter: {relativePath: {eq: "docs/sidebar.json"}}) {
+        nodes {
+          internal {
+            content
+          }
+          gitRemote {
+            sourceInstanceName
+          }
+        }
+      }
     }
   `);
 
-  data.allFile.nodes.forEach(node => {
-    const [{fields}] = node.children;
+  const sidebars = data.sidebars.nodes.reduce(
+    (acc, {internal, gitRemote}) => ({
+      [gitRemote.sourceInstanceName]: JSON.parse(internal.content)
+    }),
+    {}
+  );
+
+  data.pages.nodes.forEach(({id, children, gitRemote}) => {
+    const [{fields}] = children;
     actions.createPage({
       path: fields.slug,
       component: require.resolve('./src/templates/page'),
       context: {
-        id: node.id
+        id,
+        sidebar: sidebars[gitRemote?.sourceInstanceName]
       }
     });
   });
