@@ -10,21 +10,24 @@ import {
   Box,
   Button,
   Code,
+  Collapse,
   Divider,
   Grid,
   Heading,
   Link,
-  List,
   ListItem,
   OrderedList,
   Text,
-  UnorderedList
+  UnorderedList,
+  chakra,
+  useColorModeValue,
+  useDisclosure
 } from '@chakra-ui/react';
 import {Link as GatsbyLink, graphql} from 'gatsby';
 import {Helmet} from 'react-helmet';
 import {MDXProvider} from '@mdx-js/react';
 import {MDXRenderer} from 'gatsby-plugin-mdx';
-import {dirname, join} from 'path-browserify';
+import {dirname, join, relative} from 'path-browserify';
 
 const components = {
   a: RelativeLink,
@@ -52,6 +55,57 @@ const renderAst = new rehypeReact({
   }
 }).Compiler;
 
+function NavGroup({label, uri, items, basePath}) {
+  const {isOpen, onToggle} = useDisclosure();
+  return (
+    <div>
+      <Button onClick={onToggle}>{label}</Button>
+      <Collapse in={isOpen}>
+        <NavItems uri={uri} items={items} basePath={basePath} />
+      </Collapse>
+    </div>
+  );
+}
+
+NavGroup.propTypes = {
+  uri: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  items: PropTypes.object.isRequired,
+  basePath: PropTypes.string
+};
+
+function NavItems({items, uri, basePath}) {
+  const activeColor = useColorModeValue('indigo.500', 'indigo.200');
+  return Object.entries(items).map(([key, value], index) => {
+    if (typeof value === 'string') {
+      const path = join('/', basePath || '', value);
+      const isActive = !relative(path, uri);
+      return (
+        <div key={index}>
+          <Link as={GatsbyLink} to={path} color={isActive && activeColor}>
+            {key}
+          </Link>
+        </div>
+      );
+    }
+    return (
+      <NavGroup
+        uri={uri}
+        key={index}
+        label={key}
+        items={value}
+        basePath={basePath}
+      />
+    );
+  });
+}
+
+NavItems.propTypes = {
+  uri: PropTypes.string.isRequired,
+  items: PropTypes.object.isRequired,
+  basePath: PropTypes.string
+};
+
 export default function PageTemplate({data, uri, pageContext}) {
   const {gitRemote, childMdx, childMarkdownRemark} = data.file;
   const {frontmatter} = childMdx || childMarkdownRemark;
@@ -61,26 +115,17 @@ export default function PageTemplate({data, uri, pageContext}) {
     <Layout>
       <Helmet title={title} />
       <Grid templateColumns="300px 1fr">
-        <Box as="aside">
+        <chakra.aside>
           {sidebar && (
-            <List>
-              {Object.entries(sidebar).map(([key, value], index) =>
-                typeof value === 'string' ? (
-                  <ListItem key={index}>
-                    <Link
-                      as={GatsbyLink}
-                      to={join('/', gitRemote?.sourceInstanceName || '', value)}
-                    >
-                      {key}
-                    </Link>
-                  </ListItem>
-                ) : (
-                  <div key={index}>{key}</div>
-                )
-              )}
-            </List>
+            <chakra.nav>
+              <NavItems
+                uri={uri}
+                items={sidebar}
+                basePath={gitRemote?.sourceInstanceName}
+              />
+            </chakra.nav>
           )}
-        </Box>
+        </chakra.aside>
         <Box px="10" py="12" as="main">
           <Heading size="2xl">{title}</Heading>
           {description && (
