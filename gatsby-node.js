@@ -14,13 +14,13 @@ exports.onCreateNode = ({node, getNode, actions}) => {
     actions.createNodeField({
       node,
       name: 'slug',
-      value: parent.gitRemote___NODE
-        ? path.join(
-            '/',
-            getNode(parent.gitRemote___NODE).sourceInstanceName,
-            filePath
-          )
-        : filePath
+      value: path.join(
+        '/',
+        parent.gitRemote___NODE
+          ? getNode(parent.gitRemote___NODE).sourceInstanceName
+          : parent.sourceInstanceName,
+        filePath
+      )
     });
   }
 };
@@ -31,6 +31,7 @@ exports.createPages = async ({actions, graphql}) => {
       pages: allFile(filter: {extension: {in: ["md", "mdx"]}}) {
         nodes {
           id
+          sourceInstanceName
           gitRemote {
             sourceInstanceName
           }
@@ -48,11 +49,12 @@ exports.createPages = async ({actions, graphql}) => {
           }
         }
       }
-      sidebars: allFile(filter: {relativePath: {eq: "docs/sidebar.json"}}) {
+      sidebars: allFile(filter: {base: {eq: "sidebar.json"}}) {
         nodes {
           internal {
             content
           }
+          sourceInstanceName
           gitRemote {
             sourceInstanceName
           }
@@ -62,20 +64,22 @@ exports.createPages = async ({actions, graphql}) => {
   `);
 
   const sidebars = data.sidebars.nodes.reduce(
-    (acc, {internal, gitRemote}) => ({
-      [gitRemote.sourceInstanceName]: JSON.parse(internal.content)
+    (acc, {internal, gitRemote, sourceInstanceName}) => ({
+      [gitRemote?.sourceInstanceName || sourceInstanceName]: JSON.parse(
+        internal.content
+      )
     }),
     {}
   );
 
-  data.pages.nodes.forEach(({id, children, gitRemote}) => {
+  data.pages.nodes.forEach(({id, children, gitRemote, sourceInstanceName}) => {
     const [{fields}] = children;
     actions.createPage({
       path: fields.slug,
       component: require.resolve('./src/templates/page'),
       context: {
         id,
-        sidebar: sidebars[gitRemote?.sourceInstanceName]
+        sidebar: sidebars[gitRemote?.sourceInstanceName || sourceInstanceName]
       }
     });
   });
