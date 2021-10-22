@@ -53,46 +53,56 @@ const renderAst = new rehypeReact({
 }).Compiler;
 
 export default function PageTemplate({data, uri, pageContext}) {
-  const {gitRemote, childMdx, childMarkdownRemark} = data.file;
+  const {name, childMdx, childMarkdownRemark, sourceInstanceName} = data.file;
   const {frontmatter} = childMdx || childMarkdownRemark;
-  const {title, description} = frontmatter;
+  const {title, description, standalone} = frontmatter;
   const {sidebar} = pageContext;
+
+  const path = name === 'index' ? uri : dirname(uri);
+  const content = (
+    <PathContext.Provider value={path}>
+      {childMdx ? (
+        <MDXProvider components={mdxComponents}>
+          <MDXRenderer>{childMdx.body}</MDXRenderer>
+        </MDXProvider>
+      ) : (
+        <Wrapper>{renderAst(childMarkdownRemark.htmlAst)}</Wrapper>
+      )}
+    </PathContext.Provider>
+  );
+
   return (
     <Layout>
-      <Helmet title={title} />
-      <Grid templateColumns="300px 1fr">
-        <chakra.aside>
-          {sidebar && (
-            <chakra.nav>
-              <NavItems
-                uri={uri}
-                items={sidebar}
-                basePath={gitRemote?.sourceInstanceName}
-              />
-            </chakra.nav>
-          )}
-        </chakra.aside>
-        <Box px="10" py="12" as="main">
-          <Heading size="2xl">{title}</Heading>
-          {description && (
-            <Heading mt="2" size="lg" fontWeight="medium">
-              {description}
-            </Heading>
-          )}
-          <Divider my="8" />
-          <PathContext.Provider
-            value={data.file.name === 'index' ? uri : dirname(uri)}
-          >
-            {childMdx ? (
-              <MDXProvider components={mdxComponents}>
-                <MDXRenderer>{childMdx.body}</MDXRenderer>
-              </MDXProvider>
-            ) : (
-              <Wrapper>{renderAst(childMarkdownRemark.htmlAst)}</Wrapper>
+      <Helmet title={title}>
+        <meta name="description" content={description} />
+      </Helmet>
+      {standalone ? (
+        content
+      ) : (
+        <Grid templateColumns="300px 1fr">
+          <chakra.aside>
+            {sidebar && (
+              <chakra.nav>
+                <NavItems
+                  uri={uri}
+                  items={sidebar}
+                  basePath={sourceInstanceName}
+                />
+              </chakra.nav>
             )}
-          </PathContext.Provider>
-        </Box>
-      </Grid>
+          </chakra.aside>
+          <Box px="10" py="12" as="main">
+            <Heading size="2xl">{title}</Heading>
+            {description && (
+              <Heading mt="2" size="lg" fontWeight="medium">
+                {description}
+              </Heading>
+            )}
+            <Divider my="8" />
+            {content}
+          </Box>
+        </Grid>
+      )}
     </Layout>
   );
 }
@@ -107,17 +117,17 @@ export const pageQuery = graphql`
   query GetPage($id: String!) {
     file(id: {eq: $id}) {
       name
-      gitRemote {
-        sourceInstanceName
-      }
+      sourceInstanceName
       childMdx {
         body
         frontmatter {
           title
           description
+          standalone
         }
       }
       childMarkdownRemark {
+        html
         htmlAst
         frontmatter {
           title

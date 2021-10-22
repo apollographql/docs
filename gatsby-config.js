@@ -41,42 +41,52 @@ const plugins = [
     options: {
       plugins: gatsbyRemarkPlugins
     }
-  },
-  {
-    resolve: 'gatsby-source-filesystem',
-    options: {
-      name: '/',
-      path: 'src/content'
-    }
-  },
-  {
-    resolve: 'gatsby-source-git',
-    options: {
-      remote: 'https://github.com/apollographql/apollo-server',
-      name: 'apollo-server',
-      branch: 'tb/experimental-docs',
-      patterns: 'docs/**'
-    }
-  },
-  {
-    resolve: 'gatsby-source-git',
-    options: {
-      remote: 'https://github.com/apollographql/apollo-server',
-      name: 'apollo-server/v2',
-      branch: 'tb/experimental-v2',
-      patterns: 'docs/**'
-    }
   }
 ];
 
-if (process.env.DOCS_DEV) {
+if (process.env.DOCS_DEV_PATH) {
   plugins.push({
     resolve: 'gatsby-source-filesystem',
     options: {
-      name: 'dev',
-      path: process.env.DOCS_DEV
+      name: '/',
+      path: process.env.DOCS_DEV_PATH
     }
   });
+} else {
+  plugins.push(
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: '/',
+        path: 'src/content/basics'
+      }
+    },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'studio',
+        path: 'src/content/studio'
+      }
+    },
+    {
+      resolve: 'gatsby-source-git',
+      options: {
+        remote: 'https://github.com/apollographql/apollo-server',
+        name: 'apollo-server',
+        branch: 'tb/experimental-docs',
+        patterns: 'docs/**'
+      }
+    },
+    {
+      resolve: 'gatsby-source-git',
+      options: {
+        remote: 'https://github.com/apollographql/apollo-server',
+        name: 'apollo-server/v2',
+        branch: 'tb/experimental-v2',
+        patterns: 'docs/**'
+      }
+    }
+  );
 }
 
 module.exports = {plugins};

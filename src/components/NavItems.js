@@ -26,14 +26,14 @@ NavGroup.propTypes = {
   uri: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   items: PropTypes.object.isRequired,
-  basePath: PropTypes.string
+  basePath: PropTypes.string.isRequired
 };
 
 export default function NavItems({items, uri, basePath}) {
   const activeColor = useColorModeValue('indigo.500', 'indigo.200');
   return Object.entries(items).map(([key, value], index) => {
     if (typeof value === 'string') {
-      const path = join('/', basePath || '', value);
+      const path = join('/', basePath, value);
       const isActive = !relative(path, uri);
       return (
         <div key={index}>
@@ -58,5 +58,5 @@ export default function NavItems({items, uri, basePath}) {
 NavItems.propTypes = {
   uri: PropTypes.string.isRequired,
   items: PropTypes.object.isRequired,
-  basePath: PropTypes.string
+  basePath: PropTypes.string.isRequired
 };
