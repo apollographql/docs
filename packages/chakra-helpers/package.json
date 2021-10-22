@@ -11,7 +11,7 @@
   "author": "Trevor Blades <tdblades@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "@apollo/space-kit": "^9.9.0",
+    "@apollo/space-kit": "8.11.0",
     "@chakra-ui/react": "^1.6.10",
     "typescript": "^4.4.4"
   },
@@ -19,7 +19,7 @@
     "polished": "^4.1.3"
   },
   "peerDependencies": {
-    "@apollo/space-kit": ">=8",
+    "@apollo/space-kit": "8 - 8.11.0",
     "@chakra-ui/react": "^1.6.0"
   }
 }
