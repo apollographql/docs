@@ -7,29 +7,37 @@ import {
   useColorModeValue,
   useDisclosure
 } from '@chakra-ui/react';
+import {FiChevronDown, FiChevronRight} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
 import {join, relative} from 'path-browserify';
 
-function getFullPath(path, basePath) {
-  return join('/', basePath, path);
-}
-
-function getItemPaths(items, basePath) {
-  return Object.values(items).flatMap(path =>
+const isPathActive = (path, uri) => !relative(path, uri);
+const getFullPath = (path, basePath) => join('/', basePath, path);
+const getItemPaths = (items, basePath) =>
+  Object.values(items).flatMap(path =>
     typeof path === 'string'
       ? getFullPath(path, basePath)
       : getItemPaths(path, basePath)
   );
-}
 
 function NavGroup({label, uri, items, basePath}) {
   const itemPaths = getItemPaths(items, basePath);
+  const isActive = itemPaths.some(path => isPathActive(path, uri));
   const {isOpen, onToggle} = useDisclosure({
-    defaultIsOpen: itemPaths.some(path => !relative(path, uri))
+    defaultIsOpen: isActive
   });
   return (
     <div>
-      <Button onClick={onToggle}>{label}</Button>
+      <Button
+        isFullWidth
+        justifyContent="space-between"
+        roundedLeft="0"
+        rightIcon={isOpen ? <FiChevronDown /> : <FiChevronRight />}
+        onClick={onToggle}
+        colorScheme={isActive ? 'indigo' : 'gray'}
+      >
+        {label}
+      </Button>
       <Collapse in={isOpen}>
         <NavItems uri={uri} items={items} basePath={basePath} />
       </Collapse>
@@ -49,7 +57,7 @@ export default function NavItems({items, uri, basePath}) {
   return Object.entries(items).map(([key, value], index) => {
     if (typeof value === 'string') {
       const path = getFullPath(value, basePath);
-      const isActive = !relative(path, uri);
+      const isActive = isPathActive(path, uri);
       return (
         <div key={index}>
           <Link as={GatsbyLink} to={path} color={isActive && activeColor}>
