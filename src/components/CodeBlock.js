@@ -39,29 +39,28 @@ export default function CodeBlock({children}) {
       language={className.replace(/language-/, '')}
     >
       {({className, style, tokens, getLineProps, getTokenProps}) => (
-        <Box rounded="md" style={style} pos="relative" shadow="md">
+        <Box rounded="md" style={style} pos="relative" shadow="sm">
           <Box fontSize="md" fontFamily="mono">
             {title && (
               <Box px="4" py="2" borderBottomWidth="1px">
                 {title}
               </Box>
             )}
-            <chakra.pre className={className} p="4" fontFamily="inherit">
+            <chakra.pre className={className} py="4" fontFamily="inherit">
               {tokens.map((line, i) => (
-                <div
+                <Box
                   key={i}
                   {...getLineProps({
                     line,
-                    key: i,
-                    style: {
-                      background: linesToHighlight.includes(i + 1) && 'tomato'
-                    }
+                    key: i
                   })}
+                  px="4"
+                  bg={linesToHighlight.includes(i + 1) && 'blackAlpha.100'}
                 >
                   {line.map((token, key) => (
                     <span key={key} {...getTokenProps({token, key})} />
                   ))}
-                </div>
+                </Box>
               ))}
             </chakra.pre>
           </Box>
