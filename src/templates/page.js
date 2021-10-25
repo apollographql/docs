@@ -1,5 +1,6 @@
 import CodeBlock from '../components/CodeBlock';
 import ExpansionPanel from '../components/ExpansionPanel';
+import Header from '../components/Header';
 import Layout from '../components/Layout';
 import NavItems from '../components/NavItems';
 import PropTypes from 'prop-types';
@@ -79,10 +80,18 @@ export default function PageTemplate({data, uri, pageContext}) {
       {standalone ? (
         content
       ) : (
-        <Grid templateColumns="300px 1fr">
-          <chakra.aside borderRightWidth="1px" pr="2">
+        <Grid templateColumns="300px 1fr" alignItems="flex-start">
+          <chakra.aside
+            h="100vh"
+            borderRightWidth="1px"
+            pos="sticky"
+            top="0"
+            overflow="auto"
+            zIndex="0"
+          >
+            <Header />
             {sidebar && (
-              <chakra.nav>
+              <chakra.nav py="2" pr="2">
                 <NavItems
                   uri={uri}
                   items={sidebar}

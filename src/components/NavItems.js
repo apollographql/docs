@@ -6,7 +6,6 @@ import {
   Stack,
   chakra,
   useColorMode,
-  useColorModeValue,
   useDisclosure,
   useTheme
 } from '@chakra-ui/react';
