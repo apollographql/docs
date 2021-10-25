@@ -1,11 +1,20 @@
-import Highlight, {defaultProps} from 'prism-react-renderer';
+import Highlight, {Prism} from 'prism-react-renderer';
 import PropTypes from 'prop-types';
 import React from 'react';
 import fenceparser from 'fenceparser';
+import nightOwl from 'prism-react-renderer/themes/nightOwl';
+import nightOwlLight from 'prism-react-renderer/themes/nightOwlLight';
 import rangeParser from 'parse-numeric-range';
-import {Box, Button, DarkMode, chakra} from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  DarkMode,
+  chakra,
+  useColorModeValue
+} from '@chakra-ui/react';
 
 export default function CodeBlock({children}) {
+  const theme = useColorModeValue(nightOwlLight, nightOwl);
   const [child] = Array.isArray(children) ? children : [children];
   const {
     className = 'language-text',
@@ -24,20 +33,16 @@ export default function CodeBlock({children}) {
 
   return (
     <Highlight
-      {...defaultProps}
+      Prism={Prism}
+      theme={theme}
       code={code.trim()}
       language={className.replace(/language-/, '')}
     >
       {({className, style, tokens, getLineProps, getTokenProps}) => (
-        <Box rounded="md" style={style} pos="relative">
+        <Box rounded="md" style={style} pos="relative" shadow="md">
           <Box fontSize="md" fontFamily="mono">
             {title && (
-              <Box
-                px="4"
-                py="2"
-                borderColor="whiteAlpha.300"
-                borderBottomWidth="1px"
-              >
+              <Box px="4" py="2" borderBottomWidth="1px">
                 {title}
               </Box>
             )}
