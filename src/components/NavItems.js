@@ -3,9 +3,12 @@ import React from 'react';
 import {
   Button,
   Collapse,
-  Link,
+  Stack,
+  chakra,
+  useColorMode,
   useColorModeValue,
-  useDisclosure
+  useDisclosure,
+  useTheme
 } from '@chakra-ui/react';
 import {FiChevronDown, FiChevronRight} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
@@ -20,28 +23,51 @@ const getItemPaths = (items, basePath) =>
       : getItemPaths(path, basePath)
   );
 
-function NavGroup({label, uri, items, basePath}) {
+function NavButton({isActive, depth, children, ...props}) {
+  return (
+    <Button
+      variant="ghost"
+      roundedLeft="0"
+      colorScheme={isActive ? 'indigo' : 'gray'}
+      {...props}
+    >
+      <chakra.span pl={depth * 2}>{children}</chakra.span>
+    </Button>
+  );
+}
+
+NavButton.propTypes = {
+  children: PropTypes.node.isRequired,
+  isActive: PropTypes.bool.isRequired,
+  depth: PropTypes.number.isRequired
+};
+
+function NavGroup({label, uri, items, basePath, depth}) {
   const itemPaths = getItemPaths(items, basePath);
   const isActive = itemPaths.some(path => isPathActive(path, uri));
   const {isOpen, onToggle} = useDisclosure({
     defaultIsOpen: isActive
   });
   return (
-    <div>
-      <Button
-        isFullWidth
+    <Stack>
+      <NavButton
+        isActive={isActive}
         justifyContent="space-between"
-        roundedLeft="0"
         rightIcon={isOpen ? <FiChevronDown /> : <FiChevronRight />}
         onClick={onToggle}
-        colorScheme={isActive ? 'indigo' : 'gray'}
+        depth={depth}
       >
         {label}
-      </Button>
+      </NavButton>
       <Collapse in={isOpen}>
-        <NavItems uri={uri} items={items} basePath={basePath} />
+        <NavItems
+          uri={uri}
+          items={items}
+          basePath={basePath}
+          depth={depth + 1}
+        />
       </Collapse>
-    </div>
+    </Stack>
   );
 }
 
@@ -49,37 +75,58 @@ NavGroup.propTypes = {
   uri: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   items: PropTypes.object.isRequired,
-  basePath: PropTypes.string.isRequired
+  basePath: PropTypes.string.isRequired,
+  depth: PropTypes.number.isRequired
 };
 
-export default function NavItems({items, uri, basePath}) {
-  const activeColor = useColorModeValue('indigo.500', 'indigo.200');
-  return Object.entries(items).map(([key, value], index) => {
-    if (typeof value === 'string') {
-      const path = getFullPath(value, basePath);
-      const isActive = isPathActive(path, uri);
-      return (
-        <div key={index}>
-          <Link as={GatsbyLink} to={path} color={isActive && activeColor}>
-            {key}
-          </Link>
-        </div>
-      );
-    }
-    return (
-      <NavGroup
-        uri={uri}
-        key={index}
-        label={key}
-        items={value}
-        basePath={basePath}
-      />
-    );
+export default function NavItems({items, uri, basePath, depth = 0}) {
+  const theme = useTheme();
+  const {colorMode} = useColorMode();
+  const {
+    _hover: {bg: activeBg}
+  } = theme.components.Button.variants.ghost({
+    theme,
+    colorMode,
+    colorScheme: 'indigo'
   });
+  return (
+    <Stack>
+      {Object.entries(items).map(([key, value], index) => {
+        if (typeof value === 'string') {
+          const path = getFullPath(value, basePath);
+          const isActive = isPathActive(path, uri);
+          return (
+            <NavButton
+              key={index}
+              isActive={isActive}
+              as={GatsbyLink}
+              to={path}
+              justifyContent="flex-start"
+              depth={depth}
+              bg={isActive && activeBg}
+            >
+              {key}
+            </NavButton>
+          );
+        }
+        return (
+          <NavGroup
+            uri={uri}
+            key={index}
+            label={key}
+            items={value}
+            basePath={basePath}
+            depth={depth}
+          />
+        );
+      })}
+    </Stack>
+  );
 }
 
 NavItems.propTypes = {
   uri: PropTypes.string.isRequired,
   items: PropTypes.object.isRequired,
-  basePath: PropTypes.string.isRequired
+  basePath: PropTypes.string.isRequired,
+  depth: PropTypes.number
 };

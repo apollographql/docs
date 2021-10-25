@@ -80,7 +80,7 @@ export default function PageTemplate({data, uri, pageContext}) {
         content
       ) : (
         <Grid templateColumns="300px 1fr">
-          <chakra.aside>
+          <chakra.aside borderRightWidth="1px" pr="2">
             {sidebar && (
               <chakra.nav>
                 <NavItems
