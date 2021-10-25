@@ -8,85 +8,86 @@ const gatsbyRemarkPlugins = [
   }
 ];
 
-const plugins = [
-  'gatsby-plugin-svgr',
-  '@chakra-ui/gatsby-plugin',
-  'gatsby-plugin-react-helmet',
-  'gatsby-transformer-json',
-  {
-    resolve: 'gatsby-plugin-webfonts',
-    options: {
-      fonts: {
-        google: [
-          {
-            family: 'Source Sans Pro',
-            variants: ['400', '600', '700']
-          },
-          {
-            family: 'Source Code Pro',
-            variants: ['400', '600']
-          }
-        ]
+const sources = process.env.DOCS_DEV_PATH
+  ? [
+      {
+        resolve: 'gatsby-source-filesystem',
+        options: {
+          name: '/',
+          path: process.env.DOCS_DEV_PATH
+        }
       }
-    }
-  },
-  {
-    resolve: 'gatsby-plugin-mdx',
-    options: {
-      gatsbyRemarkPlugins
-    }
-  },
-  {
-    resolve: 'gatsby-transformer-remark',
-    options: {
-      plugins: gatsbyRemarkPlugins
-    }
-  }
-];
+    ]
+  : [
+      {
+        resolve: 'gatsby-source-filesystem',
+        options: {
+          name: '/',
+          path: 'src/content/basics'
+        }
+      },
+      {
+        resolve: 'gatsby-source-filesystem',
+        options: {
+          name: 'studio',
+          path: 'src/content/studio'
+        }
+      },
+      {
+        resolve: 'gatsby-source-git',
+        options: {
+          remote: 'https://github.com/apollographql/apollo-server',
+          name: 'apollo-server',
+          branch: 'tb/experimental-docs',
+          patterns: 'docs/**'
+        }
+      },
+      {
+        resolve: 'gatsby-source-git',
+        options: {
+          remote: 'https://github.com/apollographql/apollo-server',
+          name: 'apollo-server/v2',
+          branch: 'tb/experimental-v2',
+          patterns: 'docs/**'
+        }
+      }
+    ];
 
-if (process.env.DOCS_DEV_PATH) {
-  plugins.push({
-    resolve: 'gatsby-source-filesystem',
-    options: {
-      name: '/',
-      path: process.env.DOCS_DEV_PATH
-    }
-  });
-} else {
-  plugins.push(
+module.exports = {
+  plugins: [
+    'gatsby-plugin-svgr',
+    '@chakra-ui/gatsby-plugin',
+    'gatsby-plugin-react-helmet',
+    'gatsby-transformer-json',
     {
-      resolve: 'gatsby-source-filesystem',
+      resolve: 'gatsby-plugin-webfonts',
       options: {
-        name: '/',
-        path: 'src/content/basics'
+        fonts: {
+          google: [
+            {
+              family: 'Source Sans Pro',
+              variants: ['400', '600', '700']
+            },
+            {
+              family: 'Source Code Pro',
+              variants: ['400', '600']
+            }
+          ]
+        }
       }
     },
     {
-      resolve: 'gatsby-source-filesystem',
+      resolve: 'gatsby-plugin-mdx',
       options: {
-        name: 'studio',
-        path: 'src/content/studio'
+        gatsbyRemarkPlugins
       }
     },
     {
-      resolve: 'gatsby-source-git',
+      resolve: 'gatsby-transformer-remark',
       options: {
-        remote: 'https://github.com/apollographql/apollo-server',
-        name: 'apollo-server',
-        branch: 'tb/experimental-docs',
-        patterns: 'docs/**'
+        plugins: gatsbyRemarkPlugins
       }
     },
-    {
-      resolve: 'gatsby-source-git',
-      options: {
-        remote: 'https://github.com/apollographql/apollo-server',
-        name: 'apollo-server/v2',
-        branch: 'tb/experimental-v2',
-        patterns: 'docs/**'
-      }
-    }
-  );
-}
-
-module.exports = {plugins};
+    ...sources
+  ]
+};
