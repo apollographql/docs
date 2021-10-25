@@ -1,6 +1,7 @@
 import CodeBlock from '../components/CodeBlock';
 import ExpansionPanel from '../components/ExpansionPanel';
 import Header from '../components/Header';
+import InlineCode from '../components/InlineCode';
 import Layout from '../components/Layout';
 import NavItems from '../components/NavItems';
 import PropTypes from 'prop-types';
@@ -11,7 +12,6 @@ import rehypeReact from 'rehype-react';
 import {
   Box,
   Button,
-  Code,
   Divider,
   Grid,
   Heading,
@@ -39,7 +39,7 @@ const components = {
 const mdxComponents = {
   ...components,
   wrapper: Wrapper,
-  inlineCode: Code,
+  inlineCode: InlineCode,
   Button,
   ExpansionPanel
 };
@@ -49,7 +49,7 @@ const renderAst = new rehypeReact({
   Fragment,
   components: {
     ...components,
-    code: Code
+    code: InlineCode
   }
 }).Compiler;
 
