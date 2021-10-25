@@ -41,12 +41,7 @@ export default function CodeBlock({children}) {
                 {title}
               </Box>
             )}
-            <chakra.pre
-              className={className}
-              p="4"
-              fontFamily="inherit"
-              fontSize="inherit"
-            >
+            <chakra.pre className={className} p="4" fontFamily="inherit">
               {tokens.map((line, i) => (
                 <div
                   key={i}
