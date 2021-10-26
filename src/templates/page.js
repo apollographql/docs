@@ -1,19 +1,21 @@
 import CodeBlock from '../components/CodeBlock';
+import CustomHeading, {HEADING_PADDING} from '../components/CustomHeading';
 import ExpansionPanel from '../components/ExpansionPanel';
-import GithubSlugger from 'github-slugger';
 import Header from '../components/Header';
 import InlineCode from '../components/InlineCode';
 import Layout from '../components/Layout';
 import NavItems from '../components/NavItems';
 import PropTypes from 'prop-types';
-import React, {Fragment, createElement, useMemo} from 'react';
+import React, {Fragment, createElement} from 'react';
 import RelativeLink, {PathContext} from '../components/RelativeLink';
+import TableOfContents from '../components/TableOfContents';
 import Wrapper from '../components/Wrapper';
 import rehypeReact from 'rehype-react';
 import {
   Box,
   Button,
   Divider,
+  Flex,
   Grid,
   Heading,
   ListItem,
@@ -26,8 +28,10 @@ import {
   Thead,
   Tr,
   UnorderedList,
-  chakra
+  chakra,
+  useTheme
 } from '@chakra-ui/react';
+import {Global} from '@emotion/react';
 import {Helmet} from 'react-helmet';
 import {MDXProvider} from '@mdx-js/react';
 import {MDXRenderer} from 'gatsby-plugin-mdx';
@@ -35,27 +39,26 @@ import {dirname} from 'path-browserify';
 import {graphql} from 'gatsby';
 
 const LIST_SPACING = 2;
-const HEADING_OFFSET = 8;
 
 const components = {
   p: Text,
   h1(props) {
-    return <Heading as="h1" pt={HEADING_OFFSET} size="3xl" {...props} />;
+    return <CustomHeading depth={1} {...props} />;
   },
   h2(props) {
-    return <Heading pt={HEADING_OFFSET} size="2xl" {...props} />;
+    return <CustomHeading depth={2} {...props} />;
   },
   h3(props) {
-    return <Heading as="h3" pt={HEADING_OFFSET} {...props} />;
+    return <CustomHeading depth={3} {...props} />;
   },
   h4(props) {
-    return <Heading as="h4" pt={HEADING_OFFSET} size="lg" {...props} />;
+    return <CustomHeading depth={4} {...props} />;
   },
   h5(props) {
-    return <Heading as="h5" pt={HEADING_OFFSET} size="md" {...props} />;
+    return <CustomHeading depth={5} {...props} />;
   },
   h6(props) {
-    return <Heading as="h6" pt={HEADING_OFFSET} size="sm" {...props} />;
+    return <CustomHeading depth={6} {...props} />;
   },
   a: RelativeLink,
   pre: CodeBlock,
@@ -92,20 +95,12 @@ const renderAst = new rehypeReact({
 }).Compiler;
 
 export default function PageTemplate({data, uri, pageContext}) {
+  const {space} = useTheme();
+
   const {name, childMdx, childMarkdownRemark, sourceInstanceName} = data.file;
   const {frontmatter, headings} = childMdx || childMarkdownRemark;
   const {title, description, standalone} = frontmatter;
   const {sidebar} = pageContext;
-
-  const toc = useMemo(() => {
-    const slugger = new GithubSlugger();
-    return headings.map(heading => ({
-      ...heading,
-      id: slugger.slug(heading.value)
-    }));
-  }, [headings]);
-
-  console.log(toc);
 
   const path = name === 'index' ? uri : dirname(uri);
   const content = (
@@ -125,6 +120,13 @@ export default function PageTemplate({data, uri, pageContext}) {
       <Helmet title={title}>
         <meta name="description" content={description} />
       </Helmet>
+      <Global
+        styles={{
+          html: {
+            scrollPaddingTop: space[HEADING_PADDING]
+          }
+        }}
+      />
       {standalone ? (
         content
       ) : (
@@ -148,16 +150,30 @@ export default function PageTemplate({data, uri, pageContext}) {
               </chakra.nav>
             )}
           </chakra.aside>
-          <Box px="10" py="12" as="main">
-            <Heading size="3xl">{title}</Heading>
-            {description && (
-              <Heading mt="4" fontWeight="medium">
-                {description}
+          <Flex align="flex-start" px="10" py="12" as="main">
+            <Box flexGrow="1" w="0">
+              <Heading size="3xl">{title}</Heading>
+              {description && (
+                <Heading mt="4" fontWeight="normal">
+                  {description}
+                </Heading>
+              )}
+              <Divider my="8" />
+              {content}
+            </Box>
+            <chakra.aside
+              ml="10"
+              w="250px"
+              flexShrink="0"
+              pos="sticky"
+              top="12"
+            >
+              <Heading size="md" mb="3">
+                {title}
               </Heading>
-            )}
-            <Divider my="8" />
-            {content}
-          </Box>
+              <TableOfContents headings={headings} />
+            </chakra.aside>
+          </Flex>
         </Grid>
       )}
     </Layout>

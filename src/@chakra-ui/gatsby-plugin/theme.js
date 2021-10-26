@@ -12,6 +12,13 @@ const theme = extendTheme({
   config: {
     initialColorMode: 'system'
   },
+  components: {
+    Heading: {
+      baseStyle: {
+        fontWeight: 'semibold'
+      }
+    }
+  },
   fonts,
   colors: {
     gray: createGrayPalette(silver, grey, midnight),

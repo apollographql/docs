@@ -49,7 +49,12 @@ export default function CodeBlock({children}) {
                 {title}
               </Box>
             )}
-            <chakra.pre className={className} py="4" fontFamily="inherit">
+            <chakra.pre
+              className={className}
+              py="4"
+              fontFamily="inherit"
+              overflow="auto"
+            >
               {tokens.map((line, i) => (
                 <Box
                   key={i}
