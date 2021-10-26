@@ -150,7 +150,7 @@ export default function PageTemplate({data, uri, pageContext}) {
               </chakra.nav>
             )}
           </chakra.aside>
-          <Flex align="flex-start" px="10" py="12" as="main">
+          <Flex maxW="6xl" align="flex-start" px="10" py="12" as="main">
             <Box flexGrow="1" w="0">
               <Heading size="3xl">{title}</Heading>
               {description && (
