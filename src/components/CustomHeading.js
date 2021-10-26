@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {Box, Heading} from '@chakra-ui/react';
 
-export const HEADING_PADDING = 12;
 const HEADING_SIZES = {
   1: '3xl',
   2: '2xl',
@@ -14,7 +13,7 @@ const HEADING_SIZES = {
 
 export default function CustomHeading({depth, ...props}) {
   return (
-    <Box pt={HEADING_PADDING}>
+    <Box pt="10">
       <Heading as={'h' + depth} size={HEADING_SIZES[depth]} {...props} />
     </Box>
   );

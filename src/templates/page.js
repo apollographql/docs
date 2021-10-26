@@ -1,5 +1,5 @@
 import CodeBlock from '../components/CodeBlock';
-import CustomHeading, {HEADING_PADDING} from '../components/CustomHeading';
+import CustomHeading from '../components/CustomHeading';
 import ExpansionPanel from '../components/ExpansionPanel';
 import Header from '../components/Header';
 import InlineCode from '../components/InlineCode';
@@ -123,7 +123,7 @@ export default function PageTemplate({data, uri, pageContext}) {
       <Global
         styles={{
           html: {
-            scrollPaddingTop: space[HEADING_PADDING]
+            scrollPaddingTop: space[12]
           }
         }}
       />
