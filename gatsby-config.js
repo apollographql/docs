@@ -5,6 +5,12 @@ const gatsbyRemarkPlugins = [
     options: {
       ignoreFileExtensions: []
     }
+  },
+  {
+    resolve: 'gatsby-remark-autolink-headers',
+    options: {
+      icon: false
+    }
   }
 ];
 

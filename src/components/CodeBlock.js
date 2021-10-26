@@ -8,13 +8,13 @@ import rangeParser from 'parse-numeric-range';
 import {
   Box,
   Button,
-  DarkMode,
   chakra,
+  useClipboard,
   useColorModeValue
 } from '@chakra-ui/react';
+import {FiClipboard} from 'react-icons/fi';
 
 export default function CodeBlock({children}) {
-  const theme = useColorModeValue(nightOwlLight, nightOwl);
   const [child] = Array.isArray(children) ? children : [children];
   const {
     className = 'language-text',
@@ -30,6 +30,9 @@ export default function CodeBlock({children}) {
     : [];
 
   const [code] = Array.isArray(innerChildren) ? innerChildren : [innerChildren];
+
+  const {onCopy, hasCopied} = useClipboard(code);
+  const theme = useColorModeValue(nightOwlLight, nightOwl);
 
   return (
     <Highlight
@@ -64,11 +67,16 @@ export default function CodeBlock({children}) {
               ))}
             </chakra.pre>
           </Box>
-          <DarkMode>
-            <Button size="xs" pos="absolute" top="2" right="2">
-              Copy
-            </Button>
-          </DarkMode>
+          <Button
+            size="xs"
+            pos="absolute"
+            top="2"
+            right="2"
+            leftIcon={<FiClipboard />}
+            onClick={onCopy}
+          >
+            {hasCopied ? 'Copied!' : 'Copy'}
+          </Button>
         </Box>
       )}
     </Highlight>
