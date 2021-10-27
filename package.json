@@ -1,6 +1,7 @@
 {
   "scripts": {
     "start": "gatsby develop",
+    "build": "gatsby build",
     "dev:client": "DOCS_DEV_PATH=../apollo-client/docs npm start",
     "dev:server": "DOCS_DEV_PATH=../apollo-server/docs npm start"
   },
