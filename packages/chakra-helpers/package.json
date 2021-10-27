@@ -6,7 +6,9 @@
   "main": "lib/index.js",
   "scripts": {
     "start": "tsc --watch",
-    "prepare": "tsc"
+    "build": "tsc",
+    "postinstall": "npm run build",
+    "prepublishOnly": "npm run build"
   },
   "author": "Trevor Blades <tdblades@gmail.com>",
   "license": "MIT",
