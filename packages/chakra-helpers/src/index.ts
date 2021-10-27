@@ -9,6 +9,14 @@ export const fonts = {
   mono: "'Source Code Pro', monospace"
 };
 
+export const components = {
+  Heading: {
+    baseStyle: {
+      fontWeight: 'semibold'
+    }
+  }
+};
+
 export const createGrayPalette = (
   low: MonochromePalette,
   mid: MonochromePalette,

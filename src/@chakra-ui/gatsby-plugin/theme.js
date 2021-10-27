@@ -1,5 +1,6 @@
 import {colors} from '@apollo/space-kit/colors';
 import {
+  components,
   createColorPalette,
   createGrayPalette,
   fonts
@@ -12,13 +13,7 @@ const theme = extendTheme({
   config: {
     initialColorMode: 'system'
   },
-  components: {
-    Heading: {
-      baseStyle: {
-        fontWeight: 'semibold'
-      }
-    }
-  },
+  components,
   fonts,
   colors: {
     gray: createGrayPalette(silver, grey, midnight),
