@@ -14,13 +14,13 @@ const gatsbyRemarkPlugins = [
   }
 ];
 
-const sources = process.env.DOCS_DEV_PATH
+const sources = process.env.DOCS_PATH
   ? [
       {
         resolve: 'gatsby-source-filesystem',
         options: {
           name: '/',
-          path: process.env.DOCS_DEV_PATH
+          path: process.env.DOCS_PATH
         }
       }
     ]
