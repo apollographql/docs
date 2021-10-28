@@ -4,10 +4,12 @@
   "version": "1.0.0",
   "description": "Helps configure a Chakra UI theme for use with Apollo projects",
   "main": "lib/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "start": "tsc --watch",
     "build": "tsc",
-    "postinstall": "npm run build",
     "prepublishOnly": "npm run build"
   },
   "author": "Trevor Blades <tdblades@gmail.com>",

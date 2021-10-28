@@ -1,7 +1,10 @@
 {
+  "name": "docs",
   "scripts": {
     "start": "gatsby develop",
     "build": "gatsby build",
+    "postinstall": "npm run build --prefix packages/chakra-helpers",
+    "prebuild": "npm run postinstall",
     "dev:client": "DOCS_PATH=../apollo-client/docs npm start",
     "dev:server": "DOCS_PATH=../apollo-server/docs npm start"
   },
@@ -50,6 +53,7 @@
   "devDependencies": {
     "@trevorblades/eslint-config": "^7.2.5",
     "eslint": "^7.32.0",
-    "eslint-plugin-mdx": "^1.11.1"
+    "eslint-plugin-mdx": "^1.11.1",
+    "lerna": "^4.0.0"
   }
 }
