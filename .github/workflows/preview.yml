@@ -48,6 +48,7 @@ jobs:
         uses: actions/github-script@v5
         with:
           script: |
+            console.log(context.sha, ${{ github.event.head_commit.message }});
             github.rest.repos.createCommitStatus({
               ...context.repo,
               sha: context.sha,
