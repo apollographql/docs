@@ -1,8 +1,6 @@
 on: 
   workflow_call:
     secrets:
-      GITHUB_TOKEN:
-        required: true
       NETLIFY_SITE_ID:
         required: true
       NETLIFY_AUTH_TOKEN:
@@ -47,16 +45,15 @@ jobs:
           echo "::set-output name=deploy_url::$deploy_url"
 
       - name: Set preview status
-        uses: actions/github-script@v4
+        uses: actions/github-script@v5
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            console.log(context)
-            await github.repos.createCommitStatus({
+            console.log(context.repo)
+            github.rest.repos.createCommitStatus({
               ...context.repo,
               sha: context.sha,
               state: "success",
               target_url: ${{ steps.publish.outputs.deploy_url }},
               description: "Deploy Preview ready!",
               context: "Deploy Preview"
-            });
+            })
