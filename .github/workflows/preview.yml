@@ -1,6 +1,8 @@
 on: 
   workflow_call:
     secrets:
+      GITHUB_TOKEN:
+        required: true
       NETLIFY_SITE_ID:
         required: true
       NETLIFY_AUTH_TOKEN:
