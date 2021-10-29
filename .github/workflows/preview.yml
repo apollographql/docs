@@ -48,8 +48,7 @@ jobs:
         uses: actions/github-script@v5
         with:
           script: |
-            console.log(context.repo)
-            github.rest.repos.createCommitStatus({
+            const response = await github.rest.repos.createCommitStatus({
               ...context.repo,
               sha: context.sha,
               state: "success",
@@ -57,3 +56,4 @@ jobs:
               description: "Deploy Preview ready!",
               context: "Deploy Preview"
             })
+            console.log(response)
