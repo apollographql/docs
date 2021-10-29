@@ -1,5 +1,9 @@
 on: 
   workflow_call:
+    inputs:
+      message:
+        required: true
+        type: string
     secrets:
       NETLIFY_SITE_ID:
         required: true
@@ -41,7 +45,7 @@ jobs:
       - name: Publish
         id: publish
         run: |
-          deploy_output=$( npx netlify deploy --json --message "${{ github.event.head_commit.message }}" )
+          deploy_output=$( npx netlify deploy --json --message "${{ inputs.message }}" )
           deploy_url=$( echo $deploy_output | jq '.deploy_url' )
           echo "::set-output name=deploy_url::$deploy_url"
 
@@ -49,10 +53,9 @@ jobs:
         uses: actions/github-script@v5
         with:
           script: |
-            console.log(context);
             github.rest.repos.createCommitStatus({
               ...context.repo,
-              sha: context.sha,
+              sha: context.payload.after,
               state: "success",
               target_url: ${{ steps.publish.outputs.deploy_url }},
               description: "Deploy Preview ready!",
