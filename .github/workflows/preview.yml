@@ -51,6 +51,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
+            console.log(context)
             await github.repos.createCommitStatus({
               ...context.repo,
               sha: context.sha,
