@@ -1,6 +1,5 @@
 {
   "name": "@apollo/chakra-helpers",
-  "private": false,
   "version": "1.0.0",
   "description": "Helps configure a Chakra UI theme for use with Apollo projects",
   "main": "lib/index.js",
