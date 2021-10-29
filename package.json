@@ -3,8 +3,7 @@
   "scripts": {
     "start": "gatsby develop",
     "build": "gatsby build",
-    "postinstall": "npm run build --prefix packages/chakra-helpers",
-    "prebuild": "npm run postinstall",
+    "prebuild": "npm run bootstrap --prefix packages/chakra-helpers",
     "dev:client": "DOCS_PATH=../apollo-client/docs npm start",
     "dev:server": "DOCS_PATH=../apollo-server/docs npm start"
   },
