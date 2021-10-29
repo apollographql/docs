@@ -12,8 +12,8 @@ jobs:
 
     steps:
       - uses: actions/setup-node@v2
-          with:
-            node-version: 14
+        with:
+          node-version: 14
 
       - name: Trigger deploy
         run: npx netlify deploy --trigger --prod --message "${{ github.event.head_commit.message }}"
