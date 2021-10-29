@@ -28,6 +28,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 14
+          cache: npm
 
       - name: Install dependencies
         run: npm install
@@ -48,7 +49,7 @@ jobs:
         uses: actions/github-script@v5
         with:
           script: |
-            console.log(context.sha, ${{ github.event.head_commit.message }});
+            console.log(context);
             github.rest.repos.createCommitStatus({
               ...context.repo,
               sha: context.sha,
