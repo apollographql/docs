@@ -45,7 +45,7 @@ jobs:
       - name: Publish
         id: publish
         run: |
-          deploy_output=$( npx netlify deploy --json --message "${{ inputs.message }}" )
+          deploy_output=$( npx netlify deploy --json --message "${{ github.event.pull_request.title }}" )
           deploy_url=$( echo $deploy_output | jq '.deploy_url' )
           echo "::set-output name=deploy_url::$deploy_url"
 
