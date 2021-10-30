@@ -3,7 +3,6 @@
   "scripts": {
     "start": "gatsby develop",
     "build": "gatsby build",
-    "prebuild": "npm run bootstrap --prefix packages/chakra-helpers",
     "dev:client": "DOCS_PATH=../apollo-client/docs npm start",
     "dev:server": "DOCS_PATH=../apollo-server/docs npm start"
   },
@@ -14,7 +13,7 @@
     ]
   },
   "dependencies": {
-    "@apollo/chakra-helpers": "file:packages/chakra-helpers",
+    "@apollo/chakra-helpers": "^1.0.1",
     "@apollo/space-kit": "8.11.0",
     "@chakra-ui/gatsby-plugin": "^2.0.1",
     "@chakra-ui/react": "^1.6.10",
