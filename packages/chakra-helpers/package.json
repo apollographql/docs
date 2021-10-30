@@ -16,9 +16,7 @@
   },
   "scripts": {
     "start": "tsc --watch",
-    "build": "tsc",
-    "bootstrap": "npm i && npm run build",
-    "prepublishOnly": "npm run build"
+    "prepare": "tsc"
   },
   "author": "Trevor Blades <tdblades@gmail.com>",
   "license": "MIT",
