@@ -33,6 +33,9 @@ exports.createPages = async ({actions, graphql}) => {
       pages: allFile(filter: {extension: {in: ["md", "mdx"]}}) {
         nodes {
           id
+          gitRemote {
+            full_name
+          }
           sourceInstanceName
           children {
             ... on Mdx {
@@ -48,10 +51,13 @@ exports.createPages = async ({actions, graphql}) => {
           }
         }
       }
-      sidebars: allFile(filter: {base: {eq: "sidebar.json"}}) {
+      configs: allFile(filter: {base: {eq: "config.json"}}) {
         nodes {
           internal {
             content
+          }
+          gitRemote {
+            full_name
           }
           sourceInstanceName
         }
@@ -59,22 +65,31 @@ exports.createPages = async ({actions, graphql}) => {
     }
   `);
 
-  const sidebars = data.sidebars.nodes.reduce(
-    (acc, {internal, sourceInstanceName}) => ({
-      ...acc,
-      [sourceInstanceName]: JSON.parse(internal.content)
-    }),
-    {}
-  );
-
-  data.pages.nodes.forEach(({id, sourceInstanceName, children}) => {
+  data.pages.nodes.forEach(({id, gitRemote, sourceInstanceName, children}) => {
     const [{fields}] = children;
+    const config = data.configs.nodes.find(
+      node => node.sourceInstanceName === sourceInstanceName
+    );
+
+    const versions =
+      gitRemote &&
+      data.configs.nodes
+        .filter(node => node.gitRemote?.full_name === gitRemote.full_name)
+        .map(node => {
+          const {version} = JSON.parse(node.internal.content);
+          return {
+            label: version,
+            slug: node.sourceInstanceName
+          };
+        });
+
     actions.createPage({
       path: fields.slug,
       component: require.resolve('./src/templates/page'),
       context: {
         id,
-        sidebar: sidebars[sourceInstanceName]
+        versions,
+        config: JSON.parse(config.internal.content)
       }
     });
   });

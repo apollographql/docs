@@ -37,6 +37,7 @@ export default function Header() {
         size="sm"
         isRound
         fontSize="lg"
+        variant="ghost"
         onClick={toggleColorMode}
         icon={colorMode === 'dark' ? <FiSun /> : <FiMoon />}
       />

@@ -1,6 +1,7 @@
 import CodeBlock from '../components/CodeBlock';
 import CustomHeading from '../components/CustomHeading';
 import ExpansionPanel from '../components/ExpansionPanel';
+import GatsbyLink from 'gatsby-link';
 import Header from '../components/Header';
 import InlineCode from '../components/InlineCode';
 import Layout from '../components/Layout';
@@ -19,6 +20,10 @@ import {
   Grid,
   Heading,
   ListItem,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   OrderedList,
   Table,
   Tbody,
@@ -31,6 +36,7 @@ import {
   chakra,
   useTheme
 } from '@chakra-ui/react';
+import {FiChevronDown} from 'react-icons/fi';
 import {Global} from '@emotion/react';
 import {Helmet} from 'react-helmet';
 import {MDXProvider} from '@mdx-js/react';
@@ -100,7 +106,10 @@ export default function PageTemplate({data, uri, pageContext}) {
   const {name, childMdx, childMarkdownRemark, sourceInstanceName} = data.file;
   const {frontmatter, headings} = childMdx || childMarkdownRemark;
   const {title, description, standalone} = frontmatter;
-  const {sidebar} = pageContext;
+  const {config, versions} = pageContext;
+  const {title: docset, sidebar, version} = config;
+
+  console.log(versions);
 
   const path = name === 'index' ? uri : dirname(uri);
   const content = (
@@ -140,6 +149,29 @@ export default function PageTemplate({data, uri, pageContext}) {
             zIndex="0"
           >
             <Header />
+            <Flex px="2" py="1">
+              <Button size="xs" variant="ghost" mr="auto">
+                {docset}
+              </Button>
+              {versions && (
+                <Menu>
+                  <MenuButton
+                    as={Button}
+                    rightIcon={<FiChevronDown />}
+                    size="xs"
+                  >
+                    {version}
+                  </MenuButton>
+                  <MenuList>
+                    {versions.map((version, index) => (
+                      <GatsbyLink key={index} to={'/' + version.slug}>
+                        <MenuItem>{version.label}</MenuItem>
+                      </GatsbyLink>
+                    ))}
+                  </MenuList>
+                </Menu>
+              )}
+            </Flex>
             {sidebar && (
               <chakra.nav py="2" pr="2">
                 <NavItems
