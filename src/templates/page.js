@@ -150,7 +150,7 @@ export default function PageTemplate({data, uri, pageContext}) {
           >
             <Header />
             <Flex px="2" py="1">
-              <Button size="xs" variant="ghost" mr="auto">
+              <Button size="xs" fontSize="sm" variant="ghost" mr="auto">
                 {docset}
               </Button>
               {versions && (
@@ -159,6 +159,7 @@ export default function PageTemplate({data, uri, pageContext}) {
                     as={Button}
                     rightIcon={<FiChevronDown />}
                     size="xs"
+                    fontSize="sm"
                   >
                     {version}
                   </MenuButton>
