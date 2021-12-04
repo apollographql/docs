@@ -4,7 +4,9 @@ import ExpansionPanel from '../components/ExpansionPanel';
 import GatsbyLink from 'gatsby-link';
 import Header from '../components/Header';
 import InlineCode from '../components/InlineCode';
-import MultiCodeBlock from '../components/MultiCodeBlock';
+import MultiCodeBlock, {
+  MultiCodeBlockContext
+} from '../components/MultiCodeBlock';
 import NavItems from '../components/NavItems';
 import PropTypes from 'prop-types';
 import React, {Fragment, createElement} from 'react';
@@ -34,7 +36,7 @@ import {
   Tr,
   UnorderedList,
   chakra,
-  useTheme
+  useToken
 } from '@chakra-ui/react';
 import {FiChevronDown} from 'react-icons/fi';
 import {GatsbySeo} from 'gatsby-plugin-next-seo';
@@ -43,6 +45,7 @@ import {MDXProvider} from '@mdx-js/react';
 import {MDXRenderer} from 'gatsby-plugin-mdx';
 import {dirname} from 'path-browserify';
 import {graphql} from 'gatsby';
+import {useLocalStorage} from '@rehooks/local-storage';
 
 const LIST_SPACING = 2;
 
@@ -102,7 +105,8 @@ const renderAst = new rehypeReact({
 }).Compiler;
 
 export default function PageTemplate({data, uri, pageContext}) {
-  const {space} = useTheme();
+  const scrollPaddingTop = useToken('space', 12);
+  const [language, setLanguage] = useLocalStorage('language');
 
   const {siteUrl} = data.site.siteMetadata;
   const {name, childMdx, childMarkdownRemark, sourceInstanceName} = data.file;
@@ -112,15 +116,17 @@ export default function PageTemplate({data, uri, pageContext}) {
   const {title: docset, sidebar, version} = config;
 
   const content = (
-    <PathContext.Provider value={name === 'index' ? uri : dirname(uri)}>
-      {childMdx ? (
-        <MDXProvider components={mdxComponents}>
-          <MDXRenderer>{childMdx.body}</MDXRenderer>
-        </MDXProvider>
-      ) : (
-        <Wrapper>{renderAst(childMarkdownRemark.htmlAst)}</Wrapper>
-      )}
-    </PathContext.Provider>
+    <MultiCodeBlockContext.Provider value={{language, setLanguage}}>
+      <PathContext.Provider value={name === 'index' ? uri : dirname(uri)}>
+        {childMdx ? (
+          <MDXProvider components={mdxComponents}>
+            <MDXRenderer>{childMdx.body}</MDXRenderer>
+          </MDXProvider>
+        ) : (
+          <Wrapper>{renderAst(childMarkdownRemark.htmlAst)}</Wrapper>
+        )}
+      </PathContext.Provider>
+    </MultiCodeBlockContext.Provider>
   );
 
   return (
@@ -137,7 +143,7 @@ export default function PageTemplate({data, uri, pageContext}) {
       <Global
         styles={{
           html: {
-            scrollPaddingTop: space[12]
+            scrollPaddingTop
           }
         }}
       />

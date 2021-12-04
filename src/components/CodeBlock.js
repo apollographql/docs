@@ -1,6 +1,6 @@
 import Highlight, {Prism} from 'prism-react-renderer';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {createContext, useContext} from 'react';
 import fenceparser from 'fenceparser';
 import nightOwl from 'prism-react-renderer/themes/nightOwl';
 import nightOwlLight from 'prism-react-renderer/themes/nightOwlLight';
@@ -8,11 +8,14 @@ import rangeParser from 'parse-numeric-range';
 import {
   Box,
   Button,
+  ButtonGroup,
   chakra,
   useClipboard,
   useColorModeValue
 } from '@chakra-ui/react';
 import {FiClipboard} from 'react-icons/fi';
+
+export const CodeBlockContext = createContext();
 
 export default function CodeBlock({children}) {
   const [child] = Array.isArray(children) ? children : [children];
@@ -33,6 +36,8 @@ export default function CodeBlock({children}) {
 
   const {onCopy, hasCopied} = useClipboard(code);
   const theme = useColorModeValue(nightOwlLight, nightOwl);
+
+  const languageMenu = useContext(CodeBlockContext);
 
   return (
     <Highlight
@@ -72,16 +77,12 @@ export default function CodeBlock({children}) {
               ))}
             </chakra.pre>
           </Box>
-          <Button
-            size="xs"
-            pos="absolute"
-            top="2"
-            right="2"
-            leftIcon={<FiClipboard />}
-            onClick={onCopy}
-          >
-            {hasCopied ? 'Copied!' : 'Copy'}
-          </Button>
+          <ButtonGroup size="xs" pos="absolute" top="2" right="2">
+            <Button leftIcon={<FiClipboard />} onClick={onCopy}>
+              {hasCopied ? 'Copied!' : 'Copy'}
+            </Button>
+            {languageMenu}
+          </ButtonGroup>
         </Box>
       )}
     </Highlight>
