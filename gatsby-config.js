@@ -60,11 +60,26 @@ const sources = process.env.DOCS_PATH
     ];
 
 module.exports = {
+  siteMetadata: {
+    siteUrl: 'https://www.apollographql.com/docs'
+  },
   plugins: [
     'gatsby-plugin-svgr',
     '@chakra-ui/gatsby-plugin',
-    'gatsby-plugin-react-helmet',
     'gatsby-transformer-json',
+    {
+      resolve: 'gatsby-plugin-next-seo',
+      options: {
+        titleTemplate: '%s - Apollo GraphQL Docs',
+        openGraph: {
+          type: 'website'
+        },
+        twitter: {
+          site: '@apollographql',
+          cardType: 'summary_large_image'
+        }
+      }
+    },
     {
       resolve: 'gatsby-plugin-webfonts',
       options: {
@@ -85,13 +100,28 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-mdx',
       options: {
-        gatsbyRemarkPlugins
+        gatsbyRemarkPlugins,
+        remarkPlugins: [
+          [require('remark-typescript'), {wrapperComponent: 'MultiCodeBlock'}]
+        ]
       }
     },
     {
       resolve: 'gatsby-transformer-remark',
       options: {
         plugins: gatsbyRemarkPlugins
+      }
+    },
+    {
+      resolve: 'gatsby-plugin-google-gtag',
+      options: {
+        trackingIds: ['UA-74643563-13', 'G-0BGG5V2W2K']
+      }
+    },
+    {
+      resolve: 'gatsby-plugin-google-tagmanager',
+      options: {
+        id: 'GTM-M964NS9'
       }
     },
     ...sources

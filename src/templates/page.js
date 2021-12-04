@@ -4,7 +4,7 @@ import ExpansionPanel from '../components/ExpansionPanel';
 import GatsbyLink from 'gatsby-link';
 import Header from '../components/Header';
 import InlineCode from '../components/InlineCode';
-import Layout from '../components/Layout';
+import MultiCodeBlock from '../components/MultiCodeBlock';
 import NavItems from '../components/NavItems';
 import PropTypes from 'prop-types';
 import React, {Fragment, createElement} from 'react';
@@ -37,8 +37,8 @@ import {
   useTheme
 } from '@chakra-ui/react';
 import {FiChevronDown} from 'react-icons/fi';
+import {GatsbySeo} from 'gatsby-plugin-next-seo';
 import {Global} from '@emotion/react';
-import {Helmet} from 'react-helmet';
 import {MDXProvider} from '@mdx-js/react';
 import {MDXRenderer} from 'gatsby-plugin-mdx';
 import {dirname} from 'path-browserify';
@@ -88,7 +88,8 @@ const mdxComponents = {
   wrapper: Wrapper,
   inlineCode: InlineCode,
   Button,
-  ExpansionPanel
+  ExpansionPanel,
+  MultiCodeBlock
 };
 
 const renderAst = new rehypeReact({
@@ -103,17 +104,15 @@ const renderAst = new rehypeReact({
 export default function PageTemplate({data, uri, pageContext}) {
   const {space} = useTheme();
 
+  const {siteUrl} = data.site.siteMetadata;
   const {name, childMdx, childMarkdownRemark, sourceInstanceName} = data.file;
   const {frontmatter, headings} = childMdx || childMarkdownRemark;
   const {title, description, standalone} = frontmatter;
   const {config, versions} = pageContext;
   const {title: docset, sidebar, version} = config;
 
-  console.log(versions);
-
-  const path = name === 'index' ? uri : dirname(uri);
   const content = (
-    <PathContext.Provider value={path}>
+    <PathContext.Provider value={name === 'index' ? uri : dirname(uri)}>
       {childMdx ? (
         <MDXProvider components={mdxComponents}>
           <MDXRenderer>{childMdx.body}</MDXRenderer>
@@ -125,10 +124,16 @@ export default function PageTemplate({data, uri, pageContext}) {
   );
 
   return (
-    <Layout>
-      <Helmet title={title}>
-        <meta name="description" content={description} />
-      </Helmet>
+    <>
+      <GatsbySeo
+        title={title}
+        description={description}
+        canonical={siteUrl + uri}
+        openGraph={{
+          title,
+          description
+        }}
+      />
       <Global
         styles={{
           html: {
@@ -209,7 +214,7 @@ export default function PageTemplate({data, uri, pageContext}) {
           </Flex>
         </Grid>
       )}
-    </Layout>
+    </>
   );
 }
 
@@ -221,6 +226,11 @@ PageTemplate.propTypes = {
 
 export const pageQuery = graphql`
   query GetPage($id: String!) {
+    site {
+      siteMetadata {
+        siteUrl
+      }
+    }
     file(id: {eq: $id}) {
       name
       sourceInstanceName
