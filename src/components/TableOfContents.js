@@ -9,9 +9,12 @@ export default function TableOfContents({headings}) {
 
   const toc = useMemo(() => {
     const slugger = new GithubSlugger();
-    return headings.map(heading => ({
-      ...heading,
-      id: slugger.slug(heading.value)
+    const depths = headings.map(heading => heading.depth);
+    const minDepth = Math.min(...depths);
+    return headings.map(({depth, value}) => ({
+      value,
+      depth: depth - minDepth,
+      id: slugger.slug(value)
     }));
   }, [headings]);
 
@@ -36,7 +39,7 @@ export default function TableOfContents({headings}) {
   return (
     <List spacing="2.5">
       {toc.map(({id, value, depth}, index) => (
-        <ListItem key={index} pl={(depth - 2) * 2} lineHeight="normal">
+        <ListItem key={index} pl={depth * 2} lineHeight="normal">
           <Link href={'#' + id} color={id === activeId && activeColor}>
             {value}
           </Link>

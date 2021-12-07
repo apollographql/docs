@@ -1,5 +1,4 @@
 import CodeBlock from '../components/CodeBlock';
-import CustomHeading from '../components/CustomHeading';
 import ExpansionPanel from '../components/ExpansionPanel';
 import GatsbyLink from 'gatsby-link';
 import Header from '../components/Header';
@@ -50,34 +49,18 @@ import {useLocalStorage} from '@rehooks/local-storage';
 const LIST_SPACING = 2;
 
 const components = {
+  h1: props => <Heading as="h1" size="3xl" {...props} />,
+  h2: props => <Heading as="h2" size="2xl" {...props} />,
+  h3: props => <Heading as="h3" size="xl" {...props} />,
+  h4: props => <Heading as="h4" size="lg" {...props} />,
+  h5: props => <Heading as="h5" size="md" {...props} />,
+  h6: props => <Heading as="h6" size="sm" {...props} />,
+  ul: props => <UnorderedList spacing={LIST_SPACING} {...props} />,
+  ol: props => <OrderedList spacing={LIST_SPACING} {...props} />,
+  li: ListItem,
   p: Text,
-  h1(props) {
-    return <CustomHeading depth={1} {...props} />;
-  },
-  h2(props) {
-    return <CustomHeading depth={2} {...props} />;
-  },
-  h3(props) {
-    return <CustomHeading depth={3} {...props} />;
-  },
-  h4(props) {
-    return <CustomHeading depth={4} {...props} />;
-  },
-  h5(props) {
-    return <CustomHeading depth={5} {...props} />;
-  },
-  h6(props) {
-    return <CustomHeading depth={6} {...props} />;
-  },
   a: RelativeLink,
   pre: CodeBlock,
-  ul(props) {
-    return <UnorderedList spacing={LIST_SPACING} {...props} />;
-  },
-  ol(props) {
-    return <OrderedList spacing={LIST_SPACING} {...props} />;
-  },
-  li: ListItem,
   table: Table,
   thead: Thead,
   tbody: Tbody,

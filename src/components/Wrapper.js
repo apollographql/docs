@@ -7,8 +7,15 @@ export default function Wrapper({children}) {
     <Box
       fontSize="lg"
       sx={{
-        '>*:not(style)~*:not(style)': {
-          mt: 6
+        '>': {
+          ':not(:last-child)': {
+            mb: 6
+          },
+          [['h1', 'h2', 'h3', 'h4', 'h5', 'h6']]: {
+            ':not(:last-child)': {
+              mt: 10
+            }
+          }
         }
       }}
     >
