@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, {createContext, useContext} from 'react';
 import {Link as GatsbyLink} from 'gatsby';
 import {Link, useColorModeValue} from '@chakra-ui/react';
-import {isAbsolute, resolve} from 'path-browserify';
+import {isAbsolute, resolve} from 'path';
 
 export const PathContext = createContext();
 

@@ -1,7 +1,6 @@
 import Blockquote from '../components/Blockquote';
 import CodeBlock from '../components/CodeBlock';
 import ExpansionPanel from '../components/ExpansionPanel';
-import GatsbyLink from 'gatsby-link';
 import Header from '../components/Header';
 import InlineCode from '../components/InlineCode';
 import MultiCodeBlock, {
@@ -40,12 +39,12 @@ import {
   useToken
 } from '@chakra-ui/react';
 import {FiChevronDown} from 'react-icons/fi';
+import {Link as GatsbyLink, graphql} from 'gatsby';
 import {GatsbySeo} from 'gatsby-plugin-next-seo';
 import {Global} from '@emotion/react';
 import {MDXProvider} from '@mdx-js/react';
 import {MDXRenderer} from 'gatsby-plugin-mdx';
-import {dirname} from 'path-browserify';
-import {graphql} from 'gatsby';
+import {dirname} from 'path';
 import {rehype} from 'rehype';
 import {useLocalStorage} from '@rehooks/local-storage';
 

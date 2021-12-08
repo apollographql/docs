@@ -11,7 +11,7 @@ import {
 } from '@chakra-ui/react';
 import {FiChevronDown, FiChevronRight} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
-import {join, relative} from 'path-browserify';
+import {join, relative} from 'path';
 
 const isPathActive = (path, uri) => !relative(path, uri);
 const getFullPath = (path, basePath) => join('/', basePath, path);

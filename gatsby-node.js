@@ -1,6 +1,16 @@
 const {createFilePath} = require('gatsby-source-filesystem');
 const path = require('path');
 
+exports.onCreateWebpackConfig = ({actions}) => {
+  actions.setWebpackConfig({
+    resolve: {
+      alias: {
+        path: require.resolve('path-browserify')
+      }
+    }
+  });
+};
+
 exports.createSchemaCustomization = ({actions}) => {
   actions.createTypes(`
     type MdxFrontmatter {
