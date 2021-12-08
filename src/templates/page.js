@@ -1,3 +1,4 @@
+import Blockquote from '../components/Blockquote';
 import CodeBlock from '../components/CodeBlock';
 import ExpansionPanel from '../components/ExpansionPanel';
 import GatsbyLink from 'gatsby-link';
@@ -12,6 +13,7 @@ import React, {Fragment, createElement} from 'react';
 import RelativeLink, {PathContext} from '../components/RelativeLink';
 import TableOfContents from '../components/TableOfContents';
 import Wrapper from '../components/Wrapper';
+import autolinkHeadings from 'rehype-autolink-headings';
 import rehypeReact from 'rehype-react';
 import {
   Box,
@@ -44,6 +46,7 @@ import {MDXProvider} from '@mdx-js/react';
 import {MDXRenderer} from 'gatsby-plugin-mdx';
 import {dirname} from 'path-browserify';
 import {graphql} from 'gatsby';
+import {rehype} from 'rehype';
 import {useLocalStorage} from '@rehooks/local-storage';
 
 const LIST_SPACING = 2;
@@ -66,7 +69,8 @@ const components = {
   tbody: Tbody,
   tr: Tr,
   th: Th,
-  td: Td
+  td: Td,
+  blockquote: Blockquote
 };
 
 const mdxComponents = {
@@ -78,14 +82,17 @@ const mdxComponents = {
   MultiCodeBlock
 };
 
-const renderAst = new rehypeReact({
-  createElement,
-  Fragment,
-  components: {
-    ...components,
-    code: InlineCode
-  }
-}).Compiler;
+const {processSync} = rehype()
+  .data('settings', {fragment: true})
+  .use(autolinkHeadings, {behavior: 'wrap'})
+  .use(rehypeReact, {
+    createElement,
+    Fragment,
+    components: {
+      ...components,
+      code: InlineCode
+    }
+  });
 
 export default function PageTemplate({data, uri, pageContext}) {
   const scrollPaddingTop = useToken('space', 12);
@@ -106,7 +113,7 @@ export default function PageTemplate({data, uri, pageContext}) {
             <MDXRenderer>{childMdx.body}</MDXRenderer>
           </MDXProvider>
         ) : (
-          <Wrapper>{renderAst(childMarkdownRemark.htmlAst)}</Wrapper>
+          <Wrapper>{processSync(childMarkdownRemark.html).result}</Wrapper>
         )}
       </PathContext.Provider>
     </MultiCodeBlockContext.Provider>

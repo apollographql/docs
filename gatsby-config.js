@@ -103,6 +103,9 @@ module.exports = {
         gatsbyRemarkPlugins,
         remarkPlugins: [
           [require('remark-typescript'), {wrapperComponent: 'MultiCodeBlock'}]
+        ],
+        rehypePlugins: [
+          [require('rehype-autolink-headings'), {behavior: 'wrap'}]
         ]
       }
     },
