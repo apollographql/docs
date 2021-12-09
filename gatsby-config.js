@@ -68,6 +68,13 @@ module.exports = {
     '@chakra-ui/gatsby-plugin',
     'gatsby-transformer-json',
     {
+      resolve: 'gatsby-plugin-manifest',
+      options: {
+        icon: 'src/assets/favicon.svg'
+      }
+    },
+    'gatsby-plugin-offline',
+    {
       resolve: 'gatsby-plugin-next-seo',
       options: {
         titleTemplate: '%s - Apollo GraphQL Docs',

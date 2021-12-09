@@ -17,6 +17,10 @@ export default function Wrapper({children}) {
             },
             a: {
               color: 'inherit'
+            },
+            code: {
+              bg: 'none',
+              p: 0
             }
           }
         }
