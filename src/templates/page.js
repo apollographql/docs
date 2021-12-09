@@ -13,6 +13,7 @@ import RelativeLink, {PathContext} from '../components/RelativeLink';
 import TableOfContents from '../components/TableOfContents';
 import Wrapper from '../components/Wrapper';
 import autolinkHeadings from 'rehype-autolink-headings';
+import path, {dirname} from 'path';
 import rehypeReact from 'rehype-react';
 import {
   Box,
@@ -27,6 +28,7 @@ import {
   MenuItem,
   MenuList,
   OrderedList,
+  Stack,
   Table,
   Tbody,
   Td,
@@ -38,13 +40,13 @@ import {
   chakra,
   useToken
 } from '@chakra-ui/react';
-import {FiChevronDown} from 'react-icons/fi';
+import {FaDiscourse, FaGithub} from 'react-icons/fa';
+import {FiChevronDown, FiStar} from 'react-icons/fi';
 import {Link as GatsbyLink, graphql} from 'gatsby';
 import {GatsbySeo} from 'gatsby-plugin-next-seo';
 import {Global} from '@emotion/react';
 import {MDXProvider} from '@mdx-js/react';
 import {MDXRenderer} from 'gatsby-plugin-mdx';
-import {dirname} from 'path';
 import {rehype} from 'rehype';
 import {useLocalStorage} from '@rehooks/local-storage';
 
@@ -98,7 +100,14 @@ export default function PageTemplate({data, uri, pageContext}) {
   const [language, setLanguage] = useLocalStorage('language');
 
   const {siteUrl} = data.site.siteMetadata;
-  const {name, childMdx, childMarkdownRemark, sourceInstanceName} = data.file;
+  const {
+    name,
+    childMdx,
+    childMarkdownRemark,
+    sourceInstanceName,
+    gitRemote,
+    relativePath
+  } = data.file;
   const {frontmatter, headings} = childMdx || childMarkdownRemark;
   const {title, description, standalone} = frontmatter;
   const {config, versions} = pageContext;
@@ -194,18 +203,62 @@ export default function PageTemplate({data, uri, pageContext}) {
               <Divider my="8" />
               {content}
             </Box>
-            <chakra.aside
+            <Flex
+              direction="column"
+              as="aside"
               ml="10"
               w="250px"
               flexShrink="0"
               pos="sticky"
               top="12"
+              pb="4"
+              css={({theme}) => {
+                const {space} = theme;
+                return {
+                  maxHeight: `calc(100vh - ${space[12]} - ${space[4]})`
+                };
+              }}
             >
               <Heading size="md" mb="3">
                 {title}
               </Heading>
               <TableOfContents headings={headings} />
-            </chakra.aside>
+              <Stack align="flex-start" spacing="3" mt="10">
+                <Button
+                  onClick={() => window.freddyWidget?.show()}
+                  variant="link"
+                  size="lg"
+                  leftIcon={<FiStar />}
+                >
+                  Rate article
+                </Button>
+                {gitRemote && (
+                  <Button
+                    as="a"
+                    href={[
+                      gitRemote.href,
+                      'tree',
+                      gitRemote.ref,
+                      relativePath
+                    ].join(path.sep)}
+                    variant="link"
+                    size="lg"
+                    leftIcon={<FaGithub />}
+                  >
+                    Edit on GitHub
+                  </Button>
+                )}
+                <Button
+                  as="a"
+                  href="https://community.apollographql.com/"
+                  variant="link"
+                  size="lg"
+                  leftIcon={<FaDiscourse />}
+                >
+                  Discuss in forums
+                </Button>
+              </Stack>
+            </Flex>
           </Flex>
         </Grid>
       )}
@@ -229,6 +282,11 @@ export const pageQuery = graphql`
     file(id: {eq: $id}) {
       name
       sourceInstanceName
+      relativePath
+      gitRemote {
+        href
+        ref
+      }
       childMdx {
         body
         headings {

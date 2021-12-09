@@ -36,6 +36,7 @@ export default function CodeBlock({children}) {
 
   const {onCopy, hasCopied} = useClipboard(code);
   const theme = useColorModeValue(nightOwlLight, nightOwl);
+  const highlightColor = useColorModeValue('blackAlpha.100', 'blackAlpha.400');
 
   const languageMenu = useContext(CodeBlockContext);
 
@@ -68,7 +69,7 @@ export default function CodeBlock({children}) {
                     key: i
                   })}
                   px="4"
-                  bg={linesToHighlight.includes(i + 1) && 'blackAlpha.100'}
+                  bg={linesToHighlight.includes(i + 1) && highlightColor}
                 >
                   {line.map((token, key) => (
                     <span key={key} {...getTokenProps({token, key})} />

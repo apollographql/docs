@@ -37,7 +37,7 @@ export default function TableOfContents({headings}) {
   }, [toc]);
 
   return (
-    <List spacing="2.5">
+    <List overflow="auto" spacing="2.5">
       {toc.map(({id, value, depth}, index) => (
         <ListItem key={index} pl={depth * 2} lineHeight="normal">
           <Link href={'#' + id} color={id === activeId && activeColor}>
