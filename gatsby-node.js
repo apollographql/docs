@@ -90,7 +90,7 @@ exports.createPages = async ({actions, graphql}) => {
       ...acc,
       [node.sourceInstanceName]: {
         docset: title,
-        version,
+        currentVersion: version,
         navItems: getNavItems(sidebar)
       }
     };

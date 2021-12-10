@@ -1,7 +1,9 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import SearchButton from './SearchButton';
 import {
   Box,
+  ButtonGroup,
   Flex,
   HStack,
   IconButton,
@@ -10,11 +12,11 @@ import {
   useColorModeValue,
   useToken
 } from '@chakra-ui/react';
-import {FiMoon, FiSun} from 'react-icons/fi';
+import {FiChevronsLeft, FiMoon, FiSun} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
 import {ReactComponent as Logo} from '@apollo/space-kit/logos/mark.svg';
 
-export default function Header() {
+export default function Header({onToggleHidden}) {
   const {toggleColorMode, colorMode} = useColorMode();
   const paddingBottom = useToken('space', 4);
   const darkBg = useToken('colors', 'gray.800');
@@ -39,17 +41,27 @@ export default function Header() {
               Apollo Docs
             </Link>
           </HStack>
-          <IconButton
-            size="sm"
-            isRound
-            fontSize="lg"
-            variant="ghost"
-            onClick={toggleColorMode}
-            icon={colorMode === 'dark' ? <FiSun /> : <FiMoon />}
-          />
+          <ButtonGroup spacing="1" size="sm" variant="ghost">
+            <IconButton
+              isRound
+              fontSize="lg"
+              onClick={onToggleHidden}
+              icon={<FiChevronsLeft />}
+            />
+            <IconButton
+              isRound
+              fontSize="lg"
+              onClick={toggleColorMode}
+              icon={colorMode === 'dark' ? <FiSun /> : <FiMoon />}
+            />
+          </ButtonGroup>
         </Flex>
         <SearchButton />
       </Box>
     </Box>
   );
 }
+
+Header.propTypes = {
+  onToggleHidden: PropTypes.func.isRequired
+};

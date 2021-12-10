@@ -1,15 +1,14 @@
 import Blockquote from '../components/Blockquote';
 import CodeBlock from '../components/CodeBlock';
 import ExpansionPanel from '../components/ExpansionPanel';
-import Header from '../components/Header';
 import InlineCode from '../components/InlineCode';
 import MultiCodeBlock, {
   MultiCodeBlockContext
 } from '../components/MultiCodeBlock';
-import NavItems, {NavContext, isGroupActive} from '../components/NavItems';
 import PropTypes from 'prop-types';
-import React, {Fragment, createElement, useMemo} from 'react';
+import React, {Fragment, createElement} from 'react';
 import RelativeLink, {PathContext} from '../components/RelativeLink';
+import Sidebar, {SIDEBAR_WIDTH} from '../components/Sidebar';
 import TableOfContents from '../components/TableOfContents';
 import Wrapper from '../components/Wrapper';
 import autolinkHeadings from 'rehype-autolink-headings';
@@ -19,15 +18,11 @@ import {
   Box,
   Button,
   Divider,
+  Fade,
   Flex,
-  Grid,
   Heading,
   IconButton,
   ListItem,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
   OrderedList,
   Stack,
   Table,
@@ -36,24 +31,17 @@ import {
   Text,
   Th,
   Thead,
-  Tooltip,
   Tr,
   UnorderedList,
-  chakra,
   useToken
 } from '@chakra-ui/react';
 import {FaDiscourse, FaGithub} from 'react-icons/fa';
-import {
-  FiChevronDown,
-  FiChevronsDown,
-  FiChevronsUp,
-  FiStar
-} from 'react-icons/fi';
-import {Link as GatsbyLink, graphql} from 'gatsby';
+import {FiChevronsRight, FiStar} from 'react-icons/fi';
 import {GatsbySeo} from 'gatsby-plugin-next-seo';
 import {Global} from '@emotion/react';
 import {MDXProvider} from '@mdx-js/react';
 import {MDXRenderer} from 'gatsby-plugin-mdx';
+import {graphql} from 'gatsby';
 import {rehype} from 'rehype';
 import {useLocalStorage} from '@rehooks/local-storage';
 
@@ -102,17 +90,10 @@ const {processSync} = rehype()
     }
   });
 
-function flattenNavItems(items) {
-  return items.flatMap(item =>
-    Array.isArray(item.children)
-      ? [item, ...flattenNavItems(item.children)]
-      : item
-  );
-}
-
 export default function PageTemplate({data, uri, pageContext}) {
   const [scrollPaddingTop, tocPaddingBottom] = useToken('space', [12, 4]);
   const [language, setLanguage] = useLocalStorage('language');
+  const [sidebarHidden, setSidebarHidden] = useLocalStorage('sidebar');
 
   const {siteUrl} = data.site.siteMetadata;
   const {
@@ -125,24 +106,6 @@ export default function PageTemplate({data, uri, pageContext}) {
   } = data.file;
   const {frontmatter, headings} = childMdx || childMarkdownRemark;
   const {title, description, standalone} = frontmatter;
-  const {versions, docset, navItems, version} = pageContext;
-
-  const initialNavState = useMemo(
-    () =>
-      flattenNavItems(navItems)
-        .filter(item => Array.isArray(item.children))
-        .reduce(
-          (acc, group) => ({
-            ...acc,
-            [group.id]: isGroupActive(group.children, sourceInstanceName, uri)
-          }),
-          {}
-        ),
-    [navItems, sourceInstanceName, uri]
-  );
-
-  const [nav, setNav] = useLocalStorage('nav', initialNavState);
-  const isAllExpanded = useMemo(() => Object.values(nav).every(Boolean), [nav]);
 
   const content = (
     <MultiCodeBlockContext.Provider value={{language, setLanguage}}>
@@ -179,83 +142,35 @@ export default function PageTemplate({data, uri, pageContext}) {
       {standalone ? (
         content
       ) : (
-        <Grid templateColumns="300px 1fr" alignItems="flex-start">
-          <chakra.aside
-            h="100vh"
-            borderRightWidth="1px"
-            pos="sticky"
-            top="0"
-            overflow="auto"
-            zIndex="0"
+        <>
+          <Fade in={sidebarHidden} unmountOnExit>
+            <IconButton
+              pos="fixed"
+              top="2"
+              left="2"
+              size="sm"
+              isRound
+              fontSize="lg"
+              icon={<FiChevronsRight />}
+              onClick={() => setSidebarHidden(false)}
+            />
+          </Fade>
+          <Sidebar
+            {...pageContext}
+            uri={uri}
+            basePath={sourceInstanceName}
+            isHidden={sidebarHidden}
+            onHide={() => setSidebarHidden(true)}
+          />
+          <Flex
+            ml={!sidebarHidden && SIDEBAR_WIDTH}
+            maxW="6xl"
+            align="flex-start"
+            px="10"
+            py="12"
+            as="main"
+            transition="margin-left 250ms"
           >
-            <Header />
-            <Flex pl="4" pr="2">
-              <Button
-                size="xs"
-                fontSize="sm"
-                roundedRight="0"
-                colorScheme="indigo"
-              >
-                {docset}
-              </Button>
-              {versions && (
-                <Menu>
-                  <MenuButton
-                    as={Button}
-                    rightIcon={<FiChevronDown />}
-                    size="xs"
-                    ml="px"
-                    roundedLeft="0"
-                    fontSize="sm"
-                  >
-                    {version}
-                  </MenuButton>
-                  <MenuList>
-                    {versions.map((version, index) => (
-                      <GatsbyLink key={index} to={'/' + version.slug}>
-                        <MenuItem>{version.label}</MenuItem>
-                      </GatsbyLink>
-                    ))}
-                  </MenuList>
-                </Menu>
-              )}
-              <Tooltip
-                label={`${
-                  isAllExpanded ? 'Collapse' : 'Expand'
-                } all categories`}
-              >
-                <IconButton
-                  ml="auto"
-                  size="xs"
-                  fontSize="md"
-                  icon={isAllExpanded ? <FiChevronsUp /> : <FiChevronsDown />}
-                  onClick={() =>
-                    setNav(
-                      Object.keys(nav).reduce(
-                        (acc, key) => ({
-                          ...acc,
-                          [key]: !isAllExpanded
-                        }),
-                        {}
-                      )
-                    )
-                  }
-                />
-              </Tooltip>
-            </Flex>
-            <chakra.nav py="2" pr="2">
-              <NavContext.Provider
-                value={{uri, basePath: sourceInstanceName, nav, setNav}}
-              >
-                <NavItems
-                  uri={uri}
-                  items={navItems}
-                  basePath={sourceInstanceName}
-                />
-              </NavContext.Provider>
-            </chakra.nav>
-          </chakra.aside>
-          <Flex maxW="6xl" align="flex-start" px="10" py="12" as="main">
             <Box flexGrow="1" w="0">
               <Heading size="3xl">{title}</Heading>
               {description && (
@@ -318,7 +233,7 @@ export default function PageTemplate({data, uri, pageContext}) {
               </Stack>
             </Flex>
           </Flex>
-        </Grid>
+        </>
       )}
     </>
   );
