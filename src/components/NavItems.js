@@ -15,6 +15,9 @@ import {join, relative} from 'path';
 export const NavContext = createContext();
 
 const isPathActive = (path, uri) => !relative(path, uri);
+export const isGroupActive = (items, basePath, uri) =>
+  getItemPaths(items, basePath).some(path => isPathActive(path, uri));
+
 const getFullPath = (path, basePath) => join('/', basePath, path);
 const getItemPaths = (items, basePath) =>
   items.flatMap(({children}) =>
@@ -44,8 +47,7 @@ NavButton.propTypes = {
 
 function NavGroup({group, depth}) {
   const {basePath, uri, nav, setNav} = useContext(NavContext);
-  const itemPaths = getItemPaths(group.children, basePath);
-  const isActive = itemPaths.some(path => isPathActive(path, uri));
+  const isActive = isGroupActive(group.children, basePath, uri);
   const isOpen = nav[group.id];
   return (
     <Stack>

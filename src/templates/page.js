@@ -6,7 +6,7 @@ import InlineCode from '../components/InlineCode';
 import MultiCodeBlock, {
   MultiCodeBlockContext
 } from '../components/MultiCodeBlock';
-import NavItems, {NavContext} from '../components/NavItems';
+import NavItems, {NavContext, isGroupActive} from '../components/NavItems';
 import PropTypes from 'prop-types';
 import React, {Fragment, createElement, useMemo, useState} from 'react';
 import RelativeLink, {PathContext} from '../components/RelativeLink';
@@ -129,11 +129,11 @@ export default function PageTemplate({data, uri, pageContext}) {
 
   const [nav, setNav] = useState(
     flattenNavItems(navItems)
-      .filter(navItem => Array.isArray(navItem.children))
+      .filter(item => Array.isArray(item.children))
       .reduce(
-        (acc, navGroup) => ({
+        (acc, group) => ({
           ...acc,
-          [navGroup.id]: false // TODO: determine if this is default active based on URL
+          [group.id]: isGroupActive(group.children, sourceInstanceName, uri)
         }),
         {}
       )
