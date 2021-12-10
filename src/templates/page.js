@@ -143,7 +143,7 @@ export default function PageTemplate({data, uri, pageContext}) {
         content
       ) : (
         <>
-          <Fade in={sidebarHidden} unmountOnExit>
+          <Fade in={sidebarHidden} unmountOnExit delay={0.25}>
             <IconButton
               pos="fixed"
               top="2"

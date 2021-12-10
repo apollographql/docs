@@ -57,6 +57,7 @@ export default function Sidebar({
 
   return (
     <SlideFade
+      initial
       in={!isHidden}
       offsetY="0"
       offsetX={SIDEBAR_WIDTH / -2}
