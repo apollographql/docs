@@ -1,25 +1,26 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {createContext, useContext} from 'react';
 import {
   Button,
   Collapse,
   Stack,
   chakra,
   useColorMode,
-  useDisclosure,
   useTheme
 } from '@chakra-ui/react';
 import {FiChevronDown, FiChevronRight} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
 import {join, relative} from 'path';
 
+export const NavContext = createContext();
+
 const isPathActive = (path, uri) => !relative(path, uri);
 const getFullPath = (path, basePath) => join('/', basePath, path);
 const getItemPaths = (items, basePath) =>
-  Object.values(items).flatMap(path =>
-    typeof path === 'string'
-      ? getFullPath(path, basePath)
-      : getItemPaths(path, basePath)
+  items.flatMap(({children}) =>
+    Array.isArray(children)
+      ? getItemPaths(children, basePath)
+      : getFullPath(children, basePath)
   );
 
 function NavButton({isActive, depth, children, ...props}) {
@@ -41,27 +42,31 @@ NavButton.propTypes = {
   depth: PropTypes.number.isRequired
 };
 
-function NavGroup({label, uri, items, basePath, depth}) {
-  const itemPaths = getItemPaths(items, basePath);
+function NavGroup({group, depth}) {
+  const {basePath, uri, nav, setNav} = useContext(NavContext);
+  const itemPaths = getItemPaths(group.children, basePath);
   const isActive = itemPaths.some(path => isPathActive(path, uri));
-  const {isOpen, onToggle} = useDisclosure({
-    defaultIsOpen: isActive
-  });
+  const isOpen = nav[group.id];
   return (
     <Stack>
       <NavButton
         isActive={isActive}
         justifyContent="space-between"
         rightIcon={isOpen ? <FiChevronDown /> : <FiChevronRight />}
-        onClick={onToggle}
+        onClick={() =>
+          setNav(prev => ({
+            ...prev,
+            [group.id]: !prev[group.id]
+          }))
+        }
         depth={depth}
       >
-        {label}
+        {group.title}
       </NavButton>
       <Collapse in={isOpen}>
         <NavItems
           uri={uri}
-          items={items}
+          items={group.children}
           basePath={basePath}
           depth={depth + 1}
         />
@@ -71,15 +76,13 @@ function NavGroup({label, uri, items, basePath, depth}) {
 }
 
 NavGroup.propTypes = {
-  uri: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
-  items: PropTypes.object.isRequired,
-  basePath: PropTypes.string.isRequired,
+  group: PropTypes.object.isRequired,
   depth: PropTypes.number.isRequired
 };
 
-export default function NavItems({items, uri, basePath, depth = 0}) {
+export default function NavItems({items, depth = 0}) {
   const theme = useTheme();
+  const {basePath, uri} = useContext(NavContext);
   const {colorMode} = useColorMode();
   const {
     _hover: {bg: activeBg}
@@ -90,33 +93,25 @@ export default function NavItems({items, uri, basePath, depth = 0}) {
   });
   return (
     <Stack>
-      {Object.entries(items).map(([key, value], index) => {
-        if (typeof value === 'string') {
-          const path = getFullPath(value, basePath);
-          const isActive = isPathActive(path, uri);
-          return (
-            <NavButton
-              key={index}
-              isActive={isActive}
-              as={GatsbyLink}
-              to={path}
-              justifyContent="flex-start"
-              depth={depth}
-              bg={isActive && activeBg}
-            >
-              {key}
-            </NavButton>
-          );
+      {items.map((item, index) => {
+        if (Array.isArray(item.children)) {
+          return <NavGroup key={index} group={item} depth={depth} />;
         }
+
+        const path = getFullPath(item.children, basePath);
+        const isActive = isPathActive(path, uri);
         return (
-          <NavGroup
-            uri={uri}
+          <NavButton
             key={index}
-            label={key}
-            items={value}
-            basePath={basePath}
+            isActive={isActive}
+            as={GatsbyLink}
+            to={path}
+            justifyContent="flex-start"
             depth={depth}
-          />
+            bg={isActive && activeBg}
+          >
+            {item.title}
+          </NavButton>
         );
       })}
     </Stack>
@@ -124,8 +119,6 @@ export default function NavItems({items, uri, basePath, depth = 0}) {
 }
 
 NavItems.propTypes = {
-  uri: PropTypes.string.isRequired,
-  items: PropTypes.object.isRequired,
-  basePath: PropTypes.string.isRequired,
+  items: PropTypes.array.isRequired,
   depth: PropTypes.number
 };

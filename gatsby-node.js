@@ -1,3 +1,4 @@
+const {randomUUID} = require('crypto');
 const {createFilePath} = require('gatsby-source-filesystem');
 const path = require('path');
 
@@ -36,6 +37,14 @@ exports.onCreateNode = ({node, getNode, actions}) => {
     });
   }
 };
+
+function getNavItems(items) {
+  return Object.entries(items).map(([key, value]) => ({
+    id: randomUUID(),
+    title: key,
+    children: typeof value === 'string' ? value : getNavItems(value)
+  }));
+}
 
 exports.createPages = async ({actions, graphql}) => {
   const {data} = await graphql(`
@@ -93,13 +102,17 @@ exports.createPages = async ({actions, graphql}) => {
           };
         });
 
+    const {title, version, sidebar} = JSON.parse(config.internal.content);
+
     actions.createPage({
       path: fields.slug,
       component: require.resolve('./src/templates/page'),
       context: {
         id,
         versions,
-        config: JSON.parse(config.internal.content)
+        docset: title,
+        version,
+        navItems: getNavItems(sidebar)
       }
     });
   });

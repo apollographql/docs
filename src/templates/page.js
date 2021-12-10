@@ -6,9 +6,9 @@ import InlineCode from '../components/InlineCode';
 import MultiCodeBlock, {
   MultiCodeBlockContext
 } from '../components/MultiCodeBlock';
-import NavItems from '../components/NavItems';
+import NavItems, {NavContext} from '../components/NavItems';
 import PropTypes from 'prop-types';
-import React, {Fragment, createElement} from 'react';
+import React, {Fragment, createElement, useMemo, useState} from 'react';
 import RelativeLink, {PathContext} from '../components/RelativeLink';
 import TableOfContents from '../components/TableOfContents';
 import Wrapper from '../components/Wrapper';
@@ -22,6 +22,7 @@ import {
   Flex,
   Grid,
   Heading,
+  IconButton,
   ListItem,
   Menu,
   MenuButton,
@@ -35,13 +36,19 @@ import {
   Text,
   Th,
   Thead,
+  Tooltip,
   Tr,
   UnorderedList,
   chakra,
   useToken
 } from '@chakra-ui/react';
 import {FaDiscourse, FaGithub} from 'react-icons/fa';
-import {FiChevronDown, FiStar} from 'react-icons/fi';
+import {
+  FiChevronDown,
+  FiChevronsDown,
+  FiChevronsUp,
+  FiStar
+} from 'react-icons/fi';
 import {Link as GatsbyLink, graphql} from 'gatsby';
 import {GatsbySeo} from 'gatsby-plugin-next-seo';
 import {Global} from '@emotion/react';
@@ -95,8 +102,16 @@ const {processSync} = rehype()
     }
   });
 
+function flattenNavItems(items) {
+  return items.flatMap(item =>
+    Array.isArray(item.children)
+      ? [item, ...flattenNavItems(item.children)]
+      : item
+  );
+}
+
 export default function PageTemplate({data, uri, pageContext}) {
-  const scrollPaddingTop = useToken('space', 12);
+  const [scrollPaddingTop, tocPaddingBottom] = useToken('space', [12, 4]);
   const [language, setLanguage] = useLocalStorage('language');
 
   const {siteUrl} = data.site.siteMetadata;
@@ -110,8 +125,21 @@ export default function PageTemplate({data, uri, pageContext}) {
   } = data.file;
   const {frontmatter, headings} = childMdx || childMarkdownRemark;
   const {title, description, standalone} = frontmatter;
-  const {config, versions} = pageContext;
-  const {title: docset, sidebar, version} = config;
+  const {versions, docset, navItems, version} = pageContext;
+
+  const [nav, setNav] = useState(
+    flattenNavItems(navItems)
+      .filter(navItem => Array.isArray(navItem.children))
+      .reduce(
+        (acc, navGroup) => ({
+          ...acc,
+          [navGroup.id]: false // TODO: determine if this is default active based on URL
+        }),
+        {}
+      )
+  );
+
+  const isAllExpanded = useMemo(() => Object.values(nav).every(Boolean), [nav]);
 
   const content = (
     <MultiCodeBlockContext.Provider value={{language, setLanguage}}>
@@ -158,8 +186,13 @@ export default function PageTemplate({data, uri, pageContext}) {
             zIndex="0"
           >
             <Header />
-            <Flex px="2" py="1">
-              <Button size="xs" fontSize="sm" variant="ghost" mr="auto">
+            <Flex pl="4" pr="2" py="1">
+              <Button
+                size="xs"
+                fontSize="sm"
+                roundedRight="0"
+                colorScheme="indigo"
+              >
                 {docset}
               </Button>
               {versions && (
@@ -168,6 +201,8 @@ export default function PageTemplate({data, uri, pageContext}) {
                     as={Button}
                     rightIcon={<FiChevronDown />}
                     size="xs"
+                    ml="px"
+                    roundedLeft="0"
                     fontSize="sm"
                   >
                     {version}
@@ -181,16 +216,41 @@ export default function PageTemplate({data, uri, pageContext}) {
                   </MenuList>
                 </Menu>
               )}
+              <Tooltip
+                label={`${
+                  isAllExpanded ? 'Collapse' : 'Expand'
+                } all categories`}
+              >
+                <IconButton
+                  ml="auto"
+                  size="xs"
+                  fontSize="md"
+                  icon={isAllExpanded ? <FiChevronsUp /> : <FiChevronsDown />}
+                  onClick={() =>
+                    setNav(prev =>
+                      Object.keys(prev).reduce(
+                        (acc, key) => ({
+                          ...acc,
+                          [key]: !isAllExpanded
+                        }),
+                        {}
+                      )
+                    )
+                  }
+                />
+              </Tooltip>
             </Flex>
-            {sidebar && (
-              <chakra.nav py="2" pr="2">
+            <chakra.nav py="2" pr="2">
+              <NavContext.Provider
+                value={{uri, basePath: sourceInstanceName, nav, setNav}}
+              >
                 <NavItems
                   uri={uri}
-                  items={sidebar}
+                  items={navItems}
                   basePath={sourceInstanceName}
                 />
-              </chakra.nav>
-            )}
+              </NavContext.Provider>
+            </chakra.nav>
           </chakra.aside>
           <Flex maxW="6xl" align="flex-start" px="10" py="12" as="main">
             <Box flexGrow="1" w="0">
@@ -210,20 +270,15 @@ export default function PageTemplate({data, uri, pageContext}) {
               w="250px"
               flexShrink="0"
               pos="sticky"
-              top="12"
-              pb="4"
-              css={({theme}) => {
-                const {space} = theme;
-                return {
-                  maxHeight: `calc(100vh - ${space[12]} - ${space[4]})`
-                };
-              }}
+              top={scrollPaddingTop}
+              pb={tocPaddingBottom}
+              maxH={`calc(100vh - ${scrollPaddingTop} - ${tocPaddingBottom})`}
             >
               <Heading size="md" mb="3">
                 {title}
               </Heading>
               <TableOfContents headings={headings} />
-              <Stack align="flex-start" spacing="3" mt="10">
+              <Stack align="flex-start" spacing="3" mt="8">
                 <Button
                   onClick={() => window.freddyWidget?.show()}
                   variant="link"
