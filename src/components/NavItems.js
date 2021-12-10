@@ -56,10 +56,10 @@ function NavGroup({group, depth}) {
         justifyContent="space-between"
         rightIcon={isOpen ? <FiChevronDown /> : <FiChevronRight />}
         onClick={() =>
-          setNav(prev => ({
-            ...prev,
-            [group.id]: !prev[group.id]
-          }))
+          setNav({
+            ...nav,
+            [group.id]: !isOpen
+          })
         }
         depth={depth}
       >

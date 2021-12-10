@@ -84,12 +84,20 @@ exports.createPages = async ({actions, graphql}) => {
     }
   `);
 
+  const configs = data.configs.nodes.reduce((acc, node) => {
+    const {title, version, sidebar} = JSON.parse(node.internal.content);
+    return {
+      ...acc,
+      [node.sourceInstanceName]: {
+        docset: title,
+        version,
+        navItems: getNavItems(sidebar)
+      }
+    };
+  }, {});
+
   data.pages.nodes.forEach(({id, gitRemote, sourceInstanceName, children}) => {
     const [{fields}] = children;
-    const config = data.configs.nodes.find(
-      node => node.sourceInstanceName === sourceInstanceName
-    );
-
     const versions =
       gitRemote &&
       data.configs.nodes
@@ -102,17 +110,13 @@ exports.createPages = async ({actions, graphql}) => {
           };
         });
 
-    const {title, version, sidebar} = JSON.parse(config.internal.content);
-
     actions.createPage({
       path: fields.slug,
       component: require.resolve('./src/templates/page'),
       context: {
         id,
         versions,
-        docset: title,
-        version,
-        navItems: getNavItems(sidebar)
+        ...configs[sourceInstanceName]
       }
     });
   });

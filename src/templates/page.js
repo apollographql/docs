@@ -8,7 +8,7 @@ import MultiCodeBlock, {
 } from '../components/MultiCodeBlock';
 import NavItems, {NavContext, isGroupActive} from '../components/NavItems';
 import PropTypes from 'prop-types';
-import React, {Fragment, createElement, useMemo, useState} from 'react';
+import React, {Fragment, createElement, useMemo} from 'react';
 import RelativeLink, {PathContext} from '../components/RelativeLink';
 import TableOfContents from '../components/TableOfContents';
 import Wrapper from '../components/Wrapper';
@@ -127,18 +127,21 @@ export default function PageTemplate({data, uri, pageContext}) {
   const {title, description, standalone} = frontmatter;
   const {versions, docset, navItems, version} = pageContext;
 
-  const [nav, setNav] = useState(
-    flattenNavItems(navItems)
-      .filter(item => Array.isArray(item.children))
-      .reduce(
-        (acc, group) => ({
-          ...acc,
-          [group.id]: isGroupActive(group.children, sourceInstanceName, uri)
-        }),
-        {}
-      )
+  const initialNavState = useMemo(
+    () =>
+      flattenNavItems(navItems)
+        .filter(item => Array.isArray(item.children))
+        .reduce(
+          (acc, group) => ({
+            ...acc,
+            [group.id]: isGroupActive(group.children, sourceInstanceName, uri)
+          }),
+          {}
+        ),
+    [navItems, sourceInstanceName, uri]
   );
 
+  const [nav, setNav] = useLocalStorage('nav', initialNavState);
   const isAllExpanded = useMemo(() => Object.values(nav).every(Boolean), [nav]);
 
   const content = (
@@ -186,7 +189,7 @@ export default function PageTemplate({data, uri, pageContext}) {
             zIndex="0"
           >
             <Header />
-            <Flex pl="4" pr="2" py="1">
+            <Flex pl="4" pr="2">
               <Button
                 size="xs"
                 fontSize="sm"
@@ -227,8 +230,8 @@ export default function PageTemplate({data, uri, pageContext}) {
                   fontSize="md"
                   icon={isAllExpanded ? <FiChevronsUp /> : <FiChevronsDown />}
                   onClick={() =>
-                    setNav(prev =>
-                      Object.keys(prev).reduce(
+                    setNav(
+                      Object.keys(nav).reduce(
                         (acc, key) => ({
                           ...acc,
                           [key]: !isAllExpanded
