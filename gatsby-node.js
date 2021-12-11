@@ -39,11 +39,14 @@ exports.onCreateNode = ({node, getNode, actions}) => {
 };
 
 function getNavItems(items) {
-  return Object.entries(items).map(([key, value]) => ({
-    id: randomUUID(),
-    title: key,
-    children: typeof value === 'string' ? value : getNavItems(value)
-  }));
+  return Object.entries(items).map(([key, value]) => {
+    const isGroup = typeof value !== 'string';
+    return {
+      id: randomUUID(),
+      title: key,
+      [isGroup ? 'children' : 'path']: isGroup ? getNavItems(value) : value
+    };
+  });
 }
 
 exports.createPages = async ({actions, graphql}) => {

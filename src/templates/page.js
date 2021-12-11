@@ -31,6 +31,7 @@ import {
   Text,
   Th,
   Thead,
+  Tooltip,
   Tr,
   UnorderedList,
   useToken
@@ -144,16 +145,18 @@ export default function PageTemplate({data, uri, pageContext}) {
       ) : (
         <>
           <Fade in={sidebarHidden} unmountOnExit delay={0.25}>
-            <IconButton
-              pos="fixed"
-              top="2"
-              left="2"
-              size="sm"
-              isRound
-              fontSize="lg"
-              icon={<FiChevronsRight />}
-              onClick={() => setSidebarHidden(false)}
-            />
+            <Tooltip placement="right" label="Show sidebar">
+              <IconButton
+                pos="fixed"
+                top="2"
+                left="2"
+                size="sm"
+                isRound
+                fontSize="lg"
+                icon={<FiChevronsRight />}
+                onClick={() => setSidebarHidden(false)}
+              />
+            </Tooltip>
           </Fade>
           <Sidebar
             {...pageContext}

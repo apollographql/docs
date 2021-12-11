@@ -20,10 +20,8 @@ export const isGroupActive = (items, basePath, uri) =>
 
 const getFullPath = (path, basePath) => join('/', basePath, path);
 const getItemPaths = (items, basePath) =>
-  items.flatMap(({children}) =>
-    Array.isArray(children)
-      ? getItemPaths(children, basePath)
-      : getFullPath(children, basePath)
+  items.flatMap(({path, children}) =>
+    children ? getItemPaths(children, basePath) : getFullPath(path, basePath)
   );
 
 function NavButton({isActive, depth, children, ...props}) {
@@ -96,11 +94,11 @@ export default function NavItems({items, depth = 0}) {
   return (
     <Stack>
       {items.map((item, index) => {
-        if (Array.isArray(item.children)) {
+        if (item.children) {
           return <NavGroup key={index} group={item} depth={depth} />;
         }
 
-        const path = getFullPath(item.children, basePath);
+        const path = getFullPath(item.path, basePath);
         const isActive = isPathActive(path, uri);
         return (
           <NavButton

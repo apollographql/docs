@@ -22,9 +22,7 @@ export const SIDEBAR_WIDTH = 300;
 
 function flattenNavItems(items) {
   return items.flatMap(item =>
-    Array.isArray(item.children)
-      ? [item, ...flattenNavItems(item.children)]
-      : item
+    item.children ? [item, ...flattenNavItems(item.children)] : item
   );
 }
 
@@ -40,8 +38,10 @@ export default function Sidebar({
 }) {
   const initialNavState = useMemo(
     () =>
+      // create a mapping of nav group ids to their default open state, based on
+      // whether one of their children is the current page
       flattenNavItems(navItems)
-        .filter(item => Array.isArray(item.children))
+        .filter(item => item.children)
         .reduce(
           (acc, group) => ({
             ...acc,
@@ -52,8 +52,24 @@ export default function Sidebar({
     [navItems, basePath, uri]
   );
 
+  const navGroups = useMemo(
+    // keep a copy of the valid nav group ids
+    () => Object.keys(initialNavState),
+    [initialNavState]
+  );
+
+  // save nav state in storage
   const [nav, setNav] = useLocalStorage('nav', initialNavState);
-  const isAllExpanded = useMemo(() => Object.values(nav).every(Boolean), [nav]);
+
+  // compute expand/collapse all state from nav state
+  const isAllExpanded = useMemo(() => {
+    // get an array of the state of all nav items that also exist in the list of
+    // valid nav group ids (above)
+    const activeGroups = Object.entries(nav)
+      .filter(([key]) => navGroups.includes(key))
+      .map(([, value]) => value);
+    return activeGroups.length && activeGroups.every(Boolean);
+  }, [navGroups, nav]);
 
   return (
     <SlideFade
@@ -109,7 +125,7 @@ export default function Sidebar({
               icon={isAllExpanded ? <FiChevronsUp /> : <FiChevronsDown />}
               onClick={() =>
                 setNav(
-                  Object.keys(nav).reduce(
+                  Object.keys(initialNavState).reduce(
                     (acc, key) => ({
                       ...acc,
                       [key]: !isAllExpanded

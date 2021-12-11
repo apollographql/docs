@@ -8,6 +8,7 @@ import {
   HStack,
   IconButton,
   Link,
+  Tooltip,
   useColorMode,
   useColorModeValue,
   useToken
@@ -41,13 +42,15 @@ export default function Header({onToggleHidden}) {
               Apollo Docs
             </Link>
           </HStack>
-          <ButtonGroup spacing="1" size="sm" variant="ghost">
-            <IconButton
-              isRound
-              fontSize="lg"
-              onClick={onToggleHidden}
-              icon={<FiChevronsLeft />}
-            />
+          <ButtonGroup spacing="1" mr="0.5" size="sm" variant="ghost">
+            <Tooltip label="Hide sidebar">
+              <IconButton
+                isRound
+                fontSize="lg"
+                onClick={onToggleHidden}
+                icon={<FiChevronsLeft />}
+              />
+            </Tooltip>
             <IconButton
               isRound
               fontSize="lg"
