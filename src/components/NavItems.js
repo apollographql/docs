@@ -28,7 +28,8 @@ function NavButton({isActive, depth, children, ...props}) {
   return (
     <Button
       variant="ghost"
-      roundedLeft="0"
+      roundedLeft="none"
+      roundedRight="full"
       colorScheme={isActive ? 'indigo' : 'gray'}
       {...props}
     >
@@ -48,7 +49,7 @@ function NavGroup({group, depth}) {
   const isActive = isGroupActive(group.children, basePath, uri);
   const isOpen = nav[group.id];
   return (
-    <Stack>
+    <Stack align="flex-start">
       <NavButton
         isActive={isActive}
         justifyContent="space-between"
@@ -92,7 +93,7 @@ export default function NavItems({items, depth = 0}) {
     colorScheme: 'indigo'
   });
   return (
-    <Stack>
+    <Stack align="flex-start">
       {items.map((item, index) => {
         if (item.children) {
           return <NavGroup key={index} group={item} depth={depth} />;
