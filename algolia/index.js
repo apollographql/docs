@@ -21,13 +21,11 @@ function getMdHeading(child) {
 }
 
 async function transformer({data}) {
-  const {site, sitePlugin, allMarkdownRemark, allMdx} = data;
-  const {siteUrl} = site.siteMetadata;
-  const {gaViewId, docset} = sitePlugin.pluginOptions;
+  const {site, allMarkdownRemark, allMdx} = data;
 
   let allGAData = {};
   if (process.env.NODE_ENV !== 'test') {
-    const metricsFetcher = new MetricsFetcher({viewId: gaViewId});
+    const metricsFetcher = new MetricsFetcher({viewId: '163147389'});
     allGAData = await metricsFetcher.fetchAll();
   }
 
@@ -35,16 +33,12 @@ async function transformer({data}) {
   const records = allPages.flatMap(page => {
     const {id, fields, frontmatter, parent, tableOfContents, htmlAst, mdxAST} =
       page;
-    const {slug, sidebarTitle, isCurrentVersion} = fields;
+    const {slug} = fields;
 
-    const url = siteUrl + slug;
+    const docset = parent.gitRemote?.name || parent.sourceInstanceName;
+    const url = site.siteMetadata.siteUrl + slug;
 
     const categories = ['documentation'];
-
-    if (sidebarTitle) {
-      categories.push(sidebarTitle.toLowerCase());
-    }
-
     if (['react', 'ios', 'android'].includes(docset)) {
       categories.push('client');
     }
@@ -62,7 +56,7 @@ async function transformer({data}) {
         type: 'docs',
         docset,
         slug,
-        isCurrentVersion,
+        isCurrentVersion: false, // TODO: fix
         pageviews: allGAData[url]?.[METRICS.uniquePageViews] || 0,
         categories
       }
@@ -81,12 +75,6 @@ const query = `
         siteUrl
       }
     }
-    sitePlugin(name: {eq: "gatsby-theme-apollo-docs"}) {
-      pluginOptions {
-        gaViewId
-        docset: algoliaIndexName
-      }
-    }
     allMarkdownRemark {
       nodes {
         ...NodeFragment
@@ -98,9 +86,6 @@ const query = `
         }
         fields {
           slug
-          isCurrentVersion
-          apiReference
-          sidebarTitle
         }
       }
     }
@@ -115,9 +100,6 @@ const query = `
         }
         fields {
           slug
-          isCurrentVersion
-          apiReference
-          sidebarTitle
         }
       }
     }
@@ -128,6 +110,10 @@ const query = `
     parent {
       ... on File {
         name
+        gitRemote {
+          name
+        }
+        sourceInstanceName
       }
     }
   }

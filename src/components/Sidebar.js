@@ -73,11 +73,10 @@ export default function Sidebar({
 
   return (
     <SlideFade
-      initial
+      initial={false}
       in={!isHidden}
       offsetY="0"
-      offsetX={SIDEBAR_WIDTH / -2}
-      unmountOnExit
+      offsetX={-SIDEBAR_WIDTH}
     >
       <chakra.aside
         h="100vh"
