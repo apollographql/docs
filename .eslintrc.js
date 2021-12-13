@@ -8,6 +8,12 @@ module.exports = {
         ExpansionPanel: 'readonly',
         MultiCodeBlock: 'readonly'
       }
+    },
+    {
+      files: ['**/__tests__/*.js', '**.test.js'],
+      env: {
+        jest: true
+      }
     }
   ]
 };

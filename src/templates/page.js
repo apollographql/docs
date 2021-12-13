@@ -165,77 +165,74 @@ export default function PageTemplate({data, uri, pageContext}) {
             isHidden={sidebarHidden}
             onHide={() => setSidebarHidden(true)}
           />
-          <Flex
+          <Box
             ml={!sidebarHidden && SIDEBAR_WIDTH}
-            maxW="6xl"
-            align="flex-start"
-            px="10"
-            py="12"
-            as="main"
             transition="margin-left 250ms"
           >
-            <Box flexGrow="1" w="0">
-              <Heading size="3xl">{title}</Heading>
-              {description && (
-                <Heading mt="4" fontWeight="normal">
-                  {description}
+            <Flex maxW="6xl" align="flex-start" px="10" py="12" as="main">
+              <Box flexGrow="1" w="0">
+                <Heading size="3xl">{title}</Heading>
+                {description && (
+                  <Heading mt="4" fontWeight="normal">
+                    {description}
+                  </Heading>
+                )}
+                <Divider my="8" />
+                {content}
+              </Box>
+              <Flex
+                direction="column"
+                as="aside"
+                ml="10"
+                w="250px"
+                flexShrink="0"
+                pos="sticky"
+                top={scrollPaddingTop}
+                pb={tocPaddingBottom}
+                maxH={`calc(100vh - ${scrollPaddingTop} - ${tocPaddingBottom})`}
+              >
+                <Heading size="md" mb="3">
+                  {title}
                 </Heading>
-              )}
-              <Divider my="8" />
-              {content}
-            </Box>
-            <Flex
-              direction="column"
-              as="aside"
-              ml="10"
-              w="250px"
-              flexShrink="0"
-              pos="sticky"
-              top={scrollPaddingTop}
-              pb={tocPaddingBottom}
-              maxH={`calc(100vh - ${scrollPaddingTop} - ${tocPaddingBottom})`}
-            >
-              <Heading size="md" mb="3">
-                {title}
-              </Heading>
-              <TableOfContents headings={headings} />
-              <Stack align="flex-start" spacing="3" mt="8">
-                <Button
-                  onClick={() => window.freddyWidget?.show()}
-                  variant="link"
-                  size="lg"
-                  leftIcon={<FiStar />}
-                >
-                  Rate article
-                </Button>
-                {gitRemote && (
+                <TableOfContents headings={headings} />
+                <Stack align="flex-start" spacing="3" mt="8">
                   <Button
-                    as="a"
-                    href={[
-                      gitRemote.href,
-                      'tree',
-                      gitRemote.ref,
-                      relativePath
-                    ].join(path.sep)}
+                    onClick={() => window.freddyWidget?.show()}
                     variant="link"
                     size="lg"
-                    leftIcon={<FaGithub />}
+                    leftIcon={<FiStar />}
                   >
-                    Edit on GitHub
+                    Rate article
                   </Button>
-                )}
-                <Button
-                  as="a"
-                  href="https://community.apollographql.com/"
-                  variant="link"
-                  size="lg"
-                  leftIcon={<FaDiscourse />}
-                >
-                  Discuss in forums
-                </Button>
-              </Stack>
+                  {gitRemote && (
+                    <Button
+                      as="a"
+                      href={[
+                        gitRemote.href,
+                        'tree',
+                        gitRemote.ref,
+                        relativePath
+                      ].join(path.sep)}
+                      variant="link"
+                      size="lg"
+                      leftIcon={<FaGithub />}
+                    >
+                      Edit on GitHub
+                    </Button>
+                  )}
+                  <Button
+                    as="a"
+                    href="https://community.apollographql.com/"
+                    variant="link"
+                    size="lg"
+                    leftIcon={<FaDiscourse />}
+                  >
+                    Discuss in forums
+                  </Button>
+                </Stack>
+              </Flex>
             </Flex>
-          </Flex>
+          </Box>
         </>
       )}
     </>
