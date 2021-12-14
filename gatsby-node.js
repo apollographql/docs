@@ -29,11 +29,11 @@ exports.onCreateNode = ({node, getNode, actions}) => {
       basePath: 'docs'
     });
 
-    const parent = getNode(node.parent);
+    const {sourceInstanceName} = getNode(node.parent);
     actions.createNodeField({
       node,
       name: 'slug',
-      value: path.join('/', parent.sourceInstanceName, filePath)
+      value: path.join('/', sourceInstanceName, filePath)
     });
   }
 };

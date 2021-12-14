@@ -42,7 +42,7 @@ export default function Header({onToggleHidden}) {
               Apollo Docs
             </Link>
           </HStack>
-          <ButtonGroup spacing="1" mr="0.5" size="sm" variant="ghost">
+          <ButtonGroup spacing="1" size="sm" variant="ghost">
             <Tooltip label="Hide sidebar">
               <IconButton
                 isRound

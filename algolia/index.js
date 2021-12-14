@@ -34,12 +34,17 @@ async function transformer({data}) {
     const {id, fields, frontmatter, parent, tableOfContents, htmlAst, mdxAST} =
       page;
     const {slug} = fields;
+    const {name: fileName, gitRemote, sourceInstanceName} = parent;
 
-    const docset = parent.gitRemote?.name || parent.sourceInstanceName;
     const url = site.siteMetadata.siteUrl + slug;
+    const docset = gitRemote
+      ? gitRemote.name
+      : sourceInstanceName === '/'
+      ? 'basics'
+      : sourceInstanceName;
 
     const categories = ['documentation'];
-    if (['react', 'ios', 'android'].includes(docset)) {
+    if (['apollo-client', 'apollo-ios', 'apollo-kotlin'].includes(docset)) {
       categories.push('client');
     }
 
@@ -52,11 +57,11 @@ async function transformer({data}) {
       otherProperties: {
         // for auto-generated mobile docs, not all have frontmatter. if a title
         // isn't set, use the name of the file
-        title: frontmatter.title || parent.name,
+        title: frontmatter.title || fileName,
         type: 'docs',
         docset,
         slug,
-        isCurrentVersion: false, // TODO: fix
+        isCurrentVersion: !/\w\//.test(sourceInstanceName),
         pageviews: allGAData[url]?.[METRICS.uniquePageViews] || 0,
         categories
       }
@@ -110,10 +115,10 @@ const query = `
     parent {
       ... on File {
         name
+        sourceInstanceName
         gitRemote {
           name
         }
-        sourceInstanceName
       }
     }
   }
