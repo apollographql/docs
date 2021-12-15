@@ -12,19 +12,11 @@ import {
   useDisclosure
 } from '@chakra-ui/react';
 
-export function DocsetMenu({label}) {
+export function DocsetMenu(props) {
   const {isOpen, onOpen, onClose} = useDisclosure();
   return (
     <>
-      <Button
-        onClick={onOpen}
-        size="xs"
-        fontSize="sm"
-        roundedRight="0"
-        colorScheme="indigo"
-      >
-        {label}
-      </Button>
+      <Button onClick={onOpen} fontSize="sm" colorScheme="indigo" {...props} />
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>

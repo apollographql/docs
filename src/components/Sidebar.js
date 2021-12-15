@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import React, {useMemo} from 'react';
 import {
   Button,
+  ButtonGroup,
   Flex,
   IconButton,
   Menu,
@@ -93,28 +94,28 @@ export default function Sidebar({
         >
           <Header onToggleHidden={onHide} />
           <Flex pl="4" pr="2">
-            <DocsetMenu label={docset} />
-            {versions && (
-              <Menu>
-                <MenuButton
-                  as={Button}
-                  rightIcon={<FiChevronDown />}
-                  size="xs"
-                  ml="px"
-                  roundedLeft="0"
-                  fontSize="sm"
-                >
-                  {currentVersion}
-                </MenuButton>
-                <MenuList>
-                  {versions.map((version, index) => (
-                    <GatsbyLink key={index} to={'/' + version.slug}>
-                      <MenuItem>{version.label}</MenuItem>
-                    </GatsbyLink>
-                  ))}
-                </MenuList>
-              </Menu>
-            )}
+            <ButtonGroup isAttached size="xs">
+              <DocsetMenu>{docset}</DocsetMenu>
+              {versions && (
+                <Menu>
+                  <MenuButton
+                    as={Button}
+                    rightIcon={<FiChevronDown />}
+                    ml="px"
+                    fontSize="sm"
+                  >
+                    {currentVersion}
+                  </MenuButton>
+                  <MenuList>
+                    {versions.map((version, index) => (
+                      <GatsbyLink key={index} to={'/' + version.slug}>
+                        <MenuItem>{version.label}</MenuItem>
+                      </GatsbyLink>
+                    ))}
+                  </MenuList>
+                </Menu>
+              )}
+            </ButtonGroup>
             <Tooltip
               label={`${isAllExpanded ? 'Collapse' : 'Expand'} all categories`}
             >
