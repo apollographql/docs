@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, {createContext, useContext} from 'react';
+import React, {useContext} from 'react';
 import {
   Button,
   Collapse,
@@ -10,9 +10,8 @@ import {
 } from '@chakra-ui/react';
 import {FiChevronDown, FiChevronRight} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
+import {NavContext} from '../utils';
 import {join, relative} from 'path';
-
-export const NavContext = createContext();
 
 const isPathActive = (path, uri) => !relative(path, uri);
 export const isGroupActive = (items, basePath, uri) =>

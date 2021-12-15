@@ -19,7 +19,6 @@ import {ReactComponent as Logo} from '@apollo/space-kit/logos/mark.svg';
 
 export default function Header({onToggleHidden}) {
   const {toggleColorMode, colorMode} = useColorMode();
-  const paddingBottom = useToken('space', 4);
   const darkBg = useToken('colors', 'gray.800');
   const headerBg = useColorModeValue('white', darkBg);
   return (
@@ -28,12 +27,14 @@ export default function Header({onToggleHidden}) {
         pl="4"
         pr="2"
         pt="2"
-        pb={paddingBottom}
-        bgImage={`linear-gradient(${[
-          'to top',
-          'transparent',
-          `${headerBg} ${paddingBottom}`
-        ]})`}
+        pb={4}
+        css={({theme}) => ({
+          backgroundImage: `linear-gradient(${[
+            'to top',
+            'transparent',
+            `${headerBg} ${theme.space[5]}`
+          ]})`
+        })}
       >
         <Flex align="center" as="header" mb="2">
           <HStack mr="auto" fontWeight="semibold">

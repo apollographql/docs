@@ -1,5 +1,6 @@
+import DocsetMenu from './DocsetMenu';
 import Header from './Header';
-import NavItems, {NavContext, isGroupActive} from './NavItems';
+import NavItems, {isGroupActive} from './NavItems';
 import PropTypes from 'prop-types';
 import React, {useMemo} from 'react';
 import {
@@ -16,6 +17,7 @@ import {
 } from '@chakra-ui/react';
 import {FiChevronDown, FiChevronsDown, FiChevronsUp} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
+import {NavContext} from '../utils';
 import {useLocalStorage} from '@rehooks/local-storage';
 
 export const SIDEBAR_WIDTH = 300;
@@ -72,77 +74,75 @@ export default function Sidebar({
   }, [navGroups, nav]);
 
   return (
-    <SlideFade
-      initial={false}
-      in={!isHidden}
-      offsetY="0"
-      offsetX={-SIDEBAR_WIDTH}
-    >
-      <chakra.aside
-        h="100vh"
-        w={SIDEBAR_WIDTH}
-        borderRightWidth="1px"
-        pos="fixed"
-        top="0"
-        left="0"
-        overflow="auto"
-        zIndex="0"
+    <NavContext.Provider value={{uri, basePath, nav, setNav}}>
+      <SlideFade
+        initial={false}
+        in={!isHidden}
+        offsetY="0"
+        offsetX={-SIDEBAR_WIDTH}
       >
-        <Header onToggleHidden={onHide} />
-        <Flex pl="4" pr="2">
-          <Button size="xs" fontSize="sm" roundedRight="0" colorScheme="indigo">
-            {docset}
-          </Button>
-          {versions && (
-            <Menu>
-              <MenuButton
-                as={Button}
-                rightIcon={<FiChevronDown />}
+        <chakra.aside
+          h="100vh"
+          w={SIDEBAR_WIDTH}
+          borderRightWidth="1px"
+          pos="fixed"
+          top="0"
+          left="0"
+          overflow="auto"
+          zIndex="0"
+        >
+          <Header onToggleHidden={onHide} />
+          <Flex pl="4" pr="2">
+            <DocsetMenu label={docset} />
+            {versions && (
+              <Menu>
+                <MenuButton
+                  as={Button}
+                  rightIcon={<FiChevronDown />}
+                  size="xs"
+                  ml="px"
+                  roundedLeft="0"
+                  fontSize="sm"
+                >
+                  {currentVersion}
+                </MenuButton>
+                <MenuList>
+                  {versions.map((version, index) => (
+                    <GatsbyLink key={index} to={'/' + version.slug}>
+                      <MenuItem>{version.label}</MenuItem>
+                    </GatsbyLink>
+                  ))}
+                </MenuList>
+              </Menu>
+            )}
+            <Tooltip
+              label={`${isAllExpanded ? 'Collapse' : 'Expand'} all categories`}
+            >
+              <IconButton
+                ml="auto"
                 size="xs"
-                ml="px"
-                roundedLeft="0"
-                fontSize="sm"
-              >
-                {currentVersion}
-              </MenuButton>
-              <MenuList>
-                {versions.map((version, index) => (
-                  <GatsbyLink key={index} to={'/' + version.slug}>
-                    <MenuItem>{version.label}</MenuItem>
-                  </GatsbyLink>
-                ))}
-              </MenuList>
-            </Menu>
-          )}
-          <Tooltip
-            label={`${isAllExpanded ? 'Collapse' : 'Expand'} all categories`}
-          >
-            <IconButton
-              ml="auto"
-              size="xs"
-              fontSize="md"
-              icon={isAllExpanded ? <FiChevronsUp /> : <FiChevronsDown />}
-              onClick={() =>
-                setNav(
-                  Object.keys(initialNavState).reduce(
-                    (acc, key) => ({
-                      ...acc,
-                      [key]: !isAllExpanded
-                    }),
-                    {}
+                fontSize="md"
+                icon={isAllExpanded ? <FiChevronsUp /> : <FiChevronsDown />}
+                onClick={() =>
+                  setNav(
+                    Object.keys(initialNavState).reduce(
+                      (acc, key) => ({
+                        ...acc,
+                        [key]: !isAllExpanded
+                      }),
+                      {}
+                    )
                   )
-                )
-              }
-            />
-          </Tooltip>
-        </Flex>
-        <chakra.nav py="2" pr="2">
-          <NavContext.Provider value={{uri, basePath, nav, setNav}}>
+                }
+              />
+            </Tooltip>
+          </Flex>
+          <chakra.nav py="2" pr="2">
             <NavItems items={navItems} />
-          </NavContext.Provider>
-        </chakra.nav>
-      </chakra.aside>
-    </SlideFade>
+          </chakra.nav>
+        </chakra.aside>
+      </SlideFade>
+    </NavContext.Provider>
   );
 }
 
