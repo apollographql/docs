@@ -16,7 +16,7 @@
     "@emotion/styled": "^11.3.0",
     "@mdx-js/mdx": "^1.6.22",
     "@mdx-js/react": "^1.6.22",
-    "@rehooks/local-storage": "^2.4.0",
+    "@rehooks/local-storage": "^2.4.3",
     "@svgr/webpack": "^5.5.0",
     "apollo-algolia-transform": "^1.0.38",
     "fenceparser": "^1.1.1",
