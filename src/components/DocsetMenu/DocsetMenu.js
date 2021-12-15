@@ -1,6 +1,5 @@
 import DocsetButton from './DocsetButton';
 import DocsetGroup from './DocsetGroup';
-import PropTypes from 'prop-types';
 import React from 'react';
 import {
   Button,
@@ -41,7 +40,3 @@ export function DocsetMenu(props) {
     </>
   );
 }
-
-DocsetMenu.propTypes = {
-  label: PropTypes.string.isRequired
-};

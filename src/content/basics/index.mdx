@@ -4,14 +4,36 @@ standalone: true
 ---
 
 import Hero from '../../components/Hero';
-import {Box} from '@chakra-ui/react';
-import {Link} from 'gatsby';
+import {Box, Square} from '@chakra-ui/react';
+import {Link as GatsbyLink} from 'gatsby';
+import {SiKotlin} from 'react-icons/si';
 
 <Hero />
 
 <Box px="10" py="12">
   docs home page
-  <Button as={Link} to="/apollo-server">
+  <Square
+    size="8"
+    fontSize="md"
+    color="white"
+    rounded="lg"
+    css={({theme}) => {
+      const {indigo} = theme.colors;
+      return {
+        backgroundImage: `linear-gradient(${[
+          'to bottom right',
+          indigo[300],
+          indigo[500]
+        ]})`
+      };
+    }}
+  >
+    <SiKotlin />
+  </Square>
+  <Button as={GatsbyLink} to="/getting-started">
+    Get started with Apollo
+  </Button>
+  <Button as={GatsbyLink} to="/apollo-server">
     Apollo Server
   </Button>
 </Box>
