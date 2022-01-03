@@ -43,21 +43,21 @@ const sources = process.env.DOCS_PATH
         }
       },
       {
-        resolve: 'gatsby-source-git',
+        resolve: '@theowenyoung/gatsby-source-git',
         options: {
           remote: 'https://github.com/apollographql/apollo-server',
           name: 'apollo-server',
           branch: 'tb/experimental-docs',
-          patterns: 'docs/**'
+          rootDir: 'docs/source'
         }
       },
       {
-        resolve: 'gatsby-source-git',
+        resolve: '@theowenyoung/gatsby-source-git',
         options: {
           remote: 'https://github.com/apollographql/apollo-server',
           name: 'apollo-server/v2',
           branch: 'tb/experimental-v2',
-          patterns: 'docs/**'
+          rootDir: 'docs'
         }
       }
     ];

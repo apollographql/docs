@@ -25,8 +25,7 @@ exports.onCreateNode = ({node, getNode, actions}) => {
   if (type === 'MarkdownRemark' || type === 'Mdx') {
     const filePath = createFilePath({
       node,
-      getNode,
-      basePath: 'docs'
+      getNode
     });
 
     const {sourceInstanceName} = getNode(node.parent);
