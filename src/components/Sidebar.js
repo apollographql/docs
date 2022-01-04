@@ -19,7 +19,7 @@ import {
 import {FiChevronDown, FiChevronsDown, FiChevronsUp} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
 import {NavContext} from '../utils';
-import {useLocalstorage} from 'rooks';
+import {useLocalStorage} from '@rehooks/local-storage';
 
 export const SIDEBAR_WIDTH = 300;
 
@@ -62,7 +62,7 @@ export default function Sidebar({
   );
 
   // save nav state in storage
-  const [nav, setNav] = useLocalstorage('nav', initialNavState);
+  const [nav, setNav] = useLocalStorage('nav', initialNavState);
 
   // compute expand/collapse all state from nav state
   const isAllExpanded = useMemo(() => {

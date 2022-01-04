@@ -44,7 +44,7 @@ import {MDXProvider} from '@mdx-js/react';
 import {MDXRenderer} from 'gatsby-plugin-mdx';
 import {graphql} from 'gatsby';
 import {rehype} from 'rehype';
-import {useLocalstorage} from 'rooks';
+import {useLocalStorage} from '@rehooks/local-storage';
 
 const LIST_SPACING = 2;
 
@@ -93,8 +93,8 @@ const {processSync} = rehype()
 
 export default function PageTemplate({data, uri, pageContext}) {
   const [scrollPaddingTop, tocPaddingBottom] = useToken('space', [12, 4]);
-  const [language, setLanguage] = useLocalstorage('language');
-  const [sidebarHidden, setSidebarHidden] = useLocalstorage('sidebar');
+  const [language, setLanguage] = useLocalStorage('language');
+  const [sidebarHidden, setSidebarHidden] = useLocalStorage('sidebar');
 
   const {siteUrl} = data.site.siteMetadata;
   const {
