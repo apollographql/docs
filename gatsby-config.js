@@ -147,7 +147,7 @@ const plugins = [
       appId: process.env.ALGOLIA_APP_ID,
       apiKey: process.env.ALGOLIA_API_KEY,
       skipIndexing: process.env.CONTEXT !== 'production',
-      indexName: 'docs',
+      indexName: 'experimental',
       queries: [
         {
           query,
