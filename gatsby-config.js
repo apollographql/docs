@@ -145,9 +145,9 @@ const plugins = [
     resolve: 'gatsby-plugin-algolia',
     options: {
       appId: process.env.ALGOLIA_APP_ID,
-      apiKey: process.env.ALGOLIA_API_KEY,
+      apiKey: process.env.ALGOLIA_WRITE_KEY,
       skipIndexing: process.env.CONTEXT !== 'production',
-      indexName: 'experimental',
+      indexName: 'experimental', // TODO: change this to 'docs' before launch
       queries: [
         {
           query,
