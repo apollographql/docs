@@ -17,6 +17,53 @@ const gatsbyRemarkPlugins = [
   }
 ];
 
+const remoteSources = {
+  react: {
+    remote: 'https://github.com/trevorblades/apollo-client',
+    branch: 'tb/experimental-docs'
+  },
+  'react/v2': {
+    remote: 'https://github.com/trevorblades/apollo-client',
+    branch: 'tb/experimental-v2'
+  },
+  'apollo-server': {
+    remote: 'https://github.com/trevorblades/apollo-server',
+    branch: 'tb/experimental-docs'
+  },
+  'apollo-server/v2': {
+    remote: 'https://github.com/trevorblades/apollo-server',
+    branch: 'tb/experimental-v2'
+  },
+  ios: {
+    remote: 'https://github.com/trevorblades/apollo-ios',
+    branch: 'tb/experimental-docs'
+  },
+  kotlin: {
+    remote: 'https://github.com/trevorblades/apollo-kotlin',
+    branch: 'tb/experimental-docs'
+  },
+  'kotlin/v2': {
+    remote: 'https://github.com/trevorblades/apollo-kotlin',
+    branch: 'tb/experimental-v2'
+  },
+  federation: {
+    remote: 'https://github.com/trevorblades/federation',
+    branch: 'tb/experimental-v1'
+  },
+  'federation/v2': {
+    remote: 'https://github.com/trevorblades/federation',
+    branch: 'tb/experimental-docs'
+  },
+  rover: {
+    remote: 'https://github.com/trevorblades/rover',
+    branch: 'tb/experimental-docs'
+  },
+  router: {
+    remote: 'https://github.com/trevorblades/router',
+    branch: 'tb/experimental-docs'
+  }
+};
+
 const sources = process.env.DOCS_PATH
   ? [
       {
@@ -42,33 +89,15 @@ const sources = process.env.DOCS_PATH
           path: 'src/content/studio'
         }
       },
-      {
+      ...Object.entries(remoteSources).map(([name, {remote, branch}]) => ({
         resolve: '@theowenyoung/gatsby-source-git',
         options: {
-          remote: 'https://github.com/apollographql/apollo-server',
-          name: 'apollo-server',
-          branch: 'tb/experimental-docs',
+          remote,
+          name,
+          branch,
           rootDir: 'docs/source'
         }
-      },
-      {
-        resolve: '@theowenyoung/gatsby-source-git',
-        options: {
-          remote: 'https://github.com/apollographql/apollo-server',
-          name: 'apollo-server/v2',
-          branch: 'tb/experimental-v2',
-          rootDir: 'docs/source'
-        }
-      },
-      {
-        resolve: '@theowenyoung/gatsby-source-git',
-        options: {
-          remote: 'https://github.com/apollographql/apollo-client',
-          name: 'react',
-          branch: 'tb/experimental-docs',
-          rootDir: 'docs/source'
-        }
-      }
+      }))
     ];
 
 const plugins = [
