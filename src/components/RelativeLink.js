@@ -9,6 +9,10 @@ export default function RelativeLink({href, ...props}) {
   const {path} = useContext(PathContext);
   const linkColor = useColorModeValue('indigo.500', 'indigo.200');
 
+  if (!href) {
+    return <a {...props} />;
+  }
+
   const isUrl = /^https?:\/\//.test(href);
   const linkProps =
     isUrl || href.startsWith('#')

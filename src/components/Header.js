@@ -69,15 +69,15 @@ export default function Header({docset, versions, currentVersion}) {
           )}
         </ButtonGroup>
       </HStack>
-      <SearchButton />
       <IconButton
-        ml="2"
+        mr="2"
         fontSize="lg"
         size="sm"
         variant="ghost"
         onClick={toggleColorMode}
         icon={colorMode === 'dark' ? <FiSun /> : <FiMoon />}
       />
+      <SearchButton />
     </Flex>
   );
 }

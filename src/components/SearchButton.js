@@ -1,14 +1,15 @@
 import React from 'react';
-import {Box, Flex, Kbd, useColorModeValue} from '@chakra-ui/react';
+import {Box, Flex, useColorModeValue} from '@chakra-ui/react';
 import {FiSearch} from 'react-icons/fi';
 
 export default function SearchButton() {
-  const bgColor = useColorModeValue('white', 'gray.900');
+  const bgColor = useColorModeValue('gray.50', 'gray.900');
   const textColor = useColorModeValue('gray.400', 'gray.500');
   return (
     <Flex
       borderWidth="1px"
-      p="1.5"
+      h="10"
+      px="3"
       lineHeight="none"
       align="center"
       maxW="sm"
@@ -20,9 +21,8 @@ export default function SearchButton() {
     >
       <FiSearch />
       <Box ml="2" color={textColor}>
-        Search Apollo
+        Search Apollo (Press /)
       </Box>
-      <Kbd ml="auto">/</Kbd>
     </Flex>
   );
 }

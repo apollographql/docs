@@ -7,7 +7,7 @@ import MultiCodeBlock, {
   MultiCodeBlockContext
 } from '../components/MultiCodeBlock';
 import PropTypes from 'prop-types';
-import React, {Fragment, createElement} from 'react';
+import React, {Fragment, createElement, useMemo} from 'react';
 import RelativeLink from '../components/RelativeLink';
 import Sidebar, {SIDEBAR_WIDTH} from '../components/Sidebar';
 import TableOfContents from '../components/TableOfContents';
@@ -94,7 +94,12 @@ const {processSync} = rehype()
   });
 
 export default function PageTemplate({data, uri, pageContext}) {
-  const [scrollPaddingTop, tocPaddingBottom] = useToken('space', [12, 4]);
+  const paddingTop = useToken('space', 10);
+  const paddingBottom = useToken('space', 12);
+  const scrollPaddingTop = useMemo(
+    () => `calc(${paddingTop} + ${HEADER_HEIGHT + 1}px)`,
+    [paddingTop]
+  );
   const [language, setLanguage] = useLocalStorage('language');
   const [sidebarHidden, setSidebarHidden] = useLocalStorage('sidebar');
 
@@ -182,7 +187,16 @@ export default function PageTemplate({data, uri, pageContext}) {
               transitionProperty="margin-left"
               transitionDuration="normal"
             >
-              <Flex maxW="6xl" align="flex-start" px="10" py="12" as="main">
+              <Flex
+                maxW="6xl"
+                align="flex-start"
+                px="10"
+                as="main"
+                sx={{
+                  paddingTop,
+                  paddingBottom
+                }}
+              >
                 <Box flexGrow="1" w="0">
                   <Heading size="3xl">{title}</Heading>
                   {description && (
@@ -200,11 +214,8 @@ export default function PageTemplate({data, uri, pageContext}) {
                   w="250px"
                   flexShrink="0"
                   pos="sticky"
-                  top={`calc(${scrollPaddingTop} + ${HEADER_HEIGHT + 1}px)`}
-                  pb={tocPaddingBottom}
-                  maxH={`calc(100vh - ${
-                    HEADER_HEIGHT + 1
-                  }px - ${scrollPaddingTop} - ${tocPaddingBottom})`}
+                  top={scrollPaddingTop}
+                  maxH={`calc(100vh - ${scrollPaddingTop} - ${paddingBottom})`}
                 >
                   <Heading size="md" mb="3">
                     {title}
@@ -247,6 +258,9 @@ export default function PageTemplate({data, uri, pageContext}) {
                   </Stack>
                 </Flex>
               </Flex>
+              <Box borderTopWidth="1px" px="10" py="12">
+                footer
+              </Box>
             </Box>
           </>
         )}
