@@ -11,6 +11,7 @@ export default function SearchButton() {
       p="1.5"
       lineHeight="none"
       align="center"
+      maxW="sm"
       w="full"
       as="button"
       rounded="lg"

@@ -1,24 +1,17 @@
-import DocsetMenu from './DocsetMenu';
-import Header from './Header';
 import NavItems, {isGroupActive} from './NavItems';
 import PropTypes from 'prop-types';
-import React, {useMemo} from 'react';
+import React, {useContext, useMemo} from 'react';
 import {
-  Button,
   ButtonGroup,
   Flex,
   IconButton,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  SlideFade,
   Tooltip,
-  chakra
+  chakra,
+  useColorModeValue
 } from '@chakra-ui/react';
-import {FiChevronDown, FiChevronsDown, FiChevronsUp} from 'react-icons/fi';
-import {Link as GatsbyLink} from 'gatsby';
-import {NavContext} from '../utils';
+import {FiChevronsDown, FiChevronsLeft, FiChevronsUp} from 'react-icons/fi';
+import {HEADER_HEIGHT} from './Header';
+import {NavContext, PathContext} from '../utils';
 import {useLocalStorage} from '@rehooks/local-storage';
 
 export const SIDEBAR_WIDTH = 300;
@@ -29,16 +22,8 @@ function flattenNavItems(items) {
   );
 }
 
-export default function Sidebar({
-  docset,
-  navItems,
-  uri,
-  basePath,
-  currentVersion,
-  versions,
-  isHidden,
-  onHide
-}) {
+export default function Sidebar({navItems, isHidden, onHide}) {
+  const {uri, basePath} = useContext(PathContext);
   const initialNavState = useMemo(
     () =>
       // create a mapping of nav group ids to their default open state, based on
@@ -74,85 +59,62 @@ export default function Sidebar({
     return activeGroups.length && activeGroups.every(Boolean);
   }, [navGroups, nav]);
 
+  const bg = useColorModeValue('white', 'gray.800');
+
   return (
-    <NavContext.Provider value={{uri, basePath, nav, setNav}}>
-      <SlideFade
-        initial={false}
-        in={!isHidden}
-        offsetY="0"
-        offsetX={-SIDEBAR_WIDTH}
-      >
-        <chakra.aside
-          h="100vh"
-          w={SIDEBAR_WIDTH}
-          borderRightWidth="1px"
-          pos="fixed"
-          top="0"
-          left="0"
-          overflow="auto"
-          zIndex="0"
-        >
-          <Header onToggleHidden={onHide} />
-          <Flex pl="4" pr="2">
-            <ButtonGroup isAttached size="xs">
-              <DocsetMenu>{docset}</DocsetMenu>
-              {versions && (
-                <Menu>
-                  <MenuButton
-                    as={Button}
-                    rightIcon={<FiChevronDown />}
-                    ml="px"
-                    fontSize="sm"
-                  >
-                    {currentVersion}
-                  </MenuButton>
-                  <MenuList>
-                    {versions.map((version, index) => (
-                      <GatsbyLink key={index} to={'/' + version.slug}>
-                        <MenuItem>{version.label}</MenuItem>
-                      </GatsbyLink>
-                    ))}
-                  </MenuList>
-                </Menu>
-              )}
-            </ButtonGroup>
-            <Tooltip
-              label={`${isAllExpanded ? 'Collapse' : 'Expand'} all categories`}
-            >
-              <IconButton
-                ml="auto"
-                size="xs"
-                fontSize="md"
-                icon={isAllExpanded ? <FiChevronsUp /> : <FiChevronsDown />}
-                onClick={() =>
-                  setNav(
-                    Object.keys(initialNavState).reduce(
-                      (acc, key) => ({
-                        ...acc,
-                        [key]: !isAllExpanded
-                      }),
-                      {}
-                    )
+    <chakra.aside
+      // account for header border
+      h={`calc(100vh - ${HEADER_HEIGHT + 1}px)`}
+      w={SIDEBAR_WIDTH}
+      borderRightWidth="1px"
+      pos="fixed"
+      left="0"
+      zIndex="0"
+      overflow="auto"
+      transitionProperty="common"
+      transitionDuration="normal"
+      bg={bg}
+      css={{top: HEADER_HEIGHT}}
+      style={{
+        opacity: isHidden ? 0 : 1,
+        transform: isHidden ? `translateX(-${SIDEBAR_WIDTH}px)` : 'none'
+      }}
+    >
+      <Flex p="2" pos="sticky" top="0" bg={bg} zIndex="1">
+        <ButtonGroup size="xs">
+          <Tooltip label="Hide sidebar">
+            <IconButton onClick={onHide} icon={<FiChevronsLeft />} />
+          </Tooltip>
+          <Tooltip
+            label={`${isAllExpanded ? 'Collapse' : 'Expand'} all categories`}
+          >
+            <IconButton
+              icon={isAllExpanded ? <FiChevronsUp /> : <FiChevronsDown />}
+              onClick={() =>
+                setNav(
+                  Object.keys(initialNavState).reduce(
+                    (acc, key) => ({
+                      ...acc,
+                      [key]: !isAllExpanded
+                    }),
+                    {}
                   )
-                }
-              />
-            </Tooltip>
-          </Flex>
-          <chakra.nav py="2" pr="2">
-            <NavItems items={navItems} />
-          </chakra.nav>
-        </chakra.aside>
-      </SlideFade>
-    </NavContext.Provider>
+                )
+              }
+            />
+          </Tooltip>
+        </ButtonGroup>
+      </Flex>
+      <NavContext.Provider value={{nav, setNav}}>
+        <chakra.nav py="2" pr="2">
+          <NavItems items={navItems} />
+        </chakra.nav>
+      </NavContext.Provider>
+    </chakra.aside>
   );
 }
 
 Sidebar.propTypes = {
-  uri: PropTypes.string.isRequired,
-  basePath: PropTypes.string.isRequired,
-  docset: PropTypes.string.isRequired,
-  currentVersion: PropTypes.string,
-  versions: PropTypes.array,
   navItems: PropTypes.array.isRequired,
   isHidden: PropTypes.bool.isRequired,
   onHide: PropTypes.func.isRequired

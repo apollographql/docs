@@ -3,10 +3,10 @@ import React, {useContext} from 'react';
 import path from 'path';
 import {Button} from '@chakra-ui/react';
 import {Link as GatsbyLink} from 'gatsby';
-import {NavContext} from '../../utils';
+import {PathContext} from '../../utils';
 
 export default function DocsetButton({to, ...props}) {
-  const {basePath} = useContext(NavContext);
+  const {basePath} = useContext(PathContext);
   const [docsetPath] = basePath.split(path.sep);
   return (
     <Button

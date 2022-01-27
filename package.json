@@ -4,8 +4,8 @@
     "start": "gatsby develop",
     "build": "gatsby build",
     "test": "jest",
-    "dev:client": "DOCS_PATH=../apollo-client/docs npm start",
-    "dev:server": "DOCS_PATH=../apollo-server/docs npm start"
+    "dev:client": "DOCS_PATH=../apollo-client/docs/source npm start",
+    "dev:server": "DOCS_PATH=../apollo-server/docs/source npm start"
   },
   "dependencies": {
     "@apollo/chakra-helpers": "^1.0.1",

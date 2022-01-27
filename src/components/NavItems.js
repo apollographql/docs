@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react';
 import {FiChevronDown, FiChevronRight} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
-import {NavContext} from '../utils';
+import {NavContext, PathContext} from '../utils';
 import {join, relative} from 'path';
 
 const isPathActive = (path, uri) => !relative(path, uri);
@@ -44,7 +44,8 @@ NavButton.propTypes = {
 };
 
 function NavGroup({group, depth}) {
-  const {basePath, uri, nav, setNav} = useContext(NavContext);
+  const {nav, setNav} = useContext(NavContext);
+  const {basePath, uri} = useContext(PathContext);
   const isActive = isGroupActive(group.children, basePath, uri);
   const isOpen = nav[group.id];
   return (
@@ -82,7 +83,7 @@ NavGroup.propTypes = {
 
 export default function NavItems({items, depth = 0}) {
   const theme = useTheme();
-  const {basePath, uri} = useContext(NavContext);
+  const {basePath, uri} = useContext(PathContext);
   const {colorMode} = useColorMode();
   const {
     _hover: {bg: activeBg}

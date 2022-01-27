@@ -1,13 +1,14 @@
 import Blockquote from '../components/Blockquote';
 import CodeBlock from '../components/CodeBlock';
 import ExpansionPanel from '../components/ExpansionPanel';
+import Header, {HEADER_HEIGHT} from '../components/Header';
 import InlineCode from '../components/InlineCode';
 import MultiCodeBlock, {
   MultiCodeBlockContext
 } from '../components/MultiCodeBlock';
 import PropTypes from 'prop-types';
 import React, {Fragment, createElement} from 'react';
-import RelativeLink, {PathContext} from '../components/RelativeLink';
+import RelativeLink from '../components/RelativeLink';
 import Sidebar, {SIDEBAR_WIDTH} from '../components/Sidebar';
 import TableOfContents from '../components/TableOfContents';
 import Wrapper from '../components/Wrapper';
@@ -42,6 +43,7 @@ import {GatsbySeo} from 'gatsby-plugin-next-seo';
 import {Global} from '@emotion/react';
 import {MDXProvider} from '@mdx-js/react';
 import {MDXRenderer} from 'gatsby-plugin-mdx';
+import {PathContext} from '../utils';
 import {graphql} from 'gatsby';
 import {rehype} from 'rehype';
 import {useLocalStorage} from '@rehooks/local-storage';
@@ -107,18 +109,17 @@ export default function PageTemplate({data, uri, pageContext}) {
   } = data.file;
   const {frontmatter, headings} = childMdx || childMarkdownRemark;
   const {title, description, standalone} = frontmatter;
+  const {docset, versions, currentVersion, navItems} = pageContext;
 
   const content = (
     <MultiCodeBlockContext.Provider value={{language, setLanguage}}>
-      <PathContext.Provider value={name === 'index' ? uri : dirname(uri)}>
-        {childMdx ? (
-          <MDXProvider components={mdxComponents}>
-            <MDXRenderer>{childMdx.body}</MDXRenderer>
-          </MDXProvider>
-        ) : (
-          <Wrapper>{processSync(childMarkdownRemark.html).result}</Wrapper>
-        )}
-      </PathContext.Provider>
+      {childMdx ? (
+        <MDXProvider components={mdxComponents}>
+          <MDXRenderer>{childMdx.body}</MDXRenderer>
+        </MDXProvider>
+      ) : (
+        <Wrapper>{processSync(childMarkdownRemark.html).result}</Wrapper>
+      )}
     </MultiCodeBlockContext.Provider>
   );
 
@@ -140,101 +141,116 @@ export default function PageTemplate({data, uri, pageContext}) {
           }
         }}
       />
-      {standalone ? (
-        content
-      ) : (
-        <>
-          <Fade in={sidebarHidden} unmountOnExit delay={0.25}>
-            <Tooltip placement="right" label="Show sidebar">
-              <IconButton
-                pos="fixed"
-                top="2"
-                left="2"
-                size="sm"
-                isRound
-                fontSize="lg"
-                icon={<FiChevronsRight />}
-                onClick={() => setSidebarHidden(false)}
-              />
-            </Tooltip>
-          </Fade>
-          <Sidebar
-            {...pageContext}
-            uri={uri}
-            basePath={sourceInstanceName}
-            isHidden={sidebarHidden}
-            onHide={() => setSidebarHidden(true)}
-          />
-          <Box
-            ml={!sidebarHidden && SIDEBAR_WIDTH}
-            transition="margin-left 250ms"
-          >
-            <Flex maxW="6xl" align="flex-start" px="10" py="12" as="main">
-              <Box flexGrow="1" w="0">
-                <Heading size="3xl">{title}</Heading>
-                {description && (
-                  <Heading mt="4" fontWeight="normal">
-                    {description}
+      <PathContext.Provider
+        value={{
+          uri,
+          basePath: sourceInstanceName,
+          path: name === 'index' ? uri : dirname(uri)
+        }}
+      >
+        {standalone ? (
+          content
+        ) : (
+          <>
+            <Header
+              docset={docset}
+              versions={versions}
+              currentVersion={currentVersion}
+            />
+            <Fade in={sidebarHidden} unmountOnExit delay={0.25}>
+              <Tooltip placement="right" label="Show sidebar">
+                <IconButton
+                  pos="fixed"
+                  mt="2"
+                  left="2"
+                  size="sm"
+                  isRound
+                  fontSize="lg"
+                  icon={<FiChevronsRight />}
+                  css={{top: HEADER_HEIGHT}}
+                  onClick={() => setSidebarHidden(false)}
+                />
+              </Tooltip>
+            </Fade>
+            <Sidebar
+              navItems={navItems}
+              isHidden={sidebarHidden}
+              onHide={() => setSidebarHidden(true)}
+            />
+            <Box
+              style={{marginLeft: sidebarHidden ? 0 : SIDEBAR_WIDTH}}
+              transitionProperty="margin-left"
+              transitionDuration="normal"
+            >
+              <Flex maxW="6xl" align="flex-start" px="10" py="12" as="main">
+                <Box flexGrow="1" w="0">
+                  <Heading size="3xl">{title}</Heading>
+                  {description && (
+                    <Heading mt="4" fontWeight="normal">
+                      {description}
+                    </Heading>
+                  )}
+                  <Divider my="8" />
+                  {content}
+                </Box>
+                <Flex
+                  direction="column"
+                  as="aside"
+                  ml="10"
+                  w="250px"
+                  flexShrink="0"
+                  pos="sticky"
+                  top={`calc(${scrollPaddingTop} + ${HEADER_HEIGHT + 1}px)`}
+                  pb={tocPaddingBottom}
+                  maxH={`calc(100vh - ${
+                    HEADER_HEIGHT + 1
+                  }px - ${scrollPaddingTop} - ${tocPaddingBottom})`}
+                >
+                  <Heading size="md" mb="3">
+                    {title}
                   </Heading>
-                )}
-                <Divider my="8" />
-                {content}
-              </Box>
-              <Flex
-                direction="column"
-                as="aside"
-                ml="10"
-                w="250px"
-                flexShrink="0"
-                pos="sticky"
-                top={scrollPaddingTop}
-                pb={tocPaddingBottom}
-                maxH={`calc(100vh - ${scrollPaddingTop} - ${tocPaddingBottom})`}
-              >
-                <Heading size="md" mb="3">
-                  {title}
-                </Heading>
-                <TableOfContents headings={headings} />
-                <Stack align="flex-start" spacing="3" mt="8">
-                  <Button
-                    onClick={() => window.freddyWidget?.show()}
-                    variant="link"
-                    size="lg"
-                    leftIcon={<FiStar />}
-                  >
-                    Rate article
-                  </Button>
-                  {gitRemote && (
+                  <TableOfContents headings={headings} />
+                  <Stack align="flex-start" spacing="3" mt="8">
                     <Button
-                      as="a"
-                      href={[
-                        gitRemote.href,
-                        'tree',
-                        gitRemote.ref,
-                        relativePath
-                      ].join(path.sep)}
+                      onClick={() => window.freddyWidget?.show()}
                       variant="link"
                       size="lg"
-                      leftIcon={<FaGithub />}
+                      leftIcon={<FiStar />}
                     >
-                      Edit on GitHub
+                      Rate article
                     </Button>
-                  )}
-                  <Button
-                    as="a"
-                    href="https://community.apollographql.com/"
-                    variant="link"
-                    size="lg"
-                    leftIcon={<FaDiscourse />}
-                  >
-                    Discuss in forums
-                  </Button>
-                </Stack>
+                    {gitRemote && (
+                      <Button
+                        as="a"
+                        href={[
+                          gitRemote.href,
+                          'tree',
+                          gitRemote.ref,
+                          relativePath
+                        ].join(path.sep)}
+                        variant="link"
+                        size="lg"
+                        leftIcon={<FaGithub />}
+                      >
+                        Edit on GitHub
+                      </Button>
+                    )}
+                    <Button
+                      as="a"
+                      href="https://community.apollographql.com/"
+                      variant="link"
+                      size="lg"
+                      leftIcon={<FaDiscourse />}
+                    >
+                      Discuss in forums
+                    </Button>
+                  </Stack>
+                </Flex>
               </Flex>
-            </Flex>
-          </Box>
-        </>
-      )}
+            </Box>
+          </>
+        )}
+      </PathContext.Provider>
     </>
   );
 }

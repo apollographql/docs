@@ -15,7 +15,7 @@ export function DocsetMenu(props) {
   const {isOpen, onOpen, onClose} = useDisclosure();
   return (
     <>
-      <Button onClick={onOpen} fontSize="sm" colorScheme="indigo" {...props} />
+      <Button onClick={onOpen} {...props} />
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>

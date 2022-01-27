@@ -1,71 +1,89 @@
+import DocsetMenu from './DocsetMenu';
 import PropTypes from 'prop-types';
 import React from 'react';
 import SearchButton from './SearchButton';
 import {
   Box,
+  Button,
   ButtonGroup,
   Flex,
   HStack,
   IconButton,
-  Link,
-  Tooltip,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   useColorMode,
-  useColorModeValue,
-  useToken
+  useColorModeValue
 } from '@chakra-ui/react';
-import {FiChevronsLeft, FiMoon, FiSun} from 'react-icons/fi';
+import {FiChevronDown, FiMoon, FiSun} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
-import {ReactComponent as Logo} from '@apollo/space-kit/logos/mark.svg';
+import {ReactComponent as Logo} from '@apollo/space-kit/logos/logo.svg';
 
-export default function Header({onToggleHidden}) {
+export const HEADER_HEIGHT = 50;
+
+export default function Header({docset, versions, currentVersion}) {
   const {toggleColorMode, colorMode} = useColorMode();
-  const darkBg = useToken('colors', 'gray.800');
-  const headerBg = useColorModeValue('white', darkBg);
+  const bg = useColorModeValue('white', 'gray.800');
   return (
-    <Box pos="sticky" top="0" zIndex="1">
-      <Box
-        pl="4"
-        pr="2"
-        pt="2"
-        pb={4}
-        css={({theme}) => ({
-          backgroundImage: `linear-gradient(${[
-            'to top',
-            'transparent',
-            `${headerBg} ${theme.space[5]}`
-          ]})`
-        })}
-      >
-        <Flex align="center" as="header" mb="2">
-          <HStack mr="auto" fontWeight="semibold">
-            <Box as={Logo} fill="current" h="7" />
-            <Link as={GatsbyLink} to="/">
-              Apollo Docs
-            </Link>
-          </HStack>
-          <ButtonGroup spacing="1" size="sm" variant="ghost">
-            <Tooltip label="Hide sidebar">
-              <IconButton
-                isRound
-                fontSize="lg"
-                onClick={onToggleHidden}
-                icon={<FiChevronsLeft />}
-              />
-            </Tooltip>
-            <IconButton
-              isRound
-              fontSize="lg"
-              onClick={toggleColorMode}
-              icon={colorMode === 'dark' ? <FiSun /> : <FiMoon />}
-            />
-          </ButtonGroup>
-        </Flex>
-        <SearchButton />
-      </Box>
-    </Box>
+    <Flex
+      align="center"
+      as="header"
+      px="4"
+      boxSizing="content-box"
+      borderBottomWidth="1px"
+      pos="sticky"
+      top="0"
+      zIndex="1"
+      bg={bg}
+      css={{height: HEADER_HEIGHT}}
+    >
+      <HStack spacing="4" mr="auto" fontWeight="semibold">
+        <Box
+          as={Logo}
+          fill="current"
+          h="7"
+          // center the logo text vertically
+          transform="translateY(3.08578178%)"
+        />
+        <ButtonGroup size="sm" isAttached>
+          <DocsetMenu>{docset}</DocsetMenu>
+          {versions?.length > 1 && (
+            <Menu>
+              <MenuButton
+                as={Button}
+                rightIcon={<FiChevronDown />}
+                ml="px"
+                fontSize="sm"
+              >
+                {currentVersion}
+              </MenuButton>
+              <MenuList>
+                {versions.map((version, index) => (
+                  <GatsbyLink key={index} to={'/' + version.slug}>
+                    <MenuItem>{version.label}</MenuItem>
+                  </GatsbyLink>
+                ))}
+              </MenuList>
+            </Menu>
+          )}
+        </ButtonGroup>
+      </HStack>
+      <SearchButton />
+      <IconButton
+        ml="2"
+        fontSize="lg"
+        size="sm"
+        variant="ghost"
+        onClick={toggleColorMode}
+        icon={colorMode === 'dark' ? <FiSun /> : <FiMoon />}
+      />
+    </Flex>
   );
 }
 
 Header.propTypes = {
-  onToggleHidden: PropTypes.func.isRequired
+  docset: PropTypes.string.isRequired,
+  versions: PropTypes.array,
+  currentVersion: PropTypes.string
 };
