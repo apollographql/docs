@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 import {Link as GatsbyLink} from 'gatsby';
 import {Link, useColorModeValue} from '@chakra-ui/react';
-import {PathContext} from '../utils';
+import {PathContext, isUrl} from '../utils';
 import {isAbsolute, resolve} from 'path';
 
 export default function RelativeLink({href, ...props}) {
@@ -13,10 +13,10 @@ export default function RelativeLink({href, ...props}) {
     return <a {...props} />;
   }
 
-  const isUrl = /^https?:\/\//.test(href);
+  const isExternal = isUrl(href);
   const linkProps =
-    isUrl || href.startsWith('#')
-      ? {href, isExternal: isUrl}
+    isExternal || href.startsWith('#')
+      ? {href, isExternal}
       : {as: GatsbyLink, to: isAbsolute(href) ? href : resolve(path, href)};
 
   return <Link color={linkColor} {...linkProps} {...props} />;

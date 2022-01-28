@@ -1,6 +1,7 @@
 import Blockquote from '../components/Blockquote';
 import CodeBlock from '../components/CodeBlock';
 import ExpansionPanel from '../components/ExpansionPanel';
+import Footer from '../components/Footer';
 import Header, {HEADER_HEIGHT} from '../components/Header';
 import InlineCode from '../components/InlineCode';
 import MultiCodeBlock, {
@@ -100,6 +101,7 @@ export default function PageTemplate({data, uri, pageContext}) {
     () => `calc(${paddingTop} + ${HEADER_HEIGHT + 1}px)`,
     [paddingTop]
   );
+
   const [language, setLanguage] = useLocalStorage('language');
   const [sidebarHidden, setSidebarHidden] = useLocalStorage('sidebar');
 
@@ -168,9 +170,9 @@ export default function PageTemplate({data, uri, pageContext}) {
                   pos="fixed"
                   mt="2"
                   left="2"
-                  size="sm"
+                  size="xs"
                   isRound
-                  fontSize="lg"
+                  fontSize="md"
                   icon={<FiChevronsRight />}
                   css={{top: HEADER_HEIGHT}}
                   onClick={() => setSidebarHidden(false)}
@@ -258,9 +260,7 @@ export default function PageTemplate({data, uri, pageContext}) {
                   </Stack>
                 </Flex>
               </Flex>
-              <Box borderTopWidth="1px" px="10" py="12">
-                footer
-              </Box>
+              <Footer />
             </Box>
           </>
         )}

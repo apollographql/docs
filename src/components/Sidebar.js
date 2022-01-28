@@ -2,7 +2,7 @@ import NavItems, {isGroupActive} from './NavItems';
 import PropTypes from 'prop-types';
 import React, {useContext, useMemo} from 'react';
 import {
-  ButtonGroup,
+  Button,
   Flex,
   IconButton,
   Tooltip,
@@ -14,7 +14,7 @@ import {HEADER_HEIGHT} from './Header';
 import {NavContext, PathContext} from '../utils';
 import {useLocalStorage} from '@rehooks/local-storage';
 
-export const SIDEBAR_WIDTH = 300;
+export const SIDEBAR_WIDTH = 250;
 
 function flattenNavItems(items) {
   return items.flatMap(item =>
@@ -81,32 +81,38 @@ export default function Sidebar({navItems, isHidden, onHide}) {
       }}
     >
       <Flex p="2" pos="sticky" top="0" bg={bg} zIndex="1">
-        <ButtonGroup size="xs">
-          <Tooltip label="Hide sidebar">
-            <IconButton onClick={onHide} icon={<FiChevronsLeft />} />
-          </Tooltip>
-          <Tooltip
-            label={`${isAllExpanded ? 'Collapse' : 'Expand'} all categories`}
-          >
-            <IconButton
-              icon={isAllExpanded ? <FiChevronsUp /> : <FiChevronsDown />}
-              onClick={() =>
-                setNav(
-                  Object.keys(initialNavState).reduce(
-                    (acc, key) => ({
-                      ...acc,
-                      [key]: !isAllExpanded
-                    }),
-                    {}
-                  )
-                )
-              }
-            />
-          </Tooltip>
-        </ButtonGroup>
+        <Button
+          mr="auto"
+          size="xs"
+          variant="outline"
+          rightIcon={isAllExpanded ? <FiChevronsUp /> : <FiChevronsDown />}
+          onClick={() =>
+            setNav(
+              Object.keys(initialNavState).reduce(
+                (acc, key) => ({
+                  ...acc,
+                  [key]: !isAllExpanded
+                }),
+                {}
+              )
+            )
+          }
+        >
+          {isAllExpanded ? 'Collapse' : 'Expand'} all
+        </Button>
+        <Tooltip label="Hide sidebar">
+          <IconButton
+            size="xs"
+            isRound
+            variant="ghost"
+            fontSize="md"
+            onClick={onHide}
+            icon={<FiChevronsLeft />}
+          />
+        </Tooltip>
       </Flex>
       <NavContext.Provider value={{nav, setNav}}>
-        <chakra.nav py="2" pr="2">
+        <chakra.nav pt="1" pr="2" pb="4">
           <NavItems items={navItems} />
         </chakra.nav>
       </NavContext.Provider>

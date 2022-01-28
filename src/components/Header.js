@@ -2,6 +2,7 @@ import DocsetMenu from './DocsetMenu';
 import PropTypes from 'prop-types';
 import React from 'react';
 import SearchButton from './SearchButton';
+import {ReactComponent as ApolloLogo} from '@apollo/space-kit/logos/logo.svg';
 import {
   Box,
   Button,
@@ -18,7 +19,6 @@ import {
 } from '@chakra-ui/react';
 import {FiChevronDown, FiMoon, FiSun} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
-import {ReactComponent as Logo} from '@apollo/space-kit/logos/logo.svg';
 
 export const HEADER_HEIGHT = 50;
 
@@ -40,7 +40,7 @@ export default function Header({docset, versions, currentVersion}) {
     >
       <HStack spacing="4" mr="auto" fontWeight="semibold">
         <Box
-          as={Logo}
+          as={ApolloLogo}
           fill="current"
           h="7"
           // center the logo text vertically
