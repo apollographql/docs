@@ -19,13 +19,15 @@ import {
 } from '@chakra-ui/react';
 import {FiChevronDown, FiMoon, FiSun} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
+import {useTagColors} from '../utils';
 
-export const HEADER_HEIGHT = 50;
+export const HEADER_HEIGHT = 64;
 
 export default function Header({docset, versions, currentVersion}) {
   const {toggleColorMode, colorMode} = useColorMode();
   const bg = useColorModeValue('white', 'gray.800');
   const buttonTextColor = useColorModeValue('indigo.500', 'indigo.200');
+  const [tagBg, tagTextColor] = useTagColors();
   return (
     <Flex
       align="center"
@@ -40,23 +42,36 @@ export default function Header({docset, versions, currentVersion}) {
       css={{height: HEADER_HEIGHT}}
     >
       <HStack spacing="4" mr="auto" fontWeight="semibold">
-        <Box
-          as={ApolloLogo}
-          fill="current"
-          h="7"
-          // center the logo text vertically
-          transform="translateY(3.08578178%)"
-        />
-        <ButtonGroup size="sm" isAttached>
+        <Flex align="center">
+          <Box
+            as={ApolloLogo}
+            fill="current"
+            role="img"
+            aria-label="Apollo logo"
+            h="6"
+            // center the logo text vertically
+            transform="translateY(3.08578178%)"
+          />
+          <Box
+            ml="1.5"
+            px="1.5"
+            fontSize="sm"
+            fontWeight="semibold"
+            textTransform="uppercase"
+            letterSpacing="widest"
+            bg={tagBg}
+            color={tagTextColor}
+            rounded="sm"
+            transform="translateY(-3.08578178%)"
+          >
+            Docs
+          </Box>
+        </Flex>
+        <ButtonGroup isAttached>
           <DocsetMenu color={buttonTextColor}>{docset}</DocsetMenu>
           {versions?.length > 1 && (
             <Menu>
-              <MenuButton
-                as={Button}
-                rightIcon={<FiChevronDown />}
-                ml="px"
-                fontSize="sm"
-              >
+              <MenuButton as={Button} rightIcon={<FiChevronDown />} ml="px">
                 {currentVersion}
               </MenuButton>
               <MenuList>
@@ -72,8 +87,7 @@ export default function Header({docset, versions, currentVersion}) {
       </HStack>
       <IconButton
         mr="2"
-        fontSize="lg"
-        size="sm"
+        fontSize="xl"
         variant="ghost"
         onClick={toggleColorMode}
         icon={colorMode === 'dark' ? <FiSun /> : <FiMoon />}

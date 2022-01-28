@@ -80,11 +80,11 @@ export default function Sidebar({navItems, isHidden, onHide}) {
         transform: isHidden ? `translateX(-${SIDEBAR_WIDTH}px)` : 'none'
       }}
     >
-      <Flex p="2" pos="sticky" top="0" bg={bg} zIndex="1">
+      <Flex px="1" pt="2" pb="2" pos="sticky" top="0" bg={bg} zIndex="1">
         <Button
           mr="auto"
-          size="xs"
-          variant="outline"
+          size="sm"
+          variant="ghost"
           rightIcon={isAllExpanded ? <FiChevronsUp /> : <FiChevronsDown />}
           onClick={() =>
             setNav(
@@ -102,8 +102,7 @@ export default function Sidebar({navItems, isHidden, onHide}) {
         </Button>
         <Tooltip label="Hide sidebar">
           <IconButton
-            size="xs"
-            isRound
+            size="sm"
             variant="ghost"
             fontSize="md"
             onClick={onHide}

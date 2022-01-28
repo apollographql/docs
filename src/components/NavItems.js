@@ -5,12 +5,11 @@ import {
   Collapse,
   Stack,
   chakra,
-  useColorMode,
-  useTheme
+  useColorModeValue
 } from '@chakra-ui/react';
 import {FiChevronDown, FiChevronRight, FiExternalLink} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
-import {NavContext, PathContext, isUrl} from '../utils';
+import {NavContext, PathContext, isUrl, useTagColors} from '../utils';
 import {join, relative} from 'path';
 
 const isPathActive = (path, uri) => !relative(path, uri);
@@ -26,6 +25,17 @@ const getItemPaths = (items, basePath) =>
 const NavStack = props => <Stack spacing="1" align="flex-start" {...props} />;
 
 function NavButton({isActive, depth, children, ...props}) {
+  const [activeBg, activeTextColor] = useTagColors();
+  const activeHoverBg = useColorModeValue('indigo.100', 'indigo.300');
+
+  const buttonProps = isActive && {
+    bg: activeBg,
+    color: activeTextColor,
+    _hover: {
+      bg: activeHoverBg
+    }
+  };
+
   return (
     <Button
       h="auto"
@@ -34,7 +44,8 @@ function NavButton({isActive, depth, children, ...props}) {
       variant="ghost"
       roundedLeft="none"
       roundedRight="full"
-      colorScheme={isActive ? 'indigo' : 'gray'}
+      fontWeight="normal"
+      {...buttonProps}
       {...props}
     >
       <chakra.span pl={depth * 2}>{children}</chakra.span>
@@ -56,6 +67,7 @@ function NavGroup({group, depth}) {
   return (
     <NavStack>
       <NavButton
+        fontWeight="semibold"
         isActive={isActive}
         rightIcon={isOpen ? <FiChevronDown /> : <FiChevronRight />}
         onClick={() =>
@@ -86,16 +98,7 @@ NavGroup.propTypes = {
 };
 
 export default function NavItems({items, depth = 0}) {
-  const theme = useTheme();
   const {basePath, uri} = useContext(PathContext);
-  const {colorMode} = useColorMode();
-  const {
-    _hover: {bg: activeBg}
-  } = theme.components.Button.variants.ghost({
-    theme,
-    colorMode,
-    colorScheme: 'indigo'
-  });
   return (
     <NavStack>
       {items.map((item, index) => {
@@ -108,6 +111,7 @@ export default function NavItems({items, depth = 0}) {
             <NavButton
               key={index}
               as="a"
+              depth={depth}
               href={item.path}
               target="_blank"
               rel="noreferrer noopener"
@@ -125,7 +129,6 @@ export default function NavItems({items, depth = 0}) {
             key={index}
             isActive={isActive}
             depth={depth}
-            bg={isActive && activeBg}
             as={GatsbyLink}
             to={path}
           >

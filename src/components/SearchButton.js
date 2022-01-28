@@ -15,7 +15,7 @@ export default function SearchButton() {
       maxW="sm"
       w="full"
       as="button"
-      rounded="lg"
+      rounded="md"
       bg={bgColor}
       _focus={{shadow: 'outline'}}
     >

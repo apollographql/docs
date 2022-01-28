@@ -170,8 +170,8 @@ export default function PageTemplate({data, uri, pageContext}) {
                   pos="fixed"
                   mt="2"
                   left="2"
-                  size="xs"
-                  isRound
+                  size="sm"
+                  variant="outline"
                   fontSize="md"
                   icon={<FiChevronsRight />}
                   css={{top: HEADER_HEIGHT}}
