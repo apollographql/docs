@@ -25,6 +25,7 @@ export const HEADER_HEIGHT = 50;
 export default function Header({docset, versions, currentVersion}) {
   const {toggleColorMode, colorMode} = useColorMode();
   const bg = useColorModeValue('white', 'gray.800');
+  const buttonTextColor = useColorModeValue('indigo.500', 'indigo.200');
   return (
     <Flex
       align="center"
@@ -47,7 +48,7 @@ export default function Header({docset, versions, currentVersion}) {
           transform="translateY(3.08578178%)"
         />
         <ButtonGroup size="sm" isAttached>
-          <DocsetMenu>{docset}</DocsetMenu>
+          <DocsetMenu color={buttonTextColor}>{docset}</DocsetMenu>
           {versions?.length > 1 && (
             <Menu>
               <MenuButton
