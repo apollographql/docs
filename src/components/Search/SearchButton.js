@@ -2,7 +2,7 @@ import React from 'react';
 import {Box, Flex, useColorModeValue} from '@chakra-ui/react';
 import {FiSearch} from 'react-icons/fi';
 
-export default function SearchButton() {
+export default function SearchButton(props) {
   const bgColor = useColorModeValue('gray.50', 'gray.900');
   const textColor = useColorModeValue('gray.400', 'gray.500');
   return (
@@ -17,7 +17,11 @@ export default function SearchButton() {
       as="button"
       rounded="md"
       bg={bgColor}
-      _focus={{shadow: 'outline'}}
+      _focus={{
+        outline: 'none',
+        shadow: 'outline'
+      }}
+      {...props}
     >
       <FiSearch />
       <Box ml="2" color={textColor}>

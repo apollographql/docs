@@ -171,6 +171,12 @@ const plugins = [
     }
   },
   {
+    resolve: 'gatsby-plugin-env-variables',
+    options: {
+      allowList: ['ALGOLIA_APP_ID', 'ALGOLIA_SEARCH_KEY']
+    }
+  },
+  {
     resolve: 'gatsby-plugin-algolia',
     options: {
       appId: process.env.ALGOLIA_APP_ID,

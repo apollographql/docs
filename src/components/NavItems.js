@@ -55,7 +55,7 @@ function NavButton({isActive, depth, children, ...props}) {
 
 NavButton.propTypes = {
   children: PropTypes.node.isRequired,
-  isActive: PropTypes.bool.isRequired,
+  isActive: PropTypes.bool,
   depth: PropTypes.number.isRequired
 };
 

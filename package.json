@@ -8,6 +8,8 @@
     "dev:server": "DOCS_PATH=../apollo-server/docs/source npm start"
   },
   "dependencies": {
+    "@algolia/autocomplete-core": "^1.5.2",
+    "@algolia/autocomplete-preset-algolia": "^1.5.2",
     "@apollo/chakra-helpers": "^1.0.1",
     "@apollo/space-kit": "8.11.0",
     "@chakra-ui/gatsby-plugin": "^2.0.2",
@@ -19,11 +21,13 @@
     "@rehooks/local-storage": "^2.4.4",
     "@svgr/webpack": "^5.5.0",
     "@theowenyoung/gatsby-source-git": "^2.3.1",
+    "algoliasearch": "^4.12.1",
     "apollo-algolia-transform": "^1.0.38",
     "fenceparser": "^1.1.1",
     "framer-motion": "^4.1.17",
     "gatsby": "^4.4.0",
     "gatsby-plugin-algolia": "^0.24.0",
+    "gatsby-plugin-env-variables": "^2.2.0",
     "gatsby-plugin-google-gtag": "^4.3.0",
     "gatsby-plugin-google-tagmanager": "^4.3.0",
     "gatsby-plugin-manifest": "^4.3.0",

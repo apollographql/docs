@@ -1,7 +1,7 @@
 import DocsetMenu from './DocsetMenu';
 import PropTypes from 'prop-types';
 import React from 'react';
-import SearchButton from './SearchButton';
+import Search from './Search';
 import {ReactComponent as ApolloLogo} from '@apollo/space-kit/logos/logo.svg';
 import {
   Box,
@@ -92,7 +92,7 @@ export default function Header({docset, versions, currentVersion}) {
         onClick={toggleColorMode}
         icon={colorMode === 'dark' ? <FiSun /> : <FiMoon />}
       />
-      <SearchButton />
+      <Search />
     </Flex>
   );
 }
