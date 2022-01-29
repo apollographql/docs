@@ -1,5 +1,6 @@
 {
   "name": "docs",
+  "private": true,
   "scripts": {
     "start": "gatsby develop",
     "build": "gatsby build",
