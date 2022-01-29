@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import {Box, List, ListItem, useColorMode, useTheme} from '@chakra-ui/react';
+import {Markup} from 'interweave';
 
 export default function Results({autocomplete, collections}) {
   const theme = useTheme();
@@ -13,7 +14,7 @@ export default function Results({autocomplete, collections}) {
     colorScheme: 'indigo'
   });
   return (
-    <div>
+    <Box borderRightWidth="1px">
       {collections.map((collection, index) => {
         const {source, items} = collection;
         return (
@@ -37,7 +38,7 @@ export default function Results({autocomplete, collections}) {
                   >
                     <Box fontSize="lg">{item.title}</Box>
                     <Box fontSize="sm" isTruncated>
-                      {item.excerpt}
+                      <Markup content={item._highlightResult.text.value} />
                     </Box>
                   </ListItem>
                 ))}
@@ -46,7 +47,7 @@ export default function Results({autocomplete, collections}) {
           </div>
         );
       })}
-    </div>
+    </Box>
   );
 }
 

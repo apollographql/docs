@@ -64,7 +64,7 @@ export default function Sidebar({navItems, isHidden, onHide}) {
   return (
     <chakra.aside
       // account for header border
-      h={`calc(100vh - ${HEADER_HEIGHT + 1}px)`}
+      h={`calc(100vh - ${HEADER_HEIGHT}px)`}
       w={SIDEBAR_WIDTH}
       borderRightWidth="1px"
       pos="fixed"

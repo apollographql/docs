@@ -12,7 +12,7 @@ import {
   Stack,
   useDisclosure
 } from '@chakra-ui/react';
-import {SiKotlin, SiReact, SiSwift} from 'react-icons/si';
+import {SiKotlin, SiNodedotjs, SiReact, SiSwift} from 'react-icons/si';
 
 export function DocsetMenu(props) {
   const {isOpen, onOpen, onClose} = useDisclosure();
@@ -44,7 +44,9 @@ export function DocsetMenu(props) {
               </DocsetButton>
             </DocsetGroup>
             <DocsetGroup title="Backend">
-              <DocsetButton to="/apollo-server">Server</DocsetButton>
+              <DocsetButton leftIcon={<SiNodedotjs />} to="/apollo-server">
+                Server
+              </DocsetButton>
               <DocsetButton to="/federation">Federation</DocsetButton>
               <DocsetButton to="/router">Router</DocsetButton>
             </DocsetGroup>

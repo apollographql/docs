@@ -38,8 +38,8 @@ export const createGrayPalette = (
 // we need to mix colors together to fill the gaps and create a complete
 // chakra color palette
 export const createColorPalette = (color: ColorPalette): ColorHues => ({
-  50: color.lighter,
-  100: mix(0.5, color.lighter, color.light),
+  50: color.lightest,
+  100: color.lighter,
   200: color.light,
   300: mix(0.5, color.light, color.base),
   400: color.base,

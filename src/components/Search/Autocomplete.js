@@ -55,7 +55,7 @@ export default function Autocomplete() {
 
   return (
     <div {...autocomplete.getRootProps({})}>
-      <InputGroup size="lg">
+      <InputGroup size="lg" shadow={autocompleteState.isOpen && 'sm'}>
         <Input
           borderWidth="0"
           focusBorderColor="transparent"
@@ -70,11 +70,7 @@ export default function Autocomplete() {
         </InputLeftElement>
       </InputGroup>
       {autocompleteState.isOpen && (
-        <SimpleGrid
-          columns="2"
-          borderTopWidth="1px"
-          {...autocomplete.getPanelProps({})}
-        >
+        <SimpleGrid columns="2" {...autocomplete.getPanelProps({})}>
           <Results
             autocomplete={autocomplete}
             collections={autocompleteState.collections}

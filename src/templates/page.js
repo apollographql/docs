@@ -98,7 +98,7 @@ export default function PageTemplate({data, uri, pageContext}) {
   const paddingTop = useToken('space', 10);
   const paddingBottom = useToken('space', 12);
   const scrollPaddingTop = useMemo(
-    () => `calc(${paddingTop} + ${HEADER_HEIGHT + 1}px)`,
+    () => `calc(${paddingTop} + ${HEADER_HEIGHT}px)`,
     [paddingTop]
   );
 
