@@ -1,5 +1,6 @@
 import Preview from './Preview';
-import React, {useMemo, useState} from 'react';
+import PropTypes from 'prop-types';
+import React, {useEffect, useMemo, useState} from 'react';
 import Results from './Results';
 import algoliasearch from 'algoliasearch/lite';
 import {FiSearch} from 'react-icons/fi';
@@ -17,8 +18,14 @@ const searchClient = algoliasearch(
   process.env.ALGOLIA_SEARCH_KEY
 );
 
-export default function Autocomplete() {
+export default function Autocomplete({onClose}) {
   const [autocompleteState, setAutocompleteState] = useState({});
+
+  useEffect(() => {
+    if (autocompleteState.activeItemId === null) {
+      onClose();
+    }
+  }, [autocompleteState, onClose]);
 
   const autocomplete = useMemo(
     () =>
@@ -83,3 +90,7 @@ export default function Autocomplete() {
     </div>
   );
 }
+
+Autocomplete.propTypes = {
+  onClose: PropTypes.func.isRequired
+};

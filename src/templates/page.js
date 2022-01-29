@@ -16,6 +16,7 @@ import Wrapper from '../components/Wrapper';
 import autolinkHeadings from 'rehype-autolink-headings';
 import path, {dirname} from 'path';
 import rehypeReact from 'rehype-react';
+import useLocalStorage from 'react-use/lib/useLocalStorage';
 import {
   Box,
   Button,
@@ -47,7 +48,6 @@ import {MDXRenderer} from 'gatsby-plugin-mdx';
 import {PathContext} from '../utils';
 import {graphql} from 'gatsby';
 import {rehype} from 'rehype';
-import {useLocalStorage} from '@rehooks/local-storage';
 
 const LIST_SPACING = 2;
 

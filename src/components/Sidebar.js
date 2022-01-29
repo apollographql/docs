@@ -1,6 +1,7 @@
 import NavItems, {isGroupActive} from './NavItems';
 import PropTypes from 'prop-types';
 import React, {useContext, useMemo} from 'react';
+import useLocalStorage from 'react-use/lib/useLocalStorage';
 import {
   Button,
   Flex,
@@ -12,7 +13,6 @@ import {
 import {FiChevronsDown, FiChevronsLeft, FiChevronsUp} from 'react-icons/fi';
 import {HEADER_HEIGHT} from './Header';
 import {NavContext, PathContext} from '../utils';
-import {useLocalStorage} from '@rehooks/local-storage';
 
 export const SIDEBAR_WIDTH = 250;
 
