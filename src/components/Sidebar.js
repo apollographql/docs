@@ -85,6 +85,7 @@ export default function Sidebar({navItems, isHidden, onHide}) {
           mr="auto"
           size="sm"
           variant="ghost"
+          isDisabled={!navGroups.length}
           rightIcon={isAllExpanded ? <FiChevronsUp /> : <FiChevronsDown />}
           onClick={() =>
             setNav(
