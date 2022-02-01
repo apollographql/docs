@@ -2,7 +2,7 @@ import Blockquote from '../components/Blockquote';
 import CodeBlock from '../components/CodeBlock';
 import ExpansionPanel from '../components/ExpansionPanel';
 import Footer from '../components/Footer';
-import Header, {HEADER_HEIGHT} from '../components/Header';
+import Header, {TOTAL_HEADER_HEIGHT} from '../components/Header';
 import InlineCode from '../components/InlineCode';
 import MultiCodeBlock, {
   MultiCodeBlockContext
@@ -98,7 +98,7 @@ export default function PageTemplate({data, uri, pageContext}) {
   const paddingTop = useToken('space', 10);
   const paddingBottom = useToken('space', 12);
   const scrollPaddingTop = useMemo(
-    () => `calc(${paddingTop} + ${HEADER_HEIGHT}px)`,
+    () => `calc(${paddingTop} + ${TOTAL_HEADER_HEIGHT}px)`,
     [paddingTop]
   );
 
@@ -174,7 +174,7 @@ export default function PageTemplate({data, uri, pageContext}) {
                   variant="outline"
                   fontSize="md"
                   icon={<FiChevronsRight />}
-                  css={{top: HEADER_HEIGHT}}
+                  css={{top: TOTAL_HEADER_HEIGHT}}
                   onClick={() => setSidebarHidden(false)}
                 />
               </Tooltip>

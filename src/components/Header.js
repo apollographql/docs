@@ -21,7 +21,9 @@ import {FiChevronDown, FiMoon, FiSun} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
 import {useTagColors} from '../utils';
 
-export const HEADER_HEIGHT = 60;
+const HEADER_HEIGHT = 60;
+const HEADER_BORDER_WIDTH = 1;
+export const TOTAL_HEADER_HEIGHT = HEADER_HEIGHT + HEADER_BORDER_WIDTH;
 
 export default function Header({docset, versions, currentVersion}) {
   const {toggleColorMode, colorMode} = useColorMode();
@@ -34,12 +36,14 @@ export default function Header({docset, versions, currentVersion}) {
       as="header"
       px="4"
       boxSizing="content-box"
-      shadow="sm"
       pos="sticky"
       top="0"
       zIndex="1"
       bg={bg}
-      css={{height: HEADER_HEIGHT}}
+      css={{
+        height: HEADER_HEIGHT,
+        borderBottomWidth: HEADER_BORDER_WIDTH
+      }}
     >
       <HStack spacing="4" mr="auto" fontWeight="semibold">
         <Flex align="center">

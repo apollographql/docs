@@ -17,6 +17,7 @@ export default function Results({autocomplete, collections}) {
     <Box borderRightWidth="1px">
       {collections.map((collection, index) => {
         const {source, items} = collection;
+        console.log(items);
         return (
           <div key={index}>
             {items.length > 0 && (
@@ -36,7 +37,9 @@ export default function Results({autocomplete, collections}) {
                       source
                     })}
                   >
-                    <Box fontSize="lg">{item.title}</Box>
+                    <Box fontSize="lg">
+                      <Markup content={item._highlightResult.title.value} />
+                    </Box>
                     <Box fontSize="sm" isTruncated>
                       <Markup content={item._highlightResult.text.value} />
                     </Box>

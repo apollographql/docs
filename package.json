@@ -8,10 +8,13 @@
     "dev:client": "DOCS_PATH=../apollo-client/docs/source npm start",
     "dev:server": "DOCS_PATH=../apollo-server/docs/source npm start"
   },
+  "workspaces": [
+    "./packages/*"
+  ],
   "dependencies": {
     "@algolia/autocomplete-core": "^1.5.2",
     "@algolia/autocomplete-preset-algolia": "^1.5.2",
-    "@apollo/chakra-helpers": "^1.0.1",
+    "@apollo/chakra-helpers": "file:packages/chakra-helpers",
     "@apollo/space-kit": "8.11.0",
     "@chakra-ui/gatsby-plugin": "^2.0.2",
     "@chakra-ui/react": "^1.6.10",

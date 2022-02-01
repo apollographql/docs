@@ -11,8 +11,8 @@ import {
   useColorModeValue
 } from '@chakra-ui/react';
 import {FiChevronsDown, FiChevronsLeft, FiChevronsUp} from 'react-icons/fi';
-import {HEADER_HEIGHT} from './Header';
 import {NavContext, PathContext} from '../utils';
+import {TOTAL_HEADER_HEIGHT} from './Header';
 
 export const SIDEBAR_WIDTH = 250;
 
@@ -64,7 +64,7 @@ export default function Sidebar({navItems, isHidden, onHide}) {
   return (
     <chakra.aside
       // account for header border
-      h={`calc(100vh - ${HEADER_HEIGHT}px)`}
+      h={`calc(100vh - ${TOTAL_HEADER_HEIGHT}px)`}
       w={SIDEBAR_WIDTH}
       borderRightWidth="1px"
       pos="fixed"
@@ -74,7 +74,7 @@ export default function Sidebar({navItems, isHidden, onHide}) {
       transitionProperty="common"
       transitionDuration="normal"
       bg={bg}
-      css={{top: HEADER_HEIGHT}}
+      css={{top: TOTAL_HEADER_HEIGHT}}
       style={{
         opacity: isHidden ? 0 : 1,
         transform: isHidden ? `translateX(-${SIDEBAR_WIDTH}px)` : 'none'

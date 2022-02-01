@@ -7,7 +7,7 @@ import {
 } from '@apollo/chakra-helpers';
 import {extendTheme} from '@chakra-ui/react';
 
-const {grey, silver, indigo, midnight} = colors;
+const {grey, silver, indigo, blilet, midnight} = colors;
 
 const theme = extendTheme({
   config: {
@@ -24,7 +24,8 @@ const theme = extendTheme({
   fonts,
   colors: {
     gray: createGrayPalette(silver, grey, midnight),
-    indigo: createColorPalette(indigo)
+    indigo: createColorPalette(indigo),
+    blue: createColorPalette(blilet)
   }
 });
 

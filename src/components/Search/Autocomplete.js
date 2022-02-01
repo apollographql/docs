@@ -1,15 +1,9 @@
-import Preview from './Preview';
+import Panel from './Panel';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
-import Results from './Results';
 import algoliasearch from 'algoliasearch/lite';
 import {FiSearch} from 'react-icons/fi';
-import {
-  Input,
-  InputGroup,
-  InputLeftElement,
-  SimpleGrid
-} from '@chakra-ui/react';
+import {Input, InputGroup, InputLeftElement} from '@chakra-ui/react';
 import {createAutocomplete} from '@algolia/autocomplete-core';
 import {getAlgoliaResults} from '@algolia/autocomplete-preset-algolia';
 
@@ -62,7 +56,10 @@ export default function Autocomplete({onClose}) {
 
   return (
     <div {...autocomplete.getRootProps({})}>
-      <InputGroup size="lg" shadow={autocompleteState.isOpen && 'sm'}>
+      <InputGroup
+        size="lg"
+        borderBottomWidth={autocompleteState.isOpen && '1px'}
+      >
         <Input
           borderWidth="0"
           focusBorderColor="transparent"
@@ -77,15 +74,10 @@ export default function Autocomplete({onClose}) {
         </InputLeftElement>
       </InputGroup>
       {autocompleteState.isOpen && (
-        <SimpleGrid columns="2" {...autocomplete.getPanelProps({})}>
-          <Results
-            autocomplete={autocomplete}
-            collections={autocompleteState.collections}
-          />
-          {autocompleteState.context.preview && (
-            <Preview preview={autocompleteState.context.preview} />
-          )}
-        </SimpleGrid>
+        <Panel
+          autocomplete={autocomplete}
+          autocompleteState={autocompleteState}
+        />
       )}
     </div>
   );

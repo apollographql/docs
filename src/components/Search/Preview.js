@@ -37,6 +37,8 @@ export default function Preview({preview}) {
     searchByAlgoliaDark
   );
 
+  const breadcrumbBg = useColorModeValue('gray.100', 'gray.800');
+
   return (
     <Flex
       direction="column"
@@ -55,7 +57,7 @@ export default function Preview({preview}) {
           px="2"
           rounded="sm"
           fontSize="sm"
-          bg="gray.100"
+          bg={breadcrumbBg}
           spacing="1"
           separator={<FiChevronRight />}
         >
