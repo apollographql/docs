@@ -1,10 +1,11 @@
 import GithubSlugger from 'github-slugger';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
-import {Link, List, ListItem, useColorModeValue} from '@chakra-ui/react';
+import {Link, List, ListItem} from '@chakra-ui/react';
+import {useAccentColor} from '../utils';
 
 export default function TableOfContents({headings}) {
-  const activeColor = useColorModeValue('indigo.500', 'indigo.200');
+  const activeColor = useAccentColor();
   const [activeId, setActiveId] = useState(null);
 
   const toc = useMemo(() => {

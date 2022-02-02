@@ -12,7 +12,17 @@ import {
   Stack,
   useDisclosure
 } from '@chakra-ui/react';
+import {IoGitNetworkOutline} from 'react-icons/io5';
 import {SiKotlin, SiNodedotjs, SiReact, SiSwift} from 'react-icons/si';
+
+export const DOCSET_ICONS = {
+  react: <SiReact />,
+  ios: <SiSwift />,
+  android: <SiKotlin />, // TODO: update algolia index to be called "kotlin"
+  server: <SiNodedotjs />,
+  apollo: <Box fill="current" h="1em" as={ApolloMark} />,
+  federation: <IoGitNetworkOutline />
+};
 
 export function DocsetMenu(props) {
   const {isOpen, onOpen, onClose} = useDisclosure();
@@ -25,29 +35,28 @@ export function DocsetMenu(props) {
           <ModalCloseButton />
           <Stack spacing="4" p="6">
             <DocsetGroup title="Get started">
-              <DocsetButton
-                to="/"
-                leftIcon={<Box fill="current" h="1em" as={ApolloMark} />}
-              >
+              <DocsetButton to="/" leftIcon={DOCSET_ICONS.apollo}>
                 Apollo Basics
               </DocsetButton>
             </DocsetGroup>
             <DocsetGroup title="Client">
-              <DocsetButton leftIcon={<SiReact />} to="/react">
+              <DocsetButton leftIcon={DOCSET_ICONS.react} to="/react">
                 React
               </DocsetButton>
-              <DocsetButton leftIcon={<SiSwift />} to="/ios">
+              <DocsetButton leftIcon={DOCSET_ICONS.ios} to="/ios">
                 iOS
               </DocsetButton>
-              <DocsetButton leftIcon={<SiKotlin />} to="/kotlin">
+              <DocsetButton leftIcon={DOCSET_ICONS.android} to="/kotlin">
                 Kotlin
               </DocsetButton>
             </DocsetGroup>
             <DocsetGroup title="Backend">
-              <DocsetButton leftIcon={<SiNodedotjs />} to="/apollo-server">
+              <DocsetButton leftIcon={DOCSET_ICONS.server} to="/apollo-server">
                 Server
               </DocsetButton>
-              <DocsetButton to="/federation">Federation</DocsetButton>
+              <DocsetButton leftIcon={DOCSET_ICONS.federation} to="/federation">
+                Federation
+              </DocsetButton>
               <DocsetButton to="/router">Router</DocsetButton>
             </DocsetGroup>
             <DocsetGroup title="Tools">

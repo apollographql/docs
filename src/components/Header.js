@@ -19,7 +19,7 @@ import {
 } from '@chakra-ui/react';
 import {FiChevronDown, FiMoon, FiSun} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
-import {useTagColors} from '../utils';
+import {useAccentColor, useTagColors} from '../utils';
 
 const HEADER_HEIGHT = 60;
 const HEADER_BORDER_WIDTH = 1;
@@ -28,7 +28,7 @@ export const TOTAL_HEADER_HEIGHT = HEADER_HEIGHT + HEADER_BORDER_WIDTH;
 export default function Header({docset, versions, currentVersion}) {
   const {toggleColorMode, colorMode} = useColorMode();
   const bg = useColorModeValue('white', 'gray.800');
-  const buttonTextColor = useColorModeValue('indigo.500', 'indigo.200');
+  const buttonTextColor = useAccentColor();
   const [tagBg, tagTextColor] = useTagColors();
   return (
     <Flex

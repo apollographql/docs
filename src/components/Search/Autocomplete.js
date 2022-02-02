@@ -7,6 +7,12 @@ import {Input, InputGroup, InputLeftElement} from '@chakra-ui/react';
 import {createAutocomplete} from '@algolia/autocomplete-core';
 import {getAlgoliaResults} from '@algolia/autocomplete-preset-algolia';
 
+const SOURCES = {
+  docs: 'Documentation',
+  blog: 'Blog',
+  odyssey: 'Odyssey'
+};
+
 const searchClient = algoliasearch(
   process.env.ALGOLIA_APP_ID,
   process.env.ALGOLIA_SEARCH_KEY
@@ -27,9 +33,9 @@ export default function Autocomplete({onClose}) {
         debug: true,
         defaultActiveItemId: 0,
         onStateChange: ({state}) => setAutocompleteState(state),
-        getSources: () => [
-          {
-            sourceId: 'docs',
+        getSources: () =>
+          Object.keys(SOURCES).map((indexName, index) => ({
+            sourceId: indexName,
             getItemUrl: ({item}) => item.url,
             getItemInputValue: ({item}) => item.query,
             getItems: ({query}) =>
@@ -37,10 +43,10 @@ export default function Autocomplete({onClose}) {
                 searchClient,
                 queries: [
                   {
-                    indexName: 'docs',
+                    indexName,
                     query,
                     params: {
-                      hitsPerPage: 4,
+                      hitsPerPage: index ? 2 : 8,
                       highlightPreTag: '<mark>',
                       highlightPostTag: '</mark>'
                     }
@@ -48,8 +54,7 @@ export default function Autocomplete({onClose}) {
                 ]
               }),
             onActive: ({item, setContext}) => setContext({preview: item})
-          }
-        ]
+          }))
       }),
     []
   );
@@ -75,6 +80,7 @@ export default function Autocomplete({onClose}) {
       </InputGroup>
       {autocompleteState.isOpen && (
         <Panel
+          sources={SOURCES}
           autocomplete={autocomplete}
           autocompleteState={autocompleteState}
         />

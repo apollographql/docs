@@ -1,8 +1,9 @@
 import React from 'react';
-import {Box, useColorModeValue} from '@chakra-ui/react';
+import {Box} from '@chakra-ui/react';
+import {useAccentColor} from '../utils';
 
 export default function Blockquote(props) {
-  const borderColor = useColorModeValue('indigo.500', 'indigo.200');
+  const borderColor = useAccentColor();
   return (
     <Box
       pl="4"

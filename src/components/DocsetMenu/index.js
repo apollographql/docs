@@ -1,1 +1,1 @@
-export {DocsetMenu as default} from './DocsetMenu';
+export {DocsetMenu as default, DOCSET_ICONS} from './DocsetMenu';

@@ -1,8 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import ResultIcon from './ResultIcon';
 import searchByAlgoliaDark from '../../assets/logos/search-by-algolia-dark.svg';
 import searchByAlgoliaLight from '../../assets/logos/search-by-algolia-light.svg';
+import upperFirst from 'lodash/upperFirst';
 import {
+  Box,
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
@@ -13,15 +16,30 @@ import {
   Link,
   Tag,
   Text,
+  chakra,
   useColorModeValue
 } from '@chakra-ui/react';
 import {FiChevronRight} from 'react-icons/fi';
 import {Markup} from 'interweave';
+import {useAccentColor} from '../../utils';
+
+function getDocsetTitle(docset) {
+  switch (docset) {
+    case 'ios':
+      return 'iOS';
+    case 'android':
+      return 'Kotlin';
+    default:
+      return upperFirst(docset);
+  }
+}
 
 export default function Preview({preview}) {
   const {
     url,
+    type,
     title,
+    docset,
     categories,
     sectionTitle,
     ancestors = [],
@@ -32,12 +50,12 @@ export default function Preview({preview}) {
     ? [...ancestors, {url, title: sectionTitle}]
     : ancestors;
 
+  const iconColor = useAccentColor();
+  const breadcrumbBg = useColorModeValue('gray.100', 'gray.800');
   const searchByAlgolia = useColorModeValue(
     searchByAlgoliaLight,
     searchByAlgoliaDark
   );
-
-  const breadcrumbBg = useColorModeValue('gray.100', 'gray.800');
 
   return (
     <Flex
@@ -48,6 +66,14 @@ export default function Preview({preview}) {
       px="5"
       pos="relative"
     >
+      <Flex mb="5" align="center">
+        <Box fontSize="2xl" color={iconColor}>
+          <ResultIcon result={preview} />
+        </Box>
+        <chakra.span ml="2">
+          {docset ? `${getDocsetTitle(docset)} docs` : upperFirst(type)}
+        </chakra.span>
+      </Flex>
       <Heading size="lg" mb="2">
         <Link href={url}>{title}</Link>
       </Heading>
@@ -70,9 +96,11 @@ export default function Preview({preview}) {
           ))}
         </Breadcrumb>
       )}
-      <Text>
-        <Markup content={_snippetResult.text.value} />
-      </Text>
+      {_snippetResult?.text && (
+        <Text>
+          <Markup content={_snippetResult.text.value} />
+        </Text>
+      )}
       {categories && (
         <HStack mt="4">
           {categories.map((category, index) => (
