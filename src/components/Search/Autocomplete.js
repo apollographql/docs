@@ -13,32 +13,28 @@ import {getAlgoliaResults} from '@algolia/autocomplete-preset-algolia';
 const SOURCES = {
   [DOCS_INDEX]: 'Documentation',
   blog: 'Blog',
-  odyssey: 'Odyssey',
-  [QUERY_SUGGESTIONS_INDEX]: "Can't find what you're looking for?"
+  odyssey: 'Odyssey'
+  // [QUERY_SUGGESTIONS_INDEX]: "Can't find what you're looking for?"
 };
 
-const searchClient = algoliasearch(
-  process.env.ALGOLIA_APP_ID,
-  process.env.ALGOLIA_SEARCH_KEY
-);
+const appId = process.env.ALGOLIA_APP_ID;
+const apiKey = process.env.ALGOLIA_SEARCH_KEY;
 
+const searchClient = algoliasearch(appId, apiKey);
 insightsClient('init', {
-  appId: process.env.ALGOLIA_APP_ID,
-  apiKey: process.env.ALGOLIA_SEARCH_KEY,
+  appId,
+  apiKey,
   useCookie: true
 });
 
 function getEventName(index) {
   switch (index) {
-    case QUERY_SUGGESTIONS_INDEX: {
+    case QUERY_SUGGESTIONS_INDEX:
       return 'Suggestion selected from Autocomplete';
-    }
-    case DOCS_INDEX: {
+    case DOCS_INDEX:
       return 'Article selected from docs index';
-    }
-    default: {
+    default:
       return 'Article selected from Autocomplete';
-    }
   }
 }
 

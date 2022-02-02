@@ -5,6 +5,7 @@ import ResultIcon from './ResultIcon';
 import {
   Box,
   Flex,
+  chakra,
   useColorMode,
   useColorModeValue,
   useTheme
@@ -25,46 +26,36 @@ export default function Result({item, ...props}) {
   const iconColor = useAccentColor();
   const highlightColor = useColorModeValue('gray.500', 'gray.400');
   const {text, title, description} = item._highlightResult;
+  const {'aria-selected': isSelected} = props;
 
   return (
-    <Flex
-      as="li"
-      p="2"
-      sx={{
-        '&[aria-selected="true"]': {
-          bg: activeBg
-        }
-      }}
-      {...props}
-    >
-      <Box mr="3" fontSize="xl" color={iconColor} flexShrink="0">
-        <ResultIcon result={item} />
-      </Box>
-      <Box lineHeight="shorter" w="0" flexGrow="1">
-        <Box fontSize="lg">
-          <Highlight value={title.value} />
+    <chakra.li bg={isSelected && activeBg} {...props}>
+      <Flex as="a" href={item.url} p="2">
+        <Box mr="3" fontSize="xl" color={iconColor} flexShrink="0">
+          <ResultIcon result={item} />
         </Box>
-        <Box fontSize="sm" color={highlightColor} isTruncated>
-          <Highlight value={(text || description).value} />
+        <Box lineHeight="shorter" w="0" flexGrow="1">
+          <Box fontSize="lg">
+            <Highlight value={title.value} />
+          </Box>
+          <Box fontSize="sm" color={highlightColor} isTruncated>
+            <Highlight value={(text || description).value} />
+          </Box>
         </Box>
-      </Box>
-      <Box
-        ml="2"
-        my="auto"
-        display="none"
-        color={highlightColor}
-        sx={{
-          '[aria-selected="true"] > &': {
-            display: 'block'
-          }
-        }}
-      >
-        ⏎
-      </Box>
-    </Flex>
+        <Box
+          ml="2"
+          my="auto"
+          display={!isSelected && 'none'}
+          color={highlightColor}
+        >
+          ⏎
+        </Box>
+      </Flex>
+    </chakra.li>
   );
 }
 
 Result.propTypes = {
-  item: PropTypes.object.isRequired
+  item: PropTypes.object.isRequired,
+  'aria-selected': PropTypes.bool.isRequired
 };
