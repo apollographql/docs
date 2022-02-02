@@ -1,4 +1,4 @@
-import Panel from './Panel';
+import Panel, {DOCS_INDEX, QUERY_SUGGESTIONS_INDEX} from './Panel';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
 import algoliasearch from 'algoliasearch/lite';
@@ -11,9 +11,10 @@ import {createAutocomplete} from '@algolia/autocomplete-core';
 import {getAlgoliaResults} from '@algolia/autocomplete-preset-algolia';
 
 const SOURCES = {
-  docs: 'Documentation',
+  [DOCS_INDEX]: 'Documentation',
   blog: 'Blog',
-  odyssey: 'Odyssey'
+  odyssey: 'Odyssey',
+  [QUERY_SUGGESTIONS_INDEX]: "Can't find what you're looking for?"
 };
 
 const searchClient = algoliasearch(
@@ -29,10 +30,10 @@ insightsClient('init', {
 
 function getEventName(index) {
   switch (index) {
-    case 'docs_query_suggestions': {
+    case QUERY_SUGGESTIONS_INDEX: {
       return 'Suggestion selected from Autocomplete';
     }
-    case 'docs': {
+    case DOCS_INDEX: {
       return 'Article selected from docs index';
     }
     default: {
@@ -88,7 +89,11 @@ export default function Autocomplete({onClose}) {
                     indexName,
                     query,
                     params: {
-                      hitsPerPage: index ? 2 : 8,
+                      hitsPerPage: !index
+                        ? 8
+                        : indexName === QUERY_SUGGESTIONS_INDEX
+                        ? 4
+                        : 2,
                       highlightPreTag: '<mark>',
                       highlightPostTag: '</mark>'
                     }

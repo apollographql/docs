@@ -99,7 +99,7 @@ export default function Preview({preview}) {
       )}
       {_snippetResult?.text && (
         <Text>
-          <Markup content={_snippetResult.text.value} />
+          <Markup content={_snippetResult.text.value} allowList={['mark']} />
         </Text>
       )}
       {categories && (

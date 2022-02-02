@@ -24,6 +24,7 @@ export default function Result({item, ...props}) {
 
   const iconColor = useAccentColor();
   const highlightColor = useColorModeValue('gray.500', 'gray.400');
+  const {text, title, description} = item._highlightResult;
 
   return (
     <Flex
@@ -41,13 +42,11 @@ export default function Result({item, ...props}) {
       </Box>
       <Box lineHeight="shorter" w="0" flexGrow="1">
         <Box fontSize="lg">
-          <Markup content={item._highlightResult.title.value} />
+          <Markup content={title.value} />
         </Box>
-        {item._highlightResult.text && (
-          <Box fontSize="sm" color={highlightColor} isTruncated>
-            <Markup content={item._highlightResult.text.value} />
-          </Box>
-        )}
+        <Box fontSize="sm" color={highlightColor} isTruncated>
+          <Markup content={(text || description).value} allowList={['mark']} />
+        </Box>
       </Box>
       <Box
         ml="2"
