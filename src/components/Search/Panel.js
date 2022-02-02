@@ -9,30 +9,16 @@ import {
   Heading,
   SimpleGrid,
   Wrap,
-  WrapItem,
-  useColorModeValue
+  WrapItem
 } from '@chakra-ui/react';
 
 export const DOCS_INDEX = 'docs';
 export const QUERY_SUGGESTIONS_INDEX = 'docs_query_suggestions';
 
 export default function Panel({sources, autocomplete, autocompleteState}) {
-  const markColor = useColorModeValue('indigo.500', 'inherit');
   const scrollArea = useRef();
   return (
-    <SimpleGrid
-      h="md"
-      columns="2"
-      sx={{
-        mark: {
-          bg: 'none',
-          color: markColor,
-          fontWeight: 'semibold',
-          textDecoration: 'underline'
-        }
-      }}
-      {...autocomplete.getPanelProps({})}
-    >
+    <SimpleGrid h="md" columns="2" {...autocomplete.getPanelProps({})}>
       <Box ref={scrollArea} borderRightWidth="1px" overflow="auto" pb="4">
         {autocompleteState.collections
           .filter(collection => collection.items.length > 0)

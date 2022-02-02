@@ -1,3 +1,4 @@
+import Highlight from './Highlight';
 import PropTypes from 'prop-types';
 import React from 'react';
 import ResultIcon from './ResultIcon';
@@ -8,7 +9,6 @@ import {
   useColorModeValue,
   useTheme
 } from '@chakra-ui/react';
-import {Markup} from 'interweave';
 import {useAccentColor} from '../../utils';
 
 export default function Result({item, ...props}) {
@@ -42,10 +42,10 @@ export default function Result({item, ...props}) {
       </Box>
       <Box lineHeight="shorter" w="0" flexGrow="1">
         <Box fontSize="lg">
-          <Markup content={title.value} />
+          <Highlight value={title.value} />
         </Box>
         <Box fontSize="sm" color={highlightColor} isTruncated>
-          <Markup content={(text || description).value} allowList={['mark']} />
+          <Highlight value={(text || description).value} />
         </Box>
       </Box>
       <Box

@@ -1,3 +1,4 @@
+import Highlight from './Highlight';
 import PropTypes from 'prop-types';
 import React, {Fragment} from 'react';
 import ResultIcon from './ResultIcon';
@@ -17,7 +18,6 @@ import {
   useColorModeValue
 } from '@chakra-ui/react';
 import {FiChevronRight} from 'react-icons/fi';
-import {Markup} from 'interweave';
 import {useAccentColor} from '../../utils';
 
 function getDocsetTitle(docset) {
@@ -99,7 +99,7 @@ export default function Preview({preview}) {
       )}
       {_snippetResult?.text && (
         <Text>
-          <Markup content={_snippetResult.text.value} allowList={['mark']} />
+          <Highlight value={_snippetResult.text.value} />
         </Text>
       )}
       {categories && (
