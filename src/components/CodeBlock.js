@@ -60,7 +60,7 @@ export default function CodeBlock({children}) {
       Prism={Prism}
       theme={theme}
       code={code.trim()}
-      language={className.replace(/language-/, '')}
+      language={className.replace(/language-/, '').replace(/{.*?}/, '')} // TODO: use regex and get match for language instead of double replace
     >
       {({className, style, tokens, getLineProps, getTokenProps}) => (
         <Box rounded="md" style={style} pos="relative" shadow="sm">

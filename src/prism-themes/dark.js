@@ -1,6 +1,3 @@
-// TODO: some code blocks don't seem to be getting syntax color styles
-// code block w/ `js{12-17}` language prop doesn't colorize correctly, but `js` language prop does
-
 export const theme = {
   plain: {
     color: '#ffffff',
