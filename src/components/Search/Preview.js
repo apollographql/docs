@@ -1,14 +1,11 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {Fragment} from 'react';
 import ResultIcon from './ResultIcon';
 import searchByAlgoliaDark from '../../assets/logos/search-by-algolia-dark.svg';
 import searchByAlgoliaLight from '../../assets/logos/search-by-algolia-light.svg';
 import upperFirst from 'lodash/upperFirst';
 import {
   Box,
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
   Flex,
   HStack,
   Heading,
@@ -78,23 +75,27 @@ export default function Preview({preview}) {
         <Link href={url}>{title}</Link>
       </Heading>
       {allAncestors.length > 0 && (
-        <Breadcrumb
+        <HStack
+          as="nav"
+          aria-label="Breadcrumb"
           mb="2"
           px="2"
           rounded="sm"
           fontSize="sm"
           bg={breadcrumbBg}
           spacing="1"
-          separator={<FiChevronRight />}
+          whiteSpace="nowrap"
+          maxW="full"
         >
           {allAncestors.map((ancestor, index) => (
-            <BreadcrumbItem key={index}>
-              <BreadcrumbLink href={ancestor.url}>
+            <Fragment key={index}>
+              {index > 0 && <Box as={FiChevronRight} flexShrink="0" />}
+              <Link isTruncated href={ancestor.url} title={ancestor.title}>
                 {ancestor.title}
-              </BreadcrumbLink>
-            </BreadcrumbItem>
+              </Link>
+            </Fragment>
           ))}
-        </Breadcrumb>
+        </HStack>
       )}
       {_snippetResult?.text && (
         <Text>
