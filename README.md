@@ -1,7 +1,9 @@
 # Apollo docs
 
+## Running the docs locally
+
 ```sh
-npx lerna bootstrap
+npm install
 ```
 
 ```sh
@@ -11,6 +13,8 @@ netlify init
 ```sh
 netlify dev
 ```
+
+## Running against a local docset
 
 ```sh
 DOCS_PATH=../apollo-client/docs/source netlify dev
