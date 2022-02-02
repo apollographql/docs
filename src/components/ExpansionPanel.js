@@ -1,25 +1,39 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {Collapse, IconButton, useDisclosure} from '@chakra-ui/react';
+import {Box, Button, Collapse, useDisclosure} from '@chakra-ui/react';
 import {FiChevronDown, FiChevronUp} from 'react-icons/fi';
+import {useAccentColor} from '../utils';
 
-export default function ExpansionPanel({children, title}) {
+export default function ExpansionPanel({children, title = 'Click to expand'}) {
   const {isOpen, onToggle} = useDisclosure();
+  const borderColor = useAccentColor();
   return (
-    <div>
-      <h3>{title}</h3>
-      <IconButton
-        icon={isOpen ? <FiChevronUp /> : <FiChevronDown />}
+    <Box
+      borderWidth="1px"
+      borderLeftWidth="2px"
+      borderLeftColor={borderColor}
+      roundedRight="md"
+      overflow="hidden"
+    >
+      <Button
+        isFullWidth
+        variant="ghost"
+        rounded="none"
+        justifyContent="flex-start"
+        leftIcon={isOpen ? <FiChevronUp /> : <FiChevronDown />}
         onClick={onToggle}
-      />
+        _focus={{shadow: 'none'}}
+      >
+        {title}
+      </Button>
       <Collapse in={isOpen}>
-        <div>{children}</div>
+        <Box p="4">{children}</Box>
       </Collapse>
-    </div>
+    </Box>
   );
 }
 
 ExpansionPanel.propTypes = {
   children: PropTypes.node.isRequired,
-  title: PropTypes.string.isRequired
+  title: PropTypes.string
 };
