@@ -21,12 +21,11 @@ export default function TableOfContents({headings}) {
 
   useEffect(() => {
     function handleScroll(event) {
-      const {scrollY, innerHeight} = event.currentTarget;
-      const halfway = scrollY + innerHeight / 2;
+      const halfway = event.currentTarget.innerHeight / 2;
       for (let i = toc.length - 1; i >= 0; i--) {
         const {id} = toc[i];
-        const {offsetTop} = document.getElementById(id);
-        if (offsetTop <= halfway) {
+        const {top} = document.getElementById(id).getBoundingClientRect();
+        if (top <= halfway) {
           setActiveId(id);
           break;
         }
