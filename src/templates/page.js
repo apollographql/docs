@@ -1,5 +1,6 @@
 import Blockquote from '../components/Blockquote';
 import CodeBlock from '../components/CodeBlock';
+import CodeColumns from '../components/CodeColumns';
 import ExpansionPanel from '../components/ExpansionPanel';
 import Footer from '../components/Footer';
 import Header, {TOTAL_HEADER_HEIGHT} from '../components/Header';
@@ -46,6 +47,7 @@ import {Global} from '@emotion/react';
 import {MDXProvider} from '@mdx-js/react';
 import {MDXRenderer} from 'gatsby-plugin-mdx';
 import {PathContext} from '../utils';
+import {YouTube} from 'mdx-embed';
 import {graphql} from 'gatsby';
 import {rehype} from 'rehype';
 
@@ -79,7 +81,9 @@ const mdxComponents = {
   inlineCode: InlineCode,
   Button,
   ExpansionPanel,
-  MultiCodeBlock
+  MultiCodeBlock,
+  YouTube,
+  CodeColumns
 };
 
 const {processSync} = rehype()
