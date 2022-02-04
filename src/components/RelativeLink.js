@@ -5,9 +5,13 @@ import {Link} from '@chakra-ui/react';
 import {PathContext, isUrl, useAccentColor} from '../utils';
 import {isAbsolute, resolve} from 'path';
 
+export function ColorLink(props) {
+  const linkColor = useAccentColor();
+  return <Link color={linkColor} {...props} />;
+}
+
 export default function RelativeLink({href, ...props}) {
   const {path} = useContext(PathContext);
-  const linkColor = useAccentColor();
 
   if (!href) {
     return <a {...props} />;
@@ -19,7 +23,7 @@ export default function RelativeLink({href, ...props}) {
       ? {href, isExternal}
       : {as: GatsbyLink, to: isAbsolute(href) ? href : resolve(path, href)};
 
-  return <Link color={linkColor} {...linkProps} {...props} />;
+  return <ColorLink {...linkProps} {...props} />;
 }
 
 RelativeLink.propTypes = {

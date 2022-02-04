@@ -47,16 +47,20 @@ export default function Header({docset, versions, currentVersion}) {
     >
       <HStack spacing="4" mr="auto" fontWeight="semibold">
         <Flex align="center">
+          <a href="https://www.apollographql.com">
+            <Box
+              as={ApolloLogo}
+              fill="current"
+              role="img"
+              aria-label="Apollo logo"
+              h="6"
+              // center the logo text vertically
+              transform="translateY(3.08578178%)"
+            />
+          </a>
           <Box
-            as={ApolloLogo}
-            fill="current"
-            role="img"
-            aria-label="Apollo logo"
-            h="6"
-            // center the logo text vertically
-            transform="translateY(3.08578178%)"
-          />
-          <Box
+            as="a"
+            href="https://www.apollographql.com/docs"
             ml="1.5"
             px="1.5"
             fontSize="sm"

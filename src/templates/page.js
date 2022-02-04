@@ -1,5 +1,6 @@
 import Blockquote from '../components/Blockquote';
 import CodeBlock from '../components/CodeBlock';
+import CodeColumns from '../components/CodeColumns';
 import ExpansionPanel from '../components/ExpansionPanel';
 import Footer from '../components/Footer';
 import Header, {TOTAL_HEADER_HEIGHT} from '../components/Header';
@@ -12,6 +13,7 @@ import React, {Fragment, createElement, useMemo} from 'react';
 import RelativeLink from '../components/RelativeLink';
 import Sidebar, {SIDEBAR_WIDTH} from '../components/Sidebar';
 import TableOfContents from '../components/TableOfContents';
+import TypeScriptApiBox from '../components/TypeScriptApiBox';
 import Wrapper from '../components/Wrapper';
 import autolinkHeadings from 'rehype-autolink-headings';
 import path, {dirname} from 'path';
@@ -46,6 +48,7 @@ import {Global} from '@emotion/react';
 import {MDXProvider} from '@mdx-js/react';
 import {MDXRenderer} from 'gatsby-plugin-mdx';
 import {PathContext} from '../utils';
+import {YouTube} from 'mdx-embed';
 import {graphql} from 'gatsby';
 import {rehype} from 'rehype';
 
@@ -79,7 +82,10 @@ const mdxComponents = {
   inlineCode: InlineCode,
   Button,
   ExpansionPanel,
-  MultiCodeBlock
+  MultiCodeBlock,
+  YouTube,
+  CodeColumns,
+  TypescriptApiBox: TypeScriptApiBox
 };
 
 const {processSync} = rehype()

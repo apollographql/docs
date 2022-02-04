@@ -103,7 +103,6 @@ const sources = process.env.DOCS_PATH
 const plugins = [
   'gatsby-plugin-svgr',
   '@chakra-ui/gatsby-plugin',
-  'gatsby-transformer-json',
   'gatsby-plugin-sitemap',
   {
     resolve: 'gatsby-plugin-manifest',
