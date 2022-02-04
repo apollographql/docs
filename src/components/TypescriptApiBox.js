@@ -1,25 +1,23 @@
 import InlineCode from './InlineCode';
 import PropTypes from 'prop-types';
-import React, {Fragment, useMemo} from 'react';
+import React, {useMemo} from 'react';
 import ReactMarkdown from 'react-markdown';
-import styled from '@emotion/styled';
-import {chakra} from '@chakra-ui/react';
+import {
+  Box,
+  Heading,
+  Stack,
+  Table,
+  Tbody,
+  Td,
+  Text,
+  Th,
+  Thead,
+  Tr,
+  chakra
+} from '@chakra-ui/react';
+import {ColorLink} from './RelativeLink';
 import {extend, partition} from 'lodash';
 import {graphql, useStaticQuery} from 'gatsby';
-
-const MainHeading = styled.h3({
-  paddingTop: 20
-});
-
-const StyledCode = styled.code({
-  padding: '0 !important',
-  background: 'none !important'
-});
-
-const Subheading = styled.h6({
-  marginTop: 12,
-  marginBottom: 10
-});
 
 function _allText(data) {
   return [data.shortText, data.text].filter(Boolean).join('\n\n');
@@ -63,6 +61,8 @@ function mdToReact(text) {
   return (
     <ReactMarkdown
       components={{
+        p: Text,
+        a: ColorLink,
         code: InlineCode
       }}
     >
@@ -216,7 +216,7 @@ export default function TypeScriptApiBox({name}) {
 
     let typeName = _typeName(type);
     if (!typeName) {
-      console.error(
+      console.warn(
         'unknown type name for',
         data.name,
         'using the type name `any`'
@@ -373,74 +373,70 @@ export default function TypeScriptApiBox({name}) {
   const args = templateArgs(rawData);
   return (
     <>
-      <div>
-        <MainHeading title={args.name} id={args.id}>
-          <StyledCode className="language-">
-            <a href={`#${args.id}`}>{args.signature}</a>
-          </StyledCode>
-        </MainHeading>
+      <Box pt="4">
+        <Heading
+          as="h3"
+          size="xl"
+          fontFamily="mono"
+          title={args.name}
+          id={args.id}
+        >
+          <ColorLink href={`#${args.id}`}>{args.signature}</ColorLink>
+        </Heading>
         {args.filepath && (
-          <Subheading>
-            <a
+          <Heading as="h6" fontWeight="normal" size="sm" mt="2">
+            <ColorLink
               href={`https://github.com/${args.repo}/blob/${args.branch}/${args.filepath}#L${args.lineno}`}
-              target="_blank"
-              rel="noopener noreferrer"
+              isExternal
             >
               ({args.filepath}, line {args.lineno})
-            </a>
-          </Subheading>
+            </ColorLink>
+          </Heading>
         )}
-      </div>
-      <div>
-        {args.summary && mdToReact(args.summary)}
-        {args.type && <div>{args.type}</div>}
-        {args.groups
-          .filter(group => group.members.length)
-          .map((group, index) => (
-            <Fragment key={index}>
-              <chakra.h6
-                fontWeight="bold"
-                textTransform="uppercase"
-                fontSize="sm"
-                letterSpacing="wider"
-              >
-                {group.name}
-              </chakra.h6>
-              <table className="field-table">
-                <thead>
-                  <tr>
-                    <th>
-                      Name /<br />
-                      Type
-                    </th>
-                    <th>Description</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {group.members.map((member, index) => (
-                    <tr key={index}>
-                      <td>
-                        <h6>
-                          <StyledCode className="language-">
-                            {member.name}
-                          </StyledCode>
-                        </h6>
-                        <p>
-                          <StyledCode className="language-">
-                            {member.type}
-                          </StyledCode>
-                        </p>
-                      </td>
-                      <td>
-                        {member.description && mdToReact(member.description)}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </Fragment>
-          ))}
-      </div>
+      </Box>
+      <Stack spacing="4">{args.summary && mdToReact(args.summary)}</Stack>
+      {args.type && <div>{args.type}</div>}
+      {args.groups
+        .filter(group => group.members.length)
+        .map((group, index) => (
+          <div key={index}>
+            <chakra.h6
+              mb="4"
+              fontWeight="bold"
+              textTransform="uppercase"
+              fontSize="sm"
+              letterSpacing="wider"
+            >
+              {group.name}
+            </chakra.h6>
+            <Table w="auto">
+              <Thead>
+                <Tr>
+                  <Th>
+                    Name /<br />
+                    Type
+                  </Th>
+                  <Th>Description</Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                {group.members.map((member, index) => (
+                  <Tr key={index} fontSize="md">
+                    <Td sx={{code: {bg: 'none', p: 0}}}>
+                      <chakra.h6 fontSize="lg" mb="1">
+                        <InlineCode>{member.name}</InlineCode>
+                      </chakra.h6>
+                      <InlineCode colorScheme="teal">{member.type}</InlineCode>
+                    </Td>
+                    <Td lineHeight="base">
+                      {member.description && mdToReact(member.description)}
+                    </Td>
+                  </Tr>
+                ))}
+              </Tbody>
+            </Table>
+          </div>
+        ))}
     </>
   );
 }
