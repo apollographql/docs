@@ -121,20 +121,8 @@ export default function PageTemplate({data, uri, pageContext}) {
     relativePath
   } = data.file;
   const {frontmatter, headings} = childMdx || childMarkdownRemark;
-  const {title, description, standalone} = frontmatter;
+  const {title, description} = frontmatter;
   const {docset, versions, currentVersion, navItems} = pageContext;
-
-  const content = (
-    <MultiCodeBlockContext.Provider value={{language, setLanguage}}>
-      {childMdx ? (
-        <MDXProvider components={mdxComponents}>
-          <MDXRenderer>{childMdx.body}</MDXRenderer>
-        </MDXProvider>
-      ) : (
-        <Wrapper>{processSync(childMarkdownRemark.html).result}</Wrapper>
-      )}
-    </MultiCodeBlockContext.Provider>
-  );
 
   return (
     <>
@@ -161,115 +149,122 @@ export default function PageTemplate({data, uri, pageContext}) {
           path: name === 'index' ? uri : dirname(uri)
         }}
       >
-        {standalone ? (
-          content
-        ) : (
-          <>
-            <Header
-              docset={docset}
-              versions={versions}
-              currentVersion={currentVersion}
+        <Header
+          docset={docset}
+          versions={versions}
+          currentVersion={currentVersion}
+        />
+        <Fade in={sidebarHidden} unmountOnExit delay={0.25}>
+          <Tooltip placement="right" label="Show sidebar">
+            <IconButton
+              pos="fixed"
+              mt="2"
+              left="2"
+              size="sm"
+              variant="outline"
+              fontSize="md"
+              icon={<FiChevronsRight />}
+              css={{top: TOTAL_HEADER_HEIGHT}}
+              onClick={() => setSidebarHidden(false)}
             />
-            <Fade in={sidebarHidden} unmountOnExit delay={0.25}>
-              <Tooltip placement="right" label="Show sidebar">
-                <IconButton
-                  pos="fixed"
-                  mt="2"
-                  left="2"
-                  size="sm"
-                  variant="outline"
-                  fontSize="md"
-                  icon={<FiChevronsRight />}
-                  css={{top: TOTAL_HEADER_HEIGHT}}
-                  onClick={() => setSidebarHidden(false)}
-                />
-              </Tooltip>
-            </Fade>
-            <Sidebar
-              navItems={navItems}
-              isHidden={sidebarHidden}
-              onHide={() => setSidebarHidden(true)}
-            />
-            <Box
-              style={{marginLeft: sidebarHidden ? 0 : SIDEBAR_WIDTH}}
-              transitionProperty="margin-left"
-              transitionDuration="normal"
-            >
+          </Tooltip>
+        </Fade>
+        <Sidebar
+          navItems={navItems}
+          isHidden={sidebarHidden}
+          onHide={() => setSidebarHidden(true)}
+        />
+        <Box
+          marginLeft={{base: 0, lg: sidebarHidden ? 0 : SIDEBAR_WIDTH}}
+          transitionProperty="margin-left"
+          transitionDuration="normal"
+        >
+          <Flex
+            maxW="6xl"
+            align="flex-start"
+            px="10"
+            as="main"
+            sx={{
+              paddingTop,
+              paddingBottom
+            }}
+          >
+            <Box flexGrow="1" w="0">
+              <Heading size="3xl">{title}</Heading>
+              {description && (
+                <Heading mt="4" fontWeight="normal">
+                  {description}
+                </Heading>
+              )}
+              <Divider my="8" />
+              <MultiCodeBlockContext.Provider value={{language, setLanguage}}>
+                {childMdx ? (
+                  <MDXProvider components={mdxComponents}>
+                    <MDXRenderer>{childMdx.body}</MDXRenderer>
+                  </MDXProvider>
+                ) : (
+                  <Wrapper>
+                    {processSync(childMarkdownRemark.html).result}
+                  </Wrapper>
+                )}
+              </MultiCodeBlockContext.Provider>
+            </Box>
+            {uri !== '/' && (
+              // hide the table of contents on the home page
               <Flex
-                maxW="6xl"
-                align="flex-start"
-                px="10"
-                as="main"
-                sx={{
-                  paddingTop,
-                  paddingBottom
-                }}
+                direction="column"
+                as="aside"
+                ml="10"
+                w="250px"
+                flexShrink="0"
+                pos="sticky"
+                top={scrollPaddingTop}
+                maxH={`calc(100vh - ${scrollPaddingTop} - ${paddingBottom})`}
               >
-                <Box flexGrow="1" w="0">
-                  <Heading size="3xl">{title}</Heading>
-                  {description && (
-                    <Heading mt="4" fontWeight="normal">
-                      {description}
-                    </Heading>
-                  )}
-                  <Divider my="8" />
-                  {content}
-                </Box>
-                <Flex
-                  direction="column"
-                  as="aside"
-                  ml="10"
-                  w="250px"
-                  flexShrink="0"
-                  pos="sticky"
-                  top={scrollPaddingTop}
-                  maxH={`calc(100vh - ${scrollPaddingTop} - ${paddingBottom})`}
-                >
-                  <Heading size="md" mb="3">
-                    {title}
-                  </Heading>
-                  <TableOfContents headings={headings} />
-                  <Stack align="flex-start" spacing="3" mt="8">
-                    <Button
-                      onClick={() => window.freddyWidget?.show()}
-                      variant="link"
-                      size="lg"
-                      leftIcon={<FiStar />}
-                    >
-                      Rate article
-                    </Button>
-                    {gitRemote && (
-                      <Button
-                        as="a"
-                        href={[
-                          gitRemote.href,
-                          'tree',
-                          gitRemote.ref,
-                          relativePath
-                        ].join(path.sep)}
-                        variant="link"
-                        size="lg"
-                        leftIcon={<FaGithub />}
-                      >
-                        Edit on GitHub
-                      </Button>
-                    )}
+                <Heading size="md" mb="3">
+                  {title}
+                </Heading>
+                <TableOfContents headings={headings} />
+                <Stack align="flex-start" spacing="3" mt="8">
+                  <Button
+                    onClick={() => window.freddyWidget?.show()}
+                    variant="link"
+                    size="lg"
+                    leftIcon={<FiStar />}
+                  >
+                    Rate article
+                  </Button>
+                  {gitRemote && (
                     <Button
                       as="a"
-                      href="https://community.apollographql.com/"
+                      href={[
+                        gitRemote.href,
+                        'tree',
+                        gitRemote.ref,
+                        relativePath
+                      ].join(path.sep)}
                       variant="link"
                       size="lg"
-                      leftIcon={<FaDiscourse />}
+                      leftIcon={<FaGithub />}
                     >
-                      Discuss in forums
+                      Edit on GitHub
                     </Button>
-                  </Stack>
-                </Flex>
+                  )}
+                  <Button
+                    as="a"
+                    href="https://community.apollographql.com/"
+                    variant="link"
+                    size="lg"
+                    leftIcon={<FaDiscourse />}
+                  >
+                    Discuss in forums
+                  </Button>
+                </Stack>
               </Flex>
-              <Footer />
-            </Box>
-          </>
-        )}
+            )}
+          </Flex>
+          <Footer />
+        </Box>
       </PathContext.Provider>
     </>
   );
@@ -305,7 +300,6 @@ export const pageQuery = graphql`
         frontmatter {
           title
           description
-          standalone
         }
       }
       childMarkdownRemark {

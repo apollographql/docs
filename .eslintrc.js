@@ -7,6 +7,9 @@ module.exports = {
         Button: 'readonly',
         ExpansionPanel: 'readonly',
         MultiCodeBlock: 'readonly'
+      },
+      rules: {
+        'react/no-unescaped-entities': 'off'
       }
     },
     {

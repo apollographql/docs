@@ -59,8 +59,8 @@ export default function Header({docset, versions, currentVersion}) {
             />
           </a>
           <Box
-            as="a"
-            href="https://www.apollographql.com/docs"
+            as={GatsbyLink}
+            to="/"
             ml="1.5"
             px="1.5"
             fontSize="sm"

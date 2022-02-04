@@ -2,6 +2,7 @@ const {algoliaSettings} = require('apollo-algolia-transform');
 const {query, transformer} = require('./algolia');
 
 const gatsbyRemarkPlugins = [
+  '@fec/remark-a11y-emoji/gatsby',
   'gatsby-remark-mermaid',
   {
     resolve: 'gatsby-remark-copy-linked-files',
