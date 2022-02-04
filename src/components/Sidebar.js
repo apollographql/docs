@@ -69,7 +69,7 @@ export default function Sidebar({navItems, isHidden, onHide}) {
       borderRightWidth="1px"
       pos="fixed"
       left="0"
-      zIndex="0"
+      zIndex="1"
       overflow="auto"
       transitionProperty="common"
       transitionDuration="normal"

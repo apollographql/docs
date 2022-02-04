@@ -12,7 +12,7 @@ exports.sourceNodes = ({
   cache,
   reporter
 }) =>
-  // downloadload Apollo Client typedoc output
+  // download Apollo Client typedoc output and save it as a file node
   createRemoteFileNode({
     url: 'https://61fc4e6768368d0007f0702c--apollo-client-docs.netlify.app/docs.json',
     store,
@@ -26,26 +26,21 @@ exports.onCreateWebpackConfig = ({actions}) => {
   actions.setWebpackConfig({
     resolve: {
       fallback: {
+        // fallbacks needed for Algolia search-insights
         http: require.resolve('stream-http'),
         https: require.resolve('https-browserify'),
+        // because we use `path` a lot
         path: require.resolve('path-browserify')
       }
     }
   });
 };
 
-exports.createSchemaCustomization = ({actions}) => {
-  actions.createTypes(`
-    type MdxFrontmatter {
-      standalone: Boolean
-    }
-  `);
-};
-
 exports.onCreateNode = async ({node, getNode, loadNodeContent, actions}) => {
   const {type, mediaType} = node.internal;
 
   if (mediaType === 'application/json') {
+    // save the raw content of JSON files as a field
     const content = await loadNodeContent(node);
     actions.createNodeField({
       node,
@@ -56,6 +51,7 @@ exports.onCreateNode = async ({node, getNode, loadNodeContent, actions}) => {
   }
 
   if (type === 'MarkdownRemark' || type === 'Mdx') {
+    // add slugs for MD/MDX pages based on their file names
     const filePath = createFilePath({
       node,
       getNode
@@ -65,6 +61,7 @@ exports.onCreateNode = async ({node, getNode, loadNodeContent, actions}) => {
     actions.createNodeField({
       node,
       name: 'slug',
+      // prefix slugs with their docset path (configured by source name)
       value: path.join('/', sourceInstanceName, filePath)
     });
   }

@@ -1,39 +1,86 @@
 ---
-title: Welcome to the docs
-standalone: true
+title: Explore the Apollo platform
+toc: false
 ---
 
-import Hero from '../../components/Hero';
-import {Box, Square} from '@chakra-ui/react';
-import {Link as GatsbyLink} from 'gatsby';
-import {SiKotlin} from 'react-icons/si';
+import dish from '../../assets/dish.png';
+import {
+  CTA_LEARN,
+  Docset,
+  DocsetGrid,
+  Odyssey
+} from '../../components/HomePage';
+import {Img} from '@chakra-ui/react';
 
-<Hero />
+Apollo is a platform for building a unified graph, a communication layer that helps you manage the flow of data between your application clients (such as web and native apps) and your back-end services. At the heart of the graph is a query language called GraphQL.
 
-<Box px="10" py="12">
-  docs home page
-  <Square
-    size="8"
-    fontSize="md"
-    color="white"
-    rounded="lg"
-    css={({theme}) => {
-      const {indigo} = theme.colors;
-      return {
-        backgroundImage: `linear-gradient(${[
-          'to bottom right',
-          indigo[300],
-          indigo[500]
-        ]})`
-      };
-    }}
-  >
-    <SiKotlin />
-  </Square>
-  <Button as={GatsbyLink} to="/getting-started">
-    Get started with Apollo
-  </Button>
-  <Button as={GatsbyLink} to="/apollo-server">
-    Apollo Server
-  </Button>
-</Box>
+<Odyssey />
+
+## Getting started
+
+<Docset
+  title="Apollo Basics"
+  description="Whether you're looking for an overview of the Apollo Graph Platform or trying to determine if GraphQL is the right fit for you, we've got you covered!"
+  path="/getting-started"
+  cta="Get started with %s"
+>
+  <Img flexShrink="0" src={dish} w="92px" ml="8" />
+</Docset>
+
+## Client
+
+<DocsetGrid>
+  <Docset
+    title="React"
+    description="Manage your React app's state and seamlessly execute GraphQL operations."
+    path="/react"
+  />
+  <Docset
+    title="iOS"
+    description="Manage your iOS app's state and seamlessly execute GraphQL operations."
+    path="/iOS"
+  />
+  <Docset
+    title="Kotlin"
+    description="Manage your Kotlin app's state and seamlessly execute GraphQL operations."
+    path="/kotlin"
+  />
+</DocsetGrid>
+
+## Backend
+
+<DocsetGrid>
+  <Docset
+    title="Apollo Server"
+    description="Configure a production-ready GraphQL server to fetch and combine data from multiple sources."
+    path="/apollo-server"
+    cta={CTA_LEARN}
+  />
+  <Docset
+    title="Federation"
+    description="Implement a single unified graph across multiple subgraphs."
+    path="/federation"
+    cta="Get familiar with %s"
+  />
+</DocsetGrid>
+
+## Cloud
+
+<DocsetGrid>
+  <Docset
+    title="Studio"
+    description="Build your graph with your team, evolve it safely, and keep it running smoothly."
+    path="/react"
+    cta={CTA_LEARN}
+  />
+  <Docset
+    title="iOS"
+    description="Manage your Studio graphs and schemas from the command line."
+    path="/iOS"
+    cta={CTA_LEARN}
+  />
+</DocsetGrid>
+
+### Join our community :speech_balloon:
+
+We love hearing from you! Here are a few ways in which you can contribute at any time you'd like.
