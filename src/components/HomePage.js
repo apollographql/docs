@@ -5,6 +5,8 @@ import {
   Flex,
   Grid,
   Heading,
+  IconButton,
+  Link,
   SimpleGrid,
   Text,
   useColorModeValue,
@@ -87,3 +89,7 @@ Docset.propTypes = {
   cta: PropTypes.string,
   children: PropTypes.node
 };
+
+export function CommunityButton(props) {
+  return <IconButton as={Link} fontSize="larger" isExternal {...props} />;
+}

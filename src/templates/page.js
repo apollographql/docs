@@ -39,7 +39,6 @@ import {
   Tooltip,
   Tr,
   UnorderedList,
-  useBreakpointValue,
   useToken
 } from '@chakra-ui/react';
 import {FaDiscourse, FaGithub} from 'react-icons/fa';
@@ -109,8 +108,6 @@ export default function PageTemplate({data, uri, pageContext}) {
     [paddingTop]
   );
 
-  const sidebarOffset = useBreakpointValue({lg: SIDEBAR_WIDTH});
-
   const [language, setLanguage] = useLocalStorage('language');
   const [sidebarHidden, setSidebarHidden] = useLocalStorage('sidebar');
 
@@ -124,7 +121,7 @@ export default function PageTemplate({data, uri, pageContext}) {
     relativePath
   } = data.file;
   const {frontmatter, headings} = childMdx || childMarkdownRemark;
-  const {title, description, toc} = frontmatter;
+  const {title, description} = frontmatter;
   const {docset, versions, currentVersion, navItems} = pageContext;
 
   return (
@@ -178,7 +175,7 @@ export default function PageTemplate({data, uri, pageContext}) {
           onHide={() => setSidebarHidden(true)}
         />
         <Box
-          style={{marginLeft: sidebarHidden ? 0 : sidebarOffset}}
+          marginLeft={{base: 0, lg: sidebarHidden ? 0 : SIDEBAR_WIDTH}}
           transitionProperty="margin-left"
           transitionDuration="normal"
         >
@@ -212,7 +209,8 @@ export default function PageTemplate({data, uri, pageContext}) {
                 )}
               </MultiCodeBlockContext.Provider>
             </Box>
-            {toc !== false && (
+            {uri !== '/' && (
+              // hide the table of contents on the home page
               <Flex
                 direction="column"
                 as="aside"
@@ -302,7 +300,6 @@ export const pageQuery = graphql`
         frontmatter {
           title
           description
-          toc
         }
       }
       childMarkdownRemark {

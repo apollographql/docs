@@ -4,13 +4,15 @@ toc: false
 ---
 
 import dish from '../../assets/dish.png';
+import {ButtonGroup, Img, VStack} from '@chakra-ui/react';
 import {
   CTA_LEARN,
+  CommunityButton,
   Docset,
   DocsetGrid,
   Odyssey
 } from '../../components/HomePage';
-import {Img} from '@chakra-ui/react';
+import {SiDiscourse, SiGithub, SiTwitter, SiYoutube} from 'react-icons/si';
 
 Apollo is a platform for building a unified graph, a communication layer that helps you manage the flow of data between your application clients (such as web and native apps) and your back-end services. At the heart of the graph is a query language called GraphQL.
 
@@ -38,7 +40,7 @@ Apollo is a platform for building a unified graph, a communication layer that he
   <Docset
     title="iOS"
     description="Manage your iOS app's state and seamlessly execute GraphQL operations."
-    path="/iOS"
+    path="/ios"
   />
   <Docset
     title="Kotlin"
@@ -81,6 +83,29 @@ Apollo is a platform for building a unified graph, a communication layer that he
   />
 </DocsetGrid>
 
-### Join our community :speech_balloon:
+<VStack pt="4" spacing="4" textAlign="center" maxW="md" mx="auto">
+
+### Join our community 💬
 
 We love hearing from you! Here are a few ways in which you can contribute at any time you'd like.
+
+<ButtonGroup variant="ghost">
+  <CommunityButton
+    href="https://github.com/apollographql"
+    icon={<SiGithub />}
+  />
+  <CommunityButton
+    href="https://youtube.com/apollographql"
+    icon={<SiYoutube />}
+  />
+  <CommunityButton
+    href="https://community.apollographql.com"
+    icon={<SiDiscourse />}
+  />
+  <CommunityButton
+    href="https://twitter.com/apollographql"
+    icon={<SiTwitter />}
+  />
+</ButtonGroup>
+
+</VStack>
