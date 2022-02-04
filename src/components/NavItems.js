@@ -12,11 +12,11 @@ import {Link as GatsbyLink} from 'gatsby';
 import {NavContext, PathContext, isUrl, useTagColors} from '../utils';
 import {join, relative} from 'path';
 
-const isPathActive = (path, uri) => !relative(path, uri);
+export const isPathActive = (path, uri) => !relative(path, uri);
 export const isGroupActive = (items, basePath, uri) =>
   getItemPaths(items, basePath).some(path => isPathActive(path, uri));
 
-const getFullPath = (path, basePath) => join('/', basePath, path);
+export const getFullPath = (path, basePath) => join('/', basePath, path);
 const getItemPaths = (items, basePath) =>
   items.flatMap(({path, children}) =>
     children ? getItemPaths(children, basePath) : getFullPath(path, basePath)
