@@ -1,6 +1,26 @@
 const {randomUUID} = require('crypto');
-const {createFilePath} = require('gatsby-source-filesystem');
+const {
+  createFilePath,
+  createRemoteFileNode
+} = require('gatsby-source-filesystem');
 const path = require('path');
+
+exports.sourceNodes = ({
+  actions: {createNode},
+  createNodeId,
+  store,
+  cache,
+  reporter
+}) =>
+  // downloadload Apollo Client typedoc output
+  createRemoteFileNode({
+    url: 'https://61fc4e6768368d0007f0702c--apollo-client-docs.netlify.app/docs.json',
+    store,
+    cache,
+    createNode,
+    createNodeId,
+    reporter
+  });
 
 exports.onCreateWebpackConfig = ({actions}) => {
   actions.setWebpackConfig({
@@ -22,8 +42,19 @@ exports.createSchemaCustomization = ({actions}) => {
   `);
 };
 
-exports.onCreateNode = ({node, getNode, actions}) => {
-  const {type} = node.internal;
+exports.onCreateNode = async ({node, getNode, loadNodeContent, actions}) => {
+  const {type, mediaType} = node.internal;
+
+  if (mediaType === 'application/json') {
+    const content = await loadNodeContent(node);
+    actions.createNodeField({
+      node,
+      name: 'content',
+      value: content
+    });
+    return;
+  }
+
   if (type === 'MarkdownRemark' || type === 'Mdx') {
     const filePath = createFilePath({
       node,
@@ -76,7 +107,7 @@ exports.createPages = async ({actions, graphql}) => {
       }
       configs: allFile(filter: {base: {eq: "config.json"}}) {
         nodes {
-          internal {
+          fields {
             content
           }
           gitRemote {
@@ -89,7 +120,7 @@ exports.createPages = async ({actions, graphql}) => {
   `);
 
   const configs = data.configs.nodes.reduce((acc, node) => {
-    const {title, version, sidebar} = JSON.parse(node.internal.content);
+    const {title, version, sidebar} = JSON.parse(node.fields.content);
     return {
       ...acc,
       [node.sourceInstanceName]: {
@@ -107,7 +138,7 @@ exports.createPages = async ({actions, graphql}) => {
       data.configs.nodes
         .filter(node => node.gitRemote?.full_name === gitRemote.full_name)
         .map(node => {
-          const {version} = JSON.parse(node.internal.content);
+          const {version} = JSON.parse(node.fields.content);
           return {
             label: version,
             slug: node.sourceInstanceName

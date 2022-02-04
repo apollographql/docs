@@ -1,11 +1,11 @@
+import InlineCode from './InlineCode';
 import PropTypes from 'prop-types';
-import React, {Component, Fragment} from 'react';
-import extend from 'lodash/extend';
-import partition from 'lodash/partition';
-import remark from 'remark';
-import remark2react from 'remark-react';
+import React, {Fragment, useMemo} from 'react';
+import ReactMarkdown from 'react-markdown';
 import styled from '@emotion/styled';
 import {chakra} from '@chakra-ui/react';
+import {extend, partition} from 'lodash';
+import {graphql, useStaticQuery} from 'gatsby';
 
 const MainHeading = styled.h3({
   paddingTop: 20
@@ -60,24 +60,35 @@ function isReadableName(name) {
 
 function mdToReact(text) {
   const sanitized = text.replace(/\{@link (\w*)\}/g, '[$1](#$1)');
-  return remark()
-    .use(remark2react, {
-      remarkReactComponents: {
-        code(props) {
-          return <code className="language-" {...props} />;
-        }
-      }
-    })
-    .processSync(sanitized).contents;
+  return (
+    <ReactMarkdown
+      components={{
+        code: InlineCode
+      }}
+    >
+      {sanitized}
+    </ReactMarkdown>
+  );
 }
 
-export class TypescriptApiBox extends Component {
-  static propTypes = {
-    name: PropTypes.string.isRequired,
-    docs: PropTypes.object.isRequired
-  };
+export default function TypeScriptApiBox({name}) {
+  const data = useStaticQuery(
+    graphql`
+      {
+        file(
+          base: {eq: "docs.json"}
+          sourceInstanceName: {eq: "__PROGRAMMATIC__"}
+        ) {
+          fields {
+            content
+          }
+        }
+      }
+    `
+  );
 
-  get dataByKey() {
+  const {content} = data.file.fields;
+  const dataByKey = useMemo(() => {
     const dataByKey = {};
 
     function traverse(tree, parentName) {
@@ -92,72 +103,26 @@ export class TypescriptApiBox extends Component {
       dataByKey[name] = tree;
 
       if (tree.children) {
-        tree.children.forEach(child => {
-          traverse(child, name);
-        });
+        tree.children.forEach(child => traverse(child, name));
       }
     }
 
-    traverse(this.props.docs);
+    const docs = JSON.parse(content);
+    traverse(docs);
 
     return dataByKey;
-  }
+  }, [content]);
 
-  templateArgs(rawData) {
-    const parameters = this._parameters(rawData, this.dataByKey);
-    const split = partition(parameters, 'isOptions');
+  const rawData = dataByKey[name];
 
-    const groups = [];
-    if (split[1].length > 0) {
-      groups.push({
-        name: 'Arguments',
-        members: split[1]
-      });
-    }
-    if (split[0].length > 0) {
-      groups.push({
-        name: 'Options',
-        // the properties of the options parameter are the things listed in this group
-        members: split[0][0].properties
-      });
-    }
-
-    if ('Interface' === rawData.kindString) {
-      groups.push({
-        name: 'Properties',
-        members: this._objectProperties(rawData)
-      });
-    }
-
-    let type;
-    if ('Type alias' === rawData.kindString) {
-      // this means it's an object type
-      if (rawData.type.declaration && rawData.type.declaration.children) {
-        groups.push({
-          name: 'Properties',
-          members: this._objectProperties(rawData.type.declaration)
-        });
-      } else {
-        type = this._type(rawData);
-      }
-    }
-
-    return {
-      id: _typeId(rawData),
-      name: rawData.name,
-      type,
-      signature: this._signature(rawData, parameters),
-      summary: _summary(rawData),
-      groups,
-      repo: 'apollographql/apollo-client',
-      branch: 'main',
-      filepath: rawData.sources[0].fileName,
-      lineno: rawData.sources[0].line
-    };
+  if (!rawData) {
+    // TODO: account for things that past versions may reference, but have
+    // been removed in current version docs.json
+    return null;
   }
 
   // This is just literally the name of the type, nothing fancy, except for references
-  _typeName = type => {
+  function _typeName(type) {
     if (type.type === 'instrinct') {
       if (type.isArray) {
         return '[' + type.name + ']';
@@ -167,7 +132,7 @@ export class TypescriptApiBox extends Component {
       const typeNames = [];
       for (let i = 0; i < type.types.length; i++) {
         // Try to get the type name for this type.
-        const typeName = this._typeName(type.types[i]);
+        const typeName = _typeName(type.types[i]);
         // Propogate undefined type names by returning early. Otherwise just add the
         // type name to our array.
         if (typeof typeName === 'undefined') {
@@ -180,14 +145,14 @@ export class TypescriptApiBox extends Component {
       return typeNames.join(' | ');
     } else if (type.type === 'reference') {
       // check to see if the reference type is a simple type alias
-      const referencedData = this.dataByKey[type.name];
+      const referencedData = dataByKey[type.name];
       if (referencedData && referencedData.kindString === 'Type alias') {
         // Is it an "objecty" type? We can't display it in one line if so
         if (
           !referencedData.type.declaration ||
           !referencedData.type.declaration.children
         ) {
-          return this._type(referencedData);
+          return _type(referencedData);
         }
       }
 
@@ -196,41 +161,41 @@ export class TypescriptApiBox extends Component {
     } else if (type.type === 'stringLiteral') {
       return '"' + type.value + '"';
     }
-  };
+  }
 
-  _objectProperties(rawData) {
+  function _objectProperties(rawData) {
     const signatures = Array.isArray(rawData.indexSignature)
       ? rawData.indexSignature
       : [];
     return signatures
       .map(signature => {
-        const parameterString = this._indexParameterString(signature);
-        return extend(this._parameter(signature), {name: parameterString});
+        const parameterString = _indexParameterString(signature);
+        return extend(_parameter(signature), {name: parameterString});
       })
-      .concat(rawData.children.map(this._parameter));
+      .concat(rawData.children.map(_parameter));
   }
 
-  _indexParameterString(signature) {
+  function _indexParameterString(signature) {
     const parameterNamesAndTypes = signature.parameters.map(
-      param => param.name + ':' + this._typeName(param.type)
+      param => param.name + ':' + _typeName(param.type)
     );
     return _parameterString(parameterNamesAndTypes, '[', ']');
   }
 
   // Render the type of a data object. It's pretty confusing, to say the least
-  _type = (data, skipSignature) => {
+  function _type(data, skipSignature) {
     const {type} = data;
 
     if (data.kindString === 'Method') {
-      return this._type(data.signatures[0]);
+      return _type(data.signatures[0]);
     }
 
     if (data.kindString === 'Call signature' && !skipSignature) {
       const paramTypes = Array.isArray(data.parameters)
-        ? data.parameters.map(this._type)
+        ? data.parameters.map(_type)
         : [];
       const args = '(' + paramTypes.join(', ') + ')';
-      return args + ' => ' + this._type(data, true);
+      return args + ' => ' + _type(data, true);
     }
 
     const isReflected =
@@ -238,20 +203,18 @@ export class TypescriptApiBox extends Component {
     if (isReflected && type.declaration) {
       const {declaration} = type;
       if (declaration.signatures) {
-        return this._type(declaration.signatures[0]);
+        return _type(declaration.signatures[0]);
       }
 
       if (declaration.indexSignature) {
         const signature = Array.isArray(declaration.indexSignature)
           ? declaration.indexSignature[0]
           : declaration.indexSignature;
-        return (
-          this._indexParameterString(signature) + ':' + this._type(signature)
-        );
+        return _indexParameterString(signature) + ':' + _type(signature);
       }
     }
 
-    let typeName = this._typeName(type);
+    let typeName = _typeName(type);
     if (!typeName) {
       console.error(
         'unknown type name for',
@@ -264,16 +227,15 @@ export class TypescriptApiBox extends Component {
 
     if (type.typeArguments) {
       return (
-        typeName +
-        _parameterString(type.typeArguments.map(this._typeName), '<', '>')
+        typeName + _parameterString(type.typeArguments.map(_typeName), '<', '>')
       );
     }
     return typeName;
-  };
+  }
 
   // XXX: not sure whether to use the 'kind' enum from TS or just run with the
   // strings. Strings seem safe enough I guess
-  _signature(rawData, parameters) {
+  function _signature(rawData, parameters) {
     let dataForSignature = rawData;
     if (_isReflectedProperty(rawData)) {
       dataForSignature = rawData.type.declaration;
@@ -291,9 +253,9 @@ export class TypescriptApiBox extends Component {
       );
       let returnType = '';
       if (rawData.kindString !== 'Constructor') {
-        const type = this._type(signature, true);
+        const type = _type(signature, true);
         if (type !== 'void') {
-          returnType = ': ' + this._type(signature, true);
+          returnType = ': ' + _type(signature, true);
         }
       }
 
@@ -303,17 +265,10 @@ export class TypescriptApiBox extends Component {
     return escapedName;
   }
 
-  _parameter = param => ({
-    name: param.name,
-    type: this._type(param),
-    description:
-      param.comment && (param.comment.text || param.comment.shortText)
-  });
-
   // Takes the data about a function / constructor and parses out the named params
-  _parameters(rawData, dataByKey) {
+  function _parameters(rawData) {
     if (_isReflectedProperty(rawData)) {
-      return this._parameters(rawData.type.declaration, dataByKey);
+      return _parameters(rawData.type.declaration, dataByKey);
     }
 
     const signature = rawData.signatures && rawData.signatures[0];
@@ -335,16 +290,16 @@ export class TypescriptApiBox extends Component {
       let properties = [];
       if (param.type && param.type.declaration) {
         properties = Array.isArray(param.type.declaration.children)
-          ? param.type.declaration.children.map(this._parameter)
+          ? param.type.declaration.children.map(_parameter)
           : [];
       } else if (param.type && param.type.type === 'reference') {
         const dataForProperties = dataByKey[param.type.name] || {};
         properties = Array.isArray(dataForProperties.children)
-          ? dataForProperties.children.map(this._parameter)
+          ? dataForProperties.children.map(_parameter)
           : [];
       }
 
-      return extend(this._parameter(param), {
+      return extend(_parameter(param), {
         name,
         isOptions: name === 'options',
         optional: !!param.defaultValue,
@@ -353,86 +308,143 @@ export class TypescriptApiBox extends Component {
     });
   }
 
-  render() {
-    const rawData = this.dataByKey[this.props.name];
-    if (typeof rawData === 'undefined') {
-      // TODO: account for things that past versions may reference, but have
-      // been removed in current version docs.json
-      return null;
+  function _parameter(param) {
+    return {
+      name: param.name,
+      type: _type(param),
+      description:
+        param.comment && (param.comment.text || param.comment.shortText)
+    };
+  }
+
+  function templateArgs(rawData) {
+    const parameters = _parameters(rawData, dataByKey);
+    const split = partition(parameters, 'isOptions');
+
+    const groups = [];
+    if (split[1].length > 0) {
+      groups.push({
+        name: 'Arguments',
+        members: split[1]
+      });
+    }
+    if (split[0].length > 0) {
+      groups.push({
+        name: 'Options',
+        // the properties of the options parameter are the things listed in this group
+        members: split[0][0].properties
+      });
     }
 
-    const args = this.templateArgs(rawData);
-    return (
-      <>
-        <div>
-          <MainHeading title={args.name} id={args.id}>
-            <StyledCode className="language-">
-              <a href={`#${args.id}`}>{args.signature}</a>
-            </StyledCode>
-          </MainHeading>
-          {args.filepath && (
-            <Subheading>
-              <a
-                href={`https://github.com/${args.repo}/blob/${args.branch}/${args.filepath}#L${args.lineno}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                ({args.filepath}, line {args.lineno})
-              </a>
-            </Subheading>
-          )}
-        </div>
-        <div>
-          {args.summary && mdToReact(args.summary)}
-          {args.type && <div>{args.type}</div>}
-          {args.groups
-            .filter(group => group.members.length)
-            .map((group, index) => (
-              <Fragment key={index}>
-                <chakra.h6
-                  fontWeight="bold"
-                  textTransform="uppercase"
-                  fontSize="sm"
-                  letterSpacing="wider"
-                >
-                  {group.name}
-                </chakra.h6>
-                <table className="field-table">
-                  <thead>
-                    <tr>
-                      <th>
-                        Name /<br />
-                        Type
-                      </th>
-                      <th>Description</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {group.members.map((member, index) => (
-                      <tr key={index}>
-                        <td>
-                          <h6>
-                            <StyledCode className="language-">
-                              {member.name}
-                            </StyledCode>
-                          </h6>
-                          <p>
-                            <StyledCode className="language-">
-                              {member.type}
-                            </StyledCode>
-                          </p>
-                        </td>
-                        <td>
-                          {member.description && mdToReact(member.description)}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </Fragment>
-            ))}
-        </div>
-      </>
-    );
+    if ('Interface' === rawData.kindString) {
+      groups.push({
+        name: 'Properties',
+        members: _objectProperties(rawData)
+      });
+    }
+
+    let type;
+    if ('Type alias' === rawData.kindString) {
+      // this means it's an object type
+      if (rawData.type.declaration && rawData.type.declaration.children) {
+        groups.push({
+          name: 'Properties',
+          members: _objectProperties(rawData.type.declaration)
+        });
+      } else {
+        type = _type(rawData);
+      }
+    }
+
+    return {
+      id: _typeId(rawData),
+      name: rawData.name,
+      type,
+      signature: _signature(rawData, parameters),
+      summary: _summary(rawData),
+      groups,
+      repo: 'apollographql/apollo-client',
+      branch: 'main',
+      filepath: rawData.sources[0].fileName,
+      lineno: rawData.sources[0].line
+    };
   }
+
+  const args = templateArgs(rawData);
+  return (
+    <>
+      <div>
+        <MainHeading title={args.name} id={args.id}>
+          <StyledCode className="language-">
+            <a href={`#${args.id}`}>{args.signature}</a>
+          </StyledCode>
+        </MainHeading>
+        {args.filepath && (
+          <Subheading>
+            <a
+              href={`https://github.com/${args.repo}/blob/${args.branch}/${args.filepath}#L${args.lineno}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              ({args.filepath}, line {args.lineno})
+            </a>
+          </Subheading>
+        )}
+      </div>
+      <div>
+        {args.summary && mdToReact(args.summary)}
+        {args.type && <div>{args.type}</div>}
+        {args.groups
+          .filter(group => group.members.length)
+          .map((group, index) => (
+            <Fragment key={index}>
+              <chakra.h6
+                fontWeight="bold"
+                textTransform="uppercase"
+                fontSize="sm"
+                letterSpacing="wider"
+              >
+                {group.name}
+              </chakra.h6>
+              <table className="field-table">
+                <thead>
+                  <tr>
+                    <th>
+                      Name /<br />
+                      Type
+                    </th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {group.members.map((member, index) => (
+                    <tr key={index}>
+                      <td>
+                        <h6>
+                          <StyledCode className="language-">
+                            {member.name}
+                          </StyledCode>
+                        </h6>
+                        <p>
+                          <StyledCode className="language-">
+                            {member.type}
+                          </StyledCode>
+                        </p>
+                      </td>
+                      <td>
+                        {member.description && mdToReact(member.description)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </Fragment>
+          ))}
+      </div>
+    </>
+  );
 }
+
+TypeScriptApiBox.propTypes = {
+  name: PropTypes.string.isRequired
+};

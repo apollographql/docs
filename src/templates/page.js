@@ -13,6 +13,7 @@ import React, {Fragment, createElement, useMemo} from 'react';
 import RelativeLink from '../components/RelativeLink';
 import Sidebar, {SIDEBAR_WIDTH} from '../components/Sidebar';
 import TableOfContents from '../components/TableOfContents';
+import TypeScriptApiBox from '../components/TypeScriptApiBox';
 import Wrapper from '../components/Wrapper';
 import autolinkHeadings from 'rehype-autolink-headings';
 import path, {dirname} from 'path';
@@ -83,7 +84,8 @@ const mdxComponents = {
   ExpansionPanel,
   MultiCodeBlock,
   YouTube,
-  CodeColumns
+  CodeColumns,
+  TypescriptApiBox: TypeScriptApiBox
 };
 
 const {processSync} = rehype()
