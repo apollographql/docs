@@ -24,10 +24,13 @@ export default function TableOfContents({headings}) {
       const halfway = event.currentTarget.innerHeight / 2;
       for (let i = toc.length - 1; i >= 0; i--) {
         const {id} = toc[i];
-        const {top} = document.getElementById(id).getBoundingClientRect();
-        if (top <= halfway) {
-          setActiveId(id);
-          break;
+        const heading = document.getElementById(id);
+        if (heading) {
+          const {top} = heading.getBoundingClientRect();
+          if (top <= halfway) {
+            setActiveId(id);
+            break;
+          }
         }
       }
     }

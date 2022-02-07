@@ -8,8 +8,9 @@ import InlineCode from '../components/InlineCode';
 import MultiCodeBlock, {
   MultiCodeBlockContext
 } from '../components/MultiCodeBlock';
+import Pagination from '../components/Pagination';
 import PropTypes from 'prop-types';
-import React, {Fragment, createElement, useContext, useMemo} from 'react';
+import React, {Fragment, createElement, useMemo} from 'react';
 import RelativeLink from '../components/RelativeLink';
 import Sidebar, {SIDEBAR_WIDTH} from '../components/Sidebar';
 import TableOfContents from '../components/TableOfContents';
@@ -43,52 +44,15 @@ import {
   useToken
 } from '@chakra-ui/react';
 import {FaDiscourse, FaGithub} from 'react-icons/fa';
-import {
-  FiChevronLeft,
-  FiChevronRight,
-  FiChevronsRight,
-  FiStar
-} from 'react-icons/fi';
-import {Link as GatsbyLink, graphql} from 'gatsby';
+import {FiChevronsRight, FiStar} from 'react-icons/fi';
 import {GatsbySeo} from 'gatsby-plugin-next-seo';
 import {Global} from '@emotion/react';
 import {MDXProvider} from '@mdx-js/react';
 import {MDXRenderer} from 'gatsby-plugin-mdx';
 import {PathContext} from '../utils';
 import {YouTube} from 'mdx-embed';
-import {getFullPath, isPathActive} from '../components/NavItems';
+import {graphql} from 'gatsby';
 import {rehype} from 'rehype';
-
-function PaginationButton({item, label, ...props}) {
-  const {basePath} = useContext(PathContext);
-  return (
-    <Button
-      h="auto"
-      py="2"
-      variant="ghost"
-      as={GatsbyLink}
-      to={getFullPath(item.path, basePath)}
-      {...props}
-    >
-      <div>
-        <Box
-          textTransform="uppercase"
-          letterSpacing="wider"
-          fontWeight="normal"
-          fontSize="xs"
-        >
-          {label}
-        </Box>
-        <Box fontSize="lg">{item.title}</Box>
-      </div>
-    </Button>
-  );
-}
-
-PaginationButton.propTypes = {
-  item: PropTypes.object.isRequired,
-  label: PropTypes.string.isRequired
-};
 
 const LIST_SPACING = 2;
 
@@ -138,11 +102,6 @@ const {processSync} = rehype()
     }
   });
 
-const flattenNavItems = navItems =>
-  navItems.flatMap(navItem =>
-    navItem.children ? flattenNavItems(navItem.children) : navItem
-  );
-
 export default function PageTemplate({data, uri, pageContext}) {
   const paddingTop = useToken('space', 10);
   const paddingBottom = useToken('space', 12);
@@ -167,19 +126,6 @@ export default function PageTemplate({data, uri, pageContext}) {
   const {frontmatter, headings} = childMdx || childMarkdownRemark;
   const {title, description} = frontmatter;
   const {docset, versions, currentVersion, navItems} = pageContext;
-
-  const [prevItem, nextItem] = useMemo(() => {
-    const flatNavItems = flattenNavItems(navItems).filter(navItem =>
-      // only include local pages
-      navItem.path.startsWith('/')
-    );
-    const currentIndex = flatNavItems.findIndex(navItem => {
-      const fullPath = getFullPath(navItem.path, basePath);
-      return isPathActive(fullPath, uri);
-    });
-
-    return [flatNavItems[currentIndex - 1], flatNavItems[currentIndex + 1]];
-  }, [navItems, basePath, uri]);
 
   return (
     <>
@@ -265,26 +211,7 @@ export default function PageTemplate({data, uri, pageContext}) {
                   </Wrapper>
                 )}
               </MultiCodeBlockContext.Provider>
-              <Flex mt="10">
-                {prevItem && (
-                  <PaginationButton
-                    label="Previous"
-                    item={prevItem}
-                    leftIcon={<FiChevronLeft />}
-                    pl="3"
-                  />
-                )}
-                {nextItem && (
-                  <PaginationButton
-                    ml="auto"
-                    textAlign="right"
-                    label="Next"
-                    rightIcon={<FiChevronRight />}
-                    item={nextItem}
-                    pr="3"
-                  />
-                )}
-              </Flex>
+              <Pagination navItems={navItems} />
             </Box>
             {uri !== '/' && (
               // hide the table of contents on the home page
