@@ -21,7 +21,7 @@ The central piece of this repo, the docs infrastructure, is a Gatsby website tha
 - [History](#history)
   - [Benefits](#benefits)
   - [Drawbacks](#drawbacks)
-  - [The solution](#the-solution)
+  - [Solution](#solution)
 
 ## Developing locally
 
@@ -151,11 +151,63 @@ Next, these two docsets must specify the label that they want to appear for that
 
 ## Deploys and previews
 
-- set up a new docset
-- config
-- add to sources
-- content directory
-- github workflows
+This website gets rebuilt and deployed to Netlify every time something is committed to its default branch. Deploy previews are automatically created for new PRs.
+
+"But what about changes to remote docsets?", I hear you say. Netlify doesn't let us configure a site to listen for changes in more than one repo. To get around this, we use GitHub Actions to trigger a new production deploy every time docs-related changes are made. We also build deploy previews and publish them to Netlify for PRs that include docs changes on these repos.
+
+<!-- TODO: update when we get org-wide workflow templates working -->
+
+To set up these actions in any repo, copy the following two YAML files to the repo's `.github/workflows` directory.
+
+### publish.yml
+
+```yml
+name: Deploy to production
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - docs/**
+
+jobs:
+  publish:
+    uses: apollographql/docs/.github/workflows/publish.yml@main
+    secrets:
+      NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+      NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+```
+
+### preview.yml
+
+```yml
+name: Preview on Netlify
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - docs/**
+
+jobs:
+  preview:
+    uses: apollographql/docs/.github/workflows/preview.yml@main
+    secrets:
+      NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+      NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+```
+
+Both of these workflows are configured to respond to changes to files within the `docs` directory and assumes that your default branch is `main`—please change this if it should be something else. Additionally, any [version branches](#managing-versions) that you have configured must also be added to the `branches` field.
+
+```yml
+branches:
+  - main
+  - version-2.6
+```
+
+They both make use of secrets configured at the organization level, so those don't need to be set within each repo. They also reference shared workflows [from this repo](./.github/workflows/) to simplify the complicated parts of the deploy process.
 
 ## Authoring
 
