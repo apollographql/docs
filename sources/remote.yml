@@ -1,0 +1,34 @@
+# mapping of remote source paths to their git repo and branch name
+react: 
+  remote: https://github.com/trevorblades/apollo-client
+  branch: tb/experimental-docs
+react/v2: 
+  remote: https://github.com/trevorblades/apollo-client
+  branch: tb/experimental-v2
+apollo-server: 
+  remote: https://github.com/trevorblades/apollo-server
+  branch: tb/experimental-docs
+apollo-server/v2: 
+  remote: https://github.com/trevorblades/apollo-server
+  branch: tb/experimental-v2
+ios: 
+  remote: https://github.com/trevorblades/apollo-ios
+  branch: tb/experimental-docs
+kotlin: 
+  remote: https://github.com/trevorblades/apollo-kotlin
+  branch: tb/experimental-docs
+kotlin/v2: 
+  remote: https://github.com/trevorblades/apollo-kotlin
+  branch: tb/experimental-v2
+federation: 
+  remote: https://github.com/trevorblades/federation
+  branch: tb/experimental-v1
+federation/v2: 
+  remote: https://github.com/trevorblades/federation
+  branch: tb/experimental-docs
+rover: 
+  remote: https://github.com/trevorblades/rover
+  branch: tb/experimental-docs
+router: 
+  remote: https://github.com/trevorblades/router
+  branch: tb/experimental-docs

@@ -7,11 +7,17 @@ This repo contains the code responsible for building the Apollo Docs site. It al
 The central piece of this repo, the docs infrastructure, is a Gatsby website that sources MDX and Markdown files from the remote git repos of Apollo's tools, like https://github.com/apollographql/apollo-client. It pulls in all of this data and outputs a single static site. To learn more about this approach, check out [this section](#the-approach).
 
 - [Developing locally](#developing-locally)
-  - [Developing a local docset](#developing-a-local-docset)
+  - [Developing a single docset](#developing-a-single-docset)
 - [Meet the docsets](#meet-the-docsets)
   - [Local](#local)
   - [Remote](#remote)
-- [Running against a local docset](#running-against-a-local-docset)
+- [Docset configuration](#docset-configuration)
+  - [config.json](#configjson)
+  - [Adding a local docset](#adding-a-local-docset)
+  - [Configuring a remote docset](#configuring-a-remote-docset)
+  - [Managing versions](#managing-versions)
+- [Deploys and previews](#deploys-and-previews)
+- [Authoring](#authoring)
 - [History](#history)
   - [Benefits](#benefits)
   - [Drawbacks](#drawbacks)
@@ -40,9 +46,9 @@ netlify dev # start local development environment
 
 > ⌚ The first run may take a long time as it has to source a lot of content, but subsequent runs will be shorter since most of that data will have been cached.
 
-### Developing a local docset
+### Developing a single docset
 
-By default, running the local development environment will build a site with _everything_ included. If you're working on a content edit to a single docset and want to preview those changes within the context of the docs site, you can specify a `DOCS_PATH` environment variable pointing to the location of your local content directory. This will cause the site to source content _only_ from the provided local directory, and content changes will be hot-reloaded.
+By default, running the local development environment will build a site with _everything_ included. If you're working on a content edit to a single docset and want to preview those changes within the context of the docs site, you can specify a `DOCS_PATH` environment variable pointing to the location of your local content directory. This will cause the site to source content _only_ from the provided local directory, and content changes will be hot-reloaded. 🔥
 
 ```sh
 DOCS_PATH=../apollo-client/docs/source netlify dev
@@ -66,6 +72,61 @@ The docs content is written and maintained in the following places. Many of them
 - [Apollo Federation](https://github.com/apollographql/federation)
 - [Rover CLI](https://github.com/apollographql/rover)
 - [Apollo Router](https://github.com/apollographql/router)
+
+## Docset configuration
+
+A docset is made up of mostly Markdown/MDX files and a `config.json` file that configures its settings.
+
+### config.json
+
+The `config.json` file lives at the root of its docset's content directory, and it allows authors to configure the docset's title, version name, and sidebar nav. Here's an example of one:
+
+```json
+{
+  "title": "Apollo Server",
+  "version": "v3",
+  "sidebar": {
+    "Introduction": "/",
+    "Get started": "/getting-started",
+    "New in v3": {
+      "Migrating to Apollo Server 3": "/migration",
+      "Changelog": "https://github.com/apollographql/apollo-server/blob/main/CHANGELOG.md"
+    }
+  }
+}
+```
+
+| Name    | Required? | Description                                                                                                                                                                                                                                                                                                       |
+| ------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| title   | yes       | The title of the docset. It is used to construct page titles and shown in the header when the docset is selected.                                                                                                                                                                                                 |
+| version | no        | A string representing the version of the software that is being documented, i.e. "v3". This value is shown in the version dropdown if multiple versions of a docset are configured.                                                                                                                               |
+| sidebar | yes       | A JSON object mapping sidebar nav labels to thier paths. Use paths beginning with a slash, relative to the root of the content directory for internal links. Full URLs are transformed into external links that open in a new tab. These objects can be nested to define categories and subcategories in the nav. |
+
+### Adding a local docset
+
+To create a local docset, add a new directory to the `src/content` directory of this repo, and drop in an `index.md` file and a `config.json` file. Next, head over to the `sources/local.yml` file and add a line mapping the URL path that you want the docset to live at to the location of its content.
+
+```yml
+studio: src/content/studio
+```
+
+Restart your local development environment and the new docset will be available to peruse and develop. 🚀
+
+### Configuring a remote docset
+
+Remote docsets live within the `docs/source` directory of the **public** repo for the library that is being documented. The `docs/source` directory must contain some Markdown/MDX files and a `config.json` file.
+
+> Configured repos must be public so that we can pull down their files at build time without permission issues
+
+To add a remote docset to the website, add a record in the `sources/remote.yml` file. This record should map the URL path you want the docset to live at to the repo URL, called `remote`, and the name of the `branch` that content should be sourced from.
+
+```yml
+react:
+  remote: https://github.com/apollographql/apollo-client
+  branch: main
+```
+
+### Managing versions
 
 ## Deploys and previews
 
@@ -114,6 +175,8 @@ Another downside was the complicated flow for publishing changes to the docs inf
 6. Publish new version of the theme
 7. Wait for Renovate to pick up the change and post a PR (~1h) or make your own PR upgrading the theme in every. single. repo. 💀
 
-### The solution
+### Solution
 
 This new infrastructure fixes these issues by centralizing the website code and dependencies in one place, and pulling in content from the library repos. Each library's `docs` directory now only needs to include Markdown/MDX files and images—no Gatsby configuration or dependencies.
+
+We also increase our pace of iteration on website changes and make it easier to issue bug fixes or address security vulnerabilities by cutting out the extra steps of publishing to NPM and installing new versions of a package on each docs repo. And by moving non-OSS-related docsets into the central docs repo, we're able to consolidate docs-only repos and make those docsets easier to update.

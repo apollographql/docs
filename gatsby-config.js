@@ -1,5 +1,7 @@
 const {algoliaSettings} = require('apollo-algolia-transform');
 const {query, transformer} = require('./algolia');
+const yaml = require('js-yaml');
+const fs = require('fs');
 
 const gatsbyRemarkPlugins = [
   '@fec/remark-a11y-emoji/gatsby',
@@ -18,52 +20,8 @@ const gatsbyRemarkPlugins = [
   }
 ];
 
-const remoteSources = {
-  react: {
-    remote: 'https://github.com/trevorblades/apollo-client',
-    branch: 'tb/experimental-docs'
-  },
-  'react/v2': {
-    remote: 'https://github.com/trevorblades/apollo-client',
-    branch: 'tb/experimental-v2'
-  },
-  'apollo-server': {
-    remote: 'https://github.com/trevorblades/apollo-server',
-    branch: 'tb/experimental-docs'
-  },
-  'apollo-server/v2': {
-    remote: 'https://github.com/trevorblades/apollo-server',
-    branch: 'tb/experimental-v2'
-  },
-  ios: {
-    remote: 'https://github.com/trevorblades/apollo-ios',
-    branch: 'tb/experimental-docs'
-  },
-  kotlin: {
-    remote: 'https://github.com/trevorblades/apollo-kotlin',
-    branch: 'tb/experimental-docs'
-  },
-  'kotlin/v2': {
-    remote: 'https://github.com/trevorblades/apollo-kotlin',
-    branch: 'tb/experimental-v2'
-  },
-  federation: {
-    remote: 'https://github.com/trevorblades/federation',
-    branch: 'tb/experimental-v1'
-  },
-  'federation/v2': {
-    remote: 'https://github.com/trevorblades/federation',
-    branch: 'tb/experimental-docs'
-  },
-  rover: {
-    remote: 'https://github.com/trevorblades/rover',
-    branch: 'tb/experimental-docs'
-  },
-  router: {
-    remote: 'https://github.com/trevorblades/router',
-    branch: 'tb/experimental-docs'
-  }
-};
+const localSources = yaml.load(fs.readFileSync('sources/local.yml', 'utf8'));
+const remoteSources = yaml.load(fs.readFileSync('sources/remote.yml', 'utf8'));
 
 const sources = process.env.DOCS_PATH
   ? [
@@ -76,20 +34,13 @@ const sources = process.env.DOCS_PATH
       }
     ]
   : [
-      {
+      ...Object.entries(localSources).map(([name, path]) => ({
         resolve: 'gatsby-source-filesystem',
         options: {
-          name: '/',
-          path: 'src/content/basics'
+          name,
+          path
         }
-      },
-      {
-        resolve: 'gatsby-source-filesystem',
-        options: {
-          name: 'studio',
-          path: 'src/content/studio'
-        }
-      },
+      })),
       ...Object.entries(remoteSources).map(([name, {remote, branch}]) => ({
         resolve: '@theowenyoung/gatsby-source-git',
         options: {
