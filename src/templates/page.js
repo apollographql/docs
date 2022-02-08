@@ -87,6 +87,7 @@ const mdxComponents = {
   MultiCodeBlock,
   YouTube,
   CodeColumns,
+  TypeScriptApiBox,
   TypescriptApiBox: TypeScriptApiBox
 };
 

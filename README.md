@@ -17,7 +17,13 @@ The central piece of this repo, the docs infrastructure, is a Gatsby website tha
   - [Configuring a remote docset](#configuring-a-remote-docset)
   - [Managing versions](#managing-versions)
 - [Deploys and previews](#deploys-and-previews)
+  - [publish.yml](#publishyml)
+  - [preview.yml](#previewyml)
 - [Authoring](#authoring)
+  - [Frontmatter](#frontmatter)
+  - [Linking](#linking)
+  - [Code blocks](#code-blocks)
+  - [Using MDX](#using-mdx)
 - [History](#history)
   - [Benefits](#benefits)
   - [Drawbacks](#drawbacks)
@@ -211,11 +217,62 @@ They both make use of secrets configured at the organization level, so those don
 
 ## Authoring
 
-- links
-- code blocks
-- what is mdx?
-  - shared content blocks
-  - components
+Docs articles are authored in [Markdown syntax](https://www.markdownguide.org/cheat-sheet/). This allows us to express lists, tables, blockquotes, and other HTML elements in a simple format. The following are some conventions and techniques to keep in mind when writing articles.
+
+### Frontmatter
+
+Frontmatter is a block of YAML code surrounded by `---` at the top of a Markdown file. We use frontmatter to configure the page title and description of each article.
+
+```md
+---
+title: Proxy configuration
+description: Configuring proxy settings for outgoing requests
+---
+```
+
+### Linking
+
+Links between docs articles should be written as relative paths. For example, if you wanted to link from the `schema/custom-scalars` article in the Apollo Server docs to the `getting-started` page at the root of the content directory, you would write:
+
+```md
+[get started](../getting-started)
+```
+
+Writing links using absolute paths, i.e. `/getting-started` will result in that link taking the user to `/docs/getting-started` in production, instead of `/docs/apollo-server/getting-started` as intended.
+
+### Code blocks
+
+In addition to supporting [syntax highlighting](https://www.markdownguide.org/extended-syntax/#syntax-highlighting), our code blocks also allow you to specify the title of the file that is being represented, and highlight specific lines.
+
+In the following example, a YAML code block is configured with a `title` of "config.yml" and the numbers in the curly braces represent the lines that are meant to be highlighted—lines 1, 3, 4, and 5 in this case.
+
+````md
+```yml title="config.yml" {1,3-5}
+title: Apollo Client
+version: v3
+sidebar:
+  Introduction: /
+  Why Apollo Client: /why-apollo
+```
+````
+
+### Using MDX
+
+#### Components
+
+##### Button
+
+##### ExpansionPanel
+
+##### MultiCodeBlock
+
+##### CodeColumns
+
+##### YouTube
+
+##### TypeScriptApiBox
+
+#### Shared content
 
 ## History
 
