@@ -128,6 +128,27 @@ react:
 
 ### Managing versions
 
+This website presents multiple versions of docs for the same subject as options within a version dropdown in the main nav. It automatically treats multiple docsets with the same git remote URL as different versions of the same docs. So to add a new version, add a second entry to the `sources/remote.yml` file with your desired path (appending "/v2" in this case) and updated branch name.
+
+```yml
+react:
+  remote: https://github.com/apollographql/apollo-client
+  branch: main
+react/v2:
+  remote: https://github.com/apollographql/apollo-client
+  branch: version-2.6
+```
+
+Next, these two docsets must specify the label that they want to appear for that version in the version dropdown. This is done by adding a `version` field to each version's `config.json`.
+
+```json
+{
+  "title": "Apollo Client",
+  "version": "v2",
+  "sidebar": {...}
+}
+```
+
 ## Deploys and previews
 
 - set up a new docset
