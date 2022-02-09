@@ -1,7 +1,10 @@
 import Blockquote from '../components/Blockquote';
 import CodeBlock from '../components/CodeBlock';
 import CodeColumns from '../components/CodeColumns';
-import ExpansionPanel from '../components/ExpansionPanel';
+import ExpansionPanel, {
+  ExpansionPanelList,
+  ExpansionPanelListItem
+} from '../components/ExpansionPanel';
 import Footer from '../components/Footer';
 import Header, {TOTAL_HEADER_HEIGHT} from '../components/Header';
 import InlineCode from '../components/InlineCode';
@@ -84,6 +87,8 @@ const mdxComponents = {
   inlineCode: InlineCode,
   Button, // TODO: consider making pages import this from @chakra-ui/react
   ExpansionPanel,
+  ExpansionPanelList,
+  ExpansionPanelListItem,
   MultiCodeBlock,
   YouTube,
   CodeColumns,
