@@ -117,6 +117,7 @@ exports.createPages = async ({actions, graphql}) => {
   `);
 
   const configs = data.configs.nodes.reduce((acc, node) => {
+    // TODO: convert configs to YAML
     const {title, version, sidebar} = JSON.parse(node.fields.content);
     return {
       ...acc,

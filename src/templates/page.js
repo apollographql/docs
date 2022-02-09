@@ -82,11 +82,12 @@ const mdxComponents = {
   ...components,
   wrapper: Wrapper,
   inlineCode: InlineCode,
-  Button,
+  Button, // TODO: consider making pages import this from @chakra-ui/react
   ExpansionPanel,
   MultiCodeBlock,
   YouTube,
   CodeColumns,
+  TypeScriptApiBox,
   TypescriptApiBox: TypeScriptApiBox
 };
 
