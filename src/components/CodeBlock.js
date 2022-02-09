@@ -1,4 +1,5 @@
-import Highlight, {Prism} from 'prism-react-renderer';
+import Highlight from 'prism-react-renderer';
+import Prism from 'prismjs';
 import PropTypes from 'prop-types';
 import React, {createContext, useContext} from 'react';
 import fenceparser from 'fenceparser';
@@ -14,6 +15,20 @@ import {
   useColorModeValue
 } from '@chakra-ui/react';
 import {FiClipboard} from 'react-icons/fi';
+
+// these must be imported after Prism
+import 'prismjs/components/prism-bash';
+import 'prismjs/components/prism-graphql';
+import 'prismjs/components/prism-java';
+import 'prismjs/components/prism-javascript';
+import 'prismjs/components/prism-json';
+import 'prismjs/components/prism-jsx';
+import 'prismjs/components/prism-kotlin';
+import 'prismjs/components/prism-ruby';
+import 'prismjs/components/prism-rust';
+import 'prismjs/components/prism-swift';
+import 'prismjs/components/prism-tsx';
+import 'prismjs/components/prism-typescript';
 
 export const CodeBlockContext = createContext();
 
