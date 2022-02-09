@@ -258,21 +258,97 @@ sidebar:
 
 ### Using MDX
 
+MDX is just like Markdown except you can import and render React components within it. MDX files use the `.mdx` extension, and you may be familiar with them if you've worked in any of our docsets before.
+
+#### Shared content
+
+MDX is also composable; it allows you to render other MDX files within as if it were a React component. One pattern we use when sharing MDX content is saving the shared bits in a folder outside the `docs/source` directory so that those files aren't rendered as pages in the docs site.
+
+_shared/configure-project.mdx_
+
+```mdx
+1. Sign up for an Apollo account
+2. Create a graph in Apollo Studio
+3. Add environment variables to your project
+```
+
+_source/get-started.mdx_
+
+```mdx
+import ConfigureProject from "../shared/configure-project.mdx";
+
+## Introduction
+
+Here's how to configure a project:
+
+<ConfigureProject />
+```
+
 #### Components
+
+You can import modules within MDX files, but we also provide a variety of components to every MDX file—no import required.
 
 ##### Button
 
+A general-purpose button exported from Chakra UI. Refer to the [Chakra docs](https://chakra-ui.com/docs/form/button) for more information about how to use this component.
+
+```mdx
+import { Link } from "gatsby";
+
+<Button as={Link} to="/apollo-server/v2">
+  View older version
+</Button>
+```
+
 ##### ExpansionPanel
 
+Show and hide a section of content with a configurable message. Wrap this component around a block of Markdown, and **make sure to add empty lines** between the opening and closing tags and the content within them.
+
+```mdx
+<ExpansionPanel title="Show solution">
+
+This content will be hidden by default, but can be expanded if the user clicks on the panel.
+
+- Markdown
+- works
+- here
+
+</ExpansionPanel>
+```
+
 ##### MultiCodeBlock
+
+````mdx
+<MultiCodeBlock>
+
+```ts
+const foo: number = 123;
+```
+
+</MultiCodeBlock>
+````
 
 ##### CodeColumns
 
 ##### YouTube
 
+A YouTube player exported from [MDX Embed](https://www.mdx-embed.com/?path=/docs/components-youtube--usage).
+
+```mdx
+Check out this introduction to Apollo Studio:
+
+<YouTube youTubeId="sarXMaz3OpY" />
+```
+
 ##### TypeScriptApiBox
 
-#### Shared content
+For use in the Apollo Client docs.
+
+```mdx
+## The `ApolloClient` constructor
+
+<TypescriptApiBox name="ApolloClient.constructor" />
+```
 
 ## History
 
