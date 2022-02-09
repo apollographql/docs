@@ -19,6 +19,7 @@ import {FiClipboard} from 'react-icons/fi';
 // these must be imported after Prism
 import 'prismjs/components/prism-bash';
 import 'prismjs/components/prism-graphql';
+import 'prismjs/components/prism-groovy';
 import 'prismjs/components/prism-java';
 import 'prismjs/components/prism-javascript';
 import 'prismjs/components/prism-json';
