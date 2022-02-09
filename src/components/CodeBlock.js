@@ -3,7 +3,6 @@ import Prism from 'prismjs';
 import PropTypes from 'prop-types';
 import React, {createContext, useContext} from 'react';
 import fenceparser from 'fenceparser';
-import nightOwlLight from 'prism-react-renderer/themes/nightOwlLight';
 import rangeParser from 'parse-numeric-range';
 import {
   Box,
@@ -15,6 +14,7 @@ import {
 } from '@chakra-ui/react';
 import {FiClipboard} from 'react-icons/fi';
 import {theme as darkTheme} from '../prism-themes/dark';
+import {theme as lightTheme} from '../prism-themes/light';
 
 // these must be imported after Prism
 import 'prismjs/components/prism-bash';
@@ -51,8 +51,8 @@ export default function CodeBlock({children}) {
   const [code] = Array.isArray(innerChildren) ? innerChildren : [innerChildren];
 
   const {onCopy, hasCopied} = useClipboard(code);
-  const theme = useColorModeValue(nightOwlLight, darkTheme);
-  const highlightColor = useColorModeValue('blackAlpha.100', 'blackAlpha.400');
+  const theme = useColorModeValue(lightTheme, darkTheme);
+  const highlightColor = useColorModeValue('gray.100', 'blackAlpha.400');
 
   const languageMenu = useContext(CodeBlockContext);
 
