@@ -52,7 +52,8 @@ export default function CodeBlock({children}) {
   const {onCopy, hasCopied} = useClipboard(code);
   const theme = useColorModeValue(lightTheme, darkTheme);
   const highlightColor = useColorModeValue('gray.100', 'blackAlpha.400');
-
+  const borderColor = useColorModeValue('gray.200', 'gray.700');
+  const titleBgColor = useColorModeValue('white', 'inherit');
   const languageMenu = useContext(CodeBlockContext);
 
   return (
@@ -60,13 +61,26 @@ export default function CodeBlock({children}) {
       Prism={Prism}
       theme={theme}
       code={code.trim()}
-      language={className.replace(/language-/, '')}
+      language={className.replace(/^language-/, '')}
     >
       {({className, style, tokens, getLineProps, getTokenProps}) => (
-        <Box rounded="md" style={style} pos="relative" shadow="sm">
+        <Box
+          rounded="md"
+          style={style}
+          pos="relative"
+          shadow="sm"
+          borderWidth="1px"
+          borderColor={borderColor}
+        >
           <Box fontSize="md" fontFamily="mono">
             {title && (
-              <Box px="4" py="2" borderBottomWidth="1px">
+              <Box
+                px="4"
+                py="2"
+                borderBottomWidth="1px"
+                bgColor={titleBgColor}
+                borderTopRadius="md"
+              >
                 {title}
               </Box>
             )}
