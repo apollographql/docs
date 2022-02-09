@@ -5,7 +5,7 @@ const {black, silver, orange, grey, pink, teal, indigo, yellow} = colors;
 export const theme = {
   plain: {
     color: black.lighter,
-    backgroundColor: silver.light
+    backgroundColor: silver.lighter
   },
   styles: [
     {
