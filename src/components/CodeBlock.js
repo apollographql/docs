@@ -124,6 +124,7 @@ export default function CodeBlock({children}) {
                   top={title ? '57px' : SPACING} // 57px = SPACING (16px) + height of title box (41px)
                   left={SPACING}
                   textAlign="right"
+                  fontFamily="inherit"
                   bgColor={theme.plain.backgroundColor} // for horizontal scrolling of code text
                 >
                   {tokens.map((_, index) => (
