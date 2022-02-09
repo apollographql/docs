@@ -1,3 +1,5 @@
 # mapping of local source paths to the location of their content
+# TODO: maybe try sourcing content from outside the src directory?
+# https://github.com/gatsbyjs/gatsby/issues/5510
 /: src/content/basics
 studio: src/content/studio

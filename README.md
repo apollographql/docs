@@ -4,7 +4,7 @@ This repo contains the code responsible for building the Apollo Docs site. It al
 
 > We use the word **docset** to describe an individual docs website. For example, "I just updated the Android docset".
 
-The central piece of this repo, the docs infrastructure, is a Gatsby website that sources MDX and Markdown files from the remote git repos of Apollo's tools, like https://github.com/apollographql/apollo-client. It pulls in all of this data and outputs a single static site. To learn more about this approach, check out [this section](#the-approach).
+The central piece of this repo, the docs infrastructure, is a Gatsby website that sources MDX and Markdown files from the [remote git repos](#remote) of Apollo's tools. It pulls in all of this data and outputs a single static site. To learn more about this approach and why we built this, check out [this section](#history).
 
 - [Developing locally](#developing-locally)
   - [Developing a single docset](#developing-a-single-docset)
