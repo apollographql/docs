@@ -318,6 +318,10 @@ This content will be hidden by default, but can be expanded if the user clicks o
 
 ##### MultiCodeBlock
 
+Wrap TypeScript code blocks in a `MultiCodeBlock` component to automatically transpile them into JavaScript. A language dropdown will be rendered in the top right corner of the code block for the user to switch between the two options. This feature works on code blocks tagged with `ts` or `tsx`.
+
+You can also manually add multiple code blocks with different languages to the `MultiCodeBlock` to have them behave the same way.
+
 ````mdx
 <MultiCodeBlock>
 
@@ -330,9 +334,31 @@ const foo: number = 123;
 
 ##### CodeColumns
 
+Render multiple code blocks side-by-side. It takes a `cols` prop that affects the number of columns rendered. By default, it renders **two columns**.
+
+````mdx
+<CodeColumns cols={3}>
+
+```js
+const foo = 123;
+```
+
+```css
+.link {
+  background-color: red;
+}
+```
+
+```html
+<a class="link" href="https://example.com">Click here</a>
+```
+
+</CodeColumns>
+````
+
 ##### YouTube
 
-A YouTube player exported from [MDX Embed](https://www.mdx-embed.com/?path=/docs/components-youtube--usage).
+A YouTube player exported from MDX Embed. Check out all of the different props and options [on their docs](https://www.mdx-embed.com/?path=/docs/components-youtube--usage).
 
 ```mdx
 Check out this introduction to Apollo Studio:
@@ -342,12 +368,12 @@ Check out this introduction to Apollo Studio:
 
 ##### TypeScriptApiBox
 
-For use in the Apollo Client docs.
+This component is currently only used in the Apollo Client docset. It takes a property name and renders auto-generated documentation created by running [TypeDoc](https://typedoc.org/) in the Apollo Client repo.
 
 ```mdx
 ## The `ApolloClient` constructor
 
-<TypescriptApiBox name="ApolloClient.constructor" />
+<TypeScriptApiBox name="ApolloClient.constructor" />
 ```
 
 ## History
