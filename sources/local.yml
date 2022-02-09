@@ -1,3 +1,3 @@
 # mapping of local source paths to the location of their content
-/: docsets/basics
-studio: docsets/studio
+/: src/content/basics
+studio: src/content/studio
