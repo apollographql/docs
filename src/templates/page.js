@@ -151,7 +151,10 @@ export default function PageTemplate({data, uri, pageContext}) {
           html: {
             scrollPaddingTop
           },
-          '.mermaid': mermaidStyles
+          '.mermaid': {
+            lineHeight: 'normal',
+            ...mermaidStyles
+          }
         }}
       />
       <PathContext.Provider

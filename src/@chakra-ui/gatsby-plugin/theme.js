@@ -13,13 +13,6 @@ const theme = extendTheme({
   config: {
     initialColorMode: 'system'
   },
-  styles: {
-    global: {
-      '.mermaid': {
-        lineHeight: 'normal'
-      }
-    }
-  },
   components: {
     ...components,
     Table: {
