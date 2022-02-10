@@ -52,10 +52,11 @@ import {GatsbySeo} from 'gatsby-plugin-next-seo';
 import {Global} from '@emotion/react';
 import {MDXProvider} from '@mdx-js/react';
 import {MDXRenderer} from 'gatsby-plugin-mdx';
-import {PathContext, useMermaidStyles} from '../utils';
+import {PathContext} from '../utils';
 import {YouTube} from 'mdx-embed';
 import {graphql} from 'gatsby';
 import {rehype} from 'rehype';
+import {useMermaidStyles} from '../utils/mermaid';
 
 const LIST_SPACING = 2;
 
