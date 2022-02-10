@@ -56,6 +56,7 @@ import {PathContext} from '../utils';
 import {YouTube} from 'mdx-embed';
 import {graphql} from 'gatsby';
 import {rehype} from 'rehype';
+import {useMermaidStyles} from '../utils/mermaid';
 
 const LIST_SPACING = 2;
 
@@ -119,6 +120,8 @@ export default function PageTemplate({data, uri, pageContext}) {
   const [language, setLanguage] = useLocalStorage('language');
   const [sidebarHidden, setSidebarHidden] = useLocalStorage('sidebar');
 
+  const mermaidStyles = useMermaidStyles();
+
   const {siteUrl} = data.site.siteMetadata;
   const {
     name,
@@ -148,6 +151,10 @@ export default function PageTemplate({data, uri, pageContext}) {
         styles={{
           html: {
             scrollPaddingTop
+          },
+          '.mermaid': {
+            lineHeight: 'normal',
+            ...mermaidStyles
           }
         }}
       />
