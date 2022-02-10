@@ -1,6 +1,8 @@
 import {createContext} from 'react';
 import {useColorModeValue} from '@chakra-ui/react';
 
+export * from './mermaid';
+
 export const NavContext = createContext();
 export const PathContext = createContext();
 

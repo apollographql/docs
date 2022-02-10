@@ -52,7 +52,7 @@ import {GatsbySeo} from 'gatsby-plugin-next-seo';
 import {Global} from '@emotion/react';
 import {MDXProvider} from '@mdx-js/react';
 import {MDXRenderer} from 'gatsby-plugin-mdx';
-import {PathContext} from '../utils';
+import {PathContext, useMermaidStyles} from '../utils';
 import {YouTube} from 'mdx-embed';
 import {graphql} from 'gatsby';
 import {rehype} from 'rehype';
@@ -119,6 +119,8 @@ export default function PageTemplate({data, uri, pageContext}) {
   const [language, setLanguage] = useLocalStorage('language');
   const [sidebarHidden, setSidebarHidden] = useLocalStorage('sidebar');
 
+  const mermaidStyles = useMermaidStyles();
+
   const {siteUrl} = data.site.siteMetadata;
   const {
     name,
@@ -148,7 +150,8 @@ export default function PageTemplate({data, uri, pageContext}) {
         styles={{
           html: {
             scrollPaddingTop
-          }
+          },
+          '.mermaid': mermaidStyles
         }}
       />
       <PathContext.Provider
