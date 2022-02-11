@@ -14,6 +14,7 @@ import {
   useColorModeValue
 } from '@chakra-ui/react';
 import {FiClipboard} from 'react-icons/fi';
+import {colors} from '@apollo/space-kit/colors';
 import {theme as darkTheme} from '../prism-themes/dark';
 import {theme as lightTheme} from '../prism-themes/light';
 
@@ -58,7 +59,10 @@ export default function CodeBlock({children}) {
   const {onCopy, hasCopied} = useClipboard(code);
   const theme = useColorModeValue(lightTheme, darkTheme);
   const highlightColor = useColorModeValue('gray.100', 'blackAlpha.400');
-  const lineNumberColor = useColorModeValue('gray.300', '#798fbb');
+  const lineNumberColor = useColorModeValue(
+    'gray.300',
+    colors.midnight.lighter
+  );
   const languageMenu = useContext(CodeBlockContext);
 
   return (
