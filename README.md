@@ -4,7 +4,7 @@ This repo contains the code responsible for building the Apollo Docs site. It al
 
 > We use the word **docset** to describe an individual docs website. For example, "I just updated the Android docset".
 
-The central piece of this repo, the docs infrastructure, is a Gatsby website that sources MDX and Markdown files from the [remote git repos](#remote) of Apollo's tools. It pulls in all of this data and outputs a single static site. To learn more about this approach and why we built this, check out [this section](#history).
+The central piece of this repo, the docs infrastructure, is a [Gatsby](https://www.gatsbyjs.com/) website that sources MDX and Markdown files from the [remote git repos](#remote) of Apollo's tools. It pulls in all of this data and outputs a single static site. To learn more about this approach and why we built this, check out [this section](#history).
 
 - [Developing locally](#developing-locally)
   - [Developing a single docset](#developing-a-single-docset)
@@ -106,7 +106,7 @@ The `config.json` file lives at the root of its docset's content directory, and 
 | ------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | title   | yes       | The title of the docset. It is used to construct page titles and shown in the header when the docset is selected.                                                                                                                                                                                                 |
 | version | no        | A string representing the version of the software that is being documented, i.e. "v3". This value is shown in the version dropdown if multiple versions of a docset are configured.                                                                                                                               |
-| sidebar | yes       | A JSON object mapping sidebar nav labels to thier paths. Use paths beginning with a slash, relative to the root of the content directory for internal links. Full URLs are transformed into external links that open in a new tab. These objects can be nested to define categories and subcategories in the nav. |
+| sidebar | yes       | A JSON object mapping sidebar nav labels to their paths. Use paths beginning with a slash, relative to the root of the content directory for internal links. Full URLs are transformed into external links that open in a new tab. These objects can be nested to define categories and subcategories in the nav. |
 
 ### Adding a local docset
 
@@ -258,7 +258,9 @@ sidebar:
 
 ### Using MDX
 
-MDX is just like Markdown except you can import and render React components within it. MDX files use the `.mdx` extension, and you may be familiar with them if you've worked in any of our docsets before.
+[MDX](https://mdxjs.com/) is just like Markdown except you can import and render React components within it. MDX files use the `.mdx` extension, and you may be familiar with them if you've worked in any of our docsets before.
+
+> Gatsby does not currently support MDX v2 ([MDX v2 only uses ESM](https://mdxjs.com/migrating/v2/#esm), which [Gatsby does not yet support](https://github.com/gatsbyjs/gatsby/discussions/31599)), so make sure that the MDX syntax you are using when authoring in an `.mdx` file is compatible with MDX v1.
 
 #### Shared content
 
