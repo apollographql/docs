@@ -77,13 +77,7 @@ export default function CodeBlock({children}) {
         // ex. if there are 28 lines in the code block, lineNumberOffset = 2ch
         const lineNumberOffset = tokens.length.toString().length + 'ch';
         return (
-          <Box
-            rounded="md"
-            style={style}
-            pos="relative"
-            shadow="sm"
-            borderWidth="1px"
-          >
+          <Box rounded="md" style={style} pos="relative" borderWidth="1px">
             <Box fontSize="md" fontFamily="mono">
               {title && (
                 <Box
