@@ -8,6 +8,7 @@ import {
   Box,
   Button,
   ButtonGroup,
+  Flex,
   chakra,
   useClipboard,
   useColorModeValue
@@ -99,46 +100,35 @@ export default function CodeBlock({children}) {
                 overflow="auto"
               >
                 {tokens.map((line, i) => (
-                  <Box
-                    {...getLineProps({
-                      line,
-                      key: i
-                    })}
-                    key={i}
-                    pl={(SPACING / 2) * (showLineNumbers ? 2 : 1)}
-                    bg={linesToHighlight.includes(i + 1) && highlightColor}
-                  >
-                    <Box ml={showLineNumbers && lineNumberOffset}>
-                      {line.map((token, key) => (
-                        <span key={key} {...getTokenProps({token, key})} />
-                      ))}
+                  <Flex key={i}>
+                    {showLineNumbers && (
+                      <Box
+                        aria-hidden="true"
+                        userSelect="none"
+                        textAlign="right" // line number alignment used in VS Code
+                        w={lineNumberOffset}
+                        mr={SPACING}
+                        color={lineNumberColor}
+                      >
+                        {i + 1}
+                      </Box>
+                    )}
+                    <Box
+                      {...getLineProps({
+                        line,
+                        key: i
+                      })}
+                      bg={linesToHighlight.includes(i + 1) && highlightColor}
+                    >
+                      <Box>
+                        {line.map((token, key) => (
+                          <span key={key} {...getTokenProps({token, key})} />
+                        ))}
+                      </Box>
                     </Box>
-                  </Box>
+                  </Flex>
                 ))}
               </chakra.pre>
-              {/* put below all code and then position so that if user selects text, line numbers will be excluded */}
-              {showLineNumbers && (
-                <chakra.pre
-                  aria-hidden="true" // hide from screen reader
-                  pos="absolute"
-                  top={title ? '57px' : SPACING} // 57px = SPACING (16px) + height of title box (41px)
-                  left={SPACING}
-                  textAlign="right"
-                  fontFamily="inherit"
-                  bgColor={theme.plain.backgroundColor} // for horizontal scrolling of code text
-                >
-                  {tokens.map((_, index) => (
-                    <Box
-                      key={index}
-                      w={lineNumberOffset}
-                      mr={SPACING}
-                      color={lineNumberColor}
-                    >
-                      {index + 1}
-                    </Box>
-                  ))}
-                </chakra.pre>
-              )}
             </Box>
             <ButtonGroup size="xs" pos="absolute" top="2" right="2">
               <Button leftIcon={<FiClipboard />} onClick={onCopy}>
