@@ -33,7 +33,7 @@ import 'prismjs/components/prism-tsx';
 import 'prismjs/components/prism-typescript';
 
 export const CodeBlockContext = createContext();
-const SPACING = 4;
+const CODE_BLOCK_SPACING = 4;
 export default function CodeBlock({children}) {
   const [child] = Array.isArray(children) ? children : [children];
   const {
@@ -83,7 +83,7 @@ export default function CodeBlock({children}) {
             <Box fontSize="md" fontFamily="mono">
               {title && (
                 <Box
-                  px={SPACING}
+                  px={CODE_BLOCK_SPACING}
                   py="2"
                   borderBottomWidth="1px"
                   borderTopRadius="md"
@@ -93,14 +93,14 @@ export default function CodeBlock({children}) {
               )}
               <chakra.pre
                 className={className}
-                py={SPACING}
+                py={CODE_BLOCK_SPACING}
                 fontFamily="inherit"
                 overflow="auto"
               >
                 {tokens.map((line, i) => (
                   <Flex
                     key={i}
-                    px={SPACING}
+                    px={CODE_BLOCK_SPACING}
                     minW="100%" // width styles for line highlighting to always go all the way across code block
                     w="fit-content"
                     bg={linesToHighlight.includes(i + 1) && highlightColor}
@@ -111,7 +111,7 @@ export default function CodeBlock({children}) {
                         userSelect="none"
                         textAlign="right" // line number alignment used in VS Code
                         w={lineNumberOffset}
-                        mr={SPACING}
+                        mr={CODE_BLOCK_SPACING}
                         color={lineNumberColor}
                       >
                         {i + 1}
