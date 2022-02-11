@@ -1,49 +1,54 @@
+import {colors} from '@apollo/space-kit/colors';
+
+const {midnight, blilet, orange, teal, yellow} = colors;
+const white = '#ffffff'; // TODO: import white directly from chakra theme
+
 export const theme = {
   plain: {
-    color: '#ffffff',
-    backgroundColor: '#060f2f'
+    color: white,
+    backgroundColor: midnight.darkest
   },
   styles: [
     {
       types: ['comment', 'punctuation'],
       style: {
-        color: '#798FBB'
+        color: midnight.lighter
       }
     },
     {
       types: ['variable', 'string'],
       style: {
-        color: '#FFC18F'
+        color: orange.light
       }
     },
     {
       types: ['constant'],
       style: {
-        color: '#FFFFFF'
+        color: white
       }
     },
     {
       types: ['keyword', 'builtin', 'number', 'char'],
       style: {
-        color: '#F59140'
+        color: orange.base
       }
     },
     {
       types: ['tag', 'deleted'],
       style: {
-        color: '#41D9D3'
+        color: teal.base
       }
     },
     {
       types: ['function'],
       style: {
-        color: '#7A92F0'
+        color: blilet.light
       }
     },
     {
       types: ['symbol', 'inserted'],
       style: {
-        color: '#8BF6F2'
+        color: teal.light
       }
     },
     {
@@ -67,7 +72,7 @@ export const theme = {
     {
       types: ['boolean'],
       style: {
-        color: '#F4D03F'
+        color: yellow.base
       }
     }
   ]
