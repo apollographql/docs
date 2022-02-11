@@ -48,7 +48,7 @@ export default function CodeBlock({children}) {
   const {
     title,
     highlight,
-    showLineNumbers = false
+    showLineNumbers = true
   } = meta ? fenceparser(meta) : {};
   const linesToHighlight = highlight
     ? rangeParser(Object.keys(highlight).toString())
