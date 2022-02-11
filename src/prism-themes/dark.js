@@ -2,11 +2,10 @@ import {colors} from '@apollo/space-kit/colors';
 import {mix} from 'polished';
 
 const {midnight, blilet, orange, teal, yellow, purple, blue} = colors;
-const white = '#ffffff'; // TODO: import white directly from chakra theme
 
 export const theme = {
   plain: {
-    color: white,
+    color: 'white',
     backgroundColor: midnight.darkest
   },
   styles: [
@@ -25,7 +24,7 @@ export const theme = {
     {
       types: ['constant'],
       style: {
-        color: white
+        color: 'white'
       }
     },
     {
