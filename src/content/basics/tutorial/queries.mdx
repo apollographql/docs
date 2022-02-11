@@ -145,7 +145,7 @@ import * as GetLaunchListTypes from './__generated__/GetLaunchList';
 
 2. Replace the dummy declaration of `const Launches` with the following:
 
-  <MultiCodeBlock>
+<MultiCodeBlock>
 
 ```tsx title="src/pages/launches.tsx"
 const Launches: React.FC<LaunchesProps> = () => {
@@ -175,7 +175,7 @@ const Launches: React.FC<LaunchesProps> = () => {
 }
 ```
 
-  </MultiCodeBlock>
+</MultiCodeBlock>
 
 This component passes our `GET_LAUNCHES` query to `useQuery` and obtains `data`, `loading`, and `error` properties from the result. Depending on the state of those properties, we render a list of launches, a loading indicator, or an error message.
 
