@@ -44,7 +44,11 @@ export default function CodeBlock({children}) {
   } = child.props;
 
   const meta = metastring || dataMeta;
-  const {title, highlight, showLineNumbers} = meta ? fenceparser(meta) : {};
+  const {
+    title,
+    highlight,
+    showLineNumbers = false
+  } = meta ? fenceparser(meta) : {};
   const linesToHighlight = highlight
     ? rangeParser(Object.keys(highlight).toString())
     : [];
@@ -96,7 +100,7 @@ export default function CodeBlock({children}) {
                 {tokens.map((line, i) => (
                   <Flex
                     key={i}
-                    px={showLineNumbers && SPACING}
+                    px={SPACING}
                     minW="100%" // width styles for line highlighting to always go all the way across code block
                     w="fit-content"
                     bg={linesToHighlight.includes(i + 1) && highlightColor}
