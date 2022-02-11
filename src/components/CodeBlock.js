@@ -95,12 +95,17 @@ export default function CodeBlock({children}) {
               <chakra.pre
                 className={className}
                 py={SPACING}
-                px={showLineNumbers && SPACING}
                 fontFamily="inherit"
                 overflow="auto"
               >
                 {tokens.map((line, i) => (
-                  <Flex key={i}>
+                  <Flex
+                    key={i}
+                    px={showLineNumbers && SPACING}
+                    minW="100%" // width styles for line highlighting to always go all the way across code block
+                    w="fit-content"
+                    bg={linesToHighlight.includes(i + 1) && highlightColor}
+                  >
                     {showLineNumbers && (
                       <Box
                         aria-hidden="true"
@@ -118,7 +123,6 @@ export default function CodeBlock({children}) {
                         line,
                         key: i
                       })}
-                      bg={linesToHighlight.includes(i + 1) && highlightColor}
                     >
                       <Box>
                         {line.map((token, key) => (
