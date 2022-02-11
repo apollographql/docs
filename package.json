@@ -75,7 +75,8 @@
     "remark-react": "^9.0.1",
     "remark-typescript": "^0.4.0",
     "search-insights": "^1.8.0",
-    "stream-http": "^3.2.0"
+    "stream-http": "^3.2.0",
+    "subscriptions-transport-ws": "^0.11.0"
   },
   "devDependencies": {
     "@trevorblades/eslint-config": "^7.2.7",
