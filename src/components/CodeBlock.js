@@ -60,7 +60,7 @@ export default function CodeBlock({children}) {
   const theme = useColorModeValue(lightTheme, darkTheme);
   const highlightColor = useColorModeValue('gray.100', 'gray.700');
   const lineNumberColor = useColorModeValue(
-    'gray.300',
+    'gray.400',
     colors.midnight.lighter
   );
   const languageMenu = useContext(CodeBlockContext);
