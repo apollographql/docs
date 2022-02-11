@@ -55,8 +55,6 @@ export default function CodeBlock({children}) {
   const {onCopy, hasCopied} = useClipboard(code);
   const theme = useColorModeValue(lightTheme, darkTheme);
   const highlightColor = useColorModeValue('gray.100', 'blackAlpha.400');
-  const borderColor = useColorModeValue('gray.200', 'gray.700');
-  const titleBgColor = useColorModeValue('white', 'inherit');
   const lineNumberColor = useColorModeValue('gray.300', '#798fbb');
   const languageMenu = useContext(CodeBlockContext);
 
@@ -78,7 +76,6 @@ export default function CodeBlock({children}) {
             pos="relative"
             shadow="sm"
             borderWidth="1px"
-            borderColor={borderColor}
           >
             <Box fontSize="md" fontFamily="mono">
               {title && (
@@ -86,7 +83,6 @@ export default function CodeBlock({children}) {
                   px={SPACING}
                   py="2"
                   borderBottomWidth="1px"
-                  bgColor={titleBgColor}
                   borderTopRadius="md"
                 >
                   {title}
