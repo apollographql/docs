@@ -40,12 +40,11 @@ export default function CodeBlock({children}) {
     className = 'language-text',
     children: innerChildren,
     metastring,
-    'data-meta': dataMeta,
-    showLineNumbers = true
+    'data-meta': dataMeta
   } = child.props;
 
   const meta = metastring || dataMeta;
-  const {title, highlight} = meta ? fenceparser(meta) : {};
+  const {title, highlight, showLineNumbers} = meta ? fenceparser(meta) : {};
   const linesToHighlight = highlight
     ? rangeParser(Object.keys(highlight).toString())
     : [];
