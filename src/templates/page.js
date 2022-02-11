@@ -1,6 +1,7 @@
 import Blockquote from '../components/Blockquote';
 import CodeBlock from '../components/CodeBlock';
 import CodeColumns from '../components/CodeColumns';
+import EmbeddableExplorer from '../components/EmbeddableExplorer';
 import ExpansionPanel, {
   ExpansionPanelList,
   ExpansionPanelListItem
@@ -94,7 +95,8 @@ const mdxComponents = {
   YouTube,
   CodeColumns,
   TypeScriptApiBox,
-  TypescriptApiBox: TypeScriptApiBox
+  TypescriptApiBox: TypeScriptApiBox,
+  EmbeddableExplorer
 };
 
 const {processSync} = rehype()

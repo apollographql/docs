@@ -101,7 +101,7 @@ async function executeSubscription({
   window.addEventListener('message', checkForSubscriptionTermination);
 }
 
-export function EmbeddableExplorer({
+export default function EmbeddableExplorer({
   graphRef,
   graphEndpoint,
   graphSubscriptionEndpoint,
