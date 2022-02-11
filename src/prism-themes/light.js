@@ -1,4 +1,5 @@
 import {colors} from '@apollo/space-kit/colors';
+import {sharedStyles} from './sharedStyles';
 
 const {black, silver, orange, grey, pink, teal, indigo, yellow} = colors;
 
@@ -8,6 +9,7 @@ export const theme = {
     backgroundColor: silver.lighter
   },
   styles: [
+    ...sharedStyles,
     {
       types: ['comment', 'prolog', 'doctype', 'cdata'],
       style: {
@@ -60,24 +62,6 @@ export const theme = {
       types: ['regex', 'important', 'variable'],
       style: {
         color: yellow.darker
-      }
-    },
-    {
-      types: ['important', 'bold'],
-      style: {
-        fontWeight: 'bold'
-      }
-    },
-    {
-      types: ['italic'],
-      style: {
-        fontStyle: 'italic'
-      }
-    },
-    {
-      types: ['entity'],
-      style: {
-        cursor: 'help'
       }
     }
   ]

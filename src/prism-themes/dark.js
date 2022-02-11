@@ -1,5 +1,6 @@
 import {colors} from '@apollo/space-kit/colors';
 import {mix} from 'polished';
+import {sharedStyles} from './sharedStyles';
 
 const {midnight, blilet, orange, teal, yellow, purple, blue} = colors;
 
@@ -9,6 +10,7 @@ export const theme = {
     backgroundColor: midnight.darkest
   },
   styles: [
+    ...sharedStyles,
     {
       types: ['comment', 'punctuation'],
       style: {
