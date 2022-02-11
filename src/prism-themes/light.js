@@ -29,7 +29,9 @@ export const theme = {
         'number',
         'constant',
         'symbol',
-        'deleted'
+        'deleted',
+        'class-name',
+        'function'
       ],
       style: {
         color: pink.darker
@@ -52,12 +54,6 @@ export const theme = {
       types: ['atrule', 'attr-value', 'keyword'],
       style: {
         color: indigo.dark
-      }
-    },
-    {
-      types: ['class-name', 'function'],
-      style: {
-        color: pink.darker
       }
     },
     {
