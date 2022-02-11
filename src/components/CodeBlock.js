@@ -58,7 +58,7 @@ export default function CodeBlock({children}) {
 
   const {onCopy, hasCopied} = useClipboard(code);
   const theme = useColorModeValue(lightTheme, darkTheme);
-  const highlightColor = useColorModeValue('gray.100', 'blackAlpha.400');
+  const highlightColor = useColorModeValue('gray.100', 'gray.700');
   const lineNumberColor = useColorModeValue(
     'gray.300',
     colors.midnight.lighter
