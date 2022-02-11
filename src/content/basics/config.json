@@ -1,7 +1,34 @@
 {
   "title": "Apollo Basics",
   "sidebar": {
-    "Get started": "/getting-started",
-    "Schema basics": "/schema"
+    "Home": "/",
+    "The Apollo platform": "/intro/platform",
+    "Why adopt GraphQL?": "/intro/benefits",
+    "Guided tutorials": "https://odyssey.apollographql.com/?utm_source=apollo_docs&utm_medium=referral&utm_campaign=docs_sidebar",
+    "Full-Stack Tutorial": {
+      "0. Introduction": "/tutorial/introduction",
+      "1. Build a schema": "/tutorial/schema",
+      "2. Connect to data sources": "/tutorial/data-source",
+      "3. Write query resolvers": "/tutorial/resolvers",
+      "4. Write mutation resolvers": "/tutorial/mutation-resolvers",
+      "5. Connect to Apollo Studio": "/tutorial/production",
+      "6. Set up Apollo Client": "/tutorial/client",
+      "7. Fetch data with queries": "/tutorial/queries",
+      "8. Update data with mutations": "/tutorial/mutations",
+      "9. Manage local state": "/tutorial/local-state"
+    },
+    "Development Tools": {
+      "Rover CLI": "https://www.apollographql.com/docs/rover",
+      "Apollo extension for VS Code": "/devtools/editor-plugins",
+      "Configuring Apollo projects": "/devtools/apollo-config",
+      "The Apollo CLI (partially deprecated)": "/devtools/cli"
+    },
+    "Resources": {
+      "Principled GraphQL": "https://principledgraphql.com",
+      "Glossary": "/resources/graphql-glossary",
+      "GraphQL FAQ": "/resources/faq",
+      "Elastic License v2 FAQ": "/resources/elastic-license-v2-faq",
+      "Release lifecycle": "/resources/release-stages"
+    }
   }
 }

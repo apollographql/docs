@@ -1,0 +1,21 @@
+1. If you haven't yet:
+
+   - [Install the Rover CLI](https://www.apollographql.com/docs/rover/getting-started/)
+   - [Authenticate Rover](https://www.apollographql.com/docs/rover/configuring/) with Apollo Studio
+
+2. Decide how you'll provide your server's schema to Rover. You can either:
+
+   - Use a `.gql` or `.graphql` file saved on your local machine, or
+   - Perform an introspection query on your running server to fetch the schema
+
+3. Run the `rover graph publish` command, providing your schema in one of the ways shown:
+
+   ```bash
+   # Provide a local .graphql file path
+   rover graph publish my-graph@my-variant --schema ./schema.graphql
+
+   # Provide an introspection result via stdin
+   rover graph introspect http://localhost:4000 | rover graph publish my-graph@my-variant --schema -
+   ```
+
+   As shown, the first positional argument you provide `rover graph publish` is a [graph ref](/rover/conventions/#graph-refs), a string that specifies a particular variant of a particular graph in Studio.
