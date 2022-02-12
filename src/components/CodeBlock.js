@@ -33,8 +33,9 @@ import 'prismjs/components/prism-swift';
 import 'prismjs/components/prism-tsx';
 import 'prismjs/components/prism-typescript';
 
-export const CodeBlockContext = createContext();
 const CODE_BLOCK_SPACING = 4;
+export const CodeBlockContext = createContext();
+
 export default function CodeBlock({children}) {
   const [child] = Array.isArray(children) ? children : [children];
   const {
@@ -99,7 +100,8 @@ export default function CodeBlock({children}) {
                   <Flex
                     key={i}
                     px={CODE_BLOCK_SPACING}
-                    minW="100%" // width styles for line highlighting to always go all the way across code block
+                    // for line highlighting to go all the way across code block
+                    minW="full"
                     w="fit-content"
                     bg={linesToHighlight.includes(i + 1) && highlightColor}
                   >
@@ -107,7 +109,8 @@ export default function CodeBlock({children}) {
                       <Box
                         aria-hidden="true"
                         userSelect="none"
-                        textAlign="right" // line number alignment used in VS Code
+                        // line number alignment used in VS Code
+                        textAlign="right"
                         w={lineNumberOffset}
                         mr={CODE_BLOCK_SPACING}
                         color={lineNumberColor}
