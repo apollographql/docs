@@ -58,19 +58,6 @@ import {graphql} from 'gatsby';
 import {rehype} from 'rehype';
 import {useMermaidStyles} from '../utils/mermaid';
 
-const redirects =
-  '# Add tutorial shortcut\n/tutorial/ /docs/tutorial/introduction/\n\n# Add Developer Tools category to root docset\n/resources/apollo-config/ /docs/devtools/apollo-config/\n\n# Get rid of "References" category\n/references/apollo-config/ /docs/devtools/apollo-config/\n/references/apollo-config.html /docs/devtools/apollo-config/\n/references/setup-analytics/ /docs/graph-manager/setup-analytics/\n\n# Split "Apollo Engine guide" into two articles\n/references/apollo-engine/ /docs/graph-manager\n\n# Redirect Removed Guides to Platform Features\n/guides/security.html /docs/platform/operation-registry\n/guides/monitoring.html /docs/platform/integrations\n/guides/versioning.html /docs/platform/schema-checks#versioning\n\n# This lived here for a short period of time.\n/resources/apollo-config.html /docs/devtools/apollo-config\n\n# Redirect Removed Guides to Client & Server Docs\n/guides/schema-design.html /docs/apollo-server/essentials/schema\n/guides/testing-react-components.html /docs/react/recipes/testing\n/guides/state-management.html /docs/react/essentials/local-state\n/guides/access-control.html /docs/apollo-server/features/authentication\n\n# File uploads no longer have a home, but the blog post is the same content.\n/guides/file-uploads.html https://blog.apollographql.com/file-uploads-with-apollo-server-2-0-5db2f3f60675\n\n# Move our Apollo config docs to the References section\n/platform/apollo-config.html /docs/devtools/apollo-config\n/platform/setup-analytics.html /docs/references/setup-analytics\n/platform/schema-checks.html /docs/studio/schema-checks\n\n# Move Graph Manager docs to their own website\n/platform/* /docs/studio/:splat\n/references/graph-manager-data-privacy/ /docs/studio/data-privacy/\n';
-
-console.log(
-  redirects
-    .split('\n')
-    .filter(line => line.trim() && !line.startsWith('#'))
-    .map(line => {
-      const [from, ...rest] = line.split(/\s+/);
-      return [path.join('/', 'asdf', from), ...rest].join(' ');
-    })
-);
-
 const LIST_SPACING = 2;
 
 const components = {
