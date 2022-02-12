@@ -38,9 +38,10 @@ exports.onCreateWebpackConfig = ({actions}) => {
 };
 
 exports.onCreateNode = async ({node, getNode, loadNodeContent, actions}) => {
-  switch (node.internal.type) {
+  const {type, mediaType} = node.internal;
+  switch (type) {
     case 'File':
-      if (node.base === 'config.json' || node.base === '_redirects') {
+      if (mediaType === 'application/json' || node.base === '_redirects') {
         // save the raw content of JSON files as a field
         const content = await loadNodeContent(node);
         actions.createNodeField({
