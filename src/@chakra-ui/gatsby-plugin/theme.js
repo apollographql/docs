@@ -13,6 +13,13 @@ const theme = extendTheme({
   config: {
     initialColorMode: 'system'
   },
+  styles: {
+    global: {
+      strong: {
+        fontWeight: 'semibold'
+      }
+    }
+  },
   components: {
     ...components,
     Table: {

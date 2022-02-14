@@ -19,7 +19,6 @@ import RelativeLink from '../components/RelativeLink';
 import Sidebar, {SIDEBAR_WIDTH} from '../components/Sidebar';
 import TableOfContents from '../components/TableOfContents';
 import TypeScriptApiBox from '../components/TypeScriptApiBox';
-import Wrapper from '../components/Wrapper';
 import autolinkHeadings from 'rehype-autolink-headings';
 import path, {dirname} from 'path';
 import rehypeReact from 'rehype-react';
@@ -59,7 +58,8 @@ import {graphql} from 'gatsby';
 import {rehype} from 'rehype';
 import {useMermaidStyles} from '../utils/mermaid';
 
-const LIST_SPACING = 2;
+const LIST_SPACING = 4;
+const HEADINGS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
 
 const components = {
   h1: props => <Heading as="h1" size="3xl" {...props} />,
@@ -70,7 +70,18 @@ const components = {
   h6: props => <Heading as="h6" size="sm" {...props} />,
   ul: props => <UnorderedList spacing={LIST_SPACING} {...props} />,
   ol: props => <OrderedList spacing={LIST_SPACING} {...props} />,
-  li: ListItem,
+  li: props => (
+    <ListItem
+      sx={{
+        '>': {
+          ':not(:last-child)': {
+            mb: 3
+          }
+        }
+      }}
+      {...props}
+    />
+  ),
   p: Text,
   a: RelativeLink,
   pre: CodeBlock,
@@ -85,7 +96,6 @@ const components = {
 
 const mdxComponents = {
   ...components,
-  wrapper: Wrapper,
   inlineCode: InlineCode,
   Button, // TODO: consider making pages import this from @chakra-ui/react
   ExpansionPanel,
@@ -215,17 +225,41 @@ export default function PageTemplate({data, uri, pageContext}) {
                 </Heading>
               )}
               <Divider my="8" />
-              <MultiCodeBlockContext.Provider value={{language, setLanguage}}>
-                {childMdx ? (
-                  <MDXProvider components={mdxComponents}>
-                    <MDXRenderer>{childMdx.body}</MDXRenderer>
-                  </MDXProvider>
-                ) : (
-                  <Wrapper>
-                    {processSync(childMarkdownRemark.html).result}
-                  </Wrapper>
-                )}
-              </MultiCodeBlockContext.Provider>
+              <Box
+                sx={{
+                  fontSize: 'lg',
+                  [HEADINGS]: {
+                    a: {
+                      color: 'inherit'
+                    },
+                    code: {
+                      bg: 'none',
+                      p: 0
+                    }
+                  },
+                  '>': {
+                    ':not(:last-child)': {
+                      mb: 6
+                    },
+                    [HEADINGS]: {
+                      ':not(:first-child)': {
+                        mt: 10,
+                        mb: 4
+                      }
+                    }
+                  }
+                }}
+              >
+                <MultiCodeBlockContext.Provider value={{language, setLanguage}}>
+                  {childMdx ? (
+                    <MDXProvider components={mdxComponents}>
+                      <MDXRenderer>{childMdx.body}</MDXRenderer>
+                    </MDXProvider>
+                  ) : (
+                    processSync(childMarkdownRemark.html).result
+                  )}
+                </MultiCodeBlockContext.Provider>
+              </Box>
               <Pagination navItems={navItems} />
             </Box>
             {uri !== '/' && (
