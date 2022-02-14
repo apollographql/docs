@@ -8,7 +8,7 @@ Certain changes to your GraphQL schema (such as removing a field or type) might 
 You can review the results of schema checks inside Studio, helping you make informed decisions about evolving your graph:
 
 <img
-  class="screenshot"
+  className="screenshot"
   src="./img/schema-checks/checks-studio.jpg"
   alt="Schema check results in Studio"
   width="300"
@@ -53,8 +53,6 @@ rover graph check docs-example-graph@current --schema ./schema.graphql
 It requires the following:
 
 - Your registered graph's [graph ref](https://www.apollographql.com/docs/rover/conventions/#graph-refs). This is available from your graph's Schema tab in Studio:
-
-  {' '}
 
   <img
     class="screenshot"
@@ -107,7 +105,7 @@ Each change to the schema is labeled either `PASS` or `FAIL`.
 The output also includes a Studio URL that provides full details on the changes and their impact on existing clients and operations:
 
 <img
-  class="screenshot"
+  className="screenshot"
   src="./img/schema-checks/service-check-page.png"
   alt="Service check page in Apollo Studio"
 />
@@ -121,7 +119,7 @@ Occasionally, schema checks might flag a change that you know is safe. For examp
 In cases like this, you can **override** a flagged change in Apollo Studio from the associated check's details page:
 
 <img
-  class="screenshot"
+  className="screenshot"
   src="./img/schema-checks/mark-operation.png"
   alt="Service check page in Apollo Studio"
 />
@@ -140,7 +138,7 @@ You override flagged changes on an operation-by-operation basis. For each operat
 You can rerun checks from inside Studio:
 
 <img
-  class="screenshot"
+  className="screenshot"
   src="./img/schema-checks/rerun-check.png"
   alt="Rerun check in Apollo Studio"
 />
@@ -170,7 +168,7 @@ When you run `subgraph check`, Apollo Studio performs a **composition check** be
 Results of both check types are available in Studio from your graph's Checks tab:
 
 <img
-  class="screenshot"
+  className="screenshot"
   src="./img/schema-checks/checks-studio.jpg"
   alt="Schema check results in Studio"
   width="300"
@@ -232,7 +230,7 @@ jobs:
 If you're using GitHub, you can install the [Apollo Studio GitHub app](https://github.com/marketplace/apollo-studio#pricing-and-setup). This app enables Apollo Studio to send a webhook back to your GitHub project on each call to `rover graph check`, providing built-in pass/fail status checks on your pull requests:
 
 <img
-  class="screenshot"
+  className="screenshot"
   src="./img/schema-checks/github-check.png"
   alt="GitHub Status View"
 />
