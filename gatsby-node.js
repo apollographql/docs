@@ -4,6 +4,7 @@ const {
   createRemoteFileNode
 } = require('gatsby-source-filesystem');
 const path = require('path');
+const fs = require('fs');
 
 exports.sourceNodes = ({
   actions: {createNode},
@@ -38,32 +39,36 @@ exports.onCreateWebpackConfig = ({actions}) => {
 
 exports.onCreateNode = async ({node, getNode, loadNodeContent, actions}) => {
   const {type, mediaType} = node.internal;
+  switch (type) {
+    case 'File':
+      if (mediaType === 'application/json' || node.base === '_redirects') {
+        // save the raw content of JSON files as a field
+        const content = await loadNodeContent(node);
+        actions.createNodeField({
+          node,
+          name: 'content',
+          value: content
+        });
+      }
+      break;
+    case 'MarkdownRemark':
+    case 'Mdx': {
+      // add slugs for MD/MDX pages based on their file names
+      const filePath = createFilePath({
+        node,
+        getNode
+      });
 
-  if (mediaType === 'application/json') {
-    // save the raw content of JSON files as a field
-    const content = await loadNodeContent(node);
-    actions.createNodeField({
-      node,
-      name: 'content',
-      value: content
-    });
-    return;
-  }
-
-  if (type === 'MarkdownRemark' || type === 'Mdx') {
-    // add slugs for MD/MDX pages based on their file names
-    const filePath = createFilePath({
-      node,
-      getNode
-    });
-
-    const {sourceInstanceName} = getNode(node.parent);
-    actions.createNodeField({
-      node,
-      name: 'slug',
-      // prefix slugs with their docset path (configured by source name)
-      value: path.join('/', sourceInstanceName, filePath)
-    });
+      const {sourceInstanceName} = getNode(node.parent);
+      actions.createNodeField({
+        node,
+        name: 'slug',
+        // prefix slugs with their docset path (configured by source name)
+        value: path.join('/', sourceInstanceName, filePath)
+      });
+      break;
+    }
+    default:
   }
 };
 
@@ -113,8 +118,36 @@ exports.createPages = async ({actions, graphql}) => {
           sourceInstanceName
         }
       }
+      redirects: allFile(filter: {base: {eq: "_redirects"}}) {
+        nodes {
+          id
+          fields {
+            content
+          }
+          sourceInstanceName
+        }
+      }
     }
   `);
+
+  // combine sourced redirect files for each docset
+  const redirects = data.redirects.nodes
+    .flatMap(node =>
+      node.fields.content
+        .split('\n')
+        .filter(line => line.trim() && !line.startsWith('#'))
+        .map(line => {
+          const [from, ...rest] = line.split(/\s+/);
+          // append docset path to redirect "from" path
+          return [path.join('/', node.sourceInstanceName, from), ...rest].join(
+            ' '
+          );
+        })
+    )
+    .join('\n');
+
+  // write combined redirects file
+  fs.writeFileSync('public/_redirects', redirects);
 
   const configs = data.configs.nodes.reduce((acc, node) => {
     // TODO: convert configs to YAML

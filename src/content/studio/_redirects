@@ -1,0 +1,37 @@
+/schema/registry/ /docs/studio/org/graphs/
+
+/performance/ /docs/studio/metrics/operation-signatures/
+/setup-analytics/ /docs/studio/metrics/usage-reporting/
+/datadog-integration/ /docs/studio/metrics/datadog-integration/
+/client-awareness/ /docs/studio/metrics/client-awareness/
+/explorer/ /docs/studio/explorer/explorer/
+/embed-explorer/ /docs/studio/explorer/embed-explorer/
+
+# Move managed federation docs into Federation docset
+/managed-federation/overview/ /docs/federation/managed-federation/overview/
+/managed-federation/monitoring/ /docs/federation/managed-federation/monitoring/#metrics-and-observability
+/managed-federation/deployment/ /docs/federation/managed-federation/deployment/#the-servicepush-lifecycle
+/managed-federation/federated-schema-checks/ /docs/federation/managed-federation/federated-schema-checks/
+/managed-federation/setup/ /docs/federation/managed-federation/setup/
+/managed-federation/advanced-topics/ /docs/federation/managed-federation/advanced-topics/
+
+# Slack content folded into Notifications article
+/slack-integration/ /docs/studio/notification-setup/#slack
+
+# Migrate schema validation to schema checks
+/schema-validation/ /docs/studio/schema-checks/
+
+/graph-manager-data-privacy/ /docs/studio/data-privacy/
+/schema-registry/ /docs/studio/schema/registry/
+/accounts-organizations/ /docs/studio/org/account/
+
+/federation/ /docs/studio/managed-federation/overview/
+
+/integrations/ /docs/studio/github-integration/
+
+/editor-plugins/ /docs/devtools/editor-plugins/
+
+/graph-manager-overview /docs/studio
+/tracing /docs/studio/performance
+/errors /docs/studio/performance
+/vscode /docs/studio/editor-plugins
