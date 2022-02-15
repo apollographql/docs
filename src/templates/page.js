@@ -247,6 +247,10 @@ export default function PageTemplate({data, uri, pageContext}) {
                         mb: 4
                       }
                     }
+                  },
+                  'img.screenshot': {
+                    shadow: 'md',
+                    rounded: 'md'
                   }
                 }}
               >

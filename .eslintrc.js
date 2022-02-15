@@ -6,7 +6,8 @@ module.exports = {
       globals: {
         Button: 'readonly',
         ExpansionPanel: 'readonly',
-        MultiCodeBlock: 'readonly'
+        MultiCodeBlock: 'readonly',
+        YouTube: 'readonly'
       },
       rules: {
         'react/no-unescaped-entities': 'off'

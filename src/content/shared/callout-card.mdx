@@ -1,6 +1,13 @@
-import {Box, Link} from '@chakra-ui/react';
+import {Stack} from '@chakra-ui/react';
 
-<Box borderWidth="1px" rounded="lg" p="6" mt="10">
+<Stack
+  spacing="3"
+  align="flex-start"
+  borderWidth="1px"
+  rounded="lg"
+  p="6"
+  mt="10"
+>
 
 #### Large team or Enterprise?
 
@@ -8,11 +15,12 @@ Apollo Studio provides core GraphQL schema management features to all users for 
 
 <Button
   colorScheme="indigo"
-  as={Link}
-  isExternal
+  as="a"
+  target="_blank"
+  rel="noopener noreferrer"
   href="https://studio.apollographql.com/signup?utm_source=apollo-docs"
 >
   Start a free trial
 </Button>
 
-</Box>
+</Stack>
