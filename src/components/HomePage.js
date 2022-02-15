@@ -68,7 +68,7 @@ export function Docset({
 }) {
   return (
     <Flex align="flex-start" p="6" rounded="md" borderWidth="1px">
-      <Flex direction="column" h="full">
+      <Flex align="flex-start" direction="column" h="full">
         <Heading as="h3" size="lg" mb="4">
           {title}
         </Heading>
