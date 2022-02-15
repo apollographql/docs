@@ -11,6 +11,13 @@ export default function Blockquote(props) {
       borderLeftWidth="2px"
       borderColor={borderColor}
       fontSize="md"
+      sx={{
+        '>': {
+          ':not(:last-child)': {
+            mb: 2
+          }
+        }
+      }}
       {...props}
     />
   );
