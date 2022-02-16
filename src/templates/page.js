@@ -144,10 +144,11 @@ export default function PageTemplate({data, uri, pageContext}) {
     relativePath
   } = data.file;
 
-  const {frontmatter, headings} = childMdx || childMarkdownRemark;
+  const {frontmatter, headings, fields} = childMdx || childMarkdownRemark;
   const {title, description} = frontmatter;
-  const {docset, versions, currentVersion, navItems} = pageContext;
-
+  const {docset, versions, currentVersion, navItems, twitterHandle} =
+    pageContext;
+  const {image} = fields;
   return (
     <>
       <GatsbySeo
@@ -156,7 +157,16 @@ export default function PageTemplate({data, uri, pageContext}) {
         canonical={siteUrl + uri}
         openGraph={{
           title,
-          description
+          description,
+          images: image && [
+            {
+              url: image
+            }
+          ]
+        }}
+        twitter={{
+          cardType: image ? 'summary_large_image' : 'summary',
+          site: twitterHandle ? `@${twitterHandle}` : '@apollographql'
         }}
       />
       <Global
@@ -357,6 +367,9 @@ export const pageQuery = graphql`
         frontmatter {
           title
           description
+        }
+        fields {
+          image
         }
       }
       childMarkdownRemark {
