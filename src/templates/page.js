@@ -44,10 +44,12 @@ import {
   Tr,
   UnorderedList,
   chakra,
+  useColorModeValue,
   useToken
 } from '@chakra-ui/react';
 import {FaDiscourse, FaGithub} from 'react-icons/fa';
 import {FiChevronsRight, FiStar} from 'react-icons/fi';
+import {Link as GatsbyLink, graphql} from 'gatsby';
 import {GatsbySeo} from 'gatsby-plugin-next-seo';
 import {Global} from '@emotion/react';
 import {MDXProvider} from '@mdx-js/react';
@@ -55,7 +57,6 @@ import {MDXRenderer} from 'gatsby-plugin-mdx';
 import {PathContext} from '../utils';
 import {YouTube} from 'mdx-embed';
 import {default as getShareImage} from '@jlengstorf/get-share-image';
-import {graphql} from 'gatsby';
 import {rehype} from 'rehype';
 import {useMermaidStyles} from '../utils/mermaid';
 
@@ -124,6 +125,8 @@ const {processSync} = rehype()
 
 export default function PageTemplate({data, uri, pageContext}) {
   const sidebarWidth = useSidebarWidth();
+  const versionBannerBgColor = useColorModeValue('yellow.100', 'yellow.700');
+  const versionBannerTextColor = useColorModeValue('yellow.900', 'yellow.50');
   const paddingTop = useToken('space', 10);
   const paddingBottom = useToken('space', 12);
   const scrollPaddingTop = useMemo(
@@ -227,6 +230,28 @@ export default function PageTemplate({data, uri, pageContext}) {
           transitionProperty="margin-left"
           transitionDuration="normal"
         >
+          {basePath.includes('/') && basePath !== '/' && (
+            <Box
+              textAlign="center"
+              w="full"
+              py="4"
+              px="8"
+              bgColor={versionBannerBgColor}
+              color={versionBannerTextColor}
+            >
+              You&apos;re viewing documentation for a previous version of this
+              software.{' '}
+              <Flex
+                as={GatsbyLink}
+                to={'/' + basePath.split('/')[0]}
+                display="inline-flex"
+                textDecoration="underline"
+                fontWeight="semibold"
+              >
+                Switch to the latest stable version
+              </Flex>
+            </Box>
+          )}
           <Flex
             maxW="7xl"
             mx="auto"
