@@ -148,7 +148,7 @@ export default function PageTemplate({data, uri, pageContext}) {
   const {title, description} = frontmatter;
   const {docset, versions, currentVersion, navItems, twitterHandle} =
     pageContext;
-  const {image} = fields;
+  const image = fields?.image;
   return (
     <>
       <GatsbySeo
