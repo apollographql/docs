@@ -70,11 +70,16 @@ export default function Header({docset, versions, currentVersion}) {
             Docs
           </Box>
         </Flex>
-        <ButtonGroup isAttached>
+        <ButtonGroup isAttached shadow="sm" rounded="md">
           <DocsetMenu color={buttonTextColor}>{docset}</DocsetMenu>
           {versions?.length > 1 && (
             <Menu>
-              <MenuButton as={Button} rightIcon={<FiChevronDown />} ml="px">
+              <MenuButton
+                as={Button}
+                variant="outline"
+                rightIcon={<FiChevronDown />}
+                ml="-px"
+              >
                 {currentVersion}
               </MenuButton>
               <MenuList>

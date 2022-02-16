@@ -32,7 +32,6 @@ export function DocsetMenu(props) {
       <Button
         rightIcon={<FiGrid />}
         variant="outline"
-        shadow="sm"
         onClick={onOpen}
         {...props}
       />
