@@ -68,7 +68,8 @@ const plugins = [
     options: {
       titleTemplate: '%s - Apollo GraphQL Docs',
       openGraph: {
-        type: 'website'
+        type: 'website',
+        site_name: 'Apollo Docs'
       },
       twitter: {
         site: '@apollographql',
