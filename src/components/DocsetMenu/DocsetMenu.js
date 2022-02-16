@@ -12,6 +12,7 @@ import {
   Stack,
   useDisclosure
 } from '@chakra-ui/react';
+import {FiGrid} from 'react-icons/fi';
 import {IoGitNetworkOutline} from 'react-icons/io5';
 import {SiKotlin, SiNodedotjs, SiReact, SiSwift} from 'react-icons/si';
 
@@ -28,7 +29,13 @@ export function DocsetMenu(props) {
   const {isOpen, onOpen, onClose} = useDisclosure();
   return (
     <>
-      <Button onClick={onOpen} {...props} />
+      <Button
+        rightIcon={<FiGrid />}
+        variant="outline"
+        shadow="sm"
+        onClick={onOpen}
+        {...props}
+      />
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
