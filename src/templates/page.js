@@ -62,12 +62,12 @@ const LIST_SPACING = 4;
 const HEADINGS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
 
 const components = {
-  h1: props => <Heading as="h1" size="3xl" {...props} />,
-  h2: props => <Heading as="h2" size="2xl" {...props} />,
-  h3: props => <Heading as="h3" size="xl" {...props} />,
-  h4: props => <Heading as="h4" size="lg" {...props} />,
-  h5: props => <Heading as="h5" size="md" {...props} />,
-  h6: props => <Heading as="h6" size="sm" {...props} />,
+  h1: props => <Heading as="h1" size="2xl" {...props} />,
+  h2: props => <Heading as="h2" size="xl" {...props} />,
+  h3: props => <Heading as="h3" size="lg" {...props} />,
+  h4: props => <Heading as="h4" size="md" {...props} />,
+  h5: props => <Heading as="h5" size="sm" {...props} />,
+  h6: props => <Heading as="h6" size="xs" {...props} />,
   ul: props => <UnorderedList spacing={LIST_SPACING} {...props} />,
   ol: props => <OrderedList spacing={LIST_SPACING} {...props} />,
   li: props => (
@@ -218,9 +218,11 @@ export default function PageTemplate({data, uri, pageContext}) {
             }}
           >
             <Box flexGrow="1" w="0">
-              <Heading size="3xl">{title}</Heading>
+              <Heading as="h1" size="2xl">
+                {title}
+              </Heading>
               {description && (
-                <Heading mt="4" fontWeight="normal">
+                <Heading size="lg" mt="2" fontWeight="normal">
                   {description}
                 </Heading>
               )}
