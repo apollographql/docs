@@ -53,10 +53,10 @@ export default function Header({docset, versions, currentVersion}) {
             role="img"
             aria-label="Apollo logo"
             h="6"
+            mt="0.5" // offset to vertically align better w/ docs tag
           />
 
           <Box
-            mt="-1" // offset to vertically align better w/ apollo logo
             ml="1.5"
             px="1.5"
             fontSize="sm"
