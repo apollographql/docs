@@ -46,21 +46,17 @@ export default function Header({docset, versions, currentVersion}) {
       }}
     >
       <HStack spacing="4" mr="auto" fontWeight="semibold">
-        <Flex align="center">
-          <a href="https://www.apollographql.com">
-            <Box
-              as={ApolloLogo}
-              fill="current"
-              role="img"
-              aria-label="Apollo logo"
-              h="6"
-              // center the logo text vertically
-              transform="translateY(3.08578178%)"
-            />
-          </a>
+        <Flex as={GatsbyLink} to="/" align="center">
           <Box
-            as={GatsbyLink}
-            to="/"
+            as={ApolloLogo}
+            fill="current"
+            role="img"
+            aria-label="Apollo logo"
+            h="6"
+          />
+
+          <Box
+            mt="-1" // offset to vertically align better w/ apollo logo
             ml="1.5"
             px="1.5"
             fontSize="sm"
@@ -70,7 +66,6 @@ export default function Header({docset, versions, currentVersion}) {
             bg={tagBg}
             color={tagTextColor}
             rounded="sm"
-            transform="translateY(-3.08578178%)"
           >
             Docs
           </Box>
