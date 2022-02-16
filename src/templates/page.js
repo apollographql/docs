@@ -1,6 +1,7 @@
 import Blockquote from '../components/Blockquote';
 import CodeBlock from '../components/CodeBlock';
 import CodeColumns from '../components/CodeColumns';
+import DocsetMenu from '../components/DocsetMenu';
 import EmbeddableExplorer from '../components/EmbeddableExplorer';
 import ExpansionPanel, {
   ExpansionPanelList,
@@ -20,18 +21,24 @@ import Sidebar, {useSidebarWidth} from '../components/Sidebar';
 import TableOfContents from '../components/TableOfContents';
 import TypeScriptApiBox from '../components/TypeScriptApiBox';
 import autolinkHeadings from 'rehype-autolink-headings';
+import getShareImage from '@jlengstorf/get-share-image';
 import path, {dirname} from 'path';
 import rehypeReact from 'rehype-react';
 import useLocalStorage from 'react-use/lib/useLocalStorage';
 import {
   Box,
   Button,
+  ButtonGroup,
   Divider,
   Fade,
   Flex,
   Heading,
   IconButton,
   ListItem,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   OrderedList,
   Stack,
   Table,
@@ -48,7 +55,7 @@ import {
   useToken
 } from '@chakra-ui/react';
 import {FaDiscourse, FaGithub} from 'react-icons/fa';
-import {FiChevronsRight, FiStar} from 'react-icons/fi';
+import {FiChevronDown, FiChevronsRight, FiStar} from 'react-icons/fi';
 import {Link as GatsbyLink, graphql} from 'gatsby';
 import {GatsbySeo} from 'gatsby-plugin-next-seo';
 import {Global} from '@emotion/react';
@@ -56,7 +63,6 @@ import {MDXProvider} from '@mdx-js/react';
 import {MDXRenderer} from 'gatsby-plugin-mdx';
 import {PathContext} from '../utils';
 import {YouTube} from 'mdx-embed';
-import {default as getShareImage} from '@jlengstorf/get-share-image';
 import {rehype} from 'rehype';
 import {useMermaidStyles} from '../utils/mermaid';
 
@@ -204,7 +210,30 @@ export default function PageTemplate({data, uri, pageContext}) {
           docset={docset}
           versions={versions}
           currentVersion={currentVersion}
-        />
+        >
+          <ButtonGroup isAttached shadow="sm" rounded="md">
+            <DocsetMenu color="primary">{docset}</DocsetMenu>
+            {versions?.length > 1 && (
+              <Menu>
+                <MenuButton
+                  as={Button}
+                  variant="outline"
+                  rightIcon={<FiChevronDown />}
+                  ml="-px"
+                >
+                  {currentVersion}
+                </MenuButton>
+                <MenuList>
+                  {versions.map((version, index) => (
+                    <GatsbyLink key={index} to={'/' + version.slug}>
+                      <MenuItem>{version.label}</MenuItem>
+                    </GatsbyLink>
+                  ))}
+                </MenuList>
+              </Menu>
+            )}
+          </ButtonGroup>
+        </Header>
         <Fade in={sidebarHidden} unmountOnExit delay={0.25}>
           <Tooltip placement="right" label="Show sidebar">
             <IconButton

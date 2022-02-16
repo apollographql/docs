@@ -12,19 +12,17 @@ import {
   useDisclosure
 } from '@chakra-ui/react';
 import {FiCheck, FiChevronDown, FiChevronUp} from 'react-icons/fi';
-import {useAccentColor} from '../utils';
 
 function ExpansionPanelLine(props) {
   return <Box w="px" mx="auto" bg="current" {...props} />;
 }
 
 export function ExpansionPanelListItem({number, children}) {
-  const accentColor = useAccentColor();
   const isLast = isNaN(number);
   return (
     <ListItem>
       <Flex>
-        <Flex mr="2" shrink="0" direction="column" color={accentColor}>
+        <Flex mr="2" shrink="0" direction="column" color="primary">
           <ExpansionPanelLine h="0.5" sx={number === 1 && {bg: 'none'}} />
           <Circle
             size="6"
@@ -69,12 +67,11 @@ ExpansionPanelList.propTypes = {
 
 export default function ExpansionPanel({children, title = 'Click to expand'}) {
   const {isOpen, onToggle} = useDisclosure();
-  const borderColor = useAccentColor();
   return (
     <Box
       borderWidth="1px"
       borderLeftWidth="2px"
-      borderLeftColor={borderColor}
+      borderLeftColor="primary"
       roundedRight="md"
       overflow="hidden"
     >

@@ -2,12 +2,11 @@ import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 import {Link as GatsbyLink} from 'gatsby';
 import {Link} from '@chakra-ui/react';
-import {PathContext, isUrl, useAccentColor} from '../utils';
+import {PathContext, isUrl} from '../utils';
 import {isAbsolute, resolve} from 'path';
 
 export function ColorLink(props) {
-  const linkColor = useAccentColor();
-  return <Link color={linkColor} {...props} />;
+  return <Link color="primary" {...props} />;
 }
 
 export default function RelativeLink({href, ...props}) {

@@ -18,7 +18,6 @@ import {
   useColorModeValue
 } from '@chakra-ui/react';
 import {FiChevronRight} from 'react-icons/fi';
-import {useAccentColor} from '../../utils';
 
 function getDocsetTitle(docset) {
   switch (docset) {
@@ -47,7 +46,6 @@ export default function Preview({preview}) {
     ? [...ancestors, {url, title: sectionTitle}]
     : ancestors;
 
-  const iconColor = useAccentColor();
   const breadcrumbBg = useColorModeValue('gray.100', 'gray.800');
   const searchByAlgolia = useColorModeValue(
     searchByAlgoliaLight,
@@ -64,7 +62,7 @@ export default function Preview({preview}) {
       pos="relative"
     >
       <Flex mb="5" align="center">
-        <Box fontSize="2xl" color={iconColor}>
+        <Box fontSize="2xl" color="primary">
           <ResultIcon result={preview} />
         </Box>
         <chakra.span ml="2">

@@ -11,6 +11,3 @@ export function useTagColors() {
   const textColor = useColorModeValue('indigo.500', 'inherit');
   return [bg, textColor];
 }
-
-export const useAccentColor = () =>
-  useColorModeValue('indigo.500', 'indigo.200');
