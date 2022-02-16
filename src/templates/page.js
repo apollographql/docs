@@ -54,6 +54,7 @@ import {MDXProvider} from '@mdx-js/react';
 import {MDXRenderer} from 'gatsby-plugin-mdx';
 import {PathContext} from '../utils';
 import {YouTube} from 'mdx-embed';
+import {default as getShareImage} from '@jlengstorf/get-share-image';
 import {graphql} from 'gatsby';
 import {rehype} from 'rehype';
 import {useMermaidStyles} from '../utils/mermaid';
@@ -144,11 +145,11 @@ export default function PageTemplate({data, uri, pageContext}) {
     relativePath
   } = data.file;
 
-  const {frontmatter, headings, fields} = childMdx || childMarkdownRemark;
+  const {frontmatter, headings} = childMdx || childMarkdownRemark;
   const {title, description} = frontmatter;
-  const {docset, versions, currentVersion, navItems, twitterHandle} =
-    pageContext;
-  const image = fields?.image;
+  const {docset, versions, currentVersion, navItems} = pageContext;
+  const titleFont = encodeURIComponent('Source Sans Pro');
+
   return (
     <>
       <GatsbySeo
@@ -158,15 +159,23 @@ export default function PageTemplate({data, uri, pageContext}) {
         openGraph={{
           title,
           description,
-          images: image && [
+          images: [
             {
-              url: image
+              url: getShareImage({
+                title,
+                tagline: docset,
+                titleFont,
+                titleFontSize: 80,
+                titleExtraConfig: '_bold',
+                taglineFont: titleFont,
+                textColor: 'FFFFFF',
+                textLeftOffset: 80,
+                textAreaWidth: 1120,
+                cloudName: 'apollographql',
+                imagePublicID: 'apollo-docs-template2_dohzxt'
+              })
             }
           ]
-        }}
-        twitter={{
-          cardType: image ? 'summary_large_image' : 'summary',
-          site: twitterHandle ? `@${twitterHandle}` : '@apollographql'
         }}
       />
       <Global
@@ -367,9 +376,6 @@ export const pageQuery = graphql`
         frontmatter {
           title
           description
-        }
-        fields {
-          image
         }
       }
       childMarkdownRemark {
