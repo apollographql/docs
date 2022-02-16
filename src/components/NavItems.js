@@ -39,7 +39,7 @@ function NavButton({isActive, depth, children, ...props}) {
   return (
     <Button
       h="auto"
-      py="2.5"
+      py={depth ? 1.5 : 2.5} // give top level nav items larger padding
       whiteSpace="normal"
       variant="ghost"
       roundedLeft="none"
