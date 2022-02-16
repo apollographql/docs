@@ -5,6 +5,7 @@ const {
 } = require('gatsby-source-filesystem');
 const path = require('path');
 const fs = require('fs');
+const {default: getShareImage} = require('@jlengstorf/get-share-image');
 
 exports.sourceNodes = ({
   actions: {createNode},
@@ -66,6 +67,27 @@ exports.onCreateNode = async ({node, getNode, loadNodeContent, actions}) => {
         // prefix slugs with their docset path (configured by source name)
         value: path.join('/', sourceInstanceName, filePath)
       });
+
+      const {title} = node.frontmatter;
+      const titleFont = encodeURIComponent('Source Sans Pro');
+      actions.createNodeField({
+        node,
+        name: 'image',
+        value: getShareImage({
+          title,
+          tagline: 'Apollo Docs', // TODO: get subtitle from docset config.json
+          titleFont,
+          titleFontSize: 80,
+          titleExtraConfig: '_bold',
+          taglineFont: titleFont,
+          textColor: 'FFFFFF',
+          textLeftOffset: 80,
+          textAreaWidth: 1120,
+          cloudName: 'apollographql',
+          imagePublicID: 'apollo-docs-template2_dohzxt'
+        })
+      });
+
       break;
     }
     default:
@@ -151,11 +173,12 @@ exports.createPages = async ({actions, graphql}) => {
 
   const configs = data.configs.nodes.reduce((acc, node) => {
     // TODO: convert configs to YAML
-    const {title, version, sidebar} = JSON.parse(node.fields.content);
+    const {title, subtitle, version, sidebar} = JSON.parse(node.fields.content);
     return {
       ...acc,
       [node.sourceInstanceName]: {
         docset: title,
+        subtitle,
         currentVersion: version,
         navItems: getNavItems(sidebar)
       }
