@@ -8,13 +8,14 @@ import {
   IconButton,
   Tooltip,
   chakra,
+  useBreakpointValue,
   useColorModeValue
 } from '@chakra-ui/react';
 import {FiChevronsDown, FiChevronsLeft, FiChevronsUp} from 'react-icons/fi';
 import {NavContext, PathContext} from '../utils';
 import {TOTAL_HEADER_HEIGHT} from './Header';
 
-export const SIDEBAR_WIDTH = 250;
+export const useSidebarWidth = () => useBreakpointValue({base: 250, xl: 300});
 
 function flattenNavItems(items) {
   return items.flatMap(item =>
@@ -23,6 +24,7 @@ function flattenNavItems(items) {
 }
 
 export default function Sidebar({navItems, isHidden, onHide}) {
+  const sidebarWidth = useSidebarWidth();
   const {uri, basePath} = useContext(PathContext);
   const initialNavState = useMemo(
     () =>
@@ -65,7 +67,7 @@ export default function Sidebar({navItems, isHidden, onHide}) {
     <chakra.aside
       // account for header border
       h={`calc(100vh - ${TOTAL_HEADER_HEIGHT}px)`}
-      w={SIDEBAR_WIDTH}
+      w={sidebarWidth}
       borderRightWidth="1px"
       pos="fixed"
       left="0"
@@ -77,7 +79,7 @@ export default function Sidebar({navItems, isHidden, onHide}) {
       css={{top: TOTAL_HEADER_HEIGHT}}
       style={{
         opacity: isHidden ? 0 : 1,
-        transform: isHidden ? `translateX(-${SIDEBAR_WIDTH}px)` : 'none'
+        transform: isHidden ? `translateX(-${sidebarWidth}px)` : 'none'
       }}
     >
       <Flex px="1" pt="2" pb="2" pos="sticky" top="0" bg={bg} zIndex="1">

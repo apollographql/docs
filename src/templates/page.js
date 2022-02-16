@@ -16,7 +16,7 @@ import Pagination from '../components/Pagination';
 import PropTypes from 'prop-types';
 import React, {Fragment, createElement, useMemo} from 'react';
 import RelativeLink from '../components/RelativeLink';
-import Sidebar, {SIDEBAR_WIDTH} from '../components/Sidebar';
+import Sidebar, {useSidebarWidth} from '../components/Sidebar';
 import TableOfContents from '../components/TableOfContents';
 import TypeScriptApiBox from '../components/TypeScriptApiBox';
 import autolinkHeadings from 'rehype-autolink-headings';
@@ -122,6 +122,7 @@ const {processSync} = rehype()
   });
 
 export default function PageTemplate({data, uri, pageContext}) {
+  const sidebarWidth = useSidebarWidth();
   const paddingTop = useToken('space', 10);
   const paddingBottom = useToken('space', 12);
   const scrollPaddingTop = useMemo(
@@ -203,12 +204,13 @@ export default function PageTemplate({data, uri, pageContext}) {
           onHide={() => setSidebarHidden(true)}
         />
         <Box
-          marginLeft={{base: 0, md: sidebarHidden ? 0 : SIDEBAR_WIDTH}}
+          marginLeft={{base: 0, md: sidebarHidden ? 0 : sidebarWidth}}
           transitionProperty="margin-left"
           transitionDuration="normal"
         >
           <Flex
-            maxW="6xl"
+            maxW="7xl"
+            mx="auto"
             align="flex-start"
             px="10"
             as="main"
