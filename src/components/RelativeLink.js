@@ -1,17 +1,14 @@
 import PropTypes from 'prop-types';
-import React, {useContext} from 'react';
+import React from 'react';
 import {Link as GatsbyLink} from 'gatsby';
 import {Link} from '@chakra-ui/react';
-import {PathContext, isUrl} from '../utils';
-import {isAbsolute, resolve} from 'path';
+import {isUrl} from '../utils';
 
 export function ColorLink(props) {
   return <Link color="primary" {...props} />;
 }
 
 export default function RelativeLink({href, ...props}) {
-  const {path} = useContext(PathContext);
-
   if (!href) {
     return <a {...props} />;
   }
@@ -20,7 +17,7 @@ export default function RelativeLink({href, ...props}) {
   const linkProps =
     isExternal || href.startsWith('#')
       ? {href, isExternal}
-      : {as: GatsbyLink, to: isAbsolute(href) ? href : resolve(path, href)};
+      : {as: GatsbyLink, to: href};
 
   return <ColorLink {...linkProps} {...props} />;
 }

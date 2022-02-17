@@ -47,6 +47,7 @@
     "gatsby-remark-autolink-headers": "^5.4.0",
     "gatsby-remark-copy-linked-files": "^5.4.0",
     "gatsby-remark-mermaid": "^2.1.0",
+    "gatsby-remark-rewrite-relative-links": "^1.0.8",
     "gatsby-source-filesystem": "^4.4.0",
     "gatsby-transformer-json": "^4.4.0",
     "gatsby-transformer-remark": "^5.4.0",
