@@ -211,16 +211,11 @@ export default function PageTemplate({data, uri, pageContext}) {
           versions={versions}
           currentVersion={currentVersion}
         >
-          <ButtonGroup isAttached shadow="sm" rounded="md">
+          <ButtonGroup variant="outline" isAttached shadow="sm" rounded="md">
             <DocsetMenu color="primary">{docset}</DocsetMenu>
             {versions?.length > 1 && (
               <Menu>
-                <MenuButton
-                  as={Button}
-                  variant="outline"
-                  rightIcon={<FiChevronDown />}
-                  ml="-px"
-                >
+                <MenuButton as={Button} rightIcon={<FiChevronDown />} ml="-px">
                   {currentVersion}
                 </MenuButton>
                 <MenuList>

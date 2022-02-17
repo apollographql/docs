@@ -29,12 +29,7 @@ export function DocsetMenu(props) {
   const {isOpen, onOpen, onClose} = useDisclosure();
   return (
     <>
-      <Button
-        rightIcon={<FiGrid />}
-        variant="outline"
-        onClick={onOpen}
-        {...props}
-      />
+      <Button rightIcon={<FiGrid />} onClick={onOpen} {...props} />
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
