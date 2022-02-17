@@ -6,7 +6,6 @@ const fs = require('fs');
 const gatsbyRemarkPlugins = [
   '@fec/remark-a11y-emoji/gatsby',
   'gatsby-remark-mermaid',
-  'gatsby-remark-rewrite-relative-links',
   {
     resolve: 'gatsby-remark-copy-linked-files',
     options: {
@@ -57,6 +56,7 @@ const plugins = [
   'gatsby-plugin-svgr',
   '@chakra-ui/gatsby-plugin',
   'gatsby-plugin-sitemap',
+  'gatsby-plugin-check-links',
   {
     resolve: 'gatsby-plugin-manifest',
     options: {
