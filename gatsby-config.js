@@ -56,7 +56,8 @@ const plugins = [
   'gatsby-plugin-svgr',
   '@chakra-ui/gatsby-plugin',
   'gatsby-plugin-sitemap',
-  'gatsby-plugin-check-links',
+  'gatsby-plugin-check-links', // local plugin
+  'gatsby-plugin-combine-redirects', // local plugin
   {
     resolve: 'gatsby-plugin-manifest',
     options: {
