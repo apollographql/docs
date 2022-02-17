@@ -22,7 +22,7 @@ Apollo Studio can perform the following types of schema checks:
 
 - **Operation checks.** Compare your proposed schema changes against historical operations to verify whether the changes will break any of your graph's active clients.
 
-- [**Composition checks.**](#federated-composition-checks) For [federated graphs](https://www.apollographql.com/docs/federation/), verify whether your proposed changes to a subgraph schema will successfully compose with your _other_ registered subgraph schemas.
+- [**Composition checks.**](#federated-composition-checks) For [federated graphs](/federation/), verify whether your proposed changes to a subgraph schema will successfully compose with your _other_ registered subgraph schemas.
 
 > Most of this article covers operation checks. For details on composition checks, [see this section](#federated-composition-checks).
 
@@ -31,18 +31,18 @@ Apollo Studio can perform the following types of schema checks:
 To enable schema checks for your graph, do the following if you haven't yet:
 
 1. Register your production graph's schema with Apollo.
-   - [Federated setup](https://www.apollographql.com/docs/federation/managed-federation/setup)
+   - [Federated setup](/federation/managed-federation/setup)
    - [Non-federated setup](./schema/schema-reporting/)
 2. Enable metrics reporting to Apollo Studio from your production graph. Studio uses these metrics to help determine when a type or field can be modified or removed safely.
-   - [Federated setup](https://www.apollographql.com/docs/federation/managed-federation/monitoring/#metrics-and-observability)
-   - [Non-federated setup](/metrics/usage-reporting/)
-3. [Install the Rover CLI](https://www.apollographql.com/docs/rover/getting-started/) in your development environment and [authenticate it with Apollo Studio](https://www.apollographql.com/docs/rover/configuring/#authenticating-with-apollo-studio).
+   - [Federated setup](/federation/managed-federation/monitoring/#metrics-and-observability)
+   - [Non-federated setup](./metrics/usage-reporting/)
+3. [Install the Rover CLI](/rover/getting-started/) in your development environment and [authenticate it with Apollo Studio](/rover/configuring/#authenticating-with-apollo-studio).
 
 ## Running your first check
 
 Let's say you've made local changes to your GraphQL server's schema. After you [complete the prerequisites](#prerequisites), you can run schema checks against those changes with the `rover graph check` command.
 
-> **Important:** If your graph is [federated](https://www.apollographql.com/docs/federation/), use [`rover subgraph`](https://www.apollographql.com/docs/rover/subgraphs/#checking-subgraph-schema-changes) commands instead of `rover graph` commands. These commands require one additional option, the `--name` of the subgraph you're operating on.
+> **Important:** If your graph is [federated](/federation/), use [`rover subgraph`](/rover/subgraphs/#checking-subgraph-schema-changes) commands instead of `rover graph` commands. These commands require one additional option, the `--name` of the subgraph you're operating on.
 
 The `rover graph check` command looks like this:
 
@@ -52,7 +52,7 @@ rover graph check docs-example-graph@current --schema ./schema.graphql
 
 It requires the following:
 
-- Your registered graph's [graph ref](https://www.apollographql.com/docs/rover/conventions/#graph-refs). This is available from your graph's Schema tab in Studio:
+- Your registered graph's [graph ref](/rover/conventions/#graph-refs). This is available from your graph's Schema tab in Studio:
 
   <img
     class="screenshot"
@@ -151,7 +151,7 @@ The new check incorporates any changes made to excluded or included clients, che
 
 ## Federated composition checks
 
-If you have a [federated graph](https://www.apollographql.com/docs/federation/), you run schema checks with the `rover subgraph check` command (instead of `rover graph check`):
+If you have a [federated graph](/federation/), you run schema checks with the `rover subgraph check` command (instead of `rover graph check`):
 
 ```bash
 rover subgraph check docs-example-graph@current --schema ./schema.graphql --name products
@@ -161,7 +161,7 @@ In addition to the arguments required by `graph check`, `subgraph check` require
 
 > To obtain your running subgraph's schema via introspection, use `subgraph introspect` instead of `graph introspect`. This preserves federation-specific directives that are required for composition.
 
-When you run `subgraph check`, Apollo Studio performs a **composition check** before it performs operation checks. A composition check verifies that changes you make to a subgraph schema are compatible with your _other_ subgraph schemas, enabling them to compose into a _supergraph_ schema ([learn more](https://www.apollographql.com/docs/federation/quickstart/#federation-concepts)).
+When you run `subgraph check`, Apollo Studio performs a **composition check** before it performs operation checks. A composition check verifies that changes you make to a subgraph schema are compatible with your _other_ subgraph schemas, enabling them to compose into a _supergraph_ schema ([learn more](/federation/quickstart/#federation-concepts)).
 
 > If a composition check fails, Studio does _not_ then perform operation checks for the provided schema.
 
@@ -186,7 +186,7 @@ We recommend defining a separate CI job for each [variant of your schema](./chec
 
 ### Authenticating Rover
 
-The `rover config auth` command is _interactive_, which means you shouldn't use it in CI environments. Instead, you can authenticate Rover with Studio by setting the `APOLLO_KEY` environment variable in CI. For details, see [Configuring Rover](https://www.apollographql.com/docs/rover/configuring).
+The `rover config auth` command is _interactive_, which means you shouldn't use it in CI environments. Instead, you can authenticate Rover with Studio by setting the `APOLLO_KEY` environment variable in CI. For details, see [Configuring Rover](/rover/configuring).
 
 ### Example configuration
 

@@ -11,9 +11,9 @@ Apollo Studio's top priority is ensuring the privacy and security of your data a
 
 ## Which tools send data to Apollo Studio?
 
-[Apollo Server](https://www.apollographql.com/docs/apollo-server/), the [Rover CLI](https://www.apollographql.com/docs/rover/), and the [Apollo CLI](https://www.apollographql.com/docs/devtools/cli/) have **opt-in features** that send data to Apollo Studio.
+[Apollo Server](/apollo-server/), the [Rover CLI](/rover/), and the [Apollo CLI](/devtools/cli/) have **opt-in features** that send data to Apollo Studio.
 
-The Rover CLI also collects anonymous usage data by default. [You can disable this.](https://www.apollographql.com/docs/rover/privacy/)
+The Rover CLI also collects anonymous usage data by default. [You can disable this.](/rover/privacy/)
 
 Apollo Client does **not** send data to Apollo Studio.
 
@@ -21,28 +21,28 @@ Apollo Client does **not** send data to Apollo Studio.
 
 All data sent to Apollo Studio is sent to an endpoint with one of the following base URLs:
 
-| Base URL                                              | Used by                                                                                                                                                                                                                                           |
-| ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Base URL                                              | Used by                                                                                                                                                                                                          |
+| ----------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Latest URLs**                                       |
-| `https://usage-reporting.api.apollographql.com`       | Metrics reporting from [Apollo Server](/metrics/usage-reporting/#pushing-metrics-from-apollo-server) (v2.18.0+) and [third-party API servers](/metrics/usage-reporting/#third-party-support)                                                      |
-| `https://schema-reporting.api.apollographql.com`      | Schema registration via schema reporting in [Apollo Server](/schema/schema-reporting/#apollo-server-setup) (v2.18.0+) and [third-party API servers](/schema/schema-reporting/#other-graphql-servers)                                              |
-| `https://graphql.api.apollographql.com`               | All [Apollo CLI](https://www.apollographql.com/docs/devtools/cli/) (v2.31+) commands and [Rover CLI](https://www.apollographql.com/docs/rover/) commands that communicate with Studio (and the Studio web UI)                                     |
-| `https://operations.api.apollographql.com`            | Apollo Server with the [operation registry plugin](/operation-registry/) (v0.4.1+)                                                                                                                                                                |
-| `https://storage-secrets.api.apollographql.com`       | Apollo Server with Apollo Gateway (v0.16.0-v0.33.0) with [managed federation](https://www.apollographql.com/docs/federation/managed-federation/overview/), or with the [operation registry plugin](/operation-registry/) (v0.4.1+)                |
-| `https://uplink.api.apollographql.com`                | Apollo Server with Apollo Gateway (v0.34.0+) with [managed federation](https://www.apollographql.com/docs/federation/managed-federation/overview/)                                                                                                |
-| `https://aws.uplink.api.apollographql.com`            | Apollo Server with Apollo Gateway (v0.45.0+) with [managed federation](https://www.apollographql.com/docs/federation/managed-federation/overview/)                                                                                                |
+| `https://usage-reporting.api.apollographql.com`       | Metrics reporting from [Apollo Server](./metrics/usage-reporting/#pushing-metrics-from-apollo-server) (v2.18.0+) and [third-party API servers](./metrics/usage-reporting/#third-party-support)                   |
+| `https://schema-reporting.api.apollographql.com`      | Schema registration via schema reporting in [Apollo Server](./schema/schema-reporting/#apollo-server-setup) (v2.18.0+) and [third-party API servers](./schema/schema-reporting/#other-graphql-servers)           |
+| `https://graphql.api.apollographql.com`               | All [Apollo CLI](/devtools/cli/) (v2.31+) commands and [Rover CLI](/rover/) commands that communicate with Studio (and the Studio web UI)                                                                        |
+| `https://operations.api.apollographql.com`            | Apollo Server with the [operation registry plugin](./operation-registry/) (v0.4.1+)                                                                                                                              |
+| `https://storage-secrets.api.apollographql.com`       | Apollo Server with Apollo Gateway (v0.16.0-v0.33.0) with [managed federation](/federation/managed-federation/overview/), or with the [operation registry plugin](./operation-registry/) (v0.4.1+)                |
+| `https://uplink.api.apollographql.com`                | Apollo Server with Apollo Gateway (v0.34.0+) with [managed federation](/federation/managed-federation/overview/)                                                                                                 |
+| `https://aws.uplink.api.apollographql.com`            | Apollo Server with Apollo Gateway (v0.45.0+) with [managed federation](/federation/managed-federation/overview/)                                                                                                 |
 | **Active legacy URLs**                                |
-| `https://engine-report.apollodata.com`                | Metrics reporting from Apollo Server (v2.0-2.17.x)                                                                                                                                                                                                |
-| `https://edge-server-reporting.api.apollographql.com` | Schema registration via schema reporting in Apollo Server (v2.15.0-2.17.x)                                                                                                                                                                        |
-| `https://engine-graphql.apollographql.com`            | All Apollo CLI (v2.30 and earlier) commands that communicate with Studio                                                                                                                                                                          |
-| `https://storage.googleapis.com`                      | Apollo Server with Apollo Gateway (v0.15.1 and earlier) with [managed federation](https://www.apollographql.com/docs/federation/managed-federation/overview/), or with the [operation registry plugin](/operation-registry/) (v0.3.1 and earlier) |
-| `https://federation.api.apollographql.com`            | Apollo Server with Apollo Gateway (v0.16.0-v0.33.0) with [managed federation](https://www.apollographql.com/docs/federation/managed-federation/overview/)                                                                                         |
+| `https://engine-report.apollodata.com`                | Metrics reporting from Apollo Server (v2.0-2.17.x)                                                                                                                                                               |
+| `https://edge-server-reporting.api.apollographql.com` | Schema registration via schema reporting in Apollo Server (v2.15.0-2.17.x)                                                                                                                                       |
+| `https://engine-graphql.apollographql.com`            | All Apollo CLI (v2.30 and earlier) commands that communicate with Studio                                                                                                                                         |
+| `https://storage.googleapis.com`                      | Apollo Server with Apollo Gateway (v0.15.1 and earlier) with [managed federation](/federation/managed-federation/overview/), or with the [operation registry plugin](./operation-registry/) (v0.3.1 and earlier) |
+| `https://federation.api.apollographql.com`            | Apollo Server with Apollo Gateway (v0.16.0-v0.33.0) with [managed federation](/federation/managed-federation/overview/)                                                                                          |
 
 If your environment uses a corporate proxy or firewall, you might need to configure it to allow outbound traffic to these domains. Note that data might be sent to multiple endpoints in a given domain.
 
 ## What data does Apollo Server send to Apollo Studio?
 
-You can configure Apollo Server to trace the execution of each GraphQL operation and [push those metrics to Apollo Studio](/metrics/usage-reporting/). Studio uses this trace data to reconstruct both operation-level timing data for given query shapes and field-level timing data for your overall schema. This data is available for you to explore and visualize in Studio.
+You can configure Apollo Server to trace the execution of each GraphQL operation and [push those metrics to Apollo Studio](./metrics/usage-reporting/). Studio uses this trace data to reconstruct both operation-level timing data for given query shapes and field-level timing data for your overall schema. This data is available for you to explore and visualize in Studio.
 
 You can also configure Apollo Server to [report its schema to the Apollo registry](./schema/schema-reporting).
 
@@ -87,7 +87,7 @@ Manager. The responses from your GraphQL service stay internal to your applicati
 
 By default, if Apollo Server sees a response that includes an `errors` field, it reports the values of the error's `message` and `locations` fields (if any) to Apollo Studio.
 
-You can use the [usage reporting plugin's `rewriteError` option](https://www.apollographql.com/docs/apollo-server/api/plugin/usage-reporting/#rewriteerror) to filter or transform errors before they're stored in Studio. Use this to strip sensitive data from errors or filter "safe" errors from Studio reports.
+You can use the [usage reporting plugin's `rewriteError` option](/apollo-server/api/plugin/usage-reporting/#rewriteerror) to filter or transform errors before they're stored in Studio. Use this to strip sensitive data from errors or filter "safe" errors from Studio reports.
 
 ### Query operation strings
 
@@ -99,14 +99,14 @@ Apollo Server reports the string representation of each query operation to Apoll
 
 In Apollo Server 2.7.0 and later, **none** of an operation's GraphQL variables are sent to Apollo Studio by default.
 
-You can set a value for the [usage reporting plugin's `sendVariableValues` option](https://www.apollographql.com/docs/apollo-server/api/plugin/usage-reporting/#sendvariablevalues) to specify a different strategy for reporting some or all of your GraphQL variables.
+You can set a value for the [usage reporting plugin's `sendVariableValues` option](/apollo-server/api/plugin/usage-reporting/#sendvariablevalues) to specify a different strategy for reporting some or all of your GraphQL variables.
 
 #### Versions prior to 2.7.0
 
 In versions of Apollo Server 2 _prior_ to 2.7.0, **all** of an operation's GraphQL
 variables are sent to Apollo Studio by default.
 
-If you're using an earlier version of Apollo Server, it's recommended that you update. If you can't update for whatever reason, you can use the [`privateVariables` reporting option](https://www.apollographql.com/docs/apollo-server/migration-engine-plugins/#options-for-apolloserverpluginusagereporting) to specify the names of variables that should _not_ be sent to Studio. You can also set this option to `false` to prevent all variables from being sent. This reporting option is deprecated and will not be available in future versions of Apollo Server.
+If you're using an earlier version of Apollo Server, it's recommended that you update. If you can't update for whatever reason, you can use the [`privateVariables` reporting option](/apollo-server/migration-engine-plugins/#options-for-apolloserverpluginusagereporting) to specify the names of variables that should _not_ be sent to Studio. You can also set this option to `false` to prevent all variables from being sent. This reporting option is deprecated and will not be available in future versions of Apollo Server.
 
 ### HTTP Headers
 
@@ -126,7 +126,7 @@ You can, however, configure reporting options for all other HTTP headers.
 In Apollo Server 2.7.0 and later, **none** of an
 operation's HTTP headers is sent to Apollo Studio by default.
 
-You can set a value for the [usage reporting plugin's `sendHeaders` option](https://www.apollographql.com/docs/apollo-server/api/plugin/usage-reporting/#sendheaders) to specify a different strategy for reporting
+You can set a value for the [usage reporting plugin's `sendHeaders` option](/apollo-server/api/plugin/usage-reporting/#sendheaders) to specify a different strategy for reporting
 some or all of your HTTP headers.
 
 #### Versions prior to 2.7.0
@@ -135,7 +135,7 @@ In versions of Apollo Server 2 _prior_ to 2.7.0, **all** of an operation's HTTP 
 (except the confidential headers listed [above](#http-headers)) are sent to Apollo Studio by default.
 
 If you're using an earlier version of Apollo Server, it's recommended that you
-update. If you can't update for whatever reason, you can use the [`privateHeaders` reporting option](https://www.apollographql.com/docs/apollo-server/migration-engine-plugins/#options-for-apolloserverpluginusagereporting) to specify the names of variables that should _not_ be sent to Studio. You can also set this option to `false` to prevent all headers from being sent. This reporting option is deprecated and will not be available in future versions of Apollo Server.
+update. If you can't update for whatever reason, you can use the [`privateHeaders` reporting option](/apollo-server/migration-engine-plugins/#options-for-apolloserverpluginusagereporting) to specify the names of variables that should _not_ be sent to Studio. You can also set this option to `false` to prevent all headers from being sent. This reporting option is deprecated and will not be available in future versions of Apollo Server.
 
 ## What data does Apollo Studio log about operations executed in the Explorer?
 

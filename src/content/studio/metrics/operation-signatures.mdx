@@ -8,7 +8,7 @@ In your metrics reports, Apollo Studio groups together operations based on the e
 <img
   src="../img/separate-operations.jpg"
   alt="Separate operations with same name in Studio"
-  class="screenshot"
+  className="screenshot"
   width="500"
 />
 
@@ -140,4 +140,4 @@ query GetUser {
 
 The signature algorithm's primary purpose is to group together operations that differ only cosmetically (in terms of whitespace, field order, aliases, and so on). As an additional effect, the algorithm does [remove most in-line argument values](#1-transform-in-line-argument-values), which in theory helps maintain data privacy.
 
-**However, you should not rely on this!** Ideally, your sensitive data should never reach Apollo Studio in the first place. Whenever possible, [use GraphQL variables](https://www.apollographql.com/docs/react/data/operation-best-practices/#use-graphql-variables-to-provide-arguments) instead of in-line values for arguments. This helps you control exactly which values are reported to Apollo. For details, see [Apollo Studio data privacy and compliance](/data-privacy/).
+**However, you should not rely on this!** Ideally, your sensitive data should never reach Apollo Studio in the first place. Whenever possible, [use GraphQL variables](https://www.apollographql.com/docs/react/data/operation-best-practices/#use-graphql-variables-to-provide-arguments) instead of in-line values for arguments. This helps you control exactly which values are reported to Apollo. For details, see [Apollo Studio data privacy and compliance](../data-privacy/).
