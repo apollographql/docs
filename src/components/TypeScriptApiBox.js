@@ -15,7 +15,7 @@ import {
   Tr,
   chakra
 } from '@chakra-ui/react';
-import {ColorLink} from './RelativeLink';
+import {PrimaryLink} from './RelativeLink';
 import {extend, partition} from 'lodash';
 import {graphql, useStaticQuery} from 'gatsby';
 
@@ -62,7 +62,7 @@ function mdToReact(text) {
     <ReactMarkdown
       components={{
         p: Text,
-        a: ColorLink,
+        a: PrimaryLink,
         code: InlineCode
       }}
     >
@@ -381,16 +381,16 @@ export default function TypeScriptApiBox({name}) {
           title={args.name}
           id={args.id}
         >
-          <ColorLink href={`#${args.id}`}>{args.signature}</ColorLink>
+          <PrimaryLink href={`#${args.id}`}>{args.signature}</PrimaryLink>
         </Heading>
         {args.filepath && (
           <Heading as="h6" fontWeight="normal" size="sm" mt="2">
-            <ColorLink
+            <PrimaryLink
               href={`https://github.com/${args.repo}/blob/${args.branch}/${args.filepath}#L${args.lineno}`}
               isExternal
             >
               ({args.filepath}, line {args.lineno})
-            </ColorLink>
+            </PrimaryLink>
           </Heading>
         )}
       </Box>

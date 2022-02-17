@@ -12,9 +12,9 @@ import {
   useColorModeValue,
   useToken
 } from '@chakra-ui/react';
-import {ColorLink} from './RelativeLink';
 import {FiArrowRight} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
+import {PrimaryLink} from './RelativeLink';
 
 export function Odyssey() {
   const shade = useColorModeValue(50, 700);
@@ -73,9 +73,9 @@ export function Docset({
           {title}
         </Heading>
         <Text mb="4">{description}</Text>
-        <ColorLink mt="auto" fontWeight="semibold" as={GatsbyLink} to={path}>
+        <PrimaryLink mt="auto" fontWeight="semibold" as={GatsbyLink} to={path}>
           {cta.replace('%s', title)}
-        </ColorLink>
+        </PrimaryLink>
       </Flex>
       {children}
     </Flex>

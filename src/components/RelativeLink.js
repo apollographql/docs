@@ -4,9 +4,7 @@ import {Link as GatsbyLink} from 'gatsby';
 import {Link} from '@chakra-ui/react';
 import {isUrl} from '../utils';
 
-export function ColorLink(props) {
-  return <Link color="primary" {...props} />;
-}
+export const PrimaryLink = props => <Link color="primary" {...props} />;
 
 export default function RelativeLink({href, ...props}) {
   if (!href) {
@@ -19,7 +17,7 @@ export default function RelativeLink({href, ...props}) {
       ? {href, isExternal}
       : {as: GatsbyLink, to: href};
 
-  return <ColorLink {...linkProps} {...props} />;
+  return <PrimaryLink {...linkProps} {...props} />;
 }
 
 RelativeLink.propTypes = {
