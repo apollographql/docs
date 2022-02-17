@@ -10,7 +10,6 @@ import {
   useColorModeValue,
   useTheme
 } from '@chakra-ui/react';
-import {useAccentColor} from '../../utils';
 
 export default function Result({item, ...props}) {
   const theme = useTheme();
@@ -23,7 +22,6 @@ export default function Result({item, ...props}) {
     colorScheme: 'indigo'
   });
 
-  const iconColor = useAccentColor();
   const highlightColor = useColorModeValue('gray.500', 'gray.400');
   const {text, title, description} = item._highlightResult;
   const {'aria-selected': isSelected} = props;
@@ -31,7 +29,7 @@ export default function Result({item, ...props}) {
   return (
     <chakra.li bg={isSelected && activeBg} {...props}>
       <Flex as="a" href={item.url} p="2">
-        <Box mr="3" fontSize="xl" color={iconColor} flexShrink="0">
+        <Box mr="3" fontSize="xl" color="primary" flexShrink="0">
           <ResultIcon result={item} />
         </Box>
         <Box lineHeight="shorter" w="0" flexGrow="1">

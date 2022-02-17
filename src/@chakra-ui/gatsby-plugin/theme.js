@@ -20,6 +20,14 @@ const theme = extendTheme({
       }
     }
   },
+  semanticTokens: {
+    colors: {
+      primary: {
+        default: 'indigo.500',
+        _dark: 'indigo.200'
+      }
+    }
+  },
   components: {
     ...components,
     Table: {

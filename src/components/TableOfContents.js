@@ -2,13 +2,11 @@ import GithubSlugger from 'github-slugger';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
 import {Link, List, ListItem} from '@chakra-ui/react';
-import {useAccentColor} from '../utils';
 
 const MIN_HEADING_DEPTH = 2;
 const MAX_HEADING_DEPTH = 3;
 
 export default function TableOfContents({headings}) {
-  const activeColor = useAccentColor();
   const [activeId, setActiveId] = useState(null);
 
   const toc = useMemo(() => {
@@ -53,7 +51,7 @@ export default function TableOfContents({headings}) {
           pl={(depth - MIN_HEADING_DEPTH) * 4}
           lineHeight="normal"
         >
-          <Link href={'#' + id} color={id === activeId && activeColor}>
+          <Link href={'#' + id} color={id === activeId && 'primary'}>
             {value}
           </Link>
         </ListItem>

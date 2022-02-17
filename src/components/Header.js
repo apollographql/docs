@@ -1,34 +1,26 @@
-import DocsetMenu from './DocsetMenu';
 import PropTypes from 'prop-types';
 import React from 'react';
 import Search from './Search';
 import {ReactComponent as ApolloLogo} from '@apollo/space-kit/logos/logo.svg';
 import {
   Box,
-  Button,
-  ButtonGroup,
   Flex,
   HStack,
   IconButton,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
   useColorMode,
   useColorModeValue
 } from '@chakra-ui/react';
-import {FiChevronDown, FiMoon, FiSun} from 'react-icons/fi';
+import {FiMoon, FiSun} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
-import {useAccentColor, useTagColors} from '../utils';
+import {useTagColors} from '../utils';
 
 const HEADER_HEIGHT = 60;
 const HEADER_BORDER_WIDTH = 1;
 export const TOTAL_HEADER_HEIGHT = HEADER_HEIGHT + HEADER_BORDER_WIDTH;
 
-export default function Header({docset, versions, currentVersion}) {
+export default function Header({children}) {
   const {toggleColorMode, colorMode} = useColorMode();
   const bg = useColorModeValue('white', 'gray.800');
-  const buttonTextColor = useAccentColor();
   const [tagBg, tagTextColor] = useTagColors();
   return (
     <Flex
@@ -70,28 +62,7 @@ export default function Header({docset, versions, currentVersion}) {
             Docs
           </Box>
         </Flex>
-        <ButtonGroup isAttached shadow="sm" rounded="md">
-          <DocsetMenu color={buttonTextColor}>{docset}</DocsetMenu>
-          {versions?.length > 1 && (
-            <Menu>
-              <MenuButton
-                as={Button}
-                variant="outline"
-                rightIcon={<FiChevronDown />}
-                ml="-px"
-              >
-                {currentVersion}
-              </MenuButton>
-              <MenuList>
-                {versions.map((version, index) => (
-                  <GatsbyLink key={index} to={'/' + version.slug}>
-                    <MenuItem>{version.label}</MenuItem>
-                  </GatsbyLink>
-                ))}
-              </MenuList>
-            </Menu>
-          )}
-        </ButtonGroup>
+        {children}
       </HStack>
       <IconButton
         mr="2"
@@ -106,7 +77,5 @@ export default function Header({docset, versions, currentVersion}) {
 }
 
 Header.propTypes = {
-  docset: PropTypes.string.isRequired,
-  versions: PropTypes.array,
-  currentVersion: PropTypes.string
+  children: PropTypes.node
 };
