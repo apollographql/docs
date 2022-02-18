@@ -32,3 +32,6 @@ rover:
 router: 
   remote: https://github.com/trevorblades/router
   branch: tb/experimental-docs
+graphql-subscriptions:
+  remote: https://github.com/trevorblades/subscriptions-transport-ws
+  branch: tb/experimental-docs
