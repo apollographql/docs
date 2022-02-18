@@ -13,8 +13,8 @@ import {getAlgoliaResults} from '@algolia/autocomplete-preset-algolia';
 const SOURCES = {
   [DOCS_INDEX]: 'Documentation',
   blog: 'Blog',
-  odyssey: 'Odyssey'
-  // [QUERY_SUGGESTIONS_INDEX]: "Can't find what you're looking for?"
+  odyssey: 'Odyssey',
+  [QUERY_SUGGESTIONS_INDEX]: "Can't find what you're looking for?"
 };
 
 const appId = process.env.ALGOLIA_APP_ID;
