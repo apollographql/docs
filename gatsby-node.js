@@ -3,8 +3,7 @@ const {
   createFilePath,
   createRemoteFileNode
 } = require('gatsby-source-filesystem');
-const path = require('path');
-const fs = require('fs');
+const {join} = require('path');
 
 exports.sourceNodes = ({
   actions: {createNode},
@@ -64,7 +63,7 @@ exports.onCreateNode = async ({node, getNode, loadNodeContent, actions}) => {
         node,
         name: 'slug',
         // prefix slugs with their docset path (configured by source name)
-        value: path.join('/', sourceInstanceName, filePath)
+        value: join('/', sourceInstanceName, filePath)
       });
       break;
     }
@@ -118,36 +117,8 @@ exports.createPages = async ({actions, graphql}) => {
           sourceInstanceName
         }
       }
-      redirects: allFile(filter: {base: {eq: "_redirects"}}) {
-        nodes {
-          id
-          fields {
-            content
-          }
-          sourceInstanceName
-        }
-      }
     }
   `);
-
-  // combine sourced redirect files for each docset
-  const redirects = data.redirects.nodes
-    .flatMap(node =>
-      node.fields.content
-        .split('\n')
-        .filter(line => line.trim() && !line.startsWith('#'))
-        .map(line => {
-          const [from, ...rest] = line.split(/\s+/);
-          // append docset path to redirect "from" path
-          return [path.join('/', node.sourceInstanceName, from), ...rest].join(
-            ' '
-          );
-        })
-    )
-    .join('\n');
-
-  // write combined redirects file
-  fs.writeFileSync('public/_redirects', redirects);
 
   const configs = data.configs.nodes.reduce((acc, node) => {
     // TODO: convert configs to YAML

@@ -9,7 +9,7 @@ A **graph** in Apollo Studio represents a graph in your organization. Each graph
 To create a graph in [Apollo Studio](https://studio.apollographql.com/), first select the Studio organization that the graph will belong to. Then click **New Graph** in the upper right and proceed through the creation flow:
 
 <img
-  class="screenshot"
+  className="screenshot"
   src="../img/graph-creation.jpg"
   width="500"
   style="margin-bottom: 20px;"
@@ -39,7 +39,7 @@ to view its editable README, schema, data, and settings. All of a Studio organiz
 When a user opens one of your graph's variants in Apollo Studio, its **README page** is shown:
 
 <img
-  class="screenshot"
+  className="screenshot"
   alt="GraphQL codeblock in README"
   src="../img/readme-example.jpg"
   width="500"
@@ -47,7 +47,7 @@ When a user opens one of your graph's variants in Apollo Studio, its **README pa
 
 Like the typical homepage for a Git repository, this page displays a Markdown-based README that you can edit with any content you like.
 
-> **Note:** Only organization members with the [`Org Admin`, `Graph Admin`, or `Contributor` role](/org/members/) can edit a variant's README. If a variant is [protected](#protected-variants-enterprise-only), `Contributor`s _cannot_ edit its README.
+> **Note:** Only organization members with the [`Org Admin`, `Graph Admin`, or `Contributor` role](./members/) can edit a variant's README. If a variant is [protected](#protected-variants-enterprise-only), `Contributor`s _cannot_ edit its README.
 
 **Each variant has its own README.** If you edit one variant's README, those edits are _not_ applied to other variants. Among other uses, this enables you to provide different information to external consumers in a [public variant](#public-variants).
 
@@ -69,7 +69,7 @@ You can define a GraphQL code block with the following syntax:
 This renders the code block with buttons you can use to copy an operation or open it in the Explorer:
 
 <img
-  class="screenshot"
+  className="screenshot"
   alt="GraphQL codeblock in README"
   src="../img/readme-codeblock.jpg"
   width="300"
@@ -99,7 +99,7 @@ The Schema > Changelog tab in Apollo Studio displays a timeline of changes made 
 
 <img
   src="../img/schema-changelog.jpg"
-  class="screenshot"
+  className="screenshot"
   alt="Schema Changelog tab"
   width="600"
 />
@@ -112,7 +112,7 @@ To distinguish between instances of the same graph running in different environm
 
 <img
   src="../img/graph-variants.jpg"
-  class="screenshot"
+  className="screenshot"
   alt="Schema Changelog tab"
   width="400"
 />
@@ -136,7 +136,7 @@ You can enable public access for individual variants of your graph. If you do, *
 - Home
 - Schema
 - Explorer
-  - You can also [embed the Explorer](/explorer/embed-explorer/) on your own webpage.
+  - You can also [embed the Explorer](../explorer/embed-explorer/) on your own webpage.
 
 This enables consumers of your graph to learn about your graph's schema and any special usage information (such as authentication details) that you've documented in [the public variant's README](#the-readme-page). They can also run properly authenticated operations against your graph with the Explorer.
 
@@ -144,7 +144,7 @@ People outside your organization can't view any _other_ pages for a public varia
 
 #### Making a variant public
 
-> Only organization members with the [`Org Admin` or `Graph Admin` role](/org/members/) can toggle a variant's public visibility.
+> Only organization members with the [`Org Admin` or `Graph Admin` role](./members/) can toggle a variant's public visibility.
 
 1. Go to your graph's Settings page and open the Access tab.
 2. Under the Variants section, toggle the switch for the variant you want to make public:
@@ -163,7 +163,7 @@ You can toggle the switch back to make the variant private again.
 After you make a variant public, you can click the variant's **PUBLIC** label at the top of Apollo Studio to get its public link:
 
 <img
-  class="screenshot"
+  className="screenshot"
   src="../img/public-variant-label.jpg"
   alt="Public variant label in Studio"
   width="400"
@@ -171,7 +171,7 @@ After you make a variant public, you can click the variant's **PUBLIC** label at
 
 ### Protected variants (Enterprise only)
 
-If you have an Enterprise plan, you can designate particular variants of a graph as **protected variants**. Making a variant protected specifically affects the ability of users with the [`Contributor` role](/org/members/#organization-wide-member-roles) to make certain changes to the variant:
+If you have an Enterprise plan, you can designate particular variants of a graph as **protected variants**. Making a variant protected specifically affects the ability of users with the [`Contributor` role](./members/#organization-wide-member-roles) to make certain changes to the variant:
 
 - `Contributor`s _cannot_ push schema updates to a protected variant.
 - `Contributors` _cannot_ manage Explorer-related settings for a protected variant, like setting its URL.

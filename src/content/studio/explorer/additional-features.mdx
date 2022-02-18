@@ -72,7 +72,7 @@ You can pause introspection polling at any time. To do so:
 If you're working with a federated graph in Studio, the Explorer dynamically calculates example query plans for your operations in the right-hand panel (click **Response** and select **Query Plan Preview** from the dropdown):
 
 <img
-  class="screenshot"
+  className="screenshot"
   src="../img/explorer-query-plan.jpg"
   alt="Query plan in the Explorer"
   width="300"
@@ -89,7 +89,7 @@ As you edit an operation, the Explorer recalculates its example query plan accor
 There are two display modes for query plans. You can switch between **Show plan as text** and **Show plan as chart** by clicking the icons next to **Query Plan Preview**:
 
 <img
-  class="screenshot"
+  className="screenshot"
   src="../img/explorer-query-plan-diagram.jpg"
   alt="Query plan diagram in the Explorer"
   width="600"
@@ -108,7 +108,7 @@ The Explorer supports the following libraries/protocols for sending subscription
 To execute a subscription operation, first specify your subscriptions endpoint and implementation in the Explorer's connection settings:
 
 <img
-  class="screenshot"
+  className="screenshot"
   src="../img/explorer-subscriptions-settings.jpg"
   alt="Subscription settings in the Explorer"
   width="500"
@@ -117,7 +117,7 @@ To execute a subscription operation, first specify your subscriptions endpoint a
 When you execute a subscription, a Subscriptions panel appears in the bottom-right of the Response panel:
 
 <img
-  class="screenshot"
+  className="screenshot"
   src="../img/explorer-subscriptions-panel.jpg"
   alt="Subscriptions panel in the Explorer"
   width="500"
@@ -194,7 +194,7 @@ You can specify default headers that are applied to _every_ Explorer request exe
 
 ### Field latency hints
 
-As an alternative to [response hints](#response-hints), the Explorer can show you hints for the latency of the fields in your query. This option is available only if you've configured your graph to [report field usage and tracing data to Studio](/metrics/usage-reporting/).
+As an alternative to [response hints](#response-hints), the Explorer can show you hints for the latency of the fields in your query. This option is available only if you've configured your graph to [report field usage and tracing data to Studio](../metrics/usage-reporting/).
 
 The Explorer shows you the 95th-percentile (default) response times for the fields in your query to help you get a sense of how "expensive" your query is and what the bottlenecks in response time will be.
 You can change which percentile you want to see hints from at any time in the Explorer settings.
