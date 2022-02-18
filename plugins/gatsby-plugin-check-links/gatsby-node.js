@@ -113,6 +113,8 @@ exports.createPages = async ({graphql, reporter}) => {
         reporter.warn(`${position} ${link.to}`);
       }
 
+      reporter.warn('---');
+
       totalBrokenLinks += brokenLinks.length;
     }
   }
