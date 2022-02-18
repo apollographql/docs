@@ -124,5 +124,9 @@ exports.createPages = async ({graphql, reporter}, {ignore = []}) => {
     }
   }
 
-  reporter.warn(`${totalBrokenLinks} total broken links`);
+  if (totalBrokenLinks) {
+    reporter.warn(`${totalBrokenLinks} total broken links found`);
+  } else {
+    reporter.success('No broken links found. Hooray! 🎉');
+  }
 };
