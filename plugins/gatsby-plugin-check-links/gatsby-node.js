@@ -5,7 +5,7 @@ const {dirname, resolve, isAbsolute} = require('path');
 
 const TRAILING_SLASH_PATTERN = /(?!^)\/$/;
 
-exports.createPages = async ({graphql, reporter}) => {
+exports.createPages = async ({graphql, reporter}, {ignore = []}) => {
   const {data} = await graphql(
     `
       {
@@ -87,6 +87,11 @@ exports.createPages = async ({graphql, reporter}) => {
 
       const [absPath, heading] = fullPath.split('#');
       const trimmedPath = absPath.replace(TRAILING_SLASH_PATTERN, '');
+
+      if (ignore.includes(trimmedPath)) {
+        continue;
+      }
+
       const target = pages[trimmedPath];
 
       // if the target doesn't exist or the heading hash is wrong

@@ -56,8 +56,13 @@ const plugins = [
   'gatsby-plugin-svgr',
   '@chakra-ui/gatsby-plugin',
   'gatsby-plugin-sitemap',
-  'gatsby-plugin-check-links', // local plugin
   'gatsby-plugin-combine-redirects', // local plugin
+  {
+    resolve: 'gatsby-plugin-check-links', // local plugin
+    options: {
+      ignore: ['/react/api/core/ApolloClient', '/react/v2/api/apollo-client']
+    }
+  },
   {
     resolve: 'gatsby-plugin-manifest',
     options: {
