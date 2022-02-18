@@ -6,7 +6,7 @@ import {Link as GatsbyLink} from 'gatsby';
 export default function VersionBanner({to}) {
   const [bgColor, textColor] = useColorModeValue(
     ['yellow.100', 'yellow.900'],
-    ['yellow.700', 'yellow.50']
+    ['yellow.700', 'yellow.100']
   );
   return (
     <Box

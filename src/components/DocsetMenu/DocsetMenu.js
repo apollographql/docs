@@ -1,5 +1,6 @@
 import DocsetButton from './DocsetButton';
 import DocsetGroup from './DocsetGroup';
+import PropTypes from 'prop-types';
 import React from 'react';
 import {ReactComponent as ApolloMark} from '@apollo/space-kit/logos/mark.svg';
 import {
@@ -12,17 +13,28 @@ import {
   Stack,
   useDisclosure
 } from '@chakra-ui/react';
+import {ReactComponent as Federation} from '../../assets/icons/federation.svg';
 import {FiGrid} from 'react-icons/fi';
-import {IoGitNetworkOutline} from 'react-icons/io5';
-import {SiKotlin, SiNodedotjs, SiReact, SiSwift} from 'react-icons/si';
+import {ReactComponent as Rover} from '../../assets/icons/rover.svg';
+import {ReactComponent as Satellite} from '../../assets/icons/satellite.svg';
+import {ReactComponent as Schema} from '../../assets/icons/schema.svg';
+import {SiKotlin, SiReact, SiSwift} from 'react-icons/si';
+
+const CustomIcon = ({icon}) => <Box fill="current" boxSize="1em" as={icon} />;
+
+CustomIcon.propTypes = {
+  icon: PropTypes.elementType.isRequired
+};
 
 export const DOCSET_ICONS = {
   react: <SiReact />,
   ios: <SiSwift />,
   android: <SiKotlin />, // TODO: update algolia index to be called "kotlin"
-  server: <SiNodedotjs />,
-  apollo: <Box fill="current" h="1em" as={ApolloMark} />,
-  federation: <IoGitNetworkOutline />
+  server: <CustomIcon icon={Satellite} />,
+  apollo: <CustomIcon icon={ApolloMark} />,
+  federation: <CustomIcon icon={Federation} />,
+  studio: <CustomIcon icon={Schema} />,
+  rover: <CustomIcon icon={Rover} />
 };
 
 export function DocsetMenu(props) {
@@ -30,7 +42,7 @@ export function DocsetMenu(props) {
   return (
     <>
       <Button rightIcon={<FiGrid />} onClick={onOpen} {...props} />
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal returnFocusOnClose={false} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
           <ModalCloseButton />
@@ -61,8 +73,12 @@ export function DocsetMenu(props) {
               <DocsetButton to="/router">Router</DocsetButton>
             </DocsetGroup>
             <DocsetGroup title="Tools">
-              <DocsetButton to="/studio">Studio</DocsetButton>
-              <DocsetButton to="/rover">Rover CLI</DocsetButton>
+              <DocsetButton leftIcon={DOCSET_ICONS.studio} to="/studio">
+                Studio
+              </DocsetButton>
+              <DocsetButton leftIcon={DOCSET_ICONS.rover} to="/rover">
+                Rover CLI
+              </DocsetButton>
             </DocsetGroup>
           </Stack>
         </ModalContent>

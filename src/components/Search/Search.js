@@ -25,7 +25,12 @@ export function Search() {
   return (
     <>
       <SearchButton onClick={onOpen} />
-      <Modal size="4xl" isOpen={isOpen} onClose={onClose}>
+      <Modal
+        returnFocusOnClose={false}
+        size="4xl"
+        isOpen={isOpen}
+        onClose={onClose}
+      >
         <ModalOverlay />
         <ModalContent overflow="hidden">
           <Autocomplete onClose={onClose} />

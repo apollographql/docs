@@ -11,6 +11,7 @@ import {
   DocsetGrid,
   Odyssey
 } from '../../components/HomePage';
+import {DOCSET_ICONS} from '../../components/DocsetMenu';
 import {SiDiscourse, SiGithub, SiTwitter, SiYoutube} from 'react-icons/si';
 
 Apollo is a platform for building a unified graph, a communication layer that helps you manage the flow of data between your application clients (such as web and native apps) and your back-end services. At the heart of the graph is a query language called GraphQL.
@@ -21,16 +22,19 @@ Apollo is a platform for building a unified graph, a communication layer that he
 
 <DocsetGrid>
   <Docset
+    icon={DOCSET_ICONS.react}
     title="React"
     description="Manage your React app's state and seamlessly execute GraphQL operations."
     path="/react"
   />
   <Docset
+    icon={DOCSET_ICONS.ios}
     title="iOS"
     description="Manage your iOS app's state and seamlessly execute GraphQL operations."
     path="/ios"
   />
   <Docset
+    icon={DOCSET_ICONS.android}
     title="Kotlin"
     description="Manage your Kotlin app's state and seamlessly execute GraphQL operations."
     path="/kotlin"
@@ -41,12 +45,14 @@ Apollo is a platform for building a unified graph, a communication layer that he
 
 <DocsetGrid>
   <Docset
+    icon={DOCSET_ICONS.server}
     title="Apollo Server"
     description="Configure a production-ready GraphQL server to fetch and combine data from multiple sources."
     path="/apollo-server"
     cta={CTA_LEARN}
   />
   <Docset
+    icon={DOCSET_ICONS.federation}
     title="Federation"
     description="Implement a single unified graph across multiple subgraphs."
     path="/federation"
@@ -58,12 +64,14 @@ Apollo is a platform for building a unified graph, a communication layer that he
 
 <DocsetGrid>
   <Docset
+    icon={DOCSET_ICONS.studio}
     title="Studio"
     description="Build your graph with your team, evolve it safely, and keep it running smoothly."
     path="/react"
     cta={CTA_LEARN}
   />
   <Docset
+    icon={DOCSET_ICONS.rover}
     title="Rover"
     description="Manage your Studio graphs and schemas from the command line."
     path="/rover"

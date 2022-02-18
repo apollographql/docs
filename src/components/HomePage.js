@@ -4,6 +4,7 @@ import {
   Button,
   Flex,
   Grid,
+  HStack,
   Heading,
   IconButton,
   Link,
@@ -53,9 +54,9 @@ export function Odyssey() {
   );
 }
 
-export function DocsetGrid(props) {
-  return <SimpleGrid spacing="4" minChildWidth="250px" {...props} />;
-}
+export const DocsetGrid = props => (
+  <SimpleGrid spacing="4" minChildWidth="250px" {...props} />
+);
 
 export const CTA_LEARN = 'Learn about %s';
 
@@ -64,13 +65,17 @@ export function Docset({
   children,
   description,
   path,
+  icon,
   cta = 'Explore %s docs'
 }) {
   return (
     <Flex align="flex-start" p="6" rounded="md" borderWidth="1px">
       <Flex align="flex-start" direction="column" h="full">
         <Heading as="h3" size="lg" mb="4">
-          {title}
+          <HStack spacing="3">
+            {icon}
+            <span>{title}</span>
+          </HStack>
         </Heading>
         <Text mb="4">{description}</Text>
         <PrimaryLink mt="auto" fontWeight="semibold" as={GatsbyLink} to={path}>
@@ -87,9 +92,10 @@ Docset.propTypes = {
   description: PropTypes.string.isRequired,
   path: PropTypes.string.isRequired,
   cta: PropTypes.string,
+  icon: PropTypes.element,
   children: PropTypes.node
 };
 
-export function CommunityButton(props) {
-  return <IconButton as={Link} fontSize="larger" isExternal {...props} />;
-}
+export const CommunityButton = props => (
+  <IconButton as={Link} fontSize="larger" isExternal {...props} />
+);
