@@ -64,10 +64,11 @@ function NavGroup({group, depth}) {
   const {basePath, uri} = useContext(PathContext);
   const isActive = isGroupActive(group.children, basePath, uri);
   const isOpen = nav[group.id];
+  const fontWeight = useColorModeValue('semibold', 'bold');
   return (
     <NavStack>
       <NavButton
-        fontWeight="semibold"
+        fontWeight={fontWeight}
         isActive={isActive}
         rightIcon={isOpen ? <FiChevronDown /> : <FiChevronRight />}
         onClick={() =>

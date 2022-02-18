@@ -50,6 +50,7 @@ export default function TableOfContents({headings}) {
           key={index}
           pl={(depth - MIN_HEADING_DEPTH) * 4}
           lineHeight="normal"
+          fontWeight={depth === 2 && 'semibold'}
         >
           <Link href={'#' + id} color={id === activeId && 'primary'}>
             {value}
