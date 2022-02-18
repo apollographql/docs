@@ -135,17 +135,17 @@ exports.createPages = async ({actions, graphql}) => {
 
   data.pages.nodes.forEach(({id, gitRemote, sourceInstanceName, children}) => {
     const [{fields}] = children;
-    const versions =
-      gitRemote &&
-      data.configs.nodes
-        .filter(node => node.gitRemote?.full_name === gitRemote.full_name)
-        .map(node => {
-          const {version} = JSON.parse(node.fields.content);
-          return {
-            label: version,
-            slug: node.sourceInstanceName
-          };
-        });
+    const versions = data.configs.nodes
+      .filter(
+        node => gitRemote && node.gitRemote?.full_name === gitRemote.full_name
+      )
+      .map(node => {
+        const {version} = JSON.parse(node.fields.content);
+        return {
+          label: version,
+          slug: node.sourceInstanceName
+        };
+      });
 
     actions.createPage({
       path: fields.slug,

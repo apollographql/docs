@@ -158,6 +158,11 @@ export default function PageTemplate({data, uri, pageContext}) {
   const {docset, versions, currentVersion, navItems} = pageContext;
   const titleFont = encodeURIComponent('Source Sans Pro');
 
+  const defaultVersion = useMemo(
+    () => versions.find(version => !version.slug.includes('/')),
+    [versions]
+  );
+
   return (
     <>
       <GatsbySeo
@@ -204,14 +209,10 @@ export default function PageTemplate({data, uri, pageContext}) {
           path: name === 'index' ? uri : dirname(uri)
         }}
       >
-        <Header
-          docset={docset}
-          versions={versions}
-          currentVersion={currentVersion}
-        >
+        <Header>
           <ButtonGroup variant="outline" isAttached shadow="sm" rounded="md">
             <DocsetMenu color="primary">{docset}</DocsetMenu>
-            {versions?.length > 1 && (
+            {versions.length > 1 && (
               <Menu>
                 <MenuButton as={Button} rightIcon={<FiChevronDown />} ml="-px">
                   {currentVersion}
@@ -252,8 +253,11 @@ export default function PageTemplate({data, uri, pageContext}) {
           transitionProperty="margin-left"
           transitionDuration="normal"
         >
-          {/^\w+\//.test(basePath) && (
-            <VersionBanner to={'/' + basePath.split('/')[0]} />
+          {defaultVersion && defaultVersion.slug !== basePath && (
+            <VersionBanner
+              versionLabels={[defaultVersion.label, currentVersion]}
+              to={'/' + defaultVersion.slug}
+            />
           )}
           <Flex
             maxW="7xl"
