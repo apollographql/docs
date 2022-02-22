@@ -56,8 +56,14 @@ export function useMermaidStyles() {
         background: 'none',
         fill: 'none'
       },
-      [['.messageText', '.noteText', '.loopText']]: {
-        fontSize: 12,
+      [[
+        '.messageText',
+        '.noteText',
+        '.labelText',
+        '.loopText',
+        '.loopText>tspan'
+      ]]: {
+        fill: 'currentColor',
         stroke: 'none'
       },
       [['g rect', 'polygon.labelBox']]: {
@@ -79,11 +85,14 @@ export function useMermaidStyles() {
         color: 'inherit',
         fill: 'currentColor'
       },
-      '.flowchart-link': {
+      [['.edgePath .path', '.flowchart-link', '.messageLine0']]: {
         stroke: 'currentColor'
       },
-      '.marker': {
+      [['.marker', '#arrowhead path']]: {
         stroke: 'currentColor',
+        fill: 'currentColor'
+      },
+      'text.actor > tspan': {
         fill: 'currentColor'
       }
     };
