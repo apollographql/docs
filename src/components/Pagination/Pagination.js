@@ -31,6 +31,7 @@ export function Pagination({navItems}) {
     <Flex mt="10">
       {prevItem && (
         <PaginationButton
+          key="prev"
           label="Previous"
           item={prevItem}
           leftIcon={<FiChevronLeft />}
@@ -39,6 +40,7 @@ export function Pagination({navItems}) {
       )}
       {nextItem && (
         <PaginationButton
+          key="next"
           ml="auto"
           textAlign="right"
           label="Next"
