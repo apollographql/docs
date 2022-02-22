@@ -1,4 +1,2 @@
 [dev]
   autoLaunch = false
-[build.environment]
-  NETLIFY_SKIP_GATSBY_FUNCTIONS = "true"
