@@ -163,6 +163,24 @@ export default function PageTemplate({data, uri, pageContext}) {
     [versions]
   );
 
+  const editOnGitHub = useMemo(
+    () =>
+      gitRemote && (
+        <Button
+          as="a"
+          href={[gitRemote.href, 'tree', gitRemote.ref, relativePath].join(
+            path.sep
+          )}
+          variant="link"
+          size="lg"
+          leftIcon={<FaGithub />}
+        >
+          Edit on GitHub
+        </Button>
+      ),
+    [gitRemote, relativePath]
+  );
+
   return (
     <>
       <GatsbySeo
@@ -318,6 +336,7 @@ export default function PageTemplate({data, uri, pageContext}) {
                     processSync(childMarkdownRemark.html).result
                   )}
                 </MultiCodeBlockContext.Provider>
+                <Box display={{lg: 'none'}}>{editOnGitHub}</Box>
               </Box>
               <Pagination navItems={navItems} />
             </Box>
@@ -346,22 +365,7 @@ export default function PageTemplate({data, uri, pageContext}) {
                   >
                     Rate article
                   </Button>
-                  {gitRemote && (
-                    <Button
-                      as="a"
-                      href={[
-                        gitRemote.href,
-                        'tree',
-                        gitRemote.ref,
-                        relativePath
-                      ].join(path.sep)}
-                      variant="link"
-                      size="lg"
-                      leftIcon={<FaGithub />}
-                    >
-                      Edit on GitHub
-                    </Button>
-                  )}
+                  {editOnGitHub}
                   <Button
                     as="a"
                     href="https://community.apollographql.com/"
