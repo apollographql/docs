@@ -49,8 +49,8 @@ export function SidebarNav({navItems, onHide, darkBg = 'gray.800', children}) {
 
   const nav = useMemo(
     () => ({
-      ...localNavState,
-      ...initialNavState
+      ...initialNavState,
+      ...localNavState
     }),
     [localNavState, initialNavState]
   );
