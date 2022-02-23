@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Search from './Search';
 import {ReactComponent as ApolloLogo} from '@apollo/space-kit/logos/logo.svg';
+import {ReactComponent as ApolloMark} from '@apollo/space-kit/logos/mark.svg';
 import {
   Box,
   Flex,
@@ -10,7 +11,7 @@ import {
   useColorMode,
   useColorModeValue
 } from '@chakra-ui/react';
-import {FiMoon, FiSun} from 'react-icons/fi';
+import {FiMenu, FiMoon, FiSun} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
 import {useTagColors} from '../utils';
 
@@ -26,7 +27,8 @@ export default function Header({children}) {
     <Flex
       align="center"
       as="header"
-      px="4"
+      pr="4"
+      pl={{base: 2, md: 4}}
       boxSizing="content-box"
       pos="sticky"
       top="0"
@@ -37,8 +39,13 @@ export default function Header({children}) {
         borderBottomWidth: HEADER_BORDER_WIDTH
       }}
     >
-      <HStack spacing="4" mr="auto" fontWeight="semibold">
-        <Flex as={GatsbyLink} to="/" align="center">
+      <HStack spacing="4" d={{base: 'none', md: 'flex'}}>
+        <Flex
+          as={GatsbyLink}
+          to="/"
+          align="center"
+          display={{base: 'none', md: 'flex'}}
+        >
           <Box
             as={ApolloLogo}
             fill="current"
@@ -64,7 +71,12 @@ export default function Header({children}) {
         </Flex>
         {children}
       </HStack>
+      <HStack d={{base: 'flex', md: 'none'}}>
+        <IconButton variant="ghost" fontSize="2xl" icon={<FiMenu />} />
+        <Box fill="current" as={ApolloMark} h="8" />
+      </HStack>
       <IconButton
+        ml="auto"
         mr="2"
         fontSize="xl"
         variant="ghost"
