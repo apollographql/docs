@@ -96,7 +96,11 @@ export default function Autocomplete({onClose}) {
                   }
                 ]
               }),
-            onActive: ({item, setContext}) => setContext({preview: item})
+            onActive: ({item, setContext}) => {
+              if (item.__autocomplete_indexName !== QUERY_SUGGESTIONS_INDEX) {
+                setContext({preview: item});
+              }
+            }
           }))
       }),
     []
