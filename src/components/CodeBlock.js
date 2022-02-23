@@ -96,49 +96,51 @@ export default function CodeBlock({children}) {
                   {title}
                 </Box>
               )}
-              <chakra.pre
-                className={className}
-                py={CODE_BLOCK_SPACING}
-                fontFamily="inherit"
-                overflow="auto"
-              >
-                {tokens.map((line, i) => (
-                  <Flex
-                    key={i}
-                    px={CODE_BLOCK_SPACING}
-                    // for line highlighting to go all the way across code block
-                    minW="full"
-                    w="fit-content"
-                    bg={linesToHighlight.includes(i + 1) && highlightColor}
-                  >
-                    {showLineNumbers && (
-                      <Box
-                        aria-hidden="true"
-                        userSelect="none"
-                        // line number alignment used in VS Code
-                        textAlign="right"
-                        w={lineNumberOffset}
-                        mr={CODE_BLOCK_SPACING}
-                        color={lineNumberColor}
-                      >
-                        {i + 1}
-                      </Box>
-                    )}
-                    <Box
-                      {...getLineProps({
-                        line,
-                        key: i
-                      })}
+              <Flex overflow="auto">
+                <chakra.pre
+                  d="inline-block"
+                  className={className}
+                  py={CODE_BLOCK_SPACING}
+                  fontFamily="inherit"
+                >
+                  {tokens.map((line, i) => (
+                    <Flex
+                      key={i}
+                      px={CODE_BLOCK_SPACING}
+                      // for line highlighting to go all the way across code block
+                      minW="full"
+                      w="fit-content"
+                      bg={linesToHighlight.includes(i + 1) && highlightColor}
                     >
-                      <Box>
-                        {line.map((token, key) => (
-                          <span key={key} {...getTokenProps({token, key})} />
-                        ))}
+                      {showLineNumbers && (
+                        <Box
+                          aria-hidden="true"
+                          userSelect="none"
+                          // line number alignment used in VS Code
+                          textAlign="right"
+                          w={lineNumberOffset}
+                          mr={CODE_BLOCK_SPACING}
+                          color={lineNumberColor}
+                        >
+                          {i + 1}
+                        </Box>
+                      )}
+                      <Box
+                        {...getLineProps({
+                          line,
+                          key: i
+                        })}
+                      >
+                        <Box>
+                          {line.map((token, key) => (
+                            <span key={key} {...getTokenProps({token, key})} />
+                          ))}
+                        </Box>
                       </Box>
-                    </Box>
-                  </Flex>
-                ))}
-              </chakra.pre>
+                    </Flex>
+                  ))}
+                </chakra.pre>
+              </Flex>
             </Box>
             <ButtonGroup size="xs" pos="absolute" top="2" right="2">
               <Button
