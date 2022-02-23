@@ -13,7 +13,7 @@ import {
   useClipboard,
   useColorModeValue
 } from '@chakra-ui/react';
-import {FiClipboard} from 'react-icons/fi';
+import {FiCheck, FiClipboard} from 'react-icons/fi';
 import {colors} from '@apollo/space-kit/colors';
 import {theme as darkTheme} from '../prism-themes/dark';
 import {theme as lightTheme} from '../prism-themes/light';
@@ -61,7 +61,7 @@ export default function CodeBlock({children}) {
   const theme = useColorModeValue(lightTheme, darkTheme);
   const highlightColor = useColorModeValue('gray.100', 'gray.700');
   const lineNumberColor = useColorModeValue(
-    'gray.400',
+    'gray.500',
     colors.midnight.lighter
   );
   const languageMenu = useContext(CodeBlockContext);
@@ -78,7 +78,13 @@ export default function CodeBlock({children}) {
         // ex. if there are 28 lines in the code block, lineNumberOffset = 2ch
         const lineNumberOffset = tokens.length.toString().length + 'ch';
         return (
-          <Box rounded="md" style={style} pos="relative" borderWidth="1px">
+          <Box
+            rounded="md"
+            style={style}
+            pos="relative"
+            borderWidth="1px"
+            lineHeight="tall"
+          >
             <Box fontSize="md" fontFamily="mono">
               {title && (
                 <Box
@@ -135,7 +141,10 @@ export default function CodeBlock({children}) {
               </chakra.pre>
             </Box>
             <ButtonGroup size="xs" pos="absolute" top="2" right="2">
-              <Button leftIcon={<FiClipboard />} onClick={onCopy}>
+              <Button
+                leftIcon={hasCopied ? <FiCheck /> : <FiClipboard />}
+                onClick={onCopy}
+              >
                 {hasCopied ? 'Copied!' : 'Copy'}
               </Button>
               {languageMenu}

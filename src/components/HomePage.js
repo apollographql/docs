@@ -18,7 +18,7 @@ import {Link as GatsbyLink} from 'gatsby';
 import {PrimaryLink} from './RelativeLink';
 
 export function Odyssey() {
-  const shade = useColorModeValue(50, 700);
+  const shade = useColorModeValue(50, 600);
   const gradient = useToken('colors', [`blue.${shade}`, `indigo.${shade}`]);
   return (
     <Grid

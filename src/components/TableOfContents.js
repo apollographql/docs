@@ -44,19 +44,25 @@ export default function TableOfContents({headings}) {
   }, [toc]);
 
   return (
-    <List overflow="auto" spacing="2.5">
-      {toc.map(({id, value, depth}, index) => (
-        <ListItem
-          key={index}
-          pl={(depth - MIN_HEADING_DEPTH) * 4}
-          lineHeight="normal"
-          fontWeight={depth === 2 && 'semibold'}
-        >
-          <Link href={'#' + id} color={id === activeId && 'primary'}>
-            {value}
-          </Link>
-        </ListItem>
-      ))}
+    <List overflow="auto" spacing="3.5">
+      {toc.map(({id, value, depth}, index) => {
+        const isActive = id === activeId;
+        return (
+          <ListItem
+            key={index}
+            pl={(depth - MIN_HEADING_DEPTH) * 6}
+            lineHeight="normal"
+          >
+            <Link
+              href={'#' + id}
+              color={isActive && 'primary'}
+              fontWeight={isActive && 'semibold'}
+            >
+              {value}
+            </Link>
+          </ListItem>
+        );
+      })}
     </List>
   );
 }

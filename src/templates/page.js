@@ -230,11 +230,16 @@ export default function PageTemplate({data, uri, pageContext}) {
         }}
       >
         <Header>
-          <ButtonGroup variant="outline" isAttached shadow="sm" rounded="md">
-            <DocsetMenu color="primary">{docset}</DocsetMenu>
+          <ButtonGroup isAttached>
+            <DocsetMenu colorScheme="indigo">{docset}</DocsetMenu>
             {versions.length > 1 && (
               <Menu>
-                <MenuButton as={Button} rightIcon={<FiChevronDown />} ml="-px">
+                <MenuButton
+                  as={Button}
+                  variant="outline"
+                  rightIcon={<FiChevronDown />}
+                  borderLeft="none"
+                >
                   {currentVersion}
                 </MenuButton>
                 <MenuList>
@@ -284,7 +289,7 @@ export default function PageTemplate({data, uri, pageContext}) {
             />
           )}
           <Flex
-            maxW="7xl"
+            maxW="6xl"
             mx="auto"
             align="flex-start"
             px="10"
@@ -299,14 +304,20 @@ export default function PageTemplate({data, uri, pageContext}) {
                 {title}
               </Heading>
               {description && (
-                <Heading size="lg" mt="2" fontWeight="normal">
+                <chakra.h2
+                  fontSize={{base: 'xl', md: '2xl'}}
+                  lineHeight="normal"
+                  mt="3"
+                  fontWeight="normal"
+                >
                   {description}
-                </Heading>
+                </chakra.h2>
               )}
               <Divider my="8" />
               <Box
                 sx={{
                   fontSize: 'lg',
+                  lineHeight: 1.7,
                   [HEADINGS]: {
                     a: {
                       color: 'inherit'
@@ -352,7 +363,7 @@ export default function PageTemplate({data, uri, pageContext}) {
                 display={{base: 'none', lg: 'flex'}}
                 flexDirection="column"
                 ml="10"
-                w="250px"
+                w={250}
                 flexShrink="0"
                 pos="sticky"
                 top={scrollPaddingTop}

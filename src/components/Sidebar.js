@@ -2,6 +2,7 @@ import NavItems, {isGroupActive} from './NavItems';
 import PropTypes from 'prop-types';
 import React, {useContext, useMemo} from 'react';
 import useLocalStorage from 'react-use/lib/useLocalStorage';
+import {BsChevronContract, BsChevronExpand} from 'react-icons/bs';
 import {
   Button,
   Flex,
@@ -10,7 +11,7 @@ import {
   chakra,
   useColorModeValue
 } from '@chakra-ui/react';
-import {FiChevronsDown, FiChevronsLeft, FiChevronsUp} from 'react-icons/fi';
+import {FiChevronsLeft} from 'react-icons/fi';
 import {NavContext, PathContext} from '../utils';
 import {TOTAL_HEADER_HEIGHT} from './Header';
 
@@ -84,13 +85,15 @@ export default function Sidebar({navItems, isHidden, onHide}) {
         transform: isHidden ? 'translateX(-100%)' : 'none'
       }}
     >
-      <Flex px="1" pt="2" pb="2" pos="sticky" top="0" bg={bg} zIndex="1">
+      <Flex p="2" pl="0" pos="sticky" top="0" bg={bg} zIndex="1">
         <Button
           mr="auto"
           size="sm"
           variant="ghost"
+          roundedRight="full"
+          roundedLeft="none"
           isDisabled={!navGroups.length}
-          rightIcon={isAllExpanded ? <FiChevronsUp /> : <FiChevronsDown />}
+          leftIcon={isAllExpanded ? <BsChevronContract /> : <BsChevronExpand />}
           onClick={() =>
             setNav(
               Object.keys(initialNavState).reduce(

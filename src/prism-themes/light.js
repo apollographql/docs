@@ -13,7 +13,8 @@ export const theme = {
     {
       types: ['comment', 'prolog', 'doctype', 'cdata'],
       style: {
-        color: orange.dark
+        color: orange.darker,
+        fontWeight: 'bold'
       }
     },
 
@@ -36,7 +37,7 @@ export const theme = {
         'function'
       ],
       style: {
-        color: pink.darker
+        color: pink.dark
       }
     },
     {
