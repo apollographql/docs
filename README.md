@@ -162,6 +162,7 @@ This website gets rebuilt and deployed to Netlify every time something is commit
 "But what about changes to remote docsets?", I hear you say. Netlify doesn't let us configure a site to listen for changes in more than one repo. To get around this, we use GitHub Actions to trigger a new production deploy every time docs-related changes are made. We also build deploy previews and publish them to Netlify for PRs that include docs changes on these repos.
 
 <!-- TODO: update when we get org-wide workflow templates working -->
+<!-- https://docs.github.com/en/actions/using-workflows/creating-starter-workflows-for-your-organization -->
 
 To set up these actions in any repo, copy the following two YAML files to the repo's `.github/workflows` directory.
 
