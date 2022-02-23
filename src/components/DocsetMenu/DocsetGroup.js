@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {ButtonGroup, Heading} from '@chakra-ui/react';
+import {Heading, Wrap, WrapItem} from '@chakra-ui/react';
 
 export default function DocsetGroup({title, children}) {
   return (
@@ -8,7 +8,11 @@ export default function DocsetGroup({title, children}) {
       <Heading mb="2" size="sm">
         {title}
       </Heading>
-      <ButtonGroup>{children}</ButtonGroup>
+      <Wrap>
+        {React.Children.map(children, (child, index) => (
+          <WrapItem key={index}>{child}</WrapItem>
+        ))}
+      </Wrap>
     </div>
   );
 }

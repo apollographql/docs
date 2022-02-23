@@ -40,7 +40,7 @@ export function Search() {
         onClose={onClose}
       >
         <ModalOverlay />
-        <ModalContent overflow="hidden" mx="8">
+        <ModalContent overflow="hidden" mx={[4, 6, 8]}>
           <Autocomplete onClose={onClose} />
         </ModalContent>
       </Modal>

@@ -54,6 +54,7 @@ export default function Preview({preview}) {
 
   return (
     <Flex
+      borderLeftWidth="1px"
       direction="column"
       align="center"
       textAlign="center"
