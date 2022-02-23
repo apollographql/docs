@@ -10,16 +10,18 @@ import ExpansionPanel, {
 import Footer from '../components/Footer';
 import Header, {TOTAL_HEADER_HEIGHT} from '../components/Header';
 import InlineCode from '../components/InlineCode';
+import MobileNav from '../components/MobileNav';
 import MultiCodeBlock, {
   MultiCodeBlockContext
 } from '../components/MultiCodeBlock';
 import Pagination from '../components/Pagination';
 import PropTypes from 'prop-types';
-import React, {Fragment, createElement, useMemo} from 'react';
+import React, {Fragment, createElement, useCallback, useMemo} from 'react';
 import RelativeLink from '../components/RelativeLink';
 import Sidebar, {
   SIDEBAR_WIDTH_BASE,
-  SIDEBAR_WIDTH_XL
+  SIDEBAR_WIDTH_XL,
+  SidebarNav
 } from '../components/Sidebar';
 import TableOfContents from '../components/TableOfContents';
 import TypeScriptApiBox from '../components/TypeScriptApiBox';
@@ -183,6 +185,34 @@ export default function PageTemplate({data, uri, pageContext}) {
     [gitRemote, relativePath]
   );
 
+  const renderSwitcher = useCallback(
+    props => (
+      <ButtonGroup isAttached {...props}>
+        <DocsetMenu colorScheme="indigo">{docset}</DocsetMenu>
+        {versions.length > 1 && (
+          <Menu>
+            <MenuButton
+              as={Button}
+              variant="outline"
+              rightIcon={<FiChevronDown />}
+              borderLeft="none"
+            >
+              {currentVersion}
+            </MenuButton>
+            <MenuList>
+              {versions.map((version, index) => (
+                <GatsbyLink key={index} to={'/' + version.slug}>
+                  <MenuItem>{version.label}</MenuItem>
+                </GatsbyLink>
+              ))}
+            </MenuList>
+          </Menu>
+        )}
+      </ButtonGroup>
+    ),
+    [docset, versions, currentVersion]
+  );
+
   return (
     <>
       <GatsbySeo
@@ -230,32 +260,19 @@ export default function PageTemplate({data, uri, pageContext}) {
         }}
       >
         <Header>
-          <ButtonGroup isAttached>
-            <DocsetMenu colorScheme="indigo">{docset}</DocsetMenu>
-            {versions.length > 1 && (
-              <Menu>
-                <MenuButton
-                  as={Button}
-                  variant="outline"
-                  rightIcon={<FiChevronDown />}
-                  borderLeft="none"
-                >
-                  {currentVersion}
-                </MenuButton>
-                <MenuList>
-                  {versions.map((version, index) => (
-                    <GatsbyLink key={index} to={'/' + version.slug}>
-                      <MenuItem>{version.label}</MenuItem>
-                    </GatsbyLink>
-                  ))}
-                </MenuList>
-              </Menu>
-            )}
-          </ButtonGroup>
+          <MobileNav>
+            <SidebarNav navItems={navItems} darkBg="gray.700">
+              <Box px="3" pt="1" pb="2">
+                {renderSwitcher({size: 'sm'})}
+              </Box>
+            </SidebarNav>
+          </MobileNav>
+          {renderSwitcher({d: {base: 'none', md: 'flex'}})}
         </Header>
         <Fade in={sidebarHidden} unmountOnExit delay={0.25}>
           <Tooltip placement="right" label="Show sidebar">
             <IconButton
+              d={{base: 'none', md: 'flex'}}
               pos="fixed"
               mt="2"
               left="2"
@@ -268,11 +285,12 @@ export default function PageTemplate({data, uri, pageContext}) {
             />
           </Tooltip>
         </Fade>
-        <Sidebar
-          navItems={navItems}
-          isHidden={sidebarHidden}
-          onHide={() => setSidebarHidden(true)}
-        />
+        <Sidebar isHidden={sidebarHidden}>
+          <SidebarNav
+            navItems={navItems}
+            onHide={() => setSidebarHidden(true)}
+          />
+        </Sidebar>
         <Box
           marginLeft={{
             base: 0,
@@ -307,7 +325,7 @@ export default function PageTemplate({data, uri, pageContext}) {
                 <chakra.h2
                   fontSize={{base: 'xl', md: '2xl'}}
                   lineHeight="normal"
-                  mt="3"
+                  mt={{base: 2, md: 3}}
                   fontWeight="normal"
                 >
                   {description}
@@ -315,9 +333,9 @@ export default function PageTemplate({data, uri, pageContext}) {
               )}
               <Divider my="8" />
               <Box
+                fontSize={{md: 'lg'}}
+                lineHeight={{md: 1.7}}
                 sx={{
-                  fontSize: 'lg',
-                  lineHeight: 1.7,
                   [HEADINGS]: {
                     a: {
                       color: 'inherit'
@@ -353,14 +371,14 @@ export default function PageTemplate({data, uri, pageContext}) {
                     processSync(childMarkdownRemark.html).result
                   )}
                 </MultiCodeBlockContext.Provider>
-                <Box display={{lg: 'none'}}>{editOnGitHub}</Box>
+                <Box d={{lg: 'none'}}>{editOnGitHub}</Box>
               </Box>
               <Pagination navItems={navItems} />
             </Box>
             {uri !== '/' && (
               // hide the table of contents on the home page
               <chakra.aside
-                display={{base: 'none', lg: 'flex'}}
+                d={{base: 'none', lg: 'flex'}}
                 flexDirection="column"
                 ml="10"
                 w={250}

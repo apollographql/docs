@@ -2,14 +2,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Search from './Search';
 import {ReactComponent as ApolloLogo} from '@apollo/space-kit/logos/logo.svg';
-import {
-  Box,
-  Flex,
-  HStack,
-  IconButton,
-  useColorMode,
-  useColorModeValue
-} from '@chakra-ui/react';
+import {ReactComponent as ApolloMark} from '@apollo/space-kit/logos/mark.svg';
+import {Box, Flex, HStack, IconButton, useColorMode} from '@chakra-ui/react';
 import {FiMoon, FiSun} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
 import {useTagColors} from '../utils';
@@ -20,7 +14,6 @@ export const TOTAL_HEADER_HEIGHT = HEADER_HEIGHT + HEADER_BORDER_WIDTH;
 
 export default function Header({children}) {
   const {toggleColorMode, colorMode} = useColorMode();
-  const bg = useColorModeValue('white', 'gray.800');
   const [tagBg, tagTextColor] = useTagColors();
   return (
     <Flex
@@ -31,14 +24,19 @@ export default function Header({children}) {
       pos="sticky"
       top="0"
       zIndex="1"
-      bg={bg}
+      bg="bg"
       css={{
         height: HEADER_HEIGHT,
         borderBottomWidth: HEADER_BORDER_WIDTH
       }}
     >
-      <HStack spacing="4" mr="auto" fontWeight="semibold">
-        <Flex as={GatsbyLink} to="/" align="center">
+      <HStack spacing="4" d={{base: 'none', md: 'flex'}}>
+        <Flex
+          as={GatsbyLink}
+          to="/"
+          align="center"
+          d={{base: 'none', md: 'flex'}}
+        >
           <Box
             as={ApolloLogo}
             fill="current"
@@ -64,7 +62,12 @@ export default function Header({children}) {
         </Flex>
         {children}
       </HStack>
+      <HStack d={{base: 'flex', md: 'none'}}>
+        {children}
+        <Box fill="current" as={ApolloMark} h="8" />
+      </HStack>
       <IconButton
+        ml="auto"
         mr="2"
         fontSize="xl"
         variant="ghost"

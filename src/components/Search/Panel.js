@@ -9,7 +9,8 @@ import {
   Heading,
   SimpleGrid,
   Wrap,
-  WrapItem
+  WrapItem,
+  useBreakpointValue
 } from '@chakra-ui/react';
 
 export const DOCS_INDEX = 'docs';
@@ -17,9 +18,10 @@ export const QUERY_SUGGESTIONS_INDEX = 'docs_query_suggestions';
 
 export default function Panel({sources, autocomplete, autocompleteState}) {
   const scrollArea = useRef();
+  const columns = useBreakpointValue({md: 2});
   return (
-    <SimpleGrid h="md" columns="2" {...autocomplete.getPanelProps({})}>
-      <Box ref={scrollArea} borderRightWidth="1px" overflow="auto" pb="4">
+    <SimpleGrid h="md" columns={columns} {...autocomplete.getPanelProps()}>
+      <Box ref={scrollArea} overflow="auto" pb="4">
         {autocompleteState.collections
           .filter(collection => collection.items.length > 0)
           .map((collection, index) => {
@@ -65,7 +67,7 @@ export default function Panel({sources, autocomplete, autocompleteState}) {
             );
           })}
       </Box>
-      {autocompleteState.context.preview && (
+      {columns === 2 && autocompleteState.context.preview && (
         <Preview preview={autocompleteState.context.preview} />
       )}
     </SimpleGrid>

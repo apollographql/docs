@@ -22,6 +22,10 @@ const theme = extendTheme({
   },
   semanticTokens: {
     colors: {
+      bg: {
+        default: 'white',
+        _dark: 'gray.800'
+      },
       primary: {
         default: 'indigo.500',
         _dark: 'indigo.200'

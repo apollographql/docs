@@ -8,7 +8,7 @@ export function useMermaidStyles() {
     useColorModeValue('pink.700', 'pink.200'),
     useColorModeValue('teal.700', 'teal.200'),
     useColorModeValue('gray.50', 'gray.700'),
-    useColorModeValue('white', 'gray.800')
+    'bg'
   ]);
 
   const mermaidStyles = useMemo(() => {

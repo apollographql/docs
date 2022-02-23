@@ -40,12 +40,7 @@ export default function Result({item, ...props}) {
             <Highlight value={(text || description).value} />
           </Box>
         </Box>
-        <Box
-          ml="2"
-          my="auto"
-          display={!isSelected && 'none'}
-          color={highlightColor}
-        >
+        <Box ml="2" my="auto" d={!isSelected && 'none'} color={highlightColor}>
           ⏎
         </Box>
       </Flex>

@@ -2,7 +2,9 @@ import Autocomplete from './Autocomplete';
 import React from 'react';
 import SearchButton from './SearchButton';
 import useKey from 'react-use/lib/useKey';
+import {FiSearch} from 'react-icons/fi';
 import {
+  IconButton,
   Modal,
   ModalContent,
   ModalOverlay,
@@ -25,6 +27,12 @@ export function Search() {
   return (
     <>
       <SearchButton onClick={onOpen} />
+      <IconButton
+        d={{base: 'flex', sm: 'none'}}
+        fontSize="xl"
+        icon={<FiSearch />}
+        onClick={onOpen}
+      />
       <Modal
         returnFocusOnClose={false}
         size="4xl"
@@ -32,7 +40,7 @@ export function Search() {
         onClose={onClose}
       >
         <ModalOverlay />
-        <ModalContent overflow="hidden">
+        <ModalContent overflow="hidden" mx={[4, 6, 8]}>
           <Autocomplete onClose={onClose} />
         </ModalContent>
       </Modal>

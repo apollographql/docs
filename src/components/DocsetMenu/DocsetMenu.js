@@ -44,7 +44,7 @@ export function DocsetMenu(props) {
       <Button rightIcon={<FiGrid />} onClick={onOpen} {...props} />
       <Modal returnFocusOnClose={false} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent mx={[4, 6, 8]}>
           <ModalCloseButton />
           <Stack spacing="4" p="6">
             <DocsetGroup title="Get started">
