@@ -42,8 +42,6 @@ export function Odyssey() {
         <Button
           as="a"
           href="https://odyssey.apollographql.com"
-          target="_blank"
-          rel="noopener noreferrer"
           colorScheme="indigo"
           rightIcon={<FiArrowRight />}
         >
