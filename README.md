@@ -162,7 +162,7 @@ This website gets rebuilt and deployed to Netlify every time something is commit
 "But what about changes to remote docsets?", I hear you say. Netlify doesn't let us configure a site to listen for changes in more than one repo. To get around this, we use GitHub Actions to trigger a new production deploy every time docs-related changes are made. We also build deploy previews and publish them to Netlify for PRs that include docs changes on these repos.
 
 <!-- TODO: update when we get org-wide workflow templates working -->
-<!-- https://docs.github.com/en/actions/using-workflows/creating-starter-workflows-for-your-organization -->
+<!-- https://github.com/apollographql/.github/pull/5 -->
 
 To set up these actions in any repo, copy the following two YAML files to the repo's `.github/workflows` directory.
 
@@ -415,3 +415,27 @@ Another downside was the complicated flow for publishing changes to the docs inf
 This new infrastructure fixes these issues by centralizing the website code and dependencies in one place, and pulling in content from the library repos. Each library's `docs` directory now only needs to include Markdown/MDX files and images—no Gatsby configuration or dependencies.
 
 We also increase our pace of iteration on website changes and make it easier to issue bug fixes or address security vulnerabilities by cutting out the extra steps of publishing to NPM and installing new versions of a package on each docs repo. And by moving non-OSS-related docsets into the central docs repo, we're able to consolidate docs-only repos and make those docsets easier to update.
+
+### Impact
+
+Using the old infrastructure, we were spending a lot of time building our docs. Because each library repo was tied to its own Netlify site, that site would redeploy any time any commit was pushed to its default branch. In other words, changes that didn't affect the docs were still triggering builds. This resulted in much more building than necessary.
+
+#### Netlify build stats (Feb 1 - Feb 24, 2022)
+
+| Site                   | Builds | Average time | Total time |
+| ---------------------- | ------ | ------------ | ---------- |
+| apollo-federation-docs | 424    | 4m 55s       | 2,084m     |
+| apollo-client-docs     | 237    | 8m 21s       | 1,979m     |
+| apollo-router-docs     | 437    | 2m 21s       | 1,027m     |
+| apollo-ios-docs        | 213    | 3m 41s       | 784m       |
+| **New docs infra**     | _94_   | _7m 30s_     | _705m_     |
+| apollo-server-docs     | 140    | 4m 34s       | 638m       |
+| apollo-android-docs    | 111    | 4m 30s       | 499m       |
+| apollo-cli-docs        | 87     | 2m 6s        | 182m       |
+| studio-docs            | 44     | 3m 11s       | 139m       |
+| apollo-docs-index      | 38     | 3m 4s        | 116m       |
+| **Total**              | 1,825  | N/A          | 8,153m     |
+
+During this period, the new docs took less time to build the entirety of our docs than the Apollo Client docs took to build just itself. It built 94 times, and each build was directly related to a change in the docs UI or content. We can't say the same for the other 1,731 combined builds that happened across other docsets.
+
+I believe this demonstrates a huge opportunity to cut down the amount of Netlify build time we spend on the docs, and as a result save us some cost in that area.
