@@ -35,8 +35,10 @@ import 'prismjs/components/prism-typescript';
 
 const CODE_BLOCK_SPACING = 4;
 export const CodeBlockContext = createContext();
+export const LineNumbersContext = createContext(true);
 
 export default function CodeBlock({children}) {
+  const defaultShowLineNumbers = useContext(LineNumbersContext);
   const [child] = Array.isArray(children) ? children : [children];
   const {
     className = 'language-text',
@@ -49,7 +51,7 @@ export default function CodeBlock({children}) {
   const {
     title,
     highlight,
-    showLineNumbers = true
+    showLineNumbers = defaultShowLineNumbers
   } = meta ? fenceparser(meta) : {};
   const linesToHighlight = highlight
     ? rangeParser(Object.keys(highlight).toString())

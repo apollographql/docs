@@ -1,12 +1,15 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import {LineNumbersContext} from './CodeBlock';
 import {SimpleGrid} from '@chakra-ui/react';
 
 export default function CodeColumns({cols = 2, children}) {
   return (
-    <SimpleGrid columns={cols} spacing="4">
-      {children}
-    </SimpleGrid>
+    <LineNumbersContext.Provider value={false}>
+      <SimpleGrid columns={cols} spacing="4">
+        {children}
+      </SimpleGrid>
+    </LineNumbersContext.Provider>
   );
 }
 
