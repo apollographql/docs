@@ -6,29 +6,7 @@ If you have a [public variant](../org/graphs/#public-variants) of your graph, yo
 
 For example, here's an embedded Explorer for an Apollo example graph. Try it out!
 
-<EmbeddableExplorer
-  graphRef="Apollo-Fullstack-Demo-o3tsz8@current"
-  graphEndpoint="https://apollo-fullstack-tutorial.herokuapp.com/"
-  graphSubscriptionEndpoint="wss://apollo-fullstack-tutorial.herokuapp.com/graphql"
-  defaultOperation={`query GetLaunches {
-  launches {
-    launches {
-      id
-      site
-      rocket {
-        id
-        name
-      }
-    }
-  }
-}`}
-  styles={{
-    width: '100%',
-    height: '450px',
-    border: '0px',
-    borderRadius: '4px'
-  }}
-/>
+<EmbeddableExplorer id="embedded-explorer-1" />
 
 > This embedded Explorer collapses its left column by default because the full three-column layout is a little cramped on this page. You can [customize the embedded Explorer's appearance](#options) to suit the page it's on.
 
