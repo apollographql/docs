@@ -55,6 +55,8 @@ export function SidebarNav({navItems, onHide, darkBg = 'gray.800', children}) {
     [localNavState, initialNavState]
   );
 
+  console.log(navItems, nav);
+
   // compute expand/collapse all state from nav state
   const isAllExpanded = useMemo(
     () =>
