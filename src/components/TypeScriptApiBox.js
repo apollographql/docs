@@ -57,7 +57,9 @@ function isReadableName(name) {
 }
 
 function mdToReact(text) {
-  const sanitized = text.replace(/\{@link (\w*)\}/g, '[$1](#$1)');
+  const sanitized = text
+    .replace(/\{@link (\w*)\}/g, '[$1](#$1)')
+    .replace(/<p ?\/>/g, '');
   return (
     <ReactMarkdown
       components={{
