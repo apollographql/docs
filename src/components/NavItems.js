@@ -22,8 +22,6 @@ const getItemPaths = (items, basePath) =>
     children ? getItemPaths(children, basePath) : getFullPath(path, basePath)
   );
 
-const NavStack = props => <Stack spacing="1" align="flex-start" {...props} />;
-
 function NavButton({isActive, depth, children, ...props}) {
   const [activeBg, activeTextColor] = useTagColors();
   const activeHoverBg = useColorModeValue('indigo.100', 'indigo.300');
@@ -66,8 +64,9 @@ function NavGroup({group, depth}) {
   const isOpen = nav[group.id];
   const fontWeight = useColorModeValue('semibold', 'bold');
   return (
-    <NavStack>
+    <div>
       <NavButton
+        mb="1"
         fontWeight={fontWeight}
         isActive={isActive}
         rightIcon={isOpen ? <FiChevronDown /> : <FiChevronRight />}
@@ -81,7 +80,7 @@ function NavGroup({group, depth}) {
       >
         {group.title}
       </NavButton>
-      <Collapse in={isOpen}>
+      <Collapse unmountOnExit in={isOpen}>
         <NavItems
           uri={uri}
           items={group.children}
@@ -89,7 +88,7 @@ function NavGroup({group, depth}) {
           depth={depth + 1}
         />
       </Collapse>
-    </NavStack>
+    </div>
   );
 }
 
@@ -101,7 +100,7 @@ NavGroup.propTypes = {
 export default function NavItems({items, depth = 0}) {
   const {basePath, uri} = useContext(PathContext);
   return (
-    <NavStack>
+    <Stack spacing="1" align="flex-start">
       {items.map((item, index) => {
         if (item.children) {
           return <NavGroup key={index} group={item} depth={depth} />;
@@ -137,7 +136,7 @@ export default function NavItems({items, depth = 0}) {
           </NavButton>
         );
       })}
-    </NavStack>
+    </Stack>
   );
 }
 
