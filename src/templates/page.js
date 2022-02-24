@@ -361,7 +361,29 @@ export default function PageTemplate({data, uri, pageContext}) {
                     shadow: 'md',
                     rounded: 'md'
                   },
-                  '.field-table': fieldTableStyles
+                  '.field-table': fieldTableStyles,
+                  '.sticky-table': {
+                    rounded: 'md',
+                    overflow: 'auto',
+                    shadow: 'inner',
+                    borderWidth: 1,
+                    table: {
+                      borderWidth: 0,
+                      [['td', 'th']]: {
+                        ':first-of-type': {
+                          position: 'sticky',
+                          left: 0,
+                          bg: 'bg',
+                          borderRightWidth: 1
+                        }
+                      },
+                      'tr:last-child': {
+                        td: {
+                          borderBottom: 'none'
+                        }
+                      }
+                    }
+                  }
                 }}
               >
                 <MultiCodeBlockContext.Provider value={{language, setLanguage}}>
