@@ -66,7 +66,7 @@ import {GatsbySeo} from 'gatsby-plugin-next-seo';
 import {Global} from '@emotion/react';
 import {MDXProvider} from '@mdx-js/react';
 import {MDXRenderer} from 'gatsby-plugin-mdx';
-import {PathContext} from '../utils';
+import {PathContext, useFieldTableStyles} from '../utils';
 import {YouTube} from 'mdx-embed';
 import {rehype} from 'rehype';
 import {useMermaidStyles} from '../utils/mermaid';
@@ -146,6 +146,7 @@ export default function PageTemplate({data, uri, pageContext}) {
   const [sidebarHidden, setSidebarHidden] = useLocalStorage('sidebar');
 
   const mermaidStyles = useMermaidStyles();
+  const fieldTableStyles = useFieldTableStyles();
 
   const {siteUrl} = data.site.siteMetadata;
   const {
@@ -359,7 +360,8 @@ export default function PageTemplate({data, uri, pageContext}) {
                   'img.screenshot': {
                     shadow: 'md',
                     rounded: 'md'
-                  }
+                  },
+                  '.field-table': fieldTableStyles
                 }}
               >
                 <MultiCodeBlockContext.Provider value={{language, setLanguage}}>
