@@ -92,8 +92,10 @@ export function useMermaidStyles() {
         stroke: 'currentColor',
         fill: 'currentColor'
       },
-      'text.actor > tspan': {
-        fill: 'currentColor'
+      [['.noteText', 'text.actor']]: {
+        tspan: {
+          fill: 'currentColor'
+        }
       }
     };
     return important(styles);
