@@ -1,9 +1,9 @@
-const {randomUUID} = require('crypto');
 const {
   createFilePath,
   createRemoteFileNode
 } = require('gatsby-source-filesystem');
 const {join} = require('path');
+const {v5} = require('uuid');
 
 exports.sourceNodes = ({
   actions: {createNode},
@@ -71,16 +71,19 @@ exports.onCreateNode = async ({node, getNode, loadNodeContent, actions}) => {
   }
 };
 
-function getNavItems(items) {
-  return Object.entries(items).map(([key, value]) => {
-    const isGroup = typeof value !== 'string';
-    return {
-      id: randomUUID(),
-      title: key,
-      [isGroup ? 'children' : 'path']: isGroup ? getNavItems(value) : value
-    };
-  });
-}
+const getNavItems = items =>
+  // turn a sidebar configuration object to an array of nav items
+  Object.entries(items).map(([title, path]) =>
+    typeof path === 'string'
+      ? {title, path} // links are treated normally
+      : {
+          title,
+          // generate an id for each group, for use with the sidebar nav state
+          id: v5(JSON.stringify(path), v5.DNS),
+          // recurse over its children and turn them into nav items
+          children: getNavItems(path)
+        }
+  );
 
 exports.createPages = async ({actions, graphql}) => {
   const {data} = await graphql(`
