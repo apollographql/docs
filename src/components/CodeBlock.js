@@ -101,6 +101,7 @@ export default function CodeBlock({children}) {
               <Flex overflow="auto">
                 <chakra.pre
                   d="inline-block"
+                  maxW="full"
                   className={className}
                   py={CODE_BLOCK_SPACING}
                   fontFamily="inherit"
