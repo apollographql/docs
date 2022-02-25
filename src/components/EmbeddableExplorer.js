@@ -1,32 +1,31 @@
 import PropTypes from 'prop-types';
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
+import {Box} from '@chakra-ui/react';
 
-const DEFAULT_OPTIONS = {
-  graphRef: 'Apollo-Fullstack-Demo-o3tsz8@current',
-  endpointUrl: 'https://apollo-fullstack-tutorial.herokuapp.com/',
-  initialState: {
+export default function EmbeddableExplorer({
+  graphRef = 'Apollo-Fullstack-Demo-o3tsz8@current',
+  endpointUrl = 'https://apollo-fullstack-tutorial.herokuapp.com/',
+  initialState = {
     document: `
-    query GetLaunches {
-      launches {
+      query GetLaunches {
         launches {
-          id
-          site
-          rocket {
+          launches {
             id
-            name
+            site
+            rocket {
+              id
+              name
+            }
           }
         }
       }
-    }`
+    `
   }
-};
-
-export default function EmbeddableExplorer({
-  id,
-  explorerOptions = DEFAULT_OPTIONS
 }) {
+  const containerRef = useRef();
+
   useEffect(() => {
-    // Step 1. Create a script element whose src = external script src from Studio Explorer embed
+    // create a script element whose src = external script src from Explorer embed
     // TODO: check if there's already an embed explorer script so we don't add extra ones unnecessarily
     const script = document.createElement('script');
     script.src =
@@ -36,12 +35,15 @@ export default function EmbeddableExplorer({
     // add the script to the body
     document.body.appendChild(script);
 
-    // Step 2. Create new instance of EmbeddedExplorer
-    // you can copy and paste the contents of the longer `script` tag from the Studio Explorer embed
-    // in this example, we have extracted out the config options into a prop so we can reuse this component in other pages
-    const onLoad = () => {
-      new window.EmbeddedExplorer({...explorerOptions, target: `#${id}`});
-    };
+    // create new instance of EmbeddedExplorer
+    const target = containerRef.current;
+    const onLoad = () =>
+      new window.EmbeddedExplorer({
+        graphRef,
+        endpointUrl,
+        initialState,
+        target
+      });
 
     // we need to wait for the external script to load first before configuring our instance of EmbeddedExplorer
     script.addEventListener('load', onLoad);
@@ -50,28 +52,18 @@ export default function EmbeddableExplorer({
     return () => {
       // remove iframe that Studio Explorer appends to our div w/ an `id` attribute
       // to prevent additional iframes from being added (i.e. in local dev w/ hot reloading)
-      document.getElementById(id).firstChild.remove();
+      target.firstChild.remove();
 
       script.removeEventListener('load', onLoad);
       document.body.removeChild(script);
     };
-  }, [explorerOptions, id]);
+  }, [graphRef, endpointUrl, initialState]);
 
-  return (
-    // Step 3. Paste div from Studio Explorer embed code here
-    <div
-      style={{
-        width: '100%',
-        height: '450px',
-        border: '0px',
-        borderRadius: '4px'
-      }}
-      id={id}
-    ></div>
-  );
+  return <Box ref={containerRef} w="full" h={450} border="none" rounded="md" />;
 }
 
 EmbeddableExplorer.propTypes = {
-  id: PropTypes.string.isRequired,
-  explorerOptions: PropTypes.object
+  graphRef: PropTypes.string,
+  endpointUrl: PropTypes.string,
+  initialState: PropTypes.object
 };
