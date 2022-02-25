@@ -7,7 +7,8 @@ module.exports = {
         Button: 'readonly',
         ExpansionPanel: 'readonly',
         MultiCodeBlock: 'readonly',
-        YouTube: 'readonly'
+        YouTube: 'readonly',
+        EmbeddableExplorer: 'readonly'
       },
       rules: {
         'react/no-unescaped-entities': 'off'

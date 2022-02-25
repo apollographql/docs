@@ -1,239 +1,69 @@
 import PropTypes from 'prop-types';
-import React, {useEffect, useMemo} from 'react';
-import {SubscriptionClient} from 'subscriptions-transport-ws';
-
-const EXPLORER_SUBSCRIPTION_TERMINATION = 'ExplorerSubscriptionTermination';
-const EXPLORER_QUERY_MUTATION_REQUEST = 'ExplorerRequest';
-const EXPLORER_SUBSCRIPTION_REQUEST = 'ExplorerSubscriptionRequest';
-const EXPLORER_QUERY_MUTATION_RESPONSE = 'ExplorerResponse';
-const EXPLORER_SUBSCRIPTION_RESPONSE = 'ExplorerSubscriptionResponse';
-
-function getHeadersWithContentType(headers) {
-  const headersWithContentType = headers ?? {};
-  if (
-    Object.keys(headersWithContentType).every(
-      key => key.toLowerCase() !== 'content-type'
-    )
-  ) {
-    headersWithContentType['content-type'] = 'application/json';
-  }
-  return headersWithContentType;
-}
-
-async function executeOperation({
-  operation,
-  operationName,
-  variables,
-  headers,
-  embeddedExplorerIFrame,
-  operationId,
-  url
-}) {
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: getHeadersWithContentType(headers),
-    body: JSON.stringify({
-      query: operation,
-      variables,
-      operationName
-    })
-  });
-  await response.json().then(response => {
-    embeddedExplorerIFrame?.contentWindow?.postMessage(
-      {
-        name: EXPLORER_QUERY_MUTATION_RESPONSE,
-        operationId,
-        response
-      },
-      embeddedExplorerIFrame?.src
-    );
-  });
-}
-
-async function executeSubscription({
-  operation,
-  operationName,
-  variables,
-  headers,
-  embeddedExplorerIFrame,
-  operationId,
-  url
-}) {
-  const getClient = () => {
-    try {
-      return new SubscriptionClient(url, {
-        reconnect: true,
-        lazy: true,
-        connectionParams: headers ?? {}
-      });
-    } catch {
-      return undefined;
-    }
-  };
-  const client = getClient();
-
-  client
-    ?.request({
-      query: operation,
-      operationName,
-      variables: variables ?? undefined
-    })
-    .subscribe({
-      next(response) {
-        embeddedExplorerIFrame?.contentWindow?.postMessage(
-          {
-            name: EXPLORER_SUBSCRIPTION_RESPONSE,
-            operationId,
-            response
-          },
-          embeddedExplorerIFrame?.src
-        );
-      }
-    });
-
-  const checkForSubscriptionTermination = event => {
-    if (event.data.name === EXPLORER_SUBSCRIPTION_TERMINATION) {
-      client?.unsubscribeAll();
-      window.removeEventListener('message', checkForSubscriptionTermination);
-    }
-  };
-
-  window.addEventListener('message', checkForSubscriptionTermination);
-}
+import React, {useEffect, useRef} from 'react';
+import {Box} from '@chakra-ui/react';
 
 export default function EmbeddableExplorer({
-  graphRef,
-  graphEndpoint,
-  graphSubscriptionEndpoint,
-  defaultOperation,
-  defaultVariables,
-  defaultHeaders,
-  sendRequestsFrom,
-  styles
-}) {
-  // Don't render embedded explorer in SSR environments
-  if (typeof window === 'undefined') {
-    return null;
+  graphRef = 'Apollo-Fullstack-Demo-o3tsz8@current',
+  endpointUrl = 'https://apollo-fullstack-tutorial.herokuapp.com/',
+  initialState = {
+    document: `
+      query GetLaunches {
+        launches {
+          launches {
+            id
+            site
+            rocket {
+              id
+              name
+            }
+          }
+        }
+      }
+    `
   }
+}) {
+  const containerRef = useRef();
 
-  return (
-    <Explorer
-      graphRef={graphRef}
-      graphEndpoint={graphEndpoint}
-      graphSubscriptionEndpoint={graphSubscriptionEndpoint}
-      defaultOperation={defaultOperation}
-      defaultVariables={defaultVariables}
-      defaultHeaders={defaultHeaders}
-      sendRequestsFrom={sendRequestsFrom}
-      styles={styles}
-    />
-  );
+  useEffect(() => {
+    // create a script element whose src = external script src from Explorer embed
+    // TODO: check if there's already an embed explorer script so we don't add extra ones unnecessarily
+    const script = document.createElement('script');
+    script.src =
+      'https://embeddable-explorer.cdn.apollographql.com/_latest/embeddable-explorer.umd.production.min.js';
+    script.async = true;
+
+    // add the script to the body
+    document.body.appendChild(script);
+
+    // create new instance of EmbeddedExplorer
+    const target = containerRef.current;
+    const onLoad = () =>
+      new window.EmbeddedExplorer({
+        graphRef,
+        endpointUrl,
+        initialState,
+        target
+      });
+
+    // we need to wait for the external script to load first before configuring our instance of EmbeddedExplorer
+    script.addEventListener('load', onLoad);
+
+    // clean up script tag and event listener
+    return () => {
+      // remove iframe that Studio Explorer appends to our div w/ an `id` attribute
+      // to prevent additional iframes from being added (i.e. in local dev w/ hot reloading)
+      target.firstChild.remove();
+
+      script.removeEventListener('load', onLoad);
+      document.body.removeChild(script);
+    };
+  }, [graphRef, endpointUrl, initialState]);
+
+  return <Box ref={containerRef} w="full" h={450} border="none" rounded="md" />;
 }
 
 EmbeddableExplorer.propTypes = {
-  graphRef: PropTypes.string.isRequired,
-  graphEndpoint: PropTypes.string,
-  graphSubscriptionEndpoint: PropTypes.string,
-  styles: PropTypes.object,
-  defaultOperation: PropTypes.string,
-  defaultVariables: PropTypes.string,
-  defaultHeaders: PropTypes.string,
-  sendRequestsFrom: PropTypes.string
-};
-
-function Explorer({
-  graphRef,
-  graphEndpoint,
-  graphSubscriptionEndpoint,
-  defaultOperation,
-  defaultVariables,
-  defaultHeaders,
-  sendRequestsFrom = 'parent',
-  styles
-}) {
-  const additionalQueryParams =
-    `&sendRequestsFrom=${sendRequestsFrom}` +
-    (defaultOperation
-      ? `&document=${window.encodeURIComponent(defaultOperation)}`
-      : '') +
-    (defaultVariables
-      ? `& variables=${window.encodeURIComponent(defaultVariables)}`
-      : '') +
-    (defaultHeaders
-      ? `&headers=${window.encodeURIComponent(defaultHeaders)}`
-      : '');
-
-  const EMBEDDABLE_EXPLORER_URL = useMemo(() => {
-    return (
-      `https://explorer.embed.apollographql.com/?graphRef=${graphRef}&docsPanelState=closed` +
-      additionalQueryParams
-    );
-  }, [graphRef]);
-
-  useEffect(() => {
-    const onPostMessageReceived = event => {
-      const isQueryOrMutation =
-        'name' in event.data &&
-        event.data.name === EXPLORER_QUERY_MUTATION_REQUEST;
-      const isSubscription =
-        'name' in event.data &&
-        event.data.name === EXPLORER_SUBSCRIPTION_REQUEST;
-
-      if (
-        (isQueryOrMutation || isSubscription) &&
-        event.data.name &&
-        event.data.operation &&
-        event.data.operationId
-      ) {
-        const embeddedExplorerIFrame =
-          document.getElementById('embedded-explorer') ?? undefined;
-        const {operation, operationId, operationName, variables, headers} =
-          event.data;
-        if (isQueryOrMutation) {
-          executeOperation({
-            operation,
-            operationName,
-            variables,
-            headers,
-            embeddedExplorerIFrame,
-            operationId,
-            url: graphEndpoint
-          });
-        } else {
-          executeSubscription({
-            operation,
-            operationName,
-            variables,
-            headers,
-            embeddedExplorerIFrame,
-            operationId,
-            url: graphSubscriptionEndpoint
-          });
-        }
-      }
-    };
-    window.addEventListener('message', onPostMessageReceived);
-
-    return () => window.removeEventListener('message', onPostMessageReceived);
-  }, [graphEndpoint, graphSubscriptionEndpoint]);
-
-  return (
-    <iframe
-      id="embedded-explorer"
-      style={styles}
-      title="embedded-explorer"
-      src={EMBEDDABLE_EXPLORER_URL}
-    />
-  );
-}
-
-Explorer.propTypes = {
-  graphRef: PropTypes.string.isRequired,
-  graphEndpoint: PropTypes.string,
-  graphSubscriptionEndpoint: PropTypes.string,
-  styles: PropTypes.object,
-  defaultOperation: PropTypes.string,
-  defaultVariables: PropTypes.string,
-  defaultHeaders: PropTypes.string,
-  sendRequestsFrom: PropTypes.string
+  graphRef: PropTypes.string,
+  endpointUrl: PropTypes.string,
+  initialState: PropTypes.object
 };
