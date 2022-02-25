@@ -422,20 +422,20 @@ Using the old infrastructure, we were spending a lot of time building our docs. 
 
 #### Netlify build stats (Feb 1 - Feb 24, 2022)
 
-| Site                   | Builds | Average time | Total time |
-| ---------------------- | ------ | ------------ | ---------- |
-| apollo-federation-docs | 424    | 4m 55s       | 2,084m     |
-| apollo-client-docs     | 237    | 8m 21s       | 1,979m     |
-| apollo-router-docs     | 437    | 2m 21s       | 1,027m     |
-| apollo-ios-docs        | 213    | 3m 41s       | 784m       |
-| **New docs infra**     | _94_   | _7m 30s_     | _705m_     |
-| apollo-server-docs     | 140    | 4m 34s       | 638m       |
-| apollo-android-docs    | 111    | 4m 30s       | 499m       |
-| apollo-cli-docs        | 87     | 2m 6s        | 182m       |
-| studio-docs            | 44     | 3m 11s       | 139m       |
-| apollo-docs-index      | 38     | 3m 4s        | 116m       |
-| **Total**              | 1,825  | N/A          | 8,153m     |
+| Site                          | Builds | Average time | Total time |
+| ----------------------------- | ------ | ------------ | ---------- |
+| apollo-federation-docs        | 424    | 4m 55s       | 2,084m     |
+| apollo-client-docs            | 237    | 8m 21s       | 1,979m     |
+| apollo-router-docs            | 437    | 2m 21s       | 1,027m     |
+| apollo-ios-docs               | 213    | 3m 41s       | 784m       |
+| **New docs infra :sparkles:** | _94_   | _7m 30s_     | _705m_     |
+| apollo-server-docs            | 140    | 4m 34s       | 638m       |
+| apollo-android-docs           | 111    | 4m 30s       | 499m       |
+| apollo-cli-docs               | 87     | 2m 6s        | 182m       |
+| studio-docs                   | 44     | 3m 11s       | 139m       |
+| apollo-docs-index             | 38     | 3m 4s        | 116m       |
+| **Total**                     | 1,825  | N/A          | 8,153m     |
 
 During this period, the new docs took less time to build the entirety of our docs than the Apollo Client docs took to build just itself. It built 94 times, and each build was directly related to a change in the docs UI or content. We can't say the same for the other 1,731 combined builds that happened across other docsets.
 
-I believe this demonstrates a huge opportunity to cut down the amount of Netlify build time we spend on the docs, and as a result save us some cost in that area.
+I believe this represents an opportunity to cut down the amount of Netlify build time we spend on the docs, and as a result save us some cost in that area.
