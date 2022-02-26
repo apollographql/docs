@@ -61,7 +61,7 @@
     "path-browserify": "^1.0.1",
     "polished": "^4.1.4",
     "prism-react-renderer": "^1.2.1",
-    "prismjs": "^1.26.0",
+    "prismjs": "^1.27.0",
     "prop-types": "^15.7.2",
     "puppeteer": "^10.4.0",
     "react": "^17.0.2",
