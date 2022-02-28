@@ -3,8 +3,15 @@ import React from 'react';
 import Search from './Search';
 import {ReactComponent as ApolloLogo} from '@apollo/space-kit/logos/logo.svg';
 import {ReactComponent as ApolloMark} from '@apollo/space-kit/logos/mark.svg';
-import {Box, Flex, HStack, IconButton, useColorMode} from '@chakra-ui/react';
-import {FiMoon, FiSun} from 'react-icons/fi';
+import {
+  Box,
+  Button,
+  Flex,
+  HStack,
+  IconButton,
+  useColorMode
+} from '@chakra-ui/react';
+import {FiArrowRight, FiMoon, FiSun} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
 import {useTagColors} from '../utils';
 
@@ -75,6 +82,15 @@ export default function Header({children}) {
         icon={colorMode === 'dark' ? <FiSun /> : <FiMoon />}
       />
       <Search />
+      <Button
+        ml="2"
+        colorScheme="indigo"
+        variant="ghost"
+        rightIcon={<FiArrowRight />}
+        d={{base: 'none', lg: 'flex'}}
+      >
+        Launch Apollo Studio
+      </Button>
     </Flex>
   );
 }

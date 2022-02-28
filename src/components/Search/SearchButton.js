@@ -13,7 +13,7 @@ export default function SearchButton(props) {
       h="10"
       px="3"
       lineHeight="none"
-      maxW={{base: '2xs', lg: 'xs', xl: 'sm'}}
+      maxW={{base: '3xs', md: '2xs', xl: 'xs'}}
       w="full"
       as="button"
       rounded="md"
