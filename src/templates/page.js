@@ -404,7 +404,7 @@ export default function PageTemplate({data, uri, pageContext}) {
               <chakra.aside
                 d={{base: 'none', lg: 'flex'}}
                 flexDirection="column"
-                ml="10"
+                ml={{base: 10, xl: 16}}
                 w={250}
                 flexShrink="0"
                 pos="sticky"
