@@ -22,11 +22,12 @@ export const Sidebar = ({children, isHidden}) => (
     left="0"
     zIndex="1"
     overflow="auto"
-    transitionProperty="common"
+    transitionProperty="visibility, opacity, transform"
     transitionDuration="normal"
     bg="bg"
     css={{top: TOTAL_HEADER_HEIGHT}}
     style={{
+      visibility: isHidden ? 'hidden' : 'visible',
       opacity: isHidden ? 0 : 1,
       transform: isHidden ? 'translateX(-100%)' : 'none'
     }}
