@@ -28,6 +28,7 @@ The central piece of this repo, the docs infrastructure, is a [Gatsby](https://w
   - [Benefits](#benefits)
   - [Drawbacks](#drawbacks)
   - [Solution](#solution)
+  - [Impact](#impact)
 
 ## Developing locally
 
@@ -240,6 +241,8 @@ Links between docs articles should be written as relative paths. For example, if
 ```
 
 Writing links using absolute paths, i.e. `/getting-started` will result in that link taking the user to `/docs/getting-started` in production, instead of `/docs/apollo-server/getting-started` as intended.
+
+That being said, links between docsets can (and should) be made using absolute paths. Previously we had to link between other docsets using full URLs, i.e. `https://www.apollographql.com/docs/apollo-server`. Now those links can be written as `/apollo-server` and they'll benefit from the same snappy, instant, client-side routing behaviour that internal links get.
 
 ### Code blocks
 
