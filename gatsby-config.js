@@ -106,7 +106,16 @@ const plugins = [
     options: {
       gatsbyRemarkPlugins,
       remarkPlugins: [
-        [require('remark-typescript'), {wrapperComponent: 'MultiCodeBlock'}]
+        [
+          require('remark-typescript'),
+          {
+            wrapperComponent: 'MultiCodeBlock',
+            prettierOptions: {
+              trailingComma: 'all',
+              singleQuote: true
+            }
+          }
+        ]
       ],
       rehypePlugins: [[require('rehype-autolink-headings'), {behavior: 'wrap'}]]
     }
