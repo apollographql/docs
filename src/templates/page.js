@@ -159,7 +159,7 @@ export default function PageTemplate({data, uri, pageContext}) {
   } = data.file;
 
   const {frontmatter, headings} = childMdx || childMarkdownRemark;
-  const {title, description} = frontmatter;
+  const {title, description, toc} = frontmatter;
   const {docset, versions, currentVersion, navItems} = pageContext;
   const titleFont = encodeURIComponent('Source Sans Pro');
 
@@ -399,7 +399,7 @@ export default function PageTemplate({data, uri, pageContext}) {
               </Box>
               <Pagination navItems={navItems} />
             </Box>
-            {uri !== '/' && (
+            {toc !== false && (
               // hide the table of contents on the home page
               <chakra.aside
                 d={{base: 'none', lg: 'flex'}}
@@ -475,6 +475,7 @@ export const pageQuery = graphql`
         frontmatter {
           title
           description
+          toc
         }
       }
       childMarkdownRemark {

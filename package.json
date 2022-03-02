@@ -5,9 +5,7 @@
     "start": "gatsby develop",
     "build": "gatsby build",
     "prebuild": "npm run prepare --workspaces",
-    "test": "jest",
-    "dev:client": "DOCS_PATH=../apollo-client/docs/source npm start",
-    "dev:server": "DOCS_PATH=../apollo-server/docs/source npm start"
+    "test": "jest"
   },
   "workspaces": [
     "./packages/*"
