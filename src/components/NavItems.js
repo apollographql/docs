@@ -62,12 +62,11 @@ function NavGroup({group, depth}) {
   const {basePath, uri} = useContext(PathContext);
   const isActive = isGroupActive(group.children, basePath, uri);
   const isOpen = nav[group.id];
-  const fontWeight = useColorModeValue('semibold', 'bold');
   return (
     <div>
       <NavButton
         mb="1"
-        fontWeight={fontWeight}
+        fontWeight="strong"
         isActive={isActive}
         rightIcon={isOpen ? <FiChevronDown /> : <FiChevronRight />}
         onClick={() =>
@@ -100,7 +99,7 @@ NavGroup.propTypes = {
 export default function NavItems({items, depth = 0}) {
   const {basePath, uri} = useContext(PathContext);
   return (
-    <Stack spacing="1" align="flex-start">
+    <Stack spacing="1" align="flex-start" pb={depth && 3}>
       {items.map((item, index) => {
         if (item.children) {
           return <NavGroup key={index} group={item} depth={depth} />;

@@ -16,11 +16,17 @@ const theme = extendTheme({
   styles: {
     global: {
       strong: {
-        fontWeight: 'semibold'
+        fontWeight: 'strong'
       }
     }
   },
   semanticTokens: {
+    fontWeights: {
+      strong: {
+        default: 'semibold',
+        _dark: 'bold'
+      }
+    },
     colors: {
       bg: {
         default: 'white',

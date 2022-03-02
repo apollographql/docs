@@ -92,6 +92,9 @@ export function useMermaidStyles() {
         stroke: 'currentColor',
         fill: 'currentColor'
       },
+      '.arrowheadPath': {
+        fill: 'currentColor'
+      },
       [['.noteText', 'text.actor']]: {
         tspan: {
           fill: 'currentColor'
