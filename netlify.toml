@@ -1,4 +1,4 @@
 [dev]
   autoLaunch = false
 [context.dev.environment]
-  DOCS_PATH = "../apollo-server/docs/source"
+  # DOCS_PATH = "../apollo-server/docs/source"
