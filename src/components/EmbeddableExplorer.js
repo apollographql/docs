@@ -1,28 +1,27 @@
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef} from 'react';
-import {Box} from '@chakra-ui/react';
+import {Box, useColorMode} from '@chakra-ui/react';
 
 export default function EmbeddableExplorer({
   graphRef = 'Apollo-Fullstack-Demo-o3tsz8@current',
   endpointUrl = 'https://apollo-fullstack-tutorial.herokuapp.com/',
-  initialState = {
-    document: `
-      query GetLaunches {
+  document = `
+    query GetLaunches {
+      launches {
         launches {
-          launches {
+          id
+          site
+          rocket {
             id
-            site
-            rocket {
-              id
-              name
-            }
+            name
           }
         }
       }
-    `
-  }
+    }
+  `
 }) {
   const containerRef = useRef();
+  const {colorMode} = useColorMode();
 
   useEffect(() => {
     // create a script element whose src = external script src from Explorer embed
@@ -41,7 +40,10 @@ export default function EmbeddableExplorer({
       new window.EmbeddedExplorer({
         graphRef,
         endpointUrl,
-        initialState,
+        initialState: {
+          document,
+          theme: colorMode
+        },
         target
       });
 
@@ -57,7 +59,7 @@ export default function EmbeddableExplorer({
       script.removeEventListener('load', onLoad);
       document.body.removeChild(script);
     };
-  }, [graphRef, endpointUrl, initialState]);
+  }, [graphRef, endpointUrl, document, colorMode]);
 
   return <Box ref={containerRef} w="full" h={450} border="none" rounded="md" />;
 }
@@ -65,5 +67,5 @@ export default function EmbeddableExplorer({
 EmbeddableExplorer.propTypes = {
   graphRef: PropTypes.string,
   endpointUrl: PropTypes.string,
-  initialState: PropTypes.object
+  document: PropTypes.string
 };
