@@ -26,6 +26,7 @@
     "@mdx-js/react": "^1.6.22",
     "@svgr/webpack": "^5.5.0",
     "@theowenyoung/gatsby-source-git": "^2.3.1",
+    "airtable": "^0.11.2",
     "algoliasearch": "^4.12.1",
     "apollo-algolia-transform": "^1.0.38",
     "fenceparser": "^1.1.1",
