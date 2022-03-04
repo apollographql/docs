@@ -134,7 +134,10 @@ exports.createPages = async ({graphql, reporter}, {ignore = []}) => {
   if (allBrokenLinks.length) {
     reporter.warn(`${allBrokenLinks.length} total broken links found`);
 
-    if (process.env.CONTEXT === 'production') {
+    if (
+      process.env.CONTEXT === 'deploy-preview' ||
+      process.env.CONTEXT === 'production'
+    ) {
       // save all links in chunks of 10 links each
       const chunks = chunk(allBrokenLinks, 10);
       const results = await Promise.all(
@@ -151,6 +154,7 @@ exports.createPages = async ({graphql, reporter}, {ignore = []}) => {
       await base('Reports').create([
         {
           fields: {
+            Branch: process.env.BRANCH,
             Links: results.flatMap(records =>
               records.map(record => record.getId())
             )
