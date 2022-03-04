@@ -13,7 +13,7 @@ By adopting GraphQL and Apollo, you can reduce these challenges considerably. Gr
 
 Even with many other advantages, **GraphQL's single greatest benefit is the developer experience it provides.** It's straightforward to add new types and fields to your API, and similarly straightforward for your clients to begin using those fields. This helps you design, develop, and deploy features quickly.
 
-Combined with [the Apollo platform](./platform/), complex considerations like caching, data normalization, and optimistic UI rendering become straightforward as well.
+Combined with [the Apollo platform](./platformz/), complex considerations like caching, data normalization, and optimistic UI rendering become straightforward as well.
 
 ## GraphQL provides declarative, efficient data fetching
 
@@ -61,7 +61,6 @@ const GET_PETS_BY_SHELTER = gql`
 `;
 
 function MainPage() {
-
   // Execute the query within the component that uses its result
   const { loading, error, data } = useQuery(GET_PETS_BY_SHELTER);
 
