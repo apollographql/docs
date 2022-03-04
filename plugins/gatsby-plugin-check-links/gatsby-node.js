@@ -108,7 +108,11 @@ exports.createPages = async ({graphql, reporter}, {ignore = []}) => {
     }
 
     if (brokenLinks.length) {
-      reporter.warn(`${brokenLinks.length} broken links found on ${slug}`);
+      reporter.warn(
+        `${brokenLinks.length} broken link${
+          brokenLinks.length > 1 ? 's' : ''
+        } found on ${slug}`
+      );
 
       const lineDigits = brokenLinks.map(link => link.line.toString().length);
       const maxLineDigits = Math.max(...lineDigits);
@@ -154,7 +158,7 @@ exports.createPages = async ({graphql, reporter}, {ignore = []}) => {
       await base('Reports').create([
         {
           fields: {
-            Branch: process.env.BRANCH,
+            Branch: process.env.HEAD,
             Links: results.flatMap(records =>
               records.map(record => record.getId())
             )
