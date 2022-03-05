@@ -2,8 +2,14 @@ const visit = require('unist-util-visit');
 const fromMarkdown = require('mdast-util-from-markdown');
 const GithubSlugger = require('github-slugger');
 const {dirname, resolve, isAbsolute} = require('path');
+const Airtable = require('airtable');
+const {chunk} = require('lodash');
 
 const TRAILING_SLASH_PATTERN = /(?!^)\/$/;
+
+const base = new Airtable({
+  apiKey: process.env.AIRTABLE_API_KEY
+}).base('appbv2QKIU1C6G9dX');
 
 exports.createPages = async ({graphql, reporter}, {ignore = []}) => {
   const {data} = await graphql(
@@ -54,6 +60,7 @@ exports.createPages = async ({graphql, reporter}, {ignore = []}) => {
       if (url.startsWith('#') || !/^\w+:/.test(url)) {
         const {line, column} = position.start;
         links.push({
+          from: slug,
           to: url,
           line,
           column
@@ -72,7 +79,7 @@ exports.createPages = async ({graphql, reporter}, {ignore = []}) => {
     };
   }, {});
 
-  let totalBrokenLinks = 0;
+  const allBrokenLinks = [];
 
   for (const slug in pages) {
     const brokenLinks = [];
@@ -101,7 +108,11 @@ exports.createPages = async ({graphql, reporter}, {ignore = []}) => {
     }
 
     if (brokenLinks.length) {
-      reporter.warn(`${brokenLinks.length} broken links found on ${slug}`);
+      reporter.warn(
+        `${brokenLinks.length} broken link${
+          brokenLinks.length > 1 ? 's' : ''
+        } found on ${slug}`
+      );
 
       const lineDigits = brokenLinks.map(link => link.line.toString().length);
       const maxLineDigits = Math.max(...lineDigits);
@@ -120,12 +131,41 @@ exports.createPages = async ({graphql, reporter}, {ignore = []}) => {
 
       reporter.warn('---');
 
-      totalBrokenLinks += brokenLinks.length;
+      allBrokenLinks.push(...brokenLinks);
     }
   }
 
-  if (totalBrokenLinks) {
-    reporter.warn(`${totalBrokenLinks} total broken links found`);
+  if (allBrokenLinks.length) {
+    reporter.warn(`${allBrokenLinks.length} total broken links found`);
+
+    if (
+      process.env.CONTEXT === 'deploy-preview' ||
+      process.env.CONTEXT === 'production'
+    ) {
+      // save all links in chunks of 10 links each
+      const chunks = chunk(allBrokenLinks, 10);
+      const results = await Promise.all(
+        chunks.map(links =>
+          base('Links').create(
+            links.map(link => ({
+              fields: link
+            }))
+          )
+        )
+      );
+
+      // create report with associated links
+      await base('Reports').create([
+        {
+          fields: {
+            Branch: process.env.HEAD,
+            Links: results.flatMap(records =>
+              records.map(record => record.getId())
+            )
+          }
+        }
+      ]);
+    }
   } else {
     reporter.success('No broken links found. Hooray! 🎉');
   }

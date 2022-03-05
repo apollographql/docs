@@ -61,7 +61,6 @@ const GET_PETS_BY_SHELTER = gql`
 `;
 
 function MainPage() {
-
   // Execute the query within the component that uses its result
   const { loading, error, data } = useQuery(GET_PETS_BY_SHELTER);
 
