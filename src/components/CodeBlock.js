@@ -15,8 +15,7 @@ import {
 } from '@chakra-ui/react';
 import {FiCheck, FiClipboard} from 'react-icons/fi';
 import {colors} from '@apollo/space-kit/colors';
-import {theme as darkTheme} from '../prism-themes/dark';
-import {theme as lightTheme} from '../prism-themes/light';
+import {usePrismTheme} from '../utils/prism';
 
 // these must be imported after Prism
 import 'prismjs/components/prism-bash';
@@ -60,7 +59,7 @@ export default function CodeBlock({children}) {
   const [code] = Array.isArray(innerChildren) ? innerChildren : [innerChildren];
 
   const {onCopy, hasCopied} = useClipboard(code);
-  const theme = useColorModeValue(lightTheme, darkTheme);
+  const theme = usePrismTheme();
   const highlightColor = useColorModeValue('gray.100', 'gray.700');
   const lineNumberColor = useColorModeValue(
     'gray.500',
