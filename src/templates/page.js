@@ -1,50 +1,34 @@
 import Blockquote from '../components/Blockquote';
 import CodeBlock from '../components/CodeBlock';
 import CodeColumns from '../components/CodeColumns';
-import DocsetMenu from '../components/DocsetMenu';
 import EmbeddableExplorer from '../components/EmbeddableExplorer';
 import ExpansionPanel, {
   ExpansionPanelList,
   ExpansionPanelListItem
 } from '../components/ExpansionPanel';
 import Footer from '../components/Footer';
-import Header, {TOTAL_HEADER_HEIGHT} from '../components/Header';
 import InlineCode from '../components/InlineCode';
-import MobileNav from '../components/MobileNav';
 import MultiCodeBlock, {
   MultiCodeBlockContext
 } from '../components/MultiCodeBlock';
 import Pagination from '../components/Pagination';
 import PropTypes from 'prop-types';
-import React, {Fragment, createElement, useCallback, useMemo} from 'react';
+import React, {Fragment, createElement, useMemo} from 'react';
 import RelativeLink from '../components/RelativeLink';
-import Sidebar, {
-  SIDEBAR_WIDTH_BASE,
-  SIDEBAR_WIDTH_XL,
-  SidebarNav
-} from '../components/Sidebar';
 import TableOfContents from '../components/TableOfContents';
 import TypeScriptApiBox from '../components/TypeScriptApiBox';
 import VersionBanner from '../components/VersionBanner';
 import autolinkHeadings from 'rehype-autolink-headings';
 import getShareImage from '@jlengstorf/get-share-image';
-import path, {dirname} from 'path';
 import rehypeReact from 'rehype-react';
 import useLocalStorage from 'react-use/lib/useLocalStorage';
 import {
   Box,
   Button,
-  ButtonGroup,
   Divider,
-  Fade,
   Flex,
   Heading,
-  IconButton,
   ListItem,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
   OrderedList,
   Stack,
   Table,
@@ -53,22 +37,23 @@ import {
   Text,
   Th,
   Thead,
-  Tooltip,
   Tr,
   UnorderedList,
   chakra,
   useToken
 } from '@chakra-ui/react';
 import {FaDiscourse, FaGithub} from 'react-icons/fa';
-import {FiChevronDown, FiChevronsRight, FiStar} from 'react-icons/fi';
-import {Link as GatsbyLink, graphql} from 'gatsby';
+import {FiStar} from 'react-icons/fi';
 import {GatsbySeo} from 'gatsby-plugin-next-seo';
 import {Global} from '@emotion/react';
 import {MDXProvider} from '@mdx-js/react';
 import {MDXRenderer} from 'gatsby-plugin-mdx';
-import {PathContext, useFieldTableStyles} from '../utils';
+import {TOTAL_HEADER_HEIGHT} from '../components/Header';
 import {YouTube} from 'mdx-embed';
+import {graphql} from 'gatsby';
 import {rehype} from 'rehype';
+import {sep} from 'path';
+import {useFieldTableStyles} from '../utils';
 import {useMermaidStyles} from '../utils/mermaid';
 
 const LIST_SPACING = 4;
@@ -143,25 +128,34 @@ export default function PageTemplate({data, uri, pageContext}) {
   );
 
   const [language, setLanguage] = useLocalStorage('language');
-  const [sidebarHidden, setSidebarHidden] = useLocalStorage('sidebar');
 
   const mermaidStyles = useMermaidStyles();
   const fieldTableStyles = useFieldTableStyles();
 
   const {siteUrl} = data.site.siteMetadata;
-  const {
-    name,
-    childMdx,
-    childMarkdownRemark,
-    basePath,
-    gitRemote,
-    relativePath
-  } = data.file;
+  const {childMdx, childMarkdownRemark, basePath, gitRemote, relativePath} =
+    data.file;
 
   const {frontmatter, headings} = childMdx || childMarkdownRemark;
   const {title, description, toc} = frontmatter;
   const {docset, versions, currentVersion, navItems} = pageContext;
-  const titleFont = encodeURIComponent('Source Sans Pro');
+
+  const shareImage = useMemo(() => {
+    const titleFont = encodeURIComponent('Source Sans Pro');
+    return getShareImage({
+      title,
+      tagline: docset,
+      titleFont,
+      titleFontSize: 80,
+      titleExtraConfig: '_bold',
+      taglineFont: titleFont,
+      textColor: 'FFFFFF',
+      textLeftOffset: 80,
+      textAreaWidth: 1120,
+      cloudName: 'apollographql',
+      imagePublicID: 'apollo-docs-template2_dohzxt'
+    });
+  }, [docset, title]);
 
   const defaultVersion = useMemo(
     () => versions.find(version => !version.slug.includes('/')),
@@ -173,9 +167,7 @@ export default function PageTemplate({data, uri, pageContext}) {
       gitRemote && (
         <Button
           as="a"
-          href={[gitRemote.href, 'tree', gitRemote.ref, relativePath].join(
-            path.sep
-          )}
+          href={[gitRemote.href, 'tree', gitRemote.ref, relativePath].join(sep)}
           variant="link"
           size="lg"
           leftIcon={<FaGithub />}
@@ -184,34 +176,6 @@ export default function PageTemplate({data, uri, pageContext}) {
         </Button>
       ),
     [gitRemote, relativePath]
-  );
-
-  const renderSwitcher = useCallback(
-    props => (
-      <ButtonGroup isAttached {...props}>
-        <DocsetMenu colorScheme="indigo">{docset}</DocsetMenu>
-        {versions.length > 1 && (
-          <Menu>
-            <MenuButton
-              as={Button}
-              variant="outline"
-              rightIcon={<FiChevronDown />}
-              borderLeft="none"
-            >
-              {currentVersion}
-            </MenuButton>
-            <MenuList>
-              {versions.map((version, index) => (
-                <GatsbyLink key={index} to={'/' + version.slug}>
-                  <MenuItem>{version.label}</MenuItem>
-                </GatsbyLink>
-              ))}
-            </MenuList>
-          </Menu>
-        )}
-      </ButtonGroup>
-    ),
-    [docset, versions, currentVersion]
   );
 
   return (
@@ -223,23 +187,7 @@ export default function PageTemplate({data, uri, pageContext}) {
         openGraph={{
           title,
           description,
-          images: [
-            {
-              url: getShareImage({
-                title,
-                tagline: docset,
-                titleFont,
-                titleFontSize: 80,
-                titleExtraConfig: '_bold',
-                taglineFont: titleFont,
-                textColor: 'FFFFFF',
-                textLeftOffset: 80,
-                textAreaWidth: 1120,
-                cloudName: 'apollographql',
-                imagePublicID: 'apollo-docs-template2_dohzxt'
-              })
-            }
-          ]
+          images: [{url: shareImage}]
         }}
       />
       <Global
@@ -253,194 +201,144 @@ export default function PageTemplate({data, uri, pageContext}) {
           }
         }}
       />
-      <PathContext.Provider
-        value={{
-          uri,
-          basePath,
-          path: name === 'index' ? uri : dirname(uri)
+      {defaultVersion && defaultVersion.slug !== basePath && (
+        <VersionBanner
+          versionLabels={[defaultVersion.label, currentVersion]}
+          to={'/' + defaultVersion.slug}
+        />
+      )}
+      <Flex
+        maxW="6xl"
+        mx="auto"
+        align="flex-start"
+        px="10"
+        as="main"
+        sx={{
+          paddingTop,
+          paddingBottom
         }}
       >
-        <Header>
-          <MobileNav>
-            <SidebarNav navItems={navItems} darkBg="gray.700">
-              <Box px="3" pt="1" pb="2">
-                {renderSwitcher({size: 'sm'})}
-              </Box>
-            </SidebarNav>
-          </MobileNav>
-          {renderSwitcher({d: {base: 'none', md: 'flex'}})}
-        </Header>
-        <Fade in={sidebarHidden} unmountOnExit delay={0.25}>
-          <Tooltip placement="right" label="Show sidebar">
-            <IconButton
-              d={{base: 'none', md: 'flex'}}
-              pos="fixed"
-              mt="2"
-              left="2"
-              size="sm"
-              variant="outline"
-              fontSize="md"
-              icon={<FiChevronsRight />}
-              css={{top: TOTAL_HEADER_HEIGHT}}
-              onClick={() => setSidebarHidden(false)}
-            />
-          </Tooltip>
-        </Fade>
-        <Sidebar isHidden={sidebarHidden}>
-          <SidebarNav
-            navItems={navItems}
-            onHide={() => setSidebarHidden(true)}
-          />
-        </Sidebar>
-        <Box
-          marginLeft={{
-            base: 0,
-            md: sidebarHidden ? 0 : SIDEBAR_WIDTH_BASE,
-            xl: sidebarHidden ? 0 : SIDEBAR_WIDTH_XL
-          }}
-          transitionProperty="margin-left"
-          transitionDuration="normal"
-        >
-          {defaultVersion && defaultVersion.slug !== basePath && (
-            <VersionBanner
-              versionLabels={[defaultVersion.label, currentVersion]}
-              to={'/' + defaultVersion.slug}
-            />
+        <Box flexGrow="1" w="0">
+          <Heading as="h1" size="2xl">
+            {title}
+          </Heading>
+          {description && (
+            <chakra.h2
+              fontSize={{base: 'xl', md: '2xl'}}
+              lineHeight="normal"
+              mt={{base: 2, md: 3}}
+              fontWeight="normal"
+            >
+              {description}
+            </chakra.h2>
           )}
-          <Flex
-            maxW="6xl"
-            mx="auto"
-            align="flex-start"
-            px="10"
-            as="main"
+          <Divider my="8" />
+          <Box
+            fontSize={{md: 'lg'}}
+            lineHeight={{md: 1.7}}
             sx={{
-              paddingTop,
-              paddingBottom
-            }}
-          >
-            <Box flexGrow="1" w="0">
-              <Heading as="h1" size="2xl">
-                {title}
-              </Heading>
-              {description && (
-                <chakra.h2
-                  fontSize={{base: 'xl', md: '2xl'}}
-                  lineHeight="normal"
-                  mt={{base: 2, md: 3}}
-                  fontWeight="normal"
-                >
-                  {description}
-                </chakra.h2>
-              )}
-              <Divider my="8" />
-              <Box
-                fontSize={{md: 'lg'}}
-                lineHeight={{md: 1.7}}
-                sx={{
-                  [HEADINGS]: {
-                    a: {
-                      color: 'inherit'
-                    },
-                    code: {
-                      bg: 'none',
-                      p: 0
+              [HEADINGS]: {
+                a: {
+                  color: 'inherit'
+                },
+                code: {
+                  bg: 'none',
+                  p: 0
+                }
+              },
+              '>': {
+                ':not(:last-child)': {
+                  mb: 6
+                },
+                [HEADINGS]: {
+                  ':not(:first-child)': {
+                    mt: 10,
+                    mb: 4
+                  }
+                }
+              },
+              'img.screenshot': {
+                shadow: 'md',
+                rounded: 'md'
+              },
+              '.field-table': fieldTableStyles,
+              '.sticky-table': {
+                rounded: 'md',
+                overflow: 'auto',
+                shadow: 'inner',
+                borderWidth: 1,
+                table: {
+                  borderWidth: 0,
+                  [['td', 'th']]: {
+                    ':first-of-type': {
+                      position: 'sticky',
+                      left: 0,
+                      bg: 'bg',
+                      borderRightWidth: 1
                     }
                   },
-                  '>': {
-                    ':not(:last-child)': {
-                      mb: 6
-                    },
-                    [HEADINGS]: {
-                      ':not(:first-child)': {
-                        mt: 10,
-                        mb: 4
-                      }
-                    }
-                  },
-                  'img.screenshot': {
-                    shadow: 'md',
-                    rounded: 'md'
-                  },
-                  '.field-table': fieldTableStyles,
-                  '.sticky-table': {
-                    rounded: 'md',
-                    overflow: 'auto',
-                    shadow: 'inner',
-                    borderWidth: 1,
-                    table: {
-                      borderWidth: 0,
-                      [['td', 'th']]: {
-                        ':first-of-type': {
-                          position: 'sticky',
-                          left: 0,
-                          bg: 'bg',
-                          borderRightWidth: 1
-                        }
-                      },
-                      'tr:last-child': {
-                        td: {
-                          borderBottom: 'none'
-                        }
-                      }
+                  'tr:last-child': {
+                    td: {
+                      borderBottom: 'none'
                     }
                   }
-                }}
-              >
-                <MultiCodeBlockContext.Provider value={{language, setLanguage}}>
-                  {childMdx ? (
-                    <MDXProvider components={mdxComponents}>
-                      <MDXRenderer>{childMdx.body}</MDXRenderer>
-                    </MDXProvider>
-                  ) : (
-                    processSync(childMarkdownRemark.html).result
-                  )}
-                </MultiCodeBlockContext.Provider>
-                <Box d={{lg: 'none'}}>{editOnGitHub}</Box>
-              </Box>
-              <Pagination navItems={navItems} />
-            </Box>
-            {toc !== false && (
-              // hide the table of contents on the home page
-              <chakra.aside
-                d={{base: 'none', lg: 'flex'}}
-                flexDirection="column"
-                ml={{base: 10, xl: 16}}
-                w={250}
-                flexShrink="0"
-                pos="sticky"
-                top={scrollPaddingTop}
-                maxH={`calc(100vh - ${scrollPaddingTop} - ${paddingBottom})`}
-              >
-                <Heading size="md" mb="3">
-                  {title}
-                </Heading>
-                <TableOfContents headings={headings} />
-                <Stack align="flex-start" spacing="3" mt="8">
-                  <Button
-                    onClick={() => window.freddyWidget?.show()}
-                    variant="link"
-                    size="lg"
-                    leftIcon={<FiStar />}
-                  >
-                    Rate article
-                  </Button>
-                  {editOnGitHub}
-                  <Button
-                    as="a"
-                    href="https://community.apollographql.com/"
-                    variant="link"
-                    size="lg"
-                    leftIcon={<FaDiscourse />}
-                  >
-                    Discuss in forums
-                  </Button>
-                </Stack>
-              </chakra.aside>
-            )}
-          </Flex>
-          <Footer />
+                }
+              }
+            }}
+          >
+            <MultiCodeBlockContext.Provider value={{language, setLanguage}}>
+              {childMdx ? (
+                <MDXProvider components={mdxComponents}>
+                  <MDXRenderer>{childMdx.body}</MDXRenderer>
+                </MDXProvider>
+              ) : (
+                processSync(childMarkdownRemark.html).result
+              )}
+            </MultiCodeBlockContext.Provider>
+            <Box d={{lg: 'none'}}>{editOnGitHub}</Box>
+          </Box>
+          <Pagination navItems={navItems} />
         </Box>
-      </PathContext.Provider>
+        {toc !== false && (
+          // hide the table of contents on the home page
+          <chakra.aside
+            d={{base: 'none', lg: 'flex'}}
+            flexDirection="column"
+            ml={{base: 10, xl: 16}}
+            w={250}
+            flexShrink="0"
+            pos="sticky"
+            top={scrollPaddingTop}
+            maxH={`calc(100vh - ${scrollPaddingTop} - ${paddingBottom})`}
+          >
+            <Heading size="md" mb="3">
+              {title}
+            </Heading>
+            <TableOfContents headings={headings} />
+            <Stack align="flex-start" spacing="3" mt="8">
+              <Button
+                onClick={() => window.freddyWidget?.show()}
+                variant="link"
+                size="lg"
+                leftIcon={<FiStar />}
+              >
+                Rate article
+              </Button>
+              {editOnGitHub}
+              <Button
+                as="a"
+                href="https://community.apollographql.com/"
+                variant="link"
+                size="lg"
+                leftIcon={<FaDiscourse />}
+              >
+                Discuss in forums
+              </Button>
+            </Stack>
+          </chakra.aside>
+        )}
+      </Flex>
+      <Footer />
     </>
   );
 }

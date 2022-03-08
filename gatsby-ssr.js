@@ -15,3 +15,5 @@ export const onRenderBody = ({setHeadComponents}) =>
       }}
     />
   ]);
+
+export {wrapPageElement} from './gatsby-browser';

@@ -1,6 +1,6 @@
-import NavItems, {isGroupActive} from '../NavItems';
+import NavItems from '../NavItems';
 import PropTypes from 'prop-types';
-import React, {useContext, useMemo} from 'react';
+import React, {useMemo} from 'react';
 import useLocalStorage from 'react-use/lib/useLocalStorage';
 import {
   Box,
@@ -13,7 +13,7 @@ import {
 } from '@chakra-ui/react';
 import {BsChevronContract, BsChevronExpand} from 'react-icons/bs';
 import {FiChevronsLeft} from 'react-icons/fi';
-import {NavContext, PathContext} from '../../utils';
+import {NavContext} from '../../utils';
 
 const flattenNavItems = items =>
   items.flatMap(item =>
@@ -22,31 +22,29 @@ const flattenNavItems = items =>
 
 export function SidebarNav({navItems, onHide, darkBg = 'gray.800', children}) {
   const bg = useColorModeValue('white', darkBg);
-  const {uri, basePath} = useContext(PathContext);
 
   const navGroups = useMemo(
     () => flattenNavItems(navItems).filter(item => item.children),
     [navItems]
   );
 
-  // save nav state in storage
-  const [localNavState, setLocalNavState] = useLocalStorage('nav');
+  // set all nav items to open by default
   const initialNavState = useMemo(
     () =>
-      // create a mapping of nav group ids to their default open state, based on
-      // whether one of their children is the current page
-      navGroups.reduce((acc, group) => {
-        const isActive = isGroupActive(group.children, basePath, uri);
-        return isActive
-          ? {
-              ...acc,
-              [group.id]: isActive
-            }
-          : acc;
-      }, {}),
-    [navGroups, basePath, uri]
+      navGroups.reduce(
+        (acc, group) => ({
+          ...acc,
+          [group.id]: true
+        }),
+        {}
+      ),
+    [navGroups]
   );
 
+  // save nav state in storage
+  const [localNavState, setLocalNavState] = useLocalStorage('nav');
+
+  // combine initial and local nav states
   const nav = useMemo(
     () => ({
       ...initialNavState,
