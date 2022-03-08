@@ -36,6 +36,9 @@ const CODE_BLOCK_SPACING = 4;
 export const CodeBlockContext = createContext();
 export const LineNumbersContext = createContext(true);
 
+const isHighlightComment = token =>
+  token.types.includes('comment') && token.content === '// highlight-line';
+
 export default function CodeBlock({children}) {
   const defaultShowLineNumbers = useContext(LineNumbersContext);
   const [child] = Array.isArray(children) ? children : [children];
@@ -84,7 +87,7 @@ export default function CodeBlock({children}) {
             style={style}
             pos="relative"
             borderWidth="1px"
-            lineHeight="tall"
+            lineHeight="base"
           >
             <Box fontSize="md" fontFamily="mono">
               {title && (
@@ -105,42 +108,52 @@ export default function CodeBlock({children}) {
                   py={CODE_BLOCK_SPACING}
                   fontFamily="inherit"
                 >
-                  {tokens.map((line, i) => (
-                    <Flex
-                      key={i}
-                      px={CODE_BLOCK_SPACING}
-                      // for line highlighting to go all the way across code block
-                      minW="full"
-                      w="fit-content"
-                      bg={linesToHighlight.includes(i + 1) && highlightColor}
-                    >
-                      {showLineNumbers && (
-                        <Box
-                          aria-hidden="true"
-                          userSelect="none"
-                          // line number alignment used in VS Code
-                          textAlign="right"
-                          w={lineNumberOffset}
-                          mr={CODE_BLOCK_SPACING}
-                          color={lineNumberColor}
-                        >
-                          {i + 1}
-                        </Box>
-                      )}
-                      <Box
-                        {...getLineProps({
-                          line,
-                          key: i
-                        })}
+                  {tokens.map((line, i) => {
+                    const shouldHighlight =
+                      linesToHighlight.includes(i + 1) ||
+                      line.some(isHighlightComment);
+                    return (
+                      <Flex
+                        key={i}
+                        px={CODE_BLOCK_SPACING}
+                        // for line highlighting to go all the way across code block
+                        minW="full"
+                        w="fit-content"
+                        bg={shouldHighlight && highlightColor}
                       >
-                        <Box>
-                          {line.map((token, key) => (
-                            <span key={key} {...getTokenProps({token, key})} />
-                          ))}
+                        {showLineNumbers && (
+                          <Box
+                            aria-hidden="true"
+                            userSelect="none"
+                            // line number alignment used in VS Code
+                            textAlign="right"
+                            w={lineNumberOffset}
+                            mr={CODE_BLOCK_SPACING}
+                            color={lineNumberColor}
+                          >
+                            {i + 1}
+                          </Box>
+                        )}
+                        <Box
+                          {...getLineProps({
+                            line,
+                            key: i
+                          })}
+                        >
+                          <Box>
+                            {line
+                              .filter(token => !isHighlightComment(token))
+                              .map((token, key) => (
+                                <span
+                                  key={key}
+                                  {...getTokenProps({token, key})}
+                                />
+                              ))}
+                          </Box>
                         </Box>
-                      </Box>
-                    </Flex>
-                  ))}
+                      </Flex>
+                    );
+                  })}
                 </chakra.pre>
               </Flex>
             </Box>
