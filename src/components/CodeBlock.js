@@ -87,6 +87,8 @@ export default function CodeBlock({children}) {
         // ex. if there are 28 lines in the code block, lineNumberOffset = 2ch
         const lineNumberOffset = tokens.length.toString().length + 'ch';
 
+        // create an array of lines highlighted by "highlight-start" and
+        // "highlight-end" comments
         const highlightRange = [];
         for (let i = 0; i < tokens.length; i++) {
           const line = tokens[i];
@@ -133,9 +135,12 @@ export default function CodeBlock({children}) {
                     )
                     .map((line, i) => {
                       const shouldHighlight =
+                        // if the line number exists in the metastring or highlight comment ranges
                         linesToHighlight
                           .concat(highlightRange)
-                          .includes(i + 1) || line.some(isHighlightComment);
+                          .includes(i + 1) ||
+                        // or if the line has a "highlight-line" comment in it
+                        line.some(isHighlightComment);
                       return (
                         <Flex
                           key={i}
@@ -166,6 +171,7 @@ export default function CodeBlock({children}) {
                           >
                             <Box>
                               {line
+                                // filter out "highlight-line" comments
                                 .filter(token => !isHighlightComment(token))
                                 .map((token, key) => (
                                   <span
