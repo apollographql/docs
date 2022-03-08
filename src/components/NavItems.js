@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, {useContext} from 'react';
+import React, {createContext, useContext} from 'react';
 import {
   Button,
   Collapse,
@@ -9,8 +9,10 @@ import {
 } from '@chakra-ui/react';
 import {FiChevronDown, FiChevronRight, FiExternalLink} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
-import {NavContext, PathContext, isUrl, useTagColors} from '../utils';
+import {PathContext, isUrl, useTagColors} from '../utils';
 import {join, relative} from 'path';
+
+export const NavContext = createContext();
 
 export const isPathActive = (path, uri) => !relative(path, uri);
 export const isGroupActive = (items, basePath, uri) =>
@@ -68,6 +70,7 @@ function NavGroup({group, depth}) {
         mb="1"
         fontWeight="strong"
         isActive={isActive}
+        data-group={!depth && isActive}
         rightIcon={isOpen ? <FiChevronDown /> : <FiChevronRight />}
         onClick={() =>
           setNav({
