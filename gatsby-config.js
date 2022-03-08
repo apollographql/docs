@@ -25,6 +25,7 @@ const remoteSources = yaml.load(fs.readFileSync('sources/remote.yml', 'utf8'));
 
 const sources = process.env.DOCS_PATH
   ? [
+      'gatsby-plugin-local-docs', // local plugin
       {
         resolve: 'gatsby-source-filesystem',
         options: {
