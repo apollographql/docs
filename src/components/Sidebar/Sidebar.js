@@ -8,12 +8,15 @@ export const SIDEBAR_WIDTH_XL = 300;
 
 export function Sidebar({children, isHidden}) {
   const sidebarRef = useRef();
+
   useEffect(() => {
-    const group = sidebarRef.current.querySelector('[data-group="true"');
+    // scroll the active nav group into view if one exists
+    const group = sidebarRef.current.querySelector('[data-group="true"]');
     if (group) {
       group.scrollIntoView();
     }
   }, []);
+
   return (
     <chakra.aside
       ref={sidebarRef}
