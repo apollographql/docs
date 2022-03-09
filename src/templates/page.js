@@ -34,17 +34,12 @@ import useLocalStorage from 'react-use/lib/useLocalStorage';
 import {
   Box,
   Button,
-  ButtonGroup,
   Divider,
   Fade,
   Flex,
   Heading,
   IconButton,
   ListItem,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
   OrderedList,
   Stack,
   Table,
@@ -60,14 +55,14 @@ import {
   useToken
 } from '@chakra-ui/react';
 import {FaDiscourse, FaGithub} from 'react-icons/fa';
-import {FiChevronDown, FiChevronsRight, FiStar} from 'react-icons/fi';
-import {Link as GatsbyLink, graphql} from 'gatsby';
+import {FiChevronsRight, FiStar} from 'react-icons/fi';
 import {GatsbySeo} from 'gatsby-plugin-next-seo';
 import {Global} from '@emotion/react';
 import {MDXProvider} from '@mdx-js/react';
 import {MDXRenderer} from 'gatsby-plugin-mdx';
 import {PathContext, useFieldTableStyles} from '../utils';
 import {YouTube} from 'mdx-embed';
+import {graphql} from 'gatsby';
 import {rehype} from 'rehype';
 import {useMermaidStyles} from '../utils/mermaid';
 
@@ -188,28 +183,12 @@ export default function PageTemplate({data, uri, pageContext}) {
 
   const renderSwitcher = useCallback(
     props => (
-      <ButtonGroup isAttached {...props}>
-        <DocsetMenu colorScheme="indigo">{docset}</DocsetMenu>
-        {versions.length > 1 && (
-          <Menu>
-            <MenuButton
-              as={Button}
-              variant="outline"
-              rightIcon={<FiChevronDown />}
-              borderLeft="none"
-            >
-              {currentVersion}
-            </MenuButton>
-            <MenuList>
-              {versions.map((version, index) => (
-                <GatsbyLink key={index} to={'/' + version.slug}>
-                  <MenuItem>{version.label}</MenuItem>
-                </GatsbyLink>
-              ))}
-            </MenuList>
-          </Menu>
-        )}
-      </ButtonGroup>
+      <DocsetMenu
+        docset={docset}
+        versions={versions}
+        currentVersion={currentVersion}
+        {...props}
+      />
     ),
     [docset, versions, currentVersion]
   );
@@ -263,7 +242,7 @@ export default function PageTemplate({data, uri, pageContext}) {
         <Header>
           <MobileNav>
             <SidebarNav navItems={navItems} darkBg="gray.700">
-              <Box px="3" pt="1" pb="2">
+              <Box px="3" pt="1" pb="3">
                 {renderSwitcher({size: 'sm'})}
               </Box>
             </SidebarNav>

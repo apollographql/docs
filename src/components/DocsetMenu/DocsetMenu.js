@@ -6,6 +6,11 @@ import {ReactComponent as ApolloMark} from '@apollo/space-kit/logos/mark.svg';
 import {
   Box,
   Button,
+  ButtonGroup,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   Modal,
   ModalCloseButton,
   ModalContent,
@@ -14,7 +19,8 @@ import {
   useDisclosure
 } from '@chakra-ui/react';
 import {ReactComponent as Federation} from '../../assets/icons/federation.svg';
-import {FiGrid} from 'react-icons/fi';
+import {FiChevronDown, FiGrid} from 'react-icons/fi';
+import {Link as GatsbyLink} from 'gatsby';
 import {ReactComponent as Rover} from '../../assets/icons/rover.svg';
 import {ReactComponent as Satellite} from '../../assets/icons/satellite.svg';
 import {ReactComponent as Schema} from '../../assets/icons/schema.svg';
@@ -37,11 +43,34 @@ export const DOCSET_ICONS = {
   rover: <CustomIcon icon={Rover} />
 };
 
-export function DocsetMenu(props) {
+export function DocsetMenu({docset, versions, currentVersion, ...props}) {
   const {isOpen, onOpen, onClose} = useDisclosure();
   return (
     <>
-      <Button rightIcon={<FiGrid />} onClick={onOpen} {...props} />
+      <ButtonGroup isAttached {...props}>
+        <Button rightIcon={<FiGrid />} onClick={onOpen} colorScheme="indigo">
+          {docset}
+        </Button>
+        {versions.length > 1 && (
+          <Menu>
+            <MenuButton
+              as={Button}
+              variant="outline"
+              rightIcon={<FiChevronDown />}
+              borderLeft="none"
+            >
+              {currentVersion}
+            </MenuButton>
+            <MenuList>
+              {versions.map((version, index) => (
+                <GatsbyLink key={index} to={'/' + version.slug}>
+                  <MenuItem>{version.label}</MenuItem>
+                </GatsbyLink>
+              ))}
+            </MenuList>
+          </Menu>
+        )}
+      </ButtonGroup>
       <Modal returnFocusOnClose={false} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent mx={[4, 6, 8]}>
@@ -86,3 +115,9 @@ export function DocsetMenu(props) {
     </>
   );
 }
+
+DocsetMenu.propTypes = {
+  docset: PropTypes.string.isRequired,
+  versions: PropTypes.array.isRequired,
+  currentVersion: PropTypes.string
+};
