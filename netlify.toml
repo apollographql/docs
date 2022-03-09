@@ -1,5 +1,6 @@
 [dev]
   command = "gatsby develop"
   autoLaunch = false
+  port = 3000
 [context.production.environment]
   PREFIX_PATHS = "true"

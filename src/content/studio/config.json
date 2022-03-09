@@ -7,6 +7,7 @@
       "docset:federation"
     ]
   ],
+  "internal": true,
   "sidebar": {
     "Features": "/",
     "Get started": "/getting-started",

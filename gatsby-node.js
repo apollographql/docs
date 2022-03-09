@@ -125,7 +125,7 @@ exports.createPages = async ({actions, graphql}) => {
 
   const configs = data.configs.nodes.reduce((acc, node) => {
     // TODO: convert configs to YAML
-    const {title, version, sidebar, algoliaFilters} = JSON.parse(
+    const {title, version, sidebar, algoliaFilters, internal} = JSON.parse(
       node.fields.content
     );
     return {
@@ -134,7 +134,8 @@ exports.createPages = async ({actions, graphql}) => {
         docset: title,
         currentVersion: version,
         navItems: getNavItems(sidebar),
-        algoliaFilters
+        algoliaFilters,
+        internal
       }
     };
   }, {});
@@ -153,13 +154,16 @@ exports.createPages = async ({actions, graphql}) => {
         };
       });
 
+    const {internal, ...config} = configs[sourceInstanceName];
     actions.createPage({
       path: fields.slug,
-      component: require.resolve('./src/templates/page'),
+      component: require.resolve(
+        `./src/templates/${internal ? 'internal' : 'page'}`
+      ),
       context: {
         id,
         versions,
-        ...configs[sourceInstanceName]
+        ...config
       }
     });
   });
