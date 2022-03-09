@@ -57,6 +57,12 @@ export default function TableOfContents({headings}) {
               href={'#' + id}
               color={isActive && 'primary'}
               fontWeight={isActive && 'semibold'}
+              onClick={event =>
+                window.gtag?.('event', 'Heading click', {
+                  category: 'Section Nav',
+                  label: event.target.innerText
+                })
+              }
             >
               {value}
             </Link>
