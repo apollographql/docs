@@ -1,4 +1,4 @@
-import NavItems, {NavContext} from '../NavItems';
+import NavItems, {GA_EVENT_CATEGORY_SIDEBAR, NavContext} from './NavItems';
 import PropTypes from 'prop-types';
 import React, {useMemo} from 'react';
 import useLocalStorage from 'react-use/lib/useLocalStorage';
@@ -13,11 +13,7 @@ import {
 } from '@chakra-ui/react';
 import {BsChevronContract, BsChevronExpand} from 'react-icons/bs';
 import {FiChevronsLeft} from 'react-icons/fi';
-
-const flattenNavItems = items =>
-  items.flatMap(item =>
-    item.children ? [item, ...flattenNavItems(item.children)] : item
-  );
+import {flattenNavItems} from '../../utils';
 
 export function SidebarNav({navItems, onHide, darkBg = 'gray.800', children}) {
   const bg = useColorModeValue('white', darkBg);
@@ -76,17 +72,22 @@ export function SidebarNav({navItems, onHide, darkBg = 'gray.800', children}) {
             leftIcon={
               isAllExpanded ? <BsChevronContract /> : <BsChevronExpand />
             }
-            onClick={() =>
+            onClick={() => {
+              const expanded = !isAllExpanded;
               setLocalNavState(
                 navGroups.reduce(
                   (acc, group) => ({
                     ...acc,
-                    [group.id]: !isAllExpanded
+                    [group.id]: expanded
                   }),
                   {}
                 )
-              )
-            }
+              );
+              window.gtag?.('event', 'Toggle all', {
+                category: GA_EVENT_CATEGORY_SIDEBAR,
+                label: expanded ? 'expand' : 'collapse'
+              });
+            }}
           >
             {isAllExpanded ? 'Collapse' : 'Expand'} all
           </Button>

@@ -1,10 +1,19 @@
 import {createContext} from 'react';
+import {join, relative} from 'path';
 import {useColorModeValue} from '@chakra-ui/react';
 
 export const NavContext = createContext();
 export const PathContext = createContext();
 
 export const isUrl = string => /^https?:\/\//.test(string);
+
+export const isPathActive = (path, uri) => !relative(path, uri);
+export const getFullPath = (path, basePath) => join('/', basePath, path);
+
+export const flattenNavItems = items =>
+  items.flatMap(item =>
+    item.children ? [item, ...flattenNavItems(item.children)] : item
+  );
 
 export function useTagColors() {
   const bg = useColorModeValue('indigo.50', 'indigo.400');

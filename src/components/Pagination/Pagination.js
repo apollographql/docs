@@ -3,28 +3,30 @@ import PropTypes from 'prop-types';
 import React, {useContext, useMemo} from 'react';
 import {FiChevronLeft, FiChevronRight} from 'react-icons/fi';
 import {Flex} from '@chakra-ui/react';
-import {PathContext} from '../../utils';
-import {getFullPath, isPathActive} from '../NavItems';
-
-const flattenNavItems = navItems =>
-  navItems.flatMap(navItem =>
-    navItem.children ? flattenNavItems(navItem.children) : navItem
-  );
+import {
+  PathContext,
+  flattenNavItems,
+  getFullPath,
+  isPathActive
+} from '../../utils';
 
 export function Pagination({navItems}) {
   const {uri, basePath} = useContext(PathContext);
 
   const [prevItem, nextItem] = useMemo(() => {
-    const flatNavItems = flattenNavItems(navItems).filter(navItem =>
-      // only include local pages
-      navItem.path.startsWith('/')
+    const navLinks = flattenNavItems(navItems).filter(
+      navItem =>
+        // only include link items
+        !navItem.children &&
+        // and just local pages
+        navItem.path.startsWith('/')
     );
-    const currentIndex = flatNavItems.findIndex(navItem => {
+    const currentIndex = navLinks.findIndex(navItem => {
       const fullPath = getFullPath(navItem.path, basePath);
       return isPathActive(fullPath, uri);
     });
 
-    return [flatNavItems[currentIndex - 1], flatNavItems[currentIndex + 1]];
+    return [navLinks[currentIndex - 1], navLinks[currentIndex + 1]];
   }, [navItems, basePath, uri]);
 
   return (

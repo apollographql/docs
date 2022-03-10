@@ -9,16 +9,17 @@ import {
 } from '@chakra-ui/react';
 import {FiChevronDown, FiChevronRight, FiExternalLink} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
-import {PathContext, isUrl, useTagColors} from '../utils';
-import {join, relative} from 'path';
+import {
+  PathContext,
+  getFullPath,
+  isPathActive,
+  isUrl,
+  useTagColors
+} from '../../utils';
 
+export const GA_EVENT_CATEGORY_SIDEBAR = 'Sidebar';
 export const NavContext = createContext();
 
-export const isPathActive = (path, uri) => !relative(path, uri);
-export const isGroupActive = (items, basePath, uri) =>
-  getItemPaths(items, basePath).some(path => isPathActive(path, uri));
-
-export const getFullPath = (path, basePath) => join('/', basePath, path);
 const getItemPaths = (items, basePath) =>
   items.flatMap(({path, children}) =>
     children ? getItemPaths(children, basePath) : getFullPath(path, basePath)
@@ -62,8 +63,12 @@ NavButton.propTypes = {
 function NavGroup({group, depth}) {
   const {nav, setNav} = useContext(NavContext);
   const {basePath, uri} = useContext(PathContext);
-  const isActive = isGroupActive(group.children, basePath, uri);
+
   const isOpen = nav[group.id];
+  const isActive = getItemPaths(group.children, basePath).some(path =>
+    isPathActive(path, uri)
+  );
+
   return (
     <div>
       <NavButton
@@ -72,12 +77,18 @@ function NavGroup({group, depth}) {
         isActive={isActive}
         data-group={!depth && isActive}
         rightIcon={isOpen ? <FiChevronDown /> : <FiChevronRight />}
-        onClick={() =>
+        onClick={() => {
+          const open = !isOpen;
           setNav({
             ...nav,
-            [group.id]: !isOpen
-          })
-        }
+            [group.id]: open
+          });
+          window.gtag?.('event', 'Toggle category', {
+            category: GA_EVENT_CATEGORY_SIDEBAR,
+            label: group.title,
+            value: Number(open)
+          });
+        }}
         depth={depth}
       >
         {group.title}

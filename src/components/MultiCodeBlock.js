@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, {createContext, useContext} from 'react';
 import {Button, Menu, MenuButton, MenuItem, MenuList} from '@chakra-ui/react';
-import {CodeBlockContext} from './CodeBlock';
+import {CodeBlockContext, GA_EVENT_CATEGORY_CODE_BLOCK} from './CodeBlock';
 import {FiChevronDown} from 'react-icons/fi';
 
 export const MultiCodeBlockContext = createContext();
@@ -47,7 +47,16 @@ export default function MultiCodeBlock({children}) {
             </MenuButton>
             <MenuList>
               {languages.map(language => (
-                <MenuItem key={language} onClick={() => setLanguage(language)}>
+                <MenuItem
+                  key={language}
+                  onClick={() => {
+                    setLanguage(language);
+                    window.gtag?.('event', 'Change language', {
+                      category: GA_EVENT_CATEGORY_CODE_BLOCK,
+                      label: language
+                    });
+                  }}
+                >
                   {language}
                 </MenuItem>
               ))}

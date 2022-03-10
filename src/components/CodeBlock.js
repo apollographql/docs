@@ -33,6 +33,8 @@ import 'prismjs/components/prism-tsx';
 import 'prismjs/components/prism-typescript';
 
 const CODE_BLOCK_SPACING = 4;
+export const GA_EVENT_CATEGORY_CODE_BLOCK = 'Code Block';
+
 export const CodeBlockContext = createContext();
 export const LineNumbersContext = createContext(true);
 
@@ -190,7 +192,12 @@ export default function CodeBlock({children}) {
             <ButtonGroup size="xs" pos="absolute" top="2" right="2">
               <Button
                 leftIcon={hasCopied ? <FiCheck /> : <FiClipboard />}
-                onClick={onCopy}
+                onClick={() => {
+                  onCopy();
+                  window.gtag?.('event', 'Copy', {
+                    category: GA_EVENT_CATEGORY_CODE_BLOCK
+                  });
+                }}
               >
                 {hasCopied ? 'Copied!' : 'Copy'}
               </Button>
