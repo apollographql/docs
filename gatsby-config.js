@@ -23,7 +23,28 @@ const gatsbyRemarkPlugins = [
 const plugins = [
   'gatsby-plugin-svgr',
   '@chakra-ui/gatsby-plugin',
-  'gatsby-plugin-sitemap',
+  {
+    resolve: 'gatsby-plugin-sitemap',
+    options: {
+      query: `
+        {
+          site {
+            siteMetadata {
+              siteUrl
+            }
+          }
+          allSitePage {
+            nodes {
+              path
+              pageContext
+            }
+          }
+        }
+      `,
+      // filter out internal pages
+      filterPages: page => page.pageContext.internal
+    }
+  },
   'gatsby-plugin-combine-redirects', // local plugin
   'gatsby-plugin-loadable-components-ssr',
   {
@@ -39,6 +60,13 @@ const plugins = [
     }
   },
   'gatsby-plugin-offline',
+  {
+    resolve: 'gatsby-plugin-apollo',
+    options: {
+      uri: process.env.API_URL + '/api/graphql',
+      credentials: 'include'
+    }
+  },
   {
     resolve: 'gatsby-plugin-next-seo',
     options: {

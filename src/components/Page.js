@@ -128,7 +128,7 @@ const {processSync} = rehype()
     }
   });
 
-export function Page({data, uri, pageContext}) {
+export default function Page({data, uri, pageContext}) {
   const paddingTop = useToken('space', 10);
   const paddingBottom = useToken('space', 12);
   const scrollPaddingTop = useMemo(
@@ -449,39 +449,3 @@ Page.propTypes = {
   uri: PropTypes.string.isRequired,
   pageContext: PropTypes.object.isRequired
 };
-
-export const pageQuery = graphql`
-  fragment PageFragment on File {
-    name
-    basePath: sourceInstanceName
-    relativePath
-    gitRemote {
-      href
-      ref
-    }
-    childMdx {
-      body
-      headings {
-        depth
-        value
-      }
-      frontmatter {
-        title
-        description
-        toc
-      }
-    }
-    childMarkdownRemark {
-      html
-      htmlAst
-      headings {
-        depth
-        value
-      }
-      frontmatter {
-        title
-        description
-      }
-    }
-  }
-`;

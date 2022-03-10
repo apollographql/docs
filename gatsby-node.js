@@ -154,16 +154,13 @@ exports.createPages = async ({actions, graphql}) => {
         };
       });
 
-    const {internal, ...config} = configs[sourceInstanceName];
     actions.createPage({
       path: fields.slug,
-      component: require.resolve(
-        `./src/templates/${internal ? 'internal' : 'page'}`
-      ),
+      component: require.resolve('./src/templates/page'),
       context: {
         id,
         versions,
-        ...config
+        ...configs[sourceInstanceName]
       }
     });
   });
