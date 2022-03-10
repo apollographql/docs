@@ -13,7 +13,31 @@ import {
 } from '@chakra-ui/react';
 import {FiArrowRight, FiMoon, FiSun} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
+import {gql, useQuery} from '@apollo/client';
 import {useTagColors} from '../utils';
+
+const GET_USER = gql`
+  query GetUser {
+    me {
+      name
+    }
+  }
+`;
+
+function StudioButton() {
+  const {data} = useQuery(GET_USER);
+  return (
+    <Button
+      ml="2"
+      colorScheme="indigo"
+      variant="ghost"
+      rightIcon={<FiArrowRight />}
+      d={{base: 'none', lg: 'flex'}}
+    >
+      {data?.me ? 'Launch' : 'Try'} Apollo Studio
+    </Button>
+  );
+}
 
 const HEADER_HEIGHT = 60;
 const HEADER_BORDER_WIDTH = 1;
@@ -52,7 +76,6 @@ export default function Header({children, algoliaFilters}) {
             h="6"
             mt="0.5" // offset to vertically align better w/ docs tag
           />
-
           <Box
             ml="1.5"
             px="1.5"
@@ -84,18 +107,7 @@ export default function Header({children, algoliaFilters}) {
       {process.env.ALGOLIA_SEARCH_KEY && (
         <Search algoliaFilters={algoliaFilters} />
       )}
-      <Button
-        colorScheme="indigo"
-        variant="ghost"
-        rightIcon={<FiArrowRight />}
-        as="a"
-        href="https://studio.apollographql.com?referrer=docs"
-        target="_blank"
-        rel="noopener noreferrer"
-        d={{base: 'none', lg: 'flex'}}
-      >
-        Launch Apollo Studio
-      </Button>
+      <StudioButton />
     </Flex>
   );
 }
