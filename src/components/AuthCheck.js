@@ -21,6 +21,8 @@ const GET_USER = gql`
   }
 `;
 
+const APOLLO_ORGS = ['gh.apollographql', 'apollo-private', 'apollo'];
+
 export default function AuthCheck({children}) {
   const {data, loading, error} = useQuery(GET_USER);
 
@@ -37,10 +39,17 @@ export default function AuthCheck({children}) {
   }
 
   if (!data.me) {
+    return <div>log in to your apollo account</div>;
+  }
+
+  const hasAccess = data.me.memberships.some(membership =>
+    APOLLO_ORGS.includes(membership.account.id)
+  );
+
+  if (!hasAccess) {
     return <div>access denied</div>;
   }
 
-  console.log(data.me);
   return children;
 }
 
