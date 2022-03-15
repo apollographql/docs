@@ -3,6 +3,7 @@ import React from 'react';
 import {ReactComponent as ApolloLogo} from '@apollo/space-kit/logos/logo.svg';
 import {
   Box,
+  Flex,
   Heading,
   Link,
   List,
@@ -48,7 +49,11 @@ export default function Footer({navConfig = {Resources, Company, Help}}) {
       py="12"
     >
       <div>
-        <Box mb="2" as={ApolloLogo} fill="current" h="8" />
+        <Flex mb="2">
+          <a href="https://www.apollographql.com">
+            <Box as={ApolloLogo} fill="current" h="8" />
+          </a>
+        </Flex>
         <Text>&copy; Apollo Graph Inc.</Text>
       </div>
       {Object.entries(navConfig).map(([label, items], index) => (
