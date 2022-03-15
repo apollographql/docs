@@ -2,7 +2,7 @@
   "name": "docs",
   "private": true,
   "scripts": {
-    "start": "gatsby develop",
+    "start": "netlify dev",
     "build": "gatsby build",
     "prebuild": "npm run prepare --workspaces",
     "test": "jest"
@@ -85,7 +85,7 @@
     "eslint": "^7.32.0",
     "eslint-plugin-mdx": "^1.11.1",
     "jest": "^27.4.5",
-    "lerna": "^4.0.0"
+    "netlify-cli": "^9.13.2"
   },
   "volta": {
     "node": "16.13.1",
