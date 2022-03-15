@@ -14,6 +14,7 @@ exports.sourceNodes = ({
 }) =>
   // download Apollo Client typedoc output and save it as a file node
   createRemoteFileNode({
+    // TODO: replace with prod docs.json
     url: 'https://61fc4e6768368d0007f0702c--apollo-client-docs.netlify.app/docs.json',
     store,
     cache,

@@ -172,6 +172,7 @@ const plugins = [
 ];
 
 module.exports = {
+  pathPrefix: '/docs',
   siteMetadata: {
     siteUrl: 'https://www.apollographql.com/docs'
   },
