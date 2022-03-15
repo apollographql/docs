@@ -30,9 +30,10 @@ export default function RelativeLink({href, ...props}) {
       ? {href, isExternal}
       : {
           as: GatsbyLink,
-          to: isAbsolute(href)
-            ? href
-            : resolve(path, href).replace(new RegExp(`^${site.pathPrefix}`), '')
+          to: (isAbsolute(href) ? href : resolve(path, href)).replace(
+            new RegExp(`^${site.pathPrefix}`),
+            ''
+          )
         };
 
   return <PrimaryLink {...linkProps} {...props} />;
