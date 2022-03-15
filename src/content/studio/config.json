@@ -1,5 +1,12 @@
 {
   "title": "Studio",
+  "algoliaFilters": [
+    "docset:studio",
+    [
+      "docset:rover",
+      "docset:federation"
+    ]
+  ],
   "sidebar": {
     "Features": "/",
     "Get started": "/getting-started",

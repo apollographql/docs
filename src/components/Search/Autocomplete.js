@@ -49,7 +49,7 @@ const algoliaInsightsPlugin = createAlgoliaInsightsPlugin({
   }
 });
 
-export default function Autocomplete({onClose}) {
+export default function Autocomplete({onClose, optionalFilters}) {
   const [autocompleteState, setAutocompleteState] = useState({});
   const previousActiveItemId = usePreviousDistinct(
     autocompleteState.activeItemId
@@ -85,6 +85,8 @@ export default function Autocomplete({onClose}) {
                     indexName,
                     query,
                     params: {
+                      optionalFilters,
+                      clickAnalytics: true,
                       hitsPerPage: !index
                         ? 8
                         : indexName === QUERY_SUGGESTIONS_INDEX
@@ -137,5 +139,6 @@ export default function Autocomplete({onClose}) {
 }
 
 Autocomplete.propTypes = {
-  onClose: PropTypes.func.isRequired
+  onClose: PropTypes.func.isRequired,
+  optionalFilters: PropTypes.array
 };

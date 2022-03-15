@@ -155,7 +155,8 @@ export default function PageTemplate({data, uri, pageContext}) {
 
   const {frontmatter, headings} = childMdx || childMarkdownRemark;
   const {title, description, toc} = frontmatter;
-  const {docset, versions, currentVersion, navItems} = pageContext;
+  const {docset, versions, currentVersion, navItems, algoliaFilters} =
+    pageContext;
   const titleFont = encodeURIComponent('Source Sans Pro');
 
   const defaultVersion = useMemo(
@@ -239,7 +240,7 @@ export default function PageTemplate({data, uri, pageContext}) {
           path: name === 'index' ? uri : dirname(uri)
         }}
       >
-        <Header>
+        <Header algoliaFilters={algoliaFilters}>
           <MobileNav>
             <SidebarNav navItems={navItems} darkBg="gray.700">
               <Box px="3" pt="1" pb="3">

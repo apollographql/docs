@@ -1,4 +1,5 @@
 import Autocomplete from './Autocomplete';
+import PropTypes from 'prop-types';
 import React from 'react';
 import SearchButton from './SearchButton';
 import useKey from 'react-use/lib/useKey';
@@ -11,7 +12,7 @@ import {
   useDisclosure
 } from '@chakra-ui/react';
 
-export function Search() {
+export function Search({algoliaFilters}) {
   const {isOpen, onOpen, onClose} = useDisclosure();
   useKey(
     '/',
@@ -41,9 +42,14 @@ export function Search() {
       >
         <ModalOverlay />
         <ModalContent overflow="hidden" mx={[4, 6, 8]}>
-          <Autocomplete onClose={onClose} />
+          {/* TODO: consider using context to avoid passing down site config */}
+          <Autocomplete onClose={onClose} optionalFilters={algoliaFilters} />
         </ModalContent>
       </Modal>
     </>
   );
 }
+
+Search.propTypes = {
+  algoliaFilters: PropTypes.array
+};

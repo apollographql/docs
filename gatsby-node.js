@@ -125,13 +125,16 @@ exports.createPages = async ({actions, graphql}) => {
 
   const configs = data.configs.nodes.reduce((acc, node) => {
     // TODO: convert configs to YAML
-    const {title, version, sidebar} = JSON.parse(node.fields.content);
+    const {title, version, sidebar, algoliaFilters} = JSON.parse(
+      node.fields.content
+    );
     return {
       ...acc,
       [node.sourceInstanceName]: {
         docset: title,
         currentVersion: version,
-        navItems: getNavItems(sidebar)
+        navItems: getNavItems(sidebar),
+        algoliaFilters
       }
     };
   }, {});

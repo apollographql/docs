@@ -19,7 +19,7 @@ const HEADER_HEIGHT = 60;
 const HEADER_BORDER_WIDTH = 1;
 export const TOTAL_HEADER_HEIGHT = HEADER_HEIGHT + HEADER_BORDER_WIDTH;
 
-export default function Header({children}) {
+export default function Header({children, algoliaFilters}) {
   const {toggleColorMode, colorMode} = useColorMode();
   const [tagBg, tagTextColor] = useTagColors();
   return (
@@ -81,7 +81,7 @@ export default function Header({children}) {
         onClick={toggleColorMode}
         icon={colorMode === 'dark' ? <FiSun /> : <FiMoon />}
       />
-      <Search />
+      <Search algoliaFilters={algoliaFilters} />
       <Button
         ml="2"
         colorScheme="indigo"
@@ -96,5 +96,6 @@ export default function Header({children}) {
 }
 
 Header.propTypes = {
-  children: PropTypes.node
+  children: PropTypes.node,
+  algoliaFilters: PropTypes.array
 };
