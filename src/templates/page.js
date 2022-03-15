@@ -10,7 +10,7 @@ export default function PageTemplate({data, uri, pageContext}) {
   const page = <Page data={data} uri={uri} pageContext={pageContext} />;
   return pageContext.internal ? (
     <>
-      <GatsbySeo noindex nofollow />
+      <GatsbySeo noindex />
       <NoSSR>
         <AuthCheck>{page}</AuthCheck>
       </NoSSR>
