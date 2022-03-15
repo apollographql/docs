@@ -100,7 +100,7 @@ const components = {
   th: Th,
   td: Td,
   blockquote: Blockquote,
-  undefined: Fragment
+  undefined: Fragment // because remark-a11y-emoji adds <undefined> around stuff
 };
 
 const mdxComponents = {
