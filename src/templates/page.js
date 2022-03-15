@@ -99,7 +99,8 @@ const components = {
   tr: Tr,
   th: Th,
   td: Td,
-  blockquote: Blockquote
+  blockquote: Blockquote,
+  undefined: Fragment
 };
 
 const mdxComponents = {
