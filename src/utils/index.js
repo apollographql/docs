@@ -1,13 +1,14 @@
 import {createContext} from 'react';
 import {join, relative} from 'path';
 import {useColorModeValue} from '@chakra-ui/react';
+import {withPrefix} from 'gatsby';
 
 export const NavContext = createContext();
 export const PathContext = createContext();
 
 export const isUrl = string => /^https?:\/\//.test(string);
 
-export const isPathActive = (path, uri) => !relative(path, uri);
+export const isPathActive = (path, uri) => !relative(withPrefix(path), uri);
 export const getFullPath = (path, basePath) => join('/', basePath, path);
 
 export const flattenNavItems = items =>
