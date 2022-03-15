@@ -208,7 +208,7 @@ export default function PageTemplate({
       <GatsbySeo
         title={title}
         description={description}
-        canonical={siteUrl + location.pathname}
+        canonical={siteUrl + uri}
         openGraph={{
           title,
           description,
