@@ -130,7 +130,7 @@ const {processSync} = rehype()
     }
   });
 
-export default function PageTemplate({data, uri, pageContext, location}) {
+export default function PageTemplate({data, pageContext, location}) {
   const paddingTop = useToken('space', 10);
   const paddingBottom = useToken('space', 12);
   const scrollPaddingTop = useMemo(
@@ -199,8 +199,7 @@ export default function PageTemplate({data, uri, pageContext, location}) {
     [docset, versions, currentVersion]
   );
 
-  console.log(uri, location.pathname);
-
+  const uri = location.pathname;
   return (
     <>
       <GatsbySeo
@@ -434,7 +433,6 @@ export default function PageTemplate({data, uri, pageContext, location}) {
 
 PageTemplate.propTypes = {
   data: PropTypes.object.isRequired,
-  uri: PropTypes.string.isRequired,
   location: PropTypes.object.isRequired,
   pageContext: PropTypes.object.isRequired
 };
