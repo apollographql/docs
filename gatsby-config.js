@@ -174,7 +174,7 @@ const plugins = [
 module.exports = {
   pathPrefix: '/docs',
   siteMetadata: {
-    siteUrl: 'https://www.apollographql.com/docs'
+    siteUrl: 'https://www.apollographql.com'
   },
   plugins: plugins.concat(sources)
 };

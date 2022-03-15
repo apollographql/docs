@@ -36,7 +36,8 @@ async function transformer({data}) {
     const {slug} = fields;
     const {name: fileName, gitRemote, sourceInstanceName} = parent;
 
-    const url = site.siteMetadata.siteUrl + slug;
+    const {pathPrefix, siteMetadata} = site;
+    const url = siteMetadata.siteUrl + pathPrefix + slug;
     const docset = gitRemote
       ? gitRemote.name
       : sourceInstanceName === '/'
@@ -76,6 +77,7 @@ async function transformer({data}) {
 const query = `
   query AlgoliaQuery {
     site {
+      pathPrefix
       siteMetadata {
         siteUrl
       }
