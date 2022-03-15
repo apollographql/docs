@@ -14,6 +14,9 @@ apollo-server/v2:
 ios: 
   remote: https://github.com/trevorblades/apollo-ios
   branch: tb/experimental-docs
+ios/v1:
+  remote: https://github.com/trevorblades/apollo-ios
+  branch: tb/experimental-v1
 kotlin: 
   remote: https://github.com/trevorblades/apollo-kotlin
   branch: tb/experimental-docs
@@ -31,7 +34,4 @@ rover:
   branch: tb/experimental-docs
 router: 
   remote: https://github.com/trevorblades/router
-  branch: tb/experimental-docs
-graphql-subscriptions:
-  remote: https://github.com/trevorblades/subscriptions-transport-ws
   branch: tb/experimental-docs
