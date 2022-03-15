@@ -26,13 +26,13 @@ export default function EmbeddableExplorer({
   useEffect(() => {
     // create a script element whose src = external script src from Explorer embed
     // TODO: check if there's already an embed explorer script so we don't add extra ones unnecessarily
-    const script = document.createElement('script');
+    const script = window.document.createElement('script');
     script.src =
       'https://embeddable-explorer.cdn.apollographql.com/_latest/embeddable-explorer.umd.production.min.js';
     script.async = true;
 
     // add the script to the body
-    document.body.appendChild(script);
+    window.document.body.appendChild(script);
 
     // create new instance of EmbeddedExplorer
     const target = containerRef.current;
@@ -57,7 +57,7 @@ export default function EmbeddableExplorer({
       target.firstChild.remove();
 
       script.removeEventListener('load', onLoad);
-      document.body.removeChild(script);
+      window.document.body.removeChild(script);
     };
   }, [graphRef, endpointUrl, document, colorMode]);
 
