@@ -76,7 +76,7 @@ export function Docset({
             <span>{title}</span>
           </HStack>
         </Heading>
-        <Text mb="4">{description}</Text>
+        {description && <Text mb="4">{description}</Text>}
         <PrimaryLink mt="auto" fontWeight="semibold" as={GatsbyLink} to={path}>
           {cta.replace('%s', title)}
         </PrimaryLink>
@@ -88,7 +88,7 @@ export function Docset({
 
 Docset.propTypes = {
   title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
+  description: PropTypes.string,
   path: PropTypes.string.isRequired,
   cta: PropTypes.string,
   icon: PropTypes.element,
