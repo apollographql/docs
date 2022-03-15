@@ -442,3 +442,58 @@ Using the old infrastructure, we were spending a lot of time building our docs. 
 During this period, the new docs took less time to build the entirety of our docs than the Apollo Client docs took to build just itself. It built 94 times, and each build was directly related to a change in the docs UI or content. We can't say the same for the other 1,731 combined builds that happened across other docsets.
 
 I believe this represents an opportunity to cut down the amount of Netlify build time we spend on the docs, and as a result save us some cost in that area.
+
+## Notable changes to authoring patterns
+
+Mostly all of the way that content authoring works in our docs stays the same with this change, with a few exceptions:
+
+### No more component imports
+
+Previously, we would import components like `ExpansionPanel` and `CodeColumns` from `gatsby-theme-apollo-docs` in our MDX files. Now, [all components](#components) are automatically available without importing.
+
+```diff
+- import {ExpansionPanel} from 'gatsby-theme-apollo-docs';
+
+<ExpansionPanel>
+
+Hidden content in here
+
+</ExpansionPanel>
+```
+
+In addition, we used to use the `Button` component from `@apollo/space-kit` in some places. Now a [`Button` component](#button) is available in all MDX pages. Here's an example comparing the old way of using buttons to the new way:
+
+```diff
+- import {Button} from '@apollo/space-kit';
+- import {colors} from 'gatsby-theme-apollo-core';
+import {Link} from 'gatsby';
+
+<Button
+-  color={colors.primary}
+-  as={<Link to="./get-started" />}
++  colorScheme="indigo"
++  as={Link}
++  to="./get-started"
+>
+  Click me
+</Button>
+```
+
+### Code block titles and line highlighting
+
+Line highlighting (`{x-y}`) and title attributes used to be supplied in one continuous string attached to the language tag on a code block. Now they must be added with space between each property. The title must be wrapped in quotes, and the colon before `title` can be removed.
+
+````diff
+- ```js{3-5}:title=index.js
++ ```js {3-5} title="index.js"
+const num = 123;
+```
+````
+
+More info about code blocks [here](#code-blocks).
+
+### Internal links
+
+Previously, links within a docset could be written as absolute paths, i.e. `/get-started`. Now, all internal links should be written as relative paths, i.e. `./get-started` or `../get-started`, depending on where the destination page lives relative to the page it's being linked from.
+
+More information about linking [here](#linking).
