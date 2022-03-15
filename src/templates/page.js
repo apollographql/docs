@@ -130,7 +130,11 @@ const {processSync} = rehype()
     }
   });
 
-export default function PageTemplate({data, pageContext, location}) {
+export default function PageTemplate({
+  data,
+  pageContext,
+  location: {pathname: uri}
+}) {
   const paddingTop = useToken('space', 10);
   const paddingBottom = useToken('space', 12);
   const scrollPaddingTop = useMemo(
@@ -199,7 +203,6 @@ export default function PageTemplate({data, pageContext, location}) {
     [docset, versions, currentVersion]
   );
 
-  const uri = location.pathname;
   return (
     <>
       <GatsbySeo
