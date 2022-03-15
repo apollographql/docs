@@ -87,6 +87,10 @@ export default function Header({children, algoliaFilters}) {
         colorScheme="indigo"
         variant="ghost"
         rightIcon={<FiArrowRight />}
+        as="a"
+        href="https://studio.apollographql.com?referrer=docs"
+        target="_blank"
+        rel="noopener noreferrer"
         d={{base: 'none', lg: 'flex'}}
       >
         Launch Apollo Studio
