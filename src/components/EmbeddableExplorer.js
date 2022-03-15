@@ -4,7 +4,7 @@ import {Box, useColorMode} from '@chakra-ui/react';
 
 export default function EmbeddableExplorer({
   graphRef = 'Apollo-Fullstack-Demo-o3tsz8@current',
-  endpointUrl = 'https://apollo-fullstack-tutorial.herokuapp.com/',
+  endpointUrl = 'https://apollo-fullstack-tutorial.herokuapp.com/graphql',
   document = `
     query GetLaunches {
       launches {

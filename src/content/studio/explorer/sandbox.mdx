@@ -27,6 +27,10 @@ Sandbox automatically attempts to connect to a GraphQL server running at `http:/
 
 > To try out Sandbox with an example GraphQL API, you can set its URL to `https://swapi-graphql.netlify.app/.netlify/functions/index`.
 
+## Overview video
+
+<YouTube youTubeId="0jzqqHZU00Q" />
+
 ## Publishing schemas from Sandbox
 
 > ⚠️ Sandbox does not yet support publishing subgraph schemas to Studio for a [federated graph](https://www.apollographql.com/docs/federation/).
@@ -68,6 +72,8 @@ From [Sandbox](https://studio.apollographql.com/sandbox/), open the **Schema Dif
   alt="Schema diff in Sandbox"
 />
 
+> If you're using Sandbox with a subgraph, this diff shows the schema as originally defined, not the generated subgraph schema that includes federation-specific fields like Query.\_entities. You can view the generated subgraph schema from the SDL page in Sandbox.
+
 In addition to viewing the diff on this page, you can click **Run a Check** in the upper-right to run [schema checks](#schema-checks) against the currently selected variant.
 
 ### Schema checks
@@ -95,6 +101,26 @@ Select any accessible organization, graph, and variant to check against and clic
 />
 
 To view the result's _full_ details in Studio, click **Go to details**.
+
+#### Subgraph checks
+
+You can run subgraph checks on federated graphs. If you're using Sandbox with a subgraph, you can use the subgraph dropdown to select which subgraph you want to check your changes against.
+
+<img
+  class="screenshot"
+  src="../img/subgraph-sandbox-check-prompt.jpg"
+  alt="Sandbox subgraph check prompt"
+  width="500"
+/>
+
+When you click **Run a check**, Studio first performs a composition check using your local subgraph schema and the registered schemas of your other subgraphs. If composition succeeds, Sandbox then performs operation checks as usual and displays the results of all checks. If composition fails, Sandbox does not perform operation checks and displays the composition error.
+
+<img
+  class="screenshot"
+  src="../img/subgraph-sandbox-one-check-failed.jpg"
+  alt="Sandbox subgraph check result"
+  width="500"
+/>
 
 ## Offline Sandbox
 
