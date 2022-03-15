@@ -130,7 +130,7 @@ const {processSync} = rehype()
     }
   });
 
-export default function PageTemplate({data, uri, pageContext}) {
+export default function PageTemplate({data, uri, pageContext, location}) {
   const paddingTop = useToken('space', 10);
   const paddingBottom = useToken('space', 12);
   const scrollPaddingTop = useMemo(
@@ -199,12 +199,14 @@ export default function PageTemplate({data, uri, pageContext}) {
     [docset, versions, currentVersion]
   );
 
+  console.log(uri, location.pathname);
+
   return (
     <>
       <GatsbySeo
         title={title}
         description={description}
-        canonical={siteUrl + uri}
+        canonical={siteUrl + location.pathname}
         openGraph={{
           title,
           description,
@@ -433,6 +435,7 @@ export default function PageTemplate({data, uri, pageContext}) {
 PageTemplate.propTypes = {
   data: PropTypes.object.isRequired,
   uri: PropTypes.string.isRequired,
+  location: PropTypes.object.isRequired,
   pageContext: PropTypes.object.isRequired
 };
 
