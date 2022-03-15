@@ -26,6 +26,7 @@
       "Overview": "/explorer/explorer",
       "Sandbox (no account required)": "/explorer/sandbox",
       "Connecting and authenticating": "/explorer/connecting-authenticating",
+      "Operation collections": "/explorer/operation-collections",
       "Embedded Explorer": "/explorer/embed-explorer",
       "Additional features": "/explorer/additional-features"
     },
