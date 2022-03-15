@@ -170,9 +170,13 @@ export default function PageTemplate({data, uri, pageContext}) {
       gitRemote && (
         <Button
           as="a"
-          href={[gitRemote.href, 'tree', gitRemote.ref, relativePath].join(
-            path.sep
-          )}
+          href={[
+            gitRemote.href,
+            'tree',
+            gitRemote.ref,
+            'docs/source',
+            relativePath
+          ].join(path.sep)}
           variant="link"
           size="lg"
           leftIcon={<FaGithub />}
