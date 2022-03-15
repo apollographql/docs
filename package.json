@@ -16,6 +16,7 @@
     "@algolia/autocomplete-preset-algolia": "^1.5.2",
     "@apollo/chakra-helpers": "file:packages/chakra-helpers",
     "@apollo/space-kit": "8.11.0",
+    "@apollo/explorer": "0.2.0",
     "@chakra-ui/gatsby-plugin": "^2.0.3",
     "@chakra-ui/react": "^1.8.3",
     "@emotion/react": "^11.5.0",
