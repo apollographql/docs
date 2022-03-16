@@ -1,13 +1,13 @@
 ---
 title: Operation collections in the Explorer
-sidebar_title: Operation collections
+description: Save and share frequently used GraphQL operations
 ---
 
 You can save **operation collections** in the Apollo Studio Explorer, enabling you to organize your frequently used GraphQL operations and optionally share them with your team:
 
 <img src="../img/operation-collections/list-collections.jpg" alt="Explorer collections list" class="screenshot" width="300" />
 
-Each [variant](../org/graphs/#managing-variants) of a graph has its own set of operation collections. An operation collection can be either **personal** (visible only to you) or **shared** (visible to all organization members).
+Each [variant](../org/graphs/#managing-variants) of a graph has its own set of operation collections. An operation collection can be either **personal** (visible only to you) or **shared** (visible to authorized organization members).
 
 **Operation collections help you and your team:**
 
@@ -21,6 +21,9 @@ Each [variant](../org/graphs/#managing-variants) of a graph has its own set of o
 To create an operation collection in the Explorer:
 
 1. [Open Studio](https://studio.apollographql.com/) and navigate to the Explorer.
+
+    <img src="../img/operation-collections/list-collections.jpg" alt="Explorer collections list" class="screenshot" width="300" />
+
 2. In the top left, select the graph/variant combination you want to create a collection for (e.g., `docs-example-graph/current` in the screenshot above).
 3. Click the "bookmark" tab in the Explorer's left panel to open your collection settings (shown in the screenshot above).
 4. Click **+ Create collection** at the top of either the Personal or the Shared section, depending on which type of collection you want to create.
@@ -61,7 +64,7 @@ That's it! Your newly saved entry appears in its corresponding collection:
 
 If you've saved the entry to a shared collection, it also appears for other members of your organization.
 
-After you add multiple operations to a collection, you can drag and drop to reorder them within the collection.
+> After you add multiple operations to a collection, you can **drag and drop** to reorder them within the collection.
 
 ## Modifying collections and operations
 
@@ -77,15 +80,16 @@ It's often helpful to create a _new_ collection or operation based on an existin
 
 * **To clone an entire collection,** click the **•••** button next to its entry in the list and select **Duplicate**.
   * You can save the new collection to any variant of any graph you have access to, and you can make it personal or shared.
-  * This creates a new collection with an identical set of operations. Modifying the new collection has no effect on the original.
+  * If you're using Apollo Sandbox, you can also save the new collection as a [Sandbox collection](#sandbox-collections).
+  * Cloning a collection creates a new collection with an identical set of operations. Modifying the new collection has no effect on the original.
 * **To clone a single operation,** open it in the editor panel and click the dropdown arrow next to the "floppy disk" icon. Then select **Save As**.
   * This enables you to save a copy of the operation to any collection for the current variant.
 
 ## Sharing collections
 
-Every **shared** operation collection is automatically visible in the Explorer for all members of your organization.
+Every **shared** operation collection is automatically visible in the Explorer for every organization member that has access to the corresponding variant.
 
-You can also give team members a link directly to a particular shared collection or operation. To do so, click the **•••** button next to any shared collection or operation in the list and select the **Copy link** option.
+You can also give authorized team members a link directly to a particular shared collection or operation. To do so, click the **•••** button next to any shared collection or operation in the list and select the **Copy link** option.
 
 > Team members must be signed in to Studio to view a linked collection or operation, unless it's a [public collection](#public-collections).
 

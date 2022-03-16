@@ -10,6 +10,7 @@
   "sidebar": {
     "Features": "/",
     "Get started": "/getting-started",
+    "Sandbox (no account required)": "/explorer/sandbox",
     "Managed federation": "https://apollographql.com/docs/federation/managed-federation/overview/",
     "Registering Schemas": {
       "Using schema reporting": "/schema/schema-reporting",
@@ -24,7 +25,6 @@
     },
     "The Explorer": {
       "Overview": "/explorer/explorer",
-      "Sandbox (no account required)": "/explorer/sandbox",
       "Connecting and authenticating": "/explorer/connecting-authenticating",
       "Operation collections": "/explorer/operation-collections",
       "Embedded Explorer": "/explorer/embed-explorer",
