@@ -36,7 +36,7 @@ jobs:
       - name: Build
         run: npx netlify build --context=deploy-preview
         env:
-          DOCS_PATH: content/docs
+          DOCS_PATH: content/docs/source
 
       - name: Publish
         id: publish
