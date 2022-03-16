@@ -81,7 +81,7 @@ export function DocsetMenu({docset, versions, currentVersion, ...props}) {
                 Apollo Basics
               </DocsetButton>
             </DocsetGroup>
-            <DocsetGroup title="Client">
+            <DocsetGroup title="Apollo Client">
               <DocsetButton leftIcon={DOCSET_ICONS.react} to="/react">
                 React
               </DocsetButton>
@@ -101,7 +101,7 @@ export function DocsetMenu({docset, versions, currentVersion, ...props}) {
               </DocsetButton>
               <DocsetButton to="/router">Router</DocsetButton>
             </DocsetGroup>
-            <DocsetGroup title="Tools">
+            <DocsetGroup title="Cloud">
               <DocsetButton leftIcon={DOCSET_ICONS.studio} to="/studio">
                 Studio
               </DocsetButton>

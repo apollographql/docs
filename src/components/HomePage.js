@@ -34,8 +34,9 @@ export function Odyssey() {
           Looking for a guided, interactive experience?
         </Heading>
         <Text fontSize="md">
-          Our learning platform, Odyssey, is the perfect place to start your
-          journey and learn GraphQL with videos and interactive code challenges.
+          Our learning platform, <strong>Odyssey</strong>, is the perfect place
+          to start your journey and learn GraphQL with videos and interactive
+          code challenges.
         </Text>
       </div>
       <div>
@@ -75,7 +76,7 @@ export function Docset({
             <span>{title}</span>
           </HStack>
         </Heading>
-        <Text mb="4">{description}</Text>
+        {description && <Text mb="4">{description}</Text>}
         <PrimaryLink mt="auto" fontWeight="semibold" as={GatsbyLink} to={path}>
           {cta.replace('%s', title)}
         </PrimaryLink>
@@ -87,7 +88,7 @@ export function Docset({
 
 Docset.propTypes = {
   title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
+  description: PropTypes.string,
   path: PropTypes.string.isRequired,
   cta: PropTypes.string,
   icon: PropTypes.element,
