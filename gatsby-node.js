@@ -4,6 +4,7 @@ const {
 } = require('gatsby-source-filesystem');
 const {join} = require('path');
 const {v5} = require('uuid');
+const yaml = require('js-yaml');
 
 exports.sourceNodes = ({
   actions: {createNode},
@@ -41,7 +42,14 @@ exports.onCreateNode = async ({node, getNode, loadNodeContent, actions}) => {
   const {type, mediaType} = node.internal;
   switch (type) {
     case 'File':
-      if (mediaType === 'application/json' || node.base === '_redirects') {
+      if (
+        ['application/json', 'text/yaml'].includes(mediaType) ||
+        node.base === '_redirects'
+      ) {
+        if (node.base === '_redirects') {
+          console.log(mediaType);
+        }
+
         // save the raw content of JSON files as a field
         const content = await loadNodeContent(node);
         actions.createNodeField({
@@ -110,7 +118,7 @@ exports.createPages = async ({actions, graphql}) => {
           }
         }
       }
-      configs: allFile(filter: {base: {eq: "config.json"}}) {
+      configs: allFile(filter: {base: {eq: "_config.yml"}}) {
         nodes {
           fields {
             content
@@ -125,8 +133,7 @@ exports.createPages = async ({actions, graphql}) => {
   `);
 
   const configs = data.configs.nodes.reduce((acc, node) => {
-    // TODO: convert configs to YAML
-    const {title, version, sidebar, algoliaFilters} = JSON.parse(
+    const {title, version, sidebar, algoliaFilters} = yaml.load(
       node.fields.content
     );
     return {
@@ -147,7 +154,7 @@ exports.createPages = async ({actions, graphql}) => {
         node => gitRemote && node.gitRemote?.full_name === gitRemote.full_name
       )
       .map(node => {
-        const {version} = JSON.parse(node.fields.content);
+        const {version} = yaml.load(node.fields.content);
         return {
           label: version,
           slug: node.sourceInstanceName
