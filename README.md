@@ -29,6 +29,10 @@ The central piece of this repo, the docs infrastructure, is a [Gatsby](https://w
   - [Drawbacks](#drawbacks)
   - [Solution](#solution)
   - [Impact](#impact)
+- [Notable changes to authoring patterns](#notable-changes-to-authoring-patterns)
+  - [No more component imports](#no-more-component-imports)
+  - [Code block titles and line highlighting](#code-block-titles-and-line-highlighting)
+  - [Internal links](#internal-links)
 
 ## Developing locally
 
