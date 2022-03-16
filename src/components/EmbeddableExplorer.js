@@ -1,51 +1,59 @@
-import React from "react";
-import { Box, useColorMode } from "@chakra-ui/react";
-import { ApolloExplorerReact } from "@apollo/explorer";
+import PropTypes from 'prop-types';
+import React from 'react';
+import {ApolloExplorerReact} from '@apollo/explorer';
+import {Box, useColorMode} from '@chakra-ui/react';
+import {outdent} from 'outdent';
 
-const EmbeddableExplorer = ({
-  graphRef = "Apollo-Fullstack-Demo-o3tsz8@current",
-  endpointUrl = "https://apollo-fullstack-tutorial.herokuapp.com/graphql",
-  initialDocument = `query GetLaunches {
-    launches {
+export default function EmbeddableExplorer({
+  graphRef = 'Apollo-Fullstack-Demo-o3tsz8@current',
+  endpointUrl = 'https://apollo-fullstack-tutorial.herokuapp.com/graphql',
+  document = outdent`
+    query GetLaunches {
       launches {
-        id
-        site
-        rocket {
+        launches {
           id
-          name
+          site
+          rocket {
+            id
+            name
+          }
         }
       }
     }
-  }`,
-}) => {
-  const { colorMode } = useColorMode();
+  `
+}) {
+  const {colorMode} = useColorMode();
   return (
     <Box
-      w="full"
       h={450}
-      border="none"
       rounded="md"
       sx={{
-        ".embed": {
-          width: "100%",
-          height: "100%",
-        },
+        '.embed': {
+          boxSize: 'full'
+        }
       }}
     >
       <ApolloExplorerReact
+        // give the component a key or else multiple explorers get rendered when
+        // the color mode changes
+        key={colorMode}
         className="embed"
         endpointUrl={endpointUrl}
         graphRef={graphRef}
         persistExplorerState={false}
         initialState={{
+          document,
           displayOptions: {
-            theme: colorMode,
-          },
-          document: initialDocument,
+            theme: colorMode
+          }
         }}
       />
     </Box>
   );
-};
+}
 
-export default EmbeddableExplorer;
+EmbeddableExplorer.propTypes = {
+  graphRef: PropTypes.string,
+  endpointUrl: PropTypes.string,
+  document: PropTypes.string
+};
