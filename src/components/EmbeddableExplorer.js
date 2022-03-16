@@ -1,11 +1,13 @@
 import PropTypes from 'prop-types';
-import React, {useEffect, useRef} from 'react';
+import React from 'react';
+import {ApolloExplorerReact} from '@apollo/explorer';
 import {Box, useColorMode} from '@chakra-ui/react';
+import {outdent} from 'outdent';
 
 export default function EmbeddableExplorer({
   graphRef = 'Apollo-Fullstack-Demo-o3tsz8@current',
   endpointUrl = 'https://apollo-fullstack-tutorial.herokuapp.com/graphql',
-  document = `
+  document = outdent`
     query GetLaunches {
       launches {
         launches {
@@ -20,48 +22,34 @@ export default function EmbeddableExplorer({
     }
   `
 }) {
-  const containerRef = useRef();
   const {colorMode} = useColorMode();
-
-  useEffect(() => {
-    // create a script element whose src = external script src from Explorer embed
-    // TODO: check if there's already an embed explorer script so we don't add extra ones unnecessarily
-    const script = window.document.createElement('script');
-    script.src =
-      'https://embeddable-explorer.cdn.apollographql.com/_latest/embeddable-explorer.umd.production.min.js';
-    script.async = true;
-
-    // add the script to the body
-    window.document.body.appendChild(script);
-
-    // create new instance of EmbeddedExplorer
-    const target = containerRef.current;
-    const onLoad = () =>
-      new window.EmbeddedExplorer({
-        graphRef,
-        endpointUrl,
-        initialState: {
+  return (
+    <Box
+      h={450}
+      rounded="md"
+      sx={{
+        '.embed': {
+          boxSize: 'full'
+        }
+      }}
+    >
+      <ApolloExplorerReact
+        // give the component a key or else multiple explorers get rendered when
+        // the color mode changes
+        key={colorMode}
+        className="embed"
+        endpointUrl={endpointUrl}
+        graphRef={graphRef}
+        persistExplorerState={false}
+        initialState={{
           document,
-          theme: colorMode
-        },
-        target
-      });
-
-    // we need to wait for the external script to load first before configuring our instance of EmbeddedExplorer
-    script.addEventListener('load', onLoad);
-
-    // clean up script tag and event listener
-    return () => {
-      // remove iframe that Studio Explorer appends to our div w/ an `id` attribute
-      // to prevent additional iframes from being added (i.e. in local dev w/ hot reloading)
-      target.firstChild.remove();
-
-      script.removeEventListener('load', onLoad);
-      window.document.body.removeChild(script);
-    };
-  }, [graphRef, endpointUrl, document, colorMode]);
-
-  return <Box ref={containerRef} w="full" h={450} border="none" rounded="md" />;
+          displayOptions: {
+            theme: colorMode
+          }
+        }}
+      />
+    </Box>
+  );
 }
 
 EmbeddableExplorer.propTypes = {
