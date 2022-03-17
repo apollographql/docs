@@ -137,7 +137,7 @@ export default function PageTemplate({
 }) {
   const paddingTop = useToken('space', 10);
   const paddingBottom = useToken('space', 12);
-  const scrollPaddingTop = useMemo(
+  const scrollMarginTop = useMemo(
     () => `calc(${paddingTop} + ${TOTAL_HEADER_HEIGHT}px)`,
     [paddingTop]
   );
@@ -233,9 +233,6 @@ export default function PageTemplate({
       />
       <Global
         styles={{
-          html: {
-            scrollPaddingTop
-          },
           '.mermaid': {
             lineHeight: 'normal',
             ...mermaidStyles
@@ -325,6 +322,11 @@ export default function PageTemplate({
               <Box
                 fontSize={{md: 'lg'}}
                 lineHeight={{md: 1.7}}
+                css={{
+                  [HEADINGS]: {
+                    scrollMarginTop
+                  }
+                }}
                 sx={{
                   [HEADINGS]: {
                     a: {
@@ -397,8 +399,8 @@ export default function PageTemplate({
                 w={250}
                 flexShrink="0"
                 pos="sticky"
-                top={scrollPaddingTop}
-                maxH={`calc(100vh - ${scrollPaddingTop} - ${paddingBottom})`}
+                top={scrollMarginTop}
+                maxH={`calc(100vh - ${scrollMarginTop} - ${paddingBottom})`}
               >
                 <Heading size="md" mb="3">
                   {title}
