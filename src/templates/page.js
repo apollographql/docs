@@ -100,7 +100,6 @@ const components = {
           ':first-child': {
             mt: 3
           },
-          listStyleType: 'circle',
           fontSize: 'md',
           lineHeight: 'normal'
         }
