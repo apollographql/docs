@@ -76,8 +76,38 @@ const components = {
   h4: props => <Heading as="h4" size="md" {...props} />,
   h5: props => <Heading as="h5" size="sm" {...props} />,
   h6: props => <Heading as="h6" size="xs" {...props} />,
-  ul: props => <UnorderedList spacing={LIST_SPACING} {...props} />,
-  ol: props => <OrderedList spacing={LIST_SPACING} {...props} />,
+  ul: props => (
+    <UnorderedList
+      spacing={LIST_SPACING}
+      sx={{
+        'ul li': {
+          ':first-child': {
+            mt: 3
+          },
+          listStyleType: 'circle',
+          fontSize: 'md',
+          lineHeight: 'normal'
+        }
+      }}
+      {...props}
+    />
+  ),
+  ol: props => (
+    <OrderedList
+      spacing={LIST_SPACING}
+      sx={{
+        'ul li': {
+          ':first-child': {
+            mt: 3
+          },
+          listStyleType: 'circle',
+          fontSize: 'md',
+          lineHeight: 'normal'
+        }
+      }}
+      {...props}
+    />
+  ),
   li: props => (
     <ListItem
       sx={{
@@ -91,14 +121,30 @@ const components = {
     />
   ),
   p: Text,
-  a: RelativeLink,
+  a: props => (
+    <RelativeLink
+      sx={{
+        code: {
+          color: 'primary'
+        }
+      }}
+      {...props}
+    />
+  ),
   pre: CodeBlock,
   table: Table,
   thead: Thead,
   tbody: Tbody,
   tr: Tr,
   th: Th,
-  td: Td,
+  td: props => (
+    <Td
+      sx={{
+        fontSize: 'md'
+      }}
+      {...props}
+    />
+  ),
   blockquote: Blockquote,
   undefined: Fragment // because remark-a11y-emoji adds <undefined> around stuff
 };
