@@ -1,13 +1,8 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import {chakra, useColorModeValue} from '@chakra-ui/react';
 
-export default function InlineCode({colorScheme = 'pink', ...props}) {
+export default function InlineCode(props) {
   const bgColor = useColorModeValue('gray.50', 'gray.700');
-  const textColor = useColorModeValue(
-    `${colorScheme}.600`,
-    `${colorScheme}.300`
-  );
   return (
     <chakra.code
       fontFamily="mono"
@@ -15,13 +10,9 @@ export default function InlineCode({colorScheme = 'pink', ...props}) {
       px="1"
       py="0.5"
       rounded="sm"
-      color={textColor}
+      color="secondary"
       bgColor={bgColor}
       {...props}
     />
   );
 }
-
-InlineCode.propTypes = {
-  colorScheme: PropTypes.string
-};

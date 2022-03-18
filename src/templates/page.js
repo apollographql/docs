@@ -69,6 +69,14 @@ import {useMermaidStyles} from '../utils/mermaid';
 const LIST_SPACING = 4;
 const HEADINGS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
 
+const NESTED_LIST_STYLES = {
+  [['ul', 'ol']]: {
+    mt: 3,
+    fontSize: 'md',
+    lineHeight: 'normal'
+  }
+};
+
 const components = {
   h1: props => <Heading as="h1" size="2xl" {...props} />,
   h2: props => <Heading as="h2" size="xl" {...props} />,
@@ -80,32 +88,16 @@ const components = {
     <UnorderedList
       spacing={LIST_SPACING}
       sx={{
-        'ul li': {
-          ':first-child': {
-            mt: 3
-          },
-          listStyleType: 'circle',
-          fontSize: 'md',
-          lineHeight: 'normal'
+        ...NESTED_LIST_STYLES,
+        ul: {
+          listStyleType: 'circle'
         }
       }}
       {...props}
     />
   ),
   ol: props => (
-    <OrderedList
-      spacing={LIST_SPACING}
-      sx={{
-        'ul li': {
-          ':first-child': {
-            mt: 3
-          },
-          fontSize: 'md',
-          lineHeight: 'normal'
-        }
-      }}
-      {...props}
-    />
+    <OrderedList spacing={LIST_SPACING} sx={NESTED_LIST_STYLES} {...props} />
   ),
   li: props => (
     <ListItem
@@ -120,16 +112,7 @@ const components = {
     />
   ),
   p: Text,
-  a: props => (
-    <RelativeLink
-      sx={{
-        code: {
-          color: 'primary'
-        }
-      }}
-      {...props}
-    />
-  ),
+  a: RelativeLink,
   pre: CodeBlock,
   table: Table,
   thead: Thead,
@@ -379,7 +362,8 @@ export default function PageTemplate({
                     },
                     code: {
                       bg: 'none',
-                      p: 0
+                      p: 0,
+                      color: 'secondary'
                     }
                   },
                   '>': {

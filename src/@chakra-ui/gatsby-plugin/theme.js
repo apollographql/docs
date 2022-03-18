@@ -35,6 +35,10 @@ const theme = extendTheme({
       primary: {
         default: 'indigo.500',
         _dark: 'indigo.200'
+      },
+      secondary: {
+        default: 'pink.600',
+        _dark: 'pink.300'
       }
     }
   },

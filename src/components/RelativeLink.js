@@ -5,7 +5,17 @@ import {Link} from '@chakra-ui/react';
 import {PathContext, isUrl} from '../utils';
 import {isAbsolute, resolve} from 'path';
 
-export const PrimaryLink = props => <Link color="primary" {...props} />;
+export const PrimaryLink = props => (
+  <Link
+    color="primary"
+    sx={{
+      code: {
+        color: 'inherit'
+      }
+    }}
+    {...props}
+  />
+);
 
 export default function RelativeLink({href, ...props}) {
   const {path} = useContext(PathContext);
