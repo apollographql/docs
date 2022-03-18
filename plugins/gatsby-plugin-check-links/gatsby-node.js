@@ -59,7 +59,7 @@ exports.createPages = async ({graphql, reporter}, {ignore = []}) => {
       // is a hash or not a URL with a protocol (http, mailto, etc.)
       if (url.startsWith('#') || !/^\w+:/.test(url)) {
         // don't report on absolute links if we're devloping a local docset
-        if (!process.env.DOCS_PATH || !isAbsolute(url)) {
+        if (!process.env.DOCS_LOCAL || !isAbsolute(url)) {
           const {line, column} = position.start;
           links.push({
             from: slug,

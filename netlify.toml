@@ -1,6 +1,5 @@
 [dev]
+  command = "gatsby develop"
   autoLaunch = false
-[context.dev.environment]
-  # DOCS_PATH = "../apollo-server/docs/source"
 [context.production.environment]
   PREFIX_PATHS = "true"
