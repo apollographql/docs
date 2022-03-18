@@ -139,10 +139,8 @@ const plugins = [
 ];
 
 if (process.env.DOCS_PATH) {
-  if (fs.existsSync('local')) {
-    fs.rmdirSync('local');
-  }
-  fs.cpSync(process.env.DOCS_PATH, 'local');
+  fs.rmSync('local', {recursive: true, force: true});
+  fs.cpSync(process.env.DOCS_PATH, 'local', {recursive: true});
   plugins.push(
     'gatsby-plugin-local-docs', // local plugin
     {
