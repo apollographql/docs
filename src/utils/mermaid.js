@@ -49,7 +49,7 @@ export function useMermaidStyles() {
       },
       [['.label', '.edgeLabel']]: {
         background,
-        lineHeight: 1.3,
+        lineHeight: 1.15,
         color: 'inherit'
       },
       '.edgeLabel rect': {

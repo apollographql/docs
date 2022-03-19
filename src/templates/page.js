@@ -69,6 +69,14 @@ import {useMermaidStyles} from '../utils/mermaid';
 const LIST_SPACING = 4;
 const HEADINGS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
 
+const NESTED_LIST_STYLES = {
+  [['ul', 'ol']]: {
+    mt: 3,
+    fontSize: 'md',
+    lineHeight: 'normal'
+  }
+};
+
 const components = {
   h1: props => <Heading as="h1" size="2xl" {...props} />,
   h2: props => <Heading as="h2" size="xl" {...props} />,
@@ -76,8 +84,21 @@ const components = {
   h4: props => <Heading as="h4" size="md" {...props} />,
   h5: props => <Heading as="h5" size="sm" {...props} />,
   h6: props => <Heading as="h6" size="xs" {...props} />,
-  ul: props => <UnorderedList spacing={LIST_SPACING} {...props} />,
-  ol: props => <OrderedList spacing={LIST_SPACING} {...props} />,
+  ul: props => (
+    <UnorderedList
+      spacing={LIST_SPACING}
+      sx={{
+        ...NESTED_LIST_STYLES,
+        ul: {
+          listStyleType: 'circle'
+        }
+      }}
+      {...props}
+    />
+  ),
+  ol: props => (
+    <OrderedList spacing={LIST_SPACING} sx={NESTED_LIST_STYLES} {...props} />
+  ),
   li: props => (
     <ListItem
       sx={{
@@ -98,7 +119,14 @@ const components = {
   tbody: Tbody,
   tr: Tr,
   th: Th,
-  td: Td,
+  td: props => (
+    <Td
+      sx={{
+        fontSize: 'md'
+      }}
+      {...props}
+    />
+  ),
   blockquote: Blockquote,
   undefined: Fragment // because remark-a11y-emoji adds <undefined> around stuff
 };
@@ -335,7 +363,8 @@ export default function PageTemplate({
                     },
                     code: {
                       bg: 'none',
-                      p: 0
+                      p: 0,
+                      color: 'secondary'
                     }
                   },
                   '>': {

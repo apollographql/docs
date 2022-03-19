@@ -3,3 +3,4 @@ node_modules
 public
 .netlify
 local
+.DS_Store

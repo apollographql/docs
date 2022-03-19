@@ -5,7 +5,17 @@ import {Link as GatsbyLink, graphql, useStaticQuery} from 'gatsby';
 import {PathContext, isUrl} from '../utils';
 import {isAbsolute, resolve} from 'path';
 
-export const PrimaryLink = props => <Link color="primary" {...props} />;
+export const PrimaryLink = props => (
+  <Link
+    color="primary"
+    sx={{
+      code: {
+        color: 'inherit'
+      }
+    }}
+    {...props}
+  />
+);
 
 function useLinkProps(href) {
   const {path} = useContext(PathContext);
