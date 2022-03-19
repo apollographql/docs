@@ -17,7 +17,7 @@ import MultiCodeBlock, {
 import Pagination from '../components/Pagination';
 import PropTypes from 'prop-types';
 import React, {Fragment, createElement, useCallback, useMemo} from 'react';
-import RelativeLink from '../components/RelativeLink';
+import RelativeLink, {ButtonLink} from '../components/RelativeLink';
 import Sidebar, {
   SIDEBAR_WIDTH_BASE,
   SIDEBAR_WIDTH_XL,
@@ -115,7 +115,8 @@ const mdxComponents = {
   CodeColumns,
   TypeScriptApiBox,
   TypescriptApiBox: TypeScriptApiBox,
-  EmbeddableExplorer
+  EmbeddableExplorer,
+  ButtonLink
 };
 
 const {processSync} = rehype()
