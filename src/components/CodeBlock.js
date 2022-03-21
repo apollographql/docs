@@ -31,6 +31,7 @@ import 'prismjs/components/prism-rust';
 import 'prismjs/components/prism-swift';
 import 'prismjs/components/prism-tsx';
 import 'prismjs/components/prism-typescript';
+import 'prismjs/components/prism-yaml';
 
 const CODE_BLOCK_SPACING = 4;
 export const GA_EVENT_CATEGORY_CODE_BLOCK = 'Code Block';
