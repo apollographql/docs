@@ -48,22 +48,35 @@ netlify login # if you haven't already
 netlify init
 ```
 
-Next, install NPM dependencies and run the site using the Netlify CLI.
+Next, install NPM dependencies and start the local development environment.
 
 ```sh
 npm i # install dependencies
-netlify dev # start local development environment
+npm start # start local development environment
 ```
 
 > ⌚ The first run may take a long time as it has to source a lot of content, but subsequent runs will be shorter since most of that data will have been cached.
 
 ### Developing a single docset
 
-By default, running the local development environment will build a site with _everything_ included. If you're working on a content edit to a single docset and want to preview those changes within the context of the docs site, you can specify a `DOCS_PATH` environment variable pointing to the location of your local content directory. This will cause the site to source content _only_ from the provided local directory, and content changes will be hot-reloaded. 🔥
+By default, running the local development environment will build a site with _everything_ included. If you're working on a content edit to a single docset and want to preview those changes within the context of the docs site, you can specify the path to another docs repo that you have checked out on your computer. This will cause the site to source content _only_ from the provided local directory, and changes to content in those repos will be hot-reloaded. 🔥
 
 ```sh
-DOCS_PATH=../apollo-client/docs/source netlify dev
+# this will build the React at the root of your local development environment
+npm start -- ../apollo-client
 ```
+
+For your convenience, this repo also comes with special `start` NPM scripts for each docset, assuming you have this repo checked out in the same directory as the other OSS repos.
+
+- `npm run start:client`
+- `npm run start:server`
+- `npm run start:ios`
+- `npm run start:kotlin`
+- `npm run start:federation`
+- `npm run start:rover`
+- `npm run start:router`
+
+Check out the [`package.json`](./package.json) to see how these scripts work!
 
 ## Meet the docsets
 
@@ -300,16 +313,18 @@ Here's how to configure a project:
 
 You can import modules within MDX files, but we also provide a variety of components to every MDX file—no import required.
 
-##### Button
+##### ButtonLink
 
-A general-purpose button exported from Chakra UI. Refer to the [Chakra docs](https://chakra-ui.com/docs/form/button) for more information about how to use this component.
+A Chakra UI `Button` component that behaves as a link. These links follow the same [rules as writing Markdown links](#linking). Refer to the [Chakra docs](https://chakra-ui.com/docs/form/button) for more props that can affect the style and behavior of the button.
 
 ```mdx
-import { Link } from "gatsby";
-
-<Button as={Link} to="/apollo-server/v2">
+<ButtonLink variant="outline" href="/apollo-server/v2">
   View older version
-</Button>
+</ButtonLink>
+
+<ButtonLink colorScheme="indigo" href="./get-started">
+  Get started
+</ButtonLink>
 ```
 
 ##### ExpansionPanel
