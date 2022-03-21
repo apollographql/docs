@@ -16,9 +16,8 @@ The central piece of this repo, the docs infrastructure, is a [Gatsby](https://w
   - [Adding a local docset](#adding-a-local-docset)
   - [Configuring a remote docset](#configuring-a-remote-docset)
   - [Managing versions](#managing-versions)
-- [Deploys and previews](#deploys-and-previews)
-  - [publish.yml](#publishyml)
-  - [preview.yml](#previewyml)
+- [Publish and preview](#publish-and-preview)
+  - [docs/preview.sh](#docspreviewsh)
 - [Authoring](#authoring)
   - [Frontmatter](#frontmatter)
   - [Linking](#linking)
@@ -175,66 +174,62 @@ Next, these two docsets must specify the label that they want to appear for that
 }
 ```
 
-## Deploys and previews
+## Publish and preview
 
 This website gets rebuilt and deployed to Netlify every time something is committed to its default branch. Deploy previews are automatically created for new PRs.
 
-"But what about changes to remote docsets?", I hear you say. Netlify doesn't let us configure a site to listen for changes in more than one repo. To get around this, we use GitHub Actions to trigger a new production deploy every time docs-related changes are made. We also build deploy previews and publish them to Netlify for PRs that include docs changes on these repos.
+"But what about changes to remote docsets?", I hear you say. Netlify doesn't let us configure a site to listen for changes in more than one repo. To work around this, we use Zapier to trigger a new production deploy every time docs-related changes are made. We also use Netlify to build and publish deploy previews for PRs that include docs changes.
 
-<!-- TODO: update when we get org-wide workflow templates working -->
-<!-- https://github.com/apollographql/.github/pull/5 -->
+To set up deploy previews in any repo, first copy the following shell script to the docs directory in your OSS repo, and call it `preview.sh`.
 
-To set up these actions in any repo, copy the following two YAML files to the repo's `.github/workflows` directory.
+### docs/preview.sh
 
-### publish.yml
+```sh
+#!/bin/bash
 
-```yml
-name: Deploy to production
+cd ../
 
-on:
-  push:
-    branches:
-      - main
-    paths:
-      - docs/**
+git clone https://github.com/apollographql/docs --branch tb/local-dev --single-branch monodocs
 
-jobs:
-  publish:
-    uses: apollographql/docs/.github/workflows/publish.yml@main
-    secrets:
-      NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-      NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+cd monodocs
+
+npm i
+
+cp -r ../docs local
+
+DOCS_LOCAL=true npm run build
 ```
 
-### preview.yml
+Make sure to enable execute access to this file for all users so that it can be run in the Netlify build.
 
-```yml
-name: Preview on Netlify
-
-on:
-  pull_request:
-    branches:
-      - main
-    paths:
-      - docs/**
-
-jobs:
-  preview:
-    uses: apollographql/docs/.github/workflows/preview.yml@main
-    secrets:
-      NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-      NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+```sh
+chmod +x preview.sh
 ```
 
-Both of these workflows are configured to respond to changes to files within the `docs` directory and assumes that your default branch is `main`—please change this if it should be something else. Additionally, any [version branches](#managing-versions) that you have configured must also be added to the `branches` field.
+Next, add a `netlify.toml` file to the root of your repo, or update the one you have to look like this:
 
-```yml
-branches:
-  - main
-  - version-2.6
+```toml
+[build]
+  ignore = "exit 0"
+
+[build.environment]
+  NODE_VERSION = "16"
+
+[context.deploy-preview.build]
+  base = "docs"
+  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF ."
+  command = "./preview.sh"
+  publish = "monodocs/public"
 ```
 
-They both make use of secrets configured at the organization level, so those don't need to be set within each repo. They also reference shared workflows [from this repo](./.github/workflows/) to simplify the complicated parts of the deploy process.
+This configures Netlify to:
+
+- Ignore production builds (these are handled by Zapier).
+- Set the Node.js version to 16 (and NPM v8)
+- Ignore deploy previews without any docs changes
+- Run the preview script to build a deploy preview
+
+If your docset [manages multiple versions](#managing-versions), please make sure you've configured your version branches as [branch deploys](https://docs.netlify.com/site-deploys/overview/#branch-deploy-controls) in the Netlify UI. This will ensure that deploy previews get built for PRs based on either the default branch or a version branch.
 
 ## Authoring
 
