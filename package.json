@@ -2,7 +2,14 @@
   "name": "docs",
   "private": true,
   "scripts": {
-    "start": "gatsby develop",
+    "start": "./dev.sh",
+    "start:client": "npm start -- ../apollo-client",
+    "start:server": "npm start -- ../apollo-server",
+    "start:ios": "npm start -- ../apollo-ios",
+    "start:kotlin": "npm start -- ../apollo-kotlin",
+    "start:federation": "npm start -- ../federation",
+    "start:rover": "npm start -- ../rover",
+    "start:router": "npm start -- ../router",
     "build": "gatsby build",
     "prebuild": "npm run prepare --workspaces",
     "test": "jest"
@@ -84,10 +91,11 @@
   },
   "devDependencies": {
     "@trevorblades/eslint-config": "^7.2.7",
+    "cpx": "^1.5.0",
     "eslint": "^7.32.0",
     "eslint-plugin-mdx": "^1.11.1",
     "jest": "^27.4.5",
-    "lerna": "^4.0.0"
+    "netlify-cli": "^9.13.3"
   },
   "volta": {
     "node": "16.13.1",

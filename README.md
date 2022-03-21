@@ -16,9 +16,8 @@ The central piece of this repo, the docs infrastructure, is a [Gatsby](https://w
   - [Adding a local docset](#adding-a-local-docset)
   - [Configuring a remote docset](#configuring-a-remote-docset)
   - [Managing versions](#managing-versions)
-- [Deploys and previews](#deploys-and-previews)
-  - [publish.yml](#publishyml)
-  - [preview.yml](#previewyml)
+- [Publish and preview](#publish-and-preview)
+  - [docs/preview.sh](#docspreviewsh)
 - [Authoring](#authoring)
   - [Frontmatter](#frontmatter)
   - [Linking](#linking)
@@ -48,22 +47,35 @@ netlify login # if you haven't already
 netlify init
 ```
 
-Next, install NPM dependencies and run the site using the Netlify CLI.
+Next, install NPM dependencies and start the local development environment.
 
 ```sh
 npm i # install dependencies
-netlify dev # start local development environment
+npm start # start local development environment
 ```
 
 > ⌚ The first run may take a long time as it has to source a lot of content, but subsequent runs will be shorter since most of that data will have been cached.
 
 ### Developing a single docset
 
-By default, running the local development environment will build a site with _everything_ included. If you're working on a content edit to a single docset and want to preview those changes within the context of the docs site, you can specify a `DOCS_PATH` environment variable pointing to the location of your local content directory. This will cause the site to source content _only_ from the provided local directory, and content changes will be hot-reloaded. 🔥
+By default, running the local development environment will build a site with _everything_ included. If you're working on a content edit to a single docset and want to preview those changes within the context of the docs site, you can specify the path to another docs repo that you have checked out on your computer. This will cause the site to source content _only_ from the provided local directory, and changes to content in those repos will be hot-reloaded. 🔥
 
 ```sh
-DOCS_PATH=../apollo-client/docs/source netlify dev
+# this will build the React at the root of your local development environment
+npm start -- ../apollo-client
 ```
+
+For your convenience, this repo also comes with special `start` NPM scripts for each docset, assuming you have this repo checked out in the same directory as the other OSS repos.
+
+- `npm run start:client`
+- `npm run start:server`
+- `npm run start:ios`
+- `npm run start:kotlin`
+- `npm run start:federation`
+- `npm run start:rover`
+- `npm run start:router`
+
+Check out the [`package.json`](./package.json) to see how these scripts work!
 
 ## Meet the docsets
 
@@ -162,66 +174,45 @@ Next, these two docsets must specify the label that they want to appear for that
 }
 ```
 
-## Deploys and previews
+## Publish and preview
 
 This website gets rebuilt and deployed to Netlify every time something is committed to its default branch. Deploy previews are automatically created for new PRs.
 
-"But what about changes to remote docsets?", I hear you say. Netlify doesn't let us configure a site to listen for changes in more than one repo. To get around this, we use GitHub Actions to trigger a new production deploy every time docs-related changes are made. We also build deploy previews and publish them to Netlify for PRs that include docs changes on these repos.
+"But what about changes to remote docsets?", I hear you say. Netlify doesn't let us configure a site to listen for changes in more than one repo. To work around this, we use Zapier to trigger a new production deploy every time docs-related changes are made. We also use Netlify to build and publish deploy previews for PRs that include docs changes.
 
-<!-- TODO: update when we get org-wide workflow templates working -->
-<!-- https://github.com/apollographql/.github/pull/5 -->
+To set up deploy previews in any repo, add a `netlify.toml` file to the root of your repo, or update the one you have to look like this:
 
-To set up these actions in any repo, copy the following two YAML files to the repo's `.github/workflows` directory.
+```toml
+[build]
+  ignore = "exit 0"
 
-### publish.yml
+[build.environment]
+  NODE_VERSION = "16"
 
-```yml
-name: Deploy to production
-
-on:
-  push:
-    branches:
-      - main
-    paths:
-      - docs/**
-
-jobs:
-  publish:
-    uses: apollographql/docs/.github/workflows/publish.yml@main
-    secrets:
-      NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-      NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+[context.deploy-preview.build]
+  base = "docs"
+  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF ."
+  command = """\
+  cd ../
+  rm -rf monodocs
+  git clone https://github.com/apollographql/docs --branch tb/local-dev --single-branch monodocs
+  cd monodocs
+  npm i
+  cp -r ../docs local
+  DOCS_LOCAL=true npm run build \
+  """
+  publish = "../monodocs/public"
 ```
 
-### preview.yml
+This configures Netlify to:
 
-```yml
-name: Preview on Netlify
+- Ignore production builds (these are handled by Zapier).
+- Set the Node.js version to 16 (and NPM v8)
+- Ignore deploy previews without any docs changes
+- Run a sequence of commands to build a deploy preview based on content from the OSS repo
+- Set the publish directory to the built site
 
-on:
-  pull_request:
-    branches:
-      - main
-    paths:
-      - docs/**
-
-jobs:
-  preview:
-    uses: apollographql/docs/.github/workflows/preview.yml@main
-    secrets:
-      NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-      NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-```
-
-Both of these workflows are configured to respond to changes to files within the `docs` directory and assumes that your default branch is `main`—please change this if it should be something else. Additionally, any [version branches](#managing-versions) that you have configured must also be added to the `branches` field.
-
-```yml
-branches:
-  - main
-  - version-2.6
-```
-
-They both make use of secrets configured at the organization level, so those don't need to be set within each repo. They also reference shared workflows [from this repo](./.github/workflows/) to simplify the complicated parts of the deploy process.
+If your docset [manages multiple versions](#managing-versions), please make sure you've configured your version branches as [branch deploys](https://docs.netlify.com/site-deploys/overview/#branch-deploy-controls) in the Netlify UI. This will ensure that deploy previews get built for PRs based on either the default branch or a version branch.
 
 ## Authoring
 
@@ -300,16 +291,18 @@ Here's how to configure a project:
 
 You can import modules within MDX files, but we also provide a variety of components to every MDX file—no import required.
 
-##### Button
+##### ButtonLink
 
-A general-purpose button exported from Chakra UI. Refer to the [Chakra docs](https://chakra-ui.com/docs/form/button) for more information about how to use this component.
+A Chakra UI `Button` component that behaves as a link. These links follow the same [rules as writing Markdown links](#linking). Refer to the [Chakra docs](https://chakra-ui.com/docs/form/button) for more props that can affect the style and behavior of the button.
 
 ```mdx
-import { Link } from "gatsby";
-
-<Button as={Link} to="/apollo-server/v2">
+<ButtonLink variant="outline" href="/apollo-server/v2">
   View older version
-</Button>
+</ButtonLink>
+
+<ButtonLink colorScheme="indigo" href="./get-started">
+  Get started
+</ButtonLink>
 ```
 
 ##### ExpansionPanel

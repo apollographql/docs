@@ -19,6 +19,10 @@ exports.createSchemaCustomization = ({actions}) => {
     type MdxFrontmatter {
       toc: Boolean
     }
+
+    type MarkdownRemarkFrontmatter {
+      description: String
+    }
   `;
   createTypes(typeDefs);
 };

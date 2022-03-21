@@ -20,39 +20,6 @@ const gatsbyRemarkPlugins = [
   }
 ];
 
-const localSources = yaml.load(fs.readFileSync('sources/local.yml', 'utf8'));
-const remoteSources = yaml.load(fs.readFileSync('sources/remote.yml', 'utf8'));
-
-const sources = process.env.DOCS_PATH
-  ? [
-      'gatsby-plugin-local-docs', // local plugin
-      {
-        resolve: 'gatsby-source-filesystem',
-        options: {
-          name: '/',
-          path: process.env.DOCS_PATH
-        }
-      }
-    ]
-  : [
-      ...Object.entries(localSources).map(([name, path]) => ({
-        resolve: 'gatsby-source-filesystem',
-        options: {
-          name,
-          path
-        }
-      })),
-      ...Object.entries(remoteSources).map(([name, {remote, branch}]) => ({
-        resolve: '@theowenyoung/gatsby-source-git',
-        options: {
-          remote,
-          name,
-          branch,
-          rootDir: 'docs/source'
-        }
-      }))
-    ];
-
 const plugins = [
   'gatsby-plugin-svgr',
   '@chakra-ui/gatsby-plugin',
@@ -171,10 +138,47 @@ const plugins = [
   }
 ];
 
+if (process.env.DOCS_LOCAL) {
+  plugins.push(
+    'gatsby-plugin-local-docs', // local plugin
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: '/',
+        path: 'local/source'
+      }
+    }
+  );
+} else {
+  const localSources = yaml.load(fs.readFileSync('sources/local.yml', 'utf8'));
+  const remoteSources = yaml.load(
+    fs.readFileSync('sources/remote.yml', 'utf8')
+  );
+
+  plugins.push(
+    ...Object.entries(localSources).map(([name, path]) => ({
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name,
+        path
+      }
+    })),
+    ...Object.entries(remoteSources).map(([name, {remote, branch}]) => ({
+      resolve: '@theowenyoung/gatsby-source-git',
+      options: {
+        remote,
+        name,
+        branch,
+        rootDir: 'docs/source'
+      }
+    }))
+  );
+}
+
 module.exports = {
   pathPrefix: '/docs',
   siteMetadata: {
     siteUrl: 'https://www.apollographql.com'
   },
-  plugins: plugins.concat(sources)
+  plugins
 };
