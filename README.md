@@ -180,33 +180,7 @@ This website gets rebuilt and deployed to Netlify every time something is commit
 
 "But what about changes to remote docsets?", I hear you say. Netlify doesn't let us configure a site to listen for changes in more than one repo. To work around this, we use Zapier to trigger a new production deploy every time docs-related changes are made. We also use Netlify to build and publish deploy previews for PRs that include docs changes.
 
-To set up deploy previews in any repo, first copy the following shell script to the docs directory in your OSS repo, and call it `preview.sh`.
-
-### docs/preview.sh
-
-```sh
-#!/bin/bash
-
-cd ../
-
-git clone https://github.com/apollographql/docs --branch tb/local-dev --single-branch monodocs
-
-cd monodocs
-
-npm i
-
-cp -r ../docs local
-
-DOCS_LOCAL=true npm run build
-```
-
-Make sure to enable execute access to this file for all users so that it can be run in the Netlify build.
-
-```sh
-chmod +x preview.sh
-```
-
-Next, add a `netlify.toml` file to the root of your repo, or update the one you have to look like this:
+To set up deploy previews in any repo, add a `netlify.toml` file to the root of your repo, or update the one you have to look like this:
 
 ```toml
 [build]
@@ -218,8 +192,16 @@ Next, add a `netlify.toml` file to the root of your repo, or update the one you 
 [context.deploy-preview.build]
   base = "docs"
   ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF ."
-  command = "./preview.sh"
-  publish = "monodocs/public"
+  command = """\
+  cd ../
+  rm -rf monodocs
+  git clone https://github.com/apollographql/docs --branch tb/local-dev --single-branch monodocs
+  cd monodocs
+  npm i
+  cp -r ../docs local
+  DOCS_LOCAL=true npm run build \
+  """
+  publish = "../monodocs/public"
 ```
 
 This configures Netlify to:
@@ -227,7 +209,8 @@ This configures Netlify to:
 - Ignore production builds (these are handled by Zapier).
 - Set the Node.js version to 16 (and NPM v8)
 - Ignore deploy previews without any docs changes
-- Run the preview script to build a deploy preview
+- Run a sequence of commands to build a deploy preview based on content from the OSS repo
+- Set the publish directory to the built site
 
 If your docset [manages multiple versions](#managing-versions), please make sure you've configured your version branches as [branch deploys](https://docs.netlify.com/site-deploys/overview/#branch-deploy-controls) in the Netlify UI. This will ensure that deploy previews get built for PRs based on either the default branch or a version branch.
 
