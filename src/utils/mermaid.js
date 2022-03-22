@@ -81,11 +81,23 @@ export function useMermaidStyles() {
         stroke: primary,
         fill: background
       },
+      [['g line', 'svg>line']]: {
+        stroke: tertiary
+      },
+      [['.actor-man line', '.actor-man circle']]: {
+        stroke: tertiary,
+        fill: background
+      },
       [['.label text', 'span']]: {
         color: 'inherit',
         fill: 'currentColor'
       },
-      [['.edgePath .path', '.flowchart-link', '.messageLine0']]: {
+      [[
+        '.edgePath .path',
+        '.flowchart-link',
+        '.messageLine0',
+        '.messageLine1'
+      ]]: {
         stroke: 'currentColor'
       },
       [['.marker', '#arrowhead path']]: {
