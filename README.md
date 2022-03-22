@@ -194,7 +194,7 @@ To set up deploy previews in any repo, add a `netlify.toml` file to the root of 
   command = """\
   cd ../
   rm -rf monodocs
-  git clone https://github.com/apollographql/docs --branch tb/local-dev --single-branch monodocs
+  git clone https://github.com/apollographql/docs --branch main --single-branch monodocs
   cd monodocs
   npm i
   cp -r ../docs local
