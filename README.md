@@ -17,6 +17,8 @@ The central piece of this repo, the docs infrastructure, is a [Gatsby](https://w
   - [Configuring a remote docset](#configuring-a-remote-docset)
   - [Managing versions](#managing-versions)
 - [Publish and preview](#publish-and-preview)
+  - [Production deploys](#production-deploys)
+  - [Deploy previews](#deploy-previews)
 - [Authoring](#authoring)
   - [Frontmatter](#frontmatter)
   - [Linking](#linking)
@@ -177,9 +179,42 @@ Next, these two docsets must specify the label that they want to appear for that
 
 This website gets rebuilt and deployed to Netlify every time something is committed to its default branch. Deploy previews are automatically created for new PRs.
 
-"But what about changes to remote docsets?", I hear you say. Netlify doesn't let us configure a site to listen for changes in more than one repo. To work around this, we use Zapier to trigger a new production deploy every time docs-related changes are made. We also use Netlify to build and publish deploy previews for PRs that include docs changes.
+"But what about changes to remote docsets?", I hear you say. Netlify doesn't let us configure a site to listen for changes in more than one repo.
 
-To set up deploy previews in any repo, add a `netlify.toml` file to the root of your repo, or update the one you have to look like this:
+### Production deploys
+
+To work around this, we use GitHub Actions to trigger a new production deploy every time docs-related changes are made. To enable this behavior, add a publish workflow in your repo.
+
+1. Go to the "Actions" tab in GitHub. If you already have workflows, click the "New workflow" button to get to the "Get started with GitHub Actions" page.
+2. Scroll down to the "By Apollo GraphQL" section.
+3. Find the "Docs Production Deploy Workflow" action and click the "Configure" button.
+
+This will bring up a page where you can edit the workflow template. If your docset manages more than one version, add the version branches to the `branches` block in the workflow. Below is an example of a `docs-publish.yml` workflow:
+
+```yaml
+name: Deploy docs to production
+
+on:
+  push:
+    branches:
+      - main
+      - version-2 # or whatever your version branch(es) are called
+    paths:
+      - docs/**
+
+jobs:
+  publish:
+    uses: apollographql/docs/.github/workflows/publish.yml@main
+    secrets:
+      NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+      NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+```
+
+This workflow references [a shared workflow hosted in this repo](./.github/workflows/publish.yml), so any changes that affect the way the action works will likely take place in that file, and you won't need to make any changes to the workflow in your own repo.
+
+### Deploy previews
+
+We also use Netlify to build and publish deploy previews for PRs that include docs changes. To set up deploy previews in any repo, add a `netlify.toml` file to the root of your repo, or update the one you have to look like this:
 
 ```toml
 [build]
