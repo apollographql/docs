@@ -17,7 +17,6 @@ The central piece of this repo, the docs infrastructure, is a [Gatsby](https://w
   - [Configuring a remote docset](#configuring-a-remote-docset)
   - [Managing versions](#managing-versions)
 - [Publish and preview](#publish-and-preview)
-  - [docs/preview.sh](#docspreviewsh)
 - [Authoring](#authoring)
   - [Frontmatter](#frontmatter)
   - [Linking](#linking)
