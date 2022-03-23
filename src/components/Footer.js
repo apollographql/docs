@@ -13,7 +13,7 @@ import {
 } from '@chakra-ui/react';
 
 const Resources = {
-  'GraphQL Tutorials': 'https://odyssey.apollographql.com',
+  'GraphQL Tutorials': 'https://www.apollographql.com/tutorials',
   Docs: 'https://www.apollographql.com/docs',
   Blog: 'https://www.apollographql.com/blog',
   'Developer Hub': 'https://www.apollographql.com/developers',

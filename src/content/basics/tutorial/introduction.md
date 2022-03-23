@@ -3,7 +3,7 @@ title: Introduction
 description: Start here to learn how to build full-stack apps with Apollo
 ---
 
-> Getting started with Apollo? [Check out **Odyssey**, Apollo's learning platform](https://odyssey.apollographql.com?utm_source=apollo_docs&utm_medium=referral)! Our introductory course, **Lift-off**, introduces many of the same concepts as this tutorial with helpful videos and interactive code challenges.
+> Getting started with Apollo? [Check out **Odyssey**, Apollo's learning platform](https://www.apollographql.com/tutorials)! Our introductory course, **Lift-off**, introduces many of the same concepts as this tutorial with helpful videos and interactive code challenges.
 
 Welcome! This tutorial guides you through building a full-stack, GraphQL-powered app with the Apollo platform.
 

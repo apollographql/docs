@@ -3,7 +3,7 @@ title: Build a schema
 description: Create the blueprint for your graph
 ---
 
-> Getting started with Apollo? [Check out **Odyssey**, Apollo's learning platform](https://odyssey.apollographql.com?utm_source=apollo_docs&utm_medium=referral)! Our introductory course, **Lift-off**, introduces many of the same concepts as this tutorial with helpful videos and interactive code challenges.
+> Getting started with Apollo? [Check out **Odyssey**, Apollo's learning platform](https://www.apollographql.com/tutorials)! Our introductory course, **Lift-off**, introduces many of the same concepts as this tutorial with helpful videos and interactive code challenges.
 
 > Time to accomplish: 15 minutes
 
@@ -40,8 +40,8 @@ The two packages you need to get started with Apollo Server are `apollo-server` 
 Now, let's navigate to `src/index.js` so we can create our server. Paste the code below into the file:
 
 ```js title="src/index.js"
-const { ApolloServer } = require('apollo-server');
-const typeDefs = require('./schema');
+const { ApolloServer } = require("apollo-server");
+const typeDefs = require("./schema");
 
 const server = new ApolloServer({ typeDefs });
 ```
@@ -67,7 +67,7 @@ Let's design our schema to make these actions straightforward.
 In `src/schema.js`, import `gql` from `apollo-server` and create a variable called `typeDefs` for your schema:
 
 ```js title="src/schema.js"
-const { gql } = require('apollo-server');
+const { gql } = require("apollo-server");
 
 const typeDefs = gql`
   # Your schema will go here
