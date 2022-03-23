@@ -57,3 +57,62 @@ const theme = extendTheme({
   },
 });
 ```
+
+### Global Links
+
+This package exports these objects to create a single source of truth for the links in the footers of all Apollo properties. Each contain a category title field, and an array of link objects with their own titles and hrefs.
+
+```
+communityCategory,
+companyCategory,
+helpCategory,
+productCategory,
+whyApolloCategory
+```
+
+For your convenince, there are also exported `Category` and `Link` interfaces for type safety and intellisense. 
+
+Example usage:
+```tsx
+import { Category } from '@apollo/chakra-helpers';
+import { Flex, Heading, List, ListItem } from '@chakra-ui/react';
+import FooterLink from './FooterLink';
+
+interface Props {
+  categories: Category[];
+}
+
+export const Categories = ({ categories }: Props) => {
+  return (
+    <>
+      {categories.map((category, i) => {
+        const { title, links } = category;
+
+        return (
+          <Flex key={i} direction="column" fontSize="lg">
+            <Heading color="white" fontSize="lg" fontWeight={700} pb={6}>
+              {title}
+            </Heading>
+            <List>
+              {links.map((link, i) => {
+                const { text, href, internal } = link;
+                return (
+                  <ListItem key={i} lineHeight="30px" fontSize="md">
+                    <FooterLink
+                      href={href}
+                      internal={internal}
+                      fontWeight="normal"
+                    >
+                      {text}
+                    </FooterLink>
+                  </ListItem>
+                );
+              })}
+            </List>
+          </Flex>
+        );
+      })}
+    </>
+  );
+};
+```

@@ -2,6 +2,16 @@ import {ColorHues} from '@chakra-ui/react';
 import {ColorPalette, MonochromePalette} from '@apollo/space-kit/colors';
 import {mix} from 'polished';
 
+export {
+  Category,
+  Link,
+  communityCategory,
+  companyCategory,
+  helpCategory,
+  productCategory,
+  whyApolloCategory
+} from './globalLinks';
+
 const body = "'Source Sans Pro', sans-serif";
 export const fonts = {
   body,
