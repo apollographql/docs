@@ -36,18 +36,21 @@ export function useFieldTableStyles() {
     },
     td: {
       ':not(:last-child)': {
-        h6: {
+        [['h5', 'h6']]: {
           mb: 1,
-          fontSize: 'lg',
+          fontSize: 'md',
           fontWeight: 'normal'
         },
         p: {
+          fontSize: 'sm',
           code: {
             p: 0,
             bg: 'none',
-            fontSize: 'sm',
             color: teal
           }
+        },
+        code: {
+          fontSize: 'inherit'
         }
       },
       ':last-child': {
