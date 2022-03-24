@@ -29,7 +29,11 @@ export function useTagColors() {
 
 export function useFieldTableStyles() {
   const teal = useColorModeValue('teal.600', 'teal.300');
+  const requiredBg = useColorModeValue('blackAlpha.50', 'whiteAlpha.50');
   return {
+    'tr.required': {
+      bg: requiredBg
+    },
     td: {
       ':not(:last-child)': {
         h6: {
