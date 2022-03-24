@@ -30,7 +30,7 @@ While editing your operations, you can toggle between inline or extracted notati
 
 #### Inline variable
 
-```graphql:title=query.graphql
+```graphql title="query.graphql"
 query {
   user(id: "Beth Harmon") {
     name
@@ -40,7 +40,7 @@ query {
 
 #### Extracted variable
 
-```graphql:title=query.graphql
+```graphql title="query.graphql"
 query($id: ID!) {
   user(id: $id) {
     name
@@ -48,7 +48,7 @@ query($id: ID!) {
 }
 ```
 
-```json:title=variables.json
+```json title="variables.json"
 {
   "id": "Beth Harmon"
 }
@@ -205,7 +205,7 @@ The Explorer [extends your schema with `graphql-lodash`](https://github.com/APIs
 
 Here's an example of a query that uses `graphql-lodash`. You can try pasting this in the Explorer embedded at http://apollographql.com/studio/develop:
 
-```graphql:title=example.graphql
+```graphql title="example.graphql"
 query StarWarsGenderStats {
   genderStats: allPeople @_(get: "edges") {
     edges @_(countBy: "node.gender") {
