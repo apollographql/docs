@@ -36,4 +36,13 @@
 /references/graph-manager-data-privacy/ /docs/studio/data-privacy/
 
 # Move Fullstack Tutorial to Odyssey
-/tutorial/* https://odyssey.apollographql.com/fullstack-tutorial/
+/tutorial/introduction https://odyssey.apollographql.com/fullstack-tutorial/introduction
+/tutorial/schema/ https://odyssey.apollographql.com/fullstack-tutorial/building-a-schema
+/tutorial/data-source/ https://odyssey.apollographql.com/fullstack-tutorial/connecting-to-data-sources
+/tutorial/resolvers/ https://odyssey.apollographql.com/fullstack-tutorial/writing-query-resolvers
+/tutorial/mutation-resolvers/ https://odyssey.apollographql.com/fullstack-tutorial/writing-mutation-resolvers
+/tutorial/production/ https://odyssey.apollographql.com/fullstack-tutorial/connecting-graphs-to-apollo-studio
+/tutorial/client/ https://odyssey.apollographql.com/fullstack-tutorial/setting-up-apollo-client
+/tutorial/queries/ https://odyssey.apollographql.com/fullstack-tutorial/fetching-data-with-queries
+/tutorial/mutations/ https://odyssey.apollographql.com/fullstack-tutorial/updating-data-with-mutations
+/tutorial/local-state/ https://odyssey.apollographql.com/fullstack-tutorial/managing-local-state
