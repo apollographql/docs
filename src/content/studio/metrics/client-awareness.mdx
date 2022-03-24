@@ -27,7 +27,7 @@ By default, Apollo Server checks for the presence of the following HTTP headers 
 
 **If you're using Apollo Client**, you can populate these headers automatically for every operation request by providing the `name` and `version` options to the `ApolloClient` constructor, like so:
 
-```js{8-9}
+```js {8-9}
 import { ApolloClient } from 'apollo-client';
 import { HttpLink } from 'apollo-link-http';
 
@@ -48,7 +48,7 @@ You can configure Apollo Server to use a different method to determine the `name
 
 In the following example, the `generateClientInfo` function calls a `userSuppliedLogic` function, which can return values for the client's name and version based on the details of the `request`.
 
-```js{8-14}
+```js {8-14}
 const { ApolloServer } = require("apollo-server");
 const { ApolloServerPluginUsageReporting } = require("apollo-server-core");
 

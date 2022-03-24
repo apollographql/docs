@@ -130,7 +130,7 @@ Subscription support is enabled by default in Apollo Server 2.x and provided by 
 
 To disable subscriptions support on Apollo Server 2.x, a `subscriptions: false` setting should be included on the instantiation of Apollo Server, as follows:
 
-```js{5-6}
+```js {5-6}
 const server = new ApolloServer({
   // Existing configuration
   typeDefs,
@@ -155,7 +155,7 @@ npm install @apollo/server-plugin-operation-registry
 
 Next, the plugin must be enabled. This requires adding the appropriate module to the `plugins` parameter to the Apollo Server options:
 
-```js{8-12}
+```js {8-12}
 const server = new ApolloServer({
   // Existing configuration
   typeDefs,
@@ -175,7 +175,7 @@ const server = new ApolloServer({
 
 The full setup:
 
-```js{21-25}
+```js {21-25}
 const { ApolloServer } = require('apollo-server');
 const { ApolloGateway } = require("@apollo/gateway");
 
@@ -282,7 +282,7 @@ To selectively enable operation safelisting, the `forbidUnregisteredOperations` 
 
 For example, to enforce the operation registry safelisting while skipping enforcement for any request in which the `Let-me-pass` header was present with a value of `Pretty please?`, the following configuration could be used:
 
-```js{12-27}
+```js {12-27}
 const server = new ApolloServer({
   // Existing configuration
   typeDefs,
@@ -331,7 +331,7 @@ This **experimental** function can be used to monitor the number of operations i
 
 <ExpansionPanel title="Code sample">
 
-```js{4-10}
+```js {4-10}
 const server = new ApolloServer({
   plugins: [
     require("@apollo/server-plugin-operation-registry")({
@@ -356,7 +356,7 @@ This function is run when an operation is not found in the manifest.
 
 <ExpansionPanel title="Code sample">
 
-```js{4-6}
+```js {4-6}
 const server = new ApolloServer({
   plugins: [
     require("@apollo/server-plugin-operation-registry")({
@@ -378,7 +378,7 @@ This function is run when an operation is not in the manifest and
 
 <ExpansionPanel title="Code sample">
 
-```js{5-7}
+```js {5-7}
 const server = new ApolloServer({
   plugins: [
     require("@apollo/server-plugin-operation-registry")({
