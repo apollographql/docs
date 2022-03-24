@@ -26,11 +26,12 @@
     "typescript": "^4.4.4"
   },
   "dependencies": {
+    "@apollo/explorer": "^0.2.1",
+    "outdent": "^0.8.0",
     "polished": "^4.1.3"
   },
   "peerDependencies": {
     "@apollo/space-kit": "8 - 8.11.0",
     "@chakra-ui/react": "^1.6.0"
-  },
-  "gitHead": "ac91ab6925a0bbb18933c445b99a18c417e8a37e"
+  }
 }
