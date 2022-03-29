@@ -84,8 +84,8 @@ export function SidebarNav({navItems, onHide, darkBg = 'gray.800', children}) {
                 )
               );
               window.gtag?.('event', 'Toggle all', {
-                category: GA_EVENT_CATEGORY_SIDEBAR,
-                label: expanded ? 'expand' : 'collapse'
+                event_category: GA_EVENT_CATEGORY_SIDEBAR,
+                event_label: expanded ? 'expand' : 'collapse'
               });
             }}
           >

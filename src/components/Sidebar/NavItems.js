@@ -84,8 +84,8 @@ function NavGroup({group, depth}) {
             [group.id]: open
           });
           window.gtag?.('event', 'Toggle category', {
-            category: GA_EVENT_CATEGORY_SIDEBAR,
-            label: group.title,
+            event_category: GA_EVENT_CATEGORY_SIDEBAR,
+            event_label: group.title,
             value: Number(open)
           });
         }}

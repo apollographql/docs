@@ -59,8 +59,8 @@ export default function TableOfContents({headings}) {
               fontWeight={isActive && 'semibold'}
               onClick={event =>
                 window.gtag?.('event', 'Heading click', {
-                  category: 'Section Nav',
-                  label: event.target.innerText
+                  event_category: 'Section Nav',
+                  event_label: event.target.innerText
                 })
               }
             >

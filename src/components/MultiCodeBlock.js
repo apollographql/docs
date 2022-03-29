@@ -52,8 +52,8 @@ export default function MultiCodeBlock({children}) {
                   onClick={() => {
                     setLanguage(language);
                     window.gtag?.('event', 'Change language', {
-                      category: GA_EVENT_CATEGORY_CODE_BLOCK,
-                      label: language
+                      event_category: GA_EVENT_CATEGORY_CODE_BLOCK,
+                      event_label: language
                     });
                   }}
                 >

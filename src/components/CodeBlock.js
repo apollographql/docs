@@ -196,7 +196,7 @@ export default function CodeBlock({children}) {
                 onClick={() => {
                   onCopy();
                   window.gtag?.('event', 'Copy', {
-                    category: GA_EVENT_CATEGORY_CODE_BLOCK
+                    event_category: GA_EVENT_CATEGORY_CODE_BLOCK
                   });
                 }}
               >
