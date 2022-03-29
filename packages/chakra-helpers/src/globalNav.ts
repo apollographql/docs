@@ -151,5 +151,6 @@ export const defaultConfig = [
   communityCategory,
   companyCategory,
   helpCategory,
-  productCategory
+  productCategory,
+  whyApolloCategory
 ];
