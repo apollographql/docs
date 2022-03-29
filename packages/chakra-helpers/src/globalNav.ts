@@ -14,33 +14,27 @@ export const companyCategory: Category = {
   links: [
     {
       text: 'About Us',
-      href: 'https://www.apollographql.com/about-us',
-      internal: true
+      href: 'https://www.apollographql.com/about-us'
     },
     {
       text: 'Careers',
-      href: 'https://www.apollographql.com/careers',
-      internal: true
+      href: 'https://www.apollographql.com/careers'
     },
     {
       text: 'Open Positions',
-      href: 'https://www.apollographql.com/careers#positions',
-      internal: true
+      href: 'https://www.apollographql.com/careers#positions'
     },
     {
       text: 'Team',
-      href: 'https://www.apollographql.com/careers/team',
-      internal: true
+      href: 'https://www.apollographql.com/careers/team'
     },
     {
       text: 'Leadership',
-      href: 'https://www.apollographql.com/about-us',
-      internal: true
+      href: 'https://www.apollographql.com/about-us'
     },
     {
       text: 'Interns',
-      href: 'https://www.apollographql.com/careers/interns',
-      internal: true
+      href: 'https://www.apollographql.com/careers/interns'
     }
   ]
 };
@@ -110,18 +104,15 @@ export const whyApolloCategory: Category = {
   links: [
     {
       text: 'Customer Stories',
-      href: 'https://www.apollographql.com/customers',
-      internal: true
+      href: 'https://www.apollographql.com/customers'
     },
     {
       text: 'Content Library',
-      href: 'https://www.apollographql.com/resources',
-      internal: true
+      href: 'https://www.apollographql.com/resources'
     },
     {
       text: 'Apollo for Enterprise',
-      href: 'https://www.apollographql.com/enterprise',
-      internal: true
+      href: 'https://www.apollographql.com/enterprise'
     },
     {
       text: 'Events at Apollo',
@@ -135,28 +126,23 @@ export const helpCategory: Category = {
   links: [
     {
       text: 'Contact an Expert',
-      href: 'https://www.apollographql.com/contact-sales',
-      internal: true
+      href: 'https://www.apollographql.com/contact-sales'
     },
     {
       text: 'Get Support',
-      href: 'https://www.apollographql.com/support',
-      internal: true
+      href: 'https://www.apollographql.com/support'
     },
     {
       text: 'Website Terms of Service',
-      href: 'https://www.apollographql.com/Apollo-Website-Terms-of-Service.pdf',
-      internal: true
+      href: 'https://www.apollographql.com/Apollo-Website-Terms-of-Service.pdf'
     },
     {
       text: 'Product Terms of Service',
-      href: 'https://www.apollographql.com/Apollo-Terms-of-Service.pdf',
-      internal: true
+      href: 'https://www.apollographql.com/Apollo-Terms-of-Service.pdf'
     },
     {
       text: 'Privacy Policy',
-      href: 'https://www.apollographql.com/privacy-policy',
-      internal: true
+      href: 'https://www.apollographql.com/privacy-policy'
     }
   ]
 };

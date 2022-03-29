@@ -16,7 +16,7 @@ import {
   companyCategory,
   helpCategory,
   productCategory
-} from '@apollo/chakra-helpers';
+} from '@apollo/chakra-helpers/globalNav';
 
 export default function Footer({
   navConfig = [
@@ -49,11 +49,9 @@ export default function Footer({
             {title}
           </Heading>
           <List spacing="1">
-            {links.map(({href, text, internal}, index) => (
+            {links.map(({href, text}, index) => (
               <ListItem key={index}>
-                <Link href={href} isExternal={!internal}>
-                  {text}
-                </Link>
+                <Link href={href}>{text}</Link>
               </ListItem>
             ))}
           </List>
