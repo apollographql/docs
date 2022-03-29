@@ -21,6 +21,7 @@ import {
 import {ReactComponent as Federation} from '../../assets/icons/federation.svg';
 import {FiChevronDown, FiGrid} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
+import {ReactComponent as Router} from '../../assets/icons/router.svg';
 import {ReactComponent as Rover} from '../../assets/icons/rover.svg';
 import {ReactComponent as Satellite} from '../../assets/icons/satellite.svg';
 import {ReactComponent as Schema} from '../../assets/icons/schema.svg';
@@ -40,7 +41,8 @@ export const DOCSET_ICONS = {
   apollo: <CustomIcon icon={ApolloMark} />,
   federation: <CustomIcon icon={Federation} />,
   studio: <CustomIcon icon={Schema} />,
-  rover: <CustomIcon icon={Rover} />
+  rover: <CustomIcon icon={Rover} />,
+  router: <CustomIcon icon={Router} />
 };
 
 export function DocsetMenu({docset, versions, currentVersion, ...props}) {
@@ -99,7 +101,9 @@ export function DocsetMenu({docset, versions, currentVersion, ...props}) {
               <DocsetButton leftIcon={DOCSET_ICONS.federation} to="/federation">
                 Federation
               </DocsetButton>
-              <DocsetButton to="/router">Router</DocsetButton>
+              <DocsetButton leftIcon={DOCSET_ICONS.router} to="/router">
+                Router
+              </DocsetButton>
             </DocsetGroup>
             <DocsetGroup title="Cloud">
               <DocsetButton leftIcon={DOCSET_ICONS.studio} to="/studio">

@@ -2,7 +2,6 @@ import Blockquote from '../components/Blockquote';
 import CodeBlock from '../components/CodeBlock';
 import CodeColumns from '../components/CodeColumns';
 import DocsetMenu from '../components/DocsetMenu';
-import EmbeddableExplorer from '../components/EmbeddableExplorer';
 import ExpansionPanel, {
   ExpansionPanelList,
   ExpansionPanelListItem
@@ -54,6 +53,7 @@ import {
   chakra,
   useToken
 } from '@chakra-ui/react';
+import {EmbeddableExplorer} from '@apollo/chakra-helpers';
 import {FaDiscourse, FaGithub} from 'react-icons/fa';
 import {FiChevronsRight, FiStar} from 'react-icons/fi';
 import {GatsbySeo} from 'gatsby-plugin-next-seo';

@@ -105,7 +105,7 @@ The contact info includes a name (of a team or individual), along with an option
 
 To add the `@contact` directive to your schema, you first need to _define_ the directive. Add the following definition to each of your subgraph schemas:
 
-```graphql:title=schema.graphql
+```graphql title="schema.graphql"
 directive @contact(
   "Contact title of the subgraph owner"
   name: String!
@@ -118,7 +118,7 @@ directive @contact(
 
 You can now apply the `@contact` directive to the special `schema` object. Many schemas don’t include this object because it’s not required, but you can add it like so:
 
-```graphql:title=schema.graphql
+```graphql title="schema.graphql"
 schema @contact(
   name: "Acephei Server Team",
   url: "https://myteam.slack.com/archives/teams-chat-room-url",
@@ -150,7 +150,7 @@ As shown, the `schema` object must include a field for each root operation type 
 - Similarly, you cannot provide your `@contact` directive to Apollo via [schema reporting](./schema/schema-reporting/). This registration method also does not include directives.
 - If your subgraph doesn’t already have a `schema` object, you need to add one to use the `@contact` directive. The `schema` object cannot be empty, so you need to include at least one field in it (most commonly `query: Query`). If you do provide the `Query` type like this, it needs to include at least one field in your subgraph’s schema. If your subgraph’s `Query` type is empty, you need to add a dummy field for the SDL to be valid:
 
-  ```graphql:title=schema.graphql
+  ```graphql title="schema.graphql"
   @contact(...)
   schema {
     query: Query
