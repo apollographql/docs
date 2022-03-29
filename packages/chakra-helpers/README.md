@@ -58,7 +58,7 @@ const theme = extendTheme({
 });
 ```
 
-### Global Links
+### Global Nav Links
 
 This package exports these objects to create a single source of truth for the links in the footers of all Apollo properties. Each contain a category title field, and an array of link objects with their own titles and hrefs.
 
@@ -67,52 +67,98 @@ communityCategory,
 companyCategory,
 helpCategory,
 productCategory,
-whyApolloCategory
+whyApolloCategory,
+defaultConfig
+```
+
+Example usage:
+
+```js
+// Footer.js
+import PropTypes from 'prop-types';
+import React from 'react';
+import {ReactComponent as ApolloLogo} from '@apollo/space-kit/logos/logo.svg';
+import {
+  Box,
+  Flex,
+  Heading,
+  Link,
+  List,
+  ListItem,
+  SimpleGrid,
+  Text
+} from '@chakra-ui/react';
+import {defaultConfig} from '@apollo/chakra-helpers';
+
+export default function Footer({navConfig = defaultConfig}) {
+  return (
+    <SimpleGrid
+      as="footer"
+      columns={[1, 2, 3, 4]}
+      spacing={{base: 6, md: 8}}
+      borderTopWidth="1px"
+      px="10"
+      py="12"
+    >
+      <div>
+        <Flex mb="2">
+          <a href="https://www.apollographql.com">
+            <Box as={ApolloLogo} fill="current" h="8" />
+          </a>
+        </Flex>
+        <Text>&copy; Apollo Graph Inc.</Text>
+      </div>
+      {navConfig.map(({links, title}, index) => (
+        <div key={index}>
+          <Heading mb="2" size="md">
+            {title}
+          </Heading>
+          <List spacing="1">
+            {links.map(({href, text}, index) => (
+              <ListItem key={index}>
+                <Link href={href}>{text}</Link>
+              </ListItem>
+            ))}
+          </List>
+        </div>
+      ))}
+    </SimpleGrid>
+  );
+}
+
+Footer.propTypes = {
+  navConfig: PropTypes.object
+};
 ```
 
 For your convenince, there are also exported `Category` and `Link` interfaces for type safety and intellisense. 
 
-Example usage:
-```tsx
-import { Category } from '@apollo/chakra-helpers';
-import { Flex, Heading, List, ListItem } from '@chakra-ui/react';
-import FooterLink from './FooterLink';
+example config:
 
-interface Props {
-  categories: Category[];
+```ts
+// customConfig.ts
+const customCategory: Category = {
+  title: "My Custom Category",
+  links: [
+    {
+      title: "A Custom Link",
+      href: "https://www.acustomlink.com"
+    }
+  ]
 }
+```
 
-export const Categories = ({ categories }: Props) => {
-  return (
-    <>
-      {categories.map((category, i) => {
-        const { title, links } = category;
+or:
 
-        return (
-          <Flex key={i} direction="column" fontSize="lg">
-            <Heading color="white" fontSize="lg" fontWeight={700} pb={6}>
-              {title}
-            </Heading>
-            <List>
-              {links.map((link, i) => {
-                const { text, href, internal } = link;
-                return (
-                  <ListItem key={i} lineHeight="30px" fontSize="md">
-                    <FooterLink
-                      href={href}
-                      internal={internal}
-                      fontWeight="normal"
-                    >
-                      {text}
-                    </FooterLink>
-                  </ListItem>
-                );
-              })}
-            </List>
-          </Flex>
-        );
-      })}
-    </>
-  );
-};
+```ts
+// customConfig.js
+const customCategory = {
+  title: "My Custom Category",
+  links: [
+    {
+      title: "A Custom Link",
+      href: "https://www.acustomlink.com"
+    }
+  ]
+}
 ```
