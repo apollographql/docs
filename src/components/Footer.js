@@ -44,14 +44,14 @@ import {
 //   'Privacy Policy': 'https://www.apollographql.com/privacy-policy'
 // };
 
-const categories = [
-  helpCategory,
-  communityCategory,
-  companyCategory,
-  productCategory
-];
-
-export default function Footer({navConfig = {Resources, Company, Help}}) {
+export default function Footer({
+  navConfig = [
+    helpCategory,
+    communityCategory,
+    companyCategory,
+    productCategory
+  ]
+}) {
   return (
     <SimpleGrid
       as="footer"
@@ -83,7 +83,7 @@ export default function Footer({navConfig = {Resources, Company, Help}}) {
             </List>
             </div>
           ))} */}
-      {categories.map(({links, title}, index) => (
+      {navConfig.map(({links, title}, index) => (
         <div key={index}>
           <Heading mb="2" size="md">
             {title}
