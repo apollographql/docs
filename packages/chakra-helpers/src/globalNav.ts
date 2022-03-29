@@ -146,3 +146,10 @@ export const helpCategory: Category = {
     }
   ]
 };
+
+export const defaultConfig = [
+  communityCategory,
+  companyCategory,
+  helpCategory,
+  productCategory
+];

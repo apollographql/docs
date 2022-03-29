@@ -11,21 +11,9 @@ import {
   SimpleGrid,
   Text
 } from '@chakra-ui/react';
-import {
-  communityCategory,
-  companyCategory,
-  helpCategory,
-  productCategory
-} from '@apollo/chakra-helpers/globalNav';
+import {defaultConfig} from '@apollo/chakra-helpers';
 
-export default function Footer({
-  navConfig = [
-    communityCategory,
-    companyCategory,
-    helpCategory,
-    productCategory
-  ]
-}) {
+export default function Footer({navConfig = defaultConfig}) {
   return (
     <SimpleGrid
       as="footer"
