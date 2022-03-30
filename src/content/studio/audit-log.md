@@ -15,7 +15,7 @@ Organizations with a [Studio Enterprise plan](http://apollographql.com/pricing) 
 
 When creating an audit log export, you specify a **time range**, along with optional filters to limit actions to a particular **user** or **graph**. The maximum time range that you can request audits for is 180 days, as definied by our retention policy.
 
-<img src="./img/audit-log-create.jpg" class="screenshot" alt="Apollo Studio audit log" width="400" />
+<img src="./img/audit-log-create.jpg" class="screenshot" alt="Apollo Studio Audit Log" width="400" />
 
 > If you need to export a log with more complex filters and against archives, please email **support@apollographql.com**.
 
