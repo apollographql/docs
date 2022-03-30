@@ -4,7 +4,7 @@
     "Home": "/",
     "The Apollo platform": "/intro/platform",
     "Why adopt GraphQL?": "/intro/benefits",
-    "Guided tutorials": "https://odyssey.apollographql.com/?utm_source=apollo_docs&utm_medium=referral&utm_campaign=docs_sidebar",
+    "Guided tutorials": "https://www.apollographql.com/tutorials?utm_source=apollo_docs&utm_medium=referral&utm_campaign=docs_sidebar",
     "Full-Stack Tutorial": {
       "0. Introduction": "/tutorial/introduction",
       "1. Build a schema": "/tutorial/schema",

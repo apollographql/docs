@@ -42,7 +42,7 @@ export function Odyssey() {
       <div>
         <Button
           as="a"
-          href="https://odyssey.apollographql.com"
+          href="https://www.apollographql.com/tutorials"
           colorScheme="indigo"
           rightIcon={<FiArrowRight />}
         >
