@@ -16,6 +16,7 @@ The central piece of this repo, the docs infrastructure, is a [Gatsby](https://w
   - [Adding a local docset](#adding-a-local-docset)
   - [Configuring a remote docset](#configuring-a-remote-docset)
   - [Managing versions](#managing-versions)
+  - [Redirect rules](#redirect-rules)
 - [Publish and preview](#publish-and-preview)
   - [Production deploys](#production-deploys)
   - [Deploy previews](#deploy-previews)
@@ -174,6 +175,17 @@ Next, these two docsets must specify the label that they want to appear for that
   "sidebar": {...}
 }
 ```
+
+### Redirect rules
+
+Redirects can continue to be written in the `_redirects` file in the `docs/source` directory of each docset. These redirects can be written in the [Netlify redirects syntax](https://docs.netlify.com/routing/redirects/#syntax-for-the-redirects-file), but come with one catch. The `from` path must be relative to the root of the particular docset that the redirect pertains to, but the `to` path must be relative to the root of the `apollographql.com` domain. That means that the path you want to redirect the user to must include the `/docs` path prefix to redirect to a page in the docs.
+
+```sh
+# in the React docs _redirects file
+/v2.4 /docs/react/v2/
+```
+
+All of the redirects from each docset will be bundled together at build time, and deployed as one combined `_redirects` file deployed with the built docs site.
 
 ## Publish and preview
 
