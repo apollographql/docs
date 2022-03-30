@@ -5,8 +5,8 @@
     "The Apollo platform": "/intro/platform",
     "Why adopt GraphQL?": "/intro/benefits",
     "Tutorials": {
-      "Lift-off series (recommended)": "https://odyssey.apollographql.com/lift-off-part1/?utm_source=apollo_docs&utm_medium=referral&utm_campaign=docs_sidebar",
-      "Full-stack quickstart": "https://odyssey.apollographql.com/fullstack-quickstart/?utm_source=apollo_docs&utm_medium=referral&utm_campaign=docs_sidebar"
+      "Lift-off series (recommended)": "https://www.apollographql.com/tutorials/lift-off-part1/?utm_source=apollo_docs&utm_medium=referral&utm_campaign=docs_sidebar",
+      "Full-stack quickstart": "https://www.apollographql.com/tutorials/fullstack-quickstart/?utm_source=apollo_docs&utm_medium=referral&utm_campaign=docs_sidebar"
     },
     "Development Tools": {
       "Rover CLI": "https://www.apollographql.com/docs/rover",

@@ -36,13 +36,13 @@
 /references/graph-manager-data-privacy/ /docs/studio/data-privacy/
 
 # Move Fullstack Tutorial to Odyssey
-/tutorial/introduction https://odyssey.apollographql.com/fullstack-quickstart/introduction
-/tutorial/schema/ https://odyssey.apollographql.com/fullstack-quickstart/building-a-schema
-/tutorial/data-source/ https://odyssey.apollographql.com/fullstack-quickstart/connecting-to-data-sources
-/tutorial/resolvers/ https://odyssey.apollographql.com/fullstack-quickstart/writing-query-resolvers
-/tutorial/mutation-resolvers/ https://odyssey.apollographql.com/fullstack-quickstart/writing-mutation-resolvers
-/tutorial/production/ https://odyssey.apollographql.com/fullstack-quickstart/connecting-graphs-to-apollo-studio
-/tutorial/client/ https://odyssey.apollographql.com/fullstack-quickstart/setting-up-apollo-client
-/tutorial/queries/ https://odyssey.apollographql.com/fullstack-quickstart/fetching-data-with-queries
-/tutorial/mutations/ https://odyssey.apollographql.com/fullstack-quickstart/updating-data-with-mutations
-/tutorial/local-state/ https://odyssey.apollographql.com/fullstack-quickstart/managing-local-state
+/tutorial/introduction https://www.apollographql.com/tutorials/fullstack-quickstart/introduction
+/tutorial/schema/ https://www.apollographql.com/tutorials/fullstack-quickstart/building-a-schema
+/tutorial/data-source/ https://www.apollographql.com/tutorials/fullstack-quickstart/connecting-to-data-sources
+/tutorial/resolvers/ https://www.apollographql.com/tutorials/fullstack-quickstart/writing-query-resolvers
+/tutorial/mutation-resolvers/ https://www.apollographql.com/tutorials/fullstack-quickstart/writing-mutation-resolvers
+/tutorial/production/ https://www.apollographql.com/tutorials/fullstack-quickstart/connecting-graphs-to-apollo-studio
+/tutorial/client/ https://www.apollographql.com/tutorials/fullstack-quickstart/setting-up-apollo-client
+/tutorial/queries/ https://www.apollographql.com/tutorials/fullstack-quickstart/fetching-data-with-queries
+/tutorial/mutations/ https://www.apollographql.com/tutorials/fullstack-quickstart/updating-data-with-mutations
+/tutorial/local-state/ https://www.apollographql.com/tutorials/fullstack-quickstart/managing-local-state
