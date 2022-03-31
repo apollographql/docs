@@ -1,6 +1,6 @@
 export * from './helpers';
 export {
-  defaultConfig,
+  defaultConfig as footerConfig,
   communityCategory,
   companyCategory,
   helpCategory,
@@ -8,5 +8,5 @@ export {
   whyApolloCategory,
   Link,
   Category
-} from './globalNav';
+} from './footer';
 export {EmbeddableExplorer} from './EmbeddableExplorer';

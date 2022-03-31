@@ -68,67 +68,30 @@ companyCategory,
 helpCategory,
 productCategory,
 whyApolloCategory,
-defaultConfig
+footerConfig
 ```
 
 Example usage:
 
 ```js
 // Footer.js
-import PropTypes from 'prop-types';
-import React from 'react';
-import {ReactComponent as ApolloLogo} from '@apollo/space-kit/logos/logo.svg';
-import {
-  Box,
-  Flex,
-  Heading,
-  Link,
-  List,
-  ListItem,
-  SimpleGrid,
-  Text
-} from '@chakra-ui/react';
-import {defaultConfig} from '@apollo/chakra-helpers';
+import {footerConfig} from '@apollo/chakra-helpers';
 
-export default function Footer({navConfig = defaultConfig}) {
+export default function Footer() {
   return (
-    <SimpleGrid
-      as="footer"
-      columns={[1, 2, 3, 4]}
-      spacing={{base: 6, md: 8}}
-      borderTopWidth="1px"
-      px="10"
-      py="12"
-    >
-      <div>
-        <Flex mb="2">
-          <a href="https://www.apollographql.com">
-            <Box as={ApolloLogo} fill="current" h="8" />
-          </a>
-        </Flex>
-        <Text>&copy; Apollo Graph Inc.</Text>
-      </div>
-      {navConfig.map(({links, title}, index) => (
-        <div key={index}>
-          <Heading mb="2" size="md">
-            {title}
-          </Heading>
-          <List spacing="1">
-            {links.map(({href, text}, index) => (
-              <ListItem key={index}>
-                <Link href={href}>{text}</Link>
-              </ListItem>
-            ))}
-          </List>
-        </div>
-      ))}
-    </SimpleGrid>
-  );
+    <nav>
+      {footerConfig.map(({links, title}, index) => (
+        <ul key={index}>
+          {links.map((link, index) => (
+            <li key={index}>
+              <a href={link.href}>{link.text}</a>
+            </li>
+          )}
+        </ul>
+      )}
+    </nav>
+  )
 }
-
-Footer.propTypes = {
-  navConfig: PropTypes.object
-};
 ```
 
 For your convenince, there are also exported `Category` and `Link` interfaces for type safety and intellisense. 
@@ -138,21 +101,6 @@ example config:
 ```ts
 // customConfig.ts
 const customCategory: Category = {
-  title: "My Custom Category",
-  links: [
-    {
-      title: "A Custom Link",
-      href: "https://www.acustomlink.com"
-    }
-  ]
-}
-```
-
-or:
-
-```ts
-// customConfig.js
-const customCategory = {
   title: "My Custom Category",
   links: [
     {

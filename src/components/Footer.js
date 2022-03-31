@@ -11,9 +11,9 @@ import {
   SimpleGrid,
   Text
 } from '@chakra-ui/react';
-import {defaultConfig} from '@apollo/chakra-helpers';
+import {footerConfig} from '@apollo/chakra-helpers';
 
-export default function Footer({navConfig = defaultConfig}) {
+export default function Footer({navConfig = footerConfig}) {
   return (
     <SimpleGrid
       as="footer"
@@ -50,5 +50,5 @@ export default function Footer({navConfig = defaultConfig}) {
 }
 
 Footer.propTypes = {
-  navConfig: PropTypes.object
+  navConfig: PropTypes.arrayOf(PropTypes.object)
 };
