@@ -11,34 +11,9 @@ import {
   SimpleGrid,
   Text
 } from '@chakra-ui/react';
+import {footerConfig} from '@apollo/chakra-helpers';
 
-const Resources = {
-  'GraphQL Tutorials': 'https://odyssey.apollographql.com',
-  Docs: 'https://www.apollographql.com/docs',
-  Blog: 'https://www.apollographql.com/blog',
-  'Developer Hub': 'https://www.apollographql.com/developers',
-  Community: 'https://community.apollographql.com'
-};
-
-const Company = {
-  'About Apollo': 'https://www.apollographql.com',
-  Careers: 'https://www.apollographql.com/careers',
-  Team: 'https://www.apollographql.com/team',
-  Studio: 'https://studio.apollographql.com',
-  Twitter: 'https://twitter.com/apollographql'
-};
-
-const Help = {
-  'Contact an Expert': 'https://www.apollographql.com/contact-sales',
-  'Get Support': 'https://www.apollographql.com/support',
-  'Website Terms of Service':
-    'https://www.apollographql.com/Apollo-Website-Terms-of-Service.pdf',
-  'Product Terms of Service':
-    'https://www.apollographql.com/Apollo-Terms-of-Service.pdf',
-  'Privacy Policy': 'https://www.apollographql.com/privacy-policy'
-};
-
-export default function Footer({navConfig = {Resources, Company, Help}}) {
+export default function Footer() {
   return (
     <SimpleGrid
       as="footer"
@@ -56,15 +31,15 @@ export default function Footer({navConfig = {Resources, Company, Help}}) {
         </Flex>
         <Text>&copy; Apollo Graph Inc.</Text>
       </div>
-      {Object.entries(navConfig).map(([label, items], index) => (
+      {footerConfig.map(({links, title}, index) => (
         <div key={index}>
           <Heading mb="2" size="md">
-            {label}
+            {title}
           </Heading>
           <List spacing="1">
-            {Object.entries(items).map(([label, url], index) => (
+            {links.map(({href, text}, index) => (
               <ListItem key={index}>
-                <Link href={url}>{label}</Link>
+                <Link href={href}>{text}</Link>
               </ListItem>
             ))}
           </List>
@@ -73,7 +48,3 @@ export default function Footer({navConfig = {Resources, Company, Help}}) {
     </SimpleGrid>
   );
 }
-
-Footer.propTypes = {
-  navConfig: PropTypes.object
-};

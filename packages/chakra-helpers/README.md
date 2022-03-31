@@ -57,3 +57,56 @@ const theme = extendTheme({
   },
 });
 ```
+
+### Global Nav Links
+
+This package exports these objects to create a single source of truth for the links in the footers of all Apollo properties. Each contain a category title field, and an array of link objects with their own titles and hrefs.
+
+```
+communityCategory,
+companyCategory,
+helpCategory,
+productCategory,
+whyApolloCategory,
+footerConfig
+```
+
+Example usage:
+
+```js
+// Footer.js
+import {footerConfig} from '@apollo/chakra-helpers';
+
+export default function Footer() {
+  return (
+    <nav>
+      {footerConfig.map(({links, title}, index) => (
+        <ul key={index}>
+          {links.map((link, index) => (
+            <li key={index}>
+              <a href={link.href}>{link.text}</a>
+            </li>
+          )}
+        </ul>
+      )}
+    </nav>
+  )
+}
+```
+
+For your convenince, there are also exported `Category` and `Link` interfaces for type safety and intellisense. 
+
+example config:
+
+```ts
+// customConfig.ts
+const customCategory: Category = {
+  title: "My Custom Category",
+  links: [
+    {
+      title: "A Custom Link",
+      href: "https://www.acustomlink.com"
+    }
+  ]
+}
+```

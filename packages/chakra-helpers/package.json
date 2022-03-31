@@ -2,7 +2,8 @@
   "name": "@apollo/chakra-helpers",
   "version": "1.1.0",
   "description": "Helps configure a Chakra UI theme for use with Apollo projects",
-  "main": "lib/index.js",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/apollographql/docs.git",
