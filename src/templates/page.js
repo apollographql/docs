@@ -198,27 +198,31 @@ export default function PageTemplate({
     [versions]
   );
 
-  const editOnGitHub = useMemo(
-    () =>
-      gitRemote && (
-        <Button
-          as="a"
-          href={[
-            gitRemote.href,
-            'tree',
-            gitRemote.ref,
-            'docs/source',
-            relativePath
-          ].join(path.sep)}
-          variant="link"
-          size="lg"
-          leftIcon={<FaGithub />}
-        >
-          Edit on GitHub
-        </Button>
-      ),
-    [gitRemote, relativePath]
-  );
+  const editOnGitHub = useMemo(() => {
+    const repo = gitRemote?.href || 'https://github.com/apollographql/docs';
+
+    const repoPath = ['tree', gitRemote?.ref || 'main'];
+
+    if (gitRemote) {
+      repoPath.push('docs', 'source');
+    } else {
+      repoPath.push('src', 'content', basePath === '/' ? 'basics' : basePath);
+    }
+
+    repoPath.push(relativePath);
+
+    return (
+      <Button
+        as="a"
+        href={`${repo}/${path.join(...repoPath)}`}
+        variant="link"
+        size="lg"
+        leftIcon={<FaGithub />}
+      >
+        Edit on GitHub
+      </Button>
+    );
+  }, [gitRemote, basePath, relativePath]);
 
   const renderSwitcher = useCallback(
     props => (
