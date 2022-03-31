@@ -8,13 +8,9 @@
     ],
     "esModuleInterop": true,
     "declaration": true,
-    "outDir": "lib",
+    "outDir": "lib"
   },
-  "include": [
-    "src"
-  ],
-  "exclude": [
-    "node_modules",
-    "**/__tests__/*"
-  ],
+  "files": [
+    "src/index.ts"
+  ]
 }

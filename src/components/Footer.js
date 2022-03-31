@@ -13,7 +13,7 @@ import {
 } from '@chakra-ui/react';
 import {footerConfig} from '@apollo/chakra-helpers';
 
-export default function Footer({navConfig = footerConfig}) {
+export default function Footer() {
   return (
     <SimpleGrid
       as="footer"
@@ -31,7 +31,7 @@ export default function Footer({navConfig = footerConfig}) {
         </Flex>
         <Text>&copy; Apollo Graph Inc.</Text>
       </div>
-      {navConfig.map(({links, title}, index) => (
+      {footerConfig.map(({links, title}, index) => (
         <div key={index}>
           <Heading mb="2" size="md">
             {title}
