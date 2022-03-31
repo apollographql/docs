@@ -48,7 +48,3 @@ export default function Footer() {
     </SimpleGrid>
   );
 }
-
-Footer.propTypes = {
-  navConfig: PropTypes.arrayOf(PropTypes.object)
-};
