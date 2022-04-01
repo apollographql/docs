@@ -58,20 +58,9 @@ const theme = extendTheme({
 });
 ```
 
-### Global Nav Links
+### Footer configuration
 
-This package exports these objects to create a single source of truth for the links in the footers of all Apollo properties. Each contain a category title field, and an array of link objects with their own titles and hrefs.
-
-```
-communityCategory,
-companyCategory,
-helpCategory,
-productCategory,
-whyApolloCategory,
-footerConfig
-```
-
-Example usage:
+This package exports an object that helps configure footers on all Apollo properties. Each category contains a title field and an array of link objects with their own titles and URLs.
 
 ```js
 // Footer.js
@@ -94,19 +83,54 @@ export default function Footer() {
 }
 ```
 
-For your convenince, there are also exported `Category` and `Link` interfaces for type safety and intellisense. 
+This package also exports the individual parts that make up the default `footerConfig`. These can be composed together to create your own custom footers.
 
-example config:
+```js
+import {
+  communityCategory,
+  companyCategory,
+  helpCategory,
+  productCategory,
+  whyApolloCategory
+} from '@apollo/chakra-helpers/lib/footer';
+
+const customFooterConfig = [
+  communityCategory,
+  helpCategory,
+  whyApolloCategory
+];
+```
+
+For your convenince, there are also exported `Category` and `Link` interfaces for type safety and intellisense in TypeScript projects.
 
 ```ts
-// customConfig.ts
+import {Category, Link} from '@apollo/chakra-helpers/lib/footer';
+
+const customLink: Link = {
+  title: "A Custom Link",
+  href: "https://www.acustomlink.com"
+};
+
 const customCategory: Category = {
   title: "My Custom Category",
-  links: [
-    {
-      title: "A Custom Link",
-      href: "https://www.acustomlink.com"
-    }
-  ]
+  links: [customLink]
 }
 ```
+
+### EmbeddableExplorer
+
+You can embed Apollo Studio Explorer in your Chakra sites using this component. It respects the selected color mode in your app.
+
+```js
+import {EmbeddableExplorer} from '@apollo/chakra-helpers';
+
+<EmbeddableExplorer />
+```
+
+The component can be configured using the following props. No props are required to use this component, and it default to serving up the Apollo fullstack demo API with an example query.
+
+| Name        | Type   | Description                                                                           | Default value                                       |
+| ----------- | ------ | ------------------------------------------------------------------------------------- | --------------------------------------------------- |
+| graphRef    | string | The graph ref for the **public** variant you want to use the embedded Explorer with   | Apollo-Fullstack-Demo-o3tsz8@current                |
+| endpointUrl | string | The endpoint URL of the **public** variant you want to use the embedded Explorer with | https://apollo-fullstack-tutorial.herokuapp.com/    |
+| document    | string | A URI-encoded operation to populate in the Explorer's editor on load.                 | See [the source code](./src/EmbeddableExplorer.tsx) |
