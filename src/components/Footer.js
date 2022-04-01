@@ -17,7 +17,7 @@ export default function Footer() {
   return (
     <SimpleGrid
       as="footer"
-      columns={[1, 2, 3, 4]}
+      columns={[1, 3, 4, 6]}
       spacing={{base: 6, md: 8}}
       borderTopWidth="1px"
       px="10"
