@@ -26,7 +26,7 @@ export default function SearchButton(props) {
     >
       <FiSearch />
       <Box ml="2" color={textColor}>
-        Search Apollo (Press /)
+        Search Apollo (Press Cmd+K OR /)
       </Box>
     </Box>
   );

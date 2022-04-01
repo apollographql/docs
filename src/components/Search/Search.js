@@ -27,6 +27,21 @@ export function Search({algoliaFilters}) {
     undefined,
     [isOpen]
   );
+
+  // Allow Cmd+K to open the search modal
+  // See https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/metaKey
+  const metaKeyKFilter = event => event.metaKey && event.key === 'k';
+  useKey(
+    metaKeyKFilter,
+    event => {
+      if (!isOpen) {
+        event.preventDefault();
+        onOpen();
+      }
+    },
+    undefined,
+    [isOpen]
+  );
   return (
     <>
       <SearchButton mr="2" onClick={onOpen} />

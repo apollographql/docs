@@ -11,6 +11,7 @@
     "start:rover": "npm start -- ../rover",
     "start:router": "npm start -- ../router",
     "build": "gatsby build",
+    "serve": "gatsby serve",
     "prebuild": "npm run prepare --workspaces",
     "test": "jest",
     "changeset-publish": "changeset publish"
