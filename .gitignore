@@ -4,3 +4,4 @@ public
 .netlify
 local
 .DS_Store
+.volta
