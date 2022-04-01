@@ -69,8 +69,8 @@ export const communityCategory: Category = {
   title: 'Community',
   links: [
     {
-      text: 'GraphQL Tutorial',
-      href: 'https://odyssey.apollographql.com'
+      text: 'GraphQL Tutorials',
+      href: 'https://www.apollographql.com/tutorials'
     },
     {
       text: 'GraphQL Summit',
