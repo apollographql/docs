@@ -2,6 +2,12 @@
 
 This package contains Chakra UI theme options that are shared between DX properties. This makes it easy to set up a theme with consistent color palettes, fonts, and component styles.
 
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Color palettes](#color-palettes)
+  - [Footer configuration](#footer-configuration)
+  - [EmbeddableExplorer](#embeddableexplorer)
+
 ## Installation
 
 This package has peer dependencies on `@apollo/space-kit` and `@chakra-ui/react`. Make sure those packages are already installed in your project, and then install this package.
