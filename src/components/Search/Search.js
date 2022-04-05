@@ -17,22 +17,10 @@ const Autocomplete = loadable(() => import('./Autocomplete'));
 export function Search({algoliaFilters}) {
   const {isOpen, onOpen, onClose} = useDisclosure();
   useKey(
-    '/',
-    event => {
-      if (!isOpen) {
-        event.preventDefault();
-        onOpen();
-      }
-    },
-    undefined,
-    [isOpen]
-  );
-
-  // Allow Cmd+K to open the search modal
-  // See https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/metaKey
-  const metaKeyKFilter = event => event.metaKey && event.key === 'k';
-  useKey(
-    metaKeyKFilter,
+    event =>
+      event.key === '/' ||
+      // allow cmd+k to open the search modal
+      (event.metaKey && event.key === 'k'),
     event => {
       if (!isOpen) {
         event.preventDefault();
