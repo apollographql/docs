@@ -17,7 +17,10 @@ const Autocomplete = loadable(() => import('./Autocomplete'));
 export function Search({algoliaFilters}) {
   const {isOpen, onOpen, onClose} = useDisclosure();
   useKey(
-    '/',
+    event =>
+      event.key === '/' ||
+      // allow cmd+k to open the search modal
+      (event.metaKey && event.key === 'k'),
     event => {
       if (!isOpen) {
         event.preventDefault();
