@@ -67,7 +67,7 @@ import {graphql} from 'gatsby';
 import {rehype} from 'rehype';
 import {useMermaidStyles} from '../utils/mermaid';
 
-// these must be imported after Prism
+// these must be imported after MarkdownCodeBlock
 import 'prismjs/components/prism-bash';
 import 'prismjs/components/prism-graphql';
 import 'prismjs/components/prism-groovy';
