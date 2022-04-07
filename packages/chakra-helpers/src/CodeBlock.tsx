@@ -1,7 +1,7 @@
 import Highlight from 'prism-react-renderer';
 import Prism from 'prismjs';
 import PropTypes from 'prop-types';
-import React, {createContext, useContext} from 'react';
+import React, {ReactNode, createContext, useContext} from 'react';
 import fenceparser from 'fenceparser';
 import rangeParser from 'parse-numeric-range';
 import {
@@ -15,7 +15,7 @@ import {
 } from '@chakra-ui/react';
 import {FiCheck, FiClipboard} from 'react-icons/fi';
 import {colors} from '@apollo/space-kit/colors';
-import {usePrismTheme} from '../utils/prism';
+import {usePrismTheme} from './prism';
 
 // these must be imported after Prism
 import 'prismjs/components/prism-bash';
@@ -36,7 +36,7 @@ import 'prismjs/components/prism-yaml';
 const CODE_BLOCK_SPACING = 4;
 export const GA_EVENT_CATEGORY_CODE_BLOCK = 'Code Block';
 
-export const CodeBlockContext = createContext();
+export const CodeBlockContext = createContext(null);
 export const LineNumbersContext = createContext(true);
 
 const isHighlightComment = (token, comment = '// highlight-line') =>
@@ -47,7 +47,11 @@ const isHighlightStart = (line, comment = '// highlight-start') =>
 
 const isHighlightEnd = line => isHighlightStart(line, '// highlight-end');
 
-export default function CodeBlock({children}) {
+type CodeBlockProps = {
+  children: ReactNode;
+};
+
+export const CodeBlock = ({children}: CodeBlockProps): JSX.Element => {
   const defaultShowLineNumbers = useContext(LineNumbersContext);
   const [child] = Array.isArray(children) ? children : [children];
   const {
@@ -59,8 +63,8 @@ export default function CodeBlock({children}) {
 
   const meta = metastring || dataMeta;
   const {
-    title,
-    highlight,
+    title = null,
+    highlight = null,
     showLineNumbers = defaultShowLineNumbers
   } = meta ? fenceparser(meta) : {};
   const linesToHighlight = highlight
@@ -80,6 +84,8 @@ export default function CodeBlock({children}) {
 
   return (
     <Highlight
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       Prism={Prism}
       theme={theme}
       code={code.trim()}
@@ -143,7 +149,7 @@ export default function CodeBlock({children}) {
                           .concat(highlightRange)
                           .includes(i + 1) ||
                         // or if the line has a "highlight-line" comment in it
-                        line.some(isHighlightComment);
+                        line.some(token => isHighlightComment(token));
                       return (
                         <Flex
                           key={i}
@@ -209,7 +215,7 @@ export default function CodeBlock({children}) {
       }}
     </Highlight>
   );
-}
+};
 
 CodeBlock.propTypes = {
   children: PropTypes.node.isRequired
