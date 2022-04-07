@@ -51,8 +51,8 @@ import {
   useToken
 } from '@chakra-ui/react';
 import {
-  CodeBlock,
   EmbeddableExplorer,
+  MarkdownCodeBlock,
   MultiCodeBlock,
   MultiCodeBlockContext
 } from '@apollo/chakra-helpers';
@@ -131,7 +131,7 @@ const components = {
   ),
   p: Text,
   a: RelativeLink,
-  pre: props => <CodeBlock Prism={Prism} {...props} />,
+  pre: props => <MarkdownCodeBlock Prism={Prism} {...props} />,
   table: Table,
   thead: Thead,
   tbody: Tbody,

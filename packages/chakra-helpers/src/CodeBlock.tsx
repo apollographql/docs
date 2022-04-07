@@ -1,6 +1,6 @@
-import Highlight from 'prism-react-renderer';
+import Highlight, {Language} from 'prism-react-renderer';
 import Prism from 'prismjs';
-import React, {ReactNode, createContext, useContext} from 'react';
+import React, {ReactNode, createContext, useContext, useState} from 'react';
 import fenceparser from 'fenceparser';
 import rangeParser from 'parse-numeric-range';
 import {
@@ -8,12 +8,14 @@ import {
   Button,
   ButtonGroup,
   Flex,
+  IconButton,
   chakra,
   useClipboard,
   useColorModeValue
 } from '@chakra-ui/react';
 import {FiCheck} from '@react-icons/all-files/fi/FiCheck';
 import {FiClipboard} from '@react-icons/all-files/fi/FiClipboard';
+import {FiEyeOff} from '@react-icons/all-files/fi/FiEyeOff';
 import {colors} from '@apollo/space-kit/colors';
 import {usePrismTheme} from './prism';
 
@@ -31,26 +33,31 @@ const isHighlightStart = (line, comment = '// highlight-start') =>
 
 const isHighlightEnd = line => isHighlightStart(line, '// highlight-end');
 
-type CodeBlockProps = {
+type MarkdownCodeBlockProps = {
   children: ReactNode;
   Prism?: typeof Prism;
 };
 
-export const CodeBlock = ({children, Prism}: CodeBlockProps): JSX.Element => {
+export const MarkdownCodeBlock = ({
+  children,
+  Prism
+}: MarkdownCodeBlockProps): JSX.Element => {
   const defaultShowLineNumbers = useContext(LineNumbersContext);
   const [child] = Array.isArray(children) ? children : [children];
   const {
     className = 'language-text',
     children: innerChildren,
     metastring,
-    'data-meta': dataMeta
+    'data-meta': dataMeta,
+    hidden = false
   } = child.props;
 
   const meta = metastring || dataMeta;
   const {
     title = null,
     highlight = null,
-    showLineNumbers = defaultShowLineNumbers
+    showLineNumbers = defaultShowLineNumbers,
+    disableCopy = false
   } = meta ? fenceparser(meta) : {};
   const linesToHighlight = highlight
     ? rangeParser(Object.keys(highlight).toString())
@@ -58,14 +65,50 @@ export const CodeBlock = ({children, Prism}: CodeBlockProps): JSX.Element => {
 
   const [code] = Array.isArray(innerChildren) ? innerChildren : [innerChildren];
 
+  return (
+    <CodeBlock
+      code={code.trim()}
+      language={className.replace(/^language-/, '')}
+      title={title?.toString()}
+      hidden={hidden}
+      disableCopy={disableCopy === true}
+      showLineNumbers={showLineNumbers === true}
+      linesToHighlight={linesToHighlight}
+      Prism={Prism}
+    />
+  );
+};
+
+type CodeBlockProps = {
+  language?: Language;
+  title?: string;
+  linesToHighlight?: number[];
+  disableCopy?: boolean;
+  showLineNumbers?: boolean;
+  hidden?: boolean;
+  code: string;
+  Prism?: typeof Prism;
+};
+
+export const CodeBlock = ({
+  code,
+  language,
+  title,
+  showLineNumbers,
+  linesToHighlight,
+  hidden: defaultHidden = false,
+  disableCopy = false
+}: CodeBlockProps): JSX.Element => {
   const {onCopy, hasCopied} = useClipboard(code);
+  const [hidden, setHidden] = useState(defaultHidden);
+
   const theme = usePrismTheme();
+  const languageMenu = useContext(CodeBlockContext);
   const highlightColor = useColorModeValue('gray.100', 'gray.700');
   const lineNumberColor = useColorModeValue(
     'gray.500',
     colors.midnight.lighter
   );
-  const languageMenu = useContext(CodeBlockContext);
 
   return (
     <Highlight
@@ -73,8 +116,8 @@ export const CodeBlock = ({children, Prism}: CodeBlockProps): JSX.Element => {
       // @ts-ignore
       Prism={Prism}
       theme={theme}
-      code={code.trim()}
-      language={className.replace(/^language-/, '')}
+      code={code}
+      language={language}
     >
       {({className, style, tokens, getLineProps, getTokenProps}) => {
         // length of longest line number
@@ -115,7 +158,17 @@ export const CodeBlock = ({children, Prism}: CodeBlockProps): JSX.Element => {
                   {title}
                 </Box>
               )}
-              <Flex overflow="auto">
+              <Flex
+                overflow="auto"
+                transition="filter 200ms"
+                css={
+                  hidden && {
+                    filter: 'blur(8px)',
+                    pointerEvents: 'none',
+                    userSelect: 'none'
+                  }
+                }
+              >
                 <chakra.pre
                   d="inline-block"
                   minW="full"
@@ -181,20 +234,54 @@ export const CodeBlock = ({children, Prism}: CodeBlockProps): JSX.Element => {
                 </chakra.pre>
               </Flex>
             </Box>
-            <ButtonGroup size="xs" pos="absolute" top="2" right="2">
-              <Button
-                leftIcon={hasCopied ? <FiCheck /> : <FiClipboard />}
-                onClick={() => {
-                  onCopy();
-                  window.gtag?.('event', 'Copy', {
-                    event_category: GA_EVENT_CATEGORY_CODE_BLOCK
-                  });
-                }}
-              >
-                {hasCopied ? 'Copied!' : 'Copy'}
-              </Button>
+            <ButtonGroup
+              size="xs"
+              pos="absolute"
+              top="2"
+              right="2"
+              transition="opacity 200ms linear 200ms"
+              css={
+                hidden && {
+                  opacity: 0,
+                  transition: 'none'
+                }
+              }
+            >
+              {defaultHidden && (
+                <IconButton
+                  aria-label="Hide code"
+                  icon={<FiEyeOff />}
+                  onClick={() => setHidden(true)}
+                />
+              )}
+              {!disableCopy && (
+                <Button
+                  leftIcon={hasCopied ? <FiCheck /> : <FiClipboard />}
+                  onClick={() => {
+                    onCopy();
+                    window.gtag?.('event', 'Copy', {
+                      event_category: GA_EVENT_CATEGORY_CODE_BLOCK
+                    });
+                  }}
+                >
+                  {hasCopied ? 'Copied!' : 'Copy'}
+                </Button>
+              )}
               {languageMenu}
             </ButtonGroup>
+            {hidden && (
+              <Button
+                pos="absolute"
+                top="50%"
+                left="50%"
+                transform="translate(-50%, -50%)"
+                onClick={() => setHidden(false)}
+                rounded="full"
+                colorScheme="indigo"
+              >
+                Show code
+              </Button>
+            )}
           </Box>
         );
       }}
