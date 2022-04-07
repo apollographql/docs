@@ -140,3 +140,11 @@ The component can be configured using the following props. No props are required
 | graphRef    | string | The graph ref for the **public** variant you want to use the embedded Explorer with   | Apollo-Fullstack-Demo-o3tsz8@current                |
 | endpointUrl | string | The endpoint URL of the **public** variant you want to use the embedded Explorer with | https://apollo-fullstack-tutorial.herokuapp.com/    |
 | document    | string | A URI-encoded operation to populate in the Explorer's editor on load.                 | See [the source code](./src/EmbeddableExplorer.tsx) |
+
+## Publishing changes
+
+We use [Changesets](https://github.com/changesets/changesets) to automate the publishing of new versions of this package to the NPM registry.
+
+To publish a new version, first add a changeset to your PR using `npx changeset add`. Follow the prompts in your terminal to select the version bump for this release, and add a message describing what is being changed.
+
+After this PR gets merged to main, a new PR will be opened automatically that increments the package version. When this PR is merged, [a GitHub action](../../.github/workflows/release-pr.yml) will be run that publishes the package to NPM.

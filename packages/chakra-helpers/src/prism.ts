@@ -1,9 +1,10 @@
+import {PrismTheme} from 'prism-react-renderer';
 import {colors} from '@apollo/space-kit/colors';
 import {useColorModeValue} from '@chakra-ui/react';
 
 const {silver, midnight, orange, grey, pink, teal, indigo, yellow} = colors;
 
-export function usePrismTheme() {
+export function usePrismTheme(): PrismTheme {
   const isDark = useColorModeValue(false, true);
   return {
     plain: {

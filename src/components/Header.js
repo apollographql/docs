@@ -81,9 +81,10 @@ export default function Header({children, algoliaFilters}) {
         onClick={toggleColorMode}
         icon={colorMode === 'dark' ? <FiSun /> : <FiMoon />}
       />
-      <Search algoliaFilters={algoliaFilters} />
+      {process.env.ALGOLIA_SEARCH_KEY && (
+        <Search algoliaFilters={algoliaFilters} />
+      )}
       <Button
-        ml="2"
         colorScheme="indigo"
         variant="ghost"
         rightIcon={<FiArrowRight />}

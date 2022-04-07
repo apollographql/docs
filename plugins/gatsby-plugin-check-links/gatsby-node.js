@@ -7,10 +7,6 @@ const {chunk} = require('lodash');
 
 const TRAILING_SLASH_PATTERN = /(?!^)\/$/;
 
-const base = new Airtable({
-  apiKey: process.env.AIRTABLE_API_KEY
-}).base('appbv2QKIU1C6G9dX');
-
 exports.createPages = async ({graphql, reporter}, {ignore = []}) => {
   const {data} = await graphql(
     `
@@ -145,6 +141,10 @@ exports.createPages = async ({graphql, reporter}, {ignore = []}) => {
       process.env.CONTEXT === 'deploy-preview' ||
       process.env.CONTEXT === 'production'
     ) {
+      const base = new Airtable({
+        apiKey: process.env.AIRTABLE_API_KEY
+      }).base('appbv2QKIU1C6G9dX');
+
       // save all links in chunks of 10 links each
       const chunks = chunk(allBrokenLinks, 10);
       const results = await Promise.all(

@@ -25,6 +25,7 @@ const plugins = [
   '@chakra-ui/gatsby-plugin',
   'gatsby-plugin-sitemap',
   'gatsby-plugin-combine-redirects', // local plugin
+  'gatsby-plugin-loadable-components-ssr',
   {
     resolve: 'gatsby-plugin-check-links', // local plugin
     options: {

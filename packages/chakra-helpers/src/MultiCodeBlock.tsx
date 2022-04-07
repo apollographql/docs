@@ -1,12 +1,17 @@
-import PropTypes from 'prop-types';
-import React, {createContext, useContext} from 'react';
+import React, {
+  ReactChild,
+  ReactNode,
+  createContext,
+  isValidElement,
+  useContext
+} from 'react';
 import {Button, Menu, MenuButton, MenuItem, MenuList} from '@chakra-ui/react';
 import {CodeBlockContext, GA_EVENT_CATEGORY_CODE_BLOCK} from './CodeBlock';
-import {FiChevronDown} from 'react-icons/fi';
+import {FiChevronDown} from '@react-icons/all-files/fi/FiChevronDown';
 
-export const MultiCodeBlockContext = createContext();
+export const MultiCodeBlockContext = createContext(null);
 
-function getLanguage(language) {
+function getLanguage(language: string): string {
   switch (language) {
     case 'language-js':
     case 'language-jsx':
@@ -21,12 +26,21 @@ function getLanguage(language) {
   }
 }
 
-export default function MultiCodeBlock({children}) {
+type MultiCodeBlockProps = {
+  children: ReactNode;
+};
+
+export const MultiCodeBlock = ({
+  children
+}: MultiCodeBlockProps): JSX.Element => {
   const codeBlocks = React.Children.toArray(children).reduce(
-    (acc, child) => ({
-      ...acc,
-      [getLanguage(child.props.children.props.className)]: child
-    }),
+    (acc: Record<string, ReactChild>, child) =>
+      isValidElement(child)
+        ? {
+            ...acc,
+            [getLanguage(child.props.children.props.className)]: child
+          }
+        : acc,
     {}
   );
 
@@ -68,8 +82,4 @@ export default function MultiCodeBlock({children}) {
       </CodeBlockContext.Provider>
     </div>
   );
-}
-
-MultiCodeBlock.propTypes = {
-  children: PropTypes.node.isRequired
 };

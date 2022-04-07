@@ -1,7 +1,7 @@
-import Autocomplete from './Autocomplete';
 import PropTypes from 'prop-types';
 import React from 'react';
 import SearchButton from './SearchButton';
+import loadable from '@loadable/component';
 import useKey from 'react-use/lib/useKey';
 import {FiSearch} from 'react-icons/fi';
 import {
@@ -12,10 +12,15 @@ import {
   useDisclosure
 } from '@chakra-ui/react';
 
+const Autocomplete = loadable(() => import('./Autocomplete'));
+
 export function Search({algoliaFilters}) {
   const {isOpen, onOpen, onClose} = useDisclosure();
   useKey(
-    '/',
+    event =>
+      event.key === '/' ||
+      // allow cmd+k to open the search modal
+      (event.metaKey && event.key === 'k'),
     event => {
       if (!isOpen) {
         event.preventDefault();
@@ -27,7 +32,7 @@ export function Search({algoliaFilters}) {
   );
   return (
     <>
-      <SearchButton onClick={onOpen} />
+      <SearchButton mr="2" onClick={onOpen} />
       <IconButton
         d={{base: 'flex', sm: 'none'}}
         fontSize="xl"

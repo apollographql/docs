@@ -37,23 +37,30 @@ The central piece of this repo, the docs infrastructure, is a [Gatsby](https://w
 
 ## Developing locally
 
-To run this site locally, you'll first want to make sure you have the following tools installed on your system:
+> This site uses [Volta](https://volta.sh) to ensure we're all using the same Node and NPM versions when running the site. Either install Volta before proceeding, or install [direnv](https://direnv.net) and Volta will be installed automatically when you `cd` into your local `docs` directory.
 
-- [Volta](https://volta.sh/): ensures that we're all using the same Node and NPM versions when running the site
-- [Netlify CLI](https://docs.netlify.com/cli/get-started/): automatically injects required environment variables into the build
-
-If it's your first time running the docs site locally, you must link your local directory with Netlify. Follow the prompts in your terminal and the site should be linked automatically.
+First, install NPM dependencies.
 
 ```sh
-netlify login # if you haven't already
-netlify init
+npm i
 ```
 
-Next, install NPM dependencies and start the local development environment.
+If it's your first time running the docs site locally, you must link your local directory with Netlify. To do this, you must be logged in to the `netlify` CLI with an account that has access to our "Apollo" org in Netlify. If you're not sure if you have an account with access, you can use the credentials in 1Password.
 
 ```sh
-npm i # install dependencies
-npm start # start local development environment
+npx netlify login
+```
+
+Next, link your local environment with its corresponding Netlify site. Follow the prompts that appear in your terminal and link the site based on its git repository.
+
+```sh
+npx netlify link
+```
+
+Finally, start the local development environment.
+
+```sh
+npm start
 ```
 
 > ⌚ The first run may take a long time as it has to source a lot of content, but subsequent runs will be shorter since most of that data will have been cached.

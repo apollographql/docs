@@ -5,3 +5,4 @@ public
 local
 .DS_Store
 .env
+.volta

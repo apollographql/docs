@@ -1,7 +1,6 @@
-import Highlight from 'prism-react-renderer';
+import Highlight, {Language} from 'prism-react-renderer';
 import Prism from 'prismjs';
-import PropTypes from 'prop-types';
-import React, {createContext, useContext} from 'react';
+import React, {ReactNode, createContext, useContext, useState} from 'react';
 import fenceparser from 'fenceparser';
 import rangeParser from 'parse-numeric-range';
 import {
@@ -9,34 +8,21 @@ import {
   Button,
   ButtonGroup,
   Flex,
+  IconButton,
   chakra,
   useClipboard,
   useColorModeValue
 } from '@chakra-ui/react';
-import {FiCheck, FiClipboard} from 'react-icons/fi';
+import {FiCheck} from '@react-icons/all-files/fi/FiCheck';
+import {FiClipboard} from '@react-icons/all-files/fi/FiClipboard';
+import {FiEyeOff} from '@react-icons/all-files/fi/FiEyeOff';
 import {colors} from '@apollo/space-kit/colors';
-import {usePrismTheme} from '../utils/prism';
-
-// these must be imported after Prism
-import 'prismjs/components/prism-bash';
-import 'prismjs/components/prism-graphql';
-import 'prismjs/components/prism-groovy';
-import 'prismjs/components/prism-java';
-import 'prismjs/components/prism-javascript';
-import 'prismjs/components/prism-json';
-import 'prismjs/components/prism-jsx';
-import 'prismjs/components/prism-kotlin';
-import 'prismjs/components/prism-ruby';
-import 'prismjs/components/prism-rust';
-import 'prismjs/components/prism-swift';
-import 'prismjs/components/prism-tsx';
-import 'prismjs/components/prism-typescript';
-import 'prismjs/components/prism-yaml';
+import {usePrismTheme} from './prism';
 
 const CODE_BLOCK_SPACING = 4;
 export const GA_EVENT_CATEGORY_CODE_BLOCK = 'Code Block';
 
-export const CodeBlockContext = createContext();
+export const CodeBlockContext = createContext(null);
 export const LineNumbersContext = createContext(true);
 
 const isHighlightComment = (token, comment = '// highlight-line') =>
@@ -47,21 +33,31 @@ const isHighlightStart = (line, comment = '// highlight-start') =>
 
 const isHighlightEnd = line => isHighlightStart(line, '// highlight-end');
 
-export default function CodeBlock({children}) {
+type MarkdownCodeBlockProps = {
+  children: ReactNode;
+  Prism?: typeof Prism;
+};
+
+export const MarkdownCodeBlock = ({
+  children,
+  Prism
+}: MarkdownCodeBlockProps): JSX.Element => {
   const defaultShowLineNumbers = useContext(LineNumbersContext);
   const [child] = Array.isArray(children) ? children : [children];
   const {
     className = 'language-text',
     children: innerChildren,
     metastring,
-    'data-meta': dataMeta
+    'data-meta': dataMeta,
+    hidden = false
   } = child.props;
 
   const meta = metastring || dataMeta;
   const {
-    title,
-    highlight,
-    showLineNumbers = defaultShowLineNumbers
+    title = null,
+    highlight = null,
+    showLineNumbers = defaultShowLineNumbers,
+    disableCopy = false
   } = meta ? fenceparser(meta) : {};
   const linesToHighlight = highlight
     ? rangeParser(Object.keys(highlight).toString())
@@ -69,21 +65,59 @@ export default function CodeBlock({children}) {
 
   const [code] = Array.isArray(innerChildren) ? innerChildren : [innerChildren];
 
+  return (
+    <CodeBlock
+      code={code.trim()}
+      language={className.replace(/^language-/, '')}
+      title={title?.toString()}
+      hidden={hidden}
+      disableCopy={disableCopy === true}
+      showLineNumbers={showLineNumbers === true}
+      linesToHighlight={linesToHighlight}
+      Prism={Prism}
+    />
+  );
+};
+
+type CodeBlockProps = {
+  language?: Language;
+  title?: string;
+  linesToHighlight?: number[];
+  disableCopy?: boolean;
+  showLineNumbers?: boolean;
+  hidden?: boolean;
+  code: string;
+  Prism?: typeof Prism;
+};
+
+export const CodeBlock = ({
+  code,
+  language,
+  title,
+  showLineNumbers,
+  linesToHighlight,
+  hidden: defaultHidden = false,
+  disableCopy = false
+}: CodeBlockProps): JSX.Element => {
   const {onCopy, hasCopied} = useClipboard(code);
+  const [hidden, setHidden] = useState(defaultHidden);
+
   const theme = usePrismTheme();
+  const languageMenu = useContext(CodeBlockContext);
   const highlightColor = useColorModeValue('gray.100', 'gray.700');
   const lineNumberColor = useColorModeValue(
     'gray.500',
     colors.midnight.lighter
   );
-  const languageMenu = useContext(CodeBlockContext);
 
   return (
     <Highlight
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       Prism={Prism}
       theme={theme}
-      code={code.trim()}
-      language={className.replace(/^language-/, '')}
+      code={code}
+      language={language}
     >
       {({className, style, tokens, getLineProps, getTokenProps}) => {
         // length of longest line number
@@ -124,7 +158,17 @@ export default function CodeBlock({children}) {
                   {title}
                 </Box>
               )}
-              <Flex overflow="auto">
+              <Flex
+                overflow="auto"
+                transition="filter 200ms"
+                css={
+                  hidden && {
+                    filter: 'blur(8px)',
+                    pointerEvents: 'none',
+                    userSelect: 'none'
+                  }
+                }
+              >
                 <chakra.pre
                   d="inline-block"
                   minW="full"
@@ -143,7 +187,7 @@ export default function CodeBlock({children}) {
                           .concat(highlightRange)
                           .includes(i + 1) ||
                         // or if the line has a "highlight-line" comment in it
-                        line.some(isHighlightComment);
+                        line.some(token => isHighlightComment(token));
                       return (
                         <Flex
                           key={i}
@@ -190,27 +234,57 @@ export default function CodeBlock({children}) {
                 </chakra.pre>
               </Flex>
             </Box>
-            <ButtonGroup size="xs" pos="absolute" top="2" right="2">
-              <Button
-                leftIcon={hasCopied ? <FiCheck /> : <FiClipboard />}
-                onClick={() => {
-                  onCopy();
-                  window.gtag?.('event', 'Copy', {
-                    event_category: GA_EVENT_CATEGORY_CODE_BLOCK
-                  });
-                }}
-              >
-                {hasCopied ? 'Copied!' : 'Copy'}
-              </Button>
+            <ButtonGroup
+              size="xs"
+              pos="absolute"
+              top="2"
+              right="2"
+              transition="opacity 200ms linear 200ms"
+              css={
+                hidden && {
+                  opacity: 0,
+                  transition: 'none'
+                }
+              }
+            >
+              {defaultHidden && (
+                <IconButton
+                  aria-label="Hide code"
+                  icon={<FiEyeOff />}
+                  onClick={() => setHidden(true)}
+                />
+              )}
+              {!disableCopy && (
+                <Button
+                  leftIcon={hasCopied ? <FiCheck /> : <FiClipboard />}
+                  onClick={() => {
+                    onCopy();
+                    window.gtag?.('event', 'Copy', {
+                      event_category: GA_EVENT_CATEGORY_CODE_BLOCK
+                    });
+                  }}
+                >
+                  {hasCopied ? 'Copied!' : 'Copy'}
+                </Button>
+              )}
               {languageMenu}
             </ButtonGroup>
+            {hidden && (
+              <Button
+                pos="absolute"
+                top="50%"
+                left="50%"
+                transform="translate(-50%, -50%)"
+                onClick={() => setHidden(false)}
+                rounded="full"
+                colorScheme="indigo"
+              >
+                Show code
+              </Button>
+            )}
           </Box>
         );
       }}
     </Highlight>
   );
-}
-
-CodeBlock.propTypes = {
-  children: PropTypes.node.isRequired
 };

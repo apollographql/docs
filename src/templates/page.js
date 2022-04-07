@@ -1,5 +1,4 @@
 import Blockquote from '../components/Blockquote';
-import CodeBlock from '../components/CodeBlock';
 import CodeColumns from '../components/CodeColumns';
 import DocsetMenu from '../components/DocsetMenu';
 import ExpansionPanel, {
@@ -10,10 +9,8 @@ import Footer from '../components/Footer';
 import Header, {TOTAL_HEADER_HEIGHT} from '../components/Header';
 import InlineCode from '../components/InlineCode';
 import MobileNav from '../components/MobileNav';
-import MultiCodeBlock, {
-  MultiCodeBlockContext
-} from '../components/MultiCodeBlock';
 import Pagination from '../components/Pagination';
+import Prism from 'prismjs';
 import PropTypes from 'prop-types';
 import React, {Fragment, createElement, useCallback, useMemo} from 'react';
 import RelativeLink, {ButtonLink} from '../components/RelativeLink';
@@ -53,7 +50,12 @@ import {
   chakra,
   useToken
 } from '@chakra-ui/react';
-import {EmbeddableExplorer} from '@apollo/chakra-helpers';
+import {
+  EmbeddableExplorer,
+  MarkdownCodeBlock,
+  MultiCodeBlock,
+  MultiCodeBlockContext
+} from '@apollo/chakra-helpers';
 import {FaDiscourse, FaGithub} from 'react-icons/fa';
 import {FiChevronsRight, FiStar} from 'react-icons/fi';
 import {GatsbySeo} from 'gatsby-plugin-next-seo';
@@ -65,6 +67,22 @@ import {YouTube} from 'mdx-embed';
 import {graphql} from 'gatsby';
 import {rehype} from 'rehype';
 import {useMermaidStyles} from '../utils/mermaid';
+
+// these must be imported after Prism
+import 'prismjs/components/prism-bash';
+import 'prismjs/components/prism-graphql';
+import 'prismjs/components/prism-groovy';
+import 'prismjs/components/prism-java';
+import 'prismjs/components/prism-javascript';
+import 'prismjs/components/prism-json';
+import 'prismjs/components/prism-jsx';
+import 'prismjs/components/prism-kotlin';
+import 'prismjs/components/prism-ruby';
+import 'prismjs/components/prism-rust';
+import 'prismjs/components/prism-swift';
+import 'prismjs/components/prism-tsx';
+import 'prismjs/components/prism-typescript';
+import 'prismjs/components/prism-yaml';
 
 const LIST_SPACING = 4;
 const HEADINGS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
@@ -113,7 +131,7 @@ const components = {
   ),
   p: Text,
   a: RelativeLink,
-  pre: CodeBlock,
+  pre: props => <MarkdownCodeBlock Prism={Prism} {...props} />,
   table: Table,
   thead: Thead,
   tbody: Tbody,
