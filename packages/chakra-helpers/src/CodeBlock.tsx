@@ -17,22 +17,6 @@ import {FiClipboard} from '@react-icons/all-files/fi/FiClipboard';
 import {colors} from '@apollo/space-kit/colors';
 import {usePrismTheme} from './prism';
 
-// these must be imported after Prism
-import 'prismjs/components/prism-bash';
-import 'prismjs/components/prism-graphql';
-import 'prismjs/components/prism-groovy';
-import 'prismjs/components/prism-java';
-import 'prismjs/components/prism-javascript';
-import 'prismjs/components/prism-json';
-import 'prismjs/components/prism-jsx';
-import 'prismjs/components/prism-kotlin';
-import 'prismjs/components/prism-ruby';
-import 'prismjs/components/prism-rust';
-import 'prismjs/components/prism-swift';
-import 'prismjs/components/prism-tsx';
-import 'prismjs/components/prism-typescript';
-import 'prismjs/components/prism-yaml';
-
 const CODE_BLOCK_SPACING = 4;
 export const GA_EVENT_CATEGORY_CODE_BLOCK = 'Code Block';
 
@@ -49,9 +33,10 @@ const isHighlightEnd = line => isHighlightStart(line, '// highlight-end');
 
 type CodeBlockProps = {
   children: ReactNode;
+  Prism?: typeof Prism;
 };
 
-export const CodeBlock = ({children}: CodeBlockProps): JSX.Element => {
+export const CodeBlock = ({children, Prism}: CodeBlockProps): JSX.Element => {
   const defaultShowLineNumbers = useContext(LineNumbersContext);
   const [child] = Array.isArray(children) ? children : [children];
   const {

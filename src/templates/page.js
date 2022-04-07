@@ -10,6 +10,7 @@ import Header, {TOTAL_HEADER_HEIGHT} from '../components/Header';
 import InlineCode from '../components/InlineCode';
 import MobileNav from '../components/MobileNav';
 import Pagination from '../components/Pagination';
+import Prism from 'prismjs';
 import PropTypes from 'prop-types';
 import React, {Fragment, createElement, useCallback, useMemo} from 'react';
 import RelativeLink, {ButtonLink} from '../components/RelativeLink';
@@ -67,6 +68,22 @@ import {graphql} from 'gatsby';
 import {rehype} from 'rehype';
 import {useMermaidStyles} from '../utils/mermaid';
 
+// these must be imported after Prism
+import 'prismjs/components/prism-bash';
+import 'prismjs/components/prism-graphql';
+import 'prismjs/components/prism-groovy';
+import 'prismjs/components/prism-java';
+import 'prismjs/components/prism-javascript';
+import 'prismjs/components/prism-json';
+import 'prismjs/components/prism-jsx';
+import 'prismjs/components/prism-kotlin';
+import 'prismjs/components/prism-ruby';
+import 'prismjs/components/prism-rust';
+import 'prismjs/components/prism-swift';
+import 'prismjs/components/prism-tsx';
+import 'prismjs/components/prism-typescript';
+import 'prismjs/components/prism-yaml';
+
 const LIST_SPACING = 4;
 const HEADINGS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
 
@@ -114,7 +131,7 @@ const components = {
   ),
   p: Text,
   a: RelativeLink,
-  pre: CodeBlock,
+  pre: props => <CodeBlock Prism={Prism} {...props} />,
   table: Table,
   thead: Thead,
   tbody: Tbody,
