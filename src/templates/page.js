@@ -10,7 +10,6 @@ import Header, {TOTAL_HEADER_HEIGHT} from '../components/Header';
 import InlineCode from '../components/InlineCode';
 import MobileNav from '../components/MobileNav';
 import Pagination from '../components/Pagination';
-import Prism from 'prismjs';
 import PropTypes from 'prop-types';
 import React, {Fragment, createElement, useCallback, useMemo} from 'react';
 import RelativeLink, {ButtonLink} from '../components/RelativeLink';
@@ -131,7 +130,7 @@ const components = {
   ),
   p: Text,
   a: RelativeLink,
-  pre: props => <MarkdownCodeBlock Prism={Prism} {...props} />,
+  pre: MarkdownCodeBlock,
   table: Table,
   thead: Thead,
   tbody: Tbody,
