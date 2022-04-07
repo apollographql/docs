@@ -35,12 +35,10 @@ const isHighlightEnd = line => isHighlightStart(line, '// highlight-end');
 
 type MarkdownCodeBlockProps = {
   children: ReactNode;
-  Prism?: typeof Prism;
 };
 
 export const MarkdownCodeBlock = ({
-  children,
-  Prism
+  children
 }: MarkdownCodeBlockProps): JSX.Element => {
   const defaultShowLineNumbers = useContext(LineNumbersContext);
   const [child] = Array.isArray(children) ? children : [children];
@@ -74,7 +72,6 @@ export const MarkdownCodeBlock = ({
       disableCopy={disableCopy === true}
       showLineNumbers={showLineNumbers === true}
       linesToHighlight={linesToHighlight}
-      Prism={Prism}
     />
   );
 };
@@ -87,7 +84,6 @@ type CodeBlockProps = {
   showLineNumbers?: boolean;
   hidden?: boolean;
   code: string;
-  Prism?: typeof Prism;
 };
 
 export const CodeBlock = ({

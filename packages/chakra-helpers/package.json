@@ -41,6 +41,7 @@
   "peerDependencies": {
     "@apollo/space-kit": "8 - 8.11.0",
     "@chakra-ui/react": "^1.6.0",
-    "@react-icons/all-files": "^4.1.0"
+    "@react-icons/all-files": "^4.1.0",
+    "prismjs": "^1.27.0"
   }
 }
