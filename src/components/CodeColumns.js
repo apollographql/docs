@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {LineNumbersContext} from './CodeBlock';
+import {LineNumbersContext} from '@apollo/chakra-helpers';
 import {SimpleGrid} from '@chakra-ui/react';
 
 export default function CodeColumns({cols = 2, children}) {
