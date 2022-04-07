@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, {
   ReactChild,
   ReactNode,
@@ -8,7 +7,7 @@ import React, {
 } from 'react';
 import {Button, Menu, MenuButton, MenuItem, MenuList} from '@chakra-ui/react';
 import {CodeBlockContext, GA_EVENT_CATEGORY_CODE_BLOCK} from './CodeBlock';
-import {FiChevronDown} from 'react-icons/fi';
+import {FiChevronDown} from '@react-icons/all-files/fi/FiChevronDown';
 
 export const MultiCodeBlockContext = createContext(null);
 
@@ -83,8 +82,4 @@ export const MultiCodeBlock = ({
       </CodeBlockContext.Provider>
     </div>
   );
-};
-
-MultiCodeBlock.propTypes = {
-  children: PropTypes.node.isRequired
 };

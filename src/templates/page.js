@@ -1,5 +1,4 @@
 import Blockquote from '../components/Blockquote';
-import CodeBlock from '../components/CodeBlock';
 import CodeColumns from '../components/CodeColumns';
 import DocsetMenu from '../components/DocsetMenu';
 import ExpansionPanel, {
@@ -10,9 +9,6 @@ import Footer from '../components/Footer';
 import Header, {TOTAL_HEADER_HEIGHT} from '../components/Header';
 import InlineCode from '../components/InlineCode';
 import MobileNav from '../components/MobileNav';
-import MultiCodeBlock, {
-  MultiCodeBlockContext
-} from '../components/MultiCodeBlock';
 import Pagination from '../components/Pagination';
 import PropTypes from 'prop-types';
 import React, {Fragment, createElement, useCallback, useMemo} from 'react';
@@ -53,7 +49,12 @@ import {
   chakra,
   useToken
 } from '@chakra-ui/react';
-import {EmbeddableExplorer} from '@apollo/chakra-helpers';
+import {
+  CodeBlock,
+  EmbeddableExplorer,
+  MultiCodeBlock,
+  MultiCodeBlockContext
+} from '@apollo/chakra-helpers';
 import {FaDiscourse, FaGithub} from 'react-icons/fa';
 import {FiChevronsRight, FiStar} from 'react-icons/fi';
 import {GatsbySeo} from 'gatsby-plugin-next-seo';

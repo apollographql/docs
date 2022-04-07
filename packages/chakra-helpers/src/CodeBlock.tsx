@@ -1,6 +1,5 @@
 import Highlight from 'prism-react-renderer';
 import Prism from 'prismjs';
-import PropTypes from 'prop-types';
 import React, {ReactNode, createContext, useContext} from 'react';
 import fenceparser from 'fenceparser';
 import rangeParser from 'parse-numeric-range';
@@ -13,7 +12,8 @@ import {
   useClipboard,
   useColorModeValue
 } from '@chakra-ui/react';
-import {FiCheck, FiClipboard} from 'react-icons/fi';
+import {FiCheck} from '@react-icons/all-files/fi/FiCheck';
+import {FiClipboard} from '@react-icons/all-files/fi/FiClipboard';
 import {colors} from '@apollo/space-kit/colors';
 import {usePrismTheme} from './prism';
 
@@ -215,8 +215,4 @@ export const CodeBlock = ({children}: CodeBlockProps): JSX.Element => {
       }}
     </Highlight>
   );
-};
-
-CodeBlock.propTypes = {
-  children: PropTypes.node.isRequired
 };
