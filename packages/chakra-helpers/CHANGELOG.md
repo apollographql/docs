@@ -1,5 +1,11 @@
 # @apollo/chakra-helpers
 
+## 1.3.1
+
+### Patch Changes
+
+- [`71b1d12`](https://github.com/apollographql/docs/commit/71b1d126c7f25cd0e684e6ad3a52933a1e03c133) Thanks [@trevorblades](https://github.com/trevorblades)! - Always pass in Prism to codeblock
+
 ## 1.3.0
 
 ### Minor Changes
