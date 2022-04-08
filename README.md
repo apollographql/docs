@@ -86,6 +86,14 @@ For your convenience, this repo also comes with special `start` NPM scripts for 
 
 Check out the [`package.json`](./package.json) to see how these scripts work!
 
+## Developing _only_ local docsets ⚡️
+
+The Studio and Apollo basics docs content lives in this repo. To spin up a development environment serving only these docsets, there's the `start:local` script. This will result in much faster startup time since we're not sourcing any remote data. Use this script if you're working on changes in either of those docsets or website UI changes.
+
+```sh
+npm run start:local
+```
+
 ## Meet the docsets
 
 The docs content is written and maintained in the following places. Many of them are other git repositories, but some of the content on this site is stored in this repo.
