@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "start": "./dev.sh",
+    "start:local": "DOCS_MODE=local npm start",
     "start:client": "npm start -- ../apollo-client",
     "start:server": "npm start -- ../apollo-server",
     "start:ios": "npm start -- ../apollo-ios",

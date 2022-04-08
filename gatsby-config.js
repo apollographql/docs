@@ -152,9 +152,6 @@ if (process.env.DOCS_LOCAL) {
   );
 } else {
   const localSources = yaml.load(fs.readFileSync('sources/local.yml', 'utf8'));
-  const remoteSources = yaml.load(
-    fs.readFileSync('sources/remote.yml', 'utf8')
-  );
 
   plugins.push(
     ...Object.entries(localSources).map(([name, path]) => ({
@@ -163,17 +160,27 @@ if (process.env.DOCS_LOCAL) {
         name,
         path
       }
-    })),
-    ...Object.entries(remoteSources).map(([name, {remote, branch}]) => ({
-      resolve: '@theowenyoung/gatsby-source-git',
-      options: {
-        remote,
-        name,
-        branch,
-        rootDir: 'docs/source'
-      }
     }))
   );
+
+  if (process.env.DOCS_MODE !== 'local') {
+    const remoteSources = yaml.load(
+      fs.readFileSync('sources/remote.yml', 'utf8')
+    );
+    plugins.push(
+      ...Object.entries(remoteSources).map(([name, {remote, branch}]) => ({
+        resolve: '@theowenyoung/gatsby-source-git',
+        options: {
+          remote,
+          name,
+          branch,
+          rootDir: 'docs/source'
+        }
+      }))
+    );
+  } else {
+    plugins.push('gatsby-plugin-local-docs');
+  }
 }
 
 module.exports = {
