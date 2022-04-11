@@ -100,7 +100,6 @@ These actions are applied to a variety of [resource types](#resource-types), inc
 | --------------------------------- | ----------------------------------------------------------------------------------------- |
 | `IGNORE_OPERATION_IN_CHECKS`      | Ignores a particular GraphQL operation when running [schema checks](./schema-checks/).    |
 | `MARK_CHANGES_SAFE_FOR_OPERATION` | Marks a particular set of changes as safe when running [schema checks](./schema-checks/). |
-| `REGISTER_OPERATION`              | Adds a GraphQL operation to the [operation registry](./operation-registry/).              |
 | `TOGGLE_DATADOG`                  | Enables or disables [Datadog metrics forwarding](./metrics/datadog-integration/).         |
 
 ### Studio plan

@@ -54,7 +54,6 @@
     },
     "Security": {
       "API keys": "/api-keys",
-      "Operation safelisting (enterprise only)": "/operation-registry",
       "Audit log (enterprise only)": "/audit-log",
       "Data privacy and compliance": "/data-privacy",
       "Sub-processors": "/sub-processors"
