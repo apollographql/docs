@@ -83,7 +83,7 @@ With contracts, you apply **tags** to types and fields in your subgraph schemas 
 
 For example, let's take a look at this Products subgraph schema:
 
-```graphql {1-4,16-19} title="products.graphql"
+```graphql {1-6,9,14,18-21} title="products.graphql"
 # You must include this definition in any schema with tags!
 directive @tag(name: String!) repeatable on
   | FIELD_DEFINITION
@@ -92,7 +92,7 @@ directive @tag(name: String!) repeatable on
   | UNION
 
 type Query {
-  topProducts: [Product!]!
+  topProducts: [Product!]! @tag(name: "partner")
 }
 
 # All fields of the Product object type automatically inherit
@@ -108,7 +108,11 @@ type Product @key(fields: "upc") @tag(name: "partner") {
 }
 ```
 
-This schema applies the `@tag` directive to one object (`Product`) and two object fields (`internalId` and `percentageMatch`).
+This schema applies the `@tag` directive to the following locations:
+
+* The `Product` object type
+* The `Query.topProducts` field (which _returns_ a list of `Product`s)
+* Two fields of `Product` (`internalId` and `percentageMatch`)
 
 Each tag has a string `name`. You tag types and fields with the _same_ `name` if they should be included or excluded as a group by a particular contract.
 
