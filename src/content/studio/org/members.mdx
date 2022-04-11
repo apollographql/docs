@@ -89,10 +89,7 @@ Each [graph API key](../api-keys/) also has a corresponding member role. This ro
 
 Otherwise, a graph API key is equivalent in privileges to a user with the same role for the graph. For example, you can use a `Consumer` key to fetch a graph's schema, and you can use a `Graph Admin` key to manage integrations.
 
-A few operations aren't listed in the table above because they are _only_ supported by graph API keys, not personal API keys for users in the graph's organization. These are primarily operations that are performed by your GraphQL server. They are:
-
-- Reporting usage (traces and performance metrics). This requires a `Graph Admin` key, or a `Contributor` key if the variant is not protected.
-- [Registering operations](../operation-registry/). This requires a `Graph Admin` key.
+A few operations aren't listed in the table above because they are _only_ supported by graph API keys, not personal API keys for users in the graph's organization. These are primarily operations that are performed by your GraphQL server, such as usage reporting (traces and performance metrics).
 
 > Before January 2021, graph keys did not have roles. Keys created before that date (shown as `Legacy Admin` keys) can perform the following operations:
 >
