@@ -70,6 +70,7 @@ export default function Autocomplete({onClose, optionalFilters}) {
         debug: true,
         defaultActiveItemId: 0,
         openOnFocus: true,
+        autoFocus: true,
         plugins: [algoliaInsightsPlugin],
         onStateChange: ({state}) => setAutocompleteState(state),
         getSources: () =>
