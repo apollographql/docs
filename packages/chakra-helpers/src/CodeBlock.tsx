@@ -91,7 +91,7 @@ export const CodeBlock = ({
   language,
   title,
   showLineNumbers,
-  linesToHighlight,
+  linesToHighlight = [],
   hidden: defaultHidden = false,
   disableCopy = false
 }: CodeBlockProps): JSX.Element => {
