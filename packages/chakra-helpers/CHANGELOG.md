@@ -1,5 +1,11 @@
 # @apollo/chakra-helpers
 
+## 1.3.2
+
+### Patch Changes
+
+- [`757432b`](https://github.com/apollographql/docs/commit/757432bf47f3f66acd05e733cb7bfb3429eb4abc) Thanks [@trevorblades](https://github.com/trevorblades)! - Add linesToHighlight default value
+
 ## 1.3.1
 
 ### Patch Changes
