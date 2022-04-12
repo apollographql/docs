@@ -12,9 +12,11 @@ You can use Studio with any GraphQL server. Certain features (such as [metrics r
 
 ## 1. Create your account
 
-1. Go to [studio.apollographql.com](https://studio.apollographql.com/) and click **Create an account**.
+You can sign up for Studio with either your GitHub identity or a username and password.
 
-   _You can sign up with either your GitHub identity or a username and password._
+1. Go to [studio.apollographql.com](https://studio.apollographql.com/) and click **Let's get started**.
+
+2. Select **Register a deployed graph**.
 
 2. Complete the signup flow, which includes:
 
@@ -26,33 +28,50 @@ You can use Studio with any GraphQL server. Certain features (such as [metrics r
 
 In Studio, each **graph** has an associated GraphQL schema. Your first graph will use your GraphQL server's schema.
 
-1. Visit [studio.apollographql.com](https://studio.apollographql.com/) again. Now that you have an account, this opens Studio.
+1. Visit [studio.apollographql.com](https://studio.apollographql.com/) again. Now that you have an account, this opens Studio to your newly created organization.
 
-   The list of organizations you belong to appears in the left column:
+2. Click **New Graph** in the top right. The following dialog appears:
 
-   <img
-     src="./img/organization-list.png"
+    <img
+     src="./img/graph-creation.jpg"
      class="screenshot"
-     alt="Schema history tab in Studio"
-   />
+     alt="Graph creation dialog"
+     width="500"
+    />
 
-2. Select the organization that you want to add your graph to. Then, click **New Graph** in the upper right.
+3. Specify an organization and title for your graph.
 
-3. Specify a name for your graph and click **Next**.
+4. Leave the graph's **Graph type** as **Deployed**.
 
-   - A graph's name must be globally unique across all of Studio. We recommend using a consistent prefix across all of your organization's graphs.
+    - [Development graphs](./dev-graphs/) can be useful for local development, but we'll create a standard deployed graph to start.
 
-4. Studio displays instructions for registering your schema, which is also described in the next step.
+5. Specify your **Graph Architecture**:
 
-## 3. Register your schema
+    * If your graph uses [Apollo Federation](/federation/), leave this as **Supergraph (default)**.
+    * Otherwise (i.e., your graph consists of a single GraphQL server), switch this to **Monolith**.
+
+6. Click **Next**. A dialog like the following appears (the details differ depending on which **Graph Architecture** you're using):
+
+    <img
+     src="./img/register-schema-dialog.jpg"
+     class="screenshot"
+     alt="Schema registration options"
+     width="500"
+    />
+
+7. **If you're using Apollo Federation,** select the version you're using from the **Supergraph Pipeline Track** dropdown.
+
+Now you're ready to publish your graph's schema to Apollo!
+
+## 3. Publish your schema
 
 The **Apollo schema registry** powers nearly every feature of Apollo Studio, along with helpful developer tools like our VS Code extension.
 
-To register your server's schema, first obtain a **graph API key** for your graph:
+To register your schema, first obtain a **graph API key** for your graph:
 
 <ObtainGraphApiKey />
 
-Once you have your API key, select the registration method that corresponds to your graph's architecture:
+After you obtain your API key, select the registration method that corresponds to your graph's architecture:
 
 <ExpansionPanel title="Apollo Server WITHOUT Apollo Federation">
 

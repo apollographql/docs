@@ -2,11 +2,11 @@
 title: Graphs and variants
 ---
 
-A **graph** in Apollo Studio represents a graph in your organization. Each graph has one or more **variants**, which correspond to the different environments where that graph runs (such as staging and production). Each variant has its own GraphQL schema, which means schemas can differ between environments.
+A **graph** in Apollo Studio represents a unified graph in your organization. Each graph has one or more **variants**, which correspond to the different environments where that graph runs (such as staging and production). Each variant has its own GraphQL schema, which means schemas can differ between environments.
 
 ## Creating a graph
 
-To create a graph in [Apollo Studio](https://studio.apollographql.com/), first select the Studio organization that the graph will belong to. Then click **New Graph** in the upper right and proceed through the creation flow:
+To create a graph in [Apollo Studio](https://studio.apollographql.com/), click **New Graph** in the top right. The following dialog appears:
 
 <img
   className="screenshot"
@@ -17,15 +17,20 @@ To create a graph in [Apollo Studio](https://studio.apollographql.com/), first s
 
 There are two types of graphs in Studio:
 
-- **Deployed graphs** are shared with other members of your organization. Create a deployed graph for every use case _except_ local development.
-- [**Development graphs**](../dev-graphs/) (**dev graphs** for short) are only visible to you. Use them to help you iterate on your graph in your development environment.
+* **Deployed graphs** are shared with other members of your organization. Create a deployed graph for every use case _except_ local development.
+* [**Development graphs**](../dev-graphs/) (**dev graphs** for short) are visible only to you. Use them to help you iterate on your graph in your development environment.
+
+There are also two types of **graph architectures** in Studio:
+
+* **Supergraph** - This is any graph that uses [Apollo Federation](/federation/), consisting of a gateway and one or more subgraphs.
+* **Monolith** - This is any graph that _doesn't_ use Apollo Federation, consisting of a single GraphQL server.
 
 ## Registering a schema
 
 You can register your schema to a Studio graph with one of the following methods:
 
-- [Using schema reporting](../schema/schema-reporting/) (recommended)
-- [Using the Rover CLI](../schema/cli-registration/)
+* [Using schema reporting](../schema/schema-reporting/) (monoliths only)
+* [Using the Rover CLI](../schema/cli-registration/)
 
 ## Viewing graph information
 
