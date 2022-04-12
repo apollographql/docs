@@ -130,6 +130,8 @@ Whenever your source variant's [supergraph schema](https://www.apollographql.com
 
 Additional guidance is provided in [Special cases](#special-cases).
 
+Note that you can use `@inaccessible` to mark schema elements that should not be accessible in the public facing schema. This is useful when creating a public contract variant. See the `@inaccessible` [spec](https://specs.apollo.dev/inaccessible/v0.1/) for more details. 
+
 ### 4. Register updated subgraph schemas
 
 After you're done adding tags, update your source variant by registering your updated subgraph schemas to Apollo Studio.
