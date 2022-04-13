@@ -7,7 +7,7 @@ description: Deliver subsets of your enterprise graph
 >
 > Contracts currently only support [federated graphs](https://www.apollographql.com/docs/federation/).
 
-Apollo Studio **contracts** enable you to deliver different subsets of your graph to different consumers. Each contract filters out specific portions of your graph's [API schema](https://www.apollographql.com/docs/federation/#federated-schemas) into a different Studio variant:
+Apollo Studio **contracts** enable you to deliver different subsets of your graph to different consumers. Each contract filters specific portions of your graph's [API schema](https://www.apollographql.com/docs/federation/#federated-schemas) into a different Studio variant:
 
 ```mermaid
 graph LR;
@@ -24,7 +24,7 @@ graph LR;
   api -."Filter schema<br/>according to contract B".->contractB
 ```
 
-Contracts filter out type and field definitions from your subgraph schemas based on `@tag` directives that you add:
+Contracts filter type and field definitions from your subgraph schemas based on `@tag` directives that you add:
 
 <CodeColumns>
 
