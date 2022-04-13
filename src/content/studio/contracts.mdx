@@ -7,22 +7,52 @@ description: Deliver subsets of your enterprise graph
 >
 > Contracts currently only support [federated graphs](https://www.apollographql.com/docs/federation/).
 
-Apollo Studio **contracts** enable you to deliver different subsets of your graph to different consumers. Each contract filters specific portions of your graph's [API schema](https://www.apollographql.com/docs/federation/#federated-schemas):
+Apollo Studio **contracts** enable you to deliver different subsets of your graph to different consumers. Each contract filters specific portions of your graph's [API schema](https://www.apollographql.com/docs/federation/#federated-schemas) into a different Studio variant:
 
 ```mermaid
 graph LR;
+  subgraph "Source variant";
   api("API schema<br/>▉");
-  contractA("Contract schema A<br/>▛");
+  end
+  subgraph "Contract variant B"
   contractB("Contract schema B<br/>▟")
+  end
+  subgraph "Contract variant A"
+  contractA("Contract schema A<br/>▛");
+  end
   api -."Filter schema<br/>according to contract A".->contractA
   api -."Filter schema<br/>according to contract B".->contractB
 ```
+
+Contracts filter type and field definitions from your subgraph schemas based on `@tag` directives that you add:
+
+<CodeColumns>
+
+```graphql {4} title="Source variant schema"
+type Product {
+  id: ID!
+  name: String!
+  codename: String! @tag(name: "internal")
+}
+```
+
+```graphql title="Contract variant schema"
+type Product {
+  id: ID!
+  name: String!
+  # codename field is filtered out
+}
+```
+
+</CodeColumns>
+
+In the above example, a contract excludes types and fields marked with the `internal` `@tag`.
 
 ## What are contracts for?
 
 You usually create a contract to support a **contract gateway** or **contract documentation** (or both).
 
-### Contract gateways
+#### Contract gateways
 
 You can deploy a [managed instance](https://www.apollographql.com/docs/federation/managed-federation/overview/) of your gateway that uses a contract schema. Developers who use this contract gateway can only execute GraphQL operations that the contract schema supports:
 
@@ -45,7 +75,7 @@ This enables you to hide experimental types and fields that are still in develop
 
 Contract gateways can safely connect to the same subgraph instances as any other gateway, because they can only interact with data that's represented in the contract schema. This does not affect internal routing (e.g. usage of hidden fields in `@requires` selection sets). Additionally, any `@tag` labels that are part of the source variant's supergraph schema are preserved in a contract supergraph schema.
 
-### Contract documentation
+#### Contract documentation
 
 In Studio, each contract variant has its own README, schema reference, and Explorer. If you [make a contract variant public](./org/graphs/#public-variants), you can provide these resources to external client developers to help them interact with a specific portion of your graph (while omitting irrelevant types and fields).
 
@@ -66,24 +96,24 @@ Older versions of the above libraries and tools don't fully support the required
 
 A contract uses one of your graph's existing [variants](https://www.apollographql.com/docs/studio/org/graphs/#managing-variants) (called the **source variant**) to generate its contract schema. You need to enable the source variant's support for the `@tag` directive in Apollo Studio.
 
-Open your graph's Settings page and find the Manage Variants section:
+Open the Settings page for the variant you want to use as your source variant, then select the **This Variant** tab:
 
 <img
   class="screenshot"
   alt="Edit supported directives in Studio"
-  src="./img/edit-supported-directives.jpg"
+  src="./img/contract-variant-settings.jpg"
   width="600"
 />
 
-Click **Edit Build Configuration** for the variant you want to use as a source variant, and enable support for `@tag`.
+In the **Build Configuration** section, click **Edit Configuration** and enable support for `@tag`.
 
 ### 3. Add `@tag`s
 
-With contracts, you apply **tags** to types and fields in your subgraph schemas to indicate whether to include or exclude them from your **contract schema**.
+With contracts, you apply the `@tag` directive to types and fields in your subgraph schemas to indicate whether to include or exclude them from your **contract schema**.
 
 For example, let's take a look at this Products subgraph schema:
 
-```graphql {1-6,9,14,18-21} title="products.graphql"
+```graphql {2-6,9,14,20-21} title="products.graphql"
 # You must include this definition in any schema with tags!
 directive @tag(name: String!) repeatable on
   | FIELD_DEFINITION
@@ -121,7 +151,7 @@ Whenever your source variant's [supergraph schema](https://www.apollographql.com
 #### Tagging rules
 
 - You can apply tags to the following in your schema:
-  - Fields of object types (as shown above)
+  - Fields of object types
   - Definitions of object, interface, and union types
 - Tag names can include alphanumeric characters (`a-z`, `A-Z`, `0-9`), along with hyphen (`-`) and forward slash (`/`).
 - Whenever you tag an object type definition, _also_ tag every field that _returns_ that type.
@@ -129,8 +159,6 @@ Whenever your source variant's [supergraph schema](https://www.apollographql.com
 - Whenever you tag an object or interface type, those tags propagate to the fields of that type.
 
 Additional guidance is provided in [Special cases](#special-cases).
-
-Note that you can use `@inaccessible` to mark schema elements that should not be accessible in the public facing schema. This is useful when creating a public contract variant. See the `@inaccessible` [spec](https://specs.apollo.dev/inaccessible/v0.1/) for more details. 
 
 ### 4. Register updated subgraph schemas
 
@@ -142,7 +170,14 @@ Now you're ready to create your first contract!
 
 ### 5. Create a contract
 
-Open your graph's Settings page and find the same Manage Variants section where you added support for the `@tag` directive. Below your list of registered schemas, you'll see a Contracts section.
+Once again open your source variant's Settings page and select the **This Variant** tab. This time, click **Contracts**:
+
+<img
+  class="screenshot"
+  alt="Contract settings in Studio"
+  src="./img/contract-create.jpg"
+  width="550"
+/>
 
 Click **Create Contract** to open the following dialog:
 
@@ -186,7 +221,11 @@ Your contract will filter types and fields from its source variant according to 
   - Each object and interface type is _included_ as long as _at least one_ of its fields is included (unless the type is explicitly excluded)
   - The contract schema _excludes_ a type or field if it's tagged with both an included tag _and_ an excluded tag.
 
-When you're done adding tag names, click **Continue**.
+> 💡 In Apollo Federation 2, if you want to exclude a type or field from your _source variant's_ API schema _and_ all of its contract schemas, you can use the `@inaccessible` directive instead of `@tag`. For details, see [Using `@inaccessible`](/federation/federated-types/sharing-types/#using-inaccessible).
+
+When you're done adding tag names, you can click **Generate Preview** to check the contract schema that your contract will generate. This enables you to make any necessary changes to your filters.
+
+When you're ready, click **Review**.
 
 #### Review and launch
 
@@ -275,4 +314,4 @@ Whenever Apollo Studio attempts to create or update your contract schema, it mig
 
 - Tags on objects and interface types (including tags on extension types) are inherited by all fields of that type.
 
-- Tagging interface fields in [Federation v1](https://www.apollographql.com/docs/federation/) is not supported. You can still make an interface field inaccessible by tagging the interface or by ensuring object fields that implement the interface field are removed.
+- Tagging interface _fields_ in [Federation v1](https://www.apollographql.com/docs/federation/v1/) is not supported. You can still make an interface field inaccessible by tagging the interface definition, or by ensuring that object fields that implement the interface field are removed.
