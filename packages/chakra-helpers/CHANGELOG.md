@@ -1,5 +1,11 @@
 # @apollo/chakra-helpers
 
+## 1.3.3
+
+### Patch Changes
+
+- [#78](https://github.com/apollographql/docs/pull/78) [`5451a84`](https://github.com/apollographql/docs/commit/5451a84e235cc7a2c75732d6c826675e7a56baee) Thanks [@trevorblades](https://github.com/trevorblades)! - Make highlight-line/start/end syntax apply to all languages
+
 ## 1.3.2
 
 ### Patch Changes
