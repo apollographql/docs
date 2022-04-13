@@ -25,13 +25,17 @@ export const GA_EVENT_CATEGORY_CODE_BLOCK = 'Code Block';
 export const CodeBlockContext = createContext(null);
 export const LineNumbersContext = createContext(true);
 
-const isHighlightComment = (token, comment = '// highlight-line') =>
-  token.types.includes('comment') && token.content === comment;
+const isHighlightComment = (token, comment = 'highlight-line') => {
+  return (
+    token.types.includes('comment') &&
+    new RegExp(`\\b${comment}$`).test(token.content)
+  );
+};
 
-const isHighlightStart = (line, comment = '// highlight-start') =>
+const isHighlightStart = (line, comment = 'highlight-start') =>
   line.some(token => isHighlightComment(token, comment));
 
-const isHighlightEnd = line => isHighlightStart(line, '// highlight-end');
+const isHighlightEnd = line => isHighlightStart(line, 'highlight-end');
 
 type MarkdownCodeBlockProps = {
   children: ReactNode;
