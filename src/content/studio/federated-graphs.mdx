@@ -119,18 +119,11 @@ directive @contact(
 You can now apply the `@contact` directive to the special `schema` object. Many schemas don’t include this object because it’s not required, but you can add it like so:
 
 ```graphql title="schema.graphql"
-schema @contact(
+extend schema @contact(
   name: "Acephei Server Team",
   url: "https://myteam.slack.com/archives/teams-chat-room-url",
   description: "send urgent issues to [#oncall](https://yourteam.slack.com/archives/oncall)."
-) {
-  query: Query
-
-  # Also include these if your schema defines
-  # the Mutation and/or Subscription type:
-  # mutation: Mutation
-  # subscription: Subscription
-}
+)
 ```
 
 As shown, the `schema` object must include a field for each root operation type (`Query`, `Mutation`, and/or `Subscription`) that's defined in your schema.
