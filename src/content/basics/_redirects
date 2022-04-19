@@ -35,7 +35,7 @@
 /platform/* /docs/studio/:splat
 /references/graph-manager-data-privacy/ /docs/studio/data-privacy/
 
-# Move Fullstack Tutorial to Odyssey
+# Move Full-stack Tutorial to Odyssey
 /tutorial/introduction https://www.apollographql.com/tutorials/fullstack-quickstart/introduction
 /tutorial/schema/ https://www.apollographql.com/tutorials/fullstack-quickstart/building-a-schema
 /tutorial/data-source/ https://www.apollographql.com/tutorials/fullstack-quickstart/connecting-to-data-sources
