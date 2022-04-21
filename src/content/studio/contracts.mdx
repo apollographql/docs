@@ -5,7 +5,7 @@ description: Deliver subsets of your enterprise graph
 
 > Contracts are currently available as a [public preview](https://www.apollographql.com/docs/resources/release-stages/#public-preview) feature for [Enterprise plans](https://www.apollographql.com/pricing/).
 >
-> Contracts currently only support [federated graphs](https://www.apollographql.com/docs/federation/).
+> Contracts currently only support [federated graphs](/federation/).
 
 Apollo Studio **contracts** enable you to deliver different subsets of your graph to different consumers. Each contract filters specific portions of your graph's [API schema](https://www.apollographql.com/docs/federation/#federated-schemas) into a different Studio variant:
 
@@ -248,6 +248,25 @@ Congratulations! You've created a contract in Apollo Studio. You can now use you
 
 For example, you can complete the [managed federation setup](https://www.apollographql.com/docs/federation/managed-federation/setup/) for a new gateway instance that uses your contract variant.
 
+## Federation 1 limitations
+
+Contracts behave slightly differently depending on which version of Apollo Federation your graph uses (1 or 2). Most importantly, graphs that use Federation 1 _cannot_ use `@tag`s to exclude the following from a contract schema:
+
+* Custom scalar types (default scalar types can _never_ be excluded)
+* Enum types or their values
+* Input types or their fields
+* Arguments of object fields, interface fields, or directives
+
+### Moving a contract to Federation 2
+
+Currently, it isn't possible to move a contract variant or its source variant from Federation 1 to Federation 2. Instead, you need to delete and recreate your contract variants with the following steps:
+
+1. Identify the source variant you want to move to Federation 2.
+2. Save the details for each of that source variant's existing contract variants (most importantly each variant's associated filters).
+3. Delete all of the source variant's existing contract variants.
+3. Now that the source variant has no associated contracts, you can configure it to use Federation 2 composition ([learn how](/federation/federation-2/moving-to-federation-2#configure-your-composition-method)).
+4. Recreate your deleted contract variants, which will now use Federation 2 composition like the modified source variant.
+
 ## Automatic updates
 
 Apollo automatically updates your contract schema whenever any of the following occurs:
@@ -310,8 +329,14 @@ Whenever Apollo Studio attempts to create or update your contract schema, it mig
 
   - _However_, if a subgraph resolves one of these fields by returning the excluded object, a runtime error occurs in the gateway and the operation fails.
 
-- You _can_ exclude object fields that are used in a computed field's [`@requires` directive](https://www.apollographql.com/docs/federation/entities/#extending-an-entity-with-computed-fields-advanced) without causing runtime errors.
+- You _cannot_ exclude any of the following from a contract schema:
+
+  - Built-in scalars (`Int`, `Float`, etc.)
+  - Built-in directives (`@skip`, `@include`, etc.)
+  - Custom directives that are applied to type system locations ([see the list](https://spec.graphql.org/October2021/#TypeSystemDirectiveLocation))
+
+- You _can_ exclude object fields that are used in a computed field's [`@requires` directive](https://www.apollographql.com/docs/federation/entities-advanced/#contributing-computed-entity-fields) without causing runtime errors.
 
 - Tags on objects and interface types (including tags on extension types) are inherited by all fields of that type.
 
-- Tagging interface _fields_ in [Federation v1](https://www.apollographql.com/docs/federation/v1/) is not supported. You can still make an interface field inaccessible by tagging the interface definition, or by ensuring that object fields that implement the interface field are removed.
+- Tagging interface _fields_ in [Federation 1](https://www.apollographql.com/docs/federation/v1/) is not supported. You can still make an interface field inaccessible by tagging the interface definition, or by ensuring that object fields that implement the interface field are removed.
