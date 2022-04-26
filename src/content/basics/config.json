@@ -5,7 +5,7 @@
     "The Apollo platform": "/intro/platform",
     "Why adopt GraphQL?": "/intro/benefits",
     "Tutorials": {
-      "Lift-off series (recommended)": "https://www.apollographql.com/tutorials/lift-off-part1/?utm_source=apollo_docs&utm_medium=referral&utm_campaign=docs_sidebar",
+      "Lift-off series & certification": "https://www.apollographql.com/tutorials/lift-off-part1/?utm_source=apollo_docs&utm_medium=referral&utm_campaign=docs_sidebar",
       "Full-stack quickstart": "https://www.apollographql.com/tutorials/fullstack-quickstart/introduction?utm_source=apollo_docs&utm_medium=referral&utm_campaign=docs_sidebar"
     },
     "Development Tools": {
@@ -20,6 +20,16 @@
       "GraphQL FAQ": "/resources/faq",
       "Elastic License v2 FAQ": "/resources/elastic-license-v2-faq",
       "Release lifecycle": "/resources/release-stages"
+    },
+    "Enterprise Guide": {
+      "Introduction": "/enterprise-guide/introduction",
+      "GraphQL consolidation": "/enterprise-guide/graphql-consolidation",
+      "Federated schema design": "/enterprise-guide/federated-schema-design",
+      "Graph administration": "/enterprise-guide/graph-administration",
+      "Graph security": "/enterprise-guide/graph-security",
+      "Change management": "/enterprise-guide/change-management",
+      "Federation case studies": "/enterprise-guide/federation-case-studies",
+      "Additional resources": "/enterprise-guide/additional-resources"
     }
   }
 }
