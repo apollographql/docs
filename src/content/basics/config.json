@@ -4,18 +4,9 @@
     "Home": "/",
     "The Apollo platform": "/intro/platform",
     "Why adopt GraphQL?": "/intro/benefits",
-    "GraphQL Tutorials": "https://www.apollographql.com/tutorials?utm_source=apollo_docs&utm_medium=referral&utm_campaign=docs_sidebar",
-    "Full-Stack Tutorial": {
-      "0. Introduction": "/tutorial/introduction",
-      "1. Build a schema": "/tutorial/schema",
-      "2. Connect to data sources": "/tutorial/data-source",
-      "3. Write query resolvers": "/tutorial/resolvers",
-      "4. Write mutation resolvers": "/tutorial/mutation-resolvers",
-      "5. Connect to Apollo Studio": "/tutorial/production",
-      "6. Set up Apollo Client": "/tutorial/client",
-      "7. Fetch data with queries": "/tutorial/queries",
-      "8. Update data with mutations": "/tutorial/mutations",
-      "9. Manage local state": "/tutorial/local-state"
+    "Tutorials": {
+      "Lift-off series (recommended)": "https://www.apollographql.com/tutorials/lift-off-part1/?utm_source=apollo_docs&utm_medium=referral&utm_campaign=docs_sidebar",
+      "Full-stack quickstart": "https://www.apollographql.com/tutorials/fullstack-quickstart/introduction?utm_source=apollo_docs&utm_medium=referral&utm_campaign=docs_sidebar"
     },
     "Development Tools": {
       "Rover CLI": "https://www.apollographql.com/docs/rover",
