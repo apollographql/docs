@@ -24,7 +24,7 @@ graph LR;
   api -."Filter schema<br/>according to contract B".->contractB
 ```
 
-Contracts filter type and field definitions from your subgraph schemas based on `@tag` directives that you add:
+Contracts filter schema definitions from your subgraph schemas based on `@tag` directives that you add:
 
 <CodeColumns>
 
@@ -88,7 +88,7 @@ In Studio, each contract variant has its own README, schema reference, and Explo
 1. Update your gateway's `@apollo/gateway` library to version 0.34 or later.
 2. Update your Apollo Server subgraphs to use version 0.1.1 or later of the `@apollo/subgraph` library.
    - `@apollo/subgraph` recently replaced `@apollo/federation` for Apollo Server instances acting as subgraphs. Symbol names are unchanged.
-3. If you're still using the Apollo CLI to register subgraph schemas (via `apollo service:push`), [install the Rover CLI](https://www.apollographql.com/docs/rover/getting-started/) and begin using [`rover subgraph publish`](https://www.apollographql.com/docs/rover/subgraphs/#publishing-a-subgraph-schema-to-apollo-studio) instead.
+3. If you're still using the Apollo CLI to publish subgraph schemas (via `apollo service:push`), [install the Rover CLI](https://www.apollographql.com/docs/rover/getting-started/) and begin using [`rover subgraph publish`](https://www.apollographql.com/docs/rover/subgraphs/#publishing-a-subgraph-schema-to-apollo-studio) instead.
 
 Older versions of the above libraries and tools don't fully support the required `@tag` directive.
 
@@ -113,13 +113,20 @@ With contracts, you apply the `@tag` directive to types and fields in your subgr
 
 For example, let's take a look at this Products subgraph schema:
 
-```graphql {2-6,9,14,20-21} title="products.graphql"
-# You must include this definition in any schema with tags!
+```graphql {2-13,16,21,27-28} title="products.graphql"
+# You must include this definition in any schema that uses @tag!
 directive @tag(name: String!) repeatable on
   | FIELD_DEFINITION
   | INTERFACE
   | OBJECT
   | UNION
+  # ⚠️ The rest of these locations are supported only in Federation 2!
+  | ARGUMENT_DEFINITION
+  | SCALAR
+  | ENUM
+  | ENUM_VALUE
+  | INPUT_OBJECT
+  | INPUT_FIELD_DEFINITION
 
 type Query {
   topProducts: [Product!]! @tag(name: "partner")
@@ -150,9 +157,15 @@ Whenever your source variant's [supergraph schema](https://www.apollographql.com
 
 #### Tagging rules
 
-- You can apply tags to the following in your schema:
-  - Fields of object types
+- **In both Federation 1 and Federation 2,** you can apply tags to the following in your schema:
+  - Fields of object types (Federation 1 doesn't support tagging fields of interface types)
   - Definitions of object, interface, and union types
+- **In Federation 2 only,** you can _also_ apply tags to the following:
+  - Definitions of custom scalar types
+  - Enum types and their values
+  - Input types and their fields
+  - Fields of interface types
+  - Arguments of fields, **but not directive arguments at this time**
 - Tag names can include alphanumeric characters (`a-z`, `A-Z`, `0-9`), along with hyphen (`-`) and forward slash (`/`).
 - Whenever you tag an object type definition, _also_ tag every field that _returns_ that type.
   - If you don't do this, a contract might exclude a type while including fields that return it. This produces an invalid contract schema.
@@ -160,11 +173,11 @@ Whenever your source variant's [supergraph schema](https://www.apollographql.com
 
 Additional guidance is provided in [Special cases](#special-cases).
 
-### 4. Register updated subgraph schemas
+### 4. Publish updated subgraph schemas
 
-After you're done adding tags, update your source variant by registering your updated subgraph schemas to Apollo Studio.
+After you're done adding tags, update your source variant by publishing your updated subgraph schemas to Apollo Studio.
 
-> After registering, if Studio doesn't reflect the the tags that you've added in your subgraphs schemas, make sure you've [updated all required libraries and tools](#1-update-your-gateway-and-subgraphs). If you obtain your subgraph schemas via introspection, older subgraph libraries might strip the `@tag` directive.
+> After publishing, if Studio doesn't reflect the the tags that you've added in your subgraphs schemas, make sure you've [updated all required libraries and tools](#1-update-your-gateway-and-subgraphs). If you obtain your subgraph schemas via introspection, older subgraph libraries might strip the `@tag` directive.
 
 Now you're ready to create your first contract!
 
@@ -255,11 +268,17 @@ Contracts behave slightly differently depending on which version of Apollo Feder
 * Custom scalar types (default scalar types can _never_ be excluded)
 * Enum types or their values
 * Input types or their fields
-* Arguments of object fields, interface fields, or directives
+* Arguments of object fields or interface fields
 
-### Moving a contract to Federation 2
+### Contracts and Federation 2
 
-Currently, it isn't possible to move a contract variant or its source variant from Federation 1 to Federation 2. Instead, you need to delete and recreate your contract variants with the following steps:
+To create a contract variant that uses Federation 2, the contract's source variant must _also_ use Federation 2.
+
+> [Learn how to move an existing variant to Federation 2.](/federation/federation-2/moving-to-federation-2#configure-your-composition-method)
+
+#### Moving an existing contract to Federation 2
+
+If a Federation 1 source variant already has one or more associated contracts, it isn't possible to move that variant or its contract variants to Federation 2. Instead, you need to **delete and recreate** your contract variants with the following steps:
 
 1. Identify the source variant you want to move to Federation 2.
 2. Save the details for each of that source variant's existing contract variants (most importantly each variant's associated filters).
