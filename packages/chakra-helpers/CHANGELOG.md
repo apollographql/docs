@@ -1,5 +1,11 @@
 # @apollo/chakra-helpers
 
+## 1.3.4
+
+### Patch Changes
+
+- [#89](https://github.com/apollographql/docs/pull/89) [`05debd3`](https://github.com/apollographql/docs/commit/05debd3d73c10d7c6f8d00f93e0c2eb327a3f10b) Thanks [@trevorblades](https://github.com/trevorblades)! - make graphql descriptions distinguishable
+
 ## 1.3.3
 
 ### Patch Changes
