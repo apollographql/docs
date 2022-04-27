@@ -31,7 +31,13 @@ export function usePrismTheme(): PrismTheme {
         }
       },
       {
-        types: ['comment', 'prolog', 'doctype', 'cdata'],
+        types: ['selector', 'attr-name', 'char', 'builtin', 'inserted'],
+        style: {
+          color: teal[isDark ? 'light' : 'darker']
+        }
+      },
+      {
+        types: ['comment', 'prolog', 'doctype', 'cdata', 'description'],
         style: {
           color: orange[isDark ? 'light' : 'darker'],
           fontWeight: 'bold'
@@ -60,19 +66,6 @@ export function usePrismTheme(): PrismTheme {
         }
       },
       {
-        types: [
-          'selector',
-          'attr-name',
-          'string',
-          'char',
-          'builtin',
-          'inserted'
-        ],
-        style: {
-          color: teal[isDark ? 'light' : 'darker']
-        }
-      },
-      {
         types: ['atrule', 'attr-value', 'keyword'],
         style: {
           color: 'inherit',
@@ -86,9 +79,15 @@ export function usePrismTheme(): PrismTheme {
         }
       },
       {
-        types: ['regex', 'important', 'variable'],
+        types: ['regex', 'important', 'variable', 'description'],
         style: {
           color: yellow[isDark ? 'light' : 'darker']
+        }
+      },
+      {
+        types: ['description'],
+        style: {
+          fontWeight: 'bold'
         }
       }
     ]
