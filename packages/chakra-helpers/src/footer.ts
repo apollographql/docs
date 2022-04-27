@@ -52,7 +52,7 @@ export const productCategory: Category = {
     },
     {
       text: 'Apollo Client',
-      href: 'https://www.apollographql.com/docs/apollo-client/'
+      href: 'https://www.apollographql.com/docs/react/'
     },
     {
       text: 'Apollo Server',
