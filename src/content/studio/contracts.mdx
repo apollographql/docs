@@ -167,6 +167,7 @@ Whenever your source variant's [supergraph schema](https://www.apollographql.com
   - Fields of interface types
   - Arguments of fields, **but not directive arguments at this time**
 - Tag names can include alphanumeric characters (`a-z`, `A-Z`, `0-9`), along with hyphen (`-`) and forward slash (`/`).
+- Each tag name cannot exceed 128 characters.
 - Whenever you tag an object type definition, _also_ tag every field that _returns_ that type.
   - If you don't do this, a contract might exclude a type while including fields that return it. This produces an invalid contract schema.
 - Whenever you tag an object or interface type, those tags propagate to the fields of that type.
