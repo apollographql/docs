@@ -1,5 +1,11 @@
 # @apollo/chakra-helpers
 
+## 1.3.6
+
+### Patch Changes
+
+- [`e6c227e`](https://github.com/apollographql/docs/commit/e6c227e14426e9fb65ccc60b1787ba1ae2c4912f) Thanks [@trevorblades](https://github.com/trevorblades)! - actually unbold descriptions
+
 ## 1.3.5
 
 ### Patch Changes
