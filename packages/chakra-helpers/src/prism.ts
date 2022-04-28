@@ -37,7 +37,7 @@ export function usePrismTheme(): PrismTheme {
         }
       },
       {
-        types: ['comment', 'prolog', 'doctype', 'cdata', 'description'],
+        types: ['comment', 'prolog', 'doctype', 'cdata'],
         style: {
           color: orange[isDark ? 'light' : 'darker'],
           fontWeight: 'bold'
