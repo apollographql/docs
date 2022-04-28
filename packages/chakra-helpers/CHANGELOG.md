@@ -1,5 +1,11 @@
 # @apollo/chakra-helpers
 
+## 1.3.5
+
+### Patch Changes
+
+- [`7caf858`](https://github.com/apollographql/docs/commit/7caf858388aa8b569914e8ac6adf37b7d26da0eb) Thanks [@trevorblades](https://github.com/trevorblades)! - unbold the description syntax
+
 ## 1.3.4
 
 ### Patch Changes
