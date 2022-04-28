@@ -83,12 +83,6 @@ export function usePrismTheme(): PrismTheme {
         style: {
           color: yellow[isDark ? 'light' : 'darker']
         }
-      },
-      {
-        types: ['description'],
-        style: {
-          fontWeight: 'bold'
-        }
       }
     ]
   };
