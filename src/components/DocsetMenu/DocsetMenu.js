@@ -18,6 +18,7 @@ import {
   Stack,
   useDisclosure
 } from '@chakra-ui/react';
+import {IoRocketSharp} from 'react-icons/io5';
 import {ReactComponent as Federation} from '../../assets/icons/federation.svg';
 import {FiChevronDown, FiGrid} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
@@ -42,7 +43,8 @@ export const DOCSET_ICONS = {
   federation: <CustomIcon icon={Federation} />,
   studio: <CustomIcon icon={Schema} />,
   rover: <CustomIcon icon={Rover} />,
-  router: <CustomIcon icon={Router} />
+  router: <CustomIcon icon={Router} />,
+  odyssey: <IoRocketSharp />
 };
 
 export function DocsetMenu({docset, versions, currentVersion, ...props}) {
@@ -80,7 +82,13 @@ export function DocsetMenu({docset, versions, currentVersion, ...props}) {
           <Stack spacing="4" p="6">
             <DocsetGroup title="Get started">
               <DocsetButton to="/" leftIcon={DOCSET_ICONS.apollo}>
-                Apollo Basics
+                Docs Home
+              </DocsetButton>
+              <DocsetButton
+                to="https://www.apollographql.com/tutorials/"
+                leftIcon={DOCSET_ICONS.odyssey}
+              >
+                Odyssey Tutorials
               </DocsetButton>
             </DocsetGroup>
             <DocsetGroup title="Apollo Client">
