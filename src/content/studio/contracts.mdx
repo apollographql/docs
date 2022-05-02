@@ -3,9 +3,7 @@ title: Contracts
 description: Deliver subsets of your enterprise graph
 ---
 
-> Contracts are currently available as a [public preview](https://www.apollographql.com/docs/resources/release-stages/#public-preview) feature for [Enterprise plans](https://www.apollographql.com/pricing/).
->
-> Contracts currently only support [federated graphs](/federation/).
+> Contracts are available only for [Enterprise plans](https://www.apollographql.com/pricing/). Currently, they only support [federated supergraphs](/federation/).
 
 Apollo Studio **contracts** enable you to deliver different subsets of your graph to different consumers. Each contract filters specific portions of your graph's [API schema](https://www.apollographql.com/docs/federation/#federated-schemas) into a different Studio variant:
 
@@ -73,13 +71,15 @@ graph BT;
 
 This enables you to hide experimental types and fields that are still in development, or to limit a particular audience's access to only the portions of your graph that they need.
 
-Contract gateways can safely connect to the same subgraph instances as any other gateway, because they can only interact with data that's represented in the contract schema. This does not affect internal routing (e.g. usage of hidden fields in `@requires` selection sets). Additionally, any `@tag` labels that are part of the source variant's supergraph schema are preserved in a contract supergraph schema.
+Contract gateways can safely connect to the same subgraph instances as any other gateway, because they can only interact with data that's represented in the contract schema. This does not affect internal routing (hidden fields can still be used in a `@requires` selection set). Additionally, any `@tag` labels that are part of the source variant's supergraph schema are preserved in a contract supergraph schema.
 
 #### Contract documentation
 
 In Studio, each contract variant has its own README, schema reference, and Explorer. If you [make a contract variant public](./org/graphs/#public-variants), you can provide these resources to external client developers to help them interact with a specific portion of your graph (while omitting irrelevant types and fields).
 
 ## Setup
+
+> ⚠️ The Apollo Studio steps below require an organization member with the **Org Admin** or **Graph Admin** role. [Learn about member roles.](./org/members/)
 
 ### 1. Update your gateway and subgraphs
 
