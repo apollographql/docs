@@ -120,15 +120,20 @@ export default function NavItems({items, depth = 0}) {
         }
 
         if (isUrl(item.path)) {
+          const buttonProps = !item.path.startsWith(
+            'https://www.apollographql.com'
+          ) && {
+            target: '_blank',
+            rel: 'noreferrer noopener',
+            rightIcon: <FiExternalLink />
+          };
           return (
             <NavButton
               key={index}
               as="a"
               depth={depth}
               href={item.path}
-              target="_blank"
-              rel="noreferrer noopener"
-              rightIcon={<FiExternalLink />}
+              {...buttonProps}
             >
               {item.title}
             </NavButton>
