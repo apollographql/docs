@@ -41,7 +41,7 @@
       "Schema checks": "/schema-checks",
       "Configuring schema checks": "/check-configurations",
       "Launches": "/launches",
-      "Contracts (enterprise preview)": "/contracts",
+      "Contracts (enterprise only)": "/contracts",
       "Validating client operations": "/validating-client-operations",
       "Connecting to GitHub": "/github-integration"
     },
