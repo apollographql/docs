@@ -1,8 +1,6 @@
 import Blockquote from './Blockquote';
-import CodeBlock from './CodeBlock';
 import CodeColumns from './CodeColumns';
 import DocsetMenu from './DocsetMenu';
-import EmbeddableExplorer from './EmbeddableExplorer';
 import ExpansionPanel, {
   ExpansionPanelList,
   ExpansionPanelListItem
@@ -11,11 +9,10 @@ import Footer from './Footer';
 import Header, {TOTAL_HEADER_HEIGHT} from './Header';
 import InlineCode from './InlineCode';
 import MobileNav from './MobileNav';
-import MultiCodeBlock, {MultiCodeBlockContext} from './MultiCodeBlock';
 import Pagination from './Pagination';
 import PropTypes from 'prop-types';
 import React, {Fragment, createElement, useCallback, useMemo} from 'react';
-import RelativeLink from './RelativeLink';
+import RelativeLink, {ButtonLink} from './RelativeLink';
 import Sidebar, {
   SIDEBAR_WIDTH_BASE,
   SIDEBAR_WIDTH_XL,
@@ -52,6 +49,12 @@ import {
   chakra,
   useToken
 } from '@chakra-ui/react';
+import {
+  EmbeddableExplorer,
+  MarkdownCodeBlock,
+  MultiCodeBlock,
+  MultiCodeBlockContext
+} from '@apollo/chakra-helpers';
 import {FaDiscourse, FaGithub} from 'react-icons/fa';
 import {FiChevronsRight, FiStar} from 'react-icons/fi';
 import {GatsbySeo} from 'gatsby-plugin-next-seo';
@@ -64,8 +67,32 @@ import {graphql, useStaticQuery} from 'gatsby';
 import {rehype} from 'rehype';
 import {useMermaidStyles} from '../utils/mermaid';
 
+// these must be imported after MarkdownCodeBlock
+import 'prismjs/components/prism-bash';
+import 'prismjs/components/prism-graphql';
+import 'prismjs/components/prism-groovy';
+import 'prismjs/components/prism-java';
+import 'prismjs/components/prism-javascript';
+import 'prismjs/components/prism-json';
+import 'prismjs/components/prism-jsx';
+import 'prismjs/components/prism-kotlin';
+import 'prismjs/components/prism-ruby';
+import 'prismjs/components/prism-rust';
+import 'prismjs/components/prism-swift';
+import 'prismjs/components/prism-tsx';
+import 'prismjs/components/prism-typescript';
+import 'prismjs/components/prism-yaml';
+
 const LIST_SPACING = 4;
 const HEADINGS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
+
+const NESTED_LIST_STYLES = {
+  [['ul', 'ol']]: {
+    mt: 3,
+    fontSize: 'md',
+    lineHeight: 'normal'
+  }
+};
 
 const components = {
   h1: props => <Heading as="h1" size="2xl" {...props} />,
@@ -74,8 +101,21 @@ const components = {
   h4: props => <Heading as="h4" size="md" {...props} />,
   h5: props => <Heading as="h5" size="sm" {...props} />,
   h6: props => <Heading as="h6" size="xs" {...props} />,
-  ul: props => <UnorderedList spacing={LIST_SPACING} {...props} />,
-  ol: props => <OrderedList spacing={LIST_SPACING} {...props} />,
+  ul: props => (
+    <UnorderedList
+      spacing={LIST_SPACING}
+      sx={{
+        ...NESTED_LIST_STYLES,
+        ul: {
+          listStyleType: 'circle'
+        }
+      }}
+      {...props}
+    />
+  ),
+  ol: props => (
+    <OrderedList spacing={LIST_SPACING} sx={NESTED_LIST_STYLES} {...props} />
+  ),
   li: props => (
     <ListItem
       sx={{
@@ -90,13 +130,20 @@ const components = {
   ),
   p: Text,
   a: RelativeLink,
-  pre: CodeBlock,
+  pre: MarkdownCodeBlock,
   table: Table,
   thead: Thead,
   tbody: Tbody,
   tr: Tr,
   th: Th,
-  td: Td,
+  td: props => (
+    <Td
+      sx={{
+        fontSize: 'md'
+      }}
+      {...props}
+    />
+  ),
   blockquote: Blockquote,
   undefined: Fragment // because remark-a11y-emoji adds <undefined> around stuff
 };
@@ -113,7 +160,8 @@ const mdxComponents = {
   CodeColumns,
   TypeScriptApiBox,
   TypescriptApiBox: TypeScriptApiBox,
-  EmbeddableExplorer
+  EmbeddableExplorer,
+  ButtonLink
 };
 
 const {processSync} = rehype()
@@ -128,10 +176,10 @@ const {processSync} = rehype()
     }
   });
 
-export default function Page({data, uri, pageContext}) {
+export default function Page({file, pageContext, uri}) {
   const paddingTop = useToken('space', 10);
   const paddingBottom = useToken('space', 12);
-  const scrollPaddingTop = useMemo(
+  const scrollMarginTop = useMemo(
     () => `calc(${paddingTop} + ${TOTAL_HEADER_HEIGHT}px)`,
     [paddingTop]
   );
@@ -165,7 +213,7 @@ export default function Page({data, uri, pageContext}) {
     basePath,
     gitRemote,
     relativePath
-  } = data.file;
+  } = file;
 
   const {frontmatter, headings} = childMdx || childMarkdownRemark;
   const {title, description, toc} = frontmatter;
@@ -178,27 +226,31 @@ export default function Page({data, uri, pageContext}) {
     [versions]
   );
 
-  const editOnGitHub = useMemo(
-    () =>
-      gitRemote && (
-        <Button
-          as="a"
-          href={[
-            gitRemote.href,
-            'tree',
-            gitRemote.ref,
-            'docs/source',
-            relativePath
-          ].join(path.sep)}
-          variant="link"
-          size="lg"
-          leftIcon={<FaGithub />}
-        >
-          Edit on GitHub
-        </Button>
-      ),
-    [gitRemote, relativePath]
-  );
+  const editOnGitHub = useMemo(() => {
+    const repo = gitRemote?.href || 'https://github.com/apollographql/docs';
+
+    const repoPath = ['tree', gitRemote?.ref || 'main'];
+
+    if (gitRemote) {
+      repoPath.push('docs', 'source');
+    } else {
+      repoPath.push('src', 'content', basePath === '/' ? 'basics' : basePath);
+    }
+
+    repoPath.push(relativePath);
+
+    return (
+      <Button
+        as="a"
+        href={`${repo}/${path.join(...repoPath)}`}
+        variant="link"
+        size="lg"
+        leftIcon={<FaGithub />}
+      >
+        Edit on GitHub
+      </Button>
+    );
+  }, [gitRemote, basePath, relativePath]);
 
   const renderSwitcher = useCallback(
     props => (
@@ -242,9 +294,6 @@ export default function Page({data, uri, pageContext}) {
       />
       <Global
         styles={{
-          html: {
-            scrollPaddingTop
-          },
           '.mermaid': {
             lineHeight: 'normal',
             ...mermaidStyles
@@ -334,6 +383,11 @@ export default function Page({data, uri, pageContext}) {
               <Box
                 fontSize={{md: 'lg'}}
                 lineHeight={{md: 1.7}}
+                css={{
+                  [HEADINGS]: {
+                    scrollMarginTop
+                  }
+                }}
                 sx={{
                   [HEADINGS]: {
                     a: {
@@ -341,18 +395,18 @@ export default function Page({data, uri, pageContext}) {
                     },
                     code: {
                       bg: 'none',
-                      p: 0
+                      p: 0,
+                      color: 'secondary'
                     }
                   },
                   '>': {
                     ':not(:last-child)': {
                       mb: 6
                     },
-                    // hack to get around using :first-child because emotion
-                    // recommends against using it
-                    '*:not(style) +': {
-                      [HEADINGS]: {
-                        mt: 10
+                    [HEADINGS]: {
+                      ':not(:first-child)': {
+                        mt: 10,
+                        mb: 4
                       }
                     }
                   },
@@ -407,8 +461,8 @@ export default function Page({data, uri, pageContext}) {
                 w={250}
                 flexShrink="0"
                 pos="sticky"
-                top={scrollPaddingTop}
-                maxH={`calc(100vh - ${scrollPaddingTop} - ${paddingBottom})`}
+                top={scrollMarginTop}
+                maxH={`calc(100vh - ${scrollMarginTop} - ${paddingBottom})`}
               >
                 <Heading size="md" mb="3">
                   {title}
@@ -445,7 +499,7 @@ export default function Page({data, uri, pageContext}) {
 }
 
 Page.propTypes = {
-  data: PropTypes.object.isRequired,
+  file: PropTypes.object.isRequired,
   uri: PropTypes.string.isRequired,
   pageContext: PropTypes.object.isRequired
 };

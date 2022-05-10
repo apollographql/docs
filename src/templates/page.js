@@ -6,8 +6,10 @@ import React from 'react';
 import {GatsbySeo} from 'gatsby-plugin-next-seo';
 import {graphql} from 'gatsby';
 
-export default function PageTemplate({data, uri, pageContext}) {
-  const page = <Page data={data} uri={uri} pageContext={pageContext} />;
+export default function PageTemplate({data, location, pageContext}) {
+  const page = (
+    <Page file={data.file} uri={location.pathname} pageContext={pageContext} />
+  );
   return pageContext.internal ? (
     <>
       <GatsbySeo noindex />
@@ -22,7 +24,7 @@ export default function PageTemplate({data, uri, pageContext}) {
 
 PageTemplate.propTypes = {
   data: PropTypes.object.isRequired,
-  uri: PropTypes.string.isRequired,
+  location: PropTypes.object.isRequired,
   pageContext: PropTypes.object.isRequired
 };
 
