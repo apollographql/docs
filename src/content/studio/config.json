@@ -11,7 +11,8 @@
     "Features": "/",
     "Get started": "/getting-started",
     "Sandbox (no account required)": "/explorer/sandbox",
-    "Managed federation": "https://apollographql.com/docs/federation/managed-federation/overview/",
+    "Managed federation": "https://www.apollographql.com/docs/federation/managed-federation/overview/",
+    "Data privacy and compliance": "/data-privacy",
     "Registering Schemas": {
       "Using schema reporting": "/schema/schema-reporting",
       "Using the Rover CLI": "/schema/cli-registration",
@@ -55,7 +56,6 @@
     "Security": {
       "API keys": "/api-keys",
       "Audit log (enterprise only)": "/audit-log",
-      "Data privacy and compliance": "/data-privacy",
       "Sub-processors": "/sub-processors"
     },
     "Managing Accounts": {
