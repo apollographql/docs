@@ -45,7 +45,7 @@ First, install NPM dependencies.
 npm i
 ```
 
-If it's your first time running the docs site locally, you must link your local directory with Netlify. To do this, you must be logged in to the `netlify` CLI with an account that has access to our "Apollo" org in Netlify. If you're not sure if you have an account with access, you can use the credentials in 1Password.
+If it's your first time running the docs site locally, you must link your local directory with Netlify. To do this, you must be logged in to the `netlify` CLI with an account that has access to our organization in Netlify.  Apollo Staff can log into the account using the Netlify Single Sign-On (SSO) option and specifying the `apollo-main` identifier during the login process.
 
 ```sh
 npx netlify login
