@@ -52,7 +52,7 @@ _All_ data sent from Apollo Server and Apollo Router to Studio is transmitted us
 
 ### Per-operation data
 
-**Neither Apollo Server nor Apollo Router ever send the `data` field of an operation response to Apollo Studio.** It _does_ send:
+**Neither Apollo Server nor Apollo Router ever send the `data` field of an operation response to Apollo Studio.** They _do_ send:
 
 - Several fields _besides_ `data` from every operation response
 
