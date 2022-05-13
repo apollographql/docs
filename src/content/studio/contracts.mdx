@@ -85,8 +85,8 @@ In Studio, each contract variant has its own README, schema reference, and Explo
 
 **Before you create any contracts:**
 
-1. Update your gateway's `@apollo/gateway` library to version 0.34 or later.
-2. Update your Apollo Server subgraphs to use version 0.1.1 or later of the `@apollo/subgraph` library.
+1. For Fed 1 contract variants, update your gateway's `@apollo/gateway` library to version 0.34.0 or later. For Fed 2 contract variants, ensure that you are running gateway versions higher than 2.0.2 otherwise you will encounter runtime errors.
+2. Update your Apollo Server subgraphs to use version 0.1.1 or later of the `@apollo/subgraph` library. For Fed 2 contract variants, ensure that your `@apollo/subgraph` version is higher than 2.0.0. 
    - `@apollo/subgraph` recently replaced `@apollo/federation` for Apollo Server instances acting as subgraphs. Symbol names are unchanged.
 3. If you're still using the Apollo CLI to publish subgraph schemas (via `apollo service:push`), [install the Rover CLI](https://www.apollographql.com/docs/rover/getting-started/) and begin using [`rover subgraph publish`](https://www.apollographql.com/docs/rover/subgraphs/#publishing-a-subgraph-schema-to-apollo-studio) instead.
 
