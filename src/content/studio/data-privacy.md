@@ -28,8 +28,8 @@ All data sent to Apollo Studio is sent to an endpoint with one of the following 
 | `https://schema-reporting.api.apollographql.com`      | Schema registration via schema reporting in [Apollo Server](./schema/schema-reporting/#apollo-server-setup) (v2.18.0+) and [third-party API servers](./schema/schema-reporting/#other-graphql-servers)           |
 | `https://graphql.api.apollographql.com`               | All [Apollo CLI](/devtools/cli/) (v2.31+) commands and [Rover CLI](/rover/) commands that communicate with Studio (and the Studio web UI)                                                                        |
 | `https://storage-secrets.api.apollographql.com`       | Apollo Server with Apollo Gateway (v0.16.0-v0.33.0) with [managed federation](/federation/managed-federation/overview/)                |
-| `https://uplink.api.apollographql.com`                | Apollo Server with Apollo Gateway (v0.34.0+) with [managed federation](/federation/managed-federation/overview/), Apollo Router (v0.1.0+) with [managed federation](/federation/managed-federation/overview/)                                                                                                 |
-| `https://aws.uplink.api.apollographql.com`            | Apollo Server with Apollo Gateway (v0.45.0+) with [managed federation](/federation/managed-federation/overview/), Apollo Router (v0.1.0+) with [managed federation](/federation/managed-federation/overview/)                                                                                                 |
+| `https://uplink.api.apollographql.com`                | Apollo Server with Apollo Gateway (v0.34.0+) with [managed federation](/federation/managed-federation/overview/) and Apollo Router (v0.1.0+) with [managed federation](/federation/managed-federation/overview/)                                                                                                 |
+| `https://aws.uplink.api.apollographql.com`            | Apollo Server with Apollo Gateway (v0.45.0+) with [managed federation](/federation/managed-federation/overview/) and Apollo Router (v0.1.0+) with [managed federation](/federation/managed-federation/overview/)                                                                                                 |
 | **Active legacy URLs**                                |
 | `https://engine-report.apollodata.com`                | Metrics reporting from Apollo Server (v2.0-2.17.x)                                                                                                                                                               |
 | `https://edge-server-reporting.api.apollographql.com` | Schema registration via schema reporting in Apollo Server (v2.15.0-2.17.x)                                                                                                                                       |
@@ -40,7 +40,7 @@ All data sent to Apollo Studio is sent to an endpoint with one of the following 
 
 If your environment uses a corporate proxy or firewall, you might need to configure it to allow outbound traffic to these domains. Note that data might be sent to multiple endpoints in a given domain.
 
-## What data does Apollo Server and Apollo Router send to Apollo Studio?
+## What data do Apollo Server and Apollo Router send to Apollo Studio?
 
 You can configure Apollo Server to trace the execution of each GraphQL operation and [push those metrics to Apollo Studio](./metrics/usage-reporting/). Studio uses this trace data to reconstruct both operation-level timing data for given query shapes and field-level timing data for your overall schema. This data is available for you to explore and visualize in Studio.
 
@@ -48,7 +48,7 @@ Apollo Router does not send trace data to Apollo Studio, though it does send oth
 
 You can also configure Apollo Server to [report its schema to the Apollo registry](./schema/schema-reporting).
 
-_All_ data sent from Apollo Server and Apollo Router to Studio is transmitted using HTTPS on port 443, and HTTP traffic on port 80 is disabled.
+_All_ data sent to Studio from Apollo Server and Apollo Router is transmitted using HTTPS on port 443, and HTTP traffic on port 80 is disabled.
 
 ### Per-operation data
 
@@ -58,7 +58,7 @@ _All_ data sent from Apollo Server and Apollo Router to Studio is transmitted us
 
 - The [query operation string](#query-operation-strings) for every executed operation
 
-- In the case of Apollo Server, the time it takes each resolver to execute for every operation
+- The time it takes each resolver to execute for every operation (Apollo Server only)
 
 Additionally, you can configure Apollo Server to forward some or all of:
 
