@@ -1,3 +1,4 @@
+import NotFound from '../pages/404';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {Center, Spinner} from '@chakra-ui/react';
@@ -38,16 +39,13 @@ export default function AuthCheck({children}) {
     return <div>{error.message}</div>;
   }
 
-  if (!data.me) {
-    return <div>log in to your apollo account</div>;
-  }
-
-  const hasAccess = data.me.memberships.some(membership =>
+  const hasAccess = data.me?.memberships.some(membership =>
     APOLLO_ORGS.includes(membership.account.id)
   );
 
   if (!hasAccess) {
-    return <div>access denied</div>;
+    // TODO: more granular message like "access denied" or "please log in"
+    return <NotFound />;
   }
 
   return children;
