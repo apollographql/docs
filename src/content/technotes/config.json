@@ -4,7 +4,7 @@
     "docset:technotes"
   ],
   "sidebar": {
-    "Example": "/",
+    "Home": "/",
     "Server": {
       "Client ID Enforcement": "/server-side/client-id-enforcement"
     }
