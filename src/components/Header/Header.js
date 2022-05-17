@@ -1,25 +1,19 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import Search from './Search';
+import Search from '../Search';
+import StudioButton from './StudioButton';
 import {ReactComponent as ApolloLogo} from '@apollo/space-kit/logos/logo.svg';
 import {ReactComponent as ApolloMark} from '@apollo/space-kit/logos/mark.svg';
-import {
-  Box,
-  Button,
-  Flex,
-  HStack,
-  IconButton,
-  useColorMode
-} from '@chakra-ui/react';
-import {FiArrowRight, FiMoon, FiSun} from 'react-icons/fi';
+import {Box, Flex, HStack, IconButton, useColorMode} from '@chakra-ui/react';
+import {FiMoon, FiSun} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
-import {useTagColors} from '../utils';
+import {useTagColors} from '../../utils';
 
 const HEADER_HEIGHT = 60;
 const HEADER_BORDER_WIDTH = 1;
 export const TOTAL_HEADER_HEIGHT = HEADER_HEIGHT + HEADER_BORDER_WIDTH;
 
-export default function Header({children, algoliaFilters}) {
+export function Header({children, algoliaFilters}) {
   const {toggleColorMode, colorMode} = useColorMode();
   const [tagBg, tagTextColor] = useTagColors();
   return (
@@ -52,7 +46,6 @@ export default function Header({children, algoliaFilters}) {
             h="6"
             mt="0.5" // offset to vertically align better w/ docs tag
           />
-
           <Box
             ml="1.5"
             px="1.5"
@@ -84,18 +77,7 @@ export default function Header({children, algoliaFilters}) {
       {process.env.ALGOLIA_SEARCH_KEY && (
         <Search algoliaFilters={algoliaFilters} />
       )}
-      <Button
-        colorScheme="indigo"
-        variant="ghost"
-        rightIcon={<FiArrowRight />}
-        as="a"
-        href="https://studio.apollographql.com?referrer=docs"
-        target="_blank"
-        rel="noopener noreferrer"
-        d={{base: 'none', lg: 'flex'}}
-      >
-        Launch Apollo Studio
-      </Button>
+      <StudioButton />
     </Flex>
   );
 }
