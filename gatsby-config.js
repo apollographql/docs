@@ -41,8 +41,9 @@ const plugins = [
           }
         }
       `,
-      // filter out internal pages
-      filterPages: page => page.pageContext.internal
+      resolvePages: ({allSitePage}) =>
+        // filter out internal pages
+        allSitePage.nodes.filter(page => !page.pageContext.internal)
     }
   },
   'gatsby-plugin-combine-redirects', // local plugin
