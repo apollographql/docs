@@ -1,0 +1,64 @@
+---
+title: Client ID Enforcement
+tags: server, observability
+---
+
+As part of the Studio metrics reporting, you can [tag the request with the client name and version](https://www.apollographql.com/docs/studio/metrics/client-awareness). This info can be extremely useful to schema authors to understand who is using certain fields in the graph and who to contact when changes or deprecations need to be made. Clients also have the ability to [name their operations](https://www.apollographql.com/docs/react/data/operation-best-practices/#name-all-operations), which can provide more context around how and where the data is being used within the client. Together these pieces of info make a graph much easier to monitor and allows teams to communicate with each other successfully.
+
+We strongly encourage gateway maintainers to require that the client name, client version, and operation name are included in every request. Once clients start using the graph without this info, it is much more difficult to make them go back and update their existing code. You can add this requirement as an [Apollo Server plugin](https://www.apollographql.com/docs/apollo-server/builtin-plugins) in your gateway:
+
+```js
+const clientEnforcementPlugin = {
+  requestDidStart: ({ request, logger }) => {
+    let clientName = request.http.headers.get(
+      'apollographql-client-name'
+    );
+    let clientVersion = request.http.headers.get(
+      'apollographql-client-version'
+    );
+
+    if (!clientName) {
+      let logString = `Execution Denied: Operation has no identified client`;
+      logger.debug(logString);
+
+      throw new ApolloError(logString);
+    }
+
+    if (!clientVersion) {
+      let logString = `Execution Denied: Client ${clientName} has no identified version`;
+      logger.debug(logString);
+
+      throw new ApolloError(logString);
+    }
+
+    return {
+      parsingDidStart({ queryHash, request }) {
+        if (!request.operationName) {
+          logger.debug(`Unnamed Operation: ${queryHash}`);
+
+          let error = new ApolloError(
+            'Execution denied: Unnamed operation'
+          );
+
+          Object.assign(error.extensions, {
+            queryHash: queryHash,
+            clientName: clientName,
+            clientVersion: clientVersion,
+            exception: {
+              message: `All operations must be named`
+            }
+          });
+
+          throw error;
+        }
+      }
+    };
+  }
+};
+
+const server = new ApolloServer({
+  gateway,
+  subscriptions: false,
+  plugins: [clientEnforcementPlugin]
+});
+```
