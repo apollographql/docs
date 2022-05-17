@@ -8,6 +8,7 @@ The central piece of this repo, the docs infrastructure, is a [Gatsby](https://w
 
 - [Developing locally](#developing-locally)
   - [Developing a single docset](#developing-a-single-docset)
+- [Faster startup](#faster-startup)
 - [Meet the docsets](#meet-the-docsets)
   - [Local](#local)
   - [Remote](#remote)
@@ -16,6 +17,7 @@ The central piece of this repo, the docs infrastructure, is a [Gatsby](https://w
   - [Adding a local docset](#adding-a-local-docset)
   - [Configuring a remote docset](#configuring-a-remote-docset)
   - [Managing versions](#managing-versions)
+  - [Internal-only docsets](#internal-only-docsets)
   - [Redirect rules](#redirect-rules)
 - [Publish and preview](#publish-and-preview)
   - [Production deploys](#production-deploys)
@@ -45,7 +47,7 @@ First, install NPM dependencies.
 npm i
 ```
 
-If it's your first time running the docs site locally, you must link your local directory with Netlify. To do this, you must be logged in to the `netlify` CLI with an account that has access to our organization in Netlify.  Apollo Staff can log into the account using the Netlify Single Sign-On (SSO) option and specifying the `apollo-main` identifier during the login process.
+If it's your first time running the docs site locally, you must link your local directory with Netlify. To do this, you must be logged in to the `netlify` CLI with an account that has access to our organization in Netlify. Apollo Staff can log into the account using the Netlify Single Sign-On (SSO) option and specifying the `apollo-main` identifier during the login process.
 
 ```sh
 npx netlify login
@@ -86,7 +88,7 @@ For your convenience, this repo also comes with special `start` NPM scripts for 
 
 Check out the [`package.json`](./package.json) to see how these scripts work!
 
-## Developing _only_ local docsets ⚡️
+## Faster startup
 
 The Studio and Apollo basics docs content lives in this repo. To spin up a development environment serving only these docsets, there's the `start:local` script. This will result in much faster startup time since we're not sourcing any remote data. Use this script if you're working on changes in either of those docsets or website UI changes.
 
@@ -143,6 +145,7 @@ The `config.json` file lives at the root of its docset's content directory, and 
 | sidebar        | yes       | A JSON object mapping sidebar nav labels to their paths. Use paths beginning with a slash, relative to the root of the content directory for internal links. Full URLs are transformed into external links that open in a new tab. These objects can be nested to define categories and subcategories in the nav. |
 | version        | no        | A string representing the version of the software that is being documented, i.e. "v3". This value is shown in the version dropdown if multiple versions of a docset are configured.                                                                                                                               |
 | algoliaFilters | no        | An array of filters that affect the ranking of search results when a search is made within a particular docset. This is passed to Algolia as an `optionalFilters` parameter, which you can learn more about [here](https://www.algolia.com/doc/api-reference/api-parameters/optionalFilters/).                    |
+| internal       | no        | Set to `true` if you want your docset to be [internal-only](#internal-only-docsets).                                                                                                                                                                                                                              |
 
 ### Adding a local docset
 
@@ -190,6 +193,20 @@ Next, these two docsets must specify the label that they want to appear for that
   "sidebar": {...}
 }
 ```
+
+### Internal-only docsets
+
+You can publish docsets that are viewable only by Apollo team members by setting the `internal` option to `true` in your [config.json](#configjson) file.
+
+```json
+{
+  "internal": true
+}
+```
+
+If a visitor to that page is logged in to Apollo Studio **and** is a member of one of our internal orgs, the page content will be rendered normally. If neither of those conditions are true, a 404 page will be shown. Internal-only pages are excluded from the sitemap and won't be indexed by Google.
+
+It's important to note that you must sign in to and out of your account using Studio or Odyssey, as the docs don't currently have their own sign in form.
 
 ### Redirect rules
 
