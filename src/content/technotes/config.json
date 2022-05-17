@@ -1,0 +1,12 @@
+{
+  "title": "Tech Notes",
+  "algoliaFilters": [
+    "docset:technotes"
+  ],
+  "sidebar": {
+    "Example": "/",
+    "Server": {
+      "Client ID Enforcement": "/server-side/client-id-enforcement"
+    }
+  }
+}
