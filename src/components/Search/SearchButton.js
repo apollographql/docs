@@ -13,7 +13,7 @@ export default function SearchButton(props) {
       h="10"
       px="3"
       lineHeight="none"
-      maxW={{base: '3xs', md: '2xs', xl: 'xs'}}
+      maxW={{base: '2xs', xl: 'xs'}}
       w="full"
       as="button"
       rounded="md"
@@ -26,7 +26,7 @@ export default function SearchButton(props) {
     >
       <FiSearch />
       <Box ml="2" color={textColor}>
-        Search Apollo (Press Cmd+K or /)
+        Search Apollo (Cmd+K or /)
       </Box>
     </Box>
   );
