@@ -2,7 +2,7 @@
 title: Apollo FAQ on Licensing under Elastic License v2 (ELv2)
 ---
 
-Starting with the 2.0.0-alpha release, our source code for Apollo Federation (including the gateway and federation libraries), the Rover composition add-on, and Workbench will be licensed under the [Elastic License v2](https://www.elastic.co/licensing/elastic-license) (ELv2). All previous versions of the gateway and federation libraries (0.x) remain MIT-licensed.
+Our source code for Apollo Federation (including Gateway and Federation libraries after the v2.0.0 release and all versions of the Router), the Rover composition add-on, and Workbench will be licensed under the [Elastic License v2](https://www.elastic.co/licensing/elastic-license) (ELv2). Previous versions of the Gateway and Federation libraries (0.x) remain MIT-licensed.
 
 We chose ELv2 because of its permissiveness and simplicity. We’re following the well-paved path of other great infrastructure projects like Elasticsearch and MongoDB that have implemented similar source code licenses to preserve their communities. Our community and customers still have no-charge and open access to use, modify, redistribute, and collaborate on the code. ELv2 also protects our continued investment in developing freely available libraries and developer tools by restricting cloud service providers from offering Apollo Federation as a service.
 
