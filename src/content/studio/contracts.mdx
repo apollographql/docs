@@ -111,22 +111,40 @@ In the **Build Configuration** section, click **Edit Configuration** and enable 
 
 With contracts, you apply the `@tag` directive to types and fields in your subgraph schemas to indicate whether to include or exclude them from your **contract schema**.
 
-For example, let's take a look at this Products subgraph schema:
+Before you can add `@tag`s, you need to define the directive in your subgraph schema. The way you do this depends on which version of federation you're using:
 
-```graphql {2-13,16,21,27-28} title="products.graphql"
-# You must include this definition in any schema that uses @tag!
+<ExpansionPanel title="Federation 1">
+
+Add the following definition to your subgraph schema:
+
+```graphql
 directive @tag(name: String!) repeatable on
   | FIELD_DEFINITION
   | INTERFACE
   | OBJECT
   | UNION
-  # ⚠️ The rest of these locations are supported only in Federation 2!
-  | ARGUMENT_DEFINITION
-  | SCALAR
-  | ENUM
-  | ENUM_VALUE
-  | INPUT_OBJECT
-  | INPUT_FIELD_DEFINITION
+```
+
+</ExpansionPanel>
+
+<ExpansionPanel title="Federation 2">
+
+Add the `@tag` directive to your subgraph schema's Federation 2 `import` array:
+
+```graphql {3}
+extend schema
+  @link(url: "https://specs.apollo.dev/federation/v2.0",
+        import: ["@key", "@tag"])
+```
+
+</ExpansionPanel>
+
+For example, let's take a look at this Federation 2 subgraph schema:
+
+```graphql {1-3,6,11,17-18} title="products.graphql"
+extend schema
+  @link(url: "https://specs.apollo.dev/federation/v2.0",
+        import: ["@key", "@tag"])
 
 type Query {
   topProducts: [Product!]! @tag(name: "partner")
@@ -151,7 +169,7 @@ This schema applies the `@tag` directive to the following locations:
 * The `Query.topProducts` field (which _returns_ a list of `Product`s)
 * Two fields of `Product` (`internalId` and `percentageMatch`)
 
-Each tag has a string `name`. You tag types and fields with the _same_ `name` if they should be included or excluded as a group by a particular contract.
+Each `@tag` has a string `name`. You tag types and fields with the _same_ `name` if they should be included or excluded as a group by a particular contract.
 
 Whenever your source variant's [supergraph schema](https://www.apollographql.com/docs/federation/#federated-schemas) is generated, that schema retains all of the `@tag`s from your subgraph schemas.
 
