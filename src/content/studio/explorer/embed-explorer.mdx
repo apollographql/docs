@@ -141,6 +141,26 @@ The endpoint URL of the variant you want to use the embedded Explorer with. This
 <tr>
 <td>
 
+##### `autoInviteOptions`
+
+`{
+    accountId: string;
+    inviteToken: string;
+ }`
+
+</td>
+<td>
+
+If the graph you are embedding is a [private variant](../org/graphs/#public-variants), we will by default only allow folks in your org to see the embedded Explorer. You can specify that you want anyone who visits your embedded Explorer to be automatically invited to your org with this config object. When you are grabbing the embed code from the Explorer settings in Studio, you have the option to select the role you want folks to be invited as, and the `inviteToken` and `accountId` will automatically populate.
+
+If the graph you are embedding belongs to an SSO organization, folks will be able to log in with their SSO account and are automatically invited as the role you specify in the Org Settings page in Studio. Passing this in the embed config for a graph that belongs to an SSO account will not change any behavior. New users to your organization will always be invited as the role you specify in the Org Settings page in Studio.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
 ##### `persistExplorerState`
 
 `true | false`
@@ -171,6 +191,24 @@ By default, the embedded Explorer uses the `fetch` API to send requests to your 
 
 You might want to do this if you need to include specific headers in every request made from your embedded Explorer.
 
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `includeCookies`
+
+`boolean`
+
+</td>
+<td>
+
+By default, the embedded Explorer uses the default `fetch` function to make requests, which passes `{ credentials: 'omit' }`.
+
+You can pass `includeCookies: true` if you want `{ credentials: 'include' }` to be passed as an option whenever requests are make from the Explorer. 
+
+Read more about the `fetch` API and credentials [here](https://developer.mozilla.org/en-US/docs/Web/API/fetch#credentials).
 </td>
 </tr>
 
