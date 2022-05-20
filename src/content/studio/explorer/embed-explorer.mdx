@@ -58,6 +58,20 @@ You can also open the Embed Explorer dialog with a default operation from the sh
   width="300"
 />
 
+### Authorization
+
+If you are embedding a [public variant](../org/graphs/#public-variants), anyone who has access to the embed will be able to view your schema and make queries against your variant. If you are embedding a private variant, the embedded Explorer will ask you to first authenticate yourself by logging in to Studio, and then you will be asked to authorize your Studio account to be used on this webpage.
+
+<img
+  class="screenshot"
+  src="../img/explorer-authorize.jpg"
+  alt="Explorer authorization screen"
+  width="300"
+/>
+
+When you accept, you will be able to see the Explorer for this variant, including the schema of the variant and the Operation Collections on this variant.
+
+
 ## Options
 
 The `EmbeddedExplorer` object takes an options object with the following structure (individual options are described below):
