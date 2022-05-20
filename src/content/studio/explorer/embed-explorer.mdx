@@ -2,7 +2,7 @@
 title: Embedding the Explorer
 ---
 
-If you have a [public variant](../org/graphs/#public-variants) of your graph, you can embed the [Apollo Studio Explorer](./explorer/) in a webpage that you can then provide to your graph's consumers. This enables those consumers to test out operations from your own website.
+You can embed the [Apollo Studio Explorer](./explorer/) in a webpage that you can then provide to your graph's consumers. This enables those consumers to test out operations from your own website.
 
 For example, here's an embedded Explorer for an Apollo example graph. Try it out!
 
@@ -10,11 +10,9 @@ For example, here's an embedded Explorer for an Apollo example graph. Try it out
 
 ## Setup
 
-> Before you proceed, make sure you have a [public variant](../org/graphs/#public-variants) of your graph in Apollo Studio.
-
 1. <a href="https://studio.apollographql.com/" target="_blank">
      Go to Apollo Studio
-   </a> and open the public variant you want to use with the embedded Explorer.
+   </a> and open the variant you want to use with the embedded Explorer.
 
 2. Go to the variant's Explorer page.
 
@@ -114,7 +112,7 @@ These are the top-level fields you can include in the options object you pass to
 </td>
 <td>
 
-**Required.** The graph ref for the [public variant](../org/graphs/#public-variants) you want to use the embedded Explorer with. Has the format `graph-id@variant-name`. This value is automatically populated in the Explorer's embed snippet.
+**Required.** The graph ref for the variant you want to use the embedded Explorer with. Has the format `graph-id@variant-name`. This value is automatically populated in the Explorer's embed snippet.
 
 The Explorer fetches this variant's schema from Apollo Studio to populate its Documentation panel and enable code completion.
 
@@ -133,7 +131,7 @@ If you omit this option, the Explorer _does_ still load, but it doesn't know whi
 </td>
 <td>
 
-The endpoint URL of the [public variant](../org/graphs/#public-variants) you want to use the embedded Explorer with. This value is automatically populated in the Explorer's embed snippet.
+The endpoint URL of the variant you want to use the embedded Explorer with. This value is automatically populated in the Explorer's embed snippet.
 
 **Required**, _unless_ you specify your own fetcher with the [`handleRequest`](#handlerequest) option.
 
