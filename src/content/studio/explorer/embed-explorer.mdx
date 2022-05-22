@@ -28,13 +28,22 @@ For example, here's an embedded Explorer for an Apollo example graph. Try it out
    />
 
 4. Use the options in the dialog to customize the embedded Explorer's appearance and behavior to your liking.
-5. Click **Copy** to copy the snippet, then paste it into your code.
+5. You have three options for how you want to embed the Explorer. You can use the `@apollo/explorer` npm package, or hosted built files to embed. The `@apollo/explorer` npm package exports a React component that when rendered, embeds the Explorer, or a Javascript class that you can call to embed. Once you have decided which version to use, click **Copy** to copy the snippet, then paste it into your code.
 
 [See below](#options) for descriptions of options shown in the dialog, along with advanced options that _aren't_ shown.
 
 ### Embedding with a default operation
 
-You can also open the Embed Explorer dialog from the Explorer's operation editor. Open the **•••** menu next to an operation and click **Embed this operation**:
+You can also open the Embed Explorer dialog from two other places in Studio, both of which configure your embedded Explorer to include all of the following automatically on load:
+
+- The operation you selected
+- Any variable values defined in your current Explorer tab that are used in the selected operation
+- All headers defined in your current Explorer tab
+
+
+#### Option 1
+
+Open the **•••** menu next to an operation and click **Embed this operation**:
 
 <img
   class="screenshot"
@@ -43,13 +52,9 @@ You can also open the Embed Explorer dialog from the Explorer's operation editor
   width="300"
 />
 
-This configures your embedded Explorer to include all of the following automatically on load:
+#### Option 2
 
-- The operation you selected
-- Any variable values defined in your current Explorer tab that are used in the selected operation
-- All headers defined in your current Explorer tab
-
-You can also open the Embed Explorer dialog with a default operation from the share dropdown in Explorer. 
+Open the share dropdown in Explorer, and select "Share as embed".
 
 <img
   class="screenshot"
