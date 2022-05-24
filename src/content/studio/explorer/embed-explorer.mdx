@@ -73,16 +73,18 @@ Open the share dropdown in the Explorer and select **Share as embed**:
 
 ### Authorization
 
-If you are embedding a [public variant](../org/graphs/#public-variants), anyone who has access to the embed will be able to view your schema and make queries against your variant. If you are embedding a private variant, the embedded Explorer will ask you to first authenticate yourself by logging in to Studio, and then you will be asked to authorize your Studio account to be used on this webpage.
+**If you're embedding a [public variant](../org/graphs/#public-variants),** anyone with access to the embedded Explorer can view your schema and make queries against your variant.
+
+**If you're embedding a private variant,** the embedded Explorer first asks users to authenticate by signing in to Studio. Authenticated users are then asked to authorize their Studio account to be used on the embedding webpage:
 
 <img
   class="screenshot"
-  src="../img/explorer-authorize.jpg"
+  src="../img/embed-authorize.jpg"
   alt="Explorer authorization screen"
-  width="300"
+  width="400"
 />
 
-When you accept, you will be able to see the Explorer for this variant, including the schema of the variant and the Operation Collections on this variant.
+After authorizing, users can access the embedded Explorer, which includes schema navigation and visible operation collections.
 
 
 ## Options
