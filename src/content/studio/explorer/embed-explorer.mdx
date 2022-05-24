@@ -2,7 +2,7 @@
 title: Embedding the Explorer
 ---
 
-If you have a [public variant](../org/graphs/#public-variants) of your graph, you can embed the [Apollo Studio Explorer](./explorer/) in a webpage that you can then provide to your graph's consumers. This enables those consumers to test out operations from your own website.
+You can embed the [Apollo Studio Explorer](./explorer/) in a webpage that you can then provide to your graph's consumers. This enables those consumers to test out operations from your own website.
 
 For example, here's an embedded Explorer for an Apollo example graph. Try it out!
 
@@ -10,11 +10,9 @@ For example, here's an embedded Explorer for an Apollo example graph. Try it out
 
 ## Setup
 
-> Before you proceed, make sure you have a [public variant](../org/graphs/#public-variants) of your graph in Apollo Studio.
-
 1. <a href="https://studio.apollographql.com/" target="_blank">
      Go to Apollo Studio
-   </a> and open the public variant you want to use with the embedded Explorer.
+   </a> and open the variant you want to use with the embedded Explorer.
 
 2. Go to the variant's Explorer page.
 
@@ -29,14 +27,31 @@ For example, here's an embedded Explorer for an Apollo example graph. Try it out
      width="600"
    />
 
-4. Use the options in the dialog to customize the embedded Explorer's appearance and behavior to your liking.
-5. Click **Copy** to copy the snippet, then paste it into your code.
+4. Use the options on the left side of the dialog to customize the embedded Explorer's appearance and behavior to your liking.
 
-[See below](#options) for descriptions of options shown in the dialog, along with advanced options that _aren't_ shown.
+5. Still in the dialog, use the tabs above the code snippet to select the snippet for your use case:
+
+    * Use **React** for React apps where you can `npm install` the `@apollo/explorer` package.
+    * Use **JavaScript** for non-React JavaScript apps where you can `npm install` the `@apollo/explorer` package.
+    * Use **Built file on CDN** to use Apollo's CDN-hosted embedded Explorer.
+
+6. Click **Copy** to copy the snippet, then paste it into your code.
+
+> For descriptions of options shown in the dialog (along with advanced options that _aren't_ shown), [see below](#options).
 
 ### Embedding with a default operation
 
-You can also open the Embed Explorer dialog from the Explorer's operation editor. Open the **•••** menu next to an operation and click **Embed this operation**:
+You can prepopulate your embedded Explorer with an operation from one of your existing Explorer tabs. If you do, the embedded Explorer includes all of the following automatically on load:
+
+* The operation you selected
+* Any variable names and values defined in the operation's associated tab that are _used_ by the operation
+* All header names and values defined in the operation's associated tab
+
+To prepopulate a default operation, use one of the following methods:
+
+#### Option 1
+
+Open the **•••** menu next to an operation and click **Embed this operation**:
 
 <img
   class="screenshot"
@@ -45,11 +60,30 @@ You can also open the Embed Explorer dialog from the Explorer's operation editor
   width="300"
 />
 
-This configures your embedded Explorer to include all of the following automatically on load:
+#### Option 2
 
-- The operation you selected
-- Any variable values defined in your current Explorer tab that are used in the selected operation
-- All headers defined in your current Explorer tab
+Open the share dropdown in the Explorer and select **Share as embed**:
+
+<img
+  class="screenshot"
+  src="../img/explorer-embed-share-dropdown.jpg"
+  alt="Explorer embed dropdown"
+  width="300"
+/>
+
+### Authorization
+
+If you are embedding a [public variant](../org/graphs/#public-variants), anyone who has access to the embed will be able to view your schema and make queries against your variant. If you are embedding a private variant, the embedded Explorer will ask you to first authenticate yourself by logging in to Studio, and then you will be asked to authorize your Studio account to be used on this webpage.
+
+<img
+  class="screenshot"
+  src="../img/explorer-authorize.jpg"
+  alt="Explorer authorization screen"
+  width="300"
+/>
+
+When you accept, you will be able to see the Explorer for this variant, including the schema of the variant and the Operation Collections on this variant.
+
 
 ## Options
 
@@ -114,7 +148,7 @@ These are the top-level fields you can include in the options object you pass to
 </td>
 <td>
 
-**Required.** The graph ref for the [public variant](../org/graphs/#public-variants) you want to use the embedded Explorer with. Has the format `graph-id@variant-name`. This value is automatically populated in the Explorer's embed snippet.
+**Required.** The graph ref for the variant you want to use the embedded Explorer with. Has the format `graph-id@variant-name`. This value is automatically populated in the Explorer's embed snippet.
 
 The Explorer fetches this variant's schema from Apollo Studio to populate its Documentation panel and enable code completion.
 
@@ -133,9 +167,29 @@ If you omit this option, the Explorer _does_ still load, but it doesn't know whi
 </td>
 <td>
 
-The endpoint URL of the [public variant](../org/graphs/#public-variants) you want to use the embedded Explorer with. This value is automatically populated in the Explorer's embed snippet.
+The endpoint URL of the variant you want to use the embedded Explorer with. This value is automatically populated in the Explorer's embed snippet.
 
 **Required**, _unless_ you specify your own fetcher with the [`handleRequest`](#handlerequest) option.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `autoInviteOptions`
+
+`{
+    accountId: string;
+    inviteToken: string;
+ }`
+
+</td>
+<td>
+
+If the graph you are embedding is a [private variant](../org/graphs/#public-variants), we will by default only allow folks in your org to see the embedded Explorer. You can specify that you want anyone who visits your embedded Explorer to be automatically invited to your org with this config object. When you are grabbing the embed code from the Explorer settings in Studio, you have the option to select the role you want folks to be invited as, and the `inviteToken` and `accountId` will automatically populate.
+
+If the graph you are embedding belongs to an SSO organization, folks will be able to log in with their SSO account and are automatically invited as the role you specify in the Org Settings page in Studio. Passing this in the embed config for a graph that belongs to an SSO account will not change any behavior. New users to your organization will always be invited as the role you specify in the Org Settings page in Studio.
 
 </td>
 </tr>
@@ -173,6 +227,24 @@ By default, the embedded Explorer uses the `fetch` API to send requests to your 
 
 You might want to do this if you need to include specific headers in every request made from your embedded Explorer.
 
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `includeCookies`
+
+`boolean`
+
+</td>
+<td>
+
+By default, the embedded Explorer uses the default `fetch` function to make requests, which passes `{ credentials: 'omit' }`.
+
+You can pass `includeCookies: true` if you want `{ credentials: 'include' }` to be passed as an option whenever requests are make from the Explorer.
+
+Read more about the `fetch` API and credentials [here](https://developer.mozilla.org/en-US/docs/Web/API/fetch#credentials).
 </td>
 </tr>
 
