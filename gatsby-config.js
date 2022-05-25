@@ -2,6 +2,7 @@ const {algoliaSettings} = require('apollo-algolia-transform');
 const {query, transformer} = require('./algolia');
 const yaml = require('js-yaml');
 const fs = require('fs');
+const remoteSources = require('./sources/remote');
 
 const gatsbyRemarkPlugins = [
   '@fec/remark-a11y-emoji/gatsby',
@@ -193,9 +194,6 @@ if (process.env.DOCS_LOCAL) {
   );
 
   if (process.env.DOCS_MODE !== 'local') {
-    const remoteSources = yaml.load(
-      fs.readFileSync('sources/remote.yml', 'utf8')
-    );
     plugins.push(
       ...Object.entries(remoteSources).map(([name, {remote, branch}]) => ({
         resolve: '@theowenyoung/gatsby-source-git',
