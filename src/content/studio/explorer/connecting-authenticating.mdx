@@ -53,6 +53,9 @@ Access-Control-Allow-Credentials: true
 
 Once configured, requests sent from `https://studio.apollographql.com` will carry the cookies from your domain when you run queries with the Explorer. If you're logged in on your domain, requests from the Explorer will also be logged in. If you log out on your domain and the cookie is removed, requests from the Explorer will be logged out.
 
+#### Cookies for Safari users
+Safari 13.1 and onwards [blocks third-party cookies by default](https://webkit.org/blog/10218/full-third-party-cookie-blocking-and-more/), and your endpoint would be considered "third-party" to Studio. Safari users would need to "Preferences > Privacy" and uncheck "Prevent cross-site tracking" for requests with cookies to be sent.  
+
 ### Environment variables
 
 The bottom panel of the Explorer editor includes an Environment Variables tab. Here, you can provide sensitive information that you can then include in header values or [preflight scripts](#preflight-scripts). This enables you to share operations (including headers) with other team members _without_ exposing sensitive data.
