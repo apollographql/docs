@@ -1,5 +1,6 @@
 ---
 title: Client ID Enforcement
+description: Require clients to pass in headers and operations name which help in monitoring schema usage
 tags: [server, observability]
 ---
 
@@ -62,3 +63,5 @@ const server = new ApolloServer({
   plugins: [clientEnforcementPlugin]
 });
 ```
+
+The headers specified here are the default ones sent by Apollo Client, but you can change them to any other headers you might be using today.
