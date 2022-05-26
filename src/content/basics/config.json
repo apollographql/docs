@@ -8,8 +8,17 @@
       "Lift-off series & certification": "https://www.apollographql.com/tutorials/lift-off-part1/",
       "Full-stack quickstart": "https://www.apollographql.com/tutorials/fullstack-quickstart/introduction"
     },
+    "Documentation Sets": {
+      "Client (React)": "/react/",
+      "Client (iOS)": "/ios/",
+      "Client (Kotlin)": "/kotlin/",
+      "Server": "/apollo-server/",
+      "Federation": "/federation/",
+      "Router": "/router/",
+      "Studio": "/studio/",
+      "Rover CLI": "/rover/"
+    },
     "Development Tools": {
-      "Rover CLI": "/rover/",
       "Apollo extension for VS Code": "/devtools/editor-plugins",
       "Configuring Apollo projects": "/devtools/apollo-config",
       "The Apollo CLI (partially deprecated)": "/devtools/cli"
