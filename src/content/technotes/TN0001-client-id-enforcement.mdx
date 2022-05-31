@@ -64,4 +64,16 @@ const server = new ApolloServer({
 });
 ```
 
-The headers specified here are the default ones sent by Apollo Client, but you can change them to any other headers you might be using today.
+## Adding enforcement for existing clients
+
+If clients are already consuming your graph and _are not_ providing client metadata, adding universal enforcement will _break_ those clients. To resolve this you should take the following steps:
+
+### Use other headers
+
+If you have other existing headers in your HTTP requests that can be parsed to extract some client info, you can extract the info from there.
+
+If you do change the identifying headers, also update the [Usage Reporting Plugin](https://www.apollographql.com/docs/studio/metrics/client-awareness/#advanced-apollo-server-configuration) to use the new headers so that the proper client info is also sent to Studio.
+
+### Ask clients to update their requests
+
+The long-term fix will require that clients start sending the required headers needed to extract client info. While clients are working on updating their requests you can add the plugin code to your gateway, but instead of throwing an error you can log a warning so that the gateway team can track when all requests have been updated.
