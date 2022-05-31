@@ -1,15 +1,22 @@
 ---
-title: Client ID Enforcement
-description: Require clients to pass in headers and operations name to help in monitoring schema usage
+title: TN0001 - Client ID enforcement
+description: Require client details and operation names to help monitor schema usage
 tags: [server, observability]
 ---
 
-As part of the Studio metrics reporting, you can [tag the request with the client name and version](https://www.apollographql.com/docs/studio/metrics/client-awareness). This info can be extremely useful to schema authors to understand who is using certain fields in the graph and who to contact when changes or deprecations need to be made. Clients also have the ability to [name their operations](https://www.apollographql.com/docs/react/data/operation-best-practices/#name-all-operations), which can provide more context around how and where the data is being used within the client. Together these pieces of info make a graph much easier to monitor and allows teams to communicate with each other successfully.
+As part of Apollo Studio metrics reporting, servers can [tag reported operations with the requesting client's name and version](https://www.apollographql.com/docs/studio/metrics/client-awareness). This helps graph maintainers understand which clients are using which fields in the schema.
 
-We strongly encourage gateway maintainers to require that the client name, client version, and operation name are included in every request. Once clients start using the graph without this info, it is much more difficult to make them go back and update their existing code. You can add this requirement as an [Apollo Server plugin](https://www.apollographql.com/docs/apollo-server/builtin-plugins) in your gateway:
+Clients can (and should) also [name their GraphQL operations](https://www.apollographql.com/docs/react/data/operation-best-practices/#name-all-operations), which provides more context around how and where data is being used.
 
-## Plugin Code
-```js
+Together, these pieces of information help teams monitor their graph and make changes to it safely. We strongly encourage that your GraphQL gateway _require_ client details _and_ operation names from all requesting clients.
+
+## Enforcing in Apollo Server
+
+If you're using Apollo Server for your gateway, you can require client metadata in every incoming request with a [custom plugin](https://www.apollographql.com/docs/apollo-server/integrations/plugins/):
+
+> The header names used below are the default headers sent by Apollo Client, but you can change them to whatever names your client uses.
+
+```js title="index.js"
 const clientEnforcementPlugin = {
   requestDidStart: ({ request, logger }) => {
     let clientName = request.http.headers.get(
