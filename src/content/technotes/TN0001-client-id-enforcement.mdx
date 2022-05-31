@@ -1,6 +1,6 @@
 ---
 title: Client ID Enforcement
-description: Require clients to pass in headers and operations name which help in monitoring schema usage
+description: Require clients to pass in headers and operations name to help in monitoring schema usage
 tags: [server, observability]
 ---
 
@@ -8,6 +8,7 @@ As part of the Studio metrics reporting, you can [tag the request with the clien
 
 We strongly encourage gateway maintainers to require that the client name, client version, and operation name are included in every request. Once clients start using the graph without this info, it is much more difficult to make them go back and update their existing code. You can add this requirement as an [Apollo Server plugin](https://www.apollographql.com/docs/apollo-server/builtin-plugins) in your gateway:
 
+## Plugin Code
 ```js
 const clientEnforcementPlugin = {
   requestDidStart: ({ request, logger }) => {
