@@ -358,7 +358,7 @@ export default function Page({file, pageContext, uri}) {
             maxW="6xl"
             mx="auto"
             align="flex-start"
-            px="10"
+            px={{base: 6, md: 10}}
             as="main"
             sx={{
               paddingTop,
