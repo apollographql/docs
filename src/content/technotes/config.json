@@ -1,0 +1,10 @@
+{
+  "title": "Tech Notes",
+  "algoliaFilters": [
+    "docset:technotes"
+  ],
+  "sidebar": {
+    "Home": "/",
+    "TN0001 - Client ID Enforcement": "TN0001-client-id-enforcement"
+  }
+}

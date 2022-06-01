@@ -1,0 +1,87 @@
+---
+title: TN0001 - Client ID enforcement
+description: Require client details and operation names to help monitor schema usage
+tags: [server, observability]
+---
+
+As part of Apollo Studio metrics reporting, servers can [tag reported operations with the requesting client's name and version](https://www.apollographql.com/docs/studio/metrics/client-awareness). This helps graph maintainers understand which clients are using which fields in the schema.
+
+Clients can (and should) also [name their GraphQL operations](https://www.apollographql.com/docs/react/data/operation-best-practices/#name-all-operations), which provides more context around how and where data is being used.
+
+Together, these pieces of information help teams monitor their graph and make changes to it safely. We strongly encourage that your GraphQL gateway _require_ client details _and_ operation names from all requesting clients.
+
+## Enforcing in Apollo Server
+
+If you're using Apollo Server for your gateway, you can require client metadata in every incoming request with a [custom plugin](https://www.apollographql.com/docs/apollo-server/integrations/plugins/):
+
+> The header names used below are the default headers sent by Apollo Client, but you can change them to whatever names your client uses.
+
+```js title="index.js"
+const clientEnforcementPlugin = {
+  requestDidStart: ({ request, logger }) => {
+    let clientName = request.http.headers.get(
+      'apollographql-client-name'
+    );
+    let clientVersion = request.http.headers.get(
+      'apollographql-client-version'
+    );
+
+    if (!clientName) {
+      let logString = `Execution Denied: Operation has no identified client`;
+      logger.debug(logString);
+
+      throw new ApolloError(logString);
+    }
+
+    if (!clientVersion) {
+      let logString = `Execution Denied: Client ${clientName} has no identified version`;
+      logger.debug(logString);
+
+      throw new ApolloError(logString);
+    }
+
+    return {
+      parsingDidStart({ queryHash, request }) {
+        if (!request.operationName) {
+          logger.debug(`Unnamed Operation: ${queryHash}`);
+
+          let error = new ApolloError(
+            'Execution denied: Unnamed operation'
+          );
+
+          Object.assign(error.extensions, {
+            queryHash: queryHash,
+            clientName: clientName,
+            clientVersion: clientVersion,
+            exception: {
+              message: `All operations must be named`
+            }
+          });
+
+          throw error;
+        }
+      }
+    };
+  }
+};
+
+const server = new ApolloServer({
+  gateway,
+  subscriptions: false,
+  plugins: [clientEnforcementPlugin]
+});
+```
+
+## Adding enforcement for existing clients
+
+If clients are already consuming your graph and _are not_ providing client metadata, adding universal enforcement will _break_ those clients. To resolve this you should take the following steps:
+
+### Use other headers
+
+If you have other existing headers in your HTTP requests that can be parsed to extract some client info, you can extract the info from there.
+
+If you do change the identifying headers, also update the [Usage Reporting Plugin](https://www.apollographql.com/docs/studio/metrics/client-awareness/#advanced-apollo-server-configuration) to use the new headers so that the proper client info is also sent to Studio.
+
+### Ask clients to update their requests
+
+The long-term fix will require that clients start sending the required headers needed to extract client info. While clients are working on updating their requests you can add the plugin code to your gateway, but instead of throwing an error you can log a warning so that the gateway team can track when all requests have been updated.
