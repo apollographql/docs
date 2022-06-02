@@ -3,4 +3,3 @@
 # https://github.com/gatsbyjs/gatsby/issues/5510
 /: src/content/basics
 studio: src/content/studio
-technotes: src/content/technotes
