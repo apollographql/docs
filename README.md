@@ -163,25 +163,36 @@ Remote docsets live within the `docs/source` directory of the **public** repo fo
 
 > Configured repos must be public so that we can pull down their files at build time without permission issues
 
-To add a remote docset to the website, add a record in the `sources/remote.yml` file. This record should map the URL path you want the docset to live at to the repo URL, called `remote`, and the name of the `branch` that content should be sourced from.
+To add a remote docset to the website, add a record in the `sources/remote.js` file. This record should map the URL path you want the docset to live at to the repo URL, called `remote`, and the name of the `branch` that content should be sourced from.
 
-```yml
-react:
-  remote: https://github.com/apollographql/apollo-client
-  branch: main
+```js
+// sources/remote.js
+module.exports = {
+  // ...other sources
+  react: {
+    remote: "https://github.com/apollographql/apollo-client",
+    branch: "main",
+  },
+};
 ```
 
 ### Managing versions
 
-This website presents multiple versions of docs for the same subject as options within a version dropdown in the main nav. It automatically treats multiple docsets with the same git remote URL as different versions of the same docs. So to add a new version, add a second entry to the `sources/remote.yml` file with your desired path (appending "/v2" in this case) and updated branch name.
+This website presents multiple versions of docs for the same subject as options within a version dropdown in the main nav. It automatically treats multiple docsets with the same git remote URL as different versions of the same docs. So to add a new version, add a second entry to the `sources/remote.js` file with your desired path (appending "/v2" in this case) and updated branch name.
 
-```yml
-react:
-  remote: https://github.com/apollographql/apollo-client
-  branch: main
-react/v2:
-  remote: https://github.com/apollographql/apollo-client
-  branch: version-2.6
+```js
+// sources/remote.js
+module.exports = {
+  // ...other sources
+  react: {
+    remote: "https://github.com/apollographql/apollo-client",
+    branch: "main",
+  },
+  "react/v2": {
+    remote: "https://github.com/apollographql/apollo-client",
+    branch: "version-2.6",
+  },
+};
 ```
 
 Next, these two docsets must specify the label that they want to appear for that version in the version dropdown. This is done by adding a `version` field to each version's `config.json`.

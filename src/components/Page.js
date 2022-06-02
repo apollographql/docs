@@ -62,7 +62,7 @@ import {Global} from '@emotion/react';
 import {MDXProvider} from '@mdx-js/react';
 import {MDXRenderer} from 'gatsby-plugin-mdx';
 import {PathContext, useFieldTableStyles} from '../utils';
-import {YouTube} from 'mdx-embed';
+import {YouTube} from './YouTube';
 import {graphql, useStaticQuery} from 'gatsby';
 import {rehype} from 'rehype';
 import {useMermaidStyles} from '../utils/mermaid';
@@ -358,7 +358,7 @@ export default function Page({file, pageContext, uri}) {
             maxW="6xl"
             mx="auto"
             align="flex-start"
-            px="10"
+            px={{base: 6, md: 10}}
             as="main"
             sx={{
               paddingTop,
