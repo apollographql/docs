@@ -1,4 +1,4 @@
 # Adds redirects from the TN number to the correct tech note
 # Note that the first paramater is relative, but the second is static, meaning it is /technotes/TN0001 -> /technotes/TN0001-client-id-enforcement
 /TN0001 /technotes/TN0001-client-id-enforcement
-/TN0002 /technotes/TN0002-opentelemetry-traces-to-prometheus
+/TN0003 /technotes/TN0003-opentelemetry-traces-to-prometheus

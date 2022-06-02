@@ -6,6 +6,6 @@
   "sidebar": {
     "Home": "/",
     "TN0001 - Client ID Enforcement": "TN0001-client-id-enforcement",
-    "TN0002 - Connecting OpenTelemetry Traces to Prometheus": "TN0002-opentelemetry-traces-to-prometheus"
+    "TN0003 - Connecting OpenTelemetry Traces to Prometheus": "TN0003-opentelemetry-traces-to-prometheus"
   }
 }
