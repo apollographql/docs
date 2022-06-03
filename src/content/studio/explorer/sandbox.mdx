@@ -147,33 +147,113 @@ See [this section](./operation-collections/#sandbox-collections).
 In addition to using [Studio's hosted version of Sandbox](https://studio.apollographql.com/sandbox), you can also embed Sandbox on your own website.
 This may be useful for bootstrapping a GraphQL IDE onto a development endpoint or an endpoint with CORS restrictions.
 
-To embed Sandbox on an HTML page:
+### Setup
 
-```html
-<div
-  style="width: 100vw; height: 100vh; position: absolute; top: 0"
-  id="embeddableSandbox"
-></div>
-<script src="https://embeddable-sandbox.cdn.apollographql.com/_latest/embeddable-sandbox.umd.production.min.js"></script>
-<script>
-  new window.EmbeddedSandbox({
-    target: "#embeddableSandbox",
-    initialEndpoint: window.location.href,
-    // optional
-    includeCookies: false,
-    // optional
-    handleRequest: (endpointUrl, options) =>
-      fetch(endpointUrl, {
-        ...options,
-        headers: {
+1. <a href="https://studio.apollographql.com/sandbox" target="_blank">
+     Go to Sandbox
+   </a>
+
+2. Under the Explorer's Settings tab, find **Embed Sandbox** and click **Copy code snippet**.
+
+   The following dialog appears:
+
+   <img
+     class="screenshot"
+     src="../img/embed-sandbox-modal.jpg"
+     alt="Sandbox embed dialog"
+     width="600"
+   />
+
+3. Click **Copy** to copy the snippet, then paste it into your code.
+
+### Options
+
+The `EmbeddedSandbox` object takes an options object with the following structure (individual options are described below):
+
+```js
+{
+  initialEndpoint: 'http://localhost:4000',
+  handleRequest: (endpointUrl, options) => {
+    return fetch(endpointUrl, {
+      ...options,
+      headers: {
           ...options.headers,
-          authorization: `token ABC`,
-        },
-      }),
-  });
-</script>
+          authorization: `token ${token}`
+      },
+    })
+  },
+}
 ```
 
-In general, we recommend you **only embed Sandbox in development environments**.
+These are the optional options you can include in the object you pass to `new EmbeddedSandbox`:
+
+<table class="field-table api-ref">
+
+<thead>
+  <tr>
+    <th>
+      Name /<br />
+      Type
+    </th>
+    <th>Description</th>
+  </tr>
+</thead>
+
+<tbody>
+<tr>
+<td>
+
+##### `initialEndpoint`
+
+`string`
+
+</td>
+<td>
+
+This will be the initial endpoint introspected wjen the Sandbox renders on page load. 
+The schema at this endpoint will be used to populate the Sandbox pages. Defaults to `http://localhost:4000`.
+
+In general, we recommend you **only pass development endpoints to Sandbox**.
 Sandbox is powered by schema introspection and we recommend [turning off introspection in production](https://www.apollographql.com/blog/graphql/security/why-you-should-disable-graphql-introspection-in-production/).
-If you want to provide a **similar experience to Embedded Sandbox on a production endpoint**, we recommend using Studio's [Public Graphs](https://www.apollographql.com/docs/studio/org/graphs#public-variants) or [Embedded Explorer](https://www.apollographql.com/docs/studio/explorer/embed-explorer).
+If you want to provide a **similar experience to embedded Sandbox on a production endpoint**, we recommend using Studio's [Public Graphs](https://www.apollographql.com/docs/studio/org/graphs#public-variants) or [embedded Explorer](https://www.apollographql.com/docs/studio/explorer/embed-explorer).
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `handleRequest`
+
+`(url, options) => Promise`
+
+</td>
+<td>
+
+By default, the embedded Sandbox uses the `fetch` API to send requests to the endpoint url at the top of the page from your webpage. You can instead pass a _custom_ fetcher that's used to run all operations.
+
+You might want to do this if you need to include specific headers in every request made from your embedded Sandbox.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `includeCookies`
+
+`boolean`
+
+</td>
+<td>
+
+By default, the embedded Sandbox uses the default `fetch` function to make requests, which passes `{ credentials: 'omit' }`.
+
+You can pass `includeCookies: true` if you want `{ credentials: 'include' }` to be passed as an option whenever requests are make from the Explorer. If you pass a `handleRequest`, this option will be ignored.
+
+Read more about the `fetch` API and credentials [here](https://developer.mozilla.org/en-US/docs/Web/API/fetch#credentials).
+</td>
+</tr>
+
+</tbody>
+</table>
