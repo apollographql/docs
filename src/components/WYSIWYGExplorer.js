@@ -1,21 +1,22 @@
-import React, { useEffect, useState, useMemo } from "react";
-import { ApolloExplorerReact } from "@apollo/explorer";
-import { gql, useQuery } from "@apollo/client";
-import { Button } from "@chakra-ui/react";
-import { CodeBlock } from "@apollo/chakra-helpers";
-import ExpansionPanel from "./ExpansionPanel";
+import React, { useEffect, useState, useMemo } from 'react';
+import { ApolloExplorerReact } from '@apollo/explorer';
+import { gql, useQuery } from '@apollo/client';
+import { Button } from '@chakra-ui/react';
+import { CodeBlock } from '@apollo/chakra-helpers';
+import ExpansionPanel from './ExpansionPanel';
 import {
   Alert,
-  FormLabel,
   AlertIcon,
-  Switch,
-  Stack,
-  Text,
   Box,
-  Select,
   Flex,
-  Textarea,
-} from "@chakra-ui/react";
+  FormLabel,
+  Heading,
+  Select,
+  Stack,
+  Switch,
+  Text,
+  Textarea
+} from '@chakra-ui/react';
 
 const getViableVariants = (graphList) =>
   graphList.reduce(
@@ -23,7 +24,7 @@ const getViableVariants = (graphList) =>
       ...agg,
       ...currGraph.variants
         .filter((v) => v.url)
-        .map((v) => ({ ...v, displayName: `${currGraph.name} / ${v.name}` })),
+        .map((v) => ({ ...v, displayName: `${currGraph.name} / ${v.name}` }))
     ],
     []
   );
@@ -69,7 +70,7 @@ export default function WYSIWYGExplorer() {
   `);
 
   const [selectedOrg, setSelectedOrg] = useState();
-  const [selectedGraph, setSelectedGraph] = useState();
+  const [selectedVariant, setSelectedVariant] = useState();
 
   useEffect(() => {
     if (data && data.me && data.me.memberships.length > 0) {
@@ -77,7 +78,7 @@ export default function WYSIWYGExplorer() {
       setSelectedOrg(selectedOrg);
       const vv = getViableVariants(selectedOrg.graphs);
       if (vv.length > 0) {
-        setSelectedGraph(vv[0]);
+        setSelectedVariant(vv[0]);
       }
     }
   }, [data]);
@@ -90,7 +91,7 @@ export default function WYSIWYGExplorer() {
   return (
     <div>
       {loading ? (
-        "Loading..."
+        'Loading...'
       ) : data && data.me ? (
         <>
           <Stack spacing="0">
@@ -105,7 +106,7 @@ export default function WYSIWYGExplorer() {
               <Select
                 flex="2"
                 id="organization"
-                size="sm"
+                size="md"
                 value={selectedOrg ? selectedOrg.id : undefined}
                 onChange={(e) => {
                   const membership = data.me.memberships.find(
@@ -116,9 +117,9 @@ export default function WYSIWYGExplorer() {
                     setSelectedOrg(org);
                     const vv = getViableVariants(org.graphs);
                     if (vv.length > 0) {
-                      setSelectedGraph(vv[0]);
+                      setSelectedVariant(vv[0]);
                     } else {
-                      setSelectedGraph(undefined);
+                      setSelectedVariant(undefined);
                     }
                   }
                 }}
@@ -138,13 +139,13 @@ export default function WYSIWYGExplorer() {
               <Select
                 flex="2"
                 id="graph=ref"
-                size="sm"
-                value={selectedGraph ? selectedGraph.id : undefined}
+                size="md"
+                value={selectedVariant ? selectedVariant.id : undefined}
                 onChange={(e) => {
                   const variant = viableVariants.find(
                     (v) => v.id === e.target.value
                   );
-                  setSelectedGraph(variant);
+                  setSelectedVariant(variant);
                 }}
                 disabled={viableVariants.length === 0}
               >
@@ -263,23 +264,26 @@ export default function WYSIWYGExplorer() {
             </Stack>
           </Flex>
 
-          <Text fontWeight="600" mb="2" mt="8">
-            Embedded Explorer Preview
-          </Text>
-          {selectedGraph ? (
+          <Heading size="lg" mb="4" mt="8">
+            Embed Preview
+          </Heading>
+          {selectedVariant ? (
             <Box
               h={500}
-              borderColor="primary"
+              borderRadius="lg"
+              overflow="hidden"
+              borderColor="tertiary"
+              borderWidth="1px"
               sx={{
-                ".embed": {
-                  boxSize: "full",
-                },
+                '.embed': {
+                  boxSize: 'full'
+                }
               }}
             >
               <ApolloExplorerReact
                 className="embed"
-                graphRef={selectedGraph.id}
-                endpointUrl={selectedGraph.url}
+                graphRef={selectedVariant.id}
+                endpointUrl={selectedVariant.url}
                 persistExplorerState={false}
                 initialState={{
                   document: defaultQuery,
@@ -290,19 +294,19 @@ export default function WYSIWYGExplorer() {
                   persistExplorerState: persistState,
                   displayOptions: {
                     showHeadersAndEnvVars: showHeaders,
-                    docsPanelState: collapseDocs ? "closed" : "open",
-                    theme: isDarkMode ? "dark" : "light",
-                  },
+                    docsPanelState: collapseDocs ? 'closed' : 'open',
+                    theme: isDarkMode ? 'dark' : 'light'
+                  }
                 }}
               />
             </Box>
           ) : (
-            "Not available"
+            'Not available'
           )}
 
-          <Text fontWeight="600" mb="2" mt="8">
-            Embed Code
-          </Text>
+          <Heading size="lg" mb="4" mt="8">
+            Embed Snippet
+          </Heading>
 
           <Text mb="4">
             The following sections contain code snippets for embedding the
@@ -310,7 +314,7 @@ export default function WYSIWYGExplorer() {
             environments:
           </Text>
 
-          {selectedGraph ? (
+          {selectedVariant ? (
             <>
               <ExpansionPanel title="React">
                 <CodeBlock
@@ -321,8 +325,8 @@ export default function WYSIWYGExplorer() {
 function App() {
   return (
     <ApolloExplorerReact 
-      graphRef='${selectedGraph.id}'
-      endpointUrl='${selectedGraph.url}'
+      graphRef='${selectedVariant.id}'
+      endpointUrl='${selectedVariant.url}'
       persistExplorerState={false}
       initialState={{
         document: \`${defaultQuery}\`,
@@ -330,8 +334,8 @@ function App() {
         headers: {},
         displayOptions: {
           showHeadersAndEnvVars: ${showHeaders}, 
-          docsPanelState: '${collapseDocs ? "closed" : "open"}',
-          theme: '${isDarkMode ? "dark" : "light"}',
+          docsPanelState: '${collapseDocs ? 'closed' : 'open'}',
+          theme: '${isDarkMode ? 'dark' : 'light'}',
         },
       }}
     />
@@ -348,8 +352,8 @@ function App() {
 <script>
 new window.EmbeddedExplorer({
   target: "#root",
-  graphRef: "${selectedGraph.id}",
-  endpointUrl: "${selectedGraph.url}",
+  graphRef: "${selectedVariant.id}",
+  endpointUrl: "${selectedVariant.url}",
   persistExplorerState: ${persistState},
   initialState: {
     document: \`${defaultQuery}\`,
@@ -357,8 +361,8 @@ new window.EmbeddedExplorer({
     headers: {},
     displayOptions: {
       showHeadersAndEnvVars: ${showHeaders},
-      docsPanelState: "${collapseDocs ? "closed" : "open"}",
-      theme: "${isDarkMode ? "dark" : "light"}",
+      docsPanelState: "${collapseDocs ? 'closed' : 'open'}",
+      theme: "${isDarkMode ? 'dark' : 'light'}",
     },
   },
 });
@@ -374,8 +378,8 @@ new window.EmbeddedExplorer({
 
 new ApolloExplorer({
   target: '#root',
-  graphRef: '${selectedGraph.id}',
-  endpointUrl: '${selectedGraph.url}',
+  graphRef: '${selectedVariant.id}',
+  endpointUrl: '${selectedVariant.url}',
   persistExplorerState: ${persistState},
   initialState: {
     document: \`${defaultQuery}\`,
@@ -383,8 +387,8 @@ new ApolloExplorer({
     headers: {},
     displayOptions: {
       showHeadersAndEnvVars: ${showHeaders}, 
-      docsPanelState: '${collapseDocs ? "closed" : "open"}', 
-      theme: '${isDarkMode ? "dark" : "light"}',
+      docsPanelState: '${collapseDocs ? 'closed' : 'open'}', 
+      theme: '${isDarkMode ? 'dark' : 'light'}',
     },
   },
 });
@@ -395,7 +399,7 @@ new ApolloExplorer({
               </ExpansionPanel>
             </>
           ) : (
-            "Not available"
+            'Not available'
           )}
         </>
       ) : (
@@ -403,7 +407,7 @@ new ApolloExplorer({
           <Alert status="warning" mb="8">
             <AlertIcon />
             You are not logged into Studio. Please log in and then come back
-            here to use the WYSIWYG wizard.
+            here to use the docs setup wizard.
           </Alert>
           <Button
             size="md"

@@ -2,7 +2,7 @@
 title: Embedding the Explorer
 ---
 
-You can embed the [Apollo Studio Explorer](./explorer/) for any of your graphs in the Apollo Registry on other websites.
+You can embed the [Apollo Studio Explorer](./explorer/) for any of your graphs on other websites as well.
 This is particularly helpful if your endpoint has CORS restrictions or if you want to embed the Explorer on internal sites.
 
 You can embed both private and public graphs from Studio.
@@ -12,7 +12,7 @@ If you embed a private graph, the Embedded Explorer will ask visitors to your we
 > the JavaScript bundle for the Studio Sandbox on a CDN. Sandbox can load with a schema from introspection.
 > See ["Embedding Sandbox"](./sandbox#embedding-sandbox).
 
-## Setup
+## Setup from Studio
 
 The easiest way to get embed instructions for one of your graphs is to visit your graph in Studio and use the Embed widget on the Explorer page.
 
@@ -31,17 +31,13 @@ The easiest way to get embed instructions for one of your graphs is to visit you
 
 4. Use the options on the left side of the dialog to customize the embedded Explorer's appearance and behavior to your liking.
 
-5. Still in the dialog, use the tabs above the code snippet to select the snippet for your use case:
+5. Copy the code snippet for your use case, and paste it into your code:
 
    - Use **React** for React apps where you can `npm install` the `@apollo/explorer` package.
    - Use **JavaScript** for non-React JavaScript apps where you can `npm install` the `@apollo/explorer` package.
    - Use **Built file on CDN** to use Apollo's CDN-hosted embedded Explorer.
 
-6. Click **Copy** to copy the snippet, then paste it into your code.
-
-> For descriptions of options shown in the dialog (along with advanced options that _aren't_ shown), [see below](#options).
-
-### Embedding with a default operation
+### Embed a specific operation
 
 You can prepopulate your embedded Explorer with an operation from one of your existing Explorer tabs. If you do, the embedded Explorer includes all of the following automatically on load:
 
@@ -77,16 +73,15 @@ Open the share dropdown in the Explorer and select **Share as embed**:
 
 **If you're embedding a [public variant](../org/graphs/#public-variants),** anyone with access to the embedded Explorer can view your schema and make queries against your variant.
 
-**If you're embedding a private variant,** the embedded Explorer first asks users to authenticate by signing in to Studio. Authenticated users are then asked to authorize their Studio account to be used on the embedding webpage:
-
-<img
-  class="screenshot"
-  src="../img/embed-authorize.jpg"
-  alt="Explorer authorization screen"
-  width="400"
-/>
-
+**If you're embedding a private variant,** the embedded Explorer first asks users to authenticate by signing in to Studio. Authenticated users are then asked to authorize their Studio account to be used on the embedding webpage.
 After authorizing, users can access the embedded Explorer, which includes schema navigation and visible operation collections.
+
+## Setup from Docs (Wizard)
+
+This section of the docs is a "What You See is What You Get" setup wizard for your convenience.
+Use the toggles on the page here to configure the Embedded Explorer as you wish, and copy the configured code snippet from the **Embed Code** section when you're satisfied.
+
+<WYSIWYGExplorer />
 
 ## Options
 
@@ -359,7 +354,7 @@ Example:
 ```jsx
 initialState: {
   headers: {
-    authorization: "Bearer abc123";
+    authorization: 'Bearer abc123';
   }
 }
 ```
@@ -435,7 +430,3 @@ The default value is `dark`.
 </tr>
 </tbody>
 </table>
-
-## WYSIWYG Wizard
-
-<WYSIWYGExplorer />
