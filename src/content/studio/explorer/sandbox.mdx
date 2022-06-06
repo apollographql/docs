@@ -230,7 +230,7 @@ To provide a "Sandbox-like" experience for production endpoints, we recommend us
 </td>
 <td>
 
-By default, the embedded Sandbox uses the `fetch` API to send requests to the endpoint url at the top of the page from your webpage. You can instead pass a _custom_ fetcher that's used to run all operations.
+By default, the embedded Sandbox uses the `fetch` API to send requests from your webpage to your specified GraphQL endpoint. If you provide a custom `handleRequest` function, Sandbox uses it instead of `fetch` for all operations.
 
 You might want to do this if you need to include specific headers in every request made from your embedded Sandbox.
 
