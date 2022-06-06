@@ -244,7 +244,7 @@ You might want to do this if you need to include specific headers in every reque
 
 By default, the embedded Explorer uses the default `fetch` function to make requests, which passes `{ credentials: 'omit' }`.
 
-You can pass `includeCookies: true` if you want `{ credentials: 'include' }` to be passed as an option whenever requests are make from the Explorer. 
+You can set `includeCookies` to `true` if you instead want the Explorer to pass `{ credentials: 'include' }` for its requests. 
 
 If you pass a `handleRequest`, this option will be ignored.
 
