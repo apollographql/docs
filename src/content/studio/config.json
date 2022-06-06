@@ -1,12 +1,6 @@
 {
   "title": "Studio",
-  "algoliaFilters": [
-    "docset:studio",
-    [
-      "docset:rover",
-      "docset:federation"
-    ]
-  ],
+  "algoliaFilters": ["docset:studio", ["docset:rover", "docset:federation"]],
   "sidebar": {
     "Features": "/",
     "Get started": "/getting-started",
@@ -28,7 +22,7 @@
       "Overview": "/explorer/explorer",
       "Connecting and authenticating": "/explorer/connecting-authenticating",
       "Operation collections": "/explorer/operation-collections",
-      "Embedded Explorer": "/explorer/embed-explorer",
+      "Embeddeding the Explorer": "/explorer/embed-explorer",
       "Additional features": "/explorer/additional-features"
     },
     "Metrics Reporting": {
