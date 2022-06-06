@@ -210,7 +210,9 @@ These are the optional options you can include in the object you pass to `new Em
 </td>
 <td>
 
-This will be the initial endpoint introspected when the Sandbox renders on page load. 
+The URL of the GraphQL endpoint that Sandbox introspects on initial load. Sandbox populates its pages using the schema obtained from this endpoint.
+
+The default value is `http://localhost:4000`.
 The schema at this endpoint will be used to populate the Sandbox pages. Defaults to `http://localhost:4000`.
 
 In general, we recommend you **only pass development endpoints to Sandbox**.
