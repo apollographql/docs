@@ -1,5 +1,11 @@
 # @apollo/chakra-helpers
 
+## 1.3.7
+
+### Patch Changes
+
+- [#122](https://github.com/apollographql/docs/pull/122) [`ca1491f`](https://github.com/apollographql/docs/commit/ca1491f8292e7a989684023792888599fba1117c) Thanks [@trevorblades](https://github.com/trevorblades)! - Allow for multiple highlight areas in code blocks
+
 ## 1.3.6
 
 ### Patch Changes

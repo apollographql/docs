@@ -127,15 +127,22 @@ export const CodeBlock = ({
         // create an array of lines highlighted by "highlight-start" and
         // "highlight-end" comments
         const highlightRange = [];
+        let isHighlighting = false;
+        let highlightOffset = 0;
         for (let i = 0; i < tokens.length; i++) {
           const line = tokens[i];
           if (isHighlightEnd(line)) {
-            highlightRange.pop();
-            break;
-          }
-
-          if (highlightRange.length || isHighlightStart(line)) {
-            highlightRange.push(i + 1);
+            // turn highlighting off
+            isHighlighting = false;
+            // account for the soon-to-be-missing start and end comments
+            highlightOffset += 2;
+          } else if (isHighlightStart(line)) {
+            // start highlighting
+            isHighlighting = true;
+          } else if (isHighlighting) {
+            // while highlighting, push the current index minus the offset into
+            // the array of highlighted lines
+            highlightRange.push(i - highlightOffset);
           }
         }
 
