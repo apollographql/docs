@@ -479,7 +479,7 @@ Previous to this system, we built our docs site by building each repo's docs ind
 /docs/react/* https://apollo-client-docs.netlify.app/:splat 200!
 ```
 
-> All of our path rewriting happens in the [website router](https://github.com/apollographql/webiste-router) repo.
+> All of our path rewriting happens in the [website router](https://github.com/apollographql/website-router) repo.
 
 ### Benefits
 
