@@ -131,7 +131,16 @@ const components = {
   p: Text,
   a: RelativeLink,
   pre: MarkdownCodeBlock,
-  table: Table,
+  table: props => (
+    <Box
+      rounded="md"
+      borderWidth={1}
+      overflow="auto"
+      sx={{table: {borderWidth: 0}}}
+    >
+      <Table {...props} />
+    </Box>
+  ),
   thead: Thead,
   tbody: Tbody,
   tr: Tr,
@@ -416,12 +425,8 @@ export default function Page({file, pageContext, uri}) {
                   },
                   '.field-table': fieldTableStyles,
                   '.sticky-table': {
-                    rounded: 'md',
-                    overflow: 'auto',
                     shadow: 'inner',
-                    borderWidth: 1,
                     table: {
-                      borderWidth: 0,
                       [['td', 'th']]: {
                         ':first-of-type': {
                           position: 'sticky',
