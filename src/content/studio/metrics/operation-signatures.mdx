@@ -148,7 +148,7 @@ To view operation signature hashes in your own logging tools, you can create an 
 
 The relevant values are saved in the GraphQL context as `queryHash` and `operationName`.
 
-```js title="index.js"
+```js {6-7} title="index.js"
 const logOperationSignaturePlugin = {
   async requestDidStart() {
     return {
