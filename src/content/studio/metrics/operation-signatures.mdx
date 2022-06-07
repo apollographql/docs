@@ -144,7 +144,7 @@ The signature algorithm's primary purpose is to group together operations that d
 
 
 ## Logging signatures at runtime
-If you want to see the value of the signature hash in your own logging tools you will need to use an [Apollo Server plugin](https://www.apollographql.com/docs/apollo-server/integrations/plugins/) to get access to the hash value in the context.
+To view operation signature hashes in your own logging tools, you can create an [Apollo Server plugin](https://www.apollographql.com/docs/apollo-server/integrations/plugins/) that accesses hash values from the shared `context`. The relevant values are available in the `queryHash` and `operationName` properties:
 
 The relevant values are saved in the GraphQL context as `queryHash` and `operationName`.
 
