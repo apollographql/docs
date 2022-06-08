@@ -12,7 +12,7 @@ import MobileNav from './MobileNav';
 import Pagination from './Pagination';
 import PropTypes from 'prop-types';
 import React, {Fragment, createElement, useCallback, useMemo} from 'react';
-import RelativeLink, {ButtonLink} from './RelativeLink';
+import RelativeLink, {ButtonLink, PrimaryLink} from './RelativeLink';
 import Sidebar, {
   SIDEBAR_WIDTH_BASE,
   SIDEBAR_WIDTH_XL,
@@ -38,6 +38,7 @@ import {
   OrderedList,
   Stack,
   Table,
+  Tag,
   Tbody,
   Td,
   Text,
@@ -64,6 +65,7 @@ import {MDXRenderer} from 'gatsby-plugin-mdx';
 import {PathContext, useFieldTableStyles} from '../utils';
 import {YouTube} from './YouTube';
 import {graphql, useStaticQuery} from 'gatsby';
+import {kebabCase} from 'lodash';
 import {rehype} from 'rehype';
 import {useMermaidStyles} from '../utils/mermaid';
 
@@ -225,7 +227,7 @@ export default function Page({file, pageContext, uri}) {
   } = file;
 
   const {frontmatter, headings} = childMdx || childMarkdownRemark;
-  const {title, description, toc} = frontmatter;
+  const {title, description, toc, tags} = frontmatter;
   const {docset, versions, currentVersion, navItems, algoliaFilters} =
     pageContext;
   const titleFont = encodeURIComponent('Source Sans Pro');
@@ -387,6 +389,18 @@ export default function Page({file, pageContext, uri}) {
                 >
                   {description}
                 </chakra.h2>
+              )}
+              {tags?.length && (
+                <Flex gap={1} mt={{base: 2, md: 3}}>
+                  {tags.map(tag => (
+                    <PrimaryLink
+                      key={tag}
+                      href={`/technotes/tags/${kebabCase(tag)}`}
+                    >
+                      <Tag size="lg">{tag}</Tag>
+                    </PrimaryLink>
+                  ))}
+                </Flex>
               )}
               <Divider my="8" />
               <Box
