@@ -90,6 +90,9 @@ export function DocsetMenu({docset, versions, currentVersion, ...props}) {
               >
                 Odyssey Tutorials
               </DocsetButton>
+              <DocsetButton to="/technotes" leftIcon={DOCSET_ICONS.odyssey}>
+                Tech Notes
+              </DocsetButton>
             </DocsetGroup>
             <DocsetGroup title="Apollo Client">
               <DocsetButton leftIcon={DOCSET_ICONS.react} to="/react">

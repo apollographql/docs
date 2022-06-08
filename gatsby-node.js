@@ -4,6 +4,7 @@ const {
 } = require('gatsby-source-filesystem');
 const {join} = require('path');
 const {v5} = require('uuid');
+const _ = require('lodash');
 
 exports.sourceNodes = ({
   actions: {createNode},
@@ -122,6 +123,11 @@ exports.createPages = async ({actions, graphql}) => {
           sourceInstanceName
         }
       }
+      tags: allMdx {
+        group(field: frontmatter___tags) {
+          name: fieldValue
+        }
+      }
     }
   `);
 
@@ -163,6 +169,17 @@ exports.createPages = async ({actions, graphql}) => {
         id,
         versions,
         ...configs[sourceInstanceName]
+      }
+    });
+  });
+
+  data.tags.group.forEach(tag => {
+    actions.createPage({
+      path: `/technotes/tags/${_.kebabCase(tag.name)}`,
+      component: require.resolve('./src/templates/technotes/tag'),
+      context: {
+        tag: tag.name,
+        ...configs['technotes']
       }
     });
   });

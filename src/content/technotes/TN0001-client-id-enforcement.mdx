@@ -1,5 +1,6 @@
 ---
-title: TN0001 - Client ID enforcement
+title: Client ID enforcement
+id: TN0001
 description: Require client details and operation names to help monitor schema usage
 tags: [server, observability]
 ---
@@ -18,10 +19,8 @@ If you're using Apollo Server for your gateway, you can require client metadata 
 
 ```js title="index.js"
 const clientEnforcementPlugin = {
-  requestDidStart: ({ request, logger }) => {
-    let clientName = request.http.headers.get(
-      'apollographql-client-name'
-    );
+  requestDidStart: ({request, logger}) => {
+    let clientName = request.http.headers.get('apollographql-client-name');
     let clientVersion = request.http.headers.get(
       'apollographql-client-version'
     );
@@ -41,13 +40,11 @@ const clientEnforcementPlugin = {
     }
 
     return {
-      parsingDidStart({ queryHash, request }) {
+      parsingDidStart({queryHash, request}) {
         if (!request.operationName) {
           logger.debug(`Unnamed Operation: ${queryHash}`);
 
-          let error = new ApolloError(
-            'Execution denied: Unnamed operation'
-          );
+          let error = new ApolloError('Execution denied: Unnamed operation');
 
           Object.assign(error.extensions, {
             queryHash: queryHash,
