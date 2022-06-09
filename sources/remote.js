@@ -16,6 +16,10 @@ module.exports = {
     remote: 'https://github.com/apollographql/apollo-server',
     branch: 'version-2'
   },
+  'customer-success': {
+    remote: `https://trevorblades:${process.env.GITHUB_TOKEN}@github.com/apollographql/customer-success`,
+    branch: 'main'
+  },
   ios: {
     remote: 'https://github.com/apollographql/apollo-ios',
     branch: 'main'
