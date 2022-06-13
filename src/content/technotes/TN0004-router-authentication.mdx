@@ -1,14 +1,17 @@
 ---
-title: TN0004 - Router Authentication
-description: Options for authenticating requests when using Apollo Router
+title: TN0004 - Authenticating requests with the Apollo Router
 tags: [server, router, auth]
 ---
 
-This note describes options for authentication when using Apollo Router.
+When using the Apollo Router as the entry point to your federated supergraph, you have a few options for authenticating incoming client requests:
+
+* [Delegate authentication to your subgraphs.](#authenticate-in-subgraphs)
+* [Add an ingress filter](#add-an-ingress-filter) to your supergraph.
+* [Create a custom router plugin](#create-a-custom-plugin).
 
 ## Authenticate in subgraphs
 
-The simplest architecture is to delegate authentication to subgraph services.
+The simplest authentication strategy is to delegate authentication to your individual subgraph services.
 
 ```mermaid
 sequenceDiagram
@@ -17,7 +20,7 @@ sequenceDiagram
   note over Subgraph: Authenticate request with token
 ```
 
-The YAML configuration for forwarding the `Authorization` header:
+To pass `Authentication` headers from client requests to your subgraphs, add the following to your router's YAML configuration file:
 
 ```yaml
 headers:
@@ -28,17 +31,17 @@ headers:
 
 **Pros**
 
-- Requires very little Router configuration.
-- Can leverage existing authentication code, which may be closely tied to authorization logic close to data sources.
+- Requires minimal changes to your router configuration.
+- Can take advantage of existing authentication code in subgraphs, which is often tied to authorization logic for data sources.
 
 **Cons**
 
-- Each subgraph re-authenticates the actor with each subgraph fetch.
-- If subgraphs are written in different languages, maintaining authentication code for each is not ideal.
+- Each subgraph that contributes to resolving a request needs to authenticate that request.
+- If subgraphs are written in different languages, maintaining consistent authentication code for each is complex.
 
-## Ingress filter
+## Add an ingress filter
 
-Many ingresses or generic API gateways have authentication features.
+Many ingresses and generic API gateways provide authentication features.
 
 [Envoy](https://www.envoyproxy.io/) is a powerful proxy with [built-in support for authenticating and authorizing requests with an external service](https://www.envoyproxy.io/docs/envoy/v1.22.0/intro/arch_overview/security/ext_authz_filter). See this [demo project](https://github.com/apollosolutions/router-ext-authz) for an example that uses [Open Policy Agent](https://www.openpolicyagent.org/) as the Policy Decision Point.
 
@@ -57,8 +60,8 @@ sequenceDiagram
 
 **Pros**
 
-- Requires very little Router configuration.
-- Enforces authentication at ingress instead of in each subgraph.
+- Requires minimal changes to your router configuration.
+- Enforces authentication at a single point, reducing complexity relative to authenticating in each subgraph.
 - The authorization service can execute arbitrary logic. For example, it can extract claims from a JSON Web Token (JWT), converting them to headers that are forwarded to subgraphs.
 - Envoy (as well as Open Policy Agent) typically run as sidecars within the same pod as the router, so requests between services are very fast.
 
@@ -67,9 +70,9 @@ sequenceDiagram
 - Does not support both authenticated and unauthenticated APIs (for example, a `login` mutation).
 - Requires Envoy and a control plane for configuring the `ext_authz` filter.
 
-## Router extension
+## Create a custom plugin
 
-The Router can authenticate requests in a custom plugin. See this [example in the router repository](https://github.com/apollographql/router/tree/main/examples/jwt-auth) for an demonstration of JWT authentication.
+The Apollo Router can authenticate requests in a custom plugin. For a demonstration of JWT authentication, see [this example in the router repository](https://github.com/apollographql/router/tree/main/examples/jwt-auth).
 
 ```mermaid
 sequenceDiagram
@@ -81,10 +84,10 @@ sequenceDiagram
 
 **Pros**
 
-- Enforces authentication at ingress instead of in each subgraph.
+- Enforces authentication at a single point, reducing complexity relative to authenticating in each subgraph.
 - Doesn't require additional services, sidecars, or control planes.
 - The plugin can execute arbitrary logic. For example, it can extract claims from a JWT, attaching them to the request context so they can be forwarded to subgraphs.
 
 **Cons**
 
-- Requires extensive customization of the Router in Rust.
+- Requires extensive customization of the router in Rust.
