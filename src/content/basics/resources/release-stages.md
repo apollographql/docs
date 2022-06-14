@@ -10,7 +10,7 @@ Apollo open source project releases proceed through the following stages:
 ```mermaid
 graph LR;
   experimental(Experimental)
-  experimental-->alphabeta(Alpha / Beta);
+  experimental --> alphabeta(Alpha / Beta);
   alphabeta --> preview(Preview);
   preview --> rc("Release Candidate (RC)");
   rc --> ga(General Availability);
