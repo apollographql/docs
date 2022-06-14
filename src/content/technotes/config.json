@@ -4,9 +4,11 @@
   "sidebar": {
     "Home": "/",
     "Tags": {
-      "Observability": "/tags/observability",
-      "Schema design": "/tags/schema-design",
-      "Server": "/tags/server"
+      "auth": "/tags/auth",
+      "observability": "/tags/observability",
+      "router": "/tags/router",
+      "schema design": "/tags/schema-design",
+      "server": "/tags/server"
     }
   }
 }
