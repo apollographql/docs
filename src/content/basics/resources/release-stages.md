@@ -9,7 +9,8 @@ Apollo open source project releases proceed through the following stages:
 
 ```mermaid
 graph LR;
-  alphabeta(Alpha / Beta)
+  experimental(Experimental)
+  experimental-->alphabeta(Alpha / Beta);
   alphabeta --> preview(Preview);
   preview --> rc("Release Candidate (RC)");
   rc --> ga(General Availability);
@@ -17,6 +18,10 @@ graph LR;
   class ga tertiary;
   class deprecated secondary;
 ```
+
+### Experimental
+
+An experimental release is in very volatile, active development. The release is not feature-complete, and breaking API changes are possible between individual versions. An experimental release may not move to Alpha / Beta, and should be used cautiously and for testing purposes only. An experimental release may be temporary and at any point could be deprecated.
 
 ### Alpha / Beta
 
