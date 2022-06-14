@@ -18,7 +18,7 @@ import {
   Stack,
   useDisclosure
 } from '@chakra-ui/react';
-import {IoRocketSharp} from 'react-icons/io5';
+import {IoRocketSharp, IoBookOutline} from 'react-icons/io5';
 import {ReactComponent as Federation} from '../../assets/icons/federation.svg';
 import {FiChevronDown, FiGrid} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
@@ -44,7 +44,8 @@ export const DOCSET_ICONS = {
   studio: <CustomIcon icon={Schema} />,
   rover: <CustomIcon icon={Rover} />,
   router: <CustomIcon icon={Router} />,
-  odyssey: <IoRocketSharp />
+  odyssey: <IoRocketSharp />,
+  technotes: <IoBookOutline />
 };
 
 export function DocsetMenu({docset, versions, currentVersion, ...props}) {
@@ -90,7 +91,7 @@ export function DocsetMenu({docset, versions, currentVersion, ...props}) {
               >
                 Odyssey Tutorials
               </DocsetButton>
-              <DocsetButton to="/technotes" leftIcon={DOCSET_ICONS.odyssey}>
+              <DocsetButton leftIcon={DOCSET_ICONS.technotes} to="/technotes">
                 Tech Notes
               </DocsetButton>
             </DocsetGroup>
