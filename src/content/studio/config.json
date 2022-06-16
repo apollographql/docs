@@ -11,8 +11,8 @@
     "Features": "/",
     "Get started": "/getting-started",
     "Sandbox (no account required)": "/explorer/sandbox",
-    "Managed federation": "https://www.apollographql.com/docs/federation/managed-federation/overview/",
     "Data privacy and compliance": "/data-privacy",
+    "Platform API (preview)": "/platform-api/",
     "Registering Schemas": {
       "Using schema reporting": "/schema/schema-reporting",
       "Using the Rover CLI": "/schema/cli-registration",
@@ -22,7 +22,8 @@
     "Working with Graphs": {
       "Graphs and variants": "/org/graphs",
       "Development graphs": "/dev-graphs",
-      "Federated graphs": "/federated-graphs"
+      "Federated graphs": "/federated-graphs",
+      "Managed federation docs": "https://www.apollographql.com/docs/federation/managed-federation/overview/"
     },
     "The Explorer": {
       "Overview": "/explorer/explorer",
