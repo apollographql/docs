@@ -1,15 +1,119 @@
 ---
-title: The Apollo Graph Platform
-description: Bring your graph from prototype to production
+title: The Apollo Supergraph Platform
+description: Bring your supergraph from prototype to production
 ---
 
-The Apollo platform helps you [build](#1-build-your-graph-with-apollo-server), [query](#2-query-your-graph-with-apollo-client), [manage](#3-manage-your-graph-with-apollo-studio), and [scale](#4-scale-your-graph-with-apollo-federation) a unified **graph**: a data layer that enables applications to interact with data from any combination of connected data stores and external APIs.
+The Apollo platform helps you build, manage, and scale a **unified supergraph**: a data layer that combines your organization's backend services into a single, intuitive API. With just one query to your supergraph, an application client can fetch data from any combination of sources:
 
-Your graph sits between application clients and back-end services, facilitating the flow of data between them:
+```mermaid
+graph LR;
+  clients([Client]);
+  subgraph "Your supergraph";
+  gateway([Graph<br/>router]);
+  serviceA[Users<br/>subgraph];
+  serviceB[Products<br/>subgraph];
+  dbA[(Users<br/>DB)];
+  dbB[(Products<br/>DB)];
+  gateway <--- serviceA & serviceB;
+  serviceA --- dbA;
+  serviceB --- dbB;
+  end;
+  clients -.- gateway;
+  class clients secondary;
+```
 
-![diagram](../images/index-diagram.svg)
+Clients query your supergraph with a powerful language called [GraphQL](./benefits/), which enables them to retrieve exactly the data they need with no overfetching. The architecture of your supergraph is not exposed, and clients query it as though it were a "monolithic" GraphQL server.
 
-An Apollo graph uses [GraphQL](./benefits/) to define and enforce the structure of this data flow.
+<ExpansionPanel title="See an example query and response">
+
+<CodeColumns>
+
+```graphql title="Example Client Query"
+# This query combines data from
+# both subgraphs shown above.
+query GetCurrentUserCart {
+  currentUser {
+    id
+    name
+    cartItems {
+      id
+      name
+      inStock
+    }
+  }
+}
+```
+
+```json title="Example Supergraph Response"
+{
+  "data": {
+    "currentUser": {
+      "id": "abc",
+      "name": "Katherine Johnson",
+      "cartItems": [
+        {
+          "id": "123",
+          "name": "Coffee thermos",
+          "inStock": true
+        }
+      ]
+    }
+  }
+}
+```
+
+</CodeColumns>
+
+</ExpansionPanel>
+
+**The supergraph is not a _replacement_ for your existing infrastructure!** Rather, it's a methodology for _interconnecting_ your existing infrastructure to make it more accessible and useful for everyone who interacts with your data.
+
+## What's in a supergraph?
+
+Every supergraph uses an open architecture called [**Apollo Federation**](/federation), which consists of the following parts:
+
+* A **graph router** (also known as a gateway)
+    * The graph router serves as the client entry point to your supergraph.
+    * As its name suggests, the graph router directs each incoming query to the appropriate combination of subgraphs.
+* One or more **subgraphs**
+    * Each subgraph is itself a GraphQL API that's responsible for populating a subset of your supergraph's available data.
+    * Usually, each of your existing backend services is a different subgraph.
+* Backing **data sources** (databases, REST APIs, etc.)
+    * Your subgraphs uses these to populate data.
+
+The diagram at the top of this page shows a basic supergraph with two subgraphs and two corresponding data sources.
+
+## What are the benefits of a supergraph?
+
+TODO
+
+## How do I implement a supergraph?
+
+To implement a supergraph, you implement its individual parts: the graph router and your subgraphs. Apollo provides libraries and tools for implementing each part. And more importantly, we provide tutorials to help you!
+
+### Supergraph tutorials
+
+* **If you're new to GraphQL**, we recommend starting your exciting journey with the [Lift-off tutorial series](https://www.apollographql.com/tutorials/lift-off-part1/).
+    * Understanding fundamental GraphQL concepts is an important prerequisite to fully understanding the supergraph architecture.
+* **If you're already using GraphQL**, learn how to implement a supergraph by completing the [Voyage tutorial series](https://www.apollographql.com/tutorials/voyage-part1).
+    * This series demonstrates creating a supergraph from scratch, along with converting a monolithic GraphQL server into a supergraph.
+
+### The graph router
+
+Apollo provides two libraries that can act as a graph router:
+
+* [The Apollo Router](/router/)
+    * This is a high-performance binary written in Rust that adds [minimal latency to request processing](https://www.apollographql.com/blog/announcement/backend/apollo-router-our-graphql-federation-runtime-in-rust/), even with extremely high traffic.
+* [Apollo Server](/apollo-server/) with `@apollo/gateway`
+    * This is Apollo's open-source standalone GraphQL server library, which can be configured to act as a graph router.
+
+If you initially use one of these libraries and later decide to swap it out, you can do so without making any changes to the rest of your supergraph.
+
+### Subgraphs
+
+#### Apollo Server
+
+#### Third-party libraries
 
 ## 1. Build your graph with Apollo Server
 
