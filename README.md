@@ -79,6 +79,7 @@ npm start -- ../apollo-client
 For your convenience, this repo also comes with special `start` NPM scripts for each docset, assuming you have this repo checked out in the same directory as the other OSS repos.
 
 - `npm run start:client`
+- `npm run start:customer-success`
 - `npm run start:server`
 - `npm run start:ios`
 - `npm run start:kotlin`
@@ -114,6 +115,7 @@ The docs content is written and maintained in the following places. Many of them
 - [Apollo Federation](https://github.com/apollographql/federation)
 - [Rover CLI](https://github.com/apollographql/rover)
 - [Apollo Router](https://github.com/apollographql/router)
+- [Customer Success (internal)](https://github.com/apollographql/customer-success)
 
 ## Docset configuration
 
@@ -140,7 +142,7 @@ The `config.json` file lives at the root of its docset's content directory, and 
 ```
 
 | Name           | Required? | Description                                                                                                                                                                                                                                                                                                       |
-| -------------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|----------------|-----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | title          | yes       | The title of the docset. It is used to construct page titles and shown in the header when the docset is selected.                                                                                                                                                                                                 |
 | sidebar        | yes       | A JSON object mapping sidebar nav labels to their paths. Use paths beginning with a slash, relative to the root of the content directory for internal links. Full URLs are transformed into external links that open in a new tab. These objects can be nested to define categories and subcategories in the nav. |
 | version        | no        | A string representing the version of the software that is being documented, i.e. "v3". This value is shown in the version dropdown if multiple versions of a docset are configured.                                                                                                                               |
@@ -514,7 +516,7 @@ Using the old infrastructure, we were spending a lot of time building our docs. 
 #### Netlify build stats (Feb 1 - Feb 24, 2022)
 
 | Site                          | Builds | Average time | Total time |
-| ----------------------------- | ------ | ------------ | ---------- |
+|-------------------------------|--------|--------------|------------|
 | apollo-federation-docs        | 424    | 4m 55s       | 2,084m     |
 | apollo-client-docs            | 237    | 8m 21s       | 1,979m     |
 | apollo-router-docs            | 437    | 2m 21s       | 1,027m     |
