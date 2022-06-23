@@ -40,6 +40,10 @@ export default function AuthCheck({children}) {
     return <div>{error.message}</div>;
   }
 
+  if (!data) {
+    return null;
+  }
+
   const hasAccess = data.me?.memberships.some(membership =>
     APOLLO_ORGS.includes(membership.account.id)
   );
