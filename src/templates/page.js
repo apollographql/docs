@@ -1,5 +1,4 @@
 import AuthCheck from '../components/AuthCheck';
-import NoSSR from '@mpth/react-no-ssr';
 import Page from '../components/Page';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -13,9 +12,7 @@ export default function PageTemplate({data, location, pageContext}) {
   return pageContext.internal ? (
     <>
       <GatsbySeo noindex />
-      <NoSSR>
-        <AuthCheck>{page}</AuthCheck>
-      </NoSSR>
+      <AuthCheck>{page}</AuthCheck>
     </>
   ) : (
     page
