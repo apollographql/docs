@@ -4,9 +4,10 @@ import React from 'react';
 import {Center, Spinner} from '@chakra-ui/react';
 import {gql, useQuery} from '@apollo/client';
 
-const GET_USER = gql`
-  query GetUser {
+const GET_MEMBERSHIPS = gql`
+  query GetMemberships {
     me {
+      id
       ... on User {
         memberships {
           account {
@@ -25,7 +26,7 @@ const GET_USER = gql`
 const APOLLO_ORGS = ['gh.apollographql', 'apollo-private', 'apollo'];
 
 export default function AuthCheck({children}) {
-  const {data, loading, error} = useQuery(GET_USER);
+  const {data, loading, error} = useQuery(GET_MEMBERSHIPS);
 
   if (loading) {
     return (
