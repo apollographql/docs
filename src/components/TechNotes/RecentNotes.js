@@ -1,7 +1,7 @@
 import React from 'react';
-import {graphql, useStaticQuery} from 'gatsby';
 import {Flex, HStack} from '@chakra-ui/react';
 import {PrimaryLink} from '../RelativeLink';
+import {graphql, useStaticQuery} from 'gatsby';
 
 export default function RecentNotes() {
   const {

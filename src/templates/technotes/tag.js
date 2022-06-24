@@ -1,29 +1,14 @@
 import DocsetMenu from '../../components/DocsetMenu';
 import Footer from '../../components/Footer';
-import Header, {TOTAL_HEADER_HEIGHT} from '../../components/Header';
-import MobileNav from '../../components/MobileNav';
 import PropTypes from 'prop-types';
 import React, {useCallback} from 'react';
-import Sidebar, {
-  SIDEBAR_WIDTH_BASE,
-  SIDEBAR_WIDTH_XL,
-  SidebarNav
-} from '../../components/Sidebar';
 import useLocalStorage from 'react-use/lib/useLocalStorage';
-import {
-  Box,
-  Divider,
-  Fade,
-  Flex,
-  HStack,
-  Heading,
-  IconButton,
-  Tooltip,
-  useToken
-} from '@chakra-ui/react';
-import {FiChevronsRight} from 'react-icons/fi';
+import {ApolloHeader} from '../../components/ApolloHeader';
+import {ApolloSidebar} from '../../components/ApolloSidebar';
+import {Box, Divider, Flex, Heading, useToken} from '@chakra-ui/react';
 import {PathContext} from '../../utils';
-import {PrimaryLink} from '../../components/RelativeLink';
+import {RecentTechNote} from './RecentTechNote';
+import {SIDEBAR_WIDTH_BASE, SIDEBAR_WIDTH_XL} from '../../components/Sidebar';
 import {graphql} from 'gatsby';
 
 export const pageQuery = graphql`
@@ -90,38 +75,18 @@ export default function Tags(props) {
           path: '/technotes'
         }}
       >
-        <Header algoliaFilters={algoliaFilters}>
-          <MobileNav>
-            <SidebarNav navItems={navItems} darkBg="gray.700">
-              <Box px="3" pt="1" pb="3">
-                {renderSwitcher({size: 'sm'})}
-              </Box>
-            </SidebarNav>
-          </MobileNav>
-          {renderSwitcher({d: {base: 'none', md: 'flex'}})}
-        </Header>
-        <Fade in={sidebarHidden} unmountOnExit delay={0.25}>
-          <Tooltip placement="right" label="Show sidebar">
-            <IconButton
-              d={{base: 'none', md: 'flex'}}
-              pos="fixed"
-              mt="2"
-              left="2"
-              size="sm"
-              variant="outline"
-              fontSize="md"
-              icon={<FiChevronsRight />}
-              css={{top: TOTAL_HEADER_HEIGHT}}
-              onClick={() => setSidebarHidden(false)}
-            />
-          </Tooltip>
-        </Fade>
-        <Sidebar isHidden={sidebarHidden}>
-          <SidebarNav
-            navItems={navItems}
-            onHide={() => setSidebarHidden(true)}
-          />
-        </Sidebar>
+        <ApolloHeader
+          algoliaFilters={algoliaFilters}
+          navItems={navItems}
+          renderSwitcher={renderSwitcher({size: 'sm'})}
+          renderSwitcher1={renderSwitcher({d: {base: 'none', md: 'flex'}})}
+        />
+        <ApolloSidebar
+          in={sidebarHidden}
+          onClick={() => setSidebarHidden(false)}
+          navItems={navItems}
+          onHide={() => setSidebarHidden(true)}
+        />
         <Box
           marginLeft={{
             base: 0,
@@ -151,20 +116,7 @@ export default function Tags(props) {
               <Box fontSize={{md: 'lg'}} lineHeight={{md: 1.7}}>
                 <Flex direction="column">
                   {data.allMdx.edges.map(file => (
-                    <HStack
-                      key={file.node.fields.slug}
-                      justifyContent={'space-between'}
-                    >
-                      <PrimaryLink href={`../..${file.node.fields.slug}`}>
-                        {file.node.frontmatter.title}
-                      </PrimaryLink>
-                      <span>
-                        Last Updated{' '}
-                        {new Intl.DateTimeFormat('en-US').format(
-                          new Date(file.node.parent.changeTime)
-                        )}
-                      </span>
-                    </HStack>
+                    <RecentTechNote key={file.node.fields.slug} file={file} />
                   ))}
                 </Flex>
               </Box>

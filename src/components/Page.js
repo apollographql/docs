@@ -1,24 +1,13 @@
 import Blockquote from './Blockquote';
 import CodeColumns from './CodeColumns';
 import DocsetMenu from './DocsetMenu';
-import ExpansionPanel, {
-  ExpansionPanelList,
-  ExpansionPanelListItem
-} from './ExpansionPanel';
+import ExpansionPanel from './ExpansionPanel';
 import Footer from './Footer';
-import Header, {TOTAL_HEADER_HEIGHT} from './Header';
 import InlineCode from './InlineCode';
-import MobileNav from './MobileNav';
 import Pagination from './Pagination';
 import PropTypes from 'prop-types';
 import React, {Fragment, createElement, useCallback, useMemo} from 'react';
-import RelativeLink, {ButtonLink, PrimaryLink} from './RelativeLink';
-import Sidebar, {
-  SIDEBAR_WIDTH_BASE,
-  SIDEBAR_WIDTH_XL,
-  SidebarNav
-} from './Sidebar';
-import TableOfContents from './TableOfContents';
+import RelativeLink, {PrimaryLink} from './RelativeLink';
 import TypeScriptApiBox from './TypeScriptApiBox';
 import VersionBanner from './VersionBanner';
 import autolinkHeadings from 'rehype-autolink-headings';
@@ -30,13 +19,10 @@ import {
   Box,
   Button,
   Divider,
-  Fade,
   Flex,
   Heading,
-  IconButton,
   ListItem,
   OrderedList,
-  Stack,
   Table,
   Tag,
   Tbody,
@@ -44,7 +30,6 @@ import {
   Text,
   Th,
   Thead,
-  Tooltip,
   Tr,
   UnorderedList,
   chakra,
@@ -56,13 +41,14 @@ import {
   MultiCodeBlock,
   MultiCodeBlockContext
 } from '@apollo/chakra-helpers';
-import {FaDiscourse, FaGithub} from 'react-icons/fa';
-import {FiChevronsRight, FiStar} from 'react-icons/fi';
+import {FaGithub} from 'react-icons/fa';
 import {GatsbySeo} from 'gatsby-plugin-next-seo';
 import {Global} from '@emotion/react';
 import {MDXProvider} from '@mdx-js/react';
 import {MDXRenderer} from 'gatsby-plugin-mdx';
 import {PathContext, useFieldTableStyles} from '../utils';
+import {SIDEBAR_WIDTH_BASE, SIDEBAR_WIDTH_XL} from './Sidebar';
+import {TOTAL_HEADER_HEIGHT} from './Header';
 import {YouTube} from './YouTube';
 import {graphql, useStaticQuery} from 'gatsby';
 import {kebabCase} from 'lodash';
@@ -84,6 +70,9 @@ import 'prismjs/components/prism-swift';
 import 'prismjs/components/prism-tsx';
 import 'prismjs/components/prism-typescript';
 import 'prismjs/components/prism-yaml';
+import {ApolloHeader} from './ApolloHeader';
+import {ApolloSidebar} from './ApolloSidebar';
+import {ApolloTableOfContents} from './ApolloTableOfContents';
 
 const LIST_SPACING = 4;
 const HEADINGS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
@@ -164,15 +153,12 @@ const mdxComponents = {
   inlineCode: InlineCode,
   Button, // TODO: consider making pages import this from @chakra-ui/react
   ExpansionPanel,
-  ExpansionPanelList,
-  ExpansionPanelListItem,
   MultiCodeBlock,
   YouTube,
   CodeColumns,
   TypeScriptApiBox,
   TypescriptApiBox: TypeScriptApiBox,
-  EmbeddableExplorer,
-  ButtonLink
+  EmbeddableExplorer
 };
 
 const {processSync} = rehype()
@@ -318,38 +304,18 @@ export default function Page({file, pageContext, uri}) {
           path: name === 'index' ? uri : dirname(uri)
         }}
       >
-        <Header algoliaFilters={algoliaFilters}>
-          <MobileNav>
-            <SidebarNav navItems={navItems} darkBg="gray.700">
-              <Box px="3" pt="1" pb="3">
-                {renderSwitcher({size: 'sm'})}
-              </Box>
-            </SidebarNav>
-          </MobileNav>
-          {renderSwitcher({d: {base: 'none', md: 'flex'}})}
-        </Header>
-        <Fade in={sidebarHidden} unmountOnExit delay={0.25}>
-          <Tooltip placement="right" label="Show sidebar">
-            <IconButton
-              d={{base: 'none', md: 'flex'}}
-              pos="fixed"
-              mt="2"
-              left="2"
-              size="sm"
-              variant="outline"
-              fontSize="md"
-              icon={<FiChevronsRight />}
-              css={{top: TOTAL_HEADER_HEIGHT}}
-              onClick={() => setSidebarHidden(false)}
-            />
-          </Tooltip>
-        </Fade>
-        <Sidebar isHidden={sidebarHidden}>
-          <SidebarNav
-            navItems={navItems}
-            onHide={() => setSidebarHidden(true)}
-          />
-        </Sidebar>
+        <ApolloHeader
+          algoliaFilters={algoliaFilters}
+          navItems={navItems}
+          renderSwitcher={renderSwitcher({size: 'sm'})}
+          renderSwitcher1={renderSwitcher({d: {base: 'none', md: 'flex'}})}
+        />
+        <ApolloSidebar
+          in={sidebarHidden}
+          onClick={() => setSidebarHidden(false)}
+          navItems={navItems}
+          onHide={() => setSidebarHidden(true)}
+        />
         <Box
           marginLeft={{
             base: 0,
@@ -471,44 +437,15 @@ export default function Page({file, pageContext, uri}) {
               </Box>
               <Pagination navItems={navItems} />
             </Box>
-            {toc !== false && (
-              // hide the table of contents on the home page
-              <chakra.aside
-                d={{base: 'none', lg: 'flex'}}
-                flexDirection="column"
-                ml={{base: 10, xl: 16}}
-                w={250}
-                flexShrink="0"
-                pos="sticky"
-                top={scrollMarginTop}
-                maxH={`calc(100vh - ${scrollMarginTop} - ${paddingBottom})`}
-              >
-                <Heading size="md" mb="3">
-                  {title}
-                </Heading>
-                <TableOfContents headings={headings} />
-                <Stack align="flex-start" spacing="3" mt="8">
-                  <Button
-                    onClick={() => window.freddyWidget?.show()}
-                    variant="link"
-                    size="lg"
-                    leftIcon={<FiStar />}
-                  >
-                    Rate article
-                  </Button>
-                  {editOnGitHub}
-                  <Button
-                    as="a"
-                    href="https://community.apollographql.com/"
-                    variant="link"
-                    size="lg"
-                    leftIcon={<FaDiscourse />}
-                  >
-                    Discuss in forums
-                  </Button>
-                </Stack>
-              </chakra.aside>
-            )}
+            <ApolloTableOfContents
+              toc={toc}
+              top={scrollMarginTop}
+              paddingBottom={paddingBottom}
+              title={title}
+              headings={headings}
+              onClick={() => window.freddyWidget?.show()}
+              editOnGitHub={editOnGitHub}
+            />
           </Flex>
           <Footer />
         </Box>
