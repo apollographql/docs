@@ -2,7 +2,7 @@
   "title": "Docs Home",
   "sidebar": {
     "Home": "/",
-    "What is Apollo?": "/intro/platform",
+    "What is the supergraph?": "/intro/platform",
     "Why adopt GraphQL?": "/intro/benefits",
     "Tutorials": {
       "Lift-off series & certification": "https://www.apollographql.com/tutorials/lift-off-part1/",

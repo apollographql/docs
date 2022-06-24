@@ -83,17 +83,23 @@ Every supergraph uses an open architecture called [**Apollo Federation**](/feder
 
 The diagram at the top of this page shows a basic supergraph with two subgraphs and two corresponding data sources.
 
+The following video provides a helpful visualization of how the Apollo Federation architecture works:
+
+<YouTube youTubeId="wRExDdgs6JU" />
+
 ## What are the benefits of a supergraph?
 
 Adopting a supergraph significantly improves the developer experience for every team (both internal and external) that interacts with your organization's data. These improvements enable developers to ship products and features more quickly, with greater confidence in their reliability and performance.
 
-* Many benefits of a supergraph are those provided by its underlying architecture, called **Apollo Federation**. [Learn about those benefits here.](/federation/#benefits-of-federation)
+* Many benefits of a supergraph are those provided by the GraphQL language and the Apollo Federation architecture.
+    * [GraphQL benefits](./benefits/)
+    * [Federation benefits](/federation/#benefits-of-federation)
 
-* A unified supergraph enables the use of powerful tooling for schema management, monitoring, and change validation. [Learn about Apollo Studio.](#how-do-i-manage-my-supergraph)
+* A unified supergraph enables the use of powerful tooling for schema management, metrics aggregation, and change validation. [Learn about Apollo Studio.](#how-do-i-manage-my-supergraph)
 
 ## How do I implement a supergraph?
 
-To implement a supergraph, you set up its [individual parts](#whats-in-a-supergraph): the graph router and your subgraphs. Apollo provides libraries and tools for implementing each part. And more importantly, we provide tutorials to help you!
+To implement a supergraph, you set up its [individual parts](#whats-in-a-supergraph): the graph router and your subgraphs. Apollo provides libraries and tools for setting up each part. And more importantly, we provide tutorials to help you!
 
 ### Tutorials
 
@@ -108,7 +114,7 @@ Apollo provides two libraries that can act as your graph router:
 
 * [The Apollo Router](/router/)
     * This is a high-performance binary written in Rust that adds [minimal latency to request processing](https://www.apollographql.com/blog/announcement/backend/apollo-router-our-graphql-federation-runtime-in-rust/), even with extremely high traffic.
-    * Because the Apollo Router is a precompiled binary, you don't need to write any boilerplate code around it to deploy it to your backend. All it needs a configuration file for any behavior you want to customize.
+    * Because the Apollo Router is a precompiled binary, you don't need to write any boilerplate code around it to deploy it to your backend. All it needs is a configuration file for any behavior you want to customize.
 * [Apollo Server](/federation/gateway/) with `@apollo/gateway`
     * This is Apollo's open-source Node.js GraphQL server library, which you can configure to act as a supergraph gateway.
 
@@ -116,14 +122,15 @@ If you get started with one of these libraries and later decide to switch to the
 
 ### Implementing subgraphs
 
-Each subgraph is itself a GraphQL API. Therefore, it uses a GraphQL server library to handle queries passed along by your graph router.
+Each subgraph is itself a GraphQL API. Therefore, it uses a GraphQL server library to handle queries forwarded along by your graph router.
 
-To act as a subgraph, a GraphQL server library needs to support the [Apollo Federation subgraph specification](/federation/federation-spec/). Fortunately, many popular libraries do:
+To act as a subgraph, a GraphQL server library needs to support the [Apollo Federation subgraph specification](/federation/federation-spec/). Fortunately, many popular libraries do!
 
 * [Apollo Server](/federation/subgraphs/) with `@apollo/subgraph`
     * This is Apollo's open-source Node.js GraphQL server library, which you can configure to act as a subgraph.
     * Apollo Server supports a variety of popular [Node.js middleware](/apollo-server/integrations/middleware/), and it works seamlessly with TypeScript.
 * Any of the other server libraries listed in [Subgraph-compatible server libraries](/federation/other-servers)
+    * Note that not all listed libraries support all parts of the subgraph specification.
 
 Feel free to use whichever server library best suits your organization. Different subgraphs can even use completely different libraries, which is helpful if your various backend services use different languages.
 
@@ -151,7 +158,7 @@ The Apollo Studio [Free plan](https://www.apollographql.com/pricing/) provides t
 
     <img src="../img/operations-tab.jpg" alt="Studio Explorer tab" class="screenshot" />
 
-- [Schema checks](/studio/schema-checks/), which enable you to verify whether changes to your supergraph will cause issues with any existing client applications:
+- [Schema checks](/studio/schema-checks/), which enable you to verify whether proposed changes to your supergraph will cause issues with any existing client applications:
 
     <img src="../img/checks-studio.jpg" alt="Schema checks results in Studio" class="screenshot" width="300" />
 
@@ -161,17 +168,18 @@ The Apollo Studio [Free plan](https://www.apollographql.com/pricing/) provides t
 
 ### Paid features
 
-These Studio features are available to organizations with a [paid Studio plan](https://www.apollographql.com/pricing/). Some features are available exclusively to the Enterprise plan.
+These Studio features are available to organizations with a [paid Studio plan](https://www.apollographql.com/pricing/). Some features are available exclusively to an Enterprise plan.
 
 - [Metrics reporting](/studio/metrics/usage-reporting/) for time frames beyond 24 hours
 - [Metrics segmentation by distinct clients and versions](/studio/metrics/client-awareness/)
-- [Resolver-level query tracing](/studio/performance/)
+- Delivery of filtered subsets of your supergraph to different consumers via [contracts](/studio/contracts/)
 - [Integration with Datadog](/studio/metrics/datadog-integration/)
+- Resolver-level query tracing
 - Longer data retention
 
 ## How do clients query my supergraph?
 
-Your supergraph appears the same as any other GraphQL API to client applications. Therefore, client applications query it with the same client libraries!
+To client applications, your supergraph appears the same as any other GraphQL API. Therefore, they query it with the same client libraries!
 
 Apollo provides GraphQL client libraries for the following platforms:
 
@@ -184,4 +192,13 @@ These are all customizable, open-source libraries with powerful caching and stat
 
 ## How do I get started?
 
-TODO [Section forthcoming]
+We have loads of helpful resources to help you start your supergraph journey:
+
+* Interactive tutorials with [Apollo Odyssey](https://www.apollographql.com/tutorials/)
+    * [Lift-off](https://www.apollographql.com/tutorials/lift-off-part1) (for getting started with GraphQL)
+    * [Voyage](https://www.apollographql.com/tutorials/voyage-part1) (for getting started with your supergraph)
+* Quickstarts for [Apollo Federation](/federation/quickstart/setup/) and [the Apollo Router](/router/quickstart)
+    * The Federation quickstart introduces many powerful Federation concepts, whereas the Router quickstart focuses on setting up the Router itself.
+* An [example supergraph repo](https://github.com/apollographql/supergraph-demo-fed2) with a comprehensive README and multiple subgraph definitions
+
+Looking for additional guidance? Share a question in our [community forums](https://community.apollographql.com/) and we'll help point you in the right direction!
