@@ -5,6 +5,7 @@
     "Home": "/",
     "TN0001 - Client ID Enforcement": "/TN0001-client-id-enforcement",
     "TN0002 - Schema Naming Conventions": "/TN0002-schema-naming-conventions",
-    "TN0003 - Connecting OpenTelemetry Traces to Prometheus": "TN0003-opentelemetry-traces-to-prometheus"
+    "TN0003 - Connecting OpenTelemetry Traces to Prometheus": "/TN0003-opentelemetry-traces-to-prometheus",
+    "TN0005 - Overload Protection": "/TN0005-overload-protection"
   }
 }
