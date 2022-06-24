@@ -6,6 +6,7 @@ import {gql, useQuery} from '@apollo/client';
 const GET_USER = gql`
   query GetUser {
     me {
+      id
       name
     }
   }
