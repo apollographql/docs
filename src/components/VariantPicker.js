@@ -28,6 +28,7 @@ export default function VariantPicker() {
   if (error) return error.message;
   if (!data.me) return 'Not logged in!';
   const orgs = data.me.memberships.map(membership => membership.account);
+  console.log(orgs);
   const allVariants = orgs.map(org => {
     <li key={org.id}>
       <strong>{org.name}</strong>
@@ -47,5 +48,6 @@ export default function VariantPicker() {
       </ul>
     </li>;
   });
+  console.log(allVariants);
   return <ul>{allVariants}</ul>;
 }
