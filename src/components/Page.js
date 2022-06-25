@@ -20,6 +20,7 @@ import Sidebar, {
 } from './Sidebar';
 import TableOfContents from './TableOfContents';
 import TypeScriptApiBox from './TypeScriptApiBox';
+import VariantPicker from './VariantPicker';
 import VersionBanner from './VersionBanner';
 import autolinkHeadings from 'rehype-autolink-headings';
 import getShareImage from '@jlengstorf/get-share-image';
@@ -170,7 +171,8 @@ const mdxComponents = {
   TypeScriptApiBox,
   TypescriptApiBox: TypeScriptApiBox,
   EmbeddableExplorer,
-  ButtonLink
+  ButtonLink,
+  VariantPicker
 };
 
 const {processSync} = rehype()
