@@ -30,23 +30,29 @@ export default function VariantPicker() {
   const orgs = data.me.memberships.map(membership => membership.account);
   console.log(orgs);
   const allVariants = orgs.map(org => {
-    <li key={org.id}>
-      <strong>{org.name}</strong>
-      <ul>
-        {org.services.map(graph => {
-          <li key={graph.id}>
-            <code>{graph.id}</code>
-            <ul>
-              {graph.variants.map(variant => {
-                <li key={variant.name}>
-                  <code>@{variant.name}</code>
-                </li>;
-              })}
-            </ul>
-          </li>;
-        })}
-      </ul>
-    </li>;
+    return (
+      <li key={org.id}>
+        <strong>{org.name}</strong>
+        <ul>
+          {org.services.map(graph => {
+            return (
+              <li key={graph.id}>
+                <code>{graph.id}</code>
+                <ul>
+                  {graph.variants.map(variant => {
+                    return (
+                      <li key={variant.name}>
+                        <code>@{variant.name}</code>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </li>
+            );
+          })}
+        </ul>
+      </li>
+    );
   });
   console.log(allVariants);
   return <ul>{allVariants}</ul>;
