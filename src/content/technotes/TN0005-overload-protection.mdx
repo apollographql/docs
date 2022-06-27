@@ -59,6 +59,6 @@ async function startApolloServer(typeDefs, resolvers) {
 }
 ```
 
-This approach and additions also work if you are using the `@apollo/subgraph` to create your subgraphs in a similar way. Overload protection is not specific to GraphQL, so it's best to handle it outside of Apollo software. The team at apollo already has a guide on how to change to `apollo-server-express` from `apollo-server` to allow for use of external `express` middleware. The guide can be found [here](https://www.apollographql.com/docs/apollo-server/integrations/middleware#swapping-out-apollo-server).
+This approach and additions also work if you are using the `@apollo/subgraph` to create your subgraphs in a similar way. Overload protection is not specific to GraphQL, so it's best to handle it outside of Apollo software. The team at apollo already has a guide on how to change to `apollo-server-express` from `apollo-server` to allow the use of additional `express` middleware. The guide can be found [here](https://www.apollographql.com/docs/apollo-server/integrations/middleware#swapping-out-apollo-server).
 
 \***\*Add something here about why its good for both gateway and subgraphs\*\***
