@@ -3,49 +3,42 @@ title: TN0005 - Overload Protection
 tags: [server, router, sre]
 ---
 
-Overload protection is adding some type of protection for your server to ensure it does not crash when put under a large amount of stress. The idea is we can have a service watch its resources and metrics, and when it notices, it's going to crash (think along the lines of Out of memory (OOM) killed). Overload protection is a huge sign of relief in a federated architecture. As the usage and size of your super graph grow, the pressure created by creating new paths can be unexpectedly intense. No one means to stress other services to the point of degraded service, but it happens. Overload protection is the way to minimize the effects of an unintended or organic increase in pressure.
+Overload protection is a type of protection for your server to ensure it does not become unavaible when put under a large amount of load. Simplified, overload protection is where a service watches its resource usage and metrics, and when it notices the server may have difficulties serving a request (for example running out of memory (OOM)), it sheds incoming traffic until it's healthy again.
 
-As mentioned above, overload protection applies when your service is under stress. Instead of using stress as a handwavy term for when something happens, let us give some concrete examples of some things that could cause this "stress." The of the easiest ones to describe is the [thundering herd problem](https://www.notion.so/Overload-protection-ae3661da0d5940a0b300430f88873030#63e81848cc9b4c23bb96acad2a7c6a7b). A multitude of different things can cause this. Some examples are: pod failures in Kubernetes that cause a smaller amount of pods to handle the same amount of traffic, push notifications/marketing events that drive traffic to the applications in a short period, features deployed that increase the load on the graph more than expected, etc. Another more graph-based problem is adding a link in the schema that causes a significant increase in traffic. Think of the [Star Wars schema](https://studio.apollographql.com/public/star-wars-swapi/home?variant=current). If there was no link from `Person` to `Film`(though `PersonFilmsConnection`) and it is added. Until the usage of that new connection in the schema flattens out, every deployment or event that causes traffic could cause a large amount of stress. The last bucket to talk about is organic stress events. These are a large bucket of events that happen outside your company and cause excess stress on your system. An easy example of this can be found when examining online stores. Say someone with many Twitter followers tweets your store's page with an item they like. Their followers will flood this page, causing an organic increase in pressure in the system.
+As the usage and size of your supergraph grow, the additional load created by creating new paths can be unexpectedly intense. Overload protection is one way to minimize the effects of an unintended or organic increase in pressure.
 
-## Now, what do we do about this?!
+Instead of using load as a handwavy term for when something happens, let use some concrete examples of things that could cause this "load."
 
-Most languages have some type of drop-in protection against this increase in pressure through a package; Node is no exception. The package is named [overload-protection](https://www.npmjs.com/package/overload-protection). This drag and drop package allows one to return a 503 based on the current event loop delay, the amount bytes used by the heap, and the amount of bytes used by Rss.
+One of the easiest ones to describe is the [thundering herd problem](https://en.wikipedia.org/wiki/Thundering_herd_problem), which is when a number of processes/clients attempt to access limited computer resources. A multitude of different things can cause this, for example:
 
-It's straightforward to install with the base settings:
+- Pod failures in Kubernetes that cause a smaller amount of pods to handle the same amount of traffic
+- Push notifications/marketing events that drive traffic to the applications in a short period
+- Features deployed that increase the load on the graph more than expected.
 
-```TypeScript
-const app = require('express')()
-const protect = require('overload-protection')('express', protectCfg)
-app.use(protect)
+A more graph-based problem is adding a entity relationship in the schema that causes a significant increase in traffic. For example in the [Star Wars schema](https://studio.apollographql.com/public/star-wars-swapi/home?variant=current), imagine if there was no link from `Person` to `Film`(though `PersonFilmsConnection`) and it was added today. Until the usage of that new connection in the schema flattens out, every deployment or event that causes traffic could cause a large amount of new load directly attributed to the change for the owner of the `Film` entity.
+
+The last type of load-generating event to talk about are organic stress events. These are events that happen outside your company's control and cause excess stress on your system. An easy example of this can be found when examining online stores. Say someone with many Twitter followers tweets your store's page with an item they like. Their followers will flood this page, causing an organic increase in pressure in the system.
+
+## Now, what do we do about this?
+
+Most languages have some type of drop-in protection against this increase in pressure through a package; Node is no exception. For example, we'll look at one package named [overload-protection](https://www.npmjs.com/package/overload-protection) alongside `express`. This drag and drop package allows one to return a 503 based on the current event loop delay, the amount bytes used by the heap, and the amount of bytes used by Resident Set Size (RSS).
+
+To use `overload-protection`, you'll include it in your express startup like this:
+
+```js
+const app = require("express")();
+const protect = require("overload-protection")("express");
+app.use(protect);
 ```
 
 \*_I will be using express in these examples. This does work for other frameworks._
 
-## But what about Apollo Server or a subgraph (federation)
+## Use With Apollo Server Express
 
-If you're using `apollo-server-express`, it's straightforward. If your service looks something like the following:
+If you're using `apollo-server-express`, you can add `overload-protection` via `express` middleware by adding the highlighted lines to your server creation:
 
-```js
-const app = express();
-const httpServer = http.createServer(app);
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  csrfPrevention: true,
-  cache: "bounded",
-  plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
-});
-
-await server.start();
-server.applyMiddleware({ app });
-await new Promise((resolve) => httpServer.listen({ port: 4000 }, resolve));
-console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);
-```
-
-overload protection can easily be added using the following:
-
-```js
-const protect = require("overload-protection")("express", protectCfg);
+```js {1,5}
+const protect = require("overload-protection")("express");
 
 async function startApolloServer(typeDefs, resolvers) {
   const app = express();
@@ -66,4 +59,6 @@ async function startApolloServer(typeDefs, resolvers) {
 }
 ```
 
-The difference between the two snippets is lines 1 and 5 are added in the second snippet. This approach and additions also work if you are using the @apollo/subgraph to create your subgraphs in a similar way. Unfortunately, the base Apollo server cannot implement overload protection. Luckily the team at apollo already has a guide on how to change from apollo-server to apollo-server-express! The guide can be found [here](https://www.apollographql.com/docs/apollo-server/integrations/middleware#swapping-out-apollo-server).
+This approach and additions also work if you are using the `@apollo/subgraph` to create your subgraphs in a similar way. Overload protection is not specific to GraphQL, so it's best to handle it outside of Apollo software. The team at apollo already has a guide on how to change to `apollo-server-express` from `apollo-server` to allow for use of external `express` middleware. The guide can be found [here](https://www.apollographql.com/docs/apollo-server/integrations/middleware#swapping-out-apollo-server).
+
+\***\*Add something here about why its good for both gateway and subgraphs\*\***
