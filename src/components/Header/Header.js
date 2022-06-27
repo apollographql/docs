@@ -38,9 +38,12 @@ function Eyebrow() {
       href="https://forms.gle/jhzZHGdnxRjx8q8R7"
       target="_blank"
       rel="noopener noreferrer"
+      px="3"
     >
-      Last chance to speak on stage at GraphQL Summit! Submit your proposal by
-      June 29. 🌴
+      <Box isTruncated>
+        Last chance to speak on stage at GraphQL Summit! Submit your proposal by
+        June 29. 🌴
+      </Box>
     </Center>
   );
 }
