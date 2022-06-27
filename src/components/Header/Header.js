@@ -10,6 +10,7 @@ import {
   Flex,
   HStack,
   IconButton,
+  chakra,
   useColorMode,
   useColorModeValue
 } from '@chakra-ui/react';
@@ -31,7 +32,6 @@ function Eyebrow() {
       bg={bg}
       _hover={{bg: bgHover}}
       css={{height: EYEBROW_HEIGHT}}
-      textTransform="uppercase"
       fontSize="sm"
       fontWeight="semibold"
       as="a"
@@ -40,10 +40,14 @@ function Eyebrow() {
       rel="noopener noreferrer"
       px="3"
     >
-      <Box isTruncated>
-        Last chance to speak on stage at GraphQL Summit! Submit your proposal by
-        June 29. 🌴
-      </Box>
+      <span>
+        <chakra.span display={{base: 'none', md: 'inline'}}>
+          Last chance to speak on stage at GraphQL Summit!
+        </chakra.span>{' '}
+        Submit your{' '}
+        <chakra.span display={{md: 'none'}}>GraphQL Summit</chakra.span>{' '}
+        proposal by June 29. 🌴
+      </span>
     </Center>
   );
 }
