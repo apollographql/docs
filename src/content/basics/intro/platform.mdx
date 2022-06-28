@@ -3,7 +3,7 @@ title: The Apollo Supergraph Platform
 description: Bring your supergraph from prototype to production
 ---
 
-Apollo is a platform for building, managing, and scaling a **unified supergraph**: a data layer that combines your organization's backend services into a single, all-purpose API. With just one query to your supergraph, an application client can fetch data from any combination of sources:
+Apollo is a platform for building, managing, and scaling a **supergraph**: a unified network of your data, services, and capabilities composed into a single, all-purpose API. With just one query to your supergraph, an application client can fetch data from any combination of sources:
 
 ```mermaid
 graph LR;
@@ -22,7 +22,7 @@ graph LR;
   class clients secondary;
 ```
 
-Clients query your supergraph with a powerful language called [GraphQL](./benefits/), which enables them to retrieve exactly the data they need with no overfetching. The architecture of your supergraph is not exposed, and clients query it exactly as though it were a "monolithic" GraphQL server.
+Clients query your supergraph with a powerful language called [GraphQL](./benefits/), which enables them to retrieve exactly the data they need with no overfetching. The architecture of your supergraph is not exposed, and clients query it from a single endpoint.
 
 <ExpansionPanel title="See an example query and response">
 
@@ -95,7 +95,7 @@ Adopting a supergraph significantly improves the developer experience for every 
     * [GraphQL benefits](./benefits/)
     * [Federation benefits](/federation/#benefits-of-federation)
 
-* A unified supergraph enables the use of powerful tooling for schema management, metrics aggregation, and change validation. [Learn about Apollo Studio.](#how-do-i-manage-my-supergraph)
+* A supergraph enables the use of powerful tooling for schema management, metrics aggregation, and change validation. [Learn about Apollo Studio.](#how-do-i-manage-my-supergraph)
 
 ## How do I implement a supergraph?
 
