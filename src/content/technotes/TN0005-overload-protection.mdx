@@ -59,6 +59,14 @@ async function startApolloServer(typeDefs, resolvers) {
 
 This approach and additions also work if you are using the `@apollo/subgraph` to create your subgraphs in a similar way. Overload protection is not specific to GraphQL, so it's best to handle it outside of Apollo software. If you are running `apollo-server` instead, we have a guide on how to change to `apollo-server-express` from `apollo-server` to allow the use of additional `express` middleware. The guide can be found [here](https://www.apollographql.com/docs/apollo-server/integrations/middleware#swapping-out-apollo-server).
 
-## Does this belong on the router or subgraph?
+## Does this belong on the Router/Gateway or Subgraph?
 
-The short answer is both, for different reasons. The router to allow to protect overall avaibility of the graph. A subgraph should have overload protection to reduce the error rates of quries that include data from that spesfic subgraph.
+The short answer is both, for different reasons. The router to allow to protect the overall availability of the graph. A subgraph should have overload protection to reduce the error rates of queries that include data from that specific subgraph.
+
+### Router/Gateway
+
+The main concern with the gateway is a build-up of pressure causing partial or cascading failures. If the gateway cannot properly shed the load placed on it, it will start to cause degraded performance. This happens due to a build-up of requests in the gateway. A single request to the gateway can turn into many requests to subgraphs. This expansion of requests can cause stress inside the gateway. When load creates this pressure, overload protection on the gateway can save your service from entirely falling over. This looks like a minor dip in availability vs. a total outage.
+
+### Subgraph
+
+A failure at the subgraph can cause a backup in the gateway. If this backup is due to load, overload protection becomes a way to short circuit the return of an error. This relieves the pressure in the gateway and the subgraph by allowing the gateway to return with errors faster.
