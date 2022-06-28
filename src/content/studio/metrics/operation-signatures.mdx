@@ -141,3 +141,28 @@ query GetUser {
 The signature algorithm's primary purpose is to group together operations that differ only cosmetically (in terms of whitespace, field order, aliases, and so on). As an additional effect, the algorithm does [remove most in-line argument values](#1-transform-in-line-argument-values), which in theory helps maintain data privacy.
 
 **However, you should not rely on this!** Ideally, your sensitive data should never reach Apollo Studio in the first place. Whenever possible, [use GraphQL variables](/react/data/operation-best-practices/#use-graphql-variables-to-provide-arguments) instead of in-line values for arguments. This helps you control exactly which values are reported to Apollo. For details, see [Apollo Studio data privacy and compliance](../data-privacy/).
+
+
+## Logging signatures at runtime
+To view operation signature hashes in your own logging tools, you can create an [Apollo Server plugin](https://www.apollographql.com/docs/apollo-server/integrations/plugins/) that accesses hash values from the shared `context`. The relevant values are available in the `queryHash` and `operationName` properties:
+
+
+```js {6-7} title="index.js"
+const logOperationSignaturePlugin = {
+  async requestDidStart() {
+    return {
+      async didResolveOperation(ctx) {
+        console.log({
+          queryHash: ctx.queryHash,
+          operationName: ctx.operationName
+        });
+      }
+    };
+  }
+};
+
+const server = new ApolloServer({
+  schema,
+  plugins: [logOperationSignaturePlugin]
+});
+```
