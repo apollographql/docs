@@ -46,7 +46,7 @@ function Eyebrow() {
         </chakra.span>{' '}
         Submit your{' '}
         <chakra.span display={{md: 'none'}}>GraphQL Summit</chakra.span>{' '}
-        proposal by June 29. 🌴
+        proposal by July 1. 🌴
       </span>
     </Center>
   );
