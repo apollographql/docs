@@ -17,7 +17,7 @@ import {FiMoon, FiSun} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
 import {useTagColors} from '../../utils';
 
-const EYEBROW_HEIGHT = 32;
+const EYEBROW_HEIGHT = 0; // 32;
 const HEADER_HEIGHT = 60;
 const HEADER_BORDER_WIDTH = 1;
 export const TOTAL_HEADER_HEIGHT =
