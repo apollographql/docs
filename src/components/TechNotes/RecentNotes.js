@@ -20,7 +20,6 @@ export default function RecentNotes() {
               }
               frontmatter {
                 title
-                id
               }
             }
           }
