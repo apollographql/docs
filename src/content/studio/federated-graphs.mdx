@@ -173,6 +173,31 @@ In the **Schema > Reference** tab, you’ll also see a contact card when you hov
   width="388"
 />
 
+## Schema tagging
+Annotating fields and types in your subgraphs with @tag directives can help document your API. You can enable these tags to pass through to your consumers in Schema Reference and Explorer by updating the build configuration for a variant.
+
+To annotate your schema, you first add `@tag` directives in your subgraphs for the fields and types you would like to document. 
+
+Here is an example of how you could tag a field with a description.
+
+```graphql title="schema.graphql"
+  type Product {
+  id: ID!
+  name: String!
+  codename: String! @tag(name: "internal")
+}
+  ```
+You then need to update your graph’s configuration in Apollo Studio to permit the tags in the subgraphs to pass through to your schema for consumers. 
+
+1. Go to the **Settings** page for your variant in Apollo Studio. 
+2. On the **General** tab, click **Edit Configuration**.
+3. Under **Build Settings**, enable the toggle labeled **Show all uses of @tag directives to consumers in Schema Reference and Explorer** and then click **Save**. 
+
+For supergraphs using federation version 1, you must first enable the @tag directives toggle on this settings page before you can enable the `@tag` passthrough toggle.
+
+Once you have enabled passthrough for your `@tag` directives for a variant, you can view directives inline with Schema Reference and Explorer.
+
+
 ## Federation support in the Explorer
 
 The [Apollo Studio Explorer](./explorer/explorer/) provides enhanced support for working with federated graphs:
