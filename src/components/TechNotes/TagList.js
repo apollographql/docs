@@ -1,6 +1,6 @@
 import React from 'react';
-import {graphql, useStaticQuery} from 'gatsby';
 import {Button, Flex} from '@chakra-ui/react';
+import {Link as GatsbyLink, graphql, useStaticQuery} from 'gatsby';
 import {kebabCase} from 'lodash';
 
 export default function TagList() {
@@ -26,8 +26,8 @@ export default function TagList() {
         .map(group => (
           <Button
             key={group.tag}
-            as="a"
-            href={`/technotes/tags/${kebabCase(group.tag)}`}
+            as={GatsbyLink}
+            to={`/technotes/tags/${kebabCase(group.tag)}`}
           >
             {group.tag} ({group.totalCount})
           </Button>

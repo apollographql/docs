@@ -4,7 +4,7 @@ const {
 } = require('gatsby-source-filesystem');
 const {join} = require('path');
 const {v5} = require('uuid');
-const _ = require('lodash');
+const {kebabCase} = require('lodash');
 
 exports.sourceNodes = ({
   actions: {createNode},
@@ -175,11 +175,11 @@ exports.createPages = async ({actions, graphql}) => {
 
   data.tags.group.forEach(tag => {
     actions.createPage({
-      path: `/technotes/tags/${_.kebabCase(tag.name)}`,
-      component: require.resolve('./src/templates/technotes/tag'),
+      path: `/technotes/tags/${kebabCase(tag.name)}`,
+      component: require.resolve('./src/templates/tag'),
       context: {
         tag: tag.name,
-        ...configs['technotes']
+        ...configs.technotes
       }
     });
   });

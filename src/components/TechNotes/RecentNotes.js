@@ -1,12 +1,9 @@
+import NotesList from './NotesList';
 import React from 'react';
-import {Flex, HStack} from '@chakra-ui/react';
-import {PrimaryLink} from '../RelativeLink';
 import {graphql, useStaticQuery} from 'gatsby';
 
 export default function RecentNotes() {
-  const {
-    allFile: {nodes: files}
-  } = useStaticQuery(
+  const data = useStaticQuery(
     graphql`
       query RecentTechNotes {
         allFile(
@@ -17,7 +14,10 @@ export default function RecentNotes() {
           nodes {
             changeTime
             childMdx {
-              slug
+              id
+              fields {
+                slug
+              }
               frontmatter {
                 title
                 id
@@ -26,22 +26,16 @@ export default function RecentNotes() {
           }
         }
       }
-      `
+    `
   );
-
   return (
-    <Flex direction="column">
-      {files.map(file => (
-        <HStack key={file.childMdx.slug} justifyContent={'space-between'}>
-          <PrimaryLink href={`/technotes/${file.childMdx.slug}`}>
-            {file.childMdx.frontmatter.id} - {file.childMdx.frontmatter.title}
-          </PrimaryLink>
-          <span>
-            Last updated{' '}
-            {new Intl.DateTimeFormat().format(new Date(file.changeTime))}
-          </span>
-        </HStack>
-      ))}
-    </Flex>
+    <NotesList
+      notes={data.allFile.nodes.map(({childMdx, changeTime}) => ({
+        ...childMdx,
+        parent: {
+          changeTime
+        }
+      }))}
+    />
   );
 }

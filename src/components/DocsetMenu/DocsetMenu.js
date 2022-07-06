@@ -18,10 +18,10 @@ import {
   Stack,
   useDisclosure
 } from '@chakra-ui/react';
-import {IoRocketSharp, IoBookOutline} from 'react-icons/io5';
 import {ReactComponent as Federation} from '../../assets/icons/federation.svg';
 import {FiChevronDown, FiGrid} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
+import {IoBookOutline, IoRocketSharp} from 'react-icons/io5';
 import {ReactComponent as Router} from '../../assets/icons/router.svg';
 import {ReactComponent as Rover} from '../../assets/icons/rover.svg';
 import {ReactComponent as Satellite} from '../../assets/icons/satellite.svg';
@@ -48,7 +48,7 @@ export const DOCSET_ICONS = {
   technotes: <IoBookOutline />
 };
 
-export function DocsetMenu({docset, versions, currentVersion, ...props}) {
+export function DocsetMenu({docset, versions = [], currentVersion, ...props}) {
   const {isOpen, onOpen, onClose} = useDisclosure();
   return (
     <>
@@ -134,6 +134,6 @@ export function DocsetMenu({docset, versions, currentVersion, ...props}) {
 
 DocsetMenu.propTypes = {
   docset: PropTypes.string.isRequired,
-  versions: PropTypes.array.isRequired,
+  versions: PropTypes.array,
   currentVersion: PropTypes.string
 };
