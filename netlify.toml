@@ -4,7 +4,7 @@
   port = 3000
 [build.environment]
   API_URL = "https://graphql-staging.api.apollographql.com"
-  GATSBY_DISABLE_CACHE_PERSISTENCE = "true"
+  GATSBY_DISABLE_CACHE_PERSISTENCE = "1"
 [context.production.environment]
   API_URL = "https://graphql.api.apollographql.com"
   PREFIX_PATHS = "true"
