@@ -10,7 +10,6 @@ import {
   Flex,
   HStack,
   IconButton,
-  chakra,
   useColorMode,
   useColorModeValue
 } from '@chakra-ui/react';
@@ -18,13 +17,13 @@ import {FiMoon, FiSun} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
 import {useTagColors} from '../../utils';
 
-const EYEBROW_HEIGHT = 32;
+const EYEBROW_HEIGHT = 0; // 32;
 const HEADER_HEIGHT = 60;
 const HEADER_BORDER_WIDTH = 1;
 export const TOTAL_HEADER_HEIGHT =
   EYEBROW_HEIGHT + HEADER_HEIGHT + HEADER_BORDER_WIDTH;
 
-function Eyebrow() {
+function Eyebrow({children}) {
   const bg = useColorModeValue('indigo.50', 'indigo.800');
   const bgHover = useColorModeValue('indigo.100', 'indigo.700');
   return (
@@ -40,24 +39,20 @@ function Eyebrow() {
       rel="noopener noreferrer"
       px="3"
     >
-      <span>
-        <chakra.span display={{base: 'none', md: 'inline'}}>
-          Last chance to speak on stage at GraphQL Summit!
-        </chakra.span>{' '}
-        Submit your{' '}
-        <chakra.span display={{md: 'none'}}>GraphQL Summit</chakra.span>{' '}
-        proposal by June 29. 🌴
-      </span>
+      <span>{children}</span>
     </Center>
   );
 }
+
+Eyebrow.propTypes = {
+  children: PropTypes.node.isRequired
+};
 
 export function Header({children, algoliaFilters}) {
   const {toggleColorMode, colorMode} = useColorMode();
   const [tagBg, tagTextColor] = useTagColors();
   return (
     <Box pos="sticky" top="0" zIndex="1">
-      <Eyebrow />
       <Flex
         align="center"
         as="header"
