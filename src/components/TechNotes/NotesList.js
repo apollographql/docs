@@ -3,7 +3,7 @@ import React from 'react';
 import RelativeLink from '../RelativeLink';
 import {Flex, List, ListItem} from '@chakra-ui/react';
 
-export default function NotesList({notes}) {
+export function NotesList({notes}) {
   return (
     <List spacing="1">
       {notes.map(note => (

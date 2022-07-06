@@ -1,8 +1,7 @@
 import PageLayout, {usePageLayoutProps} from '../components/PageLayout';
 import PropTypes from 'prop-types';
 import React from 'react';
-import RelativeLink from '../components/RelativeLink';
-import {Flex, List, ListItem} from '@chakra-ui/react';
+import {NotesList} from '../components/TechNotes';
 import {PathContext} from '../utils';
 import {graphql} from 'gatsby';
 
@@ -54,23 +53,7 @@ export default function Tags({pageContext, data, location}) {
         }}
       >
         <PageLayout {...pageProps}>
-          <List spacing="1">
-            {data.notes.nodes.map(note => (
-              <ListItem key={note.id}>
-                <Flex justify="space-between">
-                  <RelativeLink href={note.fields.slug}>
-                    {note.frontmatter.title}
-                  </RelativeLink>
-                  <span>
-                    Last Updated{' '}
-                    {new Intl.DateTimeFormat('en-US').format(
-                      new Date(note.parent.changeTime)
-                    )}
-                  </span>
-                </Flex>
-              </ListItem>
-            ))}
-          </List>
+          <NotesList notes={data.notes.nodes} />
         </PageLayout>
       </PathContext.Provider>
     </>

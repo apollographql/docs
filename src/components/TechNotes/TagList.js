@@ -3,7 +3,7 @@ import {Button, Flex} from '@chakra-ui/react';
 import {Link as GatsbyLink, graphql, useStaticQuery} from 'gatsby';
 import {kebabCase} from 'lodash';
 
-export default function TagList() {
+export function TagList() {
   const {
     allMdx: {group}
   } = useStaticQuery(

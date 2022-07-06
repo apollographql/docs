@@ -1,8 +1,8 @@
-import NotesList from './NotesList';
 import React from 'react';
+import {NotesList} from './NotesList';
 import {graphql, useStaticQuery} from 'gatsby';
 
-export default function RecentNotes() {
+export function RecentNotes() {
   const data = useStaticQuery(
     graphql`
       query RecentTechNotes {
