@@ -43,17 +43,11 @@ For more information on how to accomplish this, see:
 
 After you compose your supergraph schema, there are a few different ways to provide that file to your gateway or router:
 
-### Restart the gateway/router (not recommended)
-
-The most straightforward option is to restart all of your gateway or router instances. If you pass your supergraph schema file to these instances via a build process (such as a Docker image), you can redeploy for your changes to take effect.
-
-This method is _not_ recommended, because the restart causes downtime for your supergraph. The methods described above can update your supergraph schema _without_ requiring redeployment.
-
 ### Hot reloading
 
 **If you're using the Apollo Router,** you can enable hot reloading by passing the `--hr` option to the `router` executable. No other configuration is required.
 
-The flip of restarting processes in Gateway is to enable hot reloading the file using a simple watcher. 
+**If you're using the `@apollo/gateway` library,** you can enable hot reloading by setting up a basic watcher.
 
 For example, if you're using Docker, you can pass the supergraph schema file as a mounted volume. In the following example, the supergraph schema is mounted to `/etc/config/supergraph.graphql`:
 
@@ -118,3 +112,9 @@ For more information on this approach, [see the Apollo Gateway docs](/federation
 If you have complex logic that's be better suited to its own class (for example, listening to an AWS Simple Notification Service (SNS) topic), you can create a custom implementation of the `SupergraphManager` class to pass to the `supergraphSdl` option.
 
 This option provides the most customizability, but it also requires writing additional code. For an example, [see the Uplink implementation of `SupergraphManager`](https://github.com/apollographql/federation/blob/main/gateway-js/src/supergraphManagers/UplinkSupergraphManager/index.ts). 
+
+### Restart the gateway/router (not recommended)
+
+The most straightforward option is to restart all of your gateway or router instances. If you pass your supergraph schema file to these instances via a build process (such as a Docker image), you can redeploy for your changes to take effect.
+
+This method is _not_ recommended, because the restart causes downtime for your supergraph. The methods described above can update your supergraph schema _without_ requiring redeployment.
