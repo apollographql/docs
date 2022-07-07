@@ -62,7 +62,7 @@ Overload protection is not specific to GraphQL, so it's best to handle it outsid
 
 ## Protecting a supergraph
 
-hen adding overload protection to a supergraph, a reasonable question is, "Do I add protection to my gateway/router, or to my individual subgraphs?" The short answer is "both":
+When adding overload protection to a supergraph, a reasonable question is, "Do I add protection to my gateway/router, or to my individual subgraphs?" The short answer is "both":
 
 - Protecting the router protects the availability of the supergraph as a whole.
 - Protecting a subgraph reduces the error rate for queries that request data from that subgraph.
