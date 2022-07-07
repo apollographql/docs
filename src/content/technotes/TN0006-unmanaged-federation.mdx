@@ -1,24 +1,24 @@
 ---
-title: TN0006 - Using Unmanaged Federation
+title: Using unmanaged federation
 id: TN0006
 tags: [federation, gateway]
 ---
 
-[Managed Federation]([https://www.apollographql.com/docs/federation/managed-federation/overview/](https://www.apollographql.com/docs/federation/managed-federation/overview/)) is, in short, a way to run a federated graph utilizing Apollo Studio to provide the necessary supergraph file to your Apollo Gateway or Router using [Apollo Uplink](https://www.apollographql.com/docs/federation/managed-federation/uplink/). Unmanaged Federation, on the other hand, is running a federated graph without the use of [Apollo Uplink](https://www.apollographql.com/docs/federation/managed-federation/uplink/), which requires additional work to support effectively. If you are considering running an unmanaged federated graph, there are a few considerations to keep in mind when doing so.
+With [managed federation](/federation/managed-federation/overview/), your federated supergraph's gateway or router automatically fetches its composed supergraph schema from Apollo. If your supergraph _doesn't_ use managed federation, you need to compose the supergraph schema and provide it to your gateway via another mechanism. This article describes options and considerations for that process.
 
-### Graph Composition
+## Composing the supergraph schema
 
-There are a few ways to compose your supergrpah that will allow you to use it with your Apollo Gateway or Router, two of which are discussed below. 
+Options for composing your supergraph schema _besides_ managed federation are described below.
 
-#### Build Status Webhook
+### Build status webhook
 
-This approach uses the [Build Status Webhook](https://www.apollographql.com/docs/studio/build-status-notification) to trigger a redeployment of a Gateway or Router by updating on successful builds with a pre-composed supergraph file provided by Apollo Studio. The payload of the webhook contains a URL to fetch the supergraph file necessary, and can be used to download the supergraph file. 
+This approach uses the [build status webhook](/studio/build-status-notification) to trigger redeployment of a gateway or router by updating on successful builds with a composed supergraph schema provided by Apollo Studio. The payload of the webhook contains a URL to download the composed schema. 
 
 The advantage of this approach is that you have a confirmed build that composes successfully, however an important note is that this is _prior_ to any schema checks being run. This means you should have [Rover run a schema check as part of a CI/CD pipeline](https://www.apollographql.com/docs/rover/commands/subgraphs/#checking-subgraph-schema-changes).
 
-#### Local Composition
+### Local composition
 
-When running Unmanaged Federation you can leverage [Rover]([https://www.apollographql.com/docs/rover/](https://www.apollographql.com/docs/rover/)) to build the supergraph as part of a larger CI/CD pipeline in order to then be used by your Apollo Gateway or Router, similar to the above. 
+You can use the [Rover CLI](/rover/) to compose your supergraph schema as part of your CI/CD pipeline. You then provide this schema directly to your gateway or router.
 
 The process for setting this up can vary depending on CI tooling, but you'll need to leverage `rover supergraph compose` to build the supergraph GraphQL file from a configuration file. Additionally, you'll need to:
 
@@ -39,21 +39,23 @@ For more information on how to accomplish this, see:
 - [https://www.apollographql.com/docs/rover/commands/supergraphs#supergraph-compose](https://www.apollographql.com/docs/rover/commands/supergraphs#supergraph-compose)
 - [https://www.apollographql.com/docs/federation/quickstart/local-composition](https://www.apollographql.com/docs/federation/quickstart/local-composition)
 
-### Using the Supergraph File
+## Providing a composed supergraph schema
 
-Similar to getting the supergraph composed, there are a number of ways to approach updating the supergraph in your Gateway or Router. Three options are discussed below. 
+After you compose your supergraph schema, there are a few different ways to provide that file to your gateway or router:
 
-#### Restarting Gateway/Router
+### Restart the gateway/router (not recommended)
 
-The simplest option is to simply restart your Gateway or Router processes. If you passed the file into the instances via a build process (such as a Docker image), you can redeploy to take effect. This isn't recommended as there are ways to avoid any redeployments, discussed below.
+The most straightforward option is to restart all of your gateway or router instances. If you pass your supergraph schema file to these instances via a build process (such as a Docker image), you can redeploy for your changes to take effect.
 
-#### Hot Reloading
+This method is _not_ recommended, because the restart causes downtime for your supergraph. The methods described above can update your supergraph schema _without_ requiring redeployment.
 
-**If you are using the Router, you can use the `--hr` flag to enable hot reloading natively; no further configuration is needed**
+### Hot reloading
+
+**If you're using the Apollo Router,** you can enable hot reloading by passing the `--hr` option to the `router` executable. No other configuration is required.
 
 The flip of restarting processes in Gateway is to enable hot reloading the file using a simple watcher. 
 
-For example, if you're using Docker you can pass in the file as a mounted volume such as the below where the local supergraph file is mounted to `/etc/config/supergraph.graphql` for the Gateway to use. 
+For example, if you're using Docker, you can pass the supergraph schema file as a mounted volume. In the following example, the supergraph schema is mounted to `/etc/config/supergraph.graphql`:
 
 ```Dockerfile
 version: '3'
@@ -66,7 +68,7 @@ services:
     ports:
 ```
 
-Once you've passed the file to the instances, you'll want to make sure to use the `supergraphSdl` option in Gateway to hot reload the graph. An example of this would be below, which uses `chokidar` to watch for file updates. 
+After you make the schema file available to your gateway instances, pass a function to the `supergraphSdl` option of your `ApolloGateway` constructor that enables the gateway to hot reload the schema. The example function below uses the `chokidar` library to watch for file updates:
 
 To simplify the code example, the `ApolloGateway` options now accepts a `supergaphSdl` property. This property can either be a string, or it can be a function that allows for updating the supergraph during runtime as shown below.  
 
@@ -109,10 +111,10 @@ server.listen().then(({ url }) => {
 });
 ```
 
-For more information on this approach, we recommend [checking out the Gateway docs to learn more](https://github.com/apollographql/federation/blob/main/docs/source/gateway.mdx#updating-the-supergraph-schema) including further steps to harden the implementation. 
+For more information on this approach, [see the Apollo Gateway docs](/federation/gateway.mdx#updating-the-supergraph-schema).
 
-#### Custom SupergraphManager
+### Custom `SupergraphManager`
 
-Lastly, if you have complex logic that would be better suited for a seperate class (for example, listening to an AWS Simple Notification Service (SNS) topic), you can create a custom implementation of the `SupergraphManager` class to be passed to the `supergraphSdl` option described earlier. 
+If you have complex logic that's be better suited to its own class (for example, listening to an AWS Simple Notification Service (SNS) topic), you can create a custom implementation of the `SupergraphManager` class to pass to the `supergraphSdl` option.
 
-This option provides the most customizability, but comes at the cost of writing additional code- however the interface for writing the class is extremly simple. For an example, [see the Uplink implementation of `SupergraphManager` on how to do so](https://github.com/apollographql/federation/blob/main/gateway-js/src/supergraphManagers/UplinkSupergraphManager/index.ts). 
+This option provides the most customizability, but it also requires writing additional code. For an example, [see the Uplink implementation of `SupergraphManager`](https://github.com/apollographql/federation/blob/main/gateway-js/src/supergraphManagers/UplinkSupergraphManager/index.ts). 
