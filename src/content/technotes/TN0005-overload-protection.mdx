@@ -1,42 +1,41 @@
 ---
-title: TN0005 - Overload Protection
+title: TN0005 - Overload protection
 tags: [server, router, sre]
 ---
 
-Overload protection is a type of protection for your server to ensure it does not become unavaible when put under a large amount of load. Simplified, overload protection is where a service watches its resource usage and metrics, and when it notices the server may have difficulties serving a request (for example running out of memory (OOM)), it sheds incoming traffic until it's healthy again.
+A GraphQL server can implement **overload protection** to help it remain available while under high load. With overload protection, a server monitors its resource usage and begins shedding incoming traffic whenever that usage approaches a performance-degrading limit (such as running out of memory).
 
-As the usage and size of your supergraph grow, the additional load created by creating new paths can be unexpectedly intense. Overload protection is one way to minimize the effects of an unintended or organic increase in pressure.
+As you add capabilities and users to your supergraph, you might introduce new usage patterns that add unexpectedly high load. Overload protection helps reduce the impact of these spikes while you optimize your supergraph to eliminate them entirely.
 
-Instead of using load as a handwavy term for when something happens, let use some concrete examples of things that could cause this "load."
+## Example scenarios
 
-One of the easiest ones to describe is the [thundering herd problem](https://en.wikipedia.org/wiki/Thundering_herd_problem), which is when a number of processes/clients attempt to access limited computer resources. A multitude of different things can cause this, for example:
+A common source of overload in a system is the [thundering herd problem](https://en.wikipedia.org/wiki/Thundering_herd_problem), where a large number of processes or clients attempt to access limited computer resources. Many scenarios can cause this, for example:
 
-- Pod failures in Kubernetes that cause a smaller amount of pods to handle the same amount of traffic
-- Push notifications/marketing events that drive traffic to the applications in a short period
-- Features deployed that increase the load on the graph more than expected
+- Pod failures in Kubernetes cause a smaller amount of pods to handle the same amount of traffic.
+- A marketing campaign or viral social media post drives high traffic to an application in a short period.- A newly deployed feature introduces more load on the graph than expected.
 
 A more graph-based problem is adding a entity relationship in the schema that causes a significant increase in traffic. For example in the [Star Wars schema](https://studio.apollographql.com/public/star-wars-swapi/home?variant=current), imagine if there was no link from `Person` to `Film`(though `PersonFilmsConnection`) and it was added today. Until the usage of that new connection in the schema flattens out, every deployment or event that causes traffic could cause a large amount of new load directly attributed to the change for the owner of the `Film` entity.
 
-The last type of load-generating events to talk about are organic stress events. These are events that happen outside your company's control and cause excess stress on your system. An easy example of this can be found when examining online stores. Say someone with many Twitter followers tweets your store's page with an item they like. Their followers will flood this page, causing an organic increase in pressure in the system.
+## Implementing in Express
 
-## Now, what do we do about this?
+Overload protection packages are available for most popular languages and server frameworks. For example, we'll look at using the [overload-protection](https://www.npmjs.com/package/overload-protection) package with `apollo-server-express`. This drop-in package enables your server to return a 503 based any of the following:
 
-Most languages have some type of drop-in protection against this increase in pressure through a package; Node is no exception. For example, we'll look at one package named [overload-protection](https://www.npmjs.com/package/overload-protection) alongside `express`. This drag and drop package allows one to return a 503 based on the current event loop delay, the amount bytes used by the heap, and the amount of bytes used by Resident Set Size (RSS).
+- The current event loop delay
+- The amount of bytes used by the heap
+- The amount of bytes used by Resident Set Size (RSS).
 
-To use `overload-protection`, you'll include it in your express startup like this:
+To use `overload-protection`, you include it in your Express startup like so:
 
 ```js
-const app = require("express")();
-const protect = require("overload-protection")("express");
+const app = require('express')();
+const protect = require('overload-protection')('express');
 app.use(protect);
 ```
 
-## Use With Apollo Server Express
-
-If you're using `apollo-server-express`, you can add `overload-protection` via `express` middleware by adding the highlighted lines to your server creation:
+If you're using `apollo-server-express`, you can add `overload-protection` via Express middleware by adding the highlighted lines to your server creation:
 
 ```js {1,5}
-const protect = require("overload-protection")("express");
+const protect = require('overload-protection')('express');
 
 async function startApolloServer(typeDefs, resolvers) {
   const app = express();
@@ -46,7 +45,7 @@ async function startApolloServer(typeDefs, resolvers) {
     typeDefs,
     resolvers,
     csrfPrevention: true,
-    cache: "bounded",
+    cache: 'bounded',
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
   });
 
@@ -57,16 +56,23 @@ async function startApolloServer(typeDefs, resolvers) {
 }
 ```
 
-This approach and additions also work if you are using the `@apollo/subgraph` to create your subgraphs in a similar way. Overload protection is not specific to GraphQL, so it's best to handle it outside of Apollo software. If you are running `apollo-server` instead, we have a guide on how to change to `apollo-server-express` from `apollo-server` to allow the use of additional `express` middleware. The guide can be found [here](https://www.apollographql.com/docs/apollo-server/integrations/middleware#swapping-out-apollo-server).
+This approach also works if you're using the `@apollo/subgraph` library to create your subgraphs in a similar way.
 
-## Does this belong on the Router/Gateway or Subgraph?
+Overload protection is not specific to GraphQL, so it's best to handle it outside of Apollo software. If you're currently using the batteries-included `apollo-server` library instead of `apollo-server-express`, [learn how to swap over](/apollo-server/integrations/middleware#swapping-out-apollo-server).
 
-The short answer is both, for different reasons. The router to allow to protect the overall availability of the graph. A subgraph should have overload protection to reduce the error rates of queries that include data from that specific subgraph.
+## Protecting a supergraph
 
-### Router/Gateway
+hen adding overload protection to a supergraph, a reasonable question is, "Do I add protection to my gateway/router, or to my individual subgraphs?" The short answer is "both":
 
-The main concern with the gateway is a build-up of pressure causing partial or cascading failures. If the gateway cannot properly shed the load placed on it, it will start to cause degraded performance. This happens due to a build-up of requests in the gateway. A single request to the gateway can turn into many requests to subgraphs. This expansion of requests can cause stress inside the gateway. When load creates this pressure, overload protection on the gateway can save your service from entirely falling over. This looks like a minor dip in availability vs. a total outage.
+- Protecting the router protects the availability of the supergraph as a whole.
+- Protecting a subgraph reduces the error rate for queries that request data from that subgraph.
 
-### Subgraph
+### Gateway/Router
 
-A failure at the subgraph can cause a backup in the gateway. If this backup is due to load, overload protection becomes a way to short circuit the return of an error. This relieves the pressure in the gateway and the subgraph by allowing the gateway to return with errors faster.
+The main concern with the gateway is a buildup of requests that cause partial or cascading failures. If the gateway can't shed excessive load, its performance starts to degrade.
+
+A single request to the gateway usually transforms into multiple requests to subgraphs, which can increase load more than expected for complex queries. In such cases, overload protection in the gateway can save it from falling over entirely. This looks like a temporary dip in availability instead of a total outage.
+
+### Subgraphs
+
+A failure in a subgraph can cause a backup in the gateway. If this backup is due to load, overload protection helps short-circuit the return of an error. This relieves the pressure in both the gateway and the subgraph by allowing the gateway to return errors faster.
