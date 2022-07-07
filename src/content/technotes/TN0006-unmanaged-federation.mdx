@@ -1,0 +1,57 @@
+---
+title: TN0006 - Using Unmanaged Federation
+id: TN0006
+tags: [federation, gateway]
+---
+
+[Managed Federation]([https://www.apollographql.com/docs/federation/managed-federation/overview/](https://www.apollographql.com/docs/federation/managed-federation/overview/)) is, in short, a way to run a federated graph through Apollo Studio which provides a number of benefits (which are covered in the link above). Unmanaged Federation, on the other hand, is running a federated graph outside of Apollo Studio, which means you lose most of those benefits as well as requiring additional work to support it. If you are considering running an unmanaged federated graph, there are a few considerations to keep in mind when doing so.
+
+### Graph Composition
+
+When running Unmanaged Federation, Apollo no longer builds your supergraph for you; instead, you'll need to leverage [Rover]([https://www.apollographql.com/docs/rover/](https://www.apollographql.com/docs/rover/)) to build the supergraph as part of a larger CI/CD pipeline in order to then be used by your Apollo Gateway or Router. 
+
+The process for setting this up can vary depending on CI tooling, but you'll need to leverage `rover supergraph compose` to build the supergraph GraphQL file from a configuration file.
+
+To run the `rover supergraph compose` command, you'll need access to each subgraph's schema SDL. There are a few ways to do this: 
+
+- Leveraging `rover subgraph introspect` to pull the schema via introspection
+- Pulling the schema from a version control service, such as Github or Gitlab
+
+Once you have the SDL for each subgraph you run, you will then need to update the supergraph file on your Apollo Gateway or Router via a deployment and restart. 
+
+For more information on how to accomplish this, see: 
+
+- [https://www.apollographql.com/docs/rover/commands/supergraphs#supergraph-compose](https://www.apollographql.com/docs/rover/commands/supergraphs#supergraph-compose)
+- [https://www.apollographql.com/docs/federation/quickstart/local-composition](https://www.apollographql.com/docs/federation/quickstart/local-composition)
+
+### Metrics
+
+One of the big benefits of using Managed Federation (via Apollo Studio) is the ability to leverage GraphQL-tailored metrics to provide a clear insight into your graph's health and overall usage. 
+
+When running Unmanaged Federation, you lose the ability to send metrics to Apollo Studio, and as a result, lose some of that visibility when not running additional software to capture those metrics and store them. 
+
+Unlike REST where monitoring only request rates can provide insight into usage, GraphQL requires further information to fully understand what the client is requesting (and *isn't* requesting). 
+
+Information like:
+
+- Query, Mutation, and Field usage
+- Field timings and traces
+- Error breakdowns
+
+Help owners of their graph make intelligent, informed decisions about what to add or remove from their graph and make safe changes along the way. 
+
+To do this in an Unmanaged Federation setup, it is likely that you'll have to write custom logic within your resolvers to report metrics that would need custom logic to be usable.
+
+### Schema Checks
+
+In addition to composing the files, you also lose the ability to run [Schema Checks]([https://www.apollographql.com/docs/studio/schema-checks/](https://www.apollographql.com/docs/studio/schema-checks/)) during composition. Due to not sending metrics to Apollo Studio, you no longer can easily validate changes to your schema easily without additional tooling to support graph-specific metrics. 
+
+In effect, this means that your  changes can't be validated to not break existing clients- for example, removing a field on a type that is commonly queried. This can lead to potential outages if not properly validated prior to deployment. 
+
+### Additional Considerations
+
+Beyond simply running your graph, you lose out on other benefits of a Managed Federation setup: 
+
+- An Embeddable Apollo Explorer that uses your current valid schema
+- Contracts
+- Schema changelogs
