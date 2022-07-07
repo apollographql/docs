@@ -4,7 +4,7 @@
   "sidebar": {
     "Home": "/",
     "TN0001 - Client ID enforcement": "/TN0001-client-id-enforcement",
-    "TN0002 - Schema Naming Conventions": "/TN0002-schema-naming-conventions",
+    "TN0002 - Schema naming conventions": "/TN0002-schema-naming-conventions",
     "TN0003 - Connecting OpenTelemetry traces to Prometheus": "/TN0003-opentelemetry-traces-to-prometheus",
     "TN0005 - Overload Protection": "/TN0005-overload-protection"
   }
