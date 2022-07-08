@@ -113,6 +113,58 @@ If you have complex logic that's be better suited to its own class (for example,
 
 This option provides the most customizability, but it also requires writing additional code. For an example, [see the Uplink implementation of `SupergraphManager`](https://github.com/apollographql/federation/blob/main/gateway-js/src/supergraphManagers/UplinkSupergraphManager/index.ts). 
 
+If we were to write the same file watcher function as above as a `SupergraphManager`, it would look like: 
+
+```ts
+import { SupergraphManager } from '@apollo/gateway';
+import { SupergraphSdlHookOptions } from '@apollo/gateway/dist/config';
+import * as chokidar from 'chokidar';
+import {readFile} from 'fs/promises';
+
+export class FileWatcherManager implements SupergraphManager {
+    private filename: string; 
+
+    constructor({
+        filename,
+    }:{
+        filename: string
+    }){
+        this.filename = filename
+    }
+    
+    public async initialize({ update, healthCheck }: SupergraphSdlHookOptions) {
+        let watcher = chokidar.watch(this.filename)
+
+        watcher.on('change', async ()=>{
+            try {
+                const updatedSupergraph = await readFile(this.filename, 'utf-8');
+                // optional health check update to ensure our services are responsive
+                await healthCheck(updatedSupergraph);
+                // update the supergraph schema
+                update(updatedSupergraph);
+            } catch (e) {
+                // handle errors that occur during health check or while updating the supergraph schema
+                console.error(e);
+            }
+        });
+        
+        return {
+            supergraphSdl: await readFile(this.filename, 'utf-8'),
+            cleanup: async () => {
+                await watcher.close()
+            },
+          };
+    }   
+}
+```
+
+And to use it, you will instantiate it for the `sueprgraphSdl` property. For example:
+```ts
+const gateway = new ApolloGateway({
+    supergraphSdl: new FileWatcherManager({filename: './supergraph.graphql'})
+})
+```
+
 ### Restart the gateway/router (not recommended)
 
 The most straightforward option is to restart all of your gateway or router instances. If you pass your supergraph schema file to these instances via a build process (such as a Docker image), you can redeploy for your changes to take effect.
