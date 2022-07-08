@@ -48,7 +48,7 @@ You should avoid relying on deprecated releases or features whenever possible.
 
 ### Experimental features
 
-An experimental feature is in very volatile, active development. The feature is not feature-complete, and breaking API changes are possible between individual versions. An experimental feature can exist in any of the release stages defined above and should be used cautiously and for testing purposes only. An experimental feature may be temporary and removed at any point without notice.
+An experimental feature is in active development. The feature may not be feature-complete, and breaking API changes are possible between individual versions. An experimental feature can exist in any of the release stages defined above and should be used cautiously. An experimental feature may be temporary and removed at any point without notice.
 
 ## Cloud release stages
 
