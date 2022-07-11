@@ -14,30 +14,30 @@ Options for composing your supergraph schema _besides_ managed federation are de
 
 This approach uses the [build status webhook](/studio/build-status-notification) to trigger redeployment of a gateway or router by updating on successful builds with a composed supergraph schema provided by Apollo Studio. The payload of the webhook contains a URL to download the composed schema. 
 
-The advantage of this approach is that you have a confirmed build that composes successfully, however an important note is that this is _prior_ to any schema checks being run. This means you should have [Rover run a schema check as part of a CI/CD pipeline](https://www.apollographql.com/docs/rover/commands/subgraphs/#checking-subgraph-schema-changes).
+The advantage of this approach is that you have a confirmed build that composes successfully. However, the webhook notification is sent _before_ operation checks are run against your historical operation data. This means you should [run schema checks with Rover as part of your CI/CD pipeline](/rover/commands/subgraphs/#checking-subgraph-schema-changes).
 
 ### Local composition
 
 You can use the [Rover CLI](/rover/) to compose your supergraph schema as part of your CI/CD pipeline. You then provide this schema directly to your gateway or router.
 
-The process for setting this up can vary depending on CI tooling, but you'll need to leverage `rover supergraph compose` to build the supergraph GraphQL file from a configuration file. Additionally, you'll need to:
+The process for setting this up can vary depending on your CI tooling, but you always use `rover supergraph compose` to build the supergraph schema from a configuration file. Additionally, you need to:
 
-- Track all subgraphs and routing URLs
+- Keep track of all your subgraphs and their routing URLs
 - Be able to trigger the build on any new updates to any subgraphs
 
-You can use the [Build Status Webhook](https://www.apollographql.com/docs/studio/build-status-notification) to do so if you want to leverage Apollo Studio, but would prefer to build locally.
+You can use the [build status webhook](/studio/build-status-notification) to track this information if you want to use Apollo Studio but prefer performing composition locally.
 
-To run the `rover supergraph compose` command, you'll need access to each subgraph's schema SDL. There are a few ways to do this: 
+To run the `rover supergraph compose` command, you need access to each subgraph's schema SDL. There are a few ways to do this: 
 
-- Leveraging `rover subgraph introspect` to pull the schema via introspection
-- Pulling the schema from a version control service, such as Github or Gitlab
+- Use the `rover subgraph introspect` command to fetch subgraph schemas via introspection
+- Fetch subgraph schemas from a version control service, such as Github or Gitlab
 
-As with the above [Build Status Webhook section](#build-status-webhook), you should be cognizant to use [Rover to run a schema check as part of a CI/CD pipeline](https://www.apollographql.com/docs/rover/commands/subgraphs/#checking-subgraph-schema-changes) or during build time to ensure the changes are not going to break clients. 
+As described in the [Build status webhook section](#build-status-webhook), make sure to use [run schema checks in your CI/CD pipeline](/rover/commands/subgraphs/#checking-subgraph-schema-changes) or during build time to verify that any changes won't break existing clients. 
 
 For more information on how to accomplish this, see: 
 
-- [https://www.apollographql.com/docs/rover/commands/supergraphs#supergraph-compose](https://www.apollographql.com/docs/rover/commands/supergraphs#supergraph-compose)
-- [https://www.apollographql.com/docs/federation/quickstart/local-composition](https://www.apollographql.com/docs/federation/quickstart/local-composition)
+- [The `rover supergraph compose` command](/rover/commands/supergraphs#supergraph-compose)
+- [The federation quickstart](/federation/quickstart/local-composition)
 
 ## Providing a composed supergraph schema
 
@@ -64,7 +64,7 @@ services:
 
 After you make the schema file available to your gateway instances, pass a function to the `supergraphSdl` option of your `ApolloGateway` constructor that enables the gateway to hot reload the schema. The example function below uses the `chokidar` library to watch for file updates:
 
-To simplify the code example, the `ApolloGateway` options now accepts a `supergaphSdl` property. This property can either be a string, or it can be a function that allows for updating the supergraph during runtime as shown below.  
+In the code above, the `ApolloGateway` is passed a `supergaphSdl` property. This property can be a string (for a supergraph schema that _never_ changes), or it can be a function that enables updating the schema during runtime as shown.  
 
 ```js
 const { ApolloServer } = require('apollo-server');
@@ -158,7 +158,8 @@ export class FileWatcherManager implements SupergraphManager {
 }
 ```
 
-And to use it, you will instantiate it for the `sueprgraphSdl` property. For example:
+To use your custom `SupergraphManager`, you instantiate it and pass it as the `sueprgraphSdl` property, like so:
+
 ```ts
 const gateway = new ApolloGateway({
     supergraphSdl: new FileWatcherManager({filename: './supergraph.graphql'})
@@ -169,4 +170,4 @@ const gateway = new ApolloGateway({
 
 The most straightforward option is to restart all of your gateway or router instances. If you pass your supergraph schema file to these instances via a build process (such as a Docker image), you can redeploy for your changes to take effect.
 
-This method is _not_ recommended, because the restart causes downtime for your supergraph. The methods described above can update your supergraph schema _without_ requiring redeployment.
+**This method is _not_ recommended,** because the restart causes downtime for your supergraph. The methods described above can update your supergraph schema _without_ requiring redeployment.
