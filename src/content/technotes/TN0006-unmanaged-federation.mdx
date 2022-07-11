@@ -18,6 +18,8 @@ The advantage of this approach is that you have a confirmed build that composes 
 
 ### Local composition
 
+**If you're using [Contracts](/docs/studio/contracts/)**, local composition cannot be used. Instead, use the [build status webhook](#build-status-webhook) as described above.
+
 You can use the [Rover CLI](/rover/) to compose your supergraph schema as part of your CI/CD pipeline. You then provide this schema directly to your gateway or router.
 
 The process for setting this up can vary depending on your CI tooling, but you always use `rover supergraph compose` to build the supergraph schema from a configuration file. Additionally, you need to:
