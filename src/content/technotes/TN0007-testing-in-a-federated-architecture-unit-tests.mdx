@@ -3,31 +3,31 @@ title: Testing in a Federated Architecture
 tags: [server, router, testing]
 ---
 
-Testing in a federated architecture has three general parts: unit testing, integration testing and compisition testing.
+Testing in a federated architecture has three general parts: unit testing, integration testing, and composition testing.
 
 ## Unit testing
 
-We recommend unit testing all your resolvers. When unit testing your resolvers we recommend mocking as much of the data as possible using something like [`@faker-js/faker`](https://www.npmjs.com/package/@faker-js/faker). This package allows you to use realistic fake data when mocking inputs and outputs.
+We recommend unit testing all your resolvers. When unit testing your resolvers, we recommend mocking as much of the data as possible using something like [`@faker-js/faker`](https://www.npmjs.com/package/@faker-js/faker). This package allows you to use realistic fake data when mocking inputs and outputs.
 
 ### `__resolveReference`
 
-A [`__resolveReference`](https://www.apollographql.com/docs/federation/entities/#2-define-a-reference-resolver) warrents a spesfic call out in a federated architecture. A `__resolveReference` is how subgraphs comunicate, making testing this code very important.
+A [`__resolveReference`](https://www.apollographql.com/docs/federation/entities/#2-define-a-reference-resolver) warrants a specific call out in a federated architecture. A `__resolveReference` is how subgraphs communicate, making testing this code very important.
 
 ## Integration testing
 
-When doing integration tests please consider the following:
+When doing integration tests, please consider the following:
 
-- Operations should be pulled from current live quries
-  - The best way to look at the operations that are currently going though your graph and useing thouse operations for testing.
+- Operations should be pulled from current live queries
+  - Our recommended way is to look at the operations currently going through your graph and using those operations for testing.
   - Current queries can be pulled from Apollo studio's API.
-- Random test quries/mutations should be avoided
-  - Random tests end up testing paths that are not relistic. We suggest pulling the quries from studio insted of using random queries.
-- Cardinailty should be concidered
-  - When running tests, spesfically intergrations test, low cardinailty tests end up hitting caches. The best way to avoid caches is have a high cardinailty in the variables used. One of the ways we recommend to help midigate the problem is using as many query/mutation variables as possible. This allows for easy changeing of inputs.
+- Random test queries/mutations should be avoided
+  - Random tests end up testing paths that are not realistic. We suggest pulling the queries from Apollo studio instead of using arbitrary queries.
+- Cardinality should be considered
+  - When running tests, specifically integration tests, low cardinality tests hit caches. The best way to avoid caches is to have a high cardinality in the variables used. We recommend mitigating the problem by using as many variables in your queries/mutations as possible. This allows for easy changing of inputs.
 
 ### `__resolveReference` and integrations testing subgraphs
 
-In a subgraph, you may not start from the query node depending on your schema. The integration tests in this situation involves mimicing what the gateway/router. You can execute a query against `_entities` to do integration tests. This looks like the following:
+Depending on your schema, you may not start from the query node in a subgraph. The integration tests in this situation involves mimicking the gateway/router. You can execute a query against `_entities` to do integration tests. This looks like the following:
 
 ```js
 const query = `query GetEntities($representations: [_Any!]!) {
@@ -39,6 +39,6 @@ const query = `query GetEntities($representations: [_Any!]!) {
 }`;
 ```
 
-## Compisition testing
+## Composition testing
 
-Compisiton testing is spesfic to federated architectures. It involves testing that your graph will compose and handle the queries that are currently sent to it by clients. This is handled though [rover](https://www.apollographql.com/docs/rover/). These checks are done by running the [`rover subgraph check`](https://www.apollographql.com/docs/rover/commands/subgraphs#checking-subgraph-schema-changes) command. This is best place in your CI/CD pipeline.
+Composition testing is specific to federated architectures. It involves testing that your graph will compose and handle the queries that are currently sent to it by clients. This is handled through [rover](https://www.apollographql.com/docs/rover/). These checks are done by running the [`rover subgraph check`](https://www.apollographql.com/docs/rover/commands/subgraphs#checking-subgraph-schema-changes) command. This is best in your CI/CD pipeline.
