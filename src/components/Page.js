@@ -339,7 +339,8 @@ export default function Page({file, pageContext, uri}) {
                 code: {
                   bg: 'none',
                   p: 0,
-                  color: 'secondary'
+                  color: 'secondary',
+                  whiteSpace: 'normal'
                 }
               },
               '>': {
