@@ -4,3 +4,4 @@
 /TN0002 /technotes/TN0002-schema-naming-conventions
 /TN0003 /technotes/TN0003-opentelemetry-traces-to-prometheus
 /TN0004 /technotes/TN0004-router-authentication
+/TN0008 /docs/technotes/TN0008-production-readiness-checklist
