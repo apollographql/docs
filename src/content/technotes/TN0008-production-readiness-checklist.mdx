@@ -14,6 +14,7 @@ Before you start to take on production traffic from your clients, we'd recommend
   - If using an Apollo Client library, add the name and version to the constructor 
     - For example, the [React client uses the `name` and `version` attributes](/react/api/core/ApolloClient#name)in the constructor options
   - If using a third-party GraphQL client, set the `apollographql-client-name` and `apollographql-client-version` headers on the request to identify your client
+  - For an example of enforcing this as a requirement at the Gateway, see [this technote for Client ID enforcement](/technotes/TN0001-client-id-enforcement/) 
   
 ## Server-side
 - Turn off introspection for your production servers
@@ -26,9 +27,10 @@ Before you start to take on production traffic from your clients, we'd recommend
   - Apollo Server and Apollo Router have support for [Automatic Persisted Queries (APQ)](/apollo-server/performance/apq/) out of the box
     - If using an Apollo Client, make sure to enable APQ support
     - If using Apollo Server, ensure you use a [distributed caching system](/apollo-server/performance/cache-backends) for APQ in production to avoid cache inconsistency across server instances
+    - Utilizing the [`@cacheControl` directive](/apollo-server/api/plugin/cache-control) can allow your CDN to cache APQ GET requests using the `Cache-Control` header
     - Additionally, you can have your Apollo Gateway send APQ requests
       - See [the example below](#apollo-gateway-apq-example) for an example of how to configure this
-  - [Full response caching](/apollo-server/performance/caching/) can be introduced to enable CDN caching abilities
+  - [Full response caching](/apollo-server/performance/caching/) can be introduced to improve performance out of the box
 - Ensure you've load tested your graph
   - This should be done with a load representative of your current traffic. Operations that will be used in production can be used in the load testing
   - To investigate performance issues, identify which operations are performing slowly using Apollo Studio
@@ -39,7 +41,7 @@ Before you start to take on production traffic from your clients, we'd recommend
 
 ### Apollo Gateway APQ example
 
-This example uses both the [`buildService`](/federation/api/apollo-gateway/#buildservice) option and the [`RemoteGraphQLDataSource`](/federation/api/apollo-gateway/#apq) class to enable APQ to each subgrpah.
+This example uses both the [`buildService`](/federation/api/apollo-gateway/#buildservice) option and the [`RemoteGraphQLDataSource`](/federation/api/apollo-gateway/#apq) class to enable APQ to each subgraph.
 
 ```js
 const { ApolloServer } = require('apollo-server');
@@ -49,7 +51,7 @@ const { readFileSync } = require('fs');
 const gateway = new ApolloGateway({
   supergraphSdl: readFileSync("./supergraph.graphql").toString(),
   buildService: ({url})=>{
-    return new RemoteGraphQLDataSource({url, apq:false})
+    return new RemoteGraphQLDataSource({url, apq: true})
   }
 });
 
