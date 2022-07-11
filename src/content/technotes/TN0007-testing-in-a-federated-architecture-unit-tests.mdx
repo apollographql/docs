@@ -1,79 +1,44 @@
 ---
-title: Overload protection
-tags: [server, router, sre]
+title: Testing in a Federated Architecture
+tags: [server, router, testing]
 ---
 
-A GraphQL server can implement **overload protection** to help it remain available while under high load. With overload protection, a server monitors its resource usage and begins shedding incoming traffic whenever that usage approaches a performance-degrading limit (such as running out of memory).
+Testing in a federated architecture has three general parts: unit testing, integration testing and compisition testing.
 
-As you add capabilities and users to your supergraph, you might introduce new usage patterns that add unexpectedly high load. Overload protection helps reduce the impact of these spikes while you optimize your supergraph to eliminate them entirely.
+## Unit testing
 
-## Example scenarios
+We recommend unit testing all your resolvers. When unit testing your resolvers we recommend mocking as much of the data as possible using something like [`@faker-js/faker`](https://www.npmjs.com/package/@faker-js/faker). This package allows you to use realistic fake data when mocking inputs and outputs.
 
-A common source of overload in a system is the [thundering herd problem](https://en.wikipedia.org/wiki/Thundering_herd_problem), where a large number of processes or clients attempt to access limited computer resources. Many scenarios can cause this, for example:
+### `__resolveReference`
 
-- Pod failures in Kubernetes cause a smaller amount of pods to handle the same amount of traffic.
-- A marketing campaign or viral social media post drives high traffic to an application in a short period.
-- A newly deployed feature introduces more load on the graph than expected.
+A [`__resolveReference`](https://www.apollographql.com/docs/federation/entities/#2-define-a-reference-resolver) warrents a spesfic call out in a federated architecture. A `__resolveReference` is how subgraphs comunicate, making testing this code very important.
 
-A more graph-based problem is adding a entity relationship in the schema that causes a significant increase in traffic. For example in the [Star Wars schema](https://studio.apollographql.com/public/star-wars-swapi/home?variant=current), imagine if there was no link from `Person` to `Film`(though `PersonFilmsConnection`) and it was added today. Until the usage of that new connection in the schema flattens out, every deployment or event that causes traffic could cause a large amount of new load directly attributed to the change for the owner of the `Film` entity.
+## Integration testing
 
-## Implementing in Express
+When doing integration tests please consider the following:
 
-Overload protection packages are available for most popular languages and server frameworks. For example, we'll look at using the [overload-protection](https://www.npmjs.com/package/overload-protection) package with `apollo-server-express`. This drop-in package enables your server to return a 503 based any of the following:
+- Operations should be pulled from current live quries
+  - The best way to look at the operations that are currently going though your graph and useing thouse operations for testing.
+  - Current queries can be pulled from Apollo studio's API.
+- Random test quries/mutations should be avoided
+  - Random tests end up testing paths that are not relistic. We suggest pulling the quries from studio insted of using random queries.
+- Cardinailty should be concidered
+  - When running tests, spesfically intergrations test, low cardinailty tests end up hitting caches. The best way to avoid caches is have a high cardinailty in the variables used. One of the ways we recommend to help midigate the problem is using as many query/mutation variables as possible. This allows for easy changeing of inputs.
 
-- The current event loop delay
-- The amount of bytes used by the heap
-- The amount of bytes used by Resident Set Size (RSS).
+### `__resolveReference` and integrations testing subgraphs
 
-To use `overload-protection`, you include it in your Express startup like so:
+In a subgraph, you may not start from the query node depending on your schema. The integration tests in this situation involves mimicing what the gateway/router. You can execute a query against `_entities` to do integration tests. This looks like the following:
 
 ```js
-const app = require('express')();
-const protect = require('overload-protection')('express');
-app.use(protect);
+const query = `query GetEntities($representations: [_Any!]!) {
+  _entities(representations: $representations) {
+   ... on User {
+     firstName
+   }
+  }
+}`;
 ```
 
-If you're using `apollo-server-express`, you can add `overload-protection` via Express middleware by adding the highlighted lines to your server creation:
+## Compisition testing
 
-```js {1,5}
-const protect = require('overload-protection')('express');
-
-async function startApolloServer(typeDefs, resolvers) {
-  const app = express();
-  app.use(protect);
-  const httpServer = http.createServer(app);
-  const server = new ApolloServer({
-    typeDefs,
-    resolvers,
-    csrfPrevention: true,
-    cache: 'bounded',
-    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
-  });
-
-  await server.start();
-  server.applyMiddleware({ app });
-  await new Promise((resolve) => httpServer.listen({ port: 4000 }, resolve));
-  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);
-}
-```
-
-This approach also works if you're using the `@apollo/subgraph` library to create your subgraphs in a similar way.
-
-Overload protection is not specific to GraphQL, so it's best to handle it outside of Apollo software. If you're currently using the batteries-included `apollo-server` library instead of `apollo-server-express`, [learn how to swap over](/apollo-server/integrations/middleware#swapping-out-apollo-server).
-
-## Protecting a supergraph
-
-When adding overload protection to a supergraph, a reasonable question is, "Do I add protection to my gateway/router or to my individual subgraphs?" The short answer is "both":
-
-- Protecting the router protects the availability of the supergraph as a whole.
-- Protecting a subgraph reduces the error rate for queries that request data from that subgraph.
-
-### Gateway/Router
-
-The main concern with the gateway is a buildup of requests that cause partial or cascading failures. If the gateway can't shed excessive load, its performance starts to degrade.
-
-A single request to the gateway usually transforms into multiple requests to subgraphs, which can increase load more than expected for complex queries. In such cases, overload protection in the gateway can save it from falling over entirely. This looks like a temporary dip in availability instead of a total outage.
-
-### Subgraphs
-
-A failure in a subgraph can cause a backup in the gateway. If this backup is due to load, overload protection helps short-circuit the return of an error. This relieves the pressure in both the gateway and the subgraph by allowing the gateway to return errors faster.
+Compisiton testing is spesfic to federated architectures. It involves testing that your graph will compose and handle the queries that are currently sent to it by clients. This is handled though [rover](https://www.apollographql.com/docs/rover/). These checks are done by running the [`rover subgraph check`](https://www.apollographql.com/docs/rover/commands/subgraphs#checking-subgraph-schema-changes) command. This is best place in your CI/CD pipeline.
