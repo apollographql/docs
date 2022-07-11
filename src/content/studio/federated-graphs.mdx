@@ -174,7 +174,7 @@ In the **Schema > Reference** tab, you’ll also see a contact card when you hov
 />
 
 ## Schema tagging
-Annotating fields and types in your subgraphs with @tag directives can help document your API. You can enable these tags to pass through to your consumers in Schema Reference and Explorer by updating the build configuration for a variant.
+Annotating fields and types in your subgraphs with `@tag` directives can help document your API. You can enable these tags to pass through to your consumers in Schema Reference and Explorer by updating the build configuration for a variant.
 
 To annotate your schema, you first add `@tag` directives in your subgraphs for the fields and types you would like to document. 
 
@@ -196,6 +196,24 @@ You then need to update your graph’s configuration in Apollo Studio to permit 
 For supergraphs using federation version 1, you must first enable the @tag directives toggle on this settings page before you can enable the `@tag` passthrough toggle.
 
 Once you have enabled passthrough for your `@tag` directives for a variant, you can view directives inline with Schema Reference and Explorer.
+
+In the **Schema > Reference** tab, you will see tags inline with the identifier.
+
+<img
+  class="screenshot"
+  src="./img/federated-graphs/schema-reference-tag-passthrough.png"
+  alt="Studio screenshot showing tag directive in Schema Reference"
+  width="424"
+/>
+
+You will also see the tags in Explorer.
+
+<img
+  class="screenshot"
+  src="./img/federated-graphs/explorer-tag-passthrough.png"
+  alt="Studio screenshot showing tag directive in Schema Reference"
+  width="424"
+/>
 
 
 ## Federation support in the Explorer
