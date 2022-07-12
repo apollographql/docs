@@ -172,4 +172,4 @@ const gateway = new ApolloGateway({
 
 The most straightforward option for updating your supergraph schema is to restart all of your gateway or router instances. If you pass your supergraph schema file to these instances via a build process (such as a Docker image), you can redeploy for your changes to take effect.
 
-**This method is _not_ recommended,** because the restart causes downtime for your supergraph. The methods described above can update your supergraph schema _without_ requiring redeployment.
+**This method is _not_ recommended,** because the restart can potentially cause downtime for your supergraph. The methods described above can update your supergraph schema _without_ requiring redeployment.
