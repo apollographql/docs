@@ -173,6 +173,51 @@ In the **Schema > Reference** tab, you’ll also see a contact card when you hov
   width="388"
 />
 
+## Schema tagging
+
+In your subgraph schemas, you can use the `@tag` directive to tag a type or field with an arbitrary string value:
+
+```graphql {4} title="products.graphql"
+  type Product {
+  id: ID!
+  name: String!
+  codename: String! @tag(name: "internal")
+}
+```
+
+By default, these tags are _removed_ from the [API schema](/federation/federated-types/overview/#api-schema) that's generated as part of composition. This means that tag information _isn't visible_ to clients querying your supergraph.
+
+If tag information _should_ be visible to clients (for example, to help document your API), you can enable this for a variant in Studio with the following steps:
+
+
+1. Go to the **Settings** page for your variant in Apollo Studio. 
+2. On the **General** tab, click **Edit Configuration**. The Update Build Configuration dialog appears.
+3. If you have a Federation 1 supergraph, enable the toggle for the `@tag` directive under **Directives** (this step isn't necessary for Federation 2 supergraphs).
+4. Under **Build Settings**, enable the toggle labeled **Show all uses of @tag directives to consumers in Schema Reference and Explorer**.
+4. Click **Save**. 
+
+
+After you make your `@tag` directives visible, you can view them inline with both the Schema and Explorer tabs in Studio.
+
+In the **Schema > Reference** tab, tags are shown inline with each type and field:
+
+<img
+  class="screenshot"
+  src="./img/federated-graphs/schema-reference-tag-passthrough.png"
+  alt="Studio screenshot showing tag directive in Schema Reference"
+  width="600"
+/>
+
+Tags are also visible in the Explorer's Documentation tab:
+
+<img
+  class="screenshot"
+  src="./img/federated-graphs/explorer-tag-passthrough.png"
+  alt="Studio screenshot showing tag directive in Schema Reference"
+  width="424"
+/>
+
+
 ## Federation support in the Explorer
 
 The [Apollo Studio Explorer](./explorer/explorer/) provides enhanced support for working with federated graphs:
