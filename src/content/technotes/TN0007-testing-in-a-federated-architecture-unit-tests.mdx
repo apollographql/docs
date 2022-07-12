@@ -1,0 +1,72 @@
+---
+title: Testing in a federated architecture
+id: TN0007
+tags: [server, router, testing]
+---
+
+Comprehensively testing a federated supergraph requires all of the following:
+
+- [Composition testing](#composition-testing) for supergraph schema generation
+- [Unit testing](#unit-testing) in individual subgraphs
+- [Integration testing](#integration-testing) for the entire supergraph
+
+This article provides high-level guidance for each.
+
+## Composition testing
+
+Composition testing is specific to a federated architecture. It involves testing that your subgraph schemas successfully [compose into a supergraph schema](/federation/federated-types/composition/) that can resolve the operations sent by clients. You perform these tests with the [Rover CLI](/rover/), via the [`rover subgraph check`](/rover/commands/subgraphs#subgraph-check) command. We recommend performing this check in your CI/CD pipeline.
+
+## Unit testing
+
+We recommend creating unit tests for each of your subgraph resolvers. When doing so, we recommend mocking as much data as possible using a package like [`@faker-js/faker`](https://www.npmjs.com/package/@faker-js/faker). This package generates realistic fake data for mocking inputs and outputs.
+
+Using `@faker-js/faker` to mock a return value in `jest` looks something like the following:
+
+```js
+import { faker } from '@faker-js/faker';
+
+const testUser = {
+  userId: faker.datatype.uuid(),
+  username: faker.internet.userName(),
+  email: faker.internet.email(),
+  avatar: faker.image.avatar(),
+  password: faker.internet.password(),
+  birthdate: faker.date.birthdate(),
+  registeredAt: faker.date.past(),
+};
+
+const mockedFunction = jest.fn().mockReturnValue(testUser);
+```
+
+### Reference resolvers in unit tests
+
+The `__resolveReference` function (also known as a [reference resolver](/federation/entities/#2-define-a-reference-resolver) enables different subgraphs to resolve different fields of the same federated entity. Make sure to create unit tests for your reference resolvers, because they're vital to the successful execution of federated operations.
+
+## Integration testing
+
+Follow these best practices when creating integration tests for your supergraph:
+
+- Use example operations that are actually executed against your supergraph.
+  - You can view the details of recent operations in Apollo Studio.
+  - Avoid boilerplate or randomly generated operations, because these don't reflect actual traffic.
+  - If you are not in production yet, we suggest making these tests as close to what you think they will be as possible.
+- Use variables to ensure high operation cardinality.
+  - If your test operations don't use any GraphQL variables (or if you use the _same_ variable values across executions), your supergraph is likely to return cached data. This circumvents large portions of execution logic, limiting test effectiveness.
+  - By using a variety of operations and variable values, you help make sure that your tests result in minimal cache hits.
+
+### Reference resolvers in integration tests
+
+Depending on your schema, you may not start from the query node in a subgraph. The integration tests in this situation involves mimicking the gateway/router. You can execute [a query against `_entities`](/federation/federation-spec/#resolve-requests-for-entities) to do integration tests. This looks like the following:
+
+```js
+const query = `query GetEntities($representations: [_Any!]!) {
+  _entities(representations: $representations) {
+   ... on User {
+     firstName
+   }
+  }
+}`;
+``;
+```
+
+For more information, see [`Query._entities`](/federation/subgraphs#query_entities).

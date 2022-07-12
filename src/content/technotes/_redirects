@@ -1,7 +1,10 @@
 # Adds redirects from the TN number to the correct tech note
-# Note that the first paramater is relative, but the second is static, meaning it is /technotes/TN0001 -> /technotes/TN0001-client-id-enforcement
-/TN0001 /technotes/TN0001-client-id-enforcement
-/TN0002 /technotes/TN0002-schema-naming-conventions
-/TN0003 /technotes/TN0003-opentelemetry-traces-to-prometheus
-/TN0004 /technotes/TN0004-router-authentication
+# Note that the first paramater is relative, but the second is static, meaning it is /docs/technotes/TN0001 -> /docs/technotes/TN0001-client-id-enforcement
+/TN0001 /docs/technotes/TN0001-client-id-enforcement
+/TN0002 /docs/technotes/TN0002-schema-naming-conventions
+/TN0003 /docs/technotes/TN0003-opentelemetry-traces-to-prometheus
+/TN0004 /docs/technotes/TN0004-router-authentication
+/TN0005 /docs/technotes/TN0005-overload-protection
+/TN0006 /docs/technotes/TN0006-unmanaged-federation
+/TN0007 /docs/technotes/TN0007-testing-in-a-federated-architecture-unit-tests
 /TN0008 /docs/technotes/TN0008-production-readiness-checklist
