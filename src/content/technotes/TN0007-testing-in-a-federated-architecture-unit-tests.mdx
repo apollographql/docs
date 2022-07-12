@@ -27,7 +27,7 @@ When doing integration tests, please consider the following:
 
 ### `__resolveReference` and integration testing subgraphs
 
-Depending on your schema, you may not start from the query node in a subgraph. The integration tests in this situation involves mimicking the gateway/router. You can execute a query against `_entities` to do integration tests. This looks like the following:
+Depending on your schema, you may not start from the query node in a subgraph. The integration tests in this situation involves mimicking the gateway/router. You can execute [a query against `_entities`](/federation/federation-spec/#resolve-requests-for-entities) to do integration tests. This looks like the following:
 
 ```js
 const query = `query GetEntities($representations: [_Any!]!) {
