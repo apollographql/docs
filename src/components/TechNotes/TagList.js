@@ -20,7 +20,7 @@ export function TagList() {
   );
 
   return (
-    <Flex gap={2}>
+    <Flex gap={2} flexWrap={'wrap'}>
       {group
         .sort((a, b) => a.tag.localeCompare(b.tag))
         .map(group => (
