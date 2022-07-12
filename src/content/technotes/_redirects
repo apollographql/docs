@@ -4,3 +4,5 @@
 /TN0002 /technotes/TN0002-schema-naming-conventions
 /TN0003 /technotes/TN0003-opentelemetry-traces-to-prometheus
 /TN0004 /technotes/TN0004-router-authentication
+/TN0005 /technotes/TN0005-overload-protection
+/TN0007 /technotes/TN0007-testing-in-a-federated-architecture-unit-tests
