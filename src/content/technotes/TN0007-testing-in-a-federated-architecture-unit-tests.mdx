@@ -41,4 +41,4 @@ const query = `query GetEntities($representations: [_Any!]!) {
 
 ## Composition testing
 
-Composition testing is specific to federated architectures. It involves testing that your graph will compose and handle the queries that are currently sent to it by clients. This is handled through [rover](https://www.apollographql.com/docs/rover/). These checks are done by running the [`rover subgraph check`](https://www.apollographql.com/docs/rover/commands/subgraphs#checking-subgraph-schema-changes) command. This is best in your CI/CD pipeline.
+Composition testing is specific to federated architectures. It involves testing that your graph will compose and handle the queries that are currently sent to it by clients. This is handled through [Rover](/docs/rover/). These checks are done by running the [`rover subgraph check`](/rover/commands/subgraphs#checking-subgraph-schema-changes) command. This is best used when configured within your CI/CD pipeline.
