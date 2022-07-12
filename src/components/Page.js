@@ -1,12 +1,15 @@
 import Blockquote from './Blockquote';
 import CodeColumns from './CodeColumns';
-import ExpansionPanel from './ExpansionPanel';
+import ExpansionPanel, {
+  ExpansionPanelList,
+  ExpansionPanelListItem
+} from './ExpansionPanel';
 import InlineCode from './InlineCode';
 import PageLayout, {usePageLayoutProps} from './PageLayout';
 import Pagination from './Pagination';
 import PropTypes from 'prop-types';
 import React, {Fragment, createElement, useMemo} from 'react';
-import RelativeLink from './RelativeLink';
+import RelativeLink, {ButtonLink} from './RelativeLink';
 import TableOfContents from './TableOfContents';
 import TypeScriptApiBox from './TypeScriptApiBox';
 import VersionBanner from './VersionBanner';
@@ -147,12 +150,15 @@ const mdxComponents = {
   inlineCode: InlineCode,
   Button, // TODO: consider making pages import this from @chakra-ui/react
   ExpansionPanel,
+  ExpansionPanelList,
+  ExpansionPanelListItem,
   MultiCodeBlock,
   YouTube,
   CodeColumns,
   TypeScriptApiBox,
   TypescriptApiBox: TypeScriptApiBox,
-  EmbeddableExplorer
+  EmbeddableExplorer,
+  ButtonLink
 };
 
 const {processSync} = rehype()
