@@ -328,3 +328,9 @@ These changes are detected by schema checks, but they are "safe." They never aff
 | `FIELD_DESCRIPTION_CHANGE`      | An existing field's description changed.      |
 | `ENUM_VALUE_DESCRIPTION_CHANGE` | An existing enum value's description changed. |
 | `ARG_DESCRIPTION_CHANGE`        | An existing argument's description changed.   |
+
+### Limits
+
+#### Operation Cardinality
+
+Checks will run against a maximum of 10,000 distinct operations. A warning message will display on the UI when a larger cardinality has been reached. 
