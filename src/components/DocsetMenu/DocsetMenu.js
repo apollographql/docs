@@ -91,9 +91,6 @@ export function DocsetMenu({docset, versions = [], currentVersion, ...props}) {
               >
                 Odyssey Tutorials
               </DocsetButton>
-              <DocsetButton leftIcon={DOCSET_ICONS.technotes} to="/technotes">
-                Tech Notes
-              </DocsetButton>
             </DocsetGroup>
             <DocsetGroup title="Apollo Client">
               <DocsetButton leftIcon={DOCSET_ICONS.react} to="/react">
@@ -123,6 +120,11 @@ export function DocsetMenu({docset, versions = [], currentVersion, ...props}) {
               </DocsetButton>
               <DocsetButton leftIcon={DOCSET_ICONS.rover} to="/rover">
                 Rover CLI
+              </DocsetButton>
+            </DocsetGroup>
+            <DocsetGroup title="Specialized topics">
+              <DocsetButton leftIcon={DOCSET_ICONS.technotes} to="/technotes">
+                Tech Notes
               </DocsetButton>
             </DocsetGroup>
           </Stack>
