@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Flex} from '@chakra-ui/react';
+import {Button, Wrap, WrapItem} from '@chakra-ui/react';
 import {Link as GatsbyLink, graphql, useStaticQuery} from 'gatsby';
 import {kebabCase} from 'lodash';
 
@@ -20,18 +20,19 @@ export function TagList() {
   );
 
   return (
-    <Flex gap={2} flexWrap={'wrap'}>
+    <Wrap>
       {group
         .sort((a, b) => a.tag.localeCompare(b.tag))
         .map(group => (
-          <Button
-            key={group.tag}
-            as={GatsbyLink}
-            to={`/technotes/tags/${kebabCase(group.tag)}`}
-          >
-            {group.tag} ({group.totalCount})
-          </Button>
+          <WrapItem key={group.tag}>
+            <Button
+              as={GatsbyLink}
+              to={`/technotes/tags/${kebabCase(group.tag)}`}
+            >
+              {group.tag} ({group.totalCount})
+            </Button>
+          </WrapItem>
         ))}
-    </Flex>
+    </Wrap>
   );
 }

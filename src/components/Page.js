@@ -353,8 +353,8 @@ export default function Page({file, pageContext, uri}) {
                 ':not(:last-child)': {
                   mb: 6
                 },
-                [HEADINGS]: {
-                  ':not(:first-child)': {
+                ':not(style) +': {
+                  [HEADINGS]: {
                     mt: 10,
                     mb: 4
                   }

@@ -37,7 +37,7 @@ function useLinkProps(href) {
   if (isExternal || href.startsWith('#')) {
     return {
       href,
-      target: isExternal && '_blank'
+      target: isExternal ? '_blank' : null
     };
   }
 
