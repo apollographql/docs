@@ -2,54 +2,58 @@
 module.exports = {
   react: {
     remote: 'https://github.com/apollographql/apollo-client',
-    branch: 'main'
+    branch: 'main',
   },
   'react/v2': {
     remote: 'https://github.com/apollographql/apollo-client',
-    branch: 'version-2.6'
+    branch: 'version-2.6',
+  },
+  'apollo-server/v4': {
+    remote: 'https://github.com/apollographql/apollo-server',
+    branch: 'version-4',
   },
   'apollo-server': {
     remote: 'https://github.com/apollographql/apollo-server',
-    branch: 'main'
+    branch: 'main',
   },
   'apollo-server/v2': {
     remote: 'https://github.com/apollographql/apollo-server',
-    branch: 'version-2'
+    branch: 'version-2',
   },
   'customer-success': {
     remote: `https://trevorblades:${process.env.GITHUB_TOKEN}@github.com/apollographql/customer-success`,
-    branch: 'main'
+    branch: 'main',
   },
   ios: {
     remote: 'https://github.com/apollographql/apollo-ios',
-    branch: 'main'
+    branch: 'main',
   },
   'ios/v1': {
     remote: 'https://github.com/apollographql/apollo-ios',
-    branch: 'release/1.0'
+    branch: 'release/1.0',
   },
   kotlin: {
     remote: 'https://github.com/apollographql/apollo-kotlin',
-    branch: 'main'
+    branch: 'main',
   },
   'kotlin/v2': {
     remote: 'https://github.com/apollographql/apollo-kotlin',
-    branch: 'release-2.x'
+    branch: 'release-2.x',
   },
   federation: {
     remote: 'https://github.com/apollographql/federation',
-    branch: 'main'
+    branch: 'main',
   },
   'federation/v1': {
     remote: 'https://github.com/apollographql/federation',
-    branch: 'version-0.x'
+    branch: 'version-0.x',
   },
   rover: {
     remote: 'https://github.com/apollographql/rover',
-    branch: 'main'
+    branch: 'main',
   },
   router: {
     remote: 'https://github.com/apollographql/router',
-    branch: 'main'
-  }
+    branch: 'main',
+  },
 };
