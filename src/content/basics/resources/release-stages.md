@@ -9,7 +9,7 @@ Apollo open source project releases proceed through the following stages:
 
 ```mermaid
 graph LR;
-  alphabeta(Alpha / Beta)
+  alphabeta(Alpha / Beta);
   alphabeta --> preview(Preview);
   preview --> rc("Release Candidate (RC)");
   rc --> ga(General Availability);
@@ -45,6 +45,10 @@ A generally available release has been deemed ready for use in a production envi
 A deprecated release (or individual feature) is no longer officially supported by Apollo. It might continue to work, but Apollo does not guarantee that it will _continue_ to work.
 
 You should avoid relying on deprecated releases or features whenever possible.
+
+### Experimental features
+
+An experimental feature is in active development. The feature may not be feature-complete, and breaking API changes are possible between individual versions. An experimental feature can exist in any of the release stages defined above and should be used cautiously. An experimental feature may be temporary and removed at any point without notice.
 
 ## Cloud release stages
 
