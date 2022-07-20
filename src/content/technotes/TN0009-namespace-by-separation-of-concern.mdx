@@ -1,0 +1,137 @@
+---
+title: Namespace by Separation of Concern
+id: TN0009
+tags: [schema, best practices]
+---
+
+In most GraphQL API’s queries and mutations are organized in a flat structure. The GitHub GraphQL API has approximately 200 root level operations! Even with tools like Apollo Explorer, navigating and understanding these graphs can be difficult.
+
+Namespaces provide a way to organize our top level mutations and queries into separate concerns. They should be applied by using type names as a prefix with some descriptive suffix.
+
+For example a `User` entity may declare actions in a `UsersMutations` namespace. 
+
+```graphql
+type UsersMutations {
+	create(profile: UserProfileInput!): User!
+	block(id: ID!): User!
+}
+```
+
+A separate `Comment` entity could declare the same actions within a `CommentsMutations` namespace without worrying about conflicting mutation names.
+
+```graphql
+type CommentsMutations {
+	create(comment: CommentInput!): Comment!
+	delete(id: ID!): Comment!
+}
+```
+
+Then, we can add a single top-level namespaced type which wraps other mutations.
+
+```graphql
+type Mutation {
+	users: UsersMutations!
+	comments: CommentsMutations!
+}
+```
+
+The same can be done for queries for both `Users` and `Comments` .
+
+```graphql
+type UsersQueries {
+	all: [User!]!
+}
+
+type CommentsQueries {
+	byUser(user: ID!): [Comment!]!
+}
+
+# Add a single top-level namespace-type which wraps other queries
+type Query {
+	users: UsersQueries!
+	comments: CommentsQueries!
+}
+```
+
+In the client, your operations are written in a nested formatted, which still provides context on what you are querying for or mutating.
+
+```graphql
+mutation CreateNewUser($userProfile: UserProfileInput!) {
+	users {
+		create(profile: $userProfile) {
+			id
+			firstName
+			lastName
+		}
+	}
+}
+
+query FetchAllUsers {
+	users {
+		all {
+			id
+			firstName
+			lastName
+		}
+	}
+}
+```
+
+> 💡 Note that you don’t have to repeat the text “user” in the field names anymore in the `UsersQueries` type because we already know all these operations are applied to `Users`.
+
+## Namespaces for Serial Mutations
+
+One big difference between top level queries and mutations is that mutations are run in serial and not in parallel.
+
+```graphql
+mutation DoTwoThings {
+  one { 
+    success 
+  }
+  # Will not `two` resolver run until after `one` completes.
+  # Will not run at all if `one` errors.
+  two { 
+    success 
+  }
+}
+```
+
+While the benefits of this feature are dubious (you probably want to use a saga orchestrator in a single mutation if you want some kind of transactional consistency), you might still want these semantics. With namespaces, mutations are moved from the top level to nested fields so the fields will run in parallel:
+
+```graphql
+mutation DoTwoNestedThings(
+  $createInput: CreateReviewInput!
+  $deleteInput: DeleteReviewInput!
+) {
+  reviews {
+    create(input: $createInput) {
+      success
+    }
+		# will run in parallel with `create`
+    delete(input: $deleteInput) {
+      success
+    }
+  }
+}
+```
+
+But you can still use client-side aliases to create two root fields which will run in serial:
+
+```graphql
+mutation DoTwoNestedThingsInSerial(
+  $createInput: CreateReviewInput!
+  $deleteInput: DeleteReviewInput!
+) {
+  a: reviews {
+    create(input: $createInput) {
+      success
+    }
+  }
+	# will run after `a` completes
+  b: reviews {
+    delete(input: $deleteInput) {
+      success
+    }
+  }
+}
+```
