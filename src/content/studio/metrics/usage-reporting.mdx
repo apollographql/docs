@@ -139,6 +139,8 @@ Only graph-level API keys (starting with the prefix `service:`) are supported.
 
 The request can also optionally include a `Content-Type` header with value `application/protobuf`, but this is not required.
 
+Reports more than 50 minutes old will be rejected by the reporting endpoint. If you see an error like `Rejecting report from service <your service> with skewed timestamp`, ensure your traces are current and that your timestamp calculations are accurate.
+
 For a reference implementation, see the `sendReport()` function in the [TypeScript reference agent](https://github.com/apollographql/apollo-server/blob/main/packages/apollo-server-core/src/plugin/usageReporting/plugin.ts).
 
 #### Tuning reporting behavior
