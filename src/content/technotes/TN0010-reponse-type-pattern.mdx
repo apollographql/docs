@@ -1,0 +1,82 @@
+---
+title: Response-type Pattern
+id: TN0010
+tags: [schema, best practices]
+---
+
+Simple GraphQL API’s generally return entities as responses from both queries and mutations.
+
+While this works for demonstrating the capabilities of GraphQL it often doesn’t represent real-world interactions between the client and server.
+
+Instead of directly returning entity data, a `Response`-pattern type can be returned which contains the requested data, as well as any other additional metadata which may be helpful to facilitate the next query.
+
+For example, when returning a list of users additional details can be provided like count, or total.
+
+```graphql
+enum ResponseStatus {
+	SUCCESS
+	FAILURE
+}
+
+type User {
+	id: ID!
+	firstName: String!
+	lastName: String!
+}
+
+type UsersResponse {
+	status: ResponseStatus!
+	total: Int!
+	users: [User!]!
+}
+
+type Query {
+	users: UsersResponse!
+}
+```
+
+```graphql
+query FetchUsers {
+	users {
+		status
+		total
+		users {
+			id
+			firstName
+			lastName
+		}
+	}
+}
+```
+
+This response type pattern can also be useful for mutations where error responses can be returned in the cases of expected failures.
+
+For example, when calling a checkout mutation on a eCommerce graph, low inventory levels and insufficient card funds are responses that should be accounted for as they are not real errors but failures that should be expected. By using `ErrorResponse` types front-end developers can provide customized experiences for each of these responses.
+
+```graphql
+interface MutationResponse {
+	status: ResponseStatus!
+}
+
+type CheckoutSuccess implements MutationResponse {
+	status: ResponseStatus!
+	cart: [Product!]!
+	invoice: Invoice!
+}
+
+interface ErrorResponse {
+	status: ResponseStatus!
+	message: String!
+}
+
+type CheckoutError implements ErrorResponse {
+	status: ResponseStatus!
+	message: String!
+}
+
+union CheckoutResponse = CheckoutSuccess | CheckoutError
+
+type Mutation {
+	checkout(cart: ID!): CheckoutResponse!
+}
+```
