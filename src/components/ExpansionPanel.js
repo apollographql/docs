@@ -65,8 +65,12 @@ ExpansionPanelList.propTypes = {
   children: PropTypes.node.isRequired
 };
 
-export default function ExpansionPanel({children, title = 'Click to expand'}) {
-  const {isOpen, onToggle} = useDisclosure();
+export default function ExpansionPanel({
+  children,
+  title = 'Click to expand',
+  defaultIsOpen
+}) {
+  const {isOpen, onToggle} = useDisclosure({defaultIsOpen});
   return (
     <Box
       borderWidth="1px"
@@ -97,5 +101,6 @@ export default function ExpansionPanel({children, title = 'Click to expand'}) {
 
 ExpansionPanel.propTypes = {
   children: PropTypes.node.isRequired,
-  title: PropTypes.string
+  title: PropTypes.string,
+  defaultIsOpen: PropTypes.bool
 };
