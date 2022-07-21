@@ -11,16 +11,11 @@ To create a graph in [Apollo Studio](https://studio.apollographql.com/), click *
 <img
   className="screenshot"
   src="../img/graph-creation.jpg"
-  width="500"
+  width="400"
   style="margin-bottom: 20px;"
 />
 
-There are two types of graphs in Studio:
-
-* **Deployed graphs** are shared with other members of your organization. Create a deployed graph for every use case _except_ local development.
-* [**Development graphs**](../dev-graphs/) (**dev graphs** for short) are visible only to you. Use them to help you iterate on your graph in your development environment.
-
-There are also two types of **graph architectures** in Studio:
+There are two types of **graph architectures** in Studio:
 
 * **Supergraph** - This is any graph that uses [Apollo Federation](/federation/), consisting of a gateway and one or more subgraphs.
 * **Monolith** - This is any graph that _doesn't_ use Apollo Federation, consisting of a single GraphQL server.
@@ -29,8 +24,8 @@ There are also two types of **graph architectures** in Studio:
 
 You can register your schema to a Studio graph with one of the following methods:
 
-* [Using schema reporting](../schema/schema-reporting/) (monoliths only)
 * [Using the Rover CLI](../schema/cli-registration/)
+* [Using schema reporting](../schema/schema-reporting/) (monolith graphs only)
 
 ## Viewing graph information
 
@@ -100,13 +95,13 @@ Apollo Studio provides a powerful **Explorer** IDE that helps you visualize your
 
 ### Tracking schema changes
 
-The Schema > Changelog tab in Apollo Studio displays a timeline of changes made to your graph's schema:
+The Changelog page in Studio displays a timeline of changes made to your graph's schema:
 
 <img
-  src="../img/schema-changelog.jpg"
+  src="../img/changelog-page.jpg"
   className="screenshot"
   alt="Schema Changelog tab"
-  width="600"
+  width="450"
 />
 
 **Only schema changes that you publish to Studio are included in this timeline**, which is one of the most important reasons to [include schema registration in your continuous delivery pipeline](../schema/cli-registration/#registering-with-continuous-delivery).
@@ -122,15 +117,19 @@ To distinguish between instances of the same graph running in different environm
   width="400"
 />
 
-> Development graphs do **not** support variants.
-
 ### Adding a variant
 
 To add a variant to your graph, you [register a schema](#registering-a-schema) to the graph and include a variant name in the registration. If a variant with the specified name doesn't exist yet, Studio creates it.
 
 ### Associating metrics with a variant
 
-You can configure Apollo Server to associate the metrics it sends to Apollo Studio with a particular variant. To do so, set the `APOLLO_GRAPH_VARIANT` environment variable (`ENGINE_SCHEMA_TAG` in `apollo-server` pre-2.13.0) to the appropriate variant before initializing Apollo Server.
+You can configure Apollo Server to associate the metrics it sends to Apollo Studio with a particular variant. To do so, set the `APOLLO_GRAPH_REF` environment variable to the appropriate variant before initializing Apollo Server.
+
+For example, to associate metrics with the `production` variant of the `docs-example-graph` graph:
+
+```bash
+APOLLO_GRAPH_REF=docs-example-graph@production
+```
 
 > Make sure you associate metrics with the correct variant! Otherwise, metrics from your staging and test environments might be included in reports for your production graph.
 

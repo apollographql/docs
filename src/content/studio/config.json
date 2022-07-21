@@ -21,8 +21,8 @@
     },
     "Working with Graphs": {
       "Graphs and variants": "/org/graphs",
-      "Development graphs": "/dev-graphs",
-      "Federated graphs": "/federated-graphs"
+      "Federated graphs": "/federated-graphs",
+      "Dev graphs (deprecated)": "/dev-graphs"
     },
     "The Explorer": {
       "Overview": "/explorer/explorer",

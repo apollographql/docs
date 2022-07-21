@@ -3,34 +3,10 @@ title: Development graphs
 description: Use Studio features in your development environment
 ---
 
-import {AiFillWarning} from '@react-icons/all-files/ai/AiFillWarning';
-import {Alert} from '../../components/Alert';
-
-<Alert>
-  <div style={{display: 'flex'}}>
-    <div style={{marginTop: 5}}>
-      <AiFillWarning />
-    </div>
-    <div>
-      Development graphs will no longer be supported after **August 12, 2022**.
-      We are sunsetting the development graph feature in favor of using{' '}
-      <a
-        target="_blank"
-        rel="noopener noreferrer"
-        href="https://www.apollographql.com/docs/studio/explorer/sandbox"
-      >
-        Apollo Sandbox
-      </a>
-      . Head to <a
-        target="_blank"
-        rel="noopener noreferrer"
-        href="https://sandbox.apollo.dev"
-      >
-        Sandbox
-      </a> to query against your local development endpoints.{' '}
-    </div>
-  </div>
-</Alert>
+> ⚠️ **Support for development graphs will end on August 12, 2022**. We are sunsetting development graphs in favor of local development via Apollo Sandbox.
+>
+> * [See the Sandbox docs.](./explorer/sandbox/)
+> * [Open Sandbox.](https://sandbox.apollo.dev)
 
 Development graphs (or **dev graphs**) are a special type of graph in Apollo Studio.
 Unlike a _deployed_ graph (which represents a graph in a deployed environment like
