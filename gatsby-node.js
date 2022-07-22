@@ -160,7 +160,8 @@ exports.createPages = async ({actions, graphql}) => {
           label: version,
           slug: node.sourceInstanceName
         };
-      });
+      })
+      .sort((a, b) => b.label.localeCompare(a.label));
 
     actions.createPage({
       path: fields.slug,
