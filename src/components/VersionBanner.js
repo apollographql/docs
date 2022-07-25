@@ -1,11 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {Box, Link, useColorModeValue} from '@chakra-ui/react';
+import {Box, Link} from '@chakra-ui/react';
 import {Link as GatsbyLink} from 'gatsby';
 
 export default function VersionBanner({to, versionLabels}) {
-  const bgColor = useColorModeValue('yellow.200', 'yellow.600');
-
   const [defaultVersionNumber, currentVersionNumber] = versionLabels.map(
     label => {
       // parse version number from label, i.e. "v2.6"
@@ -15,7 +13,7 @@ export default function VersionBanner({to, versionLabels}) {
   );
 
   return (
-    <Box textAlign="center" py="3" px="4" bgColor={bgColor}>
+    <Box textAlign="center" py="3" px="4" bgColor="yellow.300" color="gray.800">
       You&apos;re viewing documentation for{' '}
       {currentVersionNumber > defaultVersionNumber
         ? 'an upcoming'
