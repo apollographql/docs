@@ -103,7 +103,7 @@ Apollo Studio provides a powerful **Explorer** IDE that helps you visualize your
 
 #### The Schema page
 
-The Schema page lists the different kinds of definitions included in your schema (objects, scalars, etc.):
+The Schema page lists the different kinds of definitions in your schema (objects, scalars, etc.):
 
 <img
   className="screenshot"
@@ -120,10 +120,13 @@ Select a kind of definition to view a table of all corresponding types:
   src="../img/schema-page-table.jpg"
 />
 
-Each type definition in the table includes the type's name and description (if any). If you have a supergraph, you can also see which subgraphs define each type.
+Each type definition in the table includes:
 
-You can click a type's name to view additional details for it (such as fields for an object, or possible types for a union).
-
+* The type's name
+  * You can click the name to view additional details for the type (such as fields for an object, or possible types for a union).
+* The type's description (if your schema includes one)
+* Which subgraphs define the type (if you have a federated supergraph)
+  * Users with the **Consumer** role can't view subgraph details.
 
 ##### Filtering your schema
 
@@ -154,11 +157,14 @@ You can filter your schema definitions by name, along with any combination of th
 </td>
 <td>
 
-Include results defined in the specified subgraph. Valid only for federated supergraphs.
+Include results defined in the specified subgraph.
+
+Valid only for federated supergraphs.
 </td>
 <td>
 
 `subgraph:products`
+
 </td>
 </tr>
 
@@ -170,7 +176,7 @@ Include results defined in the specified subgraph. Valid only for federated supe
 </td>
 <td>
 
-Include results that have the specified directive applied. If viewing a table of objects, include objects with at least one _field_ that has this directive.
+Include results that have the specified directive applied. If viewing a table of objects, also include objects with at least one _field_ that has this directive.
 
 </td>
 <td>
@@ -243,7 +249,7 @@ If your graph doesn't use the `@tag` directive, this filter is not available.
 * If you apply multiple filters of the same type, those filters use "OR" logic.
     * If you filter by `subgraph:products` and `subgraph:reviews`, the result includes definitions from each subgraph.
 * If you apply filters of _different_ types, those filters use "AND" logic.
-    * If you filter by `subgraph:products` and `returnType:Int`, the result includes _only_ definitions that fulfill both criteria.
+    * If you filter by `subgraph:products` and `returnType:Int`, the result includes only definitions that fulfill _both_ criteria.
 
 ### Tracking schema changes
 
