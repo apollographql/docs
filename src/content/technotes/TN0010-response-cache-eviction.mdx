@@ -18,13 +18,11 @@ This whole solutions works by defining a custom response cache key by a pattern 
 
 ### A Note on Cache Key Uniqueness
 
-Keep in mind that each key links to a full response object, so if your key is too generic, you risk potentially returning the wrong data for queries. I.E, generating a cache key based solely on the operation name would yield the same responses for all operations with the same name, even if the entire query is different. 
-
-Put simply, make sure your keys are unique enough for each incoming operation that returns different data. 
+Keep in mind that each key links to a full response object, so if your key is too generic, you risk potentially returning the wrong data for queries. I.E, generating a cache key based solely on the operation name would yield the same responses for all operations with the same name, even if the entire query is different. Make sure your keys are unique for each execution of the incoming operations that returns different data. 
 
 ### Defining a Custom Cache Key
 
-Version `3.7.0` of the `apollo-server-plugin-response-cache` introduced the `generateCacheKey` configuration method. Whatever is returned from this function will be used as the cache key to store the current query response
+Version `3.7.0` of the `apollo-server-plugin-response-cache` introduced the `generateCacheKey` configuration method. Whatever is returned from this function will be used as the cache key to store the current query response.
 
 Here’s the method signature:
 
@@ -86,7 +84,7 @@ Here’s an example using the operation name prefix pattern described above to r
 redis-cli --raw KEYS "keyv:fqc:unnamed*" | xargs redis-cli del
 ```
 
-[The Redis docs for the KEYS command](https://redis.io/commands/keys/) recommend NOT using the `KEYS` function in production application code and only execute against production with “extreme care”. Redis specifically recommends using `SCAN` instead for this type of thing, which is described in the Event Based Solution section
+[The Redis docs for the KEYS command](https://redis.io/commands/keys/) recommend NOT using the `KEYS` function in production application code and only execute against production with “extreme care”. Redis specifically recommends using `SCAN` instead for this type of thing, which is described in the Event Based Solution section.
 
 The utility of this approach will depend on the number of records stored in your cache and how performant the pattern search is. It will also depend on the number of records that need to be removed. If your searches are scanning and/or returning millions of records, this approach probably should be avoided in a production environment. 
 
@@ -128,7 +126,7 @@ This solution uses the `scanIterator` function (which uses the `SCAN` Redis func
 
 The `deleteByPrefix` method can be added to your context object and then executed in your mutation resolvers to remove certain operations from the cache. 
 
-Again a full working example of this is available in the [Response Cache Eviction](https://github.com/apollosolutions/response-cache-eviction) repo
+Again a full working example of this is available in the [Response Cache Eviction](https://github.com/apollosolutions/response-cache-eviction) repo.
 
 ## Final Thoughts
 
