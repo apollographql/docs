@@ -9,9 +9,7 @@
       "router": "/tags/router",
       "schema design": "/tags/schema-design",
       "server": "/tags/server",
-      "testing": "/tags/testing",
-      "caching": "/tags/caching",
-      "performance": "/tags/performance"
+      "testing": "/tags/testing"
     }
   }
 }
