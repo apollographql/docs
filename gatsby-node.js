@@ -90,7 +90,7 @@ exports.createPages = async ({actions, graphql}) => {
   const {data} = await graphql(`
     {
       pages: allFile(
-        filter: {base: {ne: "README.md"}, extension: {in: ["md", "mdx"]}}
+        extension: {in: ["md", "mdx"]}}
       ) {
         nodes {
           id
