@@ -97,6 +97,8 @@ At higher CPU utilization percentages, you may start to see event loop lag incre
 
 Additionally, we recommend keeping CPU utilization below 50%. At higher CPU utilization percentages, you may start to see event loop delays increase relative. Monitoring both metrics can help provide a clearer image of bottlenecks beyond just code profiling alone.
 
+If CPU throttling becomes a problem, consider removing the limits on your gateway pods as discussed in [this blog post on Kubernetes resource limits](https://erickhun.com/posts/kubernetes-faster-services-no-cpu-limits/).
+
 ## Check query plans
 
 Query plans (the steps the Gateway takes to resolve an operation from multiple subgraphs) are almost always reasonable approximations of the original operation. They're also highly cacheable so they don't incur much of a performance penalty. But it's worth looking at them to make sure they're of an appropriate size and complexity. Fragment and abstract type usage may cause undesirable query plans in very specific cases.
