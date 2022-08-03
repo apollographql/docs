@@ -11,7 +11,8 @@
       "router": "/tags/router",
       "schema design": "/tags/schema-design",
       "server": "/tags/server",
-      "testing": "/tags/testing"
+      "testing": "/tags/testing",
+      "best practices": "/tags/best-practices"
     }
   }
 }

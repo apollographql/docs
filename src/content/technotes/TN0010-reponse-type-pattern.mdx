@@ -1,0 +1,101 @@
+---
+title: Designing response types
+id: TN0010
+tags: [schema design, best practices]
+---
+
+Let's say we have a basic GraphQL API that defines the following `Query` type:
+
+```graphql
+type Query {
+  users: [User!]!
+}
+```
+
+This `Query.users` field makes intuitive sense: if you query it, you get back a list of `User` objects. _However_, this return type doesn't provide any insight into the result:
+
+* If the list is empty, is that because there are zero users, or did an error occur?
+* Even if the list is populated, did the API return _all_ users or just a subset?
+
+To answer questions like these, it's helpful for top-level fields of `Query` and `Mutation` to return "wrapper" objects that can include both the operation result _and_ metadata about the operation's execution.
+
+## Example: `UsersResponse`
+
+The following example defines a `UsersResponse` type for our `Query.users` field:
+
+```graphql
+enum ResponseStatus {
+  SUCCESS
+  FAILURE
+}
+
+type User {
+  id: ID!
+  firstName: String!
+  lastName: String!
+}
+
+type UsersResponse {
+  status: ResponseStatus!
+  total: Int!
+  users: [User!]!
+}
+
+type Query {
+  users: UsersResponse!
+}
+```
+
+With this change, a client's query can now check the `status` field to determine whether an empty list might be due to an error:
+
+```graphql
+query FetchUsers {
+  users {
+    status
+    total
+    users {
+      id
+      firstName
+      lastName
+    }
+  }
+}
+```
+
+## Response types for mutations
+
+> See also [Structuring mutation responses](/apollo-server/schema/schema#structuring-mutation-responses).
+
+This response type pattern is even more useful for mutations, because they can result in many valid failure states (such as attempting to delete an object that doesn't exist).
+
+For example, let's say we have an e-commerce graph. When executing a `checkout` mutation, it's valid for that mutation to fail if a purchased item is out of stock or the buyer has insufficient funds.
+
+If we define a set of `ErrorResponse` types in our schema, front-end developers can provide customized experiences based on the type of failure that occurred:
+
+```graphql
+interface MutationResponse {
+  status: ResponseStatus!
+}
+
+type CheckoutSuccess implements MutationResponse {
+  status: ResponseStatus!
+  cart: [Product!]!
+  invoice: Invoice!
+}
+
+interface ErrorResponse {
+  status: ResponseStatus!
+  message: String!
+}
+
+type CheckoutError implements ErrorResponse {
+  status: ResponseStatus!
+  message: String!
+}
+
+union CheckoutResponse = CheckoutSuccess | CheckoutError
+
+type Mutation {
+  checkout(cart: ID!): CheckoutResponse!
+}
+```
