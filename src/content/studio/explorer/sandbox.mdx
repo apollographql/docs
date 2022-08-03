@@ -164,7 +164,13 @@ This may be useful for bootstrapping a GraphQL IDE onto a development endpoint o
      width="600"
    />
 
-3. Click **Copy** to copy the snippet, then paste it into your html code.
+3. Within the dialog, use the tabs to select the code snippet for your use case:
+
+    * Use **React** for React apps where you can `npm install` the `@apollo/sandbox` package.
+    * Use **JavaScript** for non-React JavaScript apps where you can `npm install` the `@apollo/sandbox` package.
+    * Use **Built file on CDN** to use Apollo's CDN-hosted embedded Sandbox.
+
+4. Click **Copy** to copy the snippet, then paste it into your html code.
 
 ### Options
 
@@ -182,6 +188,7 @@ The `EmbeddedSandbox` object takes an options object with the following structur
       },
     })
   },
+  includeCookies: false,
 }
 ```
 

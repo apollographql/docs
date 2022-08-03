@@ -61,6 +61,7 @@ import 'prismjs/components/prism-graphql';
 import 'prismjs/components/prism-groovy';
 import 'prismjs/components/prism-java';
 import 'prismjs/components/prism-javascript';
+import 'prismjs/components/prism-js-templates';
 import 'prismjs/components/prism-json';
 import 'prismjs/components/prism-jsx';
 import 'prismjs/components/prism-kotlin';
@@ -254,13 +255,12 @@ export default function Page({file, pageContext, uri}) {
         <PageLayout
           {...pageProps}
           banner={
-            defaultVersion &&
-            defaultVersion.slug !== basePath && (
+            defaultVersion && defaultVersion.slug !== basePath ? (
               <VersionBanner
                 versionLabels={[defaultVersion.label, currentVersion]}
                 to={'/' + defaultVersion.slug}
               />
-            )
+            ) : null
           }
           subtitle={
             <>

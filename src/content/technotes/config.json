@@ -5,7 +5,9 @@
     "Home": "/",
     "Tags": {
       "auth": "/tags/auth",
+      "gateway": "/tags/gateway",
       "observability": "/tags/observability",
+      "performance": "/tags/performance",
       "router": "/tags/router",
       "schema design": "/tags/schema-design",
       "server": "/tags/server",

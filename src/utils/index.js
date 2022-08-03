@@ -35,7 +35,7 @@ export function useFieldTableStyles() {
       bg: requiredBg
     },
     td: {
-      ':not(:last-child)': {
+      ':first-child': {
         [['h5', 'h6']]: {
           mb: 1,
           fontSize: 'md',
@@ -53,7 +53,7 @@ export function useFieldTableStyles() {
           fontSize: 'inherit'
         }
       },
-      ':last-child': {
+      ':not(:first-child)': {
         lineHeight: 'base',
         fontSize: 'md',
         p: {

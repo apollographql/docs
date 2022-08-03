@@ -12,7 +12,6 @@ export default function InlineCode(props) {
       rounded="sm"
       color="secondary"
       bgColor={bgColor}
-      whiteSpace="nowrap"
       {...props}
     />
   );
