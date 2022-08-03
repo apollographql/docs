@@ -8,7 +8,32 @@ For example, here's an embedded Explorer for an Apollo example graph. Try it out
 
 <EmbeddableExplorer />
 
-## Setup
+## Apollo Server plugin
+As of Apollo Server [v3.8.0](https://github.com/apollographql/apollo-server/blob/main/CHANGELOG.md#v380) there now a built-in plugin that will include the embeded Explorer for you.
+
+You can use `ApolloServerPluginLandingPageLocalDefault` plugin for localhost developement, or `ApolloServerPluginLandingPageProductionDefault` for use in a production environment.
+
+```js
+import {
+  ApolloServerPluginLandingPageProductionDefault,
+  ApolloServerPluginLandingPageLocalDefault
+} from 'apollo-server-core';
+
+let plugins = [];
+if (process.env.NODE_ENV === 'production') {
+  plugins = [ApolloServerPluginLandingPageProductionDefault({embed: true, graphRef: 'myGraph@prod'})]
+} else {
+  plugins = [ApolloServerPluginLandingPageLocalDefault({ embed: true })]
+}
+
+const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    plugins
+});
+```
+
+## Custom setup
 
 1. <a href="https://studio.apollographql.com/" target="_blank">
      Go to Apollo Studio
