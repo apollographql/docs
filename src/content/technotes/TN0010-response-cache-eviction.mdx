@@ -34,7 +34,7 @@ generateCacheKey(
 
 ```
 
-The [requestContext](https://github.com/apollographql/apollo-server/blob/main/packages/apollo-server-types/src/index.ts#L135-L175) parameter holds data about the running GraphQL request, like the request / response objects as well as the [context object](https://www.apollographql.com/docs/apollo-server/data/resolvers/#the-context-argument) that is passed to your resolver functions. Any portion of these data objects can be used as part of your cache key. 
+The [requestContext](https://github.com/apollographql/apollo-server/blob/main/packages/apollo-server-types/src/index.ts#L135-L175) parameter holds data about the running GraphQL request, such as the request / response objects as well as the [context object](https://www.apollographql.com/docs/apollo-server/data/resolvers/#the-context-argument) that is passed to your resolver functions. Any portion of these data objects can be used as part of your cache key. 
 
 The `keyData` parameter can be used to ensure the uniqueness of your key, simply hashing this variable should be enough to generate a unique key per operation. In fact, the [default implementation](https://github.com/apollographql/apollo-server/blob/76caff6ce797e00907d6ed8e2dab870e255340fe/packages/apollo-server-plugin-response-cache/src/ApolloServerPluginResponseCache.ts#L168-L169) just hashes a `JSON.strigify` version of this parameter as the cache key. 
 
