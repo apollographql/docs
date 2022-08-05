@@ -64,7 +64,9 @@ This approach ensures that all cache keys are unique enough to store unique resp
 
 ## Evicting Cache Entries
 
-There are two main strategies for evicting response cache entries: Manually evicting from a shell prompt, or in response to some event, like a mutation. Actually removing entries from the cache once a custom cache key is being used will depend on your caching backend. Different caching tools offer different ways to list and remove keys. We’ll explore both options using Redis. 
+There are two main strategies for evicting response cache entries: manually evicting from a shell prompt, or in response to some event, like a mutation. 
+
+Actually removing entries from the cache once a custom cache key is being used will depend on your caching backend, as each offer different ways to list and remove keys. We’ll explore both options using Redis. 
 
 ### A Manual Solution
 
