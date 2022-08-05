@@ -18,7 +18,7 @@ This works by defining a custom response cache key by a pattern that can later b
 
 ### A Note on Cache Key Uniqueness
 
-Keep in mind that each key links to a full response object, so if your key is too generic, you risk potentially returning the wrong data for queries. I.E, generating a cache key based solely on the operation name would yield the same responses for all operations with the same name, even if the entire query is different. Make sure your keys are unique for each execution of the incoming operations that returns different data. 
+Keep in mind that each key links to a full response object, so if your key is too generic, you risk potentially returning the wrong data for queries. For example, generating a cache key based solely on the operation name would yield the same responses for all operations with the same name, even if the entire query is different. Make sure your keys are unique for each execution of the incoming operations that returns different data. 
 
 ### Defining a Custom Cache Key
 
