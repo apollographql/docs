@@ -22,7 +22,7 @@ Keep in mind that each key links to a full response object, so if your key is to
 
 ### Defining a Custom Cache Key
 
-Version `3.7.0` of the `apollo-server-plugin-response-cache` introduced the `generateCacheKey` configuration method. Whatever is returned from this function will be used as the cache key to store the current query response.
+As noted above, the `3.7.0` of the Full Response Cache plugin introduced the `generateCacheKey` configuration method. The response from this function will be used as the cache key to store the current query response.
 
 Here’s the method signature:
 
