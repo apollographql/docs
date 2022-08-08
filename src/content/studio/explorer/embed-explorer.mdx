@@ -9,9 +9,9 @@ For example, here's an embedded Explorer for an Apollo example graph. Try it out
 <EmbeddableExplorer />
 
 ## Embedding on the Apollo Server landing page
-As of Apollo Server [v3.8.0](https://github.com/apollographql/apollo-server/blob/main/CHANGELOG.md#v380) there is now a built-in plugin that will include the embeded Explorer for you.
+In Apollo Server [v3.8.0](https://github.com/apollographql/apollo-server/blob/main/CHANGELOG.md#v380) and later, you can use a built-in plugin to embed the Explorer directly on your server's landing page.
 
-You can use `ApolloServerPluginLandingPageLocalDefault` plugin for localhost development, or `ApolloServerPluginLandingPageProductionDefault` for use in a production environment.
+You use the `ApolloServerPluginLandingPageLocalDefault` plugin to configure the landing page in your local development environment, and you use `ApolloServerPluginLandingPageProductionDefault` for production environments:
 
 ```js
 const {
@@ -33,7 +33,9 @@ const server = new ApolloServer({
 });
 ```
 
-## Custom setup
+For more information, see the [landing page plugin API reference](/apollo-server/api/plugin/landing-pages/#default-behavior).
+
+## Embedding on an arbitrary webpage
 
 1. <a href="https://studio.apollographql.com/" target="_blank">
      Go to Apollo Studio
