@@ -117,7 +117,7 @@ const deleteByPrefix = async (prefix: string) => {
   }
 
   if (keys.length > 0) {
-    client.del(keys)
+    await client.del(keys) // This is blocking, consider handling async in production if the number of keys is large
   }
 
   return keys
