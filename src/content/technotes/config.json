@@ -12,7 +12,8 @@
       "schema design": "/tags/schema-design",
       "server": "/tags/server",
       "testing": "/tags/testing",
-      "best practices": "/tags/best-practices"
+      "best practices": "/tags/best-practices",
+      "caching": "/tags/caching"
     }
   }
 }
