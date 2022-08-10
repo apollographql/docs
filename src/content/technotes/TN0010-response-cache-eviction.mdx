@@ -10,8 +10,7 @@ Apollo Server’s Full Response Cache plugin (`apollo-server-plugin-response-cac
 
 The most straightforward way to avoid stale data in the response cache is to set a short default TTL. However, this limits the cache's effectiveness for responses that rarely (or never) change.
 
-As of version `3.7.0`, the Full Response Cache plugin (`apollo-server-plugin-response-cache`) allows customizing cache keys to support new cache eviction patterns. This means it’s easier to use longer cache TTLs and increase the hit rate on your cache by evicting the cached responses when relevant events occur.
-
+The Full Response Cache plugin supports advanced cache eviction patterns via custom cache keys in versions `3.7.0` and later. This enables you to set a longer default TTL and increase the cache's hit rate, because you can selectively evict cached responses when relevant events occur.
 ## Customizing the cache key
 
 This works by defining a custom response cache key by a pattern that can later be searched on in the cache. What this key should be comprised of and how it should be structured depends on the use-case and what search patterns our cache implementation supports. 
