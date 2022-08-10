@@ -8,4 +8,6 @@
 /TN0006 /docs/technotes/TN0006-unmanaged-federation
 /TN0007 /docs/technotes/TN0007-testing-in-a-federated-architecture-unit-tests
 /TN0008 /docs/technotes/TN0008-production-readiness-checklist
-/TN0010 /docs/technotes/TN0010-response-cache-eviction
+/TN0009 /docs/technotes/TN0009-gateway-performance
+/TN0010 /docs/technotes/TN0010-response-type-pattern
+/TN0011 /docs/technotes/TN0011-response-cache-eviction

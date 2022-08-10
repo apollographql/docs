@@ -89,9 +89,7 @@ const getNavItems = items =>
 exports.createPages = async ({actions, graphql}) => {
   const {data} = await graphql(`
     {
-      pages: allFile(
-        filter: {base: {ne: "README.md"}, extension: {in: ["md", "mdx"]}}
-      ) {
+      pages: allFile(filter: {extension: {in: ["md", "mdx"]}}) {
         nodes {
           id
           gitRemote {

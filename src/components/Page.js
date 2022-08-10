@@ -255,13 +255,12 @@ export default function Page({file, pageContext, uri}) {
         <PageLayout
           {...pageProps}
           banner={
-            defaultVersion &&
-            defaultVersion.slug !== basePath && (
+            defaultVersion && defaultVersion.slug !== basePath ? (
               <VersionBanner
                 versionLabels={[defaultVersion.label, currentVersion]}
                 to={'/' + defaultVersion.slug}
               />
-            )
+            ) : null
           }
           subtitle={
             <>

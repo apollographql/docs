@@ -428,7 +428,7 @@ export default function TypeScriptApiBox({name}) {
                       <chakra.h6 fontSize="lg" mb="1">
                         <InlineCode>{member.name}</InlineCode>
                       </chakra.h6>
-                      <InlineCode colorScheme="teal">{member.type}</InlineCode>
+                      <InlineCode color="tertiary">{member.type}</InlineCode>
                     </Td>
                     <Td lineHeight="base">
                       {member.description && mdToReact(member.description)}

@@ -59,7 +59,7 @@ graph LR;
   class deprecated secondary;
 ```
 
-Note that some releases might _skip_ cetain stages. For example, a release might start with a public preview instead of an opt-in preview.
+Note that some releases might _skip_ certain stages. For example, a release might start with a public preview instead of an opt-in preview.
 
 > In production environments, you should rely only on Apollo cloud releases that are in [general availability](#general-availability-ga-1).
 

@@ -5,13 +5,15 @@
     "Home": "/",
     "Tags": {
       "auth": "/tags/auth",
+      "gateway": "/tags/gateway",
       "observability": "/tags/observability",
+      "performance": "/tags/performance",
       "router": "/tags/router",
       "schema design": "/tags/schema-design",
       "server": "/tags/server",
       "testing": "/tags/testing",
-      "caching": "/tags/caching",
-      "performance": "/tags/performance"
+      "best practices": "/tags/best-practices",
+      "caching": "/tags/caching"
     }
   }
 }
