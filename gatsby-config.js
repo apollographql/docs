@@ -1,4 +1,9 @@
 const {algoliaSettings} = require('apollo-algolia-transform');
+const {
+  remarkTypescript,
+  highlightPreservation,
+  isWrapped
+} = require('remark-typescript');
 const {query, transformer} = require('./algolia');
 const yaml = require('js-yaml');
 const fs = require('fs');
@@ -106,9 +111,10 @@ const plugins = [
       gatsbyRemarkPlugins,
       remarkPlugins: [
         [
-          require('remark-typescript'),
+          remarkTypescript,
           {
-            wrapperComponent: 'MultiCodeBlock',
+            filter: isWrapped({wrapperComponent: 'MultiCodeBlock'}),
+            customTransformations: [highlightPreservation()],
             prettierOptions: {
               trailingComma: 'all',
               singleQuote: true
