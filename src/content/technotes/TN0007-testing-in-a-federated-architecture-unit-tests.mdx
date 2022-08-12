@@ -58,15 +58,27 @@ Follow these best practices when creating integration tests for your supergraph:
 
 Depending on your schema, you may not start from the query node in a subgraph. The integration tests in this situation involves mimicking the gateway/router. You can execute [a query against `_entities`](/federation/federation-spec/#resolve-requests-for-entities) to do integration tests. This looks like the following:
 
-```js
-const query = `query GetEntities($representations: [_Any!]!) {
+```graphql
+query GetEntities($representations: [_Any!]!) {
   _entities(representations: $representations) {
    ... on User {
      firstName
    }
   }
-}`;
-``;
+}
+```
+
+with the following input
+
+```json
+{
+  "representations": [
+    {
+      "__typename": "User",
+      "id": "5"
+    }
+  ]
+}
 ```
 
 For more information, see [`Query._entities`](/federation/subgraphs#query_entities).
