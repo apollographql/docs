@@ -91,11 +91,7 @@ You might need to set higher CPU and memory limits on your Apollo Gateway pods. 
 - Subgraph latency
 - Use of shared caches
 
-In general, look at increasing memory limits as Node.js is single-threaded and cannot use more than one CPU. Additionally, we recommend keeping CPU utilization below 50% if possible.
-
-At higher CPU utilization percentages, you may start to see event loop lag increase relative to usage which negatively impacts performance. Monitoring both metrics can help provide a clearer image of bottlenecks beyond just code profiling alone.
-
-Additionally, we recommend keeping CPU utilization below 50%. At higher CPU utilization percentages, you may start to see event loop delays increase relative. Monitoring both metrics can help provide a clearer image of bottlenecks beyond just code profiling alone.
+In general, look at increasing memory limits as Node.js is single-threaded and cannot use more than one CPU. That being said, we recommend keeping CPU utilization below 50%. At higher CPU utilization percentages, you may start to see event loop delays increase relative. Monitoring both memory usage and CPU upsage metrics can help provide a clearer image of bottlenecks beyond just code profiling alone.
 
 If CPU throttling becomes a problem, consider removing the limits on your gateway pods as discussed in [this blog post on Kubernetes resource limits](https://erickhun.com/posts/kubernetes-faster-services-no-cpu-limits/).
 
