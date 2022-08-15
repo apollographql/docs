@@ -8,7 +8,34 @@ For example, here's an embedded Explorer for an Apollo example graph. Try it out
 
 <EmbeddableExplorer />
 
-## Setup
+## Embedding on the Apollo Server landing page
+In Apollo Server [v3.8.0](https://github.com/apollographql/apollo-server/blob/main/CHANGELOG.md#v380) and later, you can use a built-in plugin to embed the Explorer directly on your server's landing page.
+
+You use the `ApolloServerPluginLandingPageLocalDefault` plugin to configure the landing page in your local development environment, and you use `ApolloServerPluginLandingPageProductionDefault` for production environments:
+
+```js
+const {
+ ApolloServerPluginLandingPageProductionDefault,
+ ApolloServerPluginLandingPageLocalDefault
+} = require('apollo-server-core');
+
+let plugins = [];
+if (process.env.NODE_ENV === 'production') {
+  plugins = [ApolloServerPluginLandingPageProductionDefault({ embed: true, graphRef: 'myGraph@prod' })]
+} else {
+  plugins = [ApolloServerPluginLandingPageLocalDefault({ embed: true })]
+}
+
+const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    plugins
+});
+```
+
+For more information, see the [landing page plugin API reference](/apollo-server/api/plugin/landing-pages/#default-behavior).
+
+## Embedding on an arbitrary webpage
 
 1. <a href="https://studio.apollographql.com/" target="_blank">
      Go to Apollo Studio
@@ -39,7 +66,7 @@ For example, here's an embedded Explorer for an Apollo example graph. Try it out
 
 > For descriptions of options shown in the dialog (along with advanced options that _aren't_ shown), [see below](#options).
 
-### Embedding with a default operation
+### Setting a default operation
 
 You can prepopulate your embedded Explorer with an operation from one of your existing Explorer tabs. If you do, the embedded Explorer includes all of the following automatically on load:
 
