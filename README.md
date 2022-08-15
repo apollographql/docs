@@ -414,7 +414,7 @@ This content will be hidden by default, but can be expanded if the user clicks o
 
 ##### MultiCodeBlock
 
-Wrap TypeScript code blocks in a `MultiCodeBlock` component to automatically transpile them into JavaScript. A language dropdown will be rendered in the top right corner of the code block for the user to switch between the two options. This feature works on code blocks tagged with `ts` or `tsx`.
+Wrap TypeScript code blocks in a `MultiCodeBlock` component to automatically transpile them into JavaScript. A languages will be rendered as tabs above the code block for the user to switch between the two options. This feature works on code blocks tagged with `ts` or `tsx`.
 
 You can also manually add multiple code blocks with different languages to the `MultiCodeBlock` to have them behave the same way.
 
