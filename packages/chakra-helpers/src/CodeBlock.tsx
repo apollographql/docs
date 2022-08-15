@@ -18,7 +18,7 @@ import {FiCheck} from '@react-icons/all-files/fi/FiCheck';
 import {FiClipboard} from '@react-icons/all-files/fi/FiClipboard';
 import {FiEyeOff} from '@react-icons/all-files/fi/FiEyeOff';
 import {colors} from '@apollo/space-kit/colors';
-import {getNormalizedLanguage} from './helpers';
+import {getNormalizedLanguage} from './language-util';
 import {usePrismTheme} from './prism';
 
 const CODE_BLOCK_SPACING = 4;
@@ -119,7 +119,7 @@ export const CodeBlock = ({
   const blockLanguage = getNormalizedLanguage(language);
 
   return (
-    <Box display="flex" flexDir="column">
+    <Box>
       {!isPartOfMultiCode && (
         <CodeBlockTabs
           languages={[blockLanguage]}
@@ -164,8 +164,7 @@ export const CodeBlock = ({
           return (
             <Box
               rounded="md"
-              borderTopLeftRadius="none"
-              borderTopRightRadius="none"
+              roundedTop="none"
               style={style}
               pos="relative"
               borderWidth="1px"

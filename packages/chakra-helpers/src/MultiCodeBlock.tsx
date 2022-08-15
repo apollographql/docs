@@ -7,7 +7,7 @@ import React, {
 import {Box, Flex} from '@chakra-ui/react';
 import {CodeBlockProps} from './CodeBlock';
 import {CodeBlockTabs} from './CodeBlockTabs';
-import {getNormalizedLanguage} from './helpers';
+import {getNormalizedLanguage} from './language-util';
 
 export const MultiCodeBlockContext = createContext<{
   language: string | null;

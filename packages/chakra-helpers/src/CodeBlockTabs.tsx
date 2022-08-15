@@ -3,10 +3,8 @@ import {
   Box,
   Button,
   ButtonGroup,
-  ColorMode,
   Flex,
   FlexProps,
-  useColorMode,
   useColorModeValue,
   useToken
 } from '@chakra-ui/react';
@@ -15,7 +13,7 @@ import {BsChevronRight} from '@react-icons/all-files/bs/BsChevronRight';
 import {GA_EVENT_CATEGORY_CODE_BLOCK} from './CodeBlock';
 import {MultiCodeBlockContext} from './MultiCodeBlock';
 import {TinyColor} from '@ctrl/tinycolor';
-import {getIconComponent} from './helpers';
+import {getIconComponent} from './language-util';
 import {usePrismTheme} from './prism';
 
 function getTabButtonProps(
@@ -23,8 +21,6 @@ function getTabButtonProps(
   visible: boolean,
   gradientColor: TinyColor
 ): FlexProps {
-  // const gradientColor = colorMode === 'light' ? '255,255,255' : '0,0,0';
-
   const endColor = gradientColor.clone().setAlpha(0);
 
   return {
@@ -97,21 +93,18 @@ export const CodeBlockTabs = ({
   );
 
   // Determine which arrows (if any) need to be shown
-  let showArrows = false;
-  if (
+  const showArrows = Boolean(
     innerRef.current &&
-    outerRef.current &&
-    innerRef.current.clientWidth > outerRef.current.clientWidth
-  ) {
-    showArrows = true;
-  }
+      outerRef.current &&
+      innerRef.current.clientWidth > outerRef.current.clientWidth
+  );
   // Determine if the left or right arrows should be shown based on overall
   // visibility, and the scroll position
   const showLeftArrow = showArrows && scrollPosition > 0;
   const showRightArrow = showArrows && scrollPosition < 1;
 
   return (
-    <Box pos="relative" pt="1">
+    <Box pos="relative" pt="1" zIndex="0">
       <Flex
         {...getTabButtonProps('LEFT', showLeftArrow, gradientColor)}
         onClick={bumpScroll(-120)}
@@ -149,8 +142,7 @@ export const CodeBlockTabs = ({
                   event_label: language
                 });
               }}
-              borderBottomLeftRadius="none"
-              borderBottomRightRadius="none"
+              roundedBottom="none"
               bg={
                 language !== activeLanguage
                   ? theme.plain.backgroundColor
