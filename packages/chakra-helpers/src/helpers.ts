@@ -66,11 +66,12 @@ export const createColorPalette = (color: ColorPalette): ColorHues => ({
   900: color.darkest
 });
 
-export function getNormalizedLanguage(language: string): string {
-  const classless = language
-    .replace(/language-/g, '')
-    .toLocaleLowerCase()
-    .replace(/:.*/g, '');
+export function getNormalizedLanguage(language?: string): string {
+  const classless =
+    language
+      ?.replace(/language-/g, '')
+      .toLocaleLowerCase()
+      .replace(/:.*/g, '') ?? '';
   switch (classless) {
     case 'js':
     case 'jsx':

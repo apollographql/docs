@@ -1,26 +1,47 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
-import {Box, Button, ButtonGroup, Flex, FlexProps} from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  ColorMode,
+  Flex,
+  FlexProps,
+  useColorMode,
+  useColorModeValue,
+  useToken
+} from '@chakra-ui/react';
 import {BsChevronLeft} from '@react-icons/all-files/bs/BsChevronLeft';
 import {BsChevronRight} from '@react-icons/all-files/bs/BsChevronRight';
 import {GA_EVENT_CATEGORY_CODE_BLOCK} from './CodeBlock';
 import {MultiCodeBlockContext} from './MultiCodeBlock';
+import {TinyColor} from '@ctrl/tinycolor';
 import {getIconComponent} from './helpers';
 import {usePrismTheme} from './prism';
 
-function getTabButtonProps(loc: 'LEFT' | 'RIGHT', visible: boolean): FlexProps {
+function getTabButtonProps(
+  loc: 'LEFT' | 'RIGHT',
+  visible: boolean,
+  gradientColor: TinyColor
+): FlexProps {
+  // const gradientColor = colorMode === 'light' ? '255,255,255' : '0,0,0';
+
+  const endColor = gradientColor.clone().setAlpha(0);
+
   return {
     pos: 'absolute',
-    left: loc === 'LEFT' ? 0 : undefined,
-    right: loc === 'RIGHT' ? 0 : undefined,
+    left: loc === 'LEFT' ? '-1px' : undefined,
+    right: loc === 'RIGHT' ? '-1px' : undefined,
     top: '0',
     bottom: '0',
     alignItems: 'center',
     justifyContent: loc === 'LEFT' ? 'flex-start' : 'flex-end',
     zIndex: '99',
     width: '8',
-    background: `linear-gradient(${
-      loc === 'LEFT' ? '90deg' : '270deg'
-    }, rgba(255,255,255,0.9) 50%, rgba(255,255,255,0) 100%)`,
+    background: `linear-gradient(${[
+      loc === 'LEFT' ? '90deg' : '270deg',
+      `${gradientColor.toRgbString()} 50%`,
+      endColor.toRgbString()
+    ]})`,
     opacity: visible ? 1 : 0,
     pointerEvents: visible ? 'all' : 'none',
     transition: 'all 250ms ease-in-out',
@@ -69,6 +90,11 @@ export const CodeBlockTabs = ({
   const {setLanguage} = useContext(MultiCodeBlockContext);
 
   const theme = usePrismTheme();
+  const bgColor = useToken('colors', 'gray.800');
+  const gradientColor = useColorModeValue(
+    new TinyColor('white'),
+    new TinyColor(bgColor)
+  );
 
   // Determine which arrows (if any) need to be shown
   let showArrows = false;
@@ -87,7 +113,7 @@ export const CodeBlockTabs = ({
   return (
     <Box pos="relative" pt="1">
       <Flex
-        {...getTabButtonProps('LEFT', showLeftArrow)}
+        {...getTabButtonProps('LEFT', showLeftArrow, gradientColor)}
         onClick={bumpScroll(-120)}
       >
         <BsChevronLeft />
@@ -141,7 +167,7 @@ export const CodeBlockTabs = ({
         </ButtonGroup>
       </Box>
       <Flex
-        {...getTabButtonProps('RIGHT', showRightArrow)}
+        {...getTabButtonProps('RIGHT', showRightArrow, gradientColor)}
         onClick={bumpScroll(120)}
       >
         <BsChevronRight />
