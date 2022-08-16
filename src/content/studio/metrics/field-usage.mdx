@@ -3,7 +3,9 @@ title: Measuring field usage in Apollo Studio
 description: Understand which fields your clients use
 ---
 
-In Apollo Studio, your graph's **Fields** page can display a table of usage metrics for each field in your schema. For example, here are metrics for the fields of a `BuildError` type:
+> For details on setting up field metrics reporting to Apollo Studio, see [Reporting field usage](#reporting-field-usage).
+
+In Apollo Studio, your graph's **Fields** page can display a table of basic usage metrics for each field in your schema. For example, here are metrics for the fields of a `BuildError` type:
 
 <img
   src="../img/fields-page.jpg"
@@ -12,9 +14,17 @@ In Apollo Studio, your graph's **Fields** page can display a table of usage metr
   width="700"
 />
 
-You can click any field in the table to view details about which clients and operations contribute to its usage.
+You can click any field in the table to open its **Field Insights** page. This page displays in-depth details about which clients and operations contribute to the field's usage, along with performance metrics:
 
-The table displays some combination of the following metrics for each field, depending on what data is available:
+<img
+  src="../img/field-insights.jpg"
+  class="screenshot"
+  alt="Field Insights page"
+/>
+
+## Field executions vs. requesting operations
+
+The table on the Fields page displays some combination of the following metrics for each field, depending on which data your graph reports to Studio:
 
 | Metric                 | Description                                                                                                                          |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
@@ -22,8 +32,6 @@ The table displays some combination of the following metrics for each field, dep
 | Requested by operations | How many operations sent by clients over a given time period have included the field, according to metrics provided by your servers. |
 
 For each of these columns to appear on the Fields page, your GraphQL servers must [report the associated metrics to Apollo Studio](#reporting-field-usage). If some but not _all_ of your GraphQL servers report this data, the Fields page presents an incomplete picture of your graph's field usage.
-
-## Field executions vs. requesting operations
 
 Let's look at the example metrics for the `BuildError` type again:
 
