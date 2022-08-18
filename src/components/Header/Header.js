@@ -52,7 +52,7 @@ export function Header({children, algoliaFilters}) {
   const {toggleColorMode, colorMode} = useColorMode();
   const [tagBg, tagTextColor] = useTagColors();
   return (
-    <Box pos="sticky" top="0" zIndex="1">
+    <Box pos="sticky" top="0" zIndex="2">
       <Flex
         align="center"
         as="header"
