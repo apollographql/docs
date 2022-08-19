@@ -39,6 +39,13 @@ const isHighlightStart = (line, comment = 'highlight-start') =>
 
 const isHighlightEnd = line => isHighlightStart(line, 'highlight-end');
 
+const getCodeWithoutHighlightComments = (code: string) => {
+  const highlightRegex =
+    /\/\/ (highlight-line|highlight-start|highlight-end)$/gm;
+
+  return code.replace(highlightRegex, '');
+};
+
 type MarkdownCodeBlockProps = {
   children: ReactNode;
   isPartOfMultiCode?: boolean;
@@ -106,7 +113,9 @@ export const CodeBlock = ({
   disableCopy = false,
   isPartOfMultiCode = false
 }: CodeBlockProps): JSX.Element => {
-  const {onCopy, hasCopied} = useClipboard(code);
+  const {onCopy, hasCopied} = useClipboard(
+    getCodeWithoutHighlightComments(code)
+  );
   const [hidden, setHidden] = useState(defaultHidden);
 
   const theme = usePrismTheme();
