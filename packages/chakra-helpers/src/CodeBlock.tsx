@@ -40,9 +40,8 @@ const isHighlightStart = (line, comment = 'highlight-start') =>
 const isHighlightEnd = line => isHighlightStart(line, 'highlight-end');
 
 const getCodeWithoutHighlightComments = (code: string) => {
-  const highlightRegex = new RegExp(
-    /\/\/ (highlight-line|highlight-start|highlight-end)$/gm
-  );
+  const highlightRegex =
+    /\/\/ (highlight-line|highlight-start|highlight-end)$/gm;
 
   return code.replace(highlightRegex, '');
 };
