@@ -24,7 +24,11 @@ Apollo Studio can perform the following types of schema checks:
 
 - [**Composition checks.**](#federated-composition-checks) For [federated graphs](/federation/), verify whether your proposed changes to a subgraph schema will successfully compose with your _other_ registered subgraph schemas.
 
-> Most of this article covers operation checks. For details on composition checks, [see this section](#federated-composition-checks).
+- **[Contract checks](./contracts/#contract-checks) (enterprise only).** When running schema checks on a source variant, also check whether your proposed schema changes will break any downstream contract variants.
+
+> **Most of this article covers operation checks.**
+> * For details on composition checks, [see this section](#federated-composition-checks).
+> * For details on contract checks, [see this article](./contracts/#contract-checks).
 
 ## Prerequisites
 
@@ -174,7 +178,7 @@ Results of both check types are available in Studio from your graph's Checks tab
   width="300"
 />
 
-You can click on a composition check to view its result. If composition succeeded, you can view the composed supergraph schema. Regardless of success, you can view the subgraph schema.
+You can click on a composition check to view its result. If composition succeeded, you can view the composed supergraph schema. Regardless of success, you can view the proposed subgraph schema.
 
 The `rover subgraph check` command returns a nonzero result if a composition check _or_ operation check fails.
 
@@ -220,7 +224,7 @@ jobs:
       # commands against it.
       - run: sleep 5
 
-      # In CI environments, this command authenticates with the `APOLLO_KEY`
+      # In CI environments, this command authenticates via the `APOLLO_KEY`
       # environment variable.
       - run: rover graph check docs-example-graph@current --schema ./schema.graphql
 ```
@@ -245,13 +249,13 @@ See [Configuring schema checks](./check-configurations/).
 
 ## Types of schema changes
 
-Not every change to a schema is a potentially breaking change. Additive changes (such as adding a field to a type) are typically safe and do not affect active clients. Deletions and modifications (such as removing a field or changing a return type), however, can break clients that use affected types and fields.
+Not every change to a schema is a potentially breaking change. Additive changes (such as adding a field to a type) are usually safe and do not affect active clients. Deletions and modifications (such as removing a field or changing a return type), however, can break clients that use affected types and fields.
 
 ### Potentially breaking changes
 
 #### Removals
 
-These changes remove a schema element. If a removed element is actively being used by an operation, your graph will return an error to affected clients.
+These changes remove a schema element. If a removed element is actively being used by an operation, that operation will start returning an error.
 
 | Name                          | Description                                                                                                                               |
 | ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
@@ -333,4 +337,4 @@ These changes are detected by schema checks, but they are "safe." They never aff
 
 #### Operation Cardinality
 
-Checks will run against a maximum of 10,000 distinct operations. A warning message will display on the UI when a larger cardinality has been reached. 
+Checks will run against a maximum of 10,000 distinct operations. A warning message will display on the UI when a larger cardinality has been reached.
