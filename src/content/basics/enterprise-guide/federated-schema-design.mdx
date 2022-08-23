@@ -40,7 +40,7 @@ extend type Product @key(fields: "upc") {
 
 Note that the GraphQL spec-compliant `extend` keyword is used before the referenced `Product` type, indicating that this type was defined in another subgraph. The `@key` directive indicates that the reviews service will be able to identify a product by its UPC value and therefore be able to connect to a product based on its `upc` primary key field, but the reviews service does not need to be aware of any other details about a given product. The `@external` directive is required on the `upc` field in the `Product` definition in the review service to indicate that the field originates in another service.
 
-Referencing entities is a key feature of federation, but it's only half of the story. While an entity will be owned by a single subgraph, other services may wish to add additional fields to the entity's type to provide a more holistic representation of the entity in the graph. Doing so is a simple as adding the additional field to the extended type in a non-originating service. For example, a reviews service's schema may add a `reviews` field to the extended `Producs` type that was originally defined in the products subgraph:
+Referencing entities is a key feature of federation, but it's only half of the story. While an entity will be owned by a single subgraph, other services may wish to add additional fields to the entity's type to provide a more holistic representation of the entity in the graph. Doing so is a simple as adding the additional field to the extended type in a non-originating service. For example, a reviews service's schema may add a `reviews` field to the extended `Product` type that was originally defined in the products subgraph:
 
 ```graphql title="Reviews Subgraph"
 type Review {
@@ -146,7 +146,7 @@ A good GraphQL schema will convey meaning about the underlying nodes in a graph,
 >
 > — Phil Karlton
 
-Arguably, the "naming things" aspect of this observation grows even more challenging when trying to name things consistently across a distributed GraphQL architecture supported by many teams! (Same goes for caching, but we'll cover that topic separately in a later on.)
+Arguably, the "naming things" aspect of this observation grows even more challenging when trying to name things consistently across a distributed GraphQL architecture supported by many teams! (The same goes for caching, but we'll cover that topic separately later on.)
 
 Being consistent about how you name things may go without saying, but it’s even more important when composing schemas from multiple subgraphs into a single federated GraphQL API. The [One Graph principle](https://principledgraphql.com/integrity/#1-one-graph) that drives federation is meant to help improve consistency for clients, and that consistency should include naming conventions. For example, having a `users` query defined in one service and a `getProducts` query defined in another doesn't provide a very consistent or predictable experience for graph consumers. Similar to fields, type naming and name-spacing conventions should also be standardized across the graph.
 
@@ -171,7 +171,7 @@ While it's still important to ensure that we don't expose unneeded fields in a s
 
 Convoluted input types can also complicate the observability story for your graph. If an input is used to contain query arguments, then each additional field added to the input can make it increasingly opaque as to what field may be the root cause of a particularly slow query when viewing an operation's traces in your observability tools.
 
-Taking a finer-grained approach also applies to update-related mutations. For example, rather than having a single `updateAccount` mutations to rule them all, use more purpose-driven mutations when these values are updated independently by clients. For example, consider this series of mutations used to update a user's account information:
+Taking a finer-grained approach also applies to update-related mutations. For example, rather than having a single `updateAccount` mutation to rule them all, use more purpose-driven mutations when these values are updated independently by clients. For example, consider this series of mutations used to update a user's account information:
 
 ```graphql
 extend type Mutation {
@@ -233,13 +233,13 @@ All fields in GraphQL are nullable by default and it's often best to err on the 
 
 Including non-null fields and arguments in a schema makes that schema harder to evolve where a client expects a previously non-null field's value to be provided in a response. For example, if a non-null `email` field on a `User` type is converted to a nullable field, will the clients that use that field be prepared to handle this potentially null value after the schema is updated? Similarly, if the schema changes in such a way that a client is suddenly expected to send a previously nullable argument with a request, then this may also result in a breaking change.
 
-While it's important to make informed decisions about nullability when initially designing a service's schema, you will inevitably be faced with making a breaking change of this nature as a schema naturally evolves. When this happens, GraphQL observability tools that give you insight into how those fields are used currently in different operations and across different clients. This visibility will help you identify issues proactively and allow you to communicate these changes to impacted clients in advance so they can avoid unexpected errors.
+While it's important to make informed decisions about nullability when initially designing a service's schema, you will inevitably be faced with making a breaking change of this nature as a schema naturally evolves. When this happens, GraphQL observability tools can give you insight into how those fields are used currently in different operations and across different clients. This visibility will help you identify issues proactively and allow you to communicate these changes to impacted clients in advance so they can avoid unexpected errors.
 
 ### Minimize nullable arguments and input fields
 
 As mentioned previously, converting a nullable argument or input field for a mutation to non-null may lead to breaking changes for clients. As a result, specifying non-null arguments and input fields on mutations can help you avoid this breaking change scenario in the future. Doing so, however, will typically require that you design finer-grained mutations and avoid using "everything but the kitchen sink" input types as arguments that are filled with nullable fields to account for all possible use cases.
 
-This approach also enhances the overall expressiveness of the schema and provides more transparency in your observability tools about how arguments impact overall performance (this is especially true for queries). What's more, it also shifts the burden away from graph consumers to guess exactly which fields need to be included in mutation to achieve their desired result.
+This approach also enhances the overall expressiveness of the schema and provides more transparency in your observability tools about how arguments impact overall performance (this is especially true for queries). What's more, it also shifts the burden away from graph consumers to guess exactly which fields need to be included in a mutation to achieve their desired result.
 
 And as an additional tip when you do use nullable arguments and input fields, consider providing a default value to improve the overall expressiveness of a schema by making default behaviors more transparent. In our previous `products` query example, we can improve the `type` argument by adding an `ALL` value to its corresponding `ProductType` enum and setting the default value to `ALL`. As a result, we no longer need to provide specific directions about this behavior in the argument's description string:
 
@@ -505,7 +505,7 @@ query GetSuggestedProductsForUser {
 }
 ```
 
-Because we are queuing a union type, an inline fragment is used to handle the fields relevant to each union member. The `__typename` field has been added to the operation document to help the client conditionally render elements in the user interface based on the returned type.
+Because we are querying a union type, an inline fragment is used to handle the fields relevant to each union member. The `__typename` field has been added to the operation document to help the client conditionally render elements in the user interface based on the returned type.
 
 Through this example, we can begin to see how errors as data help support graph consumers in several compelling ways. First, creating a union of happy and unhappy paths provides type safety for these potential states, which in turn makes operation outcomes more predictable for clients and allows you to evolve those states more transparently as a part of the schema.
 
