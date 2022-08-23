@@ -5,6 +5,7 @@ const {
 const {join} = require('path');
 const {v5} = require('uuid');
 const {kebabCase} = require('lodash');
+const {execSync} = require('child_process');
 
 exports.sourceNodes = ({
   actions: {createNode},
@@ -65,6 +66,20 @@ exports.onCreateNode = async ({node, getNode, loadNodeContent, actions}) => {
         name: 'slug',
         // prefix slugs with their docset path (configured by source name)
         value: join('/', sourceInstanceName, filePath)
+      });
+
+      // Add Git info to MD/MDX files for recent updated info
+      // Can replace with '@colliercz/gatsby-transformer-gitinfo' once this issues is resolved
+      //  - https://github.com/CollierCZ/gatsby-transformer-gitinfo/issues/142
+      // For now see:
+      //  - https://stackoverflow.com/questions/56025679/how-to-get-last-update-date-of-a-blog-post-in-gatsby-js
+      const gitAuthorTime = execSync(
+        `git log -1 --pretty=format:%aI ${node.fileAbsolutePath}`
+      ).toString();
+      actions.createNodeField({
+        node,
+        name: 'gitAuthorTime',
+        value: gitAuthorTime
       });
       break;
     }
