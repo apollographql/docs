@@ -173,3 +173,20 @@ const gateway = new ApolloGateway({
 The most straightforward option for updating your supergraph schema is to restart all of your gateway or router instances. If you pass your supergraph schema file to these instances via a build process (such as a Docker image), you can redeploy for your changes to take effect.
 
 **This method is _not_ recommended,** because the restart can potentially cause downtime for your supergraph. The methods described above can update your supergraph schema _without_ requiring redeployment.
+
+## Local Development with `IntrospectAndCompose`
+
+If you are using `@apollo/gateway` locally and have access to query subgraphs ([not through public internet](https://www.apollographql.com/docs/enterprise-guide/graph-security/#only-allow-the-gateway-to-query-subgraphs-directly)), you can use [IntrospectAndCompose](https://www.apollographql.com/docs/federation/api/apollo-gateway/#class-introspectandcompose).
+
+```javascript
+const gateway = new ApolloGateway({
+  supergraphSdl: new IntrospectAndCompose({
+    subgraphs: [
+      { name: 'products', url: 'https://products-service.dev/graphql' },
+      { name: 'reviews', url: 'https://reviews-service.dev/graphql' },
+    ],
+  }),
+});
+```
+
+This will use the [`_service` field](https://www.apollographql.com/docs/federation/federation-spec#query_service) to fetch the schema information directly from a running subgraph instead of fetching from Studio. If you are using [Managed Federation](https://www.apollographql.com/docs/federation/managed-federation/overview/) then this field is not needed.
