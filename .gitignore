@@ -7,3 +7,4 @@ local
 .env
 .volta
 .idea
+pnpm-lock.yaml
