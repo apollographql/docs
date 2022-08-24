@@ -7,19 +7,23 @@ import {graphql} from 'gatsby';
 
 export const pageQuery = graphql`
   query AllTechNotesWithTag($tag: String) {
-    notes: allMdx(
-      filter: {frontmatter: {tags: {in: [$tag]}}}
-      sort: {fields: frontmatter___title, order: ASC}
+    notes: allFile(
+      filter: {childMdx: {frontmatter: {tags: {in: [$tag]}}}}
+      sort: {fields: childMdx___frontmatter___title, order: ASC}
       limit: 2000
     ) {
       nodes {
-        id
         fields {
-          gitAuthorTime
-          slug
+          gitLogLatestDate
         }
-        frontmatter {
-          title
+        childMdx {
+          id
+          fields {
+            slug
+          }
+          frontmatter {
+            title
+          }
         }
       }
     }

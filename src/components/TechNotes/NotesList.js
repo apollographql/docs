@@ -7,15 +7,15 @@ export function NotesList({notes}) {
   return (
     <List spacing="1">
       {notes.map(note => (
-        <ListItem key={note.id}>
+        <ListItem key={note.childMdx.id}>
           <Flex justify="space-between">
-            <RelativeLink href={note.fields.slug}>
-              {note.frontmatter.title}
+            <RelativeLink href={note.childMdx.fields.slug}>
+              {note.childMdx.frontmatter.title}
             </RelativeLink>
             <span>
               Last Updated{' '}
               {new Intl.DateTimeFormat('en-US').format(
-                new Date(note.fields.gitAuthorTime)
+                new Date(note.fields.gitLogLatestDate)
               )}
             </span>
           </Flex>
