@@ -194,7 +194,7 @@ Your GraphQL server can report metrics for field executions, requesting operatio
 
 ### Prerequisites
 
-> ⚠️ Before continuing, make sure you've configured your GraphQL server to [push metrics to Apollo Studio](./usage-reporting/) .
+> ⚠️ Before continuing, make sure you've configured your Apollo Gateway or individual GraphQL server to [push metrics to Apollo Studio](./usage-reporting/) .
 
 To report each type of field usage metric to Apollo, make sure your graph meets the prerequisites for that metric:
 
@@ -211,6 +211,10 @@ To report metrics for field executions, your GraphQL server can run any recent v
 If you have a [federated graph](https://apollographql.com/docs/federation), your subgraphs must support federated tracing. For compatible libraries, see the **FTV1** column of [this table](https://www.apollographql.com/docs/federation/other-servers/).
 
 > If _some_ of your subgraphs support federated tracing and others _don't_, only field executions in compatible subgraphs are reported to Apollo.
+
+### Reporting with Federation
+
+If you are using [Apollo Federation](https://apollographql.com/docs/federation), only the [Gateway](https://www.apollographql.com/docs/federation/gateway) or [Router](https://www.apollographql.com/docs/router/) needs to be configured to [send metrics to Studio](./usage-reporting/). Subgraphs do not need to send any metrics to Studio directly, as they will send GraphQL specific metrics to the Gateway/Router which will then be responsible for publishing data.
 
 ### Performance considerations
 
