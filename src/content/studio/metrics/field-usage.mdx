@@ -206,7 +206,7 @@ If you have a [federated graph](https://apollographql.com/docs/federation), your
 
 ### Reporting with Federation
 
-If you are using [Apollo Federation](https://apollographql.com/docs/federation), only the [Gateway](https://www.apollographql.com/docs/federation/gateway) or [Router](https://www.apollographql.com/docs/router/) needs to be configured to [send metrics to Studio](./usage-reporting/). Subgraphs do not need to send any metrics to Studio directly. They will send GraphQL specific metrics to the Gateway/Router which will then be responsible for publishing data.
+If you are using [Apollo Federation](https://apollographql.com/docs/federation), only the [Gateway](https://www.apollographql.com/docs/federation/gateway) or [Router](https://www.apollographql.com/docs/router/) needs to be configured to [send metrics to Studio](./usage-reporting/). Subgraphs do not need to send any metrics to Studio directly, as they will send GraphQL specific metrics to the Gateway/Router which will then be responsible for publishing data.
 
 ### Performance considerations
 
