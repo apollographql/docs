@@ -172,6 +172,14 @@ const plugins = [
         }
       ]
     }
+  },
+  {
+    resolve: '@colliercz/gatsby-transformer-gitinfo',
+    // Will match all .md* files, except README.md
+    options: {
+      include: /\.md.*$/i,
+      ignore: /README/i
+    }
   }
 ];
 
