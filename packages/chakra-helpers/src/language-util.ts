@@ -43,6 +43,7 @@ export function getNormalizedLanguage(language?: string): string {
     case 'kotlin':
     case 'rust':
     case 'ruby':
+    case 'rhai':
       return classless[0].toLocaleUpperCase() + classless.slice(1);
     default:
       return classless;
