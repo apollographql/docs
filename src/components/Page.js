@@ -7,6 +7,7 @@ import ExpansionPanel, {
 import InlineCode from './InlineCode';
 import PageLayout, {usePageLayoutProps} from './PageLayout';
 import Pagination from './Pagination';
+import Prism from 'prismjs';
 import PropTypes from 'prop-types';
 import React, {Fragment, createElement, useMemo} from 'react';
 import RelativeLink, {ButtonLink} from './RelativeLink';
@@ -71,6 +72,9 @@ import 'prismjs/components/prism-swift';
 import 'prismjs/components/prism-tsx';
 import 'prismjs/components/prism-typescript';
 import 'prismjs/components/prism-yaml';
+
+// use JS syntax highlighting for rhai codeblocks
+Prism.languages.rhai = Prism.languages.javascript;
 
 const LIST_SPACING = 4;
 const HEADINGS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
