@@ -5,17 +5,18 @@
     "Home": "/",
     "Tags": {
       "auth": "/tags/auth",
+      "best practices": "/tags/best-practices",
+      "caching": "/tags/caching",
+      "contracts": "/tags/contracts",
+      "federation": "/tags/federation",
       "gateway": "/tags/gateway",
       "observability": "/tags/observability",
       "performance": "/tags/performance",
       "router": "/tags/router",
       "schema design": "/tags/schema-design",
       "server": "/tags/server",
-      "testing": "/tags/testing",
-      "best practices": "/tags/best-practices",
-      "caching": "/tags/caching",
-      "contracts": "/tags/contracts",
-      "sre": "/tags/sre"
+      "sre": "/tags/sre",
+      "testing": "/tags/testing"
     }
   }
 }
