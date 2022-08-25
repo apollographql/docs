@@ -15,7 +15,7 @@ export function NotesList({notes}) {
             <span>
               Last Updated{' '}
               {new Intl.DateTimeFormat('en-US').format(
-                new Date(note.fields.gitLogLatestDate)
+                new Date(note.fields?.gitLogLatestDate ?? Date.now())
               )}
             </span>
           </Flex>
