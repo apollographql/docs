@@ -10,7 +10,7 @@ There are three filter approaches to create a contract from a supergraph, and it
 
 ## Exclude tags (pruning approach)
 
-By far the easiest way to filter is using the excluded tags filter. While extremely easy to set up, we typically only recommend this in cases where accidental exposure of sensitive fields will be acceptable, such as beta APIs or similar.
+Using an "excludes" filter is the least amount of work, though the downside is it's easier to accidentally expose new fields if you forget to tag them appropriately. We only recommend this strategy only in cases where accidental exposure of sensitive fields will be acceptable, such as beta APIs or similar.
 
 Unless your organization has the ability to monitor schema changes and have an intake process, it's far too easy for developers to forget to tag a field that needs to be removed from the resulting supergraph, thus users are potentially able to access data they shouldn't be.
 
@@ -27,18 +27,18 @@ type User {
 }
 ```
 
-As you can see- it's not likely that `supportLevel` was intended to be left untagged, but if the company only _excluded_ the `internal` tag, they'd have exposed it in the resulting contract.
+It's likely that `supportLevel` has the same sensitivity as `supportNotes`, but the developer left off the tag, so it's now exposed in the contract.
 
 As a result, we find this approach best when it's acceptable to have fields exposed in the contract, such as the case with beta or bleeding-edge APIs where having the beta fields in the production variant wouldn't cause concern.
 
 ## Include tags (deny by default)
 
-While the include filter can be somewhat cumbersome to use initially, we feel that is the preferred way to create contracts in most cases given two key things.
+While the "includes" filter can be somewhat cumbersome to use, we feel that is the preferred way to create contracts in most cases given two key considerations:
 
 1. It's inherently easier to parse and reason with when working with the schema SDL. Having clear markings on what fields are exposed, alongside clear naming conventions, makes it a more intuitive way to work with Contracts.
-2. More importantly, it's far more secure vs. the exclude model given the more explicit nature of the filtering.
+2. More importantly, it's far more secure when compared to the "exclude" model given the more explicit nature of the filtering.
 
-To demonstrate why both of these is the case, let's take a look at the same type as before, but using an include model. This time, the company opted to use a `external` tag to denote what fields are external.
+To demonstrate why this is the case, let's take a look at the same type as before, but using an "include" model. This time, the company opted to use a `external` tag to denote what fields are exposed to external consumers.
 
 ```graphql
 type User {
@@ -51,7 +51,7 @@ type User {
 }
 ```
 
-Instead of having the two `support` fields denoted with a tag, we now are explicitly calling out which fields are exposed externally. This is also easier to understand the intent of the tag- a developer would know that the `id` is exposed to external parties.
+Instead of having the two `support` fields denoted with a tag, we now are explicitly calling out which fields are exposed externally. This is also easier to understand the intent of the tag—a developer would know that the `id` is exposed to external parties.
 
 Should the team wish to expose a new field and forget to tag it, it wouldn't be included in the resulting variant.
 
@@ -59,9 +59,9 @@ As a result, we recommend this approach when building anything that requires tha
 
 ## Include some tags & exclude others
 
-The last of the three options, this approach has specific use-cases in mind but are far more dependent on the schema you're working with. This filter method allows you to set a filter of included tags, but then refine by removing others.
+The last of the three options has specific use-cases but are far more dependent on the schema you're working with. This filter method allows you to set a filter of included tags, but then refine by removing others.
 
-Given that, we recommend considering this if you need to broadly include types (such as the above `User` type) but need to refine further with removing other fields. As a result, this typically works in the same situations as the exclude approach, but has some benefits by allowing you to explicitly defining types/fields that should be included explicitly alongside it avoiding some of the pitfalls of the exclude-only approach.
+We recommend considering this if you need to broadly include types (such as the above `User` type) but need to refine further with removing other fields. As a result, this typically works in the same situations as the exclude approach, but has some benefits by allowing you to explicitly defining types/fields that should be included explicitly alongside it avoiding some of the pitfalls of the exclude-only approach.
 
 As such, make sure to treat this as a combination of both of the previous approaches:
 
