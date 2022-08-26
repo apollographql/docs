@@ -1,0 +1,94 @@
+---
+title: Contracts usage patterns
+id: TN0014
+tags: [contracts, best practices]
+---
+
+[Contracts](/studio/contracts/) allow graph administrators to create a new supergraph based on a subset of another. Contracts allow teams to contribute to a single unified graph while also delivering use case-specific schemas to different types of consumers. Graph administrators use simple filter rules to generate Contract schemas that are a strict subset of the source supergraph.
+
+There are three filter approaches to create a contract from a supergraph, and it's important to know when to use each approach and why.
+
+## Exclude tags (pruning approach)
+
+By far the easiest way to filter is using the excluded tags filter. While extremely easy to set up, we typically only recommend this in cases where accidental exposure of sensitive fields will be acceptable, such as beta APIs or similar.
+
+Unless your organization has the ability to monitor schema changes and have an intake process, it's far too easy for developers to forget to tag a field that needs to be removed from the resulting supergraph, thus users are potentially able to access data they shouldn't be.
+
+As an example, let's look at a single subgraph using a tag `internal` to denote internal-only fields.
+
+```graphql
+type User {
+  id: ID!
+  email: String!
+  username: String!
+  description: String
+  supportNotes: [String!]! @tag(name: "internal")
+  supportLevel: Int!
+}
+```
+
+As you can see- it's not likely that `supportLevel` was intended to be left untagged, but if the company only _excluded_ the `internal` tag, they'd have exposed it in the resulting contract.
+
+As a result, we find this approach best when it's acceptable to have fields exposed in the contract, such as the case with beta or bleeding-edge APIs where having the beta fields in the production variant wouldn't cause concern.
+
+## Include tags (deny by default)
+
+While the include filter can be somewhat cumbersome to use initially, we feel that is the preferred way to create contracts in most cases given two key things.
+
+1. It's inherently easier to parse and reason with when working with the schema SDL. Having clear markings on what fields are exposed, alongside clear naming conventions, makes it a more intuitive way to work with Contracts.
+2. More importantly, it's far more secure vs. the exclude model given the more explicit nature of the filtering.
+
+To demonstrate why both of these is the case, let's take a look at the same type as before, but using an include model. This time, the company opted to use a `external` tag to denote what fields are external.
+
+```graphql
+type User {
+  id: ID! @tag(name: "external")
+  email: String! @tag(name: "external")
+  username: String! @tag(name: "external")
+  description: String @tag(name: "external")
+  supportNotes: [String!]!
+  supportLevel: Int!
+}
+```
+
+Instead of having the two `support` fields denoted with a tag, we now are explicitly calling out which fields are exposed externally. This is also easier to understand the intent of the tag- a developer would know that the `id` is exposed to external parties.
+
+Should the team wish to expose a new field and forget to tag it, it wouldn't be included in the resulting variant.
+
+As a result, we recommend this approach when building anything that requires that only specific fields are exposed to another audience, such as external or partner APIs.
+
+## Include some tags & exclude others
+
+The last of the three options, this approach has specific use-cases in mind but are far more dependent on the schema you're working with. This filter method allows you to set a filter of included tags, but then refine by removing others.
+
+Given that, we recommend considering this if you need to broadly include types (such as the above `User` type) but need to refine further with removing other fields. As a result, this typically works in the same situations as the exclude approach, but has some benefits by allowing you to explicitly defining types/fields that should be included explicitly alongside it avoiding some of the pitfalls of the exclude-only approach.
+
+As such, make sure to treat this as a combination of both of the previous approaches:
+
+- As you still rely on an exclude filter to refine the results, treat this approach much like the exclude approach discussed above. It can be easy to accidentally include fields as a result of still further refining using an exclude filter.
+- Use the include filter to ensure only the types/fields are being exposed that you want to expose.
+
+To wrap up the examples, the company decided to refactor to use this filtering approach:
+
+```graphql
+type User @tag(name:"external") {
+	id: ID!
+	email: String!
+	username: String!
+	description: String
+	support: SupportInformation! @tag(name:"internal")
+}
+
+type SupportInformation: @tag(name:"internal") {
+	level: Int!
+	supportNotes: [String!]!
+}
+```
+
+Now that they created a new type to house the support information, they tagged that with the `internal` tag- meaning they'd use that to exclude from the resulting external API, but the general `User` type would be included beyond the `support` field. Should the `support` field not be tagged, it would result in a composition error, providing some safety.
+
+This approach can be useful for a few situations. By allowing types to be tagged, it is possible to create “guardrails” against missing tags. As noted above, if a type is tagged but a field emitting that type is not, it will fail that contract's composition- so if the owning service can ensure that all types are tagged appropriately with the correct tag to filter, it can be a good way to still accomplish the exclude approach while getting some of the benefit of the include approach.
+
+On the other hand- this does mean that a strong governance program must be in place, otherwise it deals with the same issues as discussed in the exclude approach.
+
+Another possible use-case is to use this for documentation purposes, where including and omitting is far less of a concern vs. a realized API. Since a contract is just a graph variant, it is possible to link users to a contract's documentation, making it useful in this context as well.
