@@ -59,5 +59,9 @@ module.exports = {
   'platform-users': {
     remote: `https://svc-apollo-docs:${process.env.GITHUB_TOKEN}@github.com/apollographql/platform-users-docs`,
     branch: 'main'
+  },
+  platform: {
+    remote: `https://svc-apollo-docs:${process.env.GITHUB_TOKEN}@github.com/apollographql/platform-docs`,
+    branch: 'main'
   }
 };
