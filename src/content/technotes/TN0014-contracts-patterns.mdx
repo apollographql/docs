@@ -76,16 +76,16 @@ To wrap up the examples, let's look at the previous example where we've refactor
 
 ```graphql
 type User @tag(name:"external") {
-	id: ID!
-	email: String!
-	username: String!
-	description: String
-	support: SupportInformation! @tag(name: "internal")
+  id: ID!
+  email: String!
+  username: String!
+  description: String
+  support: SupportInformation! @tag(name: "internal")
 }
 
 type SupportInformation: @tag(name:"internal") {
-	level: Int!
-	supportNotes: [String!]!
+  level: Int!
+  supportNotes: [String!]!
 }
 ```
 
