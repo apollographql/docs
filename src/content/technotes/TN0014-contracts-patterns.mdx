@@ -4,13 +4,19 @@ id: TN0014
 tags: [contracts, best practices]
 ---
 
-[Contracts](/studio/contracts/) allow teams to contribute to a single unified graph while also delivering use case-specific schemas to different types of consumers. Graph administrators use simple filter rules to generate Contract schemas that are a strict subset of the source supergraph.
+[Contracts](/studio/contracts/) enable teams to contribute to a single unified graph while also delivering use-case-specific schemas to different types of consumers. Graph administrators define filter rules to generate **contract schemas** that are a strict subset of the source supergraph.
 
-There are three filter approaches to create a contract from a supergraph, and it's important to know when to use each approach and why.
+There are three different filtering strategies you can use for a contract:
 
-## Exclude tags (pruning approach)
+* Selective exclusion (pruning)
+* Selective inclusion (deny by default)
+* Combined exclusion and inclusion
 
-Using an "excludes" filter is the least amount of work, though the downside is it's easier to accidentally expose new fields if you forget to tag them appropriately. We only recommend this strategy only in cases where accidental exposure of sensitive fields will be acceptable, such as beta APIs or similar, or if your organization has strict governance and review policies in place.
+The sections below cover when to use each strategy and why.
+
+## Selective exclusion (pruning)
+
+Defining an "excludes" filter for a contract requires the least work, however it also carries the highest risk of exposing new schema fields if you forget to tag them appropriately. We recommend this strategy only in cases where accidental exposure of sensitive fields is acceptable (such as in a beta API), or if your organization has strict governance and review policies in place.
 
 As an example, let's look at a single subgraph using a tag `internal` to denote internal-only fields.
 
@@ -27,16 +33,16 @@ type User {
 
 It's likely that `supportLevel` has the same sensitivity as `supportNotes`, but the developer left off the tag, so it's now exposed in the contract.
 
-As a result, Apollo finds this approach best when it's acceptable to have fields exposed in the contract, such as the case with beta or bleeding-edge APIs where having the beta fields in the production variant wouldn't cause concern.
+As a result, Apollo finds this approach best when it's acceptable to have fields exposed in the contract, such as the case with beta or experimental APIs where having the beta fields in the production variant wouldn't cause concern.
 
-## Include tags (deny by default)
+## Selective inclusion (deny by default)
 
-While the "includes" filter can be somewhat cumbersome to use, we feel that is the preferred way to create contracts in most cases given two key considerations:
+Although the "includes" filter can be more cumbersome to use than "excludes", we recommend using it to create contracts in most cases for the following reasons:
 
-1. It's inherently easier to parse and reason with when working with the schema SDL. Having clear markings on what fields are exposed, alongside clear naming conventions, makes it a more intuitive way to work with Contracts.
-2. More importantly, it's far more secure when compared to the "exclude" model given the more explicit nature of the filtering.
+- It's more intuitive to reason with when working with the schema SDL. Having clear markings on which fields _are_ exposed, alongside clear naming conventions, provides an improved developer experience when working with contracts.
+2. It's much more secure when compared to the "exclude" strategy, given that new and potentially sensitive schema fields must be explicitly _added_ to a contract.
 
-To demonstrate why this is the case, let's take a look at the same type as before, but using an "include" model. This time, the company opted to use a `external` tag to denote what fields are exposed to external consumers.
+To demonstrate why this is the case, let's take a look at the same type as before, but using an "include" model. This time, the company opted to use an `external` tag to denote which fields are exposed to external consumers:
 
 ```graphql
 type User {
@@ -49,21 +55,21 @@ type User {
 }
 ```
 
-Instead of having the two `support` fields denoted with a tag, we now are explicitly calling out which fields are exposed externally. This is also easier to understand the intent of the tag—a developer would know that the `id` is exposed to external parties.
+Instead of tagging the two `support` fields to exclude them, we now explicitly denote which fields are exposed externally. This also more clearly conveys the intent of the tag—a developer would know that the `id` is exposed to external parties.
 
-Should the team wish to expose a new field and forget to tag it, it wouldn't be included in the resulting variant.
+If the team wants to expose a new field and forgets to tag it, it is _not_ included in the resulting contract variant.
 
 As a result, we recommend this approach when building anything that requires that only specific fields are exposed to another audience, such as external or partner APIs.
 
-## Include some tags & exclude others
+## Combined exclusion and inclusion
 
-The last of the three options has specific use-cases but are far more dependent on the schema you're working with. This filter method allows you to set a filter of included tags, but then refine by removing others.
+The last of the three options has specific use cases, but these are much more dependent on the schema you're working with. This filter method allows you to set a filter of included tags, but then refine that result by removing others.
 
 We recommend considering this if you need to broadly include types (such as the above `User` type) but need to refine further with removing other fields. As a result, this typically works in the same situations as the exclude approach, but has some benefits by allowing you to explicitly defining types/fields that should be included explicitly alongside it avoiding some of the pitfalls of the exclude-only approach.
 
 As such, make sure to treat this as a combination of both of the previous approaches:
 
-- As you still rely on an exclude filter to refine the results, treat this approach much like the exclude approach discussed above. It can be easy to accidentally include fields as a result of still further refining using an exclude filter.
+- Because you still rely on an exclude filter to refine the results, treat this approach much like the exclude approach discussed above. It's possible to accidentally include fields as a result of still further refining using an exclude filter.
 - Use the include filter to ensure only the types/fields are being exposed that you want to expose.
 
 To wrap up the examples, let's look at the previous example where we've refactored to use this filtering approach:
@@ -83,29 +89,30 @@ type SupportInformation: @tag(name:"internal") {
 }
 ```
 
-Now that we've created a new type to house the support information, we then tagged that with the `internal` tag- meaning we'd use that to exclude from the resulting external API, but the general `User` type would be included without the `support` field. Should the `support` field not be tagged, it would result in a composition error, providing some safety.
+Now that we've created a new type to house the support information, we tag that type with the `internal` tag. We'd use this tag to exclude the type from the resulting external API, but the general `User` type would be included without the `support` field. If the `support` field is not _also_ tagged as `internal`, it results in a composition error, providing some safety.
 
-This approach can be useful for a few situations. By allowing types to be tagged, it is possible to create “guardrails” against missing tags. As noted above, if a type is tagged but a field emitting that type is not, it will fail that contract's composition- so if the owning service can ensure that all types are tagged appropriately with the correct tag to filter, it can be a good way to still accomplish the exclude approach while getting some of the benefit of the include approach.
+By allowing types to be tagged, it's possible to create "guardrails" against missing tags. As noted above, if a type is tagged but a field emitting that type is not, it fails that contract's composition. If the owning service can ensure that all types are tagged appropriately with the correct tag to filter, it can be a good way to still accomplish the exclude approach while getting some of the benefit of the include approach.
 
-On the other hand, this does mean that a strong governance program must be in place, otherwise it deals with the same issues as discussed in the exclude approach.
+On the other hand, this does mean that a strong governance program must be in place. Otherwise, you can encounter the same issues as discussed in the exclude approach.
 
-Another possible use-case is to use this for documentation purposes, where including and omitting is far less of a concern vs. a realized API. Since a contract is just a graph variant, it is possible to link users to a contract's documentation, making it useful in this context as well.
+You can also use this strategy for documentation purposes, where including and omitting is much less of a concern compared to a realized API. Because a contract is just a graph variant, it's possible to link users to a contract's documentation, making it useful in this context as well.
 
-## Final consideration
+## Cross-subgraph tagging
 
-When considering the approaches described above, there is one more consideration you should have in mind when deciding the approach your company may take. As discussed above, your level of governance and adherence to those policies will help guide your decision making, but the reason why is not just due to forgetting to tag items.
+When considering the strategies described above, there's an additional composition behavior to be aware of: it's possible for a tag applied in one subgraph to affect fields that are defined in _another_ subgraph.
 
-It is important to know that it is also possible for other subgraph teams to tag types that are within another subgraph. As an example, we have two subgraphs shown below.
+As an example, consider these two subgraphs:
+
 
 ```graphql
-# subgraph a
+# Subgraph A
 type Document @key(fields: "id") {
   id: ID!
   name: String
   content: String
 }
 
-# subgraph b
+# Subgraph B
 type Document @key(fields: "id") @tag(name: "internal") {
   id: ID!
   reviewedBy: AdminUser
@@ -114,7 +121,7 @@ type Document @key(fields: "id") @tag(name: "internal") {
 }
 ```
 
-As you can see, the `Document` type was tagged as `internal` by subgraph `b`, which may have been intentional from the perspective of that team, as the intent was to tag only the new types added. Regardless, once the contract is built by Apollo Studio, the output will be:
+As shown above, the `Document` type is tagged as `internal` by Subgraph B, but _not_ by Subgraph A. When the contract schema is generated for this supergraph, the `Document` type definition looks like this:
 
 ```graphql
 type Document @key(fields: "id") @tag(name: "internal") {
@@ -127,4 +134,4 @@ type Document @key(fields: "id") @tag(name: "internal") {
 }
 ```
 
-This is due to the fact that tag inheritance is applied _after_ composition- so any tags added at the type level will be inherited after the types have had all other fields added to it. In effect, this means that what might be considered correct applications of tags in one service can have adverse impact on other subgraphs.
+This is due to the fact that tag inheritance is applied _after_ composition. Any tags added at the type level are inherited _after_ cross-subgraph entity definitions are merged. This means that what might be considered the "correct" application of a tag within one subgraph can adversely affect _other_ subgraphs and the resulting supergraph.
