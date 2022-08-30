@@ -56,7 +56,7 @@ _All_ data sent to Studio from Apollo Server and Apollo Router is transmitted us
 
 - Several fields _besides_ `data` from every operation response
 
-- The [query operation string](#query-operation-strings) for every executed operation
+- The [normalized query operation string](#query-operation-strings) for every executed operation
 
 - The time it takes each resolver to execute for every operation (Apollo Server only)
 
@@ -89,7 +89,7 @@ In Apollo Server, you can use the [usage reporting plugin's `rewriteError` optio
 
 ### Query operation strings
 
-Apollo Server and Apollo Router both report the string representation of each query operation to Apollo Studio. Consequently, **do not include sensitive data (such as passwords or personally identifiable information) in operation strings**. Instead, include this information in [GraphQL variables](#graphql-variables), which you can send selectively.
+Apollo Server and Apollo Router both report a normalized string representation of each query operation to Apollo Studio. By default, this [normalization algorithm](https://www.apollographql.com/docs/studio/metrics/operation-signatures/) will strip out string literals that are sent in arguments. However, we highly recommend that users **do not include sensitive data (such as passwords or personally identifiable information) in operation strings**. Instead, include this information in [GraphQL variables](#graphql-variables), which you can send selectively.
 
 ### GraphQL variables
 
