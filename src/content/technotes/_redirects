@@ -11,3 +11,4 @@
 /TN0009 /docs/technotes/TN0009-gateway-performance
 /TN0010 /docs/technotes/TN0010-response-type-pattern
 /TN0011 /docs/technotes/TN0011-response-cache-eviction
+/TN0012 /docs/technotes/TN0012-namespacing-by-separation-of-concern
