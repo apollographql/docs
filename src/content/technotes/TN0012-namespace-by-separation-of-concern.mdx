@@ -1,12 +1,12 @@
 ---
 title: Namespacing by separation of concerns
-id: TN0009
+id: TN0012
 tags: [schema, best practices]
 ---
 
 Most GraphQL APIs provide their capabilities as root-level fields of the `Query` and `Mutation` types, resulting in a flat structure. For example, the GitHub GraphQL API has approximately 200 of these root-level fields! Even with tools like the Apollo Explorer, navigating and understanding larger "flat" graphs can be difficult.
 
-To improve the logical organization of our graph's capabilities, we can define **namespaces** for our top-level operation fields. These are object types that in turn define query and mutation fields that are all related to a particular concern.
+To improve the logical organization of our graph's capabilities, we can define **namespaces** for our root-level operation fields. These are object types that in turn define query and mutation fields that are all related to a particular concern.
 
 For example, we can define all of the mutation fields related to `User` objects in a `UsersMutations` namespace object:
 
@@ -28,7 +28,7 @@ type CommentsMutations {
 
 Now, both our `User` and `Comment` types have an associated `create` mutation field, which is valid because each is defined within a separate namespace type.
 
-Finally, we can add our namespace types as the return values for top-level fields of the `Mutation` type:
+Finally, we can add our namespace types as the return values for root-level fields of the `Mutation` type:
 
 ```graphql
 type Mutation {
@@ -48,7 +48,7 @@ type CommentsQueries {
   byUser(user: ID!): [Comment!]!
 }
 
-# Add a single top-level namespace-type which wraps other queries
+# Add a single root-level namespace-type which wraps other queries
 type Query {
   users: UsersQueries!
   comments: CommentsQueries!
@@ -83,7 +83,7 @@ query FetchAllUsers {
 
 ## Namespaces for serial mutations
 
-Unlike all other fields in a GraphQL operation, the top-level fields of the `Mutation` type must be resolved _serially_ instead of in parallel. This can help prevent two mutation fields from interacting with the same data simultaneously, which might cause a race condition.
+Unlike all other fields in a GraphQL operation, the root-level fields of the `Mutation` type must be resolved _serially_ instead of in parallel. This can help prevent two mutation fields from interacting with the same data simultaneously, which might cause a race condition.
 
 ```graphql
 mutation DoTwoThings {
