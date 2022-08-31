@@ -13,7 +13,9 @@
       "server": "/tags/server",
       "testing": "/tags/testing",
       "best practices": "/tags/best-practices",
-      "caching": "/tags/caching"
+      "caching": "/tags/caching",
+      "contracts": "/tags/contracts",
+      "sre": "/tags/sre"
     }
   }
 }
