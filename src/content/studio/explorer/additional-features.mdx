@@ -56,14 +56,11 @@ query($id: ID!) {
 
 ## Local development
 
-You can use the Explorer for local development by opening [Sandbox](./sandbox/), or by creating a [development graph](../dev-graphs/) in Studio.
+You can use the Explorer for local development by opening [Sandbox](./sandbox/).
 
-Unlike _deployed_ graphs, both Sandbox and dev graphs use **introspection** to fetch your schema from your development server, and they also poll regularly for changes. Whenever schema changes are detected, they're pulled in automatically.
+Unlike a deployed graph, Sandbox uses **introspection** to fetch your schema from your development server, and it also polls regularly for changes. Whenever schema changes are detected, they're pulled in automatically.
 
-You can pause introspection polling at any time. To do so:
-
-- **In Sandbox**, open the Explorer Settings tab on the left and edit your connection settings. In the dialog, disable **Auto Update**.
-- **In dev graphs**, open the **DEV GRAPH** menu at the top and disable **Auto Update**.
+You can pause introspection polling at any time. To do so, open the Explorer Settings tab on the left and edit your connection settings. In the dialog, disable **Auto Update**.
 
 ## Federation
 
@@ -221,7 +218,7 @@ query StarWarsGenderStats {
 
 ### Is the Explorer available for on-prem distribution?
 
-Not at this time. The Explorer is available for free, unlimited use in Apollo Studio, but it is not available for download or on-prem distribution. This might change in the future, but for now our goal is to provide the best possible Explorer experience from within Studio.
+The Explorer is not currently available for download or on-prem hosting. However, you can embed the Apollo-hosted Explorer on your own internal websites. For details, see [Embedding the Explorer](/studio/explorer/embed-explorer).
 
 ### Do my Explorer operations pass through Apollo servers?
 

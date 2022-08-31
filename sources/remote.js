@@ -12,6 +12,10 @@ module.exports = {
     remote: 'https://github.com/apollographql/apollo-server',
     branch: 'main'
   },
+  'apollo-server/v4': {
+    remote: 'https://github.com/apollographql/apollo-server',
+    branch: 'version-4'
+  },
   'apollo-server/v2': {
     remote: 'https://github.com/apollographql/apollo-server',
     branch: 'version-2'
@@ -50,6 +54,10 @@ module.exports = {
   },
   router: {
     remote: 'https://github.com/apollographql/router',
+    branch: 'main'
+  },
+  'platform-users': {
+    remote: `https://svc-apollo-docs:${process.env.GITHUB_TOKEN}@github.com/apollographql/platform-users-docs`,
     branch: 'main'
   }
 };

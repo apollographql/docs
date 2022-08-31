@@ -9,7 +9,7 @@ Apollo open source project releases proceed through the following stages:
 
 ```mermaid
 graph LR;
-  alphabeta(Alpha / Beta)
+  alphabeta(Alpha / Beta);
   alphabeta --> preview(Preview);
   preview --> rc("Release Candidate (RC)");
   rc --> ga(General Availability);
@@ -59,7 +59,7 @@ graph LR;
   class deprecated secondary;
 ```
 
-Note that some releases might _skip_ cetain stages. For example, a release might start with a public preview instead of an opt-in preview.
+Note that some releases might _skip_ certain stages. For example, a release might start with a public preview instead of an opt-in preview.
 
 > In production environments, you should rely only on Apollo cloud releases that are in [general availability](#general-availability-ga-1).
 
@@ -84,3 +84,9 @@ A generally available release has been deemed ready for use in a production envi
 A deprecated feature is no longer officially supported by Apollo. It might continue to work, but Apollo does not guarantee that it will _continue_ to work.
 
 You should avoid relying on deprecated features whenever possible.
+
+## Experimental features
+
+At Apollo we believe in developing and iterating in the open. Experimental features are targeted at developers who wish to implement advanced cutting edge features and functionality.
+
+An experimental feature is in active development. The feature may not be feature-complete, and breaking API changes are possible between individual versions. An experimental feature can exist in any of the release stages defined above and should be used cautiously. An experimental feature may be temporary and removed at any point without notice.

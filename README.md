@@ -219,7 +219,7 @@ You can publish docsets that are viewable only by Apollo team members by setting
 
 If a visitor to that page is logged in to Apollo Studio **and** is a member of one of our internal orgs, the page content will be rendered normally. If neither of those conditions are true, a 404 page will be shown. Internal-only pages are excluded from the sitemap and won't be indexed by Google.
 
-It's important to note that you must sign in to and out of your account using Studio or Odyssey, as the docs don't currently have their own sign in form.
+It's important to note that you must sign in to and out of your account using Studio or Odyssey, as the docs don't currently have their own sign in form. For local development, sign in to the staging Studio.
 
 ### Redirect rules
 
@@ -414,7 +414,7 @@ This content will be hidden by default, but can be expanded if the user clicks o
 
 ##### MultiCodeBlock
 
-Wrap TypeScript code blocks in a `MultiCodeBlock` component to automatically transpile them into JavaScript. A language dropdown will be rendered in the top right corner of the code block for the user to switch between the two options. This feature works on code blocks tagged with `ts` or `tsx`.
+Wrap TypeScript code blocks in a `MultiCodeBlock` component to automatically transpile them into JavaScript. A languages will be rendered as tabs above the code block for the user to switch between the two options. This feature works on code blocks tagged with `ts` or `tsx`.
 
 You can also manually add multiple code blocks with different languages to the `MultiCodeBlock` to have them behave the same way.
 

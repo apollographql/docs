@@ -39,6 +39,10 @@ const theme = extendTheme({
       secondary: {
         default: 'pink.600',
         _dark: 'pink.300'
+      },
+      tertiary: {
+        default: 'teal.600',
+        _dark: 'teal.300'
       }
     }
   },

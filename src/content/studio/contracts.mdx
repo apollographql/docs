@@ -1,11 +1,11 @@
 ---
 title: Contracts
-description: Deliver subsets of your enterprise graph
+description: Deliver subsets of your enterprise supergraph
 ---
 
-> Contracts are available only for [Enterprise plans](https://www.apollographql.com/pricing/). Currently, they only support [federated supergraphs](/federation/).
+> Contracts are available only for [Enterprise plans](https://www.apollographql.com/pricing/). Currently, they only support [federated variants](/federation/) of Studio graphs.
 
-Apollo Studio **contracts** enable you to deliver different subsets of your graph to different consumers. Each contract filters specific portions of your graph's [API schema](https://www.apollographql.com/docs/federation/#federated-schemas) into a different Studio variant:
+Apollo Studio **contracts** enable you to deliver different subsets of your supergraph to different consumers. Each contract filters specific portions of your supergraph's [API schema](https://www.apollographql.com/docs/federation/#federated-schemas) into a different Studio variant:
 
 ```mermaid
 graph LR;
@@ -22,11 +22,11 @@ graph LR;
   api -."Filter schema<br/>according to contract B".->contractB
 ```
 
-Contracts filter schema definitions from your subgraph schemas based on `@tag` directives that you add:
+A contract filters definitions from your subgraph schemas based on `@tag` directives that you add:
 
 <CodeColumns>
 
-```graphql {4} title="Source variant schema"
+```graphql {4} title="Source variant subgraph schema"
 type Product {
   id: ID!
   name: String!
@@ -34,7 +34,7 @@ type Product {
 }
 ```
 
-```graphql title="Contract variant schema"
+```graphql title="Contract variant API schema"
 type Product {
   id: ID!
   name: String!
@@ -48,19 +48,19 @@ In the above example, a contract excludes types and fields marked with the `inte
 
 ## What are contracts for?
 
-You usually create a contract to support a **contract gateway** or **contract documentation** (or both).
+You usually create a contract to support a **contract router** or **contract documentation** (or both).
 
-#### Contract gateways
+#### Contract routers
 
-You can deploy a [managed instance](https://www.apollographql.com/docs/federation/managed-federation/overview/) of your gateway that uses a contract schema. Developers who use this contract gateway can only execute GraphQL operations that the contract schema supports:
+You can deploy a [managed instance](/federation/managed-federation/overview/) of your graph router that uses a contract schema. Clients that use a contract router's endpoint can only execute GraphQL operations that the contract schema supports:
 
 ```mermaid
 graph BT;
   adminapp(Admin app);
   userapp(User app);
   subgraph " ";
-    standardgateway(["Standard gateway<br/>▉"]);
-    contractgateway(["Contract gateway<br/>▟"]);
+    standardgateway(["Standard router<br/>▉"]);
+    contractgateway(["Contract router<br/>▟"]);
     subgraphs[["(All subgraphs)"]];
   end;
   userapp -.- contractgateway;
@@ -71,7 +71,7 @@ graph BT;
 
 This enables you to hide experimental types and fields that are still in development, or to limit a particular audience's access to only the portions of your graph that they need.
 
-Contract gateways can safely connect to the same subgraph instances as any other gateway, because they can only interact with data that's represented in the contract schema. This does not affect internal routing (hidden fields can still be used in a `@requires` selection set). Additionally, any `@tag` labels that are part of the source variant's supergraph schema are preserved in a contract supergraph schema.
+Contract routers can safely connect to the same subgraph instances as any other router, because their clients can only interact with data that's represented in the contract schema. This does not affect internal routing (filtered fields can still be used in a `@requires` selection set). Additionally, any `@tag` labels that are part of the source variant's supergraph schema are preserved in a contract supergraph schema.
 
 #### Contract documentation
 
@@ -81,7 +81,7 @@ In Studio, each contract variant has its own README, schema reference, and Explo
 
 > ⚠️ The Apollo Studio steps below require an organization member with the **Org Admin** or **Graph Admin** role. [Learn about member roles.](./org/members/)
 
-### 1. Update your gateway and subgraphs
+### 1. Update your router and subgraphs
 
 **Before you create any contracts:**
 
@@ -92,9 +92,11 @@ In Studio, each contract variant has its own README, schema reference, and Explo
 
 Older versions of the above libraries and tools don't fully support the required `@tag` directive.
 
-### 2. Enable variant support for `@tag`
+### 2. (Fed1) Enable variant support for `@tag`
 
-A contract uses one of your graph's existing [variants](https://www.apollographql.com/docs/studio/org/graphs/#managing-variants) (called the **source variant**) to generate its contract schema. You need to enable the source variant's support for the `@tag` directive in Apollo Studio.
+> **This step is required for Federation 1 supergraphs only.** If you have a Federation 2 supergraph, proceed to the next step.
+
+A contract uses one of your graph's existing [variants](/studio/org/graphs/#managing-variants) (called the **source variant**) to generate its contract schema. If your source variant uses Federation 1, you need to enable its support for the `@tag` directive in Apollo Studio.
 
 Open the Settings page for the variant you want to use as your source variant, then select the **This Variant** tab:
 
@@ -115,7 +117,7 @@ Before you can add `@tag`s, you need to define the directive in your subgraph sc
 
 <ExpansionPanel title="Federation 1">
 
-Add the following definition to your subgraph schema:
+Add the following definition to each of your subgraph schemas:
 
 ```graphql
 directive @tag(name: String!) repeatable on
@@ -166,43 +168,26 @@ type Product @key(fields: "upc") @tag(name: "partner") {
 This schema applies the `@tag` directive to the following locations:
 
 * The `Product` object type
-* The `Query.topProducts` field (which _returns_ a list of `Product`s)
+* The `Query.topProducts` field (which returns a list of `Product`s)
 * Two fields of `Product` (`internalId` and `percentageMatch`)
 
 Each `@tag` has a string `name`. You tag types and fields with the _same_ `name` if they should be included or excluded as a group by a particular contract.
 
-Whenever your source variant's [supergraph schema](https://www.apollographql.com/docs/federation/#federated-schemas) is generated, that schema retains all of the `@tag`s from your subgraph schemas.
+For in-depth details on valid `@tag` usage, see [Rules for `@tag`s and contracts](#rules-for-tags-and-contracts).
 
-#### Tagging rules
-
-- **In both Federation 1 and Federation 2,** you can apply tags to the following in your schema:
-  - Fields of object types (Federation 1 doesn't support tagging fields of interface types)
-  - Definitions of object, interface, and union types
-- **In Federation 2 only,** you can _also_ apply tags to the following:
-  - Definitions of custom scalar types
-  - Enum types and their values
-  - Input types and their fields
-  - Fields of interface types
-  - Arguments of fields, **but not directive arguments at this time**
-- Tag names can include alphanumeric characters (`a-z`, `A-Z`, `0-9`), along with hyphen (`-`) and forward slash (`/`).
-- Each tag name cannot exceed 128 characters.
-- Whenever you tag an object type definition, _also_ tag every field that _returns_ that type.
-  - If you don't do this, a contract might exclude a type while including fields that return it. This produces an invalid contract schema.
-- Whenever you tag an object or interface type, those tags propagate to the fields of that type.
-
-Additional guidance is provided in [Special cases](#special-cases).
+> Whenever Studio composes your source variant's [supergraph schema](/federation/#federated-schemas), that schema retains all of the `@tag`s from your subgraph schemas (this is different from most other directives, which are removed).
 
 ### 4. Publish updated subgraph schemas
 
 After you're done adding tags, update your source variant by publishing your updated subgraph schemas to Apollo Studio.
 
-> After publishing, if Studio doesn't reflect the the tags that you've added in your subgraphs schemas, make sure you've [updated all required libraries and tools](#1-update-your-gateway-and-subgraphs). If you obtain your subgraph schemas via introspection, older subgraph libraries might strip the `@tag` directive.
+> After publishing, if Studio doesn't reflect the the tags that you've added in your subgraph schemas, make sure you've [updated all required libraries and tools](#1-update-your-router-and-subgraphs). If you obtain your subgraph schemas via introspection, older subgraph libraries might strip the `@tag` directive.
 
 Now you're ready to create your first contract!
 
 ### 5. Create a contract
 
-Once again open your source variant's Settings page and select the **This Variant** tab. This time, click **Contracts**:
+Open your source variant's Settings page and select the **This Variant** tab. This time, click **Contracts**:
 
 <img
   class="screenshot"
@@ -278,7 +263,7 @@ If everything looks right, click **Create**. This kicks off the generation of yo
 
 Congratulations! You've created a contract in Apollo Studio. You can now use your contract variant to provide a [contract gateway or contract documentation](#what-are-contracts-for) to your users.
 
-For example, you can complete the [managed federation setup](https://www.apollographql.com/docs/federation/managed-federation/setup/) for a new gateway instance that uses your contract variant.
+For example, you can complete the [managed federation setup](/federation/managed-federation/setup/) for a new router instance that uses your contract variant.
 
 ## Federation 1 limitations
 
@@ -309,12 +294,12 @@ If a Federation 1 source variant already has one or more associated contracts, i
 
 Apollo automatically updates your contract schema whenever any of the following occurs:
 
-- Your contract's source variant successfully composes an updated API schema.
+- Your contract's source variant successfully composes an updated supergraph schema.
 - You [edit your contract](#editing-a-contract).
 
 This makes sure that your contract schema reflects the latest version of your source variant's schema, and that the correct types and fields are included and excluded.
 
-Updates to your contract schema are automatically fetched by your managed [contract gateways](#contract-gateways).
+Updates to your contract schema are automatically fetched by your managed [contract routers](#contract-routers).
 
 ## Editing a contract
 
@@ -353,28 +338,134 @@ Whenever Apollo Studio attempts to create or update your contract schema, it mig
 | `UNKNOWN`                                  | An unknown error occurred.                                                                                                         |
 | `VERSION_CHECK`                            | The Federation version used is not supported by contracts.                                                                         |
 
-## Special cases
+## Rules for `@tag`s and contracts
 
-- If a contract excludes _every field_ of a particular object type, the entire type definition is excluded from the contract schema.
+### Valid `@tag` locations
 
-- If a contract excludes an object, interface, or union type, it **must** also exclude all schema fields that _return_ that type. Otherwise, generation of the contract schema fails.
+**In both Federation 1 and Federation 2,** you can apply tags to the following to filter your contract schema:
 
-- If a contract has an includes filter, object and interface types without an included tag remain accessible (unlike other supported schema elements).
+- Definitions of object, interface, and union types
+- Fields of object types (Federation 1 doesn't support tagging fields of interface types)
+    - In Federation 1, you can still make an interface field inaccessible by tagging the interface definition, or by ensuring that object fields that implement the interface field are removed.
+
+**In Federation 2 only,** you can _also_ apply tags to the following:
+
+- Fields of interface types
+- Enum types and their values
+- Input types and their fields
+- Definitions of custom scalar types
+- Arguments of fields, **but not directive arguments at this time**
+
+### Valid `@tag` names
+
+- Tag names can include alphanumeric characters (`a-z`, `A-Z`, `0-9`), along with hyphen (`-`) and forward slash (`/`).
+- Each tag name cannot exceed 128 characters.
+
+```graphql {3}
+type User {
+  id: ID!
+  name: String! @tag(name: "a/b/c/1-2-3")
+}
+```
+
+### Dependent `@tag`s
+
+- Whenever you tag the definition of an object or interface type, Studio automatically considers that tag to be applied to _all fields_ of that type:
+
+    ```graphql
+    type InternalUser @tag(name: "internal") {
+      id: ID! # Also considered to have @tag(name: "internal")
+    }
+    ```
+
+- Whenever you tag the definition of an object, interface, or union type, **you should always** apply that same tag to every field that _returns_ that type:
+
+    ```graphql {1,7}
+    type BillingAccount @tag(name: "internal") {
+      id: ID!
+      acctNumber: String!
+    }
+
+    type Query {
+      billingAccounts: [BillingAccount!]! @tag(name: "internal")
+    }
+    ```
+
+  - If you don't do this, a contract might exclude a type while including fields that return that type. This produces an invalid contract schema.
 
 - If a contract excludes an object that implements an interface or is included in a union:
 
-  - The contract is _not_ required to exclude schema fields that return that interface or union.
+  - The contract is _not_ required to exclude schema fields that return that interface or union, as long as at least one other associated object type remains:
 
-  - _However_, if a subgraph resolves one of these fields by returning the excluded object, a runtime error occurs in the gateway and the operation fails.
+      ```graphql {1,7,13,20}
+      # Two object types implement this interface.
+      interface Identity {
+        id: ID!
+        name: String!
+      }
 
-- You _cannot_ exclude any of the following from a contract schema:
+      # If this implementing type is excluded...
+      type InternalUser implements Identity @tag(name: "internal") {
+        id: ID!
+        name: String!
+      }
 
+      # ...but this implementing type remains...
+      type ExternalUser implements Identity {
+        id: ID!
+        name: String!
+      }
+
+      type Query {
+        # ...then this field doesn't need to be excluded.
+        currentIdentity: Identity
+      }
+      ```
+
+  - **However**, if a subgraph resolves one of these fields by returning an object of an excluded type, a runtime error occurs in the router and the operation fails.
+
+### Special cases for filtering
+
+- If a contract defines a list of Included Tags, any object or interface type _without_ an included tag is still included in the contract schema _if_ at least one of its _fields_ is included:
+
+    ```graphql
+    # This type definition is included because one if its fields is included.
+    type User {
+      id: ID! @tag(name: "includeMe")
+    }
+    ```
+
+- If a contract excludes _every field_ of an object or interface type, the entire type definition is excluded from the contract schema:
+
+    ```graphql
+    # This object type is excluded because all of its fields are excluded.
+    type User {
+      id: ID! @tag(name: "excludeMe")
+    }
+    ```
+
+  - This can produce an invalid contract schema if any fields that _return_ the excluded type are included.
+
+- If a contract excludes _every object type_ that's part of a union type, the entire union type definition is excluded from the contract schema:
+
+    ```graphql
+    # This union type is excluded because all of its possible types are excluded.
+    union Media = Book | Movie
+
+    type Book @tag(name: "excludeMe") {
+      title: String!
+    }
+
+    type Movie @tag(name: "excludeMe") {
+      title: String!
+    }
+    ```
+
+  - This can produce an invalid contract schema if any fields that _return_ the excluded union type are included.
+
+- A contract _cannot_ exclude any of the following, even if tagged:
   - Built-in scalars (`Int`, `Float`, etc.)
   - Built-in directives (`@skip`, `@include`, etc.)
   - Custom directives that are applied to type system locations ([see the list](https://spec.graphql.org/October2021/#TypeSystemDirectiveLocation))
 
-- You _can_ exclude object fields that are used in a computed field's [`@requires` directive](https://www.apollographql.com/docs/federation/entities-advanced/#contributing-computed-entity-fields) without causing runtime errors.
-
-- Tags on objects and interface types (including tags on extension types) are inherited by all fields of that type.
-
-- Tagging interface _fields_ in [Federation 1](/federation/v1/) is not supported. You can still make an interface field inaccessible by tagging the interface definition, or by ensuring that object fields that implement the interface field are removed.
+- A contract _can_ exclude object fields that are used in a computed field's [`@requires` directive](/federation/entities-advanced/#contributing-computed-entity-fields) without causing runtime errors.
