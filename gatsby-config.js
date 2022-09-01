@@ -140,7 +140,8 @@ const plugins = [
   {
     resolve: 'gatsby-plugin-google-tagmanager',
     options: {
-      id: 'GTM-M964NS9'
+      id: process.env.GTM_CONTAINER_ID,
+      includeInDevelopment: false
     }
   },
   {
