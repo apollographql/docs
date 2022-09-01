@@ -101,6 +101,7 @@ export type CodeBlockProps = {
   hidden?: boolean;
   code: string;
   isPartOfMultiCode?: boolean;
+  disableTabs?: boolean;
 };
 
 export const CodeBlock = ({
@@ -111,7 +112,8 @@ export const CodeBlock = ({
   linesToHighlight = [],
   hidden: defaultHidden = false,
   disableCopy = false,
-  isPartOfMultiCode = false
+  isPartOfMultiCode = false,
+  disableTabs = false
 }: CodeBlockProps): JSX.Element => {
   const {onCopy, hasCopied} = useClipboard(
     getCodeWithoutHighlightComments(code)
@@ -129,7 +131,7 @@ export const CodeBlock = ({
 
   return (
     <Box>
-      {!isPartOfMultiCode && (
+      {!isPartOfMultiCode && !disableTabs && (
         <CodeBlockTabs
           languages={[blockLanguage]}
           activeLanguage={blockLanguage}
@@ -214,7 +216,7 @@ export const CodeBlock = ({
                       )
                       .map((line, i) => {
                         const shouldHighlight =
-                          // if the line number exists in the metastring or highlight comment ranges
+                          // if the line number exists in the meta string or highlight comment ranges
                           linesToHighlight
                             .concat(highlightRange)
                             .includes(i + 1) ||
