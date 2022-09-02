@@ -71,7 +71,9 @@ graph BT;
 
 This enables you to hide experimental types and fields that are still in development, or to limit a particular audience's access to only the portions of your graph that they need.
 
-Contract routers can safely connect to the same subgraph instances as any other router, because their clients can only interact with data that's represented in the contract schema. This does not affect internal routing (filtered fields can still be used in a `@requires` selection set). Additionally, any `@tag` labels that are part of the source variant's supergraph schema are preserved in a contract supergraph schema.
+Contract routers can safely connect to the same subgraph instances as any other router, because their clients can only interact with data that's represented in the contract schema. This does not affect internal routing (filtered fields can still be used in a `@requires` selection set).
+
+> Any `@tag`s that are present in a source variant's supergraph schema are _also_ present in a contract variant's supergraph schema.
 
 #### Contract documentation
 
@@ -143,7 +145,7 @@ extend schema
 
 For example, let's take a look at this Federation 2 subgraph schema:
 
-```graphql {1-3,6,11,17-18} title="products.graphql"
+```graphql {1-3,6,11} title="products.graphql"
 extend schema
   @link(url: "https://specs.apollo.dev/federation/v2.0",
         import: ["@key", "@tag"])
@@ -158,10 +160,10 @@ type Product @key(fields: "upc") @tag(name: "partner") {
   upc: ID!
   name: String!
   description: String!
-  # These fields also inherit the "partner" tag. You can
-  # prevent access to them by defining an excludes filter in Studio
+  # highlight-start
   internalId: ID! @tag(name: "internal")
   percentageMatch: Float! @tag(name: "experimental")
+  # highlight-end
 }
 ```
 
@@ -175,7 +177,7 @@ Each `@tag` has a string `name`. You tag types and fields with the _same_ `name`
 
 For in-depth details on valid `@tag` usage, see [Rules for `@tag`s and contracts](#rules-for-tags-and-contracts).
 
-> Whenever Studio composes your source variant's [supergraph schema](/federation/#federated-schemas), that schema retains all of the `@tag`s from your subgraph schemas (this is different from most other directives, which are removed).
+> Whenever Studio composes your source variant's [supergraph schema](/federation/#federated-schemas), that schema retains all of the `@tag`s from your subgraph schemas (this is different from most other directives, which are removed by default).
 
 ### 4. Publish updated subgraph schemas
 
@@ -229,7 +231,7 @@ Next, you specify tag-based filters for your contract:
 
 The dialog detects all tag names that are used in your source variant's schema, and it populates its dropdown lists with those names. You can add any number of tag names to each list.
 
-> You can also add tag names that are not yet present in your source variant's schema. If you later add tags with that name, the contract honors them.
+> You can also add tag names that aren't yet present in your source variant's schema. If you later add tags with that name, the contract honors them.
 
 Your contract will filter types and fields from its source variant according to the following rules:
 
@@ -240,7 +242,7 @@ Your contract will filter types and fields from its source variant according to 
 
 > 💡 In Apollo Federation 2, if you want to exclude a type or field from your _source variant's_ API schema _and_ all of its contract schemas, you can use the `@inaccessible` directive instead of `@tag`. For details, see [Using `@inaccessible`](/federation/federated-types/sharing-types/#using-inaccessible).
 
-When you're done adding tag names, you click **Generate Preview** to check the contract schema that your contract will generate. If the preview generates successfully, you can then click **Review** to continue.
+When you're done adding tag names, click **Generate Preview** to check the contract schema that your contract will generate. If the preview generates successfully, you can then click **Review** to continue.
 
 #### Review and launch
 
@@ -255,11 +257,11 @@ You can now review all of the details of your contract:
 
 If everything looks right, click **Create**. This kicks off the generation of your contract variant and its initial contract schema as a [launch](./launches).
 
-> Studio might encounter an error while generating your contract schema. For descriptions of these errors, see [Contract errors](#contract-errors).
+> Studio might encounter an error while generating your contract schema. For descriptions of these errors, see [Error types](#error-types).
 
 ### 6. Use your new contract variant
 
-Congratulations! You've created a contract in Apollo Studio. You can now use your contract variant to provide a [contract gateway or contract documentation](#what-are-contracts-for) to your users.
+Congratulations! You've created a contract in Apollo Studio. You can now use your contract variant to provide a [contract router or contract documentation](#what-are-contracts-for) to your users.
 
 For example, you can complete the [managed federation setup](/federation/managed-federation/setup/) for a new router instance that uses your contract variant.
 
@@ -301,6 +303,8 @@ Updates to your contract schema are automatically fetched by your managed [contr
 
 ## Editing a contract
 
+> You can't change an existing contract's name or source variant. Instead, you can create a _new_ contract (and delete the existing contract variant if you no longer need it).
+
 After you create a contract, you can edit its lists of included and excluded tags. From the Contracts list in your graph's Settings page, click **Edit Contract** where shown:
 
 <img
@@ -312,11 +316,19 @@ After you create a contract, you can edit its lists of included and excluded tag
 
 This opens a dialog similar to the one you used to create the contract.
 
-> You can't change an existing contract's name or source variant. Instead, you can create a _new_ contract (and delete the existing contract variant if you no longer need it).
+If you make any changes to the contract's included or excluded tags, Studio automatically runs [contract checks](#contract-checks) to determine whether those changes will affect any clients that user your contract variant.
+
+The result of these checks is shown in the Review Schema step of the contract edit dialog:
+
+<img
+  class="screenshot"
+  alt="Contract edit dialog with checks result"
+  src="./img/contract-edit-check.jpg"
+/>
 
 ## Contract checks
 
-If you use [schema checks](./schema-checks/) in Apollo Studio, you can (and should) configure **contract checks** for any variant that acts as a contract's source variant. This helps your team identify when proposed changes to a source variant will negatively affect one or more downstream contracts.
+If you use both contracts and [schema checks](./schema-checks/) in Apollo Studio, you can (and should) configure **contract checks** for any variant that acts as a source variant for contracts. This helps your team identify when proposed changes to a source variant will negatively affect one or more downstream contracts.
 
 Contract checks execute alongside the other types of schema checks for the source variant (composition checks and operation checks). They do the following:
 
@@ -330,12 +342,25 @@ If either of these steps fails (for example, because a generated contract schema
 To set up contract checks for a source variant:
 
 1. Open your source variant's Checks page and select the **This Variant** tab.
-2. Find the Downstream Variants section:
+2. Click **Configuration** and scroll down to the **Blocking Downstream Variants** section:
 
-    [TODO SCREENSHOT]
+    <img
+      class="screenshot"
+      alt="Blocking downstream variants for checks"
+      src="./img/contract-blocking-variants.jpg"
+    />
 
 3. Select each contract variant that you want to enable contract checks for.
-4. Click **Save changes**.
+
+You're done! From now on, whenever schema checks run for your source variant, those checks include contract checks for the selected contract variants. Those checks are shown in Studio alongside other check types under **Checks > This Variant > Recent Checks**:
+
+<img
+  class="screenshot"
+  alt="Downstream checks shown in Studio UI"
+  src="./img/contract-check-ui.jpg"
+/>
+
+Click the **Downstream** item in the Tasks column to view the details of the contract check's execution.
 
 ## Error types
 
