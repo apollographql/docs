@@ -91,7 +91,7 @@
     "rehype-react": "^7.0.3",
     "remark": "^14.0.2",
     "remark-react": "^9.0.1",
-    "remark-typescript": "^0.5.3",
+    "remark-typescript": "^0.5.4",
     "search-insights": "^1.8.0",
     "stream-http": "^3.2.0",
     "unist-util-visit": "^2.0.3",

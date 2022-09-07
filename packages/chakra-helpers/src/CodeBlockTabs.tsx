@@ -48,11 +48,13 @@ function getTabButtonProps(
 interface CodeBlockTabsProps {
   languages: string[];
   activeLanguage: string;
+  setLanguage?: (language: string) => void;
 }
 
 export const CodeBlockTabs = ({
   languages,
-  activeLanguage
+  activeLanguage,
+  setLanguage
 }: CodeBlockTabsProps): JSX.Element => {
   // Track inner (infinite width) and outer (container width) boxes using refs
   const outerRef = useRef<HTMLDivElement>(null);
@@ -77,13 +79,11 @@ export const CodeBlockTabs = ({
   // Allow for arrow presses to induce a short scroll left or right
   const bumpScroll = (distance: number) => () => {
     if (!outerRef) return;
-    outerRef.current.scrollBy({
+    outerRef.current?.scrollBy({
       left: distance,
       behavior: 'smooth'
     });
   };
-
-  const {setLanguage} = useContext(MultiCodeBlockContext);
 
   const theme = usePrismTheme();
   const bgColor = useToken('colors', 'gray.800');
@@ -136,7 +136,9 @@ export const CodeBlockTabs = ({
               leftIcon={getIconComponent(language)}
               key={language}
               onClick={() => {
-                setLanguage(language);
+                if (setLanguage) {
+                  setLanguage(language);
+                }
                 window.gtag?.('event', 'Change language', {
                   event_category: GA_EVENT_CATEGORY_CODE_BLOCK,
                   event_label: language

@@ -2,7 +2,8 @@ import React, {
   ReactNode,
   createContext,
   isValidElement,
-  useContext
+  useContext,
+  useState
 } from 'react';
 import {Box, Flex} from '@chakra-ui/react';
 import {CodeBlockProps} from './CodeBlock';
@@ -32,17 +33,26 @@ export const MultiCodeBlock = ({
     });
   }, {});
 
-  const {language} = useContext(MultiCodeBlockContext);
+  const codeBlockContext = useContext(MultiCodeBlockContext);
 
   const languages = Object.keys(codeBlocks);
   const defaultLanguage = languages[0];
+  const [localLanguage, setLocalLanguage] = useState(languages[0]);
+  const language = codeBlockContext ? codeBlockContext.language : localLanguage;
+  const setLanguage = codeBlockContext
+    ? codeBlockContext.setLanguage
+    : setLocalLanguage;
   const renderedLanguage = languages.includes(language)
     ? language
     : defaultLanguage;
 
   return (
     <Flex flexDir="column" pt="6">
-      <CodeBlockTabs languages={languages} activeLanguage={renderedLanguage} />
+      <CodeBlockTabs
+        languages={languages}
+        activeLanguage={renderedLanguage}
+        setLanguage={setLanguage}
+      />
       {languages.map(language => (
         <Box
           key={language}
