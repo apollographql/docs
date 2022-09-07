@@ -129,7 +129,7 @@ export const CodeBlock = ({
 
   return (
     <Box>
-      {!isPartOfMultiCode && (
+      {isPartOfMultiCode && (
         <CodeBlockTabs
           languages={[blockLanguage]}
           activeLanguage={blockLanguage}
