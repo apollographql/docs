@@ -39,33 +39,33 @@ The central piece of this repo, the docs infrastructure, is a [Gatsby](https://w
 
 ## Developing locally
 
-> This site uses [Volta](https://volta.sh) to ensure we're all using the same Node and NPM versions when running the site. Either install Volta before proceeding, or install [direnv](https://direnv.net) and Volta will be installed automatically when you `cd` into your local `docs` directory.
+[Volta](https://volta.sh) ensures we're all using the same Node and NPM versions when running the site. Either install Volta before proceeding, or install [direnv](https://direnv.net) to install Volta automatically when you `cd` into your local `docs` directory.
 
-First, install NPM dependencies.
+1. Install NPM dependencies:
 
-```sh
-npm i
-```
+    ```sh
+    npm i
+    ```
 
-If it's your first time running the docs site locally, you must link your local directory with Netlify. To do this, you must be logged in to the `netlify` CLI with an account that has access to our organization in Netlify. Apollo Staff can log into the account using the Netlify Single Sign-On (SSO) option and specifying the `apollo-main` identifier during the login process.
+    If it's your first time running the docs site locally, you must link your local directory with Netlify. To do this, you must be logged in to the `netlify` CLI with an account that has access to our organization in Netlify. Apollo Staff can log into the account using the Netlify Single Sign-On (SSO) option and specifying the `apollo-main` identifier during the login process.
 
-```sh
-npx netlify login
-```
+    ```sh
+    npx netlify login
+    ```
 
-Next, link your local environment with its corresponding Netlify site. Follow the prompts that appear in your terminal and link the site based on its git repository.
+2. Link your local environment with its corresponding Netlify site. Follow the prompts that appear in your terminal and link the site based on its git repository:
 
-```sh
-npx netlify link
-```
+    ```sh
+    npx netlify link
+    ```
 
-Finally, start the local development environment.
+3. Start the local development environment:
 
-```sh
-npm start
-```
+    ```sh
+    npm start
+    ```
 
-> ⌚ The first run may take a long time as it has to source a lot of content, but subsequent runs will be shorter since most of that data will have been cached.
+    > ⌚ The first run may take a long time as it has to source a lot of content, but subsequent runs will be shorter since most of that data will have been cached.
 
 ### Developing a single docset
 
