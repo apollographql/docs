@@ -32,7 +32,7 @@ Apollo Studio can perform the following types of schema checks:
 
 ## Prerequisites
 
-To enable schema checks for your graph, do the following if you haven't yet:
+To enable schema checks for your graph, do the following:
 
 1. Register your production graph's schema with Apollo.
    - [Federated setup](/federation/managed-federation/setup)
@@ -44,9 +44,9 @@ To enable schema checks for your graph, do the following if you haven't yet:
 
 ## Running your first check
 
-Let's say you've made local changes to your GraphQL server's schema. After you [complete the prerequisites](#prerequisites), you can run schema checks against those changes with the `rover graph check` command.
+Let's say you've made local changes to your GraphQL server's schema. After you have completed the [prerequisites](#prerequisites), you can run schema checks against those changes.
 
-> **Important:** If your graph is [federated](/federation/), use [`rover subgraph`](/rover/commands/subgraphs/#checking-subgraph-schema-changes) commands instead of `rover graph` commands. These commands require one additional option, the `--name` of the subgraph you're operating on.
+> **Important:** If your graph is [federated](/federation/), use [`rover subgraph`](/rover/commands/subgraphs/#checking-subgraph-schema-changes) commands instead which require one additional option, the `--name` of the subgraph you're operating on.
 
 The `rover graph check` command looks like this:
 
@@ -79,10 +79,10 @@ Try changing something in the local version of your schema and see what happens!
 
 When you run `rover graph check`:
 
-1. Apollo Studio generates a diff between your local schema and the registered schema for the variant you're checking against.
-2. Studio uses this diff to determine whether the changes affect any operations that have been executed against your graph within a [customizable time window](./check-configurations/) (by default, this is the last seven days).
+1. Apollo Studio generates a diff between your local and the registered schema for the variant you're checking against.
+2. Studio uses this diff to determine whether the changes affect any operations that have been executed against your graph within a [customizable time window](./check-configurations/) (default: last seven days).
 3. Studio returns the diff, along with a list of the operations that are affected by the changes.
-4. Rover prints the result of the check and returns a non-zero exit code if at least one breaking change is found.
+4. If at least one breaking change is found, Rover prints the result of the check and returns a non-zero exit code.
 
 ### The check response
 
@@ -130,12 +130,12 @@ In cases like this, you can **override** a flagged change in Apollo Studio from 
 
 You override flagged changes on an operation-by-operation basis. For each operation with flagged changes, you can override those changes in the following ways:
 
-- **Mark the changes as safe.** In this case, schema checks will _not_ flag these exact changes for the operation in any future execution. This effectively "approves" the changes for the operation.
+- **Mark the changes as safe.** Schema checks will _not_ flag these exact changes for the operation in any future execution. This effectively "approves" the changes for the operation.
   - If a future check detects approved changes along with _new_ unsafe changes to the operation, the new unsafe changes _will_ be flagged.
-- **Ignore the operation.** In this case, schema checks will completely ignore the operation when checking _all_ changes in any future execution.
+- **Ignore the operation.** Schema checks will completely ignore the operation when checking _all_ changes in any future execution.
   - This option is useful when you know an operation originates _only_ from clients or client versions that you don't actively support.
 
-> Note that there is currently no way to remove an override from an operation, and future changes will not explicitly show the presence of operations that are omitted due to overrides.
+> Currently, you cannot remove an override from an operation, and future changes will not explicitly show the presence of operations that are omitted due to overrides.
 
 ### Rerunning checks
 
@@ -186,7 +186,7 @@ The `rover subgraph check` command returns a nonzero result if a composition che
 
 Schema checks are especially useful when you add them to your CI pipeline (such as Jenkins or CircleCI). By doing so, you can obtain check results and display them directly on your team's pull requests.
 
-We recommend defining a separate CI job for each [variant of your schema](./check-configurations#checking-against-multiple-environments) (production, staging, etc.) that you want to validate your changes against. The `rover graph check` command returns a non-zero exit code when it detects a breaking change, meaning the job fails when the check fails.
+We recommend defining a separate CI job for each [variant of your schema](./check-configurations#checking-against-multiple-environments) (production, staging, etc.) that you want to validate your changes against. The `rover graph check` command returns a non-zero exit code and the job fails when it detects a breaking change.
 
 ### Authenticating Rover
 
