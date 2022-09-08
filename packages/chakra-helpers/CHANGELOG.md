@@ -1,5 +1,11 @@
 # @apollo/chakra-helpers
 
+## 1.4.1
+
+### Patch Changes
+
+- [#210](https://github.com/apollographql/docs/pull/210) [`464b084`](https://github.com/apollographql/docs/commit/464b08480aec820264b1623ba5bba074812d8e21) Thanks [@BlenderDude](https://github.com/BlenderDude)! - Added additional props for better tab control and a fallback to local tabs if a global context does not exist
+
 ## 1.4.0
 
 ### Minor Changes
