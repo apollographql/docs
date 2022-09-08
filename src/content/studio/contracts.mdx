@@ -338,6 +338,9 @@ The result of these checks is shown in the Review Schema step of the contract ed
 ## Contract checks
 
 > ⚠️ **Important:** To run contract checks via `rover subgraph check`, you must [update the Rover CLI](/rover/getting-started/#installation-methods) to v0.8.2 or later.
+>
+> - **If you use Rover v0.8.0 or v0.8.1,** contract checks _do_ run, but the execution ignores any [blocking downstream variants](#failing-contract-checks) you've set.
+> - **If you use a version prior to v0.8.0,** `rover subgraph check` does not run contract checks _at all_.
 
 If you run [schema checks](./schema-checks/) in Apollo Studio (which we recommend for all graphs), those checks include **contract checks** for any variant that acts as a source variant for contracts. Contract checks help your team identify when proposed changes to a source variant will negatively affect one or more downstream contracts.
 
