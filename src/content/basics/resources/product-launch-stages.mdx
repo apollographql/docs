@@ -1,0 +1,57 @@
+---
+title: Launch stages for Apollo products and features
+---
+
+## Universal launch stages
+
+All new Apollo products, features, and open-source libraries use two primary launch stages: **preview** and **general availability**.
+
+### Preview
+
+Product and feature **previews** are usually announced publicly and represent a near-complete version of the release. However, previews are _not_ officially supported with any SLA, and breaking API changes are possible between versions.
+
+**A preview might still contain bugs or undergo iteration.** You're encouraged to try out preview releases in test environments to familiarize yourself with upcoming functionality before it reaches [general availability](#general-availability).
+
+### General availability
+
+A **generally available** product or feature has been deemed ready for use in a production environment and is officially supported by Apollo. Its documentation is considered sufficient to support widespread adoption.
+
+## Pre-release stages
+
+A particular product or feature might include one or more additional pre-release stages in its development lifecycle:
+
+### Alpha / Beta
+
+An **alpha** or **beta** release is in volatile, active development. The release might not be feature-complete, and breaking API changes are possible between individual versions. 
+
+These stages help Apollo gather feedback and issues from community members and customers who are enthusiastic early adopters.
+
+### Release candidate (RC)
+
+A **release candidate** (RC) release is considered potentially viable for general availability. Minor bugs might still be present, and documentation for the release might be incomplete.
+
+You're encouraged to test out RC releases to help Apollo identify any remaining issues.
+
+## Stages for discontinuing support
+
+When support for a [generally available](#general-availability) Apollo product or feature is ending, that release proceeds through two additional stages: **deprecated** and **end of life**.
+
+### Deprecated
+
+A **deprecated** release is still supported by Apollo. It continues to receive security patches and updates to address major regressions. After a specified date, deprecated releases move to [end-of-life](#end-of-life), at which point the release is no longer supported.
+
+**Avoid relying on deprecated releases whenever possible.** Consider upgrading to the latest generally available release to continue receiving new features and functionality.
+
+### End-of-life
+
+An **end-of-life** release is **no longer supported or maintained by Apollo**. These releases no longer receive security patches or remediation for regressions. There is no commitment from Apollo to release further versions and no guarantee that the most recent version will continue to work.
+
+**Do not run end-of-life releases in production.** Upgrade to the latest generally available release as soon as possible to ensure you continue receiving security patches, bug fixes, and new features. 
+
+## Experimental features
+
+At Apollo, we believe in developing and iterating in the open. **Experimental features** are targeted at developers who want to adopt advanced, cutting-edge functionality.
+
+Experimental features might not be feature-complete, and breaking API changes are possible between individual versions. An experimental feature can exist in any of the stages defined above and should be used cautiously.
+
+**An experimental feature might be removed at any point without notice.**
