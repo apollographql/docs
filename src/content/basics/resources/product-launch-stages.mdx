@@ -2,7 +2,7 @@
 title: Launch stages for Apollo products and features
 ---
 
-## Universal launch stages
+## Primary launch stages
 
 All new Apollo products, features, and open-source libraries use two primary launch stages: **preview** and **general availability**.
 
@@ -32,6 +32,13 @@ A **release candidate** (RC) release is considered potentially viable for genera
 
 You're encouraged to test out RC releases to help Apollo identify any remaining issues.
 
+## Experimental features
+
+At Apollo, we believe in developing and iterating in the open. **Experimental features** are targeted at developers who want to adopt advanced, cutting-edge functionality. These features might not be complete, and breaking API changes are possible between individual versions.
+
+Experimental features are in active development. They can be present in a product that's in _any_ of the stages defined above, and should be used cautiously. **Experimental features might be removed from a product at any time without notice.**
+
+
 ## Stages for discontinuing support
 
 When support for a [generally available](#general-availability) Apollo product or feature is ending, that release proceeds through two additional stages: **deprecated** and **end of life**.
@@ -47,11 +54,3 @@ A **deprecated** release is still supported by Apollo. It continues to receive s
 An **end-of-life** release is **no longer supported or maintained by Apollo**. These releases no longer receive security patches or remediation for regressions. There is no commitment from Apollo to release further versions and no guarantee that the most recent version will continue to work.
 
 **Do not run end-of-life releases in production.** Upgrade to the latest generally available release as soon as possible to ensure you continue receiving security patches, bug fixes, and new features. 
-
-## Experimental features
-
-At Apollo, we believe in developing and iterating in the open. **Experimental features** are targeted at developers who want to adopt advanced, cutting-edge functionality.
-
-Experimental features might not be feature-complete, and breaking API changes are possible between individual versions. An experimental feature can exist in any of the stages defined above and should be used cautiously.
-
-**An experimental feature might be removed at any point without notice.**
