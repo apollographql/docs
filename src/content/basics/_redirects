@@ -1,3 +1,6 @@
+# Miscellaneous path changes
+/resources/release-stages/ /docs/resources/product-launch-stages/
+
 # Add Developer Tools category to root docset
 /resources/apollo-config/ /docs/devtools/apollo-config/
 
