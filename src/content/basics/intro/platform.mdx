@@ -124,12 +124,12 @@ If you get started with one of these libraries and later decide to switch to the
 
 Each subgraph is itself a GraphQL API. Therefore, it uses a GraphQL server library to handle queries forwarded along by your graph router.
 
-To act as a subgraph, a GraphQL server library needs to support the [Apollo Federation subgraph specification](/federation/federation-spec/). Fortunately, many popular libraries do!
+To act as a subgraph, a GraphQL server library needs to support the [Apollo Federation subgraph specification](/federation/subgraph-spec/). Fortunately, many popular libraries do!
 
 * [Apollo Server](/federation/subgraphs/) with `@apollo/subgraph`
     * This is Apollo's open-source Node.js GraphQL server library, which you can configure to act as a subgraph.
     * Apollo Server supports a variety of popular [Node.js middleware](/apollo-server/integrations/middleware/), and it works seamlessly with TypeScript.
-* Any of the other server libraries listed in [Subgraph-compatible server libraries](/federation/other-servers)
+* Any of the other server libraries listed in [Subgraph-compatible server libraries](/federation/supported-subgraphs/)
     * Note that not all listed libraries support all parts of the subgraph specification.
 
 Feel free to use whichever server library best suits your organization. Different subgraphs can even use completely different libraries, which is helpful if your various backend services use different languages.

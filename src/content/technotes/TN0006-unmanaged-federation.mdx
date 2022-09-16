@@ -18,7 +18,7 @@ The advantage of this approach is that you have a confirmed build that composes 
 
 ### Local composition
 
-**If you're using [Contracts](/docs/studio/contracts/)**, local composition cannot be used. Instead, use the [build status webhook](#build-status-webhook) as described above.
+**If you're using [Contracts](/studio/contracts/)**, local composition cannot be used. Instead, use the [build status webhook](#build-status-webhook) as described above.
 
 You can use the [Rover CLI](/rover/) to compose your supergraph schema as part of your CI/CD pipeline. You then provide this schema directly to your gateway or router.
 
@@ -107,7 +107,7 @@ server.listen().then(({ url }) => {
 
 In the code above, the `ApolloGateway` is passed a `supergaphSdl` property. This property can be a string (for a supergraph schema that _never_ changes during runtime), or it can be a function that enables updating the schema during runtime as shown.  
 
-For more information on this approach, [see the Apollo Gateway docs](/federation/gateway.mdx#updating-the-supergraph-schema).
+For more information on this approach, [see the Apollo Gateway docs](/federation/gateway/#updating-the-supergraph-schema).
 
 ### Custom `SupergraphManager`
 
@@ -189,4 +189,4 @@ const gateway = new ApolloGateway({
 });
 ```
 
-This uses the [`_service` field](/federation/federation-spec#query_service) to fetch the schema information directly from a running subgraph instead of fetching from Studio. If you're using [managed federation](/federation/managed-federation/overview/), this field is not needed.
+This uses the [`_service` field](/federation/subgraph-spec#enhanced-introspection-with-query_service) to fetch the schema information directly from a running subgraph instead of fetching from Studio. If you're using [managed federation](/federation/managed-federation/overview/), this field is not needed.

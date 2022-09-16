@@ -10,7 +10,7 @@ We recommend that you complete this checklist before your supergraph begins hand
 
 - Ensure that you've created multiple [variants](/studio/org/graphs#managing-variants) to represent the different environments where your supergraph runs (production, staging, and so on).
   - Optionally, [protect your production variant](/studio/org/graphs#protected-variants-enterprise-only) to avoid accidental changes while working in Apollo Studio.
-- Ensure that your [clients identify themselves](/studio/client-awareness/) by name and version.
+- Ensure that your [clients identify themselves](/studio/metrics/client-awareness/) by name and version.
   - If you're using an Apollo Client library, you can add a client name and version to the constructor.
     - For example, the [React client uses the `name` and `version` attributes](/react/api/core/ApolloClient#name) in the constructor options.
   - If you're using a third-party GraphQL client, set the `apollographql-client-name` and `apollographql-client-version` HTTP headers for each request to identify your client.
@@ -22,7 +22,7 @@ We recommend that you complete this checklist before your supergraph begins hand
   - You can continue to view and fetch your GraphQL schemas from Apollo Studio.
 - Ensure that you've correctly configured [managed federation](/federation/managed-federation/setup/).
 - Ensure that you've integrated [`rover subgraph check`](/rover/commands/subgraphs#subgraph-check) and [`rover subgraph publish`](/rover/commands/subgraphs#subgraph-publish) into your CI/CD pipeline.
-- If your [subgraph servers are listed as compatible with `ftv1`](/federation/other-servers), ensure that you've enabled [federated traces](/federation/metrics/), and that you can view operation metrics as expected in Apollo Studio.
+- If your [subgraph servers are listed as compatible with `ftv1`](/federation/supported-subgraphs/), ensure that you've enabled [federated traces](/federation/metrics/), and that you can view operation metrics as expected in Apollo Studio.
   - Enable [fractional trace sampling via `fieldLevelInstrumentation`](/studio/metrics/field-usage/#fractional-sampling) to reduce performance hits due to tracing.
 - Consider adding caching layers.
   - Apollo Server and the Apollo Router both support [automatic persisted queries (APQ)](/apollo-server/performance/apq/) out of the box.
