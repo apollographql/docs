@@ -103,7 +103,7 @@ export function DocsetMenu({docset, versions = [], currentVersion, ...props}) {
                 Kotlin
               </DocsetButton>
             </DocsetGroup>
-            <DocsetGroup title="Backend">
+            <DocsetGroup title="Build your graph">
               <DocsetButton leftIcon={DOCSET_ICONS.server} to="/apollo-server">
                 Server
               </DocsetButton>
@@ -114,7 +114,7 @@ export function DocsetMenu({docset, versions = [], currentVersion, ...props}) {
                 Router
               </DocsetButton>
             </DocsetGroup>
-            <DocsetGroup title="Cloud">
+            <DocsetGroup title="Manage your graph">
               <DocsetButton leftIcon={DOCSET_ICONS.studio} to="/studio">
                 Studio
               </DocsetButton>
