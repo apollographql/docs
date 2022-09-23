@@ -322,9 +322,9 @@ These are the fields you can include in the `initialState` option you pass to `n
 </td>
 <td>
 
-A URI-encoded operation to populate in the Explorer's editor on load.
+A URI-encoded operation to populate in the embedded Explorer's editor on load.
 
-If you omit this, the Explorer initially loads an example query based on your schema.
+If you omit this option, the Explorer initially loads an example query based on your schema. To tell the embedded Explorer the specific operation you'd like it to use in the editor, see [Setting a default operation](#setting-a-default-operation) above. 
 
 If [`persistExplorerState`](#persistexplorerstate) is `true` _and_ you provide this option, the Explorer loads any of the user's tabs from `localStorage`, and it _also_ opens a _new_ tab with this operation.
 
