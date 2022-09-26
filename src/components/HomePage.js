@@ -31,12 +31,12 @@ export function Odyssey() {
     >
       <div>
         <Heading as="h3" size="md" mb="2">
-          Looking for a guided, interactive experience?
+          New to GraphQL?
         </Heading>
         <Text fontSize="md">
-          Our learning platform, <strong>Odyssey</strong>, is the perfect place
-          to start your journey and learn GraphQL with videos and interactive
-          code challenges.
+          Welcome! Our learning platform, <strong>Odyssey</strong>, is the
+          perfect place to start your journey and learn GraphQL with videos and
+          interactive code challenges.
         </Text>
       </div>
       <div>
