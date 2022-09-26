@@ -9,14 +9,14 @@
       "Full-stack quickstart": "https://www.apollographql.com/tutorials/fullstack-quickstart/introduction"
     },
     "Documentation Sets": {
+      "Studio": "/studio/",
+      "Federation": "/federation/",
+      "Server": "/apollo-server/",
+      "Router": "/router/",
+      "Rover CLI": "/rover/",
       "Client (React)": "/react/",
       "Client (iOS)": "/ios/",
-      "Client (Kotlin)": "/kotlin/",
-      "Server": "/apollo-server/",
-      "Federation": "/federation/",
-      "Router": "/router/",
-      "Studio": "/studio/",
-      "Rover CLI": "/rover/"
+      "Client (Kotlin)": "/kotlin/"
     },
     "Development Tools": {
       "Apollo extension for VS Code": "/devtools/editor-plugins",
