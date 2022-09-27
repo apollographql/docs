@@ -23,7 +23,7 @@ The extension enables you to:
 To get all of the benefits of the VS Code experience, it's best to link the schema that is being developed against **before** installing the extension. The best way to do that is by [registering a schema](https://www.apollographql.com/docs/studio/schema-registry/#registering-a-schema-manually) to the Apollo schema registry. Once that's done:
 
 1. Create an `apollo.config.js` file at the root of the project.
-2. Obtain an API key from Apollo Studio.
+2. Obtain a [Personal API key](./../../studio/api-keys.mdx) from Apollo Studio.
 
 ### Setting up an Apollo config
 
@@ -41,7 +41,9 @@ The `service` name here is the name of the graph you've created in [Apollo Studi
 
 ### Setting up an API key
 
-To authenticate with Apollo Studio to pull down your schema, create a file next to the `apollo.config.js` called `.env`. This should be an **untracked** file (i.e., don't commit it to Git). Go to your graph's Settings page in Apollo Studio to get the API key.
+To authenticate with Apollo Studio to pull down your schema, create a `.env` file in the same directory as the `apollo.config.js` file. This should be an **untracked** file (i.e., don't commit it to Git).
+
+Then go to your [User Settings page](https://studio.apollographql.com/user-settings/api-keys) in Apollo Studio to create a new Personal API key.
 
 > **Note:** It is best practice to create a new API key for each member of the team and name the key so its easy to find and revoke if needed. This will be easier to manage in the future.
 
