@@ -39,8 +39,9 @@ module.exports = {
 
 The `service` name here is the name of the graph you've created in [Apollo Studio](https://studio.apollographql.com).
 
-### Setting up an API key
+### Setting up the `.env` file
 
+`
 To authenticate with Apollo Studio to pull down your schema, create a `.env` file in the same directory as the `apollo.config.js` file. This should be an **untracked** file (i.e., don't commit it to Git).
 
 Then go to your [User Settings page](https://studio.apollographql.com/user-settings/api-keys) in Apollo Studio to create a new Personal API key.
