@@ -89,7 +89,7 @@ For technical GraphQL content from Apollo developer advocates and the larger Gra
 
 ### How can I host my GraphQL server online?
 
-GraphQL servers created with `apollo-server` can be deployed to any environment that supports Node.js projects can be deployed. `apollo-server` even has variants to support serverless deployment with AWS Lambda.
+GraphQL servers created with Apollo Server can be deployed to any environment that supports Node.js projects can be deployed. Apollo Server can also integrate with serverless deployment environments such as AWS Lambda.
 
 There are deployment guides available for:
 
@@ -113,15 +113,15 @@ You understand how GraphQL works and the benefits it offers. You're trying to cr
 
 ### Which language should I use for my GraphQL server?
 
-There are GraphQL server tools available for most popular languages, but we recommend using [apollo-server](https://www.apollographql.com/server) (Node.js) because of the ecosystem of tools developed for GraphQL in JavaScript. Node servers can also be run nearly anywhere, including on the edge.
+There are GraphQL server tools available for most popular languages, but we recommend using [Apollo Server](https://www.apollographql.com/server) (Node.js) because of the ecosystem of tools developed for GraphQL in JavaScript. Node servers can also be run nearly anywhere, including on the edge.
 
 ### How do I wrap existing APIs?
 
 One of the best things about GraphQL is that it works excellently with existing APIs. It's possible to connect any number of existing services to your schema.
 
-The most common source is a REST API. The [`RESTDataSource`](https://www.apollographql.com/docs/apollo-server/data/data-sources/#rest-data-source) is a tool that integrates with `apollo-server` to simplify fetching and caching for existing REST APIs.
+The most common source is a REST API. The [`RESTDataSource`](https://www.apollographql.com/docs/apollo-server/data/data-sources/#rest-data-source) is a tool that integrates with Apollo Server to simplify fetching and caching for existing REST APIs.
 
-Other DataSources are under development, but even without the `DataSource` API, it's possible to connect any backend to a schema. [Resolvers](https://www.apollographql.com/docs/apollo-server/data/resolvers/) can do anything, including fetch data from an SDK or ORM.
+But it's easy to connect any backend to a schema. [Resolvers](https://www.apollographql.com/docs/apollo-server/data/resolvers/) can do anything, including fetch data from an SDK or ORM.
 
 ### How do I design the schema?
 
