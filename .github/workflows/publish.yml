@@ -19,7 +19,6 @@ jobs:
           node-version: 14
 
       - name: Trigger deploy
-        run: npx netlify deploy --trigger --prod --message "${{ github.event.head_commit.message }}"
+        run: npx netlify deploy --trigger --prod --message $(echo ${{ github.event.head_commit.message }} | head -n 1)
         env:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
