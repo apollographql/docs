@@ -28,9 +28,9 @@ module.exports = {
     remote: 'https://github.com/apollographql/apollo-ios',
     branch: 'main'
   },
-  'ios/v1': {
+  'ios/v0-legacy': {
     remote: 'https://github.com/apollographql/apollo-ios',
-    branch: 'release/1.0'
+    branch: '0.x-legacy'
   },
   kotlin: {
     remote: 'https://github.com/apollographql/apollo-kotlin',
