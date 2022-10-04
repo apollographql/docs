@@ -2,6 +2,8 @@
 title: Forwarding metrics to Datadog
 ---
 
+> ⚠️ **Datadog forwarding is available only for [Enterprise plans](https://www.apollographql.com/pricing/).** It is not available for cloud supergraphs.
+
 The **Apollo Datadog integration** enables you to forward Studio performance metrics to your Datadog account. Datadog supports an advanced function API, which enables you to create sophisticated graphs and alerts for GraphQL metrics.
 
 > **Important:** Studio only forwards metrics for **named GraphQL operations**. Metrics for _anonymous_ operations are not forwarded. Make sure your graph's clients name all operations:
@@ -45,7 +47,7 @@ To integrate with Datadog, you provide your Datadog API key and region to Studio
    - If the domain name is `app.datadoghq.com`, then your API region is `US`.
    - If the domain name is `app.datadoghq.eu`, then your API region is `EU`.
 
-4. In Studio, go to your graph's Settings page and click on the Reporting tab:
+4. In Studio, go to your graph's Integrations page:
 
    <img
      src="../img/datadog/settings-link.png"

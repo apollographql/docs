@@ -3,7 +3,9 @@ title: Segmenting metrics by client
 description: Understand how each of your clients is using your graph
 ---
 
-Apollo Studio enables you to view operation metrics for each of your application's different clients (such as `web` and `iOS`) and client versions (such as `1.0` and `1.1`), helping you understand how each one interacts with your graph:
+Apollo Studio enables you to view operation metrics for each of your application's different clients (such as `web` and `iOS`) and client _versions_ (such as `1.0` and `1.1`), helping you understand how each one interacts with your supergraph.
+
+You view these segmented metrics from your supergraph variant's **Clients** page:
 
 <img
   src="../img/client-awareness/overview.jpg"
@@ -16,14 +18,12 @@ This feature (called **client awareness**) is especially useful as your number o
 
 ## Setup
 
-First, make sure that your GraphQL server is already [pushing analytics to Studio](./usage-reporting).
-
-### Using Apollo Server and Apollo Client
-
-By default, Apollo Server checks for the presence of the following HTTP headers in every incoming operation request:
+Your supergraph's router checks for the presence of the following HTTP headers in every incoming operation request:
 
 - `apollographql-client-name`
 - `apollographql-client-version`
+
+If one or both of these headers are present, your router automatically extracts their values and includes them in the metrics data that it sends to GraphOS.
 
 **If you're using Apollo Client**, you can populate these headers automatically for every operation request by providing the `name` and `version` options to the `ApolloClient` constructor, like so:
 
@@ -40,43 +40,7 @@ const client = new ApolloClient({
 });
 ```
 
-If one or both of these headers are present, Apollo Server automatically extracts their values and includes them in the trace report that it sends to Apollo Studio. You can [override this default behavior](#advanced-apollo-server-configuration).
-
-#### Advanced Apollo Server configuration
-
-You can configure Apollo Server to use a different method to determine the `name` and `version` of the client associated with a request. To do so, install the [usage reporting plugin](https://www.apollographql.com/docs/apollo-server/api/plugin/usage-reporting/) explicitly and provide it with a `generateClientInfo` function.
-
-In the following example, the `generateClientInfo` function calls a `userSuppliedLogic` function, which can return values for the client's name and version based on the details of the `request`.
-
-```js {8-14}
-const { ApolloServer } = require("apollo-server");
-const { ApolloServerPluginUsageReporting } = require("apollo-server-core");
-
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  plugins: [
-    ApolloServerPluginUsageReporting({
-      generateClientInfo: ({ request }) => {
-        const { clientName, clientVersion } = userSuppliedLogic(request);
-        return {
-          clientName,
-          clientVersion
-        };
-      }
-    })
-  ],
-});
-
-server.listen().then(({ url }) => {
-  console.log(`🚀  Server ready at ${url}`);
-});
-```
-
-### Using another GraphQL server
-
-Please reach out to **opensource [at] apollographql.com** to work with us to add
-client awareness support to your preferred GraphQL server.
+**If you're using another GraphQL client,** consult its documentation to learn how to add custom HTTP headers to every outgoing request.
 
 ## Common use cases
 
