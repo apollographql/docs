@@ -19,7 +19,9 @@ jobs:
           node-version: 14
 
       - name: Trigger deploy
-        run: npx netlify deploy --trigger --prod --message "${{ github.event.head_commit.message }}"
+        run: npx netlify deploy --trigger --prod --message "${COMMIT_MESSAGE}"
         env:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          # Passing this through an env var allows for proper escaping.
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
