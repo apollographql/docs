@@ -1,8 +1,8 @@
 ---
-title: Federated graphs in Studio
+title: Supergraph-specific Studio features
 ---
 
-A [federated graph](https://apollographql.com/docs/federation) (also known as a **supergraph** ) is a graph that’s composed of multiple individual **subgraphs**:
+A **supergraph** (also known as a [federated graph](https://apollographql.com/docs/federation) is a graph that's composed of one or more **subgraphs**:
 
 ```mermaid
 graph BT;
@@ -15,41 +15,129 @@ graph BT;
 
 Each subgraph represents an underlying service or set of services that provide their own GraphQL API. Different subgraphs are often owned by different teams in an organization.
 
-Apollo Studio provides tools to help multiple teams collaborate on a federated graph and its subgraphs.
+Apollo Studio provides tools to help multiple teams collaborate on a supergraph and its subgraphs.
 
-<YouTube youTubeId="QaxmqfXl8HI" />
+## Supergraph variants
 
-## Variants and federated graphs
+Each [variant](./org/graphs/#variants) of a Studio supergraph has its own subgraph schemas, supergraph schema, change history, and metrics.
 
-Just like any other deployed graph in Studio, a federated graph can have multiple [variants](./org/graphs/#managing-variants). Each variant has its own subgraph schemas, supergraph schema, change history, and metrics.
-
-In addition, different variants of a federated graph can have completely different sets of subgraphs:
+Different variants of a supergraph can even have completely different sets of subgraphs:
 
 ```mermaid
 graph BT;
   subgraph "Staging"
-  gateway2(["Gateway"]);
+  router2(["Router"]);
   users2[Users];
   products2[Products];
   reviews2[Reviews];
-  gateway2 --- users2 & products2 & reviews2;
+  router2 --- users2 & products2 & reviews2;
   end
 
   subgraph "Production"
-  gateway(["Gateway"]);
+  router(["Router"]);
   users[Users];
   products[Products];
-  gateway --- users & products;
+  router --- users & products;
   end
 ```
 
 This helps you test out adding new subgraphs (or removing existing ones) in non-production environments.
 
-You specify a subgraph instance's associated variant when you [register its schema](https://www.apollographql.com/docs/federation/managed-federation/setup/#2-register-all-subgraph-schemas).
+When you [publish a subgraph's schema](./schema/cli-registration/), you can specify which variant of the supergraph you're publishing that schema to.
+
+## Managing subgraphs
+
+After you create a [cloud supergraph](./org/graphs/#cloud-supergraphs) (or a new variant of one), you can view a list of its associated subgraphs from the variant's Subgraphs page:
+
+<img
+  class="screenshot"
+  alt="List of subgraphs for a cloud supergraph in Studio"
+  src="./img/subgraph-list.jpg"
+  width="600"
+/>
+
+The list includes each subgraph's name and routing URL, along with type and field counts for each subgraph's schema.
+
+### Adding a new subgraph
+
+To add a new subgraph to a variant of your cloud supergraph, you [publish that subgraph's schema](./schema/cli-registration/) using the Rover CLI. In your command, make sure to specify the correct values for the following:
+
+* The graph and variant to publish to
+* The name for the subgraph
+* The routing URL that your router will use to communicate with the subgraph
+
+You can also click **Add a subgraph** on your variant's Subgraphs page to view instructions for publishing a subgraph schema.
+
+
+### Modifying a subgraph
+
+From your variant's Subgraphs page, you can modify an existing subgraph's routing URL:
+
+1. Open the "◦◦◦" menu for the subgraph you want to modify:
+
+    <img
+      class="screenshot"
+      alt="Menu for additional subgraph options in Studio"
+      src="./img/subgraph-menu.jpg"
+      width="450"
+    />
+
+2. Click **Edit routing URL**.
+3. In the dialog that appears, provide a new URL and click **Update**.
+    - Your router automatically begins using the new URL to communicate with your subgraph.
+
+If you need to make any _other_ modifications to an existing subgraph, use the Rover CLI. [Learn about `rover subgraph` commands.](/rover/commands/subgraphs)
+
+### Deleting a subgraph
+
+> ⚠️ **Deleting a subgraph is dangerous!** Read this section fully before deleting a subgraph.
+
+You can delete an existing subgraph from a variant of your cloud supergraph. If you do:
+
+1. The variant automatically attempts to compose an updated supergraph schema using the schemas from all _remaining_ subgraphs.
+
+    - Studio displays the result of this attempt, and you can cancel the deletion if there are errors.
+
+2. **If composition succeeds,** the variant's router automatically begins using the updated supergraph schema. This means clients can no longer query the router for fields that are defined only in the deleted subgraph.
+
+    **If composition fails,** the router continues using its _existing_ supergraph schema. This means clients can _continue_ querying the router for fields from the deleted subgraph, _until_ the remaining subgraph schemas are updated to compose successfully.
+
+#### ⚠️ Important considerations
+- **Deleting a subgraph can break existing clients!** This action is equivalent to removing _all_ of the subgraph's types and fields from your supergraph (unless they're also defined in _another_ subgraph). If a client sends an operation that includes any of those types and fields, the router will _reject_ that operation.
+    - To help you remove schema definitions safely, learn about [schema checks](./schema-checks/).
+
+- Deleting a subgraph in Studio has no effect on your actual running subgraph instance. It only removes your router's _knowledge_ of that instance and its corresponding schema fields.
+
+#### Steps to delete within Studio
+
+1. Go to the Subgraphs page for the subgraph's corresponding variant.
+
+2. Open the "◦◦◦" menu for the subgraph you want to delete:
+
+    <img
+      class="screenshot"
+      alt="Menu for additional subgraph options in Studio"
+      src="./img/subgraph-menu.jpg"
+      width="450"
+    />
+
+3. Click **Delete subgraph**. Studio attempts to compose a new supergraph schema that _doesn't_ include the subgraph you want to delete.
+
+4. A confirmation dialog appears that displays any composition errors that occurred:
+
+    <img
+      class="screenshot"
+      alt="Dialog for confirming deletion of a subgraph"
+      src="./img/delete-subgraph-dialog.jpg"
+      width="500"
+    />
+
+    If you're _sure_ you want to delete the subgraph, enter its name and click **Delete subgraph**.
+
 
 ## Viewing a field's originating subgraph
 
-The **Schema > Reference** tab in Studio displays a table of your federated schema’s types and fields. This table includes a Subgraph column:
+The **Schema > Reference** page in Studio displays a table of your supergraph's types and fields. This table includes a **Subgraph** column, which lists the subgraphs that define each type and field:
 
 <img
   class="screenshot"
@@ -58,7 +146,7 @@ The **Schema > Reference** tab in Studio displays a table of your federated sche
   width="736"
 />
 
-Clicking the subgraph link for a type or field takes you to the line in the subgraph schema where it's defined:
+Clicking the subgraph link for a type or field takes you to the line where it's defined in the corresponding subgraph schema:
 
 <img
   class="screenshot"
@@ -67,7 +155,7 @@ Clicking the subgraph link for a type or field takes you to the line in the subg
   width="700"
 />
 
-If you're using [the `@contact` directive](#subgraph-contact-info) to specify owner contact information for your subgraphs, hovering over a subgraph name displays its contact information, enabling you to follow up with the appropriate team:
+If you're using [the `@contact` directive](#contact-info-for-subgraphs) to specify owner contact information for your subgraphs, hovering over a subgraph name displays its contact information, enabling you to follow up with the appropriate team:
 
 <img
   class="screenshot"
@@ -78,19 +166,21 @@ If you're using [the `@contact` directive](#subgraph-contact-info) to specify ow
 
 ## Viewing subgraph SDL
 
-The **Schema > SDL** tab in Studio displays the raw SDL of your federated graph’s schema, along with the schema of each subgraph.
+The **Schema > SDL** page in Studio displays the raw SDL for each type of schema associated with your supergraph (API schema, supergraph schema, and subgraph schemas).
 
-From this tab you can:
+> [Learn about the different types of federated schemas.](/federation/federated-types/overview/)
 
-- View metadata about the composed graph and each subgraph (such as endpoint URL and the most recent schema registration date)
-- Identify the originating subgraph for any type or field in your API and share a link with team members
+From this page, you can:
+
+- View metadata about the composed supergraph, along with metadata about each subgraph (such its endpoint URL and most recent schema registration date)
+- Identify which subgraphs define any type or field in your API and share a link with team members
 - Search for types and fields
-- Download a copy of your subgraph’s SDL for local development
+- Download a copy of your subgraph's SDL for local development
 - Filter out comments and deprecated fields for improved scanning
 
-## Subgraph contact info
+## Contact info for subgraphs
 
-You can use the `@contact` directive to add your team's contact info to your subgraph schema. This info is displayed in Studio, helping _other_ teams know who to contact for assistance with the subgraph:
+You can use the `@contact` directive to add your team's contact info to a subgraph schema. This info is displayed in Studio, which helps _other_ teams know who to contact for assistance with the subgraph:
 
 <img
   class="screenshot"
@@ -103,7 +193,7 @@ The contact info includes a name (of a team or individual), along with an option
 
 ### Adding the `@contact` directive to your subgraph
 
-To add the `@contact` directive to your schema, you first need to _define_ the directive. Add the following definition to each of your subgraph schemas:
+To use the `@contact` directive in your subgraph schema, you first need to _define_ the directive in your schema. Add the following definition to each of your subgraph schemas:
 
 ```graphql title="schema.graphql"
 directive @contact(
@@ -116,7 +206,7 @@ directive @contact(
 ) on SCHEMA
 ```
 
-You can now apply the `@contact` directive to the special `schema` object. Many schemas don’t include this object because it’s not required, but you can add it like so:
+You can now apply the `@contact` directive to each subgraph schema's special `schema` object. If your schema doesn't already define this object, you can add it like so:
 
 ```graphql title="schema.graphql"
 extend schema @contact(
@@ -129,33 +219,80 @@ extend schema @contact(
 
 #### Supported `@contact` fields
 
-| Name          | Type      | Description                                                                                                                                |
-| ------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| `name`        | `String!` | The name of the person, people, or team responsible for the subgraph. **Required**.                                                        |
-| `url`         | `String`  | The URL where the subgraph’s owner can be reached. This might be the URL of a chat room or forum, or it could be an email address.         |
-| `description` | `String`  | Provides any additional helpful details about working with this subgraph or contacting its owner. This field also supports markdown links. |
+<table class="field-table">
+  <thead>
+    <tr>
+      <th>Name /<br/>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+
+<tbody>
+
+<tr class="required">
+<td>
+
+##### `name`
+
+`String!`
+</td>
+<td>
+
+**Required.** The name of the person, people, or team responsible for the subgraph.
+</td>
+</tr>
+
+
+<tr>
+<td>
+
+##### `url`
+
+`String`
+</td>
+<td>
+
+The URL where the subgraph's owner can be reached. This might be the URL of a chat room or forum, or it could be an email address.
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `description`
+
+`String`
+</td>
+<td>
+
+Provides any additional helpful details about working with this subgraph or contacting its owner.
+
+This field supports Markdown-formatted links.
+</td>
+</tr>
+
+</tbody>
+</table>
 
 #### Known `@contact` limitations
 
-- To provide the `@contact` directive to Apollo, you must register your schema by providing a local `.graphql` file as the `--schema` option of [`rover graph publish`](./schema/cli-registration/#registering-a-non-federated-schema).
-  - If you provide an introspection result to the command instead, directives are **not** included in the result.
-- Similarly, you cannot provide your `@contact` directive to Apollo via [schema reporting](./schema/schema-reporting/). This registration method also does not include directives.
-- If your subgraph doesn’t already have a `schema` object, you need to add one to use the `@contact` directive. The `schema` object cannot be empty, so you need to include at least one field in it (most commonly `query: Query`). If you do provide the `Query` type like this, it needs to include at least one field in your subgraph’s schema. If your subgraph’s `Query` type is empty, you need to add a dummy field for the SDL to be valid:
+- To provide the `@contact` directive to Apollo, you must publish your subgraph schemas by providing a local `.graphql` file as the `--schema` option of [`rover subgraph publish`](./schema/cli-registration/).
+  - If you provide an introspection result to the command instead, the `@contact` directive is **not** included in that result.
+- If your subgraph doesn't already have a `schema` object, you need to add one to use the `@contact` directive. The `schema` object can't be empty, so you need to include at least one field in it (most commonly `query: Query`). If you do provide the `Query` type like this, it needs to include at least one field in your subgraph's schema. If your subgraph's `Query` type is empty, you need to add a dummy field for the SDL to be valid:
 
-  ```graphql title="schema.graphql"
-  @contact(...)
-  schema {
-    query: Query
-  }
+    ```graphql title="schema.graphql"
+    schema @contact(...) {
+      query: Query
+    }
 
-  extend type Query {
-    _dummyField: Boolean
-  }
-  ```
+    type Query {
+      _dummyField: Boolean
+    }
+    ```
 
 ### Viewing contact info
 
-After you register a subgraph schema with the `@contact` directive, the contact information is included in the metadata shown in Studio’s **Schema > SDL** tab:
+After you publish a subgraph schema that includes the `@contact` directive, the contact information is included in the metadata shown in Studio's **Schema > SDL** tab:
 
 <img
   class="screenshot"
@@ -164,7 +301,7 @@ After you register a subgraph schema with the `@contact` directive, the contact 
   width="424"
 />
 
-In the **Schema > Reference** tab, you’ll also see a contact card when you hover over the subgraph link of a type or field:
+In the **Schema > Reference** tab, you'll also see a contact card when you hover over the subgraph link of a type or field:
 
 <img
   class="screenshot"
@@ -218,29 +355,31 @@ Tags are also visible in the Explorer's Documentation tab:
 />
 
 
-## Federation support in the Explorer
+## Supergraph support in the Explorer
 
-The [Apollo Studio Explorer](./explorer/explorer/) provides enhanced support for working with federated graphs:
+The [Apollo Studio Explorer](./explorer/explorer/) provides enhanced support for working with supergraphs:
 
-- You can preview how your graph resolves data for an operation by inspecting the operation’s query plan in the Response pane.
-- While you’re building operations in the Explorer, you can see which subgraph each field of your operation originates in by enabling subgraph hints from the Explorer’s Settings tab.
+- You can preview how your supergraph's router resolves data for an operation by inspecting the operation's [query plan](/federation/query-plans) in the Response pane.
+- While you're building operations in the Explorer, you can see which subgraph each field of your operation originates in by enabling subgraph hints from the Explorer's Settings tab.
 
 ## Viewing composition errors
 
-Studio displays a **Federated** label next to the name of a federated graph. If a federated graph has composition errors, you can click the label to view the errors that must be resolved before composition can succeed.
+If a supergraph's most recent set of subgraph schemas failed to compose, a **BUILD FAILED** label is shown at the top of the supergraph's page in Studio:
 
 <img
   class="screenshot"
-  src="./img/federated-graphs/federated-graph-label-composition-error-state.jpg"
-  alt="Studio screenshot showing the Federated graph label in an error state"
-  width="426"
-/>
-
-<img
-  class="screenshot"
-  src="./img/federated-graphs/federated-graph-composition-error-modal.jpg"
-  alt="Studio screenshot showing the composition error modal that is opened by clicking the Federated label in error state"
+  src="./img/composition-failed.jpg"
+  alt="Studio screenshot showing a supergraph with a failed composition state"
   width="500"
 />
 
-> [Learn more about composition errors](https://www.apollographql.com/docs/federation/errors/)
+You can click this label to view the errors that must be resolved before composition can succeed:
+
+<img
+  class="screenshot"
+  src="./img/composition-error.jpg"
+  alt="Studio screenshot showing the composition error modal that is opened by clicking the build failed label"
+  width="500"
+/>
+
+> [Learn more about composition errors.](/federation/errors/)

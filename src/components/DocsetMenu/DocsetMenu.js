@@ -94,7 +94,7 @@ export function DocsetMenu({docset, versions = [], currentVersion, ...props}) {
             </DocsetGroup>
             <DocsetGroup title="Build your supergraph">
               <DocsetButton leftIcon={DOCSET_ICONS.studio} to="/studio">
-                Studio
+                GraphOS
               </DocsetButton>
               <DocsetButton leftIcon={DOCSET_ICONS.federation} to="/federation">
                 Federation
