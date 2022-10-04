@@ -41,8 +41,11 @@ jobs:
 
       - name: Publish
         id: publish
+        env:
+           # Passing this through an env var allows for proper escaping.
+          PR_TITLE: ${{ github.event.pull_request.title }}
         run: |
-          deploy_output=$( npx netlify deploy --json --message "${{ github.event.pull_request.title }}" )
+          deploy_output=$( npx netlify deploy --json --message "${PR_TITLE}" )
           deploy_url=$( echo $deploy_output | jq '.deploy_url' )
           echo "::set-output name=deploy_url::$deploy_url"
 
