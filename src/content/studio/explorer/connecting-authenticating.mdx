@@ -2,7 +2,11 @@
 title: Connecting and authenticating with the Explorer
 ---
 
-The Explorer automatically attempts to connect to your GraphQL server at the URL specified in the Explorer Settings tab. Depending on your server's settings, you might need to configure this connection to handle CORS requirements or authentication.
+The Explorer automatically attempts to connect to your GraphQL server at the URL specified in its Settings tab.
+
+> When you use the Explorer with a [cloud supergraph](../org/graphs/#cloud-supergraphs), the endpoint URL is always the URL of your current variant's GraphOS-managed router.
+
+Depending on your GraphQL server's settings, you might need to configure the Explorer's connection to handle CORS requirements or authentication.
 
 ## CORS policies
 
@@ -31,7 +35,7 @@ The Explorer currently enables you to authenticate via [request headers](#reques
 
 The bottom panel of the Explorer includes a Headers tab where you can set headers that are included in your operation's HTTP request.
 
-Headers can include the values of [environment variables](#environment-variables), as shown:
+Headers can include the values of [environment variables](#environment-variables), which are specified with double curly braces as shown:
 
 <img
   class="screenshot"
@@ -55,27 +59,27 @@ Once configured, requests sent from `https://studio.apollographql.com` will carr
 
 ### Environment variables
 
-The bottom panel of the Explorer editor includes an Environment Variables tab. Here, you can provide sensitive information that you can then include in header values or [preflight scripts](#preflight-scripts). This enables you to share operations (including headers) with other team members _without_ exposing sensitive data.
+The Explorer's Settings tab includes a section for providing Environment Variables. Here, you can provide sensitive information that you can then include in header values or [preflight scripts](#preflight-scripts). This enables you to share operations (including headers) with other team members _without_ exposing sensitive data.
 
 For example, you can define a `token` environment variable like so:
 
 <img
   class="screenshot"
-  src="../img/explorer-env-vars.jpg"
+  src="../img/explorer-environment-variables.jpg"
   alt="Setting Explorer environment variables"
-  width="500"
+  width="300"
 />
 
-You can then include that environment variable in header values with the following syntax:
+You can then include that environment variable in header values with double curly braces, as shown:
 
 <img
   class="screenshot"
-  src="../img/explorer-headers.jpg"
+  src="../img/explorer-use-environment-variable.jpg"
   alt="Setting Explorer headers with environment variables"
-  width="500"
+  width="400"
 />
 
-When you share this operation, the value of `token` is _not_ shared, and other users can provide their own.
+If you share this operation with team members, your value for `token` is _not_ shared, and other users can provide their own value.
 
 ### Preflight scripts
 
@@ -86,10 +90,10 @@ Each preflight script applies to a _single variant_ of a particular graph, so yo
 #### ⚠️ Important considerations for preflight scripts
 
 - All team members with access to a variant can _view_ that variant's preflight script.
-- For [protected variants](../org/graphs/#protected-variants-enterprise-only), only organization members with the [`Graph Admin` role](../org/members/#organization-wide-member-roles) can _create or edit_ a variant's preflight script.
+- For [protected variants](../graph-access-permissions/#protected-variants-enterprise-only), only organization members with the [`Graph Admin` role](../org/members/#organization-wide-member-roles) can _create or edit_ a variant's preflight script.
   - For _non_-protected variants, members with the `Contributor` role can also modify the preflight script.
 - Preflight scripts are stored in the Apollo cloud in plaintext.
-  - **Do not include secret credentials in preflight scripts.** Instead, team members can provide their individual credentials in the Explorer via [environment variables](#environment-variables).
+  - **Do not include secret credentials in preflight scripts!** Instead, team members can provide their individual credentials in the Explorer via [environment variables](#environment-variables).
 - Team members can [disable](#disabling-preflight-scripts) the execution of a preflight script.
 
 #### Creating a preflight script
