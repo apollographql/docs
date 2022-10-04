@@ -9,11 +9,11 @@ Managing data in modern applications is challenging. Most applications require:
 - A backend that serves data to clients from multiple sources (Postgres, Redis, etc.)
 - Complex state and cache management for both the frontend and the backend
 
-By adopting GraphQL and Apollo, you can reduce these challenges considerably. GraphQL's declarative model helps you create a consistent, predictable API you can use across all of your clients. As you add, remove, and migrate back-end data stores, that API doesn't change from the client's perspective.
+By adopting GraphQL and Apollo, you can reduce these challenges considerably. GraphQL's declarative model helps you create a consistent, predictable API you can use across all of your clients. As you add, remove, and migrate backend data stores, that API doesn't change from the client's perspective.
 
 Even with many other advantages, **GraphQL's single greatest benefit is the developer experience it provides.** It's straightforward to add new types and fields to your API, and similarly straightforward for your clients to begin using those fields. This helps you design, develop, and deploy features quickly.
 
-Combined with [the Apollo platform](./platform/), complex considerations like caching, data normalization, and optimistic UI rendering become straightforward as well.
+Combined with Apollo open-source libraries, complex considerations like caching, data normalization, and optimistic UI rendering become straightforward as well.
 
 ## GraphQL provides declarative, efficient data fetching
 
@@ -82,11 +82,11 @@ Thanks to GraphQL's [strong typing](https://graphql.org/learn/schema) and built-
 - Compose new operations with live validation and autocomplete
 - Register your schema with a management service that tracks and checks changes
 
-### What is Apollo Studio?
+### What is Apollo GraphOS?
 
-Apollo provides a cloud-hosted collection of tools that help you measure your graph's performance and grow it safely. These tools are together known as [**Apollo Studio**](https://www.apollographql.com/docs/studio/).
+Apollo provides a cloud-hosted collection of tools that help you build your graph, measure its performance, and grow it safely. These tools are together known as [**Apollo GraphOS**](/studio/).
 
-After registering your GraphQL schema, you can use the **Apollo Studio Explorer** to inspect all of its types and fields. You can also build and run queries against your running server:
+After registering your schema with GraphOS, you can use the **Apollo Studio Explorer** to inspect all of its types and fields. You can also build and run queries against your running server:
 
 <img src="../img/explorer-tab.jpg" alt="Studio Explorer tab" class="screenshot" />
 
@@ -98,11 +98,11 @@ The Apollo Client DevTools extension for [Chrome](https://chrome.google.com/webs
 
 ## GraphQL is production-ready
 
-GraphQL's adoption has risen steadily since Facebook published the original [specification](https://spec.graphql.org/) in 2015. For more and more organizations, the benefits of GraphQL are taking it from a curious engineer's hack-week experiment to the heart of the application data layer.
+GraphQL's adoption has risen steadily since Facebook published the original [specification](https://spec.graphql.org/) in 2015. For more and more organizations, the benefits of GraphQL have taken it from a curious engineer's hack-week experiment to the heart of the enterprise data layer.
 
 GraphQL scales with the requirements of even the largest organizations, largely because of its [powerful tooling](#graphql-enables-powerful-tooling) and its compatibility with a [federated architecture](https://www.apollographql.com/docs/federation/).
 
-In a federated architecture, a single GraphQL schema is split across multiple back-end services. Each team in an organization can then own exactly the services (and the corresponding parts of the schema) that they should.
+In a federated architecture (also known as a **supergraph**), a single GraphQL schema is split across multiple back-end services. Each team in an organization can then own exactly the services (and the corresponding parts of the schema) that they should.
 
 ### Organizations using GraphQL
 
@@ -127,7 +127,7 @@ GraphQL introduces a new conceptual model for representing and interacting with 
 - Back-end developers must come up to speed with how to handle incoming requests from the frontend.
 - Developers across the organization must collaborate on a single, product-driven GraphQL schema and appoint individuals as the official maintainers of that schema.
 
-The Apollo [docs](https://www.apollographql.com/docs/), [blog](https://www.apollographql.com/blog/), and [forums](https://community.apollographql.com) are all here to help your organization adopt GraphQL and take full advantage of it.
+The Apollo [docs](https://www.apollographql.com/docs/), [blog](https://www.apollographql.com/blog/), and [community forum](https://community.apollographql.com) are all here to help your organization adopt GraphQL and take full advantage of it.
 
 ### Potential for slow operations
 

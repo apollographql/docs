@@ -9,7 +9,7 @@
       "Full-stack quickstart": "https://www.apollographql.com/tutorials/fullstack-quickstart/introduction"
     },
     "Documentation Sets": {
-      "Studio": "/studio/",
+      "GraphOS": "/studio/",
       "Federation": "/federation/",
       "Server": "/apollo-server/",
       "Router": "/router/",
