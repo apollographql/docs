@@ -47,7 +47,7 @@ These features (along with many others) are available to organizations on the **
   - Whenever you update a subgraph schema, GraphOS composes a new _supergraph_ schema for your router. If composition succeeds, your router automatically begins using its new schema.
   - You can view the results of each [launch](./launches/) that takes place whenever you update a subgraph schema, helping you resolve any issues that might occur.
 - **An interface for every use case.**
-  - [Apollo Studio](https://studio.apollographql.com) is the primary web interface for GraphOS. Among other capabilities, you use Studio to create your organization and its supergraphs, view [schemas](./org/graphs/#the-schema-page) and [metrics](./metrics/usage-reporting), and test out operations in [the Explorer](./explorer/explorer/).
+  - [Apollo Studio](https://studio.apollographql.com) is the primary web interface for GraphOS. Among other capabilities, you use Studio to create your organization and its supergraphs, view [schemas](./studio-graph-features/#the-schema-page) and [metrics](./metrics/usage-reporting), and test out operations in [the Explorer](./explorer/explorer/).
   - [The Rover CLI](/rover/getting-started/) is the primary _command-line_ interface for GraphOS. Among other capabilities, you use Rover to publish subgraph schemas to the registry, run schema checks from CI, and test out your supergraph within your development environment.
   - If you want to automate your own workflows outside of Studio or Rover, you can use the official [GraphOS Platform API](./platform-api) to do so. We'll expose more GraphOS capabilities through the Platform API over time.
 
@@ -55,7 +55,7 @@ These features (along with many others) are available to organizations on the **
 
 These additional features are available to organizations on an **Enterprise** plan:
 
-- **Self-deployed routing.**
+- **Self-hosted routing.**
   - Deploy your supergraph's router inside your own infrastructure, enabling you to maximize its performance and fully customize its behavior. Self-deployed routers use [the same powerful technology](/router/) that cloud routing uses under the hood.
 - **Supergraph filtering with [contracts](./contracts/).**
   - Deploy multiple instances of your router that use different filtered subsets of your supergraph's schema. Different clients can then communicate with different routers, limiting them to whichever types and fields they should have access to.
