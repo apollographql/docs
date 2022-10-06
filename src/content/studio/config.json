@@ -19,8 +19,8 @@
       "Overview": "/org/graphs",
       "Publishing schemas": "/schema/cli-registration",
       "Local development": "/local-development",
-      "Supergraph-specific features": "/federated-graphs",
-      "Access permissions": "/graph-access-permissions"
+      "Graphs in Studio": "/studio-graph-features",
+      "Supergraph-specific Studio features": "/federated-graphs"
     },
     "Cloud Routing": {
       "Overview": "/cloud-routing/overview",

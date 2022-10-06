@@ -370,6 +370,23 @@ export default function Page({file, pageContext, uri}) {
                 shadow: 'md',
                 rounded: 'md'
               },
+              table: {
+                td: {
+                  '>': {
+                    ':not(:last-child)': {
+                      mb: 3
+                    }
+                  },
+                  [['ul', 'ol']]: {
+                    [['ul', 'ol']]: {
+                      mt: 1
+                    },
+                    'li:not(:first-child)': {
+                      mt: 1
+                    }
+                  }
+                }
+              },
               '.field-table': fieldTableStyles,
               '.sticky-table': {
                 shadow: 'inner',
