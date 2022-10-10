@@ -2,62 +2,62 @@
 module.exports = {
   react: {
     remote: 'https://github.com/apollographql/apollo-client',
-    branch: 'main'
+    branch: 'main',
   },
   'react/v2': {
     remote: 'https://github.com/apollographql/apollo-client',
-    branch: 'version-2.6'
+    branch: 'version-2.6',
   },
   'apollo-server': {
     remote: 'https://github.com/apollographql/apollo-server',
-    branch: 'main'
+    branch: 'main',
   },
-  'apollo-server/v3': {
+  'apollo-server/v4': {
     remote: 'https://github.com/apollographql/apollo-server',
-    branch: 'version-3'
+    branch: 'version-4',
   },
   'apollo-server/v2': {
     remote: 'https://github.com/apollographql/apollo-server',
-    branch: 'version-2'
+    branch: 'version-2',
   },
   'customer-success': {
     remote: `https://svc-apollo-docs:${process.env.GITHUB_TOKEN}@github.com/apollographql/customer-success`,
-    branch: 'main'
+    branch: 'main',
   },
   ios: {
     remote: 'https://github.com/apollographql/apollo-ios',
-    branch: 'main'
+    branch: 'main',
   },
   'ios/v0-legacy': {
     remote: 'https://github.com/apollographql/apollo-ios',
-    branch: '0.x-legacy'
+    branch: '0.x-legacy',
   },
   kotlin: {
     remote: 'https://github.com/apollographql/apollo-kotlin',
-    branch: 'main'
+    branch: 'main',
   },
   'kotlin/v2': {
     remote: 'https://github.com/apollographql/apollo-kotlin',
-    branch: 'release-2.x'
+    branch: 'release-2.x',
   },
   federation: {
     remote: 'https://github.com/apollographql/federation',
-    branch: 'main'
+    branch: 'main',
   },
   'federation/v1': {
     remote: 'https://github.com/apollographql/federation',
-    branch: 'version-0.x'
+    branch: 'version-0.x',
   },
   rover: {
     remote: 'https://github.com/apollographql/rover',
-    branch: 'main'
+    branch: 'main',
   },
   router: {
     remote: 'https://github.com/apollographql/router',
-    branch: 'main'
+    branch: 'main',
   },
   'platform-users': {
     remote: `https://svc-apollo-docs:${process.env.GITHUB_TOKEN}@github.com/apollographql/platform-users-docs`,
-    branch: 'main'
-  }
+    branch: 'main',
+  },
 };

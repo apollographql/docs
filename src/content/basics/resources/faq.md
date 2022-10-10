@@ -75,7 +75,7 @@ GraphQL can improve nearly every area of development: from improving developer e
 
 ### Where can I learn GraphQL?
 
-Apollo's learning platform, [**Odyssey**](https://www.apollographql.com/tutorials?utm_source=apollo_docs&utm_medium=referral), provides practical, hands-on courses that help you learn GraphQL with Apollo technologies. 
+Apollo's learning platform, [**Odyssey**](https://www.apollographql.com/tutorials?utm_source=apollo_docs&utm_medium=referral), provides practical, hands-on courses that help you learn GraphQL with Apollo technologies.
 
 This documentation also includes getting-started content for each platform component:
 
@@ -109,7 +109,7 @@ The Apollo platform has tools available to connect almost any kind of client to 
 
 For Apollo Client projects, there are also many view-layer integrations to make querying GraphQL schemas easier in [React](https://www.apollographql.com/docs/react/), [Vue](https://apollo.vuejs.org/), and [Angular](https://apollo-angular.com/docs/).
 
-## 2. Building 0.a proof of concept
+## 2. Building a proof of concept
 
 You understand how GraphQL works and the benefits it offers. You're trying to create a proof of concept for your project or company to test GraphQL's viability in production.
 
