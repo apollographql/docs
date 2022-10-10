@@ -95,7 +95,7 @@ There are deployment guides available for:
 
 - [Heroku](https://www.apollographql.com/docs/apollo-server/deployment/heroku/)
 
-<!-- TODO: Insert these links back in once these deployment guides are updated
+<!-- TODO(AS4) Insert these links back in once these deployment guides are updated
  - [Lambda](https://www.apollographql.com/docs/apollo-server/deployment/lambda/)
 - [Azure Functions](https://www.apollographql.com/docs/apollo-server/deployment/azure-functions/) -->
 
@@ -109,7 +109,7 @@ The Apollo platform has tools available to connect almost any kind of client to 
 
 For Apollo Client projects, there are also many view-layer integrations to make querying GraphQL schemas easier in [React](https://www.apollographql.com/docs/react/), [Vue](https://apollo.vuejs.org/), and [Angular](https://apollo-angular.com/docs/).
 
-## 2. Building a proof of concept
+## 2. Building 0.a proof of concept
 
 You understand how GraphQL works and the benefits it offers. You're trying to create a proof of concept for your project or company to test GraphQL's viability in production.
 

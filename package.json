@@ -11,7 +11,6 @@
     "start:ios": "npm start -- ../apollo-ios",
     "start:kotlin": "npm start -- ../apollo-kotlin",
     "start:federation": "npm start -- ../federation",
-    "start:studio-private": "npm start -- ../studio-docs-private",
     "start:rover": "npm start -- ../rover",
     "start:router": "npm start -- ../router",
     "build": "gatsby build",

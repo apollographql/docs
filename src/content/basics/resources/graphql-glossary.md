@@ -300,7 +300,7 @@ query getHuman { human(id: 0) { height weight(unit: "") } }
 
 ## Partial query caching
 
-A technique for caching inputs to GraphQL queries. This type of caching ensures that if the query is slightly different but with the same inputs, those inputs can simply be retrieved from the cache instead of fetching data again from the backend. It is implemented in Apollo Server 2 as [data source](https://www.apollographql.com/docs/apollo-server/data/fetching-rest) caching.
+A technique for caching inputs to GraphQL queries. This type of caching ensures that if the query is slightly different but with the same inputs, those inputs can simply be retrieved from the cache instead of fetching data again from the backend. This is implemented in the [`RESTDataSource`](https://www.apollographql.com/docs/apollo-server/data/fetching-rest) class, which Apollo Server can use to fetch data from REST APIs.
 
 ## Query
 

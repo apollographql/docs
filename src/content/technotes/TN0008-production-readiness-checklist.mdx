@@ -51,7 +51,7 @@ const { ApolloGateway, RemoteGraphQLDataSource } = require('@apollo/gateway');
 const { readFileSync } = require('fs');
 
 
-async function startApolloServer() {
+async function startApolloGateway() {
   const gateway = new ApolloGateway({
     supergraphSdl: readFileSync("./supergraph.graphql").toString(),
     buildService: ({ url })=>{
