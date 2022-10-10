@@ -45,22 +45,25 @@ We recommend that you complete this checklist before your supergraph begins hand
 This example uses both the [`buildService`](/federation/api/apollo-gateway/#buildservice) option and the [`RemoteGraphQLDataSource`](/federation/api/apollo-gateway/#apq) class to enable APQ to each subgraph.
 
 ```js
-const { ApolloServer } = require('apollo-server');
+const { ApolloServer } = require('@apollo/server');
+const { startStandaloneServer } = require('@apollo/server/standalone');
 const { ApolloGateway, RemoteGraphQLDataSource } = require('@apollo/gateway');
 const { readFileSync } = require('fs');
 
-const gateway = new ApolloGateway({
-  supergraphSdl: readFileSync("./supergraph.graphql").toString(),
-  buildService: ({url})=>{
-    return new RemoteGraphQLDataSource({url, apq: true})
-  }
-});
 
-const server = new ApolloServer({
-  gateway,
-});
+async function startApolloServer() {
+  const gateway = new ApolloGateway({
+    supergraphSdl: readFileSync("./supergraph.graphql").toString(),
+    buildService: ({ url })=>{
+      return new RemoteGraphQLDataSource({url, apq: true});
+    }
+  });
 
-server.listen().then(({ url }) => {
-  console.log(`🚀 Server ready at ${url}`);
-});
+  const server = new ApolloServer({
+    gateway
+  });
+
+  const { url } = await startStandaloneServer(server);
+  console.log(`🚀  Server ready at ${url}`);
+}
 ```

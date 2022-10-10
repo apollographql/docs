@@ -67,7 +67,8 @@ services:
 After you make the schema file available to your gateway instances, pass a function to the `supergraphSdl` option of your `ApolloGateway` constructor that enables the gateway to hot reload the schema. The example function below uses the `chokidar` library to watch for file updates:
 
 ```js
-const { ApolloServer } = require('apollo-server');
+const { ApolloServer } = require('@apollo/server');
+const { startStandaloneServer } = require('@apollo/server/standalone');
 const { ApolloGateway } = require('@apollo/gateway');
 const { readFile } = require('fs/promises');
 const chokidar = require('chokidar');
@@ -100,9 +101,9 @@ const gateway = new ApolloGateway({
 const server = new ApolloServer({
   gateway,
 });
-server.listen().then(({ url }) => {
-  console.log(`🚀 Server ready at ${url}`);
-});
+
+const { url } = await startStandaloneServer(server);
+console.log(`🚀  Server ready at ${url}`);
 ```
 
 In the code above, the `ApolloGateway` is passed a `supergaphSdl` property. This property can be a string (for a supergraph schema that _never_ changes during runtime), or it can be a function that enables updating the schema during runtime as shown.  
@@ -164,7 +165,7 @@ To use your custom `SupergraphManager`, you instantiate it and pass it as the `s
 
 ```ts
 const gateway = new ApolloGateway({
-    supergraphSdl: new FileWatcherManager({filename: './supergraph.graphql'})
+  supergraphSdl: new FileWatcherManager({filename: './supergraph.graphql'})
 })
 ```
 

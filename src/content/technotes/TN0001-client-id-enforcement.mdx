@@ -13,7 +13,7 @@ Together, these pieces of information help teams monitor their graph and make ch
 
 ## Enforcing in Apollo Server
 
-If you're using Apollo Server for your gateway, you can require client metadata in every incoming request with a [custom plugin](https://www.apollographql.com/docs/apollo-server/integrations/plugins/):
+If you're using Apollo Server for your gateway, you can require client metadata in every incoming request with a [custom plugin](/apollo-server/integrations/plugins/):
 
 > The header names used below are the default headers sent by Apollo Client, but you can change them to whatever names your client uses.
 
@@ -64,7 +64,6 @@ const clientEnforcementPlugin = {
 
 const server = new ApolloServer({
   gateway,
-  subscriptions: false,
   plugins: [clientEnforcementPlugin]
 });
 ```

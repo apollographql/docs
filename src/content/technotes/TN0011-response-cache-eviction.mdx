@@ -6,18 +6,19 @@ tags: [server, caching, performance]
 
 > For a runnable example of this cache eviction solution, see the [Response Cache Eviction](https://github.com/apollosolutions/response-cache-eviction) repo.
 
-Apollo Server’s Full Response Cache plugin (`apollo-server-plugin-response-cache`) caches the results of operations for a period of time (time-to-live or TTL). After that time expires, the results are evicted from the cache, and the server fully resolves the operation the next time a client executes it.
+Apollo Server’s Full Response Cache plugin (`@apollo/server-plugin-response-cache`) caches the results of operations for a period of time (time-to-live or TTL). After that time expires, the results are evicted from the cache, and the server fully resolves the operation the next time a client executes it.
 
 The most straightforward way to avoid stale data in the response cache is to set a short default TTL. However, this limits the cache's effectiveness for responses that rarely (or never) change.
 
 The Full Response Cache plugin supports advanced cache eviction patterns via custom cache keys in versions `3.7.0` and later. This enables you to set a longer default TTL and increase the cache's hit rate, because you can selectively evict cached responses when relevant events occur.
+
 ## Customizing the cache key
 
-This works by defining a custom response cache key by a pattern that can later be searched on in the cache. What this key should be comprised of and how it should be structured depends on the use-case and what search patterns our cache implementation supports. 
+This works by defining a custom response cache key by a pattern that can later be searched on in the cache. What this key should be comprised of and how it should be structured depends on the use-case and what search patterns our cache implementation supports.
 
 ### Ensuring cache key uniqueness
 
-Keep in mind that each key links to a full response object, so if your key is too generic, you risk potentially returning the wrong data for queries. For example, generating a cache key based solely on the operation name would yield the same responses for all operations with the same name, even if the entire query is different. Make sure your keys are unique for each execution of the incoming operations that returns different data. 
+Keep in mind that each key links to a full response object, so if your key is too generic, you risk potentially returning the wrong data for queries. For example, generating a cache key based solely on the operation name would yield the same responses for all operations with the same name, even if the entire query is different. Make sure your keys are unique for each execution of the incoming operations that returns different data.
 
 ### Defining a Custom Cache Key
 
@@ -30,12 +31,11 @@ generateCacheKey(
   requestContext: GraphQLRequestContext<Record<string, any>>,
   keyData: unknown,
 ): string;
-
 ```
 
-The [requestContext](https://github.com/apollographql/apollo-server/blob/main/packages/apollo-server-types/src/index.ts#L135-L175) parameter holds data about the running GraphQL request, such as the request / response objects as well as the [context object](https://www.apollographql.com/docs/apollo-server/data/resolvers/#the-context-argument) that is passed to your resolver functions. Any portion of these data objects can be used as part of your cache key. 
+The [requestContext](https://github.com/apollographql/apollo-server/blob/578dc68831d93d5809b78174d6179c10afc8c2ef/packages/server/src/externalTypes/requestPipeline.ts#L38) parameter holds data about the running GraphQL request, such as the request / response objects as well as the [context object](https://www.apollographql.com/docs/apollo-server/data/resolvers/#the-context-argument) that is passed to your resolver functions. Any portion of these data objects can be used as part of your cache key. 
 
-The `keyData` parameter can be used to ensure the uniqueness of your key. In most cases, hashing this variable should be enough to generate a unique key per operation. In fact, the [default implementation](https://github.com/apollographql/apollo-server/blob/76caff6ce797e00907d6ed8e2dab870e255340fe/packages/apollo-server-plugin-response-cache/src/ApolloServerPluginResponseCache.ts#L168-L169) hashes a `JSON.stringify` version of this parameter as the cache key. 
+The `keyData` parameter can be used to ensure the uniqueness of your key. In most cases, hashing this variable should be enough to generate a unique key per operation. In fact, the [default implementation](https://github.com/apollographql/apollo-server/blob/578dc68831d93d5809b78174d6179c10afc8c2ef/packages/plugin-response-cache/src/ApolloServerPluginResponseCache.ts#L182) hashes a `JSON.stringify` version of this parameter as the cache key. 
 
 In this example, we prefix the default key with the name of the incoming operation:
 

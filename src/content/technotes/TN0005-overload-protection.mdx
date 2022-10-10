@@ -20,7 +20,7 @@ A more graph-based problem is adding a entity relationship in the schema that ca
 
 ## Implementing in Express
 
-Overload protection packages are available for most popular languages and server frameworks. For example, we'll look at using the [overload-protection](https://www.npmjs.com/package/overload-protection) package with `apollo-server-express`. This drop-in package enables your server to return a 503 based any of the following:
+Overload protection packages are available for most popular languages and server frameworks. For example, we'll look at using the [overload-protection](https://www.npmjs.com/package/overload-protection) package with the `@apollo/server` package. This drop-in package enables your server to return a 503 based any of the following:
 
 - The current event loop delay
 - The amount of bytes used by the heap
@@ -34,33 +34,38 @@ const protect = require('overload-protection')('express');
 app.use(protect);
 ```
 
-If you're using `apollo-server-express`, you can add `overload-protection` via Express middleware by adding the highlighted lines to your server creation:
+> Note: If you're currently using the `startStandaloneServer` function, you'll need to [swap to `expressMiddleware`](/apollo-server/api/standalone#swapping-to-expressmiddleware) before adding overload protection.
 
-```js {1,5}
-const protect = require('overload-protection')('express');
+If you're using `@apollo/server`'s Express integration (i.e.[`expressMiddleware`](/apollo-server/api/express-middleware)), you can add `overload-protection` via Express middleware by adding the highlighted lines to your server creation:
+
+```js
+const protect = require('overload-protection')('express'); // highlight-line
 
 async function startApolloServer(typeDefs, resolvers) {
   const app = express();
-  app.use(protect);
+  app.use(protect); // highlight-line
   const httpServer = http.createServer(app);
   const server = new ApolloServer({
     typeDefs,
     resolvers,
-    csrfPrevention: true,
-    cache: 'bounded',
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
   });
 
   await server.start();
-  server.applyMiddleware({ app });
+  app.use('/graphql',
+    cors<cors.CorsRequest>(),
+    json(),
+    expressMiddleware(server)
+  ),
+
   await new Promise((resolve) => httpServer.listen({ port: 4000 }, resolve));
-  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);
+  console.log(`🚀 Server ready at http://localhost:4000/graphql`);
 }
 ```
 
 This approach also works if you're using the `@apollo/subgraph` library to create your subgraphs in a similar way.
 
-Overload protection is not specific to GraphQL, so it's best to handle it outside of Apollo software. If you're currently using the batteries-included `apollo-server` library instead of `apollo-server-express`, [learn how to swap over](/apollo-server/integrations/middleware#swapping-out-apollo-server).
+Overload protection is not specific to GraphQL, so it's best to handle it outside of Apollo software.
 
 ## Protecting a supergraph
 

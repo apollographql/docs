@@ -14,10 +14,7 @@ In Apollo Server [v3.8.0](https://github.com/apollographql/apollo-server/blob/ma
 You use the `ApolloServerPluginLandingPageLocalDefault` plugin to configure the landing page in your local development environment, and you use `ApolloServerPluginLandingPageProductionDefault` for production environments:
 
 ```js
-const {
- ApolloServerPluginLandingPageProductionDefault,
- ApolloServerPluginLandingPageLocalDefault
-} = require('apollo-server-core');
+import { ApolloServerPluginLandingPageLocalDefault, ApolloServerPluginLandingPageProductionDefault } from '@apollo/server/plugin/landingPage/default';
 
 let plugins = [];
 if (process.env.NODE_ENV === 'production') {
