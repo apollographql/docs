@@ -17,7 +17,7 @@ import {FiMoon, FiSun} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
 import {useTagColors} from '../../utils';
 
-const EYEBROW_HEIGHT = 32;
+const EYEBROW_HEIGHT = 0; // 32;
 const HEADER_HEIGHT = 60;
 const HEADER_BORDER_WIDTH = 1;
 export const TOTAL_HEADER_HEIGHT =
@@ -53,11 +53,6 @@ export function Header({children, algoliaFilters}) {
   const [tagBg, tagTextColor] = useTagColors();
   return (
     <Box pos="sticky" top="0" zIndex="2">
-      <Eyebrow>
-        GraphQL Summit is back for three days of insights, hands-on learning,
-        and fun to celebrate the GraphQL community. Join us in San Diego Oct
-        3-5.
-      </Eyebrow>
       <Flex
         align="center"
         as="header"
