@@ -2,21 +2,19 @@
 title: Launches
 ---
 
-> **Important:** Launch-related features are currently available only for [federated graphs](https://www.apollographql.com/docs/federation/).
+In GraphOS, a **launch** represents the complete process of making a set of updates to a supergraph, usually initiated by changes to one of its subgraphs.
 
-In Apollo Studio, a **launch** represents the complete process of making a set of updates to your deployed graph.
-
-For a federated graph, these updates might include:
+These updates might include:
 
 - Adding, removing, or modifying types and fields in a subgraph schema
 - Adding or removing entire subgraphs
 - Migrating types or fields between subgraphs
 
-In some cases, a launch might consist entirely of changes that don't affect your graph's public API (such as migrating fields between subgraphs).
+In some cases, a launch might consist entirely of changes that don't affect your supergraph's public API (such as migrating fields between subgraphs).
 
 ## Launch status
 
-Your graph's Launches page in Studio enables you to observe and monitor the schema delivery process for both in-progress and past launches:
+Your supergraph's Launches page in Apollo Studio enables you to observe and monitor the schema delivery process for both in-progress and past launches:
 
 <img class="screenshot" src="./img/launches-page.jpg" width="500" />
 
@@ -30,7 +28,7 @@ From this detail view, you can view the timestamp and other details for each ste
 
 ## What's in a launch?
 
-For a federated graph, a launch encapsulates the following steps:
+A launch encapsulates the following steps for a supergraph:
 
 ```mermaid
 graph TB;
@@ -39,7 +37,7 @@ graph TB;
   composition --"If composition succeeds..."-->checks(Apollo runs schema checks if enabled);
   checks-->uplink(Updated supergraph schema is<br/>made available via Apollo Uplink);
   uplink-->studio(Studio updates UI and sends<br/>build status webhook notifications<br/>to reflect new published schema);
-  uplink --> gateways(Your gateway instances poll Uplink<br/>and fetch new published schema);
+  uplink --> gateways(Your router begins using<br/>the new published schema);
   studio --> complete(Launch complete);
   gateways-->complete;
   composition --"If composition fails,<br/>the launch fails"--> complete;

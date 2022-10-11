@@ -12,9 +12,9 @@ module.exports = {
     remote: 'https://github.com/apollographql/apollo-server',
     branch: 'main'
   },
-  'apollo-server/v4': {
+  'apollo-server/v3': {
     remote: 'https://github.com/apollographql/apollo-server',
-    branch: 'version-4'
+    branch: 'version-3'
   },
   'apollo-server/v2': {
     remote: 'https://github.com/apollographql/apollo-server',
@@ -28,9 +28,9 @@ module.exports = {
     remote: 'https://github.com/apollographql/apollo-ios',
     branch: 'main'
   },
-  'ios/v1': {
+  'ios/v0-legacy': {
     remote: 'https://github.com/apollographql/apollo-ios',
-    branch: 'release/1.0'
+    branch: '0.x-legacy'
   },
   kotlin: {
     remote: 'https://github.com/apollographql/apollo-kotlin',

@@ -100,7 +100,7 @@ Open the share dropdown in the Explorer and select **Share as embed**:
 
 ### Authorization
 
-**If you're embedding a [public variant](../org/graphs/#public-variants),** anyone with access to the embedded Explorer can view your schema and make queries against your variant.
+**If you're embedding a [public variant](../studio-graph-features/#public-variants),** anyone with access to the embedded Explorer can view your schema and make queries against your variant.
 
 **If you're embedding a private variant,** the embedded Explorer first asks users to authenticate by signing in to Studio. Authenticated users are then asked to authorize their Studio account to be used on the embedding webpage:
 
@@ -216,7 +216,7 @@ The endpoint URL of the variant you want to use the embedded Explorer with. This
 </td>
 <td>
 
-If the graph you are embedding is a [private variant](../org/graphs/#public-variants), we will by default only allow folks in your org to see the embedded Explorer. You can specify that you want anyone who visits your embedded Explorer to be automatically invited to your org with this config object. When you are grabbing the embed code from the Explorer settings in Studio, you have the option to select the role you want folks to be invited as, and the `inviteToken` and `accountId` will automatically populate.
+If the graph you are embedding is a [private variant](../studio-graph-features/#public-variants), we will by default only allow folks in your org to see the embedded Explorer. You can specify that you want anyone who visits your embedded Explorer to be automatically invited to your org with this config object. When you are grabbing the embed code from the Explorer settings in Studio, you have the option to select the role you want folks to be invited as, and the `inviteToken` and `accountId` will automatically populate.
 
 If the graph you are embedding belongs to an SSO organization, folks will be able to log in with their SSO account and are automatically invited as the role you specify in the Org Settings page in Studio. Passing this in the embed config for a graph that belongs to an SSO account will not change any behavior. New users to your organization will always be invited as the role you specify in the Org Settings page in Studio.
 

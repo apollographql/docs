@@ -214,7 +214,9 @@ export default function Page({file, pageContext, uri}) {
   );
 
   const editOnGitHub = useMemo(() => {
-    const repo = gitRemote?.href || 'https://github.com/apollographql/docs';
+    const repo = `https://github.com/${
+      gitRemote?.full_name ?? 'apollographql/docs'
+    }`;
 
     const repoPath = ['tree', gitRemote?.ref || 'main'];
 
@@ -367,6 +369,23 @@ export default function Page({file, pageContext, uri}) {
               'img.screenshot': {
                 shadow: 'md',
                 rounded: 'md'
+              },
+              table: {
+                td: {
+                  '>': {
+                    ':not(:last-child)': {
+                      mb: 3
+                    }
+                  },
+                  [['ul', 'ol']]: {
+                    [['ul', 'ol']]: {
+                      mt: 1
+                    },
+                    'li:not(:first-child)': {
+                      mt: 1
+                    }
+                  }
+                }
               },
               '.field-table': fieldTableStyles,
               '.sticky-table': {

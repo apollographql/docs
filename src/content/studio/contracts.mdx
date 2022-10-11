@@ -3,14 +3,14 @@ title: Contracts
 description: Deliver subsets of your enterprise supergraph
 ---
 
-> Contracts are available only for [Enterprise plans](https://www.apollographql.com/pricing/). Currently, they only support [federated variants](/federation/) of Studio graphs.
+> Contracts are available only for [Enterprise plans](https://www.apollographql.com/pricing/).
 
-Apollo Studio **contracts** enable you to deliver different subsets of your supergraph to different consumers. Each contract filters specific portions of your supergraph's [API schema](/federation/federated-types/overview/#federated-schemas) into a different Studio variant:
+Apollo Studio **contracts** enable you to deliver different subsets of your supergraph to different consumers. Each contract filters specific portions of your supergraph's schema into a different Studio variant:
 
 ```mermaid
 graph LR;
   subgraph "Source variant";
-  api("API schema<br/>▉");
+  api("Supergraph<br/>schema<br/>▉");
   end
   subgraph "Contract variant B"
   contractB("Contract schema B<br/>▟")
@@ -77,7 +77,7 @@ Contract routers can safely connect to the same subgraph instances as any other 
 
 #### Contract documentation
 
-In Studio, each contract variant has its own README, schema reference, and Explorer. If you [make a contract variant public](./org/graphs/#public-variants), you can provide these resources to external client developers to help them interact with a specific portion of your graph (while omitting irrelevant types and fields).
+In Studio, each contract variant has its own README, schema reference, and Explorer. If you [make a contract variant public](./studio-graph-features/#public-variants), you can provide these resources to external client developers to help them interact with a specific portion of your graph (while omitting irrelevant types and fields).
 
 ## Setup
 
@@ -87,10 +87,16 @@ In Studio, each contract variant has its own README, schema reference, and Explo
 
 **Before you create any contracts:**
 
-1. For Federation 2 contract variants, ensure that you're running gateway versions higher than 2.0.2. For Federation 1 contract variants, update your gateway's `@apollo/gateway` library to version 0.34.0 or later. Otherwise, you'll encounter runtime errors.
+1. If you're using the `@apollo/gateway` library for your router instead of the Apollo Router:
+    - For Federation 2 contract variants, update your gateway's `@apollo/gateway` library to version 2.
+0.2 or later.
+    - For Federation 1 contract variants, update your gateway's `@apollo/gateway` library to version 0.
+34.0 or later.
+
+    Otherwise, you'll encounter runtime errors.
+
 2. For Federation 2 contract variants, update your Apollo Server subgraphs to use version 2.0.0 or later of the `@apollo/subgraph` library. For Federation 1 contract variants, update `@apollo/subgraph` to version 0.1.1 or later.
    - `@apollo/subgraph` recently replaced `@apollo/federation` for Apollo Server instances acting as subgraphs. Symbol names are unchanged.
-3. If you're still using the Apollo CLI to publish subgraph schemas (via `apollo service:push`), [install the Rover CLI](https://www.apollographql.com/docs/rover/getting-started/) and begin using [`rover subgraph publish`](https://www.apollographql.com/docs/rover/subgraphs/#publishing-a-subgraph-schema-to-apollo-studio) instead.
 
 Older versions of the above libraries and tools don't fully support the required `@tag` directive.
 
@@ -98,7 +104,7 @@ Older versions of the above libraries and tools don't fully support the required
 
 > **This step is required for Federation 1 supergraphs only.** If you have a Federation 2 supergraph, proceed to the next step.
 
-A contract uses one of your graph's existing [variants](/studio/org/graphs/#managing-variants) (called the **source variant**) to generate its contract schema. If your source variant uses Federation 1, you need to enable its support for the `@tag` directive in Apollo Studio.
+A contract uses one of your graph's existing [variants](/studio/org/graphs/#variants) (called the **source variant**) to generate its contract schema. If your source variant uses Federation 1, you need to enable its support for the `@tag` directive in Apollo Studio.
 
 Open the Settings page for the variant you want to use as your source variant, then select the **This Variant** tab:
 
@@ -303,7 +309,7 @@ If a Federation 1 source variant already has one or more associated contracts, i
 
 Apollo automatically updates your contract schema whenever any of the following occurs:
 
-- Studio successfully composes an updated supergraph schema for the contract's source variant.
+- GraphOS successfully composes an updated supergraph schema for the contract's source variant.
 - You [edit your contract](#editing-a-contract).
 
 This makes sure that your contract schema reflects the latest version of your source variant's schema, and that the correct types and fields are included and excluded.
