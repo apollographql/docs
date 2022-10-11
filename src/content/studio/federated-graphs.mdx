@@ -278,17 +278,6 @@ This field supports Markdown-formatted links.
 
 - To provide the `@contact` directive to Apollo, you must publish your subgraph schemas by providing a local `.graphql` file as the `--schema` option of [`rover subgraph publish`](./schema/cli-registration/).
   - If you provide an introspection result to the command instead, the `@contact` directive is **not** included in that result.
-- If your subgraph doesn't already have a `schema` object, you need to add one to use the `@contact` directive. The `schema` object can't be empty, so you need to include at least one field in it (most commonly `query: Query`). If you do provide the `Query` type like this, it needs to include at least one field in your subgraph's schema. If your subgraph's `Query` type is empty, you need to add a dummy field for the SDL to be valid:
-
-    ```graphql title="schema.graphql"
-    schema @contact(...) {
-      query: Query
-    }
-
-    type Query {
-      _dummyField: Boolean
-    }
-    ```
 
 ### Viewing contact info
 
