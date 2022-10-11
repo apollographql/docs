@@ -9,7 +9,8 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v2
 
@@ -18,7 +19,7 @@ jobs:
           node-version: 14
 
       - name: Trigger deploy
-        run: npx netlify deploy --trigger --prod --message "${{ github.event.head_commit.message }}"
+        run: npx netlify deploy --trigger --prod
         env:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}

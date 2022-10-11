@@ -39,37 +39,37 @@ The central piece of this repo, the docs infrastructure, is a [Gatsby](https://w
 
 ## Developing locally
 
-> This site uses [Volta](https://volta.sh) to ensure we're all using the same Node and NPM versions when running the site. Either install Volta before proceeding, or install [direnv](https://direnv.net) and Volta will be installed automatically when you `cd` into your local `docs` directory.
+[Volta](https://volta.sh) ensures we're all using the same Node and NPM versions when running the site. Either install Volta before proceeding, or install [direnv](https://direnv.net) to install Volta automatically when you `cd` into your local `docs` directory.
 
-First, install NPM dependencies.
+1. Install NPM dependencies:
 
-```sh
-npm i
-```
+    ```sh
+    npm i
+    ```
 
-If it's your first time running the docs site locally, you must link your local directory with Netlify. To do this, you must be logged in to the `netlify` CLI with an account that has access to our organization in Netlify. Apollo Staff can log into the account using the Netlify Single Sign-On (SSO) option and specifying the `apollo-main` identifier during the login process.
+    If it's your first time running the docs site locally, you must link your local directory with Netlify. To do this, you must be logged in to the `netlify` CLI with an account that has access to our organization in Netlify. Apollo Staff can log into the account using the Netlify Single Sign-On (SSO) option and specifying the `apollo-main` identifier during the login process.
 
-```sh
-npx netlify login
-```
+    ```sh
+    npx netlify login
+    ```
 
-Next, link your local environment with its corresponding Netlify site. Follow the prompts that appear in your terminal and link the site based on its git repository.
+2. Link your local environment with its corresponding Netlify site. Follow the prompts that appear in your terminal and link the site based on its git repository:
 
-```sh
-# If netlify-cli is installed globally or as a dependency in the remote docset repo:
-npx netlify link
+    ```sh
+    # If netlify-cli is installed globally or as a dependency in the remote docset repo:
+    npx netlify link
 
-# Otherwise:
-npx -p netlify-cli netlify link
-```
+    # Otherwise:
+    npx -p netlify-cli netlify link
+    ```
 
-Finally, start the local development environment.
+3. Start the local development environment:
 
-```sh
-npm start
-```
+    ```sh
+    npm start
+    ```
 
-> ⌚ The first run may take a long time as it has to source a lot of content, but subsequent runs will be shorter since most of that data will have been cached.
+    > ⌚ The first run may take a long time as it has to source a lot of content, but subsequent runs will be shorter since most of that data will have been cached.
 
 ### Developing a single docset
 
@@ -223,7 +223,7 @@ You can publish docsets that are viewable only by Apollo team members by setting
 
 If a visitor to that page is logged in to Apollo Studio **and** is a member of one of our internal orgs, the page content will be rendered normally. If neither of those conditions are true, a 404 page will be shown. Internal-only pages are excluded from the sitemap and won't be indexed by Google.
 
-It's important to note that you must sign in to and out of your account using Studio or Odyssey, as the docs don't currently have their own sign in form.
+It's important to note that you must sign in to and out of your account using Studio or Odyssey, as the docs don't currently have their own sign in form. For local development, sign in to the staging Studio.
 
 ### Redirect rules
 
@@ -420,7 +420,7 @@ This content will be hidden by default, but can be expanded if the user clicks o
 
 ##### MultiCodeBlock
 
-Wrap TypeScript code blocks in a `MultiCodeBlock` component to automatically transpile them into JavaScript. A language dropdown will be rendered in the top right corner of the code block for the user to switch between the two options. This feature works on code blocks tagged with `ts` or `tsx`.
+Wrap TypeScript code blocks in a `MultiCodeBlock` component to automatically transpile them into JavaScript. A languages will be rendered as tabs above the code block for the user to switch between the two options. This feature works on code blocks tagged with `ts` or `tsx`.
 
 You can also manually add multiple code blocks with different languages to the `MultiCodeBlock` to have them behave the same way.
 

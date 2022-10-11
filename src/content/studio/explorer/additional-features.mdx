@@ -56,20 +56,17 @@ query($id: ID!) {
 
 ## Local development
 
-You can use the Explorer for local development by opening [Sandbox](./sandbox/), or by creating a [development graph](../dev-graphs/) in Studio.
+You can use the Explorer for local development by opening [Sandbox](./sandbox/).
 
-Unlike _deployed_ graphs, both Sandbox and dev graphs use **introspection** to fetch your schema from your development server, and they also poll regularly for changes. Whenever schema changes are detected, they're pulled in automatically.
+Unlike a deployed graph, Sandbox uses **introspection** to fetch your schema from your development server, and it also polls regularly for changes. Whenever schema changes are detected, they're pulled in automatically.
 
-You can pause introspection polling at any time. To do so:
+You can pause introspection polling at any time. To do so, open the Explorer Settings tab on the left and edit your connection settings. In the dialog, disable **Auto Update**.
 
-- **In Sandbox**, open the Explorer Settings tab on the left and edit your connection settings. In the dialog, disable **Auto Update**.
-- **In dev graphs**, open the **DEV GRAPH** menu at the top and disable **Auto Update**.
+## Supergraphs
 
-## Federation
+### Query plans for supergraphs
 
-### Query plans for federated graphs
-
-If you're working with a federated graph in Studio, the Explorer dynamically calculates example query plans for your operations in the right-hand panel (click **Response** and select **Query Plan Preview** from the dropdown):
+If you're working with a supergraph in Studio, the Explorer dynamically calculates example query plans for your operations in the right-hand panel (click **Response** and select **Query Plan Preview** from the dropdown):
 
 <img
   className="screenshot"
@@ -78,13 +75,11 @@ If you're working with a federated graph in Studio, the Explorer dynamically cal
   width="300"
 />
 
-> If you don't see the **Query Plan Preview** option, make sure you're using the full version of the Apollo Explorer, _not_ Apollo Sandbox. Also make sure you're using the Explorer with a federated graph.
+> If you don't see the **Query Plan Preview** option, make sure you're using the full version of the Explorer, _not_ Apollo Sandbox. Also make sure you're using the Explorer with a supergraph.
 
 As you edit an operation, the Explorer recalculates its example query plan accordingly.
 
-> **⚠️ The Explorer might not use the same query planning logic as your gateway!** You can mouse over the information icon next to **Query Plan Preview** to see which version of the `@apollo/query-planner` library the Explorer is using. This version might differ from your gateway's version.
->
-> The Explorer's example query plan helps you reason about your operations, but it is _not_ intended as a source of truth.
+> **⚠️ The Explorer might not use the exact same query planning logic as your router!** The example query plan helps you reason about your operations, but it is _not_ intended as a source of truth.
 
 There are two display modes for query plans. You can switch between **Show plan as text** and **Show plan as chart** by clicking the icons next to **Query Plan Preview**:
 
@@ -96,6 +91,8 @@ There are two display modes for query plans. You can switch between **Show plan 
 />
 
 ## Subscription support
+
+> Note that supergraphs do _not_ currently support subscription operations. You can only execute subscriptions in the Explorer with a [monograph](../org/graphs/#monographs).
 
 The Explorer supports the following libraries/protocols for sending subscription operations over WebSocket:
 
@@ -131,7 +128,7 @@ You can click the `X` next to `Listening` to stop listening for updates (the upd
 
 ## Embedding
 
-If you've enabled [public access to a variant of your graph](../org/graphs/#public-variants), you can embed the Explorer in a webpage that you can then provide to your graph's consumers. This enables those consumers to test out operations from your own website.
+If you've enabled [public access to a variant of your graph](../studio-graph-features/#public-variants), you can embed the Explorer in a webpage that you can then provide to your graph's consumers. This enables those consumers to test out operations from your own website.
 
 See [Embedding the Explorer](./embed-explorer).
 
@@ -155,7 +152,7 @@ If you are looking at your data [in the table layout](#table-layout-for-response
 
 > Enable **Inlined traces** from the Explorer's Settings tab.
 
-If you are using Apollo Server 2.18+, you can see traces from your responses inlined in the Explorer by adding the `ApolloServerPluginInlineTrace` plugin to your server's configuration:
+If you're using Apollo Server 2.18+, you can see traces from your responses inlined in the Explorer by adding the `ApolloServerPluginInlineTrace` plugin to your server's configuration:
 
 ```
 import { ApolloServerPluginInlineTrace } from "apollo-server-core";
@@ -221,8 +218,8 @@ query StarWarsGenderStats {
 
 ### Is the Explorer available for on-prem distribution?
 
-Not at this time. The Explorer is available for free, unlimited use in Apollo Studio, but it is not available for download or on-prem distribution. This might change in the future, but for now our goal is to provide the best possible Explorer experience from within Studio.
+The Explorer is not currently available for download or on-prem hosting. However, you can embed the Apollo-hosted Explorer on your own internal websites. For details, see [Embedding the Explorer](./embed-explorer/).
 
-### Do my Explorer operations pass through Apollo servers?
+### Do my Explorer operations pass through Apollo systems?
 
-No. Operations you run in the Explorer are sent directly from your browser to your GraphQL server, _without_ passing through Apollo's systems. Apollo never sees your request headers or response data. For more information, see [Apollo Studio data privacy and compliance](../data-privacy).
+No. Operations you run in the Explorer are sent directly from your browser to your GraphQL endpoint, _without_ passing through any Apollo systems along the way. Apollo never sees your request headers or response data. For more information, see [Apollo Studio data privacy and compliance](../data-privacy).

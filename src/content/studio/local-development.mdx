@@ -1,0 +1,65 @@
+---
+title: Developing your supergraph locally
+description: With the Rover CLI
+---
+
+While you're working on changes to one of your subgraphs, you can run a version of your entire supergraph locally in your development environment! To do this, you use the `rover dev` command.
+
+> [Install the Rover CLI.](/rover/getting-started/)
+
+The `rover dev` command monitors each of your subgraph schemas (either via server introspection or by watching a `.graphql` file). Whenever it detects a change, it automatically recomposes your router's supergraph schema and raises any errors that might occur. This enables you iterate quickly on schema changes.
+
+## Starting your router
+
+You run `rover dev` once for _each subgraph_ in your supergraph. The _first_ time you run it, Rover spins up a router on your local machine.
+
+Try running `rover dev` with an example subgraph like so:
+
+```bash
+rover dev --url https://flyby-locations-sub.herokuapp.com/ --name locations
+```
+
+You'll see output like the following:
+
+```
+WARN: could not detect a schema in the current working directory. to watch a schema, pass the `--schema <PATH>` argument
+👂 polling https://flyby-locations-sub.herokuapp.com/ every 1 second
+⚠️  Do not run this command in production! ⚠️  It is intended for local development.
+🛫 starting a session with the 'locations' subgraph
+🎶 composing supergraph with Federation v2.1.2
+🚀 your supergraph is running! head to http://localhost:3000 to query your supergraph
+```
+
+You can now open `http://localhost:3000` in your browser and run test queries against your local router using the Explorer!
+
+You can replace the example subgraph URL and name in the above command with the details for your own subgraph. You can provide a remote URL or a `localhost` URL.
+
+## Adding a subgraph
+
+To add a subgraph to your local supergraph, run `rover dev` _again_ in a separate terminal window.
+
+You can add a subgraph to this article's example supergraph with the following command:
+
+```bash
+rover dev --url https://flyby-reviews-sub.herokuapp.com/ --name reviews
+```
+
+This command's output is similar to the output for the _initial_ execution, but it includes a line like the following:
+
+```
+🐤 adding the 'reviews' subgraph to the session
+```
+
+This indicates that `rover dev` has identified your existing supergraph session and is adding this subgraph to it.
+
+Now if you run test queries in the Explorer, you'll see that they can include fields from both the `locations` and `reviews` subgraphs!
+
+## Ending a `rover dev` session
+
+To shut down your local supergraph, use `CTRL+C` to terminate the _first_ `rover dev` process you started. This automatically terminates all _secondary_ `rover dev` processes that are part of the same session.
+
+> If you terminate a _secondary_ `rover dev` process, your session remains active, and the router's schema is automatically updated to reflect the removed subgraph.
+
+## Command options
+
+For more details on `rover dev` options, see the [Rover documentation](/rover/commands/dev/).

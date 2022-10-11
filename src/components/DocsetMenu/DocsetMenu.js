@@ -92,6 +92,28 @@ export function DocsetMenu({docset, versions = [], currentVersion, ...props}) {
                 Odyssey Tutorials
               </DocsetButton>
             </DocsetGroup>
+            <DocsetGroup title="Build your supergraph">
+              <DocsetButton leftIcon={DOCSET_ICONS.studio} to="/studio">
+                GraphOS
+              </DocsetButton>
+              <DocsetButton leftIcon={DOCSET_ICONS.federation} to="/federation">
+                Federation
+              </DocsetButton>
+            </DocsetGroup>
+            <DocsetGroup title="Technical reference">
+              <DocsetButton leftIcon={DOCSET_ICONS.server} to="/apollo-server">
+                Server
+              </DocsetButton>
+              <DocsetButton leftIcon={DOCSET_ICONS.router} to="/router">
+                Router
+              </DocsetButton>
+              <DocsetButton leftIcon={DOCSET_ICONS.rover} to="/rover">
+                Rover CLI
+              </DocsetButton>
+              <DocsetButton leftIcon={DOCSET_ICONS.technotes} to="/technotes">
+                Tech Notes
+              </DocsetButton>
+            </DocsetGroup>
             <DocsetGroup title="Apollo Client">
               <DocsetButton leftIcon={DOCSET_ICONS.react} to="/react">
                 React
@@ -101,30 +123,6 @@ export function DocsetMenu({docset, versions = [], currentVersion, ...props}) {
               </DocsetButton>
               <DocsetButton leftIcon={DOCSET_ICONS.android} to="/kotlin">
                 Kotlin
-              </DocsetButton>
-            </DocsetGroup>
-            <DocsetGroup title="Backend">
-              <DocsetButton leftIcon={DOCSET_ICONS.server} to="/apollo-server">
-                Server
-              </DocsetButton>
-              <DocsetButton leftIcon={DOCSET_ICONS.federation} to="/federation">
-                Federation
-              </DocsetButton>
-              <DocsetButton leftIcon={DOCSET_ICONS.router} to="/router">
-                Router
-              </DocsetButton>
-            </DocsetGroup>
-            <DocsetGroup title="Cloud">
-              <DocsetButton leftIcon={DOCSET_ICONS.studio} to="/studio">
-                Studio
-              </DocsetButton>
-              <DocsetButton leftIcon={DOCSET_ICONS.rover} to="/rover">
-                Rover CLI
-              </DocsetButton>
-            </DocsetGroup>
-            <DocsetGroup title="Specialized topics">
-              <DocsetButton leftIcon={DOCSET_ICONS.technotes} to="/technotes">
-                Tech Notes
               </DocsetButton>
             </DocsetGroup>
           </Stack>

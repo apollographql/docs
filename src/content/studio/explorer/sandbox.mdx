@@ -1,17 +1,17 @@
 ---
 title: Apollo Sandbox
-description: Use Studio's devtools without an Apollo account
+description: Use Studio tools without an Apollo account
 ---
 
-**Apollo Sandbox** is a special mode of Apollo Studio that is meant to be used for local development.
-Sandbox loads with a schema from introspection as opposed to a schema from the Apollo registry and provides access to a subset of Studio's devtools:
+**Apollo Sandbox** is a special mode of Apollo Studio that helps with local development. Sandbox loads a running GraphQL server's schema via introspection, instead of fetching published schemas from the Apollo registry.
+
+Sandbox provides access to the following Apollo Studio features:
 
 - [The Explorer](./explorer/)
 - Schema reference
 - [Schema checks](../schema-checks/) and diffs against registered graphs (for logged-in users)
 
-Sandbox can be used offline and without an Apollo account.
-You can use Sandbox in our hosted environment on Apollo Studio or [run it yourself](/studio/explorer/sandbox#embedding-sandbox).
+You can use Sandbox offline and without an Apollo account. You also [embed Sandbox](#embedding-sandbox) on your own website.
 
 <Button
   size="lg"
@@ -39,34 +39,15 @@ When you open Sandbox, it automatically attempts to connect to a GraphQL server 
   width="300"
 />
 
-> To try out Sandbox with an example GraphQL API, you can set the URL to `https://swapi-graphql.netlify.app/.netlify/functions/index`.
-
-## Publishing schemas from Sandbox
-
-> ⚠️ Sandbox does not yet support publishing subgraph schemas to Studio for a [federated graph](https://www.apollographql.com/docs/federation/).
-
-If you're signed in to Sandbox with your Apollo account, you can publish your GraphQL server's schema to a new Studio graph.
-
-To do so, first click **Publish** at the top of the Explorer. The following dialog appears:
-
-<img
-  class="screenshot"
-  src="../img/sandbox-publish.jpg"
-  alt="Publishing schemas to Studio from Sandbox"
-  width="400"
-/>
-
-1. Use the dropdown menu to choose an organization for your new graph.
-2. Provide a title for your graph.
-3. If you've created any [Sandbox operation collections](./operation-collections/#sandbox-collections), you can copy those over to your new graph by checking the box.
-   - This option doesn't appear if you haven't created any Sandbox collections.
-4. Click **Confirm**.
-
-When Sandbox finishes publishing your schema, it redirects you to your new graph in Studio.
+> To try out Sandbox with an example GraphQL API, you can set the URL to:
+>
+> ```
+> https://flyby-locations-sub.herokuapp.com/
+> ```
 
 ## Schema diffs
 
-If you log into Apollo Studio, you can diff the schema in your Sandbox against any graph you have access to in the registry.
+If you log in to Apollo Studio from Sandbox, you can diff your Sandbox schema against any subgraph or monolith graph you have access to in the Apollo registry.
 
 From [Sandbox](https://studio.apollographql.com/sandbox/), open the **Schema Diff** page from the left navigation panel. Then use the dropdown menus to select any accessible organization, graph, and variant to compare against:
 
@@ -76,17 +57,15 @@ From [Sandbox](https://studio.apollographql.com/sandbox/), open the **Schema Dif
   alt="Schema diff in Sandbox"
 />
 
-> If you're using Sandbox with a subgraph, this diff shows the schema as originally defined, not the generated subgraph schema that includes federation-specific fields like Query.\_entities. You can view the generated subgraph schema from the SDL page in Sandbox.
+> If you're using Sandbox with a subgraph, this diff shows the schema as originally defined, _not_ the generated subgraph schema that includes federation-specific fields (such as `Query._entities`). You can view the generated subgraph schema from the SDL page in Sandbox.
 
 In addition to viewing the diff on this page, you can click **Run a Check** in the upper-right to run [schema checks](#schema-checks) against the currently selected variant.
 
 ## Schema checks
 
-If you log into Apollo Studio, you can run a Schema Check between the schema in your Sandbox and a graph you have access to in the Apollo registry.
+If you log in to Apollo Studio from Sandbox, you can run [schema checks](../schema-checks/) between your Sandbox schema and any graph you have access to in the Apollo registry.
 
-> [Schema checks](../schema-checks/) require [usage reporting data](../metrics/usage-reporting/) from your GraphQL server.
->
-> Organization members with the [`Consumer` role](../org/members/#organization-wide-member-roles) cannot run schema checks.
+> Organization members with the [**Consumer** role](../org/members/#organization-wide-member-roles) cannot run schema checks.
 
 From [Sandbox](https://studio.apollographql.com/sandbox/), open the **Checks** page from the left navigation panel:
 
@@ -108,9 +87,9 @@ Select any accessible organization, graph, and variant to check against and clic
 
 To view the result's _full_ details in Studio, click **Go to details**.
 
-#### Subgraph checks
+### Subgraph checks
 
-You can run subgraph checks on federated graphs. If you're using Sandbox with a subgraph, you can use the subgraph dropdown to select which subgraph you want to check your changes against.
+You can run subgraph checks on supergraphs. If you're using Sandbox with a subgraph, you can use the subgraph dropdown to select which subgraph you want to check your changes against.
 
 <img
   class="screenshot"
@@ -119,7 +98,7 @@ You can run subgraph checks on federated graphs. If you're using Sandbox with a 
   width="500"
 />
 
-When you click **Run a check**, Studio first performs a composition check using your local subgraph schema and the registered schemas of your other subgraphs. If composition succeeds, Sandbox then performs operation checks as usual and displays the results of all checks. If composition fails, Sandbox does not perform operation checks and displays the composition error.
+When you click **Run a check**, Sandbox first performs a composition check using your local subgraph schema and the published schemas of your other subgraphs. If composition succeeds, Sandbox then performs operation checks as usual and displays the results of all checks. If composition fails, Sandbox does not perform operation checks and displays the composition error.
 
 <img
   class="screenshot"
@@ -134,7 +113,7 @@ You can use Sandbox _without_ an internet connection if you're querying a graph 
 
 ### Reconnecting
 
-Sandbox automatically reconnects to Apollo Studio whenever your internet connection is restored. When it does, it might display a notification that your Apollo Studio application version is stale by at least 24 hours. You can click the notification to update _all_ of your browser's open Apollo Studio tabs to the latest version.
+Sandbox automatically reconnects whenever your internet connection is restored. When it does, it might display a notification that your Apollo Studio application version is stale by at least 24 hours. You can click the notification to update _all_ of your browser's open Apollo Studio tabs to the latest version.
 
 > This notification indicates only that the Apollo Studio _UI_ is out of date. Your Studio _data_ is always kept up to date.
 
@@ -144,8 +123,7 @@ See [this section](./operation-collections/#sandbox-collections).
 
 ## Embedding Sandbox
 
-In addition to using [Studio's hosted version of Sandbox](https://studio.apollographql.com/sandbox), you can also embed Sandbox on your own website.
-This may be useful for bootstrapping a GraphQL IDE onto a development endpoint or an endpoint with CORS restrictions.
+You can embed Sandbox on your own website. This can be useful for interacting with a GraphQL endpoint in your development environment or an endpoint with CORS restrictions.
 
 ### Setup
 
@@ -164,7 +142,13 @@ This may be useful for bootstrapping a GraphQL IDE onto a development endpoint o
      width="600"
    />
 
-3. Click **Copy** to copy the snippet, then paste it into your html code.
+3. Within the dialog, use the tabs to select the code snippet for your use case:
+
+    * Use **React** for React apps where you can `npm install` the `@apollo/sandbox` package.
+    * Use **JavaScript** for non-React JavaScript apps where you can `npm install` the `@apollo/sandbox` package.
+    * Use **Built file on CDN** to use Apollo's CDN-hosted embedded Sandbox.
+
+4. Click **Copy** to copy the snippet, then paste it into your html code.
 
 ### Options
 
@@ -182,6 +166,7 @@ The `EmbeddedSandbox` object takes an options object with the following structur
       },
     })
   },
+  includeCookies: false,
 }
 ```
 
@@ -215,7 +200,7 @@ The URL of the GraphQL endpoint that Sandbox introspects on initial load. Sandbo
 The default value is `http://localhost:4000`.
 
 **You should only pass non-production endpoints to Sandbox**. Sandbox is powered by schema introspection, and we recommend [disabling introspection in production](https://www.apollographql.com/blog/graphql/security/why-you-should-disable-graphql-introspection-in-production/).
-To provide a "Sandbox-like" experience for production endpoints, we recommend using either a [public variant](https://www.apollographql.com/docs/studio/org/graphs#public-variants) or the [embedded Explorer](https://www.apollographql.com/docs/studio/explorer/embed-explorer).
+To provide a "Sandbox-like" experience for production endpoints, we recommend using either a [public variant](../studio-graph-features/#public-variants) or the [embedded Explorer](./embed-explorer).
 
 </td>
 </tr>

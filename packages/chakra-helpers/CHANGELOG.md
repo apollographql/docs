@@ -1,5 +1,22 @@
 # @apollo/chakra-helpers
 
+## 1.4.1
+
+### Patch Changes
+
+- [#210](https://github.com/apollographql/docs/pull/210) [`464b084`](https://github.com/apollographql/docs/commit/464b08480aec820264b1623ba5bba074812d8e21) Thanks [@BlenderDude](https://github.com/BlenderDude)! - Added additional props for better tab control and a fallback to local tabs if a global context does not exist
+
+## 1.4.0
+
+### Minor Changes
+
+- [#182](https://github.com/apollographql/docs/pull/182) [`c554b8d`](https://github.com/apollographql/docs/commit/c554b8da26875a2749bb8b7f0f4b9ce51d5e71b2) Thanks [@BlenderDude](https://github.com/BlenderDude)! - Updated MultiCodeBlock to support tabbed interface
+  Updated parser to support ts to js highlighting preservation
+
+### Patch Changes
+
+- [#192](https://github.com/apollographql/docs/pull/192) [`842b511`](https://github.com/apollographql/docs/commit/842b511fda6074da56f627b3fe57a4e8553e1eb9) Thanks [@jgarrow](https://github.com/jgarrow)! - Remove highlight line comments when copying code to clipboard
+
 ## 1.3.7
 
 ### Patch Changes

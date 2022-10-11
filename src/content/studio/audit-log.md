@@ -50,7 +50,7 @@ An audit log's **Resource_Type** column indicates what type of resource each act
 | `ACCOUNT`            | A Studio [organization](./org/organizations/).      |
 | `USER`               | A Studio user.                                      |
 | `GRAPH`              | A Studio [graph](./org/graphs/).                    |
-| `GRAPH_VARIANT`      | A graph [variant](./org/graphs/#managing-variants). |
+| `GRAPH_VARIANT`      | A graph [variant](./org/graphs/#variants). |
 | `GRAPH_API_KEY`      | A graph [API key](./api-keys/).                     |
 | `USER_API_KEY`       | A user [API key](./api-keys/).                      |
 | `ZENDESK_TICKET`     | An Apollo support ticket.                           |

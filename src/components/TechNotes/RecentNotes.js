@@ -6,13 +6,15 @@ export function RecentNotes() {
   const data = useStaticQuery(
     graphql`
       query RecentTechNotes {
-        allFile(
-          filter: { childMdx: { slug: { regex: "/^TN\\d{4}/" } } }
-          sort: { fields: changeTime, order: DESC }
+        notes: allFile(
+          filter: {childMdx: {slug: {regex: "/^TN\\d{4}/"}}}
+          sort: {fields: fields___gitLogLatestDate, order: DESC}
           limit: 10
         ) {
           nodes {
-            changeTime
+            fields {
+              gitLogLatestDate
+            }
             childMdx {
               id
               fields {
@@ -27,14 +29,5 @@ export function RecentNotes() {
       }
     `
   );
-  return (
-    <NotesList
-      notes={data.allFile.nodes.map(({childMdx, changeTime}) => ({
-        ...childMdx,
-        parent: {
-          changeTime
-        }
-      }))}
-    />
-  );
+  return <NotesList notes={data.notes.nodes} />;
 }

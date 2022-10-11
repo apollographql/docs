@@ -12,21 +12,25 @@ module.exports = {
     remote: 'https://github.com/apollographql/apollo-server',
     branch: 'main'
   },
+  'apollo-server/v3': {
+    remote: 'https://github.com/apollographql/apollo-server',
+    branch: 'version-3'
+  },
   'apollo-server/v2': {
     remote: 'https://github.com/apollographql/apollo-server',
     branch: 'version-2'
   },
   'customer-success': {
-    remote: `https://trevorblades:${process.env.GITHUB_TOKEN}@github.com/apollographql/customer-success`,
+    remote: `https://svc-apollo-docs:${process.env.GITHUB_TOKEN}@github.com/apollographql/customer-success`,
     branch: 'main'
   },
   ios: {
     remote: 'https://github.com/apollographql/apollo-ios',
     branch: 'main'
   },
-  'ios/v1': {
+  'ios/v0-legacy': {
     remote: 'https://github.com/apollographql/apollo-ios',
-    branch: 'release/1.0'
+    branch: '0.x-legacy'
   },
   kotlin: {
     remote: 'https://github.com/apollographql/apollo-kotlin',
@@ -50,6 +54,10 @@ module.exports = {
   },
   router: {
     remote: 'https://github.com/apollographql/router',
+    branch: 'main'
+  },
+  'platform-users': {
+    remote: `https://svc-apollo-docs:${process.env.GITHUB_TOKEN}@github.com/apollographql/platform-users-docs`,
     branch: 'main'
   }
 };

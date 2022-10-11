@@ -34,7 +34,7 @@ function Eyebrow({children}) {
       fontSize="sm"
       fontWeight="semibold"
       as="a"
-      href="https://forms.gle/jhzZHGdnxRjx8q8R7"
+      href="https://summit.graphql.com/?utm_campaign=2022-07-22_GraphQLSummit&utm_medium=website&utm_source=apollo"
       target="_blank"
       rel="noopener noreferrer"
       px="3"
@@ -52,7 +52,7 @@ export function Header({children, algoliaFilters}) {
   const {toggleColorMode, colorMode} = useColorMode();
   const [tagBg, tagTextColor] = useTagColors();
   return (
-    <Box pos="sticky" top="0" zIndex="1">
+    <Box pos="sticky" top="0" zIndex="2">
       <Flex
         align="center"
         as="header"

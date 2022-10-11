@@ -3,9 +3,9 @@ title: Schema checks
 description: Verify the safety of changes to your graph
 ---
 
-Certain changes to your GraphQL schema (such as removing a field or type) might break one of your application's clients. Apollo Studio provides **schema checks** to help you identify breaking changes before you make them, and to help you identify when a potentially dangerous change _won't_ break anything.
+Certain changes to your graph's schema (such as removing a field or type) might break one of your application's clients. GraphOS provides **schema checks** to help you identify breaking changes before you make them, and to help you identify when a potentially dangerous change _won't_ break anything.
 
-You can review the results of schema checks inside Studio, helping you make informed decisions about evolving your graph:
+You can review the results of schema checks inside Apollo Studio, helping you make informed decisions about evolving your graph:
 
 <img
   className="screenshot"
@@ -18,74 +18,70 @@ You can review the results of schema checks inside Studio, helping you make info
 
 ## Types of checks
 
-Apollo Studio can perform the following types of schema checks:
+GraphOS can perform the following types of schema checks:
 
 - **Operation checks.** Compare your proposed schema changes against historical operations to verify whether the changes will break any of your graph's active clients.
 
-- [**Composition checks.**](#federated-composition-checks) For [federated graphs](/federation/), verify whether your proposed changes to a subgraph schema will successfully compose with your _other_ registered subgraph schemas.
+- [**Composition checks.**](#federated-composition-checks) For supergraphs, verify whether your proposed changes to a subgraph schema will successfully compose with your _other_ subgraph schemas.
 
-> Most of this article covers operation checks. For details on composition checks, [see this section](#federated-composition-checks).
+- **[Contract checks](./contracts/) (enterprise only).** When running schema checks on a source variant, also check whether your proposed schema changes will break any downstream contract variants.
+
+> **Most of this article covers operation checks.**
+> * For details on composition checks, [see this section](#federated-composition-checks).
+> * For details on contract checks, [see this article](./contracts/).
 
 ## Prerequisites
 
-To enable schema checks for your graph, do the following if you haven't yet:
+To enable schema checks for your supergraph, do the following if you haven't yet:
 
-1. Register your production graph's schema with Apollo.
-   - [Federated setup](/federation/managed-federation/setup)
-   - [Non-federated setup](./schema/schema-reporting/)
-2. Enable metrics reporting to Apollo Studio from your production graph. Studio uses these metrics to help determine when a type or field can be modified or removed safely.
-   - [Federated setup](/federation/performance/monitoring/#metrics-and-observability)
-   - [Non-federated setup](./metrics/usage-reporting/)
+1. Make sure you've published all of your subgraph schemas to GraphOS, and that those schemas are up to date.
+    - [Learn how to publish schemas.](./schema/cli-registration/)
+2. Make sure your supergraph is reporting metrics to GraphOS. GraphOS uses these metrics to help determine when a type or field can be modified or removed safely.
+    - If you have a [cloud supergraph](./org/graphs/#cloud-supergraphs), your router reports metrics automatically.
+   - [Setup for other graphs](./metrics/sending-operation-metrics/)
 3. [Install the Rover CLI](/rover/getting-started/) in your development environment and [authenticate it with Apollo Studio](/rover/configuring/#authenticating-with-apollo-studio).
 
 ## Running your first check
 
-Let's say you've made local changes to your GraphQL server's schema. After you [complete the prerequisites](#prerequisites), you can run schema checks against those changes with the `rover graph check` command.
+Let's say you've made local changes to one of your subgraph schemas. After you [complete the prerequisites](#prerequisites), you can run schema checks against those changes with the `rover subgraph check` command.
 
-> **Important:** If your graph is [federated](/federation/), use [`rover subgraph`](/rover/commands/subgraphs/#checking-subgraph-schema-changes) commands instead of `rover graph` commands. These commands require one additional option, the `--name` of the subgraph you're operating on.
+> If you have a [monograph](./org/graphs/#monographs) (not recommended), use [`rover graph`](/rover/commands/graphs/#checking-schema-changes) commands instead of `rover subgraph` commands.
 
-The `rover graph check` command looks like this:
+The `rover subgraph check` command looks like this:
 
 ```bash
-rover graph check docs-example-graph@current --schema ./schema.graphql
+rover subgraph check docs-example-graph@main --name products --schema ./schema.graphql
 ```
 
 It requires the following:
 
-- Your registered graph's [graph ref](/rover/conventions/#graph-refs). This is available from your graph's Schema tab in Studio:
-
-  <img
-    class="screenshot"
-    src="./img/schema-checks/graph-ref.jpg"
-    alt="Graph ref in Studio"
-    width="300"
-  />
+- Your registered graph's **graph ref**, which a string with the format `graph-id@variant-name` (for example, `docs-example-graph@main`). This is available from your supergraph's README page in Studio.
 
 - The locally modified version of your schema. In the command above, the schema is provided via a `.graphql` file.
 
   - If your schema is _not_ in a standalone `.graphql` file, you can run your GraphQL server locally and pipe its schema directly from `rover graph introspect`, like so:
 
     ```bash
-    rover graph introspect http://localhost:4000 | rover graph check my-graph-name@my-variant-name --schema -
+    rover subgraph introspect http://localhost:4000 | rover subgraph check docs-example-graph@main --name products --schema -
     ```
 
 Try changing something in the local version of your schema and see what happens! If everything is set up correctly, the command's output looks similar to the output shown in [The check response](#the-check-response).
 
 ## The checks lifecycle
 
-When you run `rover graph check`:
+When you run `rover subgraph check`:
 
-1. Apollo Studio generates a diff between your local schema and the registered schema for the variant you're checking against.
-2. Studio uses this diff to determine whether the changes affect any operations that have been executed against your graph within a [customizable time window](./check-configurations/) (by default, this is the last seven days).
-3. Studio returns the diff, along with a list of the operations that are affected by the changes.
+1. GraphOS generates a diff between your local schema and the registered schema for the variant you're checking against.
+2. GraphOS uses this diff to determine whether the changes affect any operations that have been executed against your supergraph within a [customizable time window](./check-configurations/) (by default, this is the last seven days).
+3. GraphOS returns the diff, along with a list of the operations that are affected by the changes.
 4. Rover prints the result of the check and returns a non-zero exit code if at least one breaking change is found.
 
 ### The check response
 
-Running `rover graph check` outputs the diff of all detected schema changes and highlights breaking changes:
+Running `rover subgraph check` outputs the diff of all detected schema changes and highlights breaking changes:
 
 ```console
-$ rover graph check docs-example-graph@current --schema ./schema.graphql
+$ rover subgraph check docs-example-graph@current --subgraph products --schema ./schema.graphql
 
 Validated the proposed subgraph against metrics from docs-example-graph@current
 Compared 1 schema changes against 24 operations
@@ -100,7 +96,7 @@ View full details at https://studio.apollographql.com/service/docs-example-graph
 
 Each change to the schema is labeled either `PASS` or `FAIL`.
 
-> **Note:** Because breaking changes are detected by analyzing recent operations, your GraphQL server _must_ be [pushing analytics to Apollo Studio](#prerequisites) for schema checks to work. **If there are no operation metrics to compare against, all potentially dangerous schema changes are labeled `FAIL`.**
+> **Note:** Because breaking changes are detected by analyzing recent operations, your graph _must_ be [reporting metrics to GraphOS](#prerequisites) for schema checks to work. **If there are no operation metrics to compare against, all potentially dangerous schema changes are labeled `FAIL`.**
 
 The output also includes a Studio URL that provides full details on the changes and their impact on existing clients and operations:
 
@@ -122,6 +118,7 @@ In cases like this, you can **override** a flagged change in Apollo Studio from 
   className="screenshot"
   src="./img/schema-checks/mark-operation.png"
   alt="Service check page in Apollo Studio"
+  width="500"
 />
 
 You override flagged changes on an operation-by-operation basis. For each operation with flagged changes, you can override those changes in the following ways:
@@ -149,23 +146,13 @@ The new check incorporates any changes made to excluded or included clients, che
 
 > **Note:** If you've [integrated schema checks with your GitHub PRs](#integrating-with-github), a rerun of the check also updates the status of the check in Github.
 
-## Federated composition checks
+## Composition checks
 
-If you have a [federated graph](/federation/), you run schema checks with the `rover subgraph check` command (instead of `rover graph check`):
-
-```bash
-rover subgraph check docs-example-graph@current --schema ./schema.graphql --name products
-```
-
-In addition to the arguments required by `graph check`, `subgraph check` requires the `--name` of the particular subgraph you're performing checks for.
-
-> To obtain your running subgraph's schema via introspection, use `subgraph introspect` instead of `graph introspect`. This preserves federation-specific directives that are required for composition.
-
-When you run `subgraph check`, Apollo Studio performs a **composition check** before it performs operation checks. A composition check verifies that changes you make to a subgraph schema are compatible with your _other_ subgraph schemas, enabling them to compose into a _supergraph_ schema ([learn more](/federation/federated-types/composition/)).
+When you run `subgraph check`, GraphOS performs a **composition check** _before_ it performs operation checks. A composition check verifies that changes you make to a subgraph schema are compatible with your _other_ subgraph schemas, enabling them to compose into a _supergraph_ schema ([learn more](/federation/federated-types/composition/)).
 
 > If a composition check fails, Studio does _not_ then perform operation checks for the provided schema.
 
-Results of both check types are available in Studio from your graph's Checks tab:
+Results of both check types are available in Studio from your graph's Checks page:
 
 <img
   className="screenshot"
@@ -174,7 +161,7 @@ Results of both check types are available in Studio from your graph's Checks tab
   width="300"
 />
 
-You can click on a composition check to view its result. If composition succeeded, you can view the composed supergraph schema. Regardless of success, you can view the subgraph schema.
+You can click on a composition check to view its result. If composition succeeded, you can view the composed supergraph schema. Regardless of success, you can view the proposed subgraph schema.
 
 The `rover subgraph check` command returns a nonzero result if a composition check _or_ operation check fails.
 
@@ -182,7 +169,7 @@ The `rover subgraph check` command returns a nonzero result if a composition che
 
 Schema checks are especially useful when you add them to your CI pipeline (such as Jenkins or CircleCI). By doing so, you can obtain check results and display them directly on your team's pull requests.
 
-We recommend defining a separate CI job for each [variant of your schema](./check-configurations#checking-against-multiple-environments) (production, staging, etc.) that you want to validate your changes against. The `rover graph check` command returns a non-zero exit code when it detects a breaking change, meaning the job fails when the check fails.
+We recommend defining a separate CI job for each [variant of your schema](./check-configurations#checking-against-multiple-environments) (production, staging, etc.) that you want to validate your changes against. The `rover subgraph check` command returns a non-zero exit code when it detects a breaking change, meaning the job fails when the check fails.
 
 ### Authenticating Rover
 
@@ -220,14 +207,14 @@ jobs:
       # commands against it.
       - run: sleep 5
 
-      # In CI environments, this command authenticates with the `APOLLO_KEY`
+      # In CI environments, this command authenticates via the `APOLLO_KEY`
       # environment variable.
-      - run: rover graph check docs-example-graph@current --schema ./schema.graphql
+      - run: rover subgraph check docs-example-graph@current --name products --schema ./schema.graphql
 ```
 
 ### Integrating with GitHub
 
-If you're using GitHub, you can install the [Apollo Studio GitHub app](https://github.com/marketplace/apollo-studio#pricing-and-setup). This app enables Apollo Studio to send a webhook back to your GitHub project on each call to `rover graph check`, providing built-in pass/fail status checks on your pull requests:
+If you're using GitHub, you can install the [Apollo Studio GitHub app](https://github.com/marketplace/apollo-studio#pricing-and-setup). This app enables Apollo Studio to send a webhook back to your GitHub project on each call to `rover subgraph check`, providing built-in pass/fail status checks on your pull requests:
 
 <img
   className="screenshot"
@@ -245,13 +232,13 @@ See [Configuring schema checks](./check-configurations/).
 
 ## Types of schema changes
 
-Not every change to a schema is a potentially breaking change. Additive changes (such as adding a field to a type) are typically safe and do not affect active clients. Deletions and modifications (such as removing a field or changing a return type), however, can break clients that use affected types and fields.
+Not every change to a schema is a potentially breaking change. Additive changes (such as adding a field to a type) are usually safe and do not affect active clients. Deletions and modifications (such as removing a field or changing a return type), however, can break clients that use affected types and fields.
 
 ### Potentially breaking changes
 
 #### Removals
 
-These changes remove a schema element. If a removed element is actively being used by an operation, your graph will return an error to affected clients.
+These changes remove a schema element. If a removed element is actively being used by an operation, that operation will start returning an error.
 
 | Name                          | Description                                                                                                                               |
 | ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
@@ -328,3 +315,9 @@ These changes are detected by schema checks, but they are "safe." They never aff
 | `FIELD_DESCRIPTION_CHANGE`      | An existing field's description changed.      |
 | `ENUM_VALUE_DESCRIPTION_CHANGE` | An existing enum value's description changed. |
 | `ARG_DESCRIPTION_CHANGE`        | An existing argument's description changed.   |
+
+### Limits
+
+#### Operation Cardinality
+
+Checks will run against a maximum of 10,000 distinct operations. A warning message will display on the UI when a larger cardinality has been reached.

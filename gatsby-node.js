@@ -89,9 +89,7 @@ const getNavItems = items =>
 exports.createPages = async ({actions, graphql}) => {
   const {data} = await graphql(`
     {
-      pages: allFile(
-        filter: {base: {ne: "README.md"}, extension: {in: ["md", "mdx"]}}
-      ) {
+      pages: allFile(filter: {extension: {in: ["md", "mdx"]}}) {
         nodes {
           id
           gitRemote {
@@ -160,7 +158,8 @@ exports.createPages = async ({actions, graphql}) => {
           label: version,
           slug: node.sourceInstanceName
         };
-      });
+      })
+      .sort((a, b) => b.label.localeCompare(a.label));
 
     actions.createPage({
       path: fields.slug,

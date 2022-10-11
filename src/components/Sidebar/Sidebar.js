@@ -52,5 +52,5 @@ export function Sidebar({children, isHidden}) {
 
 Sidebar.propTypes = {
   children: PropTypes.node.isRequired,
-  isHidden: PropTypes.bool.isRequired
+  isHidden: PropTypes.bool
 };

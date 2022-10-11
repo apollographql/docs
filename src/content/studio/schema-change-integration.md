@@ -6,7 +6,7 @@ You can [configure Apollo Studio](./notification-setup) to notify your team when
 
 <img class="screenshot" src="./img/integrations/schema-notification.jpg" alt="Schema notification Slack message." width="400" />
 
-You can configure separate change notifications for each [variant](./org/graphs/#managing-variants) of your graph.
+You can configure separate change notifications for each [variant](./org/graphs/#variants) of your graph.
 
 ## Setup
 

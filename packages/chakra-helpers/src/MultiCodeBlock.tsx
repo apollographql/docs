@@ -1,30 +1,19 @@
 import React, {
-  ReactChild,
   ReactNode,
   createContext,
   isValidElement,
-  useContext
+  useContext,
+  useState
 } from 'react';
-import {Button, Menu, MenuButton, MenuItem, MenuList} from '@chakra-ui/react';
-import {CodeBlockContext, GA_EVENT_CATEGORY_CODE_BLOCK} from './CodeBlock';
-import {FiChevronDown} from '@react-icons/all-files/fi/FiChevronDown';
+import {Box, Flex} from '@chakra-ui/react';
+import {CodeBlockProps} from './CodeBlock';
+import {CodeBlockTabs} from './CodeBlockTabs';
+import {getNormalizedLanguage} from './language-util';
 
-export const MultiCodeBlockContext = createContext(null);
-
-function getLanguage(language: string): string {
-  switch (language) {
-    case 'language-js':
-    case 'language-jsx':
-    case 'language-javascript':
-      return 'JavaScript';
-    case 'language-ts':
-    case 'language-tsx':
-    case 'language-typescript':
-      return 'TypeScript';
-    default:
-      return language;
-  }
-}
+export const MultiCodeBlockContext = createContext<{
+  language: string | null;
+  setLanguage: React.Dispatch<string>;
+}>(null);
 
 type MultiCodeBlockProps = {
   children: ReactNode;
@@ -33,53 +22,49 @@ type MultiCodeBlockProps = {
 export const MultiCodeBlock = ({
   children
 }: MultiCodeBlockProps): JSX.Element => {
-  const codeBlocks = React.Children.toArray(children).reduce(
-    (acc: Record<string, ReactChild>, child) =>
-      isValidElement(child)
-        ? {
-            ...acc,
-            [getLanguage(child.props.children.props.className)]: child
-          }
-        : acc,
-    {}
-  );
+  const codeBlocks = React.Children.toArray(children).reduce<
+    Record<string, React.ReactElement<CodeBlockProps>>
+  >((acc, child) => {
+    if (!isValidElement(child)) {
+      return acc;
+    }
+    return Object.assign(acc, {
+      [getNormalizedLanguage(child.props.children.props.className)]: child
+    });
+  }, {});
+
+  const codeBlockContext = useContext(MultiCodeBlockContext);
 
   const languages = Object.keys(codeBlocks);
   const defaultLanguage = languages[0];
-  const {language, setLanguage} = useContext(MultiCodeBlockContext);
+  const [localLanguage, setLocalLanguage] = useState(languages[0]);
+  const language = codeBlockContext ? codeBlockContext.language : localLanguage;
+  const setLanguage = codeBlockContext
+    ? codeBlockContext.setLanguage
+    : setLocalLanguage;
   const renderedLanguage = languages.includes(language)
     ? language
     : defaultLanguage;
 
   return (
-    <div>
-      <CodeBlockContext.Provider
-        value={
-          <Menu>
-            <MenuButton as={Button} rightIcon={<FiChevronDown />}>
-              {renderedLanguage}
-            </MenuButton>
-            <MenuList>
-              {languages.map(language => (
-                <MenuItem
-                  key={language}
-                  onClick={() => {
-                    setLanguage(language);
-                    window.gtag?.('event', 'Change language', {
-                      event_category: GA_EVENT_CATEGORY_CODE_BLOCK,
-                      event_label: language
-                    });
-                  }}
-                >
-                  {language}
-                </MenuItem>
-              ))}
-            </MenuList>
-          </Menu>
-        }
-      >
-        {codeBlocks[renderedLanguage]}
-      </CodeBlockContext.Provider>
-    </div>
+    <Flex flexDir="column" pt="6">
+      <CodeBlockTabs
+        languages={languages}
+        activeLanguage={renderedLanguage}
+        setLanguage={setLanguage}
+      />
+      {languages.map(language => (
+        <Box
+          key={language}
+          role="tabpanel"
+          tabIndex={0}
+          display={language === renderedLanguage ? 'block' : 'none'}
+        >
+          {React.cloneElement(codeBlocks[language], {
+            isPartOfMultiCode: true
+          })}
+        </Box>
+      ))}
+    </Flex>
   );
 };

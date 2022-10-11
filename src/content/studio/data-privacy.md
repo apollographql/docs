@@ -24,8 +24,8 @@ All data sent to Apollo Studio is sent to an endpoint with one of the following 
 | Base URL                                              | Used by                                                                                                                                                                                                          |
 | ----------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Latest URLs**                                       |
-| `https://usage-reporting.api.apollographql.com`       | Metrics reporting from [Apollo Server](./metrics/usage-reporting/#pushing-metrics-from-apollo-server) (v2.18.0+), Apollo Router (v0.1.0+), and [third-party API servers](./metrics/usage-reporting/#third-party-support)                   |
-| `https://schema-reporting.api.apollographql.com`      | Schema registration via schema reporting in [Apollo Server](./schema/schema-reporting/#apollo-server-setup) (v2.18.0+) and [third-party API servers](./schema/schema-reporting/#other-graphql-servers)           |
+| `https://usage-reporting.api.apollographql.com`       | Metrics reporting from [Apollo Server](./metrics/sending-operation-metrics/) (v2.18.0+), Apollo Router (v0.1.0+), and third-party API servers                   |
+| `https://schema-reporting.api.apollographql.com`      | Schema registration via schema reporting in Apollo Server (v2.18.0+) and third-party API servers           |
 | `https://graphql.api.apollographql.com`               | All [Apollo CLI](/devtools/cli/) (v2.31+) commands and [Rover CLI](/rover/) commands that communicate with Studio (and the Studio web UI)                                                                        |
 | `https://storage-secrets.api.apollographql.com`       | Apollo Server with Apollo Gateway (v0.16.0-v0.33.0) with [managed federation](/federation/managed-federation/overview/)                |
 | `https://uplink.api.apollographql.com`                | Apollo Server with Apollo Gateway (v0.34.0+) with [managed federation](/federation/managed-federation/overview/) and Apollo Router (v0.1.0+) with [managed federation](/federation/managed-federation/overview/)                                                                                                 |
@@ -56,7 +56,7 @@ _All_ data sent to Studio from Apollo Server and Apollo Router is transmitted us
 
 - Several fields _besides_ `data` from every operation response
 
-- The [query operation string](#query-operation-strings) for every executed operation
+- The [normalized query operation string](#query-operation-strings) for every executed operation
 
 - The time it takes each resolver to execute for every operation (Apollo Server only)
 
@@ -89,7 +89,7 @@ In Apollo Server, you can use the [usage reporting plugin's `rewriteError` optio
 
 ### Query operation strings
 
-Apollo Server and Apollo Router both report the string representation of each query operation to Apollo Studio. Consequently, **do not include sensitive data (such as passwords or personally identifiable information) in operation strings**. Instead, include this information in [GraphQL variables](#graphql-variables), which you can send selectively.
+Apollo Server and Apollo Router both report a normalized string representation of each query operation to Apollo Studio. By default, this [normalization algorithm](https://www.apollographql.com/docs/studio/metrics/operation-signatures/) will strip out string literals that are sent in arguments. However, we highly recommend that users **do not include sensitive data (such as passwords or personally identifiable information) in operation strings**. Instead, include this information in [GraphQL variables](#graphql-variables), which you can send selectively.
 
 ### GraphQL variables
 

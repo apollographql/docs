@@ -103,7 +103,7 @@ The gateway will send this tracing data to Apollo Studio where it may be used fo
 
 ![A federated trace representation in Apollo Studio](../images/enterprise-guide/apollo-studio-federated-trace.jpg)
 
-When Apollo Server is used to power subgraphs, this tracing data is provided out-of-the-box via the [inline trace plugin](https://www.apollographql.com/docs/apollo-server/api/plugin/inline-trace/#using-the-plugin). Many [third-party federation libraries](/federation/other-servers/) also expose federated tracing data. Note that not all third-party federation libraries will necessarily provide field-level tracing data in a response, but the gateway's aggregated trace will still show the total time spent in the service even though the detailed field resolver data won't be available for that portion of the query plan.
+When Apollo Server is used to power subgraphs, this tracing data is provided out-of-the-box via the [inline trace plugin](https://www.apollographql.com/docs/apollo-server/api/plugin/inline-trace/#using-the-plugin). Many [third-party federation libraries](/federation/supported-subgraphs/) also expose federated tracing data. Note that not all third-party federation libraries will necessarily provide field-level tracing data in a response, but the gateway's aggregated trace will still show the total time spent in the service even though the detailed field resolver data won't be available for that portion of the query plan.
 
 ### Integration with other observability tools
 

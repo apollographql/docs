@@ -6,24 +6,23 @@ import {PathContext} from '../utils';
 import {graphql} from 'gatsby';
 
 export const pageQuery = graphql`
-  query ($tag: String) {
-    notes: allMdx(
-      filter: {frontmatter: {tags: {in: [$tag]}}}
-      sort: {fields: frontmatter___title, order: ASC}
+  query AllTechNotesWithTag($tag: String) {
+    notes: allFile(
+      filter: {childMdx: {frontmatter: {tags: {in: [$tag]}}}}
+      sort: {fields: childMdx___frontmatter___title, order: ASC}
       limit: 2000
     ) {
-      totalCount
       nodes {
-        id
         fields {
-          slug
+          gitLogLatestDate
         }
-        frontmatter {
-          title
-        }
-        parent {
-          ... on File {
-            changeTime
+        childMdx {
+          id
+          fields {
+            slug
+          }
+          frontmatter {
+            title
           }
         }
       }
