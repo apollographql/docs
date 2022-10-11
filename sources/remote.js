@@ -12,9 +12,9 @@ module.exports = {
     remote: 'https://github.com/apollographql/apollo-server',
     branch: 'main'
   },
-  'apollo-server/v4': {
+  'apollo-server/v3': {
     remote: 'https://github.com/apollographql/apollo-server',
-    branch: 'version-4'
+    branch: 'version-3'
   },
   'apollo-server/v2': {
     remote: 'https://github.com/apollographql/apollo-server',
