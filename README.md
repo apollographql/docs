@@ -56,7 +56,11 @@ The central piece of this repo, the docs infrastructure, is a [Gatsby](https://w
 2. Link your local environment with its corresponding Netlify site. Follow the prompts that appear in your terminal and link the site based on its git repository:
 
     ```sh
+    # If netlify-cli is installed globally or as a dependency in the remote docset repo:
     npx netlify link
+
+    # Otherwise:
+    npx -p netlify-cli netlify link
     ```
 
 3. Start the local development environment:
@@ -268,6 +272,8 @@ jobs:
 ```
 
 This workflow references [a shared workflow hosted in this repo](./.github/workflows/publish.yml), so any changes that affect the way the action works will likely take place in that file, and you won't need to make any changes to the workflow in your own repo.
+
+You will also need to configure the remote docset repo's access to the required organization secrets before you run the action. To do this, visit the "Action secrets" settings page in the Apollo GraphQL organization and update the `NETLIFY_AUTH_TOKEN` and `NETLIFY_SITE_ID` secrets to include the repo in the "Selected repositories" settings for each secret.
 
 ### Deploy previews
 
