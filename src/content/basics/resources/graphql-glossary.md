@@ -77,7 +77,7 @@ query NewsFeed {
 
 ## Directive
 
-A declaration prefixed with an `@` character that encapsulates programming logic for query execution on the client or server. GraphQL includes some built-in directives (such as `@skip` and `@include`), and you can define [custom directives](https://www.apollographql.com/docs/apollo-server/v3/schema/creating-directives/). Directives can be used for features such as authentication, incremental data loading, etc.
+A declaration prefixed with an `@` character that encapsulates programming logic for query execution on the client or server. GraphQL includes some built-in directives (such as `@skip` and `@include`), and you can define [custom directives](/apollo-server/v3/schema/creating-directives/). Directives can be used for features such as authentication, incremental data loading, etc.
 
 ```graphql
 type User @auth {
@@ -300,7 +300,7 @@ query getHuman { human(id: 0) { height weight(unit: "") } }
 
 ## Partial query caching
 
-A technique for caching inputs to GraphQL queries. This type of caching ensures that if the query is slightly different but with the same inputs, those inputs can simply be retrieved from the cache instead of fetching data again from the backend. This is implemented in the [`RESTDataSource`](https://www.apollographql.com/docs/apollo-server/data/fetching-rest) class, which Apollo Server can use to fetch data from REST APIs.
+A technique for caching inputs to GraphQL queries. This type of caching ensures that if the query is slightly different but with the same inputs, those inputs can simply be retrieved from the cache instead of fetching data again from the backend. This is implemented in the [`RESTDataSource`](/apollo-server/data/fetching-rest) class, which Apollo Server can use to fetch data from REST APIs.
 
 ## Query
 
