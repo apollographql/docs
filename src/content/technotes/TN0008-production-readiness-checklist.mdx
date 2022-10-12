@@ -49,21 +49,18 @@ import { startStandaloneServer } from '@apollo/server/standalone';
 import { ApolloGateway, RemoteGraphQLDataSource } from '@apollo/gateway';
 import { readFileSync } from 'fs';
 
-async function startApolloGateway() {
-  const gateway = new ApolloGateway({
-    supergraphSdl: readFileSync('./supergraph.graphql').toString(),
-    buildService: ({ url }) => {
-      return new RemoteGraphQLDataSource({ url, apq: true });
-    },
-  });
+const gateway = new ApolloGateway({
+  supergraphSdl: readFileSync('./supergraph.graphql').toString(),
+  buildService: ({ url }) => {
+    return new RemoteGraphQLDataSource({ url, apq: true });
+  },
+});
 
-  const server = new ApolloServer({
-    gateway,
-  });
+const server = new ApolloServer({
+  gateway,
+});
 
-  const { url } = await startStandaloneServer(server);
-  console.log(`🚀  Server ready at ${url}`);
-}
-
-await startApolloGateway();
+// Note the top-level await!
+const { url } = await startStandaloneServer(server);
+console.log(`🚀  Server ready at ${url}`);
 ```

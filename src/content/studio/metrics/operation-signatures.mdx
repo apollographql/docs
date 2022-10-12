@@ -5,7 +5,12 @@ description: How GraphOS identifies equivalent operations
 
 When you're viewing your graph's [operation metrics](#usage-reporting), Apollo Studio groups together operations based on the exact set of fields they include, _not_ based on operation _names_. This means that operations with the same name but different sets of fields are displayed separately:
 
-<img src="../img/separate-operations.jpg" alt="Separate operations with same name in Studio" className="screenshot" width="500" />
+<img
+  src="../img/separate-operations.jpg"
+  alt="Separate operations with same name in Studio"
+  className="screenshot"
+  width="500"
+/>
 
 To help GraphOS identify functionally identical operations, your router generates the **signature** for each operation it reports to Studio. This signature is a normalized representation for an operation with deterministic field order, whitespace, and values for in-line argument values.
 
@@ -137,8 +142,8 @@ The signature algorithm's primary purpose is to group together operations that d
 
 **However, you should not rely on this!** Ideally, your sensitive data should never reach Apollo Studio in the first place. Whenever possible, [use GraphQL variables](/react/data/operation-best-practices/#use-graphql-variables-to-provide-arguments) instead of in-line values for arguments. This helps you control exactly which values are reported to Apollo. For details, see [Apollo Studio data privacy and compliance](../data-privacy/).
 
-## Logging signatures at runtime
 
+## Logging signatures at runtime
 To view operation signature hashes in your own logging tools, you can create an [Apollo Server plugin](https://www.apollographql.com/docs/apollo-server/integrations/plugins/) that accesses hash values from the shared `context`. The relevant values are available in the `queryHash` and `operationName` properties:
 
 <MultiCodeBlock>
@@ -151,18 +156,17 @@ const logOperationSignaturePlugin = {
         //highlight-start
         console.log({
           queryHash: ctx.queryHash,
-          operationName: ctx.operationName,
+          operationName: ctx.operationName
         });
         //highlight-end
-      },
+      }
     };
-  },
+  }
 };
 
 const server = new ApolloServer({
   schema,
-  plugins: [logOperationSignaturePlugin],
+  plugins: [logOperationSignaturePlugin]
 });
 ```
-
 </MultiCodeBlock>
