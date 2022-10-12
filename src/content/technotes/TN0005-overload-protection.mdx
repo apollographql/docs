@@ -55,24 +55,20 @@ import protect from 'overload-protection';
 protect('express');
 // highlight-end
 
-async function startApolloServer(typeDefs, resolvers) {
-  const app = express();
-  app.use(protect); // highlight-line
-  const httpServer = http.createServer(app);
-  const server = new ApolloServer({
-    typeDefs,
-    resolvers,
-    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
-  });
+const app = express();
+app.use(protect); // highlight-line
+const httpServer = http.createServer(app);
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+});
 
-  await server.start();
-  app.use('/graphql', cors(), bodyParser.json(), expressMiddleware(server));
-
-  await new Promise((resolve) => httpServer.listen({ port: 4000 }, resolve));
-  console.log(`🚀 Server ready at http://localhost:4000/graphql`);
-}
+await server.start();
+app.use('/graphql', cors(), bodyParser.json(), expressMiddleware(server));
 // Note the top-level await here!
-await startApolloServer(typeDefs, resolvers);
+await new Promise((resolve) => httpServer.listen({ port: 4000 }, resolve));
+console.log(`🚀 Server ready at http://localhost:4000/graphql`);
 ```
 
 This approach also works if you're using the `@apollo/subgraph` library to create your subgraphs in a similar way.

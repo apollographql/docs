@@ -19,11 +19,9 @@ If you're using Apollo Server for your gateway, you can require client metadata 
 
 ```js title="index.js"
 const clientEnforcementPlugin = {
-  requestDidStart: ({request, logger}) => {
+  requestDidStart: ({ request, logger }) => {
     let clientName = request.http.headers.get('apollographql-client-name');
-    let clientVersion = request.http.headers.get(
-      'apollographql-client-version'
-    );
+    let clientVersion = request.http.headers.get('apollographql-client-version');
 
     if (!clientName) {
       let logString = `Execution Denied: Operation has no identified client`;
@@ -40,7 +38,7 @@ const clientEnforcementPlugin = {
     }
 
     return {
-      parsingDidStart({queryHash, request}) {
+      parsingDidStart({ queryHash, request }) {
         if (!request.operationName) {
           logger.debug(`Unnamed Operation: ${queryHash}`);
 
@@ -51,20 +49,20 @@ const clientEnforcementPlugin = {
             clientName: clientName,
             clientVersion: clientVersion,
             exception: {
-              message: `All operations must be named`
-            }
+              message: `All operations must be named`,
+            },
           });
 
           throw error;
         }
-      }
+      },
     };
-  }
+  },
 };
 
 const server = new ApolloServer({
   gateway,
-  plugins: [clientEnforcementPlugin]
+  plugins: [clientEnforcementPlugin],
 });
 ```
 

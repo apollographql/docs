@@ -33,9 +33,9 @@ generateCacheKey(
 ): string;
 ```
 
-The [requestContext](https://github.com/apollographql/apollo-server/blob/578dc68831d93d5809b78174d6179c10afc8c2ef/packages/server/src/externalTypes/requestPipeline.ts#L38) parameter holds data about the running GraphQL request, such as the request / response objects as well as the [context object](https://www.apollographql.com/docs/apollo-server/data/resolvers/#the-context-argument) that is passed to your resolver functions. Any portion of these data objects can be used as part of your cache key. 
+The [requestContext](https://github.com/apollographql/apollo-server/blob/578dc68831d93d5809b78174d6179c10afc8c2ef/packages/server/src/externalTypes/requestPipeline.ts#L38) parameter holds data about the running GraphQL request, such as the request / response objects as well as the [context object](https://www.apollographql.com/docs/apollo-server/data/resolvers/#the-context-argument) that is passed to your resolver functions. Any portion of these data objects can be used as part of your cache key.
 
-The `keyData` parameter can be used to ensure the uniqueness of your key. In most cases, hashing this variable should be enough to generate a unique key per operation. In fact, the [default implementation](https://github.com/apollographql/apollo-server/blob/578dc68831d93d5809b78174d6179c10afc8c2ef/packages/plugin-response-cache/src/ApolloServerPluginResponseCache.ts#L182) hashes a `JSON.stringify` version of this parameter as the cache key. 
+The `keyData` parameter can be used to ensure the uniqueness of your key. In most cases, hashing this variable should be enough to generate a unique key per operation. In fact, the [default implementation](https://github.com/apollographql/apollo-server/blob/578dc68831d93d5809b78174d6179c10afc8c2ef/packages/plugin-response-cache/src/ApolloServerPluginResponseCache.ts#L182) hashes a `JSON.stringify` version of this parameter as the cache key.
 
 In this example, we prefix the default key with the name of the incoming operation:
 
@@ -53,19 +53,19 @@ generateCacheKey(requestContext, keyData) {
 }
 ```
 
-An example key for the named operation “MyOpName”: 
+An example key for the named operation “MyOpName”:
 
 ```bash
 keyv:fqc:MyOpName:e7eed80930547ed4ab4ece81a18955967831ff4c40757eda9bf1f0de84e042f8
 ```
 
-This approach ensures that all cache keys are unique enough to store unique responses, but gives us a pattern we can use to selectively remove cache entries based on our operation names. 
+This approach ensures that all cache keys are unique enough to store unique responses, but gives us a pattern we can use to selectively remove cache entries based on our operation names.
 
 ## Evicting cache entries
 
-There are two main strategies for evicting response cache entries: manually evicting from a shell prompt, or in response to some event, like a mutation. 
+There are two main strategies for evicting response cache entries: manually evicting from a shell prompt, or in response to some event, like a mutation.
 
-Actually removing entries from the cache once a custom cache key is being used will depend on your caching backend, as each offer different ways to list and remove keys. We’ll explore both options using Redis. 
+Actually removing entries from the cache once a custom cache key is being used will depend on your caching backend, as each offer different ways to list and remove keys. We’ll explore both options using Redis.
 
 ### Evicting manually
 
@@ -77,7 +77,7 @@ Here’s an example of removing all keys in a Redis instance that match a given 
 redis-cli --raw KEYS "$PATTERN" | xargs redis-cli del
 ```
 
-This command lists every key matching any glob-style "$PATTERN" and removes them one by one. 
+This command lists every key matching any glob-style "$PATTERN" and removes them one by one.
 
 Here’s an example using the operation name prefix pattern described above to remove all entries with unnamed operations:
 
@@ -87,46 +87,45 @@ redis-cli --raw KEYS "keyv:fqc:unnamed*" | xargs redis-cli del
 
 [The Redis docs for the KEYS command](https://redis.io/commands/keys/) recommend NOT using the `KEYS` function in production application code and only executing against production with "extreme care". Redis specifically recommends instead using `SCAN`, which is described in [Event-based eviction](#event-based-eviction).
 
-The utility of this approach will depend on the number of records stored in your cache and how performant the pattern search is, as well as the number of records that need to be removed. If your searches are scanning and/or returning millions of records, this approach probably should be avoided in a production environment. 
+The utility of this approach will depend on the number of records stored in your cache and how performant the pattern search is, as well as the number of records that need to be removed. If your searches are scanning and/or returning millions of records, this approach probably should be avoided in a production environment.
 
 ### Event-based eviction
 
 Most other use cases need to evict cache entries in response to certain events. The [Response Cache Eviction](https://github.com/apollosolutions/response-cache-eviction) repo provides a full walkthrough of evicting certain operation responses from the cache when a specific mutation is executed.
 
-Redis clients currently offer no way to batch delete entries based on a pattern. As a result, our event based solution needs to do a similar algorithm: look up keys by a pattern, then remove those keys. 
+Redis clients currently offer no way to batch delete entries based on a pattern. As a result, our event based solution needs to do a similar algorithm: look up keys by a pattern, then remove those keys.
 
-The following snippet is from [the repo mentioned above](https://github.com/apollosolutions/response-cache-eviction): 
+The following snippet is from [the repo mentioned above](https://github.com/apollosolutions/response-cache-eviction):
 
 ```tsx
 import { createClient, RedisClientType } from 'redis';
 
 const deleteByPrefix = async (prefix: string) => {
-  const client = createClient({ url: 'redis://localhost:6379' })
-  await client.connect()
+  const client = createClient({ url: 'redis://localhost:6379' });
+  await client.connect();
 
   const scanIterator = client.scanIterator({
     MATCH: `keyv:fqc:${prefix}*`,
-    COUNT: 2000, 
-  })
+    COUNT: 2000,
+  });
 
-  let keys = []
+  let keys = [];
 
   for await (const key of scanIterator) {
-    keys.push(key)
+    keys.push(key);
   }
 
   if (keys.length > 0) {
-    await client.del(keys) // This is blocking, consider handling async in production if the number of keys is large
+    await client.del(keys); // This is blocking, consider handling async in production if the number of keys is large
   }
 
-  return keys
-}
+  return keys;
+};
 ```
 
-This solution uses the `scanIterator` function (which uses the `SCAN` Redis function) to scan through cache entries in a memory-efficient way, as opposed to the `KEYS` method mentioned above. The `SCAN` method is more appropriate to use in a production environment. 
+This solution uses the `scanIterator` function (which uses the `SCAN` Redis function) to scan through cache entries in a memory-efficient way, as opposed to the `KEYS` method mentioned above. The `SCAN` method is more appropriate to use in a production environment.
 
-The `deleteByPrefix` method can be added to your context object and then executed in your mutation resolvers to remove certain operations from the cache. 
-
+The `deleteByPrefix` method can be added to your context object and then executed in your mutation resolvers to remove certain operations from the cache.
 
 ## Final thoughts
 
