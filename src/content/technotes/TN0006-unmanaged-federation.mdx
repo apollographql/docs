@@ -12,7 +12,7 @@ Options for composing your supergraph schema _besides_ managed federation are de
 
 ### Build status webhook
 
-This approach uses the [build status webhook](/studio/build-status-notification) to trigger redeployment of a gateway or router by updating on successful builds with a composed supergraph schema provided by Apollo Studio. The payload of the webhook contains a URL to download the composed schema. 
+This approach uses the [build status webhook](/studio/build-status-notification) to trigger redeployment of a gateway or router by updating on successful builds with a composed supergraph schema provided by Apollo Studio. The payload of the webhook contains a URL to download the composed schema.
 
 The advantage of this approach is that you have a confirmed build that composes successfully. However, the webhook notification is sent _before_ operation checks are run against your historical operation data. This means you should [run schema checks with Rover as part of your CI/CD pipeline](/rover/commands/subgraphs/#checking-subgraph-schema-changes).
 
@@ -29,14 +29,14 @@ The process for setting this up can vary depending on your CI tooling, but you a
 
 You can use the [build status webhook](/studio/build-status-notification) to track this information if you want to use Apollo Studio but prefer performing composition locally.
 
-To run the `rover supergraph compose` command, you need access to each subgraph's schema SDL. There are a few ways to do this: 
+To run the `rover supergraph compose` command, you need access to each subgraph's schema SDL. There are a few ways to do this:
 
 - Use the `rover subgraph introspect` command to fetch subgraph schemas via introspection
 - Fetch subgraph schemas from a version control service, such as Github or Gitlab
 
-As described in the [Build status webhook section](#build-status-webhook), make sure to use [schema checks in your CI/CD pipeline](/rover/commands/subgraphs/#checking-subgraph-schema-changes) or during build time to verify that any changes won't break existing clients. 
+As described in the [Build status webhook section](#build-status-webhook), make sure to use [schema checks in your CI/CD pipeline](/rover/commands/subgraphs/#checking-subgraph-schema-changes) or during build time to verify that any changes won't break existing clients.
 
-For more information on how to accomplish this, see: 
+For more information on how to accomplish this, see:
 
 - [The `rover supergraph compose` command](/rover/commands/supergraphs#supergraph-compose)
 - [The federation quickstart](/federation/quickstart/local-composition)
@@ -67,16 +67,17 @@ services:
 After you make the schema file available to your gateway instances, pass a function to the `supergraphSdl` option of your `ApolloGateway` constructor that enables the gateway to hot reload the schema. The example function below uses the `chokidar` library to watch for file updates:
 
 ```js
-const { ApolloServer } = require('apollo-server');
-const { ApolloGateway } = require('@apollo/gateway');
-const { readFile } = require('fs/promises');
-const chokidar = require('chokidar');
-const supergraphSdlLocation = '/etc/config/supergraph.graphql';
+import { ApolloServer } from '@apollo/server';
+import { startStandaloneServer } from '@apollo/server/standalone';
+import { ApolloGateway } from '@apollo/gateway';
+import { readFile } from 'fs/promises';
+import chokidar from 'chokidar';
+import supergraphSdlLocation = '/etc/config/supergraph.graphql';
 
 const gateway = new ApolloGateway({
   async supergraphSdl({ update, healthCheck }) {
     const watcher = chokidar.watch(supergraphSdlLocation);
-    watcher.on('change', async ()=>{
+    watcher.on('change', async () => {
       try {
           const updatedSupergraph = await readFile(supergraphSdlLocation, 'utf-8');
           // optional health check update to ensure our services are responsive
@@ -93,19 +94,20 @@ const gateway = new ApolloGateway({
       async cleanup() {
         await watcher.close();
       }
-    }
-  },
+    };
+  }
 });
 
 const server = new ApolloServer({
   gateway,
 });
-server.listen().then(({ url }) => {
-  console.log(`🚀 Server ready at ${url}`);
-});
+
+// Note the top-level await!
+const { url } = await startStandaloneServer(server);
+console.log(`🚀  Server ready at ${url}`);
 ```
 
-In the code above, the `ApolloGateway` is passed a `supergaphSdl` property. This property can be a string (for a supergraph schema that _never_ changes during runtime), or it can be a function that enables updating the schema during runtime as shown.  
+In the code above, the `ApolloGateway` is passed a `supergaphSdl` property. This property can be a string (for a supergraph schema that _never_ changes during runtime), or it can be a function that enables updating the schema during runtime as shown.
 
 For more information on this approach, [see the Apollo Gateway docs](/federation/gateway/#updating-the-supergraph-schema).
 
@@ -113,50 +115,46 @@ For more information on this approach, [see the Apollo Gateway docs](/federation
 
 If you have complex logic that's be better suited to its own class (for example, listening to an AWS Simple Notification Service (SNS) topic), you can create a custom implementation of the `SupergraphManager` class to pass to the `supergraphSdl` option.
 
-This option provides the most customizability, but it also requires writing additional code. For an example, [see the Uplink implementation of `SupergraphManager`](https://github.com/apollographql/federation/blob/main/gateway-js/src/supergraphManagers/UplinkSupergraphManager/index.ts). 
+This option provides the most customizability, but it also requires writing additional code. For an example, [see the Uplink implementation of `SupergraphManager`](https://github.com/apollographql/federation/blob/main/gateway-js/src/supergraphManagers/UplinkSupergraphManager/index.ts).
 
-If we were to write the same file watcher function as above as a `SupergraphManager`, it would look like: 
+If we were to write the same file watcher function as above as a `SupergraphManager`, it would look like:
 
 ```ts
 import { SupergraphManager } from '@apollo/gateway';
 import { SupergraphSdlHookOptions } from '@apollo/gateway/dist/config';
 import * as chokidar from 'chokidar';
-import {readFile} from 'fs/promises';
+import { readFile } from 'fs/promises';
 
 export class FileWatcherManager implements SupergraphManager {
-    private filename: string; 
+  private filename: string;
 
-    constructor({
-        filename,
-    }:{
-        filename: string
-    }){
-        this.filename = filename
-    }
-    
-    public async initialize({ update, healthCheck }: SupergraphSdlHookOptions) {
-        let watcher = chokidar.watch(this.filename)
+  constructor({ filename }: { filename: string }) {
+    this.filename = filename;
+  }
 
-        watcher.on('change', async ()=>{
-            try {
-                const updatedSupergraph = await readFile(this.filename, 'utf-8');
-                // optional health check update to ensure our services are responsive
-                await healthCheck(updatedSupergraph);
-                // update the supergraph schema
-                update(updatedSupergraph);
-            } catch (e) {
-                // handle errors that occur during health check or while updating the supergraph schema
-                console.error(e);
-            }
-        });
-        
-        return {
-            supergraphSdl: await readFile(this.filename, 'utf-8'),
-            cleanup: async () => {
-                await watcher.close()
-            },
-          };
-    }   
+  public async initialize({ update, healthCheck }: SupergraphSdlHookOptions) {
+    let watcher = chokidar.watch(this.filename);
+
+    watcher.on('change', async () => {
+      try {
+        const updatedSupergraph = await readFile(this.filename, 'utf-8');
+        // optional health check update to ensure our services are responsive
+        await healthCheck(updatedSupergraph);
+        // update the supergraph schema
+        update(updatedSupergraph);
+      } catch (e) {
+        // handle errors that occur during health check or while updating the supergraph schema
+        console.error(e);
+      }
+    });
+
+    return {
+      supergraphSdl: await readFile(this.filename, 'utf-8'),
+      cleanup: async () => {
+        await watcher.close();
+      },
+    };
+  }
 }
 ```
 
@@ -164,8 +162,8 @@ To use your custom `SupergraphManager`, you instantiate it and pass it as the `s
 
 ```ts
 const gateway = new ApolloGateway({
-    supergraphSdl: new FileWatcherManager({filename: './supergraph.graphql'})
-})
+  supergraphSdl: new FileWatcherManager({ filename: './supergraph.graphql' }),
+});
 ```
 
 ### Restart the gateway/router (not recommended)

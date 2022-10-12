@@ -75,7 +75,7 @@ GraphQL can improve nearly every area of development: from improving developer e
 
 ### Where can I learn GraphQL?
 
-Apollo's learning platform, [**Odyssey**](https://www.apollographql.com/tutorials?utm_source=apollo_docs&utm_medium=referral), provides practical, hands-on courses that help you learn GraphQL with Apollo technologies. 
+Apollo's learning platform, [**Odyssey**](https://www.apollographql.com/tutorials?utm_source=apollo_docs&utm_medium=referral), provides practical, hands-on courses that help you learn GraphQL with Apollo technologies.
 
 This documentation also includes getting-started content for each platform component:
 
@@ -94,8 +94,10 @@ GraphQL servers created with Apollo Server can be deployed to any environment th
 There are deployment guides available for:
 
 - [Heroku](https://www.apollographql.com/docs/apollo-server/deployment/heroku/)
-- [Lambda](https://www.apollographql.com/docs/apollo-server/deployment/lambda/)
-- [Azure Functions](https://www.apollographql.com/docs/apollo-server/deployment/azure-functions/)
+
+<!-- TODO(AS4) Insert these links back in once these deployment guides are updated
+ - [Lambda](https://www.apollographql.com/docs/apollo-server/deployment/lambda/)
+- [Azure Functions](https://www.apollographql.com/docs/apollo-server/deployment/azure-functions/) -->
 
 ### How do I connect my client app to my schema?
 
@@ -119,7 +121,7 @@ There are GraphQL server tools available for most popular languages, but we reco
 
 One of the best things about GraphQL is that it works excellently with existing APIs. It's possible to connect any number of existing services to your schema.
 
-The most common source is a REST API. The [`RESTDataSource`](https://www.apollographql.com/docs/apollo-server/data/data-sources/#rest-data-source) class integrates with Apollo Server to simplify fetching and caching for existing REST APIs.
+The most common source is a REST API. The [`RESTDataSource`](https://www.apollographql.com/docs/apollo-server/data/fetching-rest) class integrates with Apollo Server to simplify fetching and caching for existing REST APIs.
 
 But it's easy to connect any backend to a schema. [Resolvers](https://www.apollographql.com/docs/apollo-server/data/resolvers/) can do anything, including fetch data from an SDK or ORM.
 
@@ -165,9 +167,9 @@ For example, if a client requests a list of movies, each movie is cached separat
 
 You can also set up server-side caching, including whole-query caching, partial-query caching, and cache backed by a CDN. These can lower response times and make your GraphQL server as performant as possible.
 
-Whole-query and CDN caches are most useful when an API handles multiple identical queries. This commonly happens with public data, like content on pages of a site. Regardless of whether the API is used for public data or not, these caches almost always provide large performance benefits and are highly recommended. You can read more about how to set up whole-query and CDN caching with `apollo-server` 2.0 [here](https://www.apollographql.com/docs/apollo-server/performance/caching/).
+Whole-query and CDN caches are most useful when an API handles multiple identical queries. This commonly happens with public data, like content on pages of a site. Regardless of whether the API is used for public data or not, these caches almost always provide large performance benefits and are highly recommended. See [Server-side caching](https://www.apollographql.com/docs/apollo-server/performance/caching/) to learn about whole-query and CDN caching with Apollo Server.
 
-Partial query caching can be achieved by caching the responses from underlying services with something like Redis or Memcache. With this strategy, even if two queries look completely different from one another, if there is any duplication of data fetched, those results can be shared, preventing unnecessary traffic. The [`RESTDataSource`](https://www.apollographql.com/docs/apollo-server/data/data-sources/#rest-data-source) does this automatically if the appropriate `cache-control` headers are present in REST responses.
+Partial query caching can be achieved by caching the responses from underlying services with something like Redis or Memcache. With this strategy, even if two queries look completely different from one another, if there is any duplication of data fetched, those results can be shared, preventing unnecessary traffic. The [`RESTDataSource`](https://www.apollographql.com/docs/apollo-server/data/fetching-rest) does this automatically if the appropriate `cache-control` headers are present in REST responses.
 
 ### How can I monitor the health of my GraphQL schema?
 

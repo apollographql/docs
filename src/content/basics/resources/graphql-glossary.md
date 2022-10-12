@@ -54,7 +54,7 @@ The query above uses `admins` and `managers` as aliases for the `users` field.
 
 ## Data source
 
-A pattern for fetching data from a particular service, with built-in support for caching, deduplication, and error handling. When deploying GraphQL as a layer between your apps and existing APIs and services, [data sources](https://www.apollographql.com/docs/apollo-server/v2/features/data-sources/) provide the best experience for fetching and caching data from REST endpoints.
+A pattern for fetching data from a particular service, with built-in support for caching, deduplication, and error handling. When deploying GraphQL as a layer between your apps and existing APIs and services, [data sources](https://www.apollographql.com/docs/apollo-server/data/fetching-rest) provide the best experience for fetching and caching data from REST endpoints.
 
 ## Deferred query
 
@@ -77,7 +77,7 @@ query NewsFeed {
 
 ## Directive
 
-A declaration prefixed with an `@` character that encapsulates programming logic for query execution on the client or server. GraphQL includes some built-in directives (such as `@skip` and `@include`), and you can define [custom directives](https://www.apollographql.com/docs/apollo-server/schema/creating-directives/). Directives can be used for features such as authentication, incremental data loading, etc.
+A declaration prefixed with an `@` character that encapsulates programming logic for query execution on the client or server. GraphQL includes some built-in directives (such as `@skip` and `@include`), and you can define [custom directives](/apollo-server/v3/schema/creating-directives/). Directives can be used for features such as authentication, incremental data loading, etc.
 
 ```graphql
 type User @auth {
@@ -300,7 +300,7 @@ query getHuman { human(id: 0) { height weight(unit: "") } }
 
 ## Partial query caching
 
-A technique for caching inputs to GraphQL queries. This type of caching ensures that if the query is slightly different but with the same inputs, those inputs can simply be retrieved from the cache instead of fetching data again from the backend. It is implemented in Apollo Server 2 as [data source](https://www.apollographql.com/docs/apollo-server/features/data-sources/) caching.
+A technique for caching inputs to GraphQL queries. This type of caching ensures that if the query is slightly different but with the same inputs, those inputs can simply be retrieved from the cache instead of fetching data again from the backend. This is implemented in the [`RESTDataSource`](/apollo-server/data/fetching-rest) class, which Apollo Server can use to fetch data from REST APIs.
 
 ## Query
 
@@ -398,7 +398,7 @@ Refers to the need to evolve a schema over time. As a schema evolves, there is a
 
 ## Subscription
 
-A long-lived, real-time GraphQL operation. Supported [subscriptions](https://www.apollographql.com/docs/apollo-server/features/subscriptions/) are defined in a schema along with queries and mutations.
+A long-lived, real-time GraphQL operation. Supported [subscriptions](/apollo-server/data/subscriptions) are defined in a schema along with queries and mutations.
 
 ```graphql
 type Subscription {
@@ -443,4 +443,4 @@ client.query({ query: getUserQuery, variables: { userId: 1 } });
 
 ## Whole response caching
 
-A technique used to cache entire results of GraphQL queries. This process improves performance by preventing the fetching of the same results from the server if it has been obtained before. Read more about GraphQL query caching in our [guide for caching with Apollo Server](https://www.apollographql.com/docs/apollo-server/features/caching/).
+A technique used to cache entire results of GraphQL queries. This process improves performance by preventing the fetching of the same results from the server if it has been obtained before. Read more about GraphQL query caching in our [guide for caching with Apollo Server](https://www.apollographql.com/docs/apollo-server/performance/caching).

@@ -13,17 +13,15 @@ Together, these pieces of information help teams monitor their graph and make ch
 
 ## Enforcing in Apollo Server
 
-If you're using Apollo Server for your gateway, you can require client metadata in every incoming request with a [custom plugin](https://www.apollographql.com/docs/apollo-server/integrations/plugins/):
+If you're using Apollo Server for your gateway, you can require client metadata in every incoming request with a [custom plugin](/apollo-server/integrations/plugins/):
 
 > The header names used below are the default headers sent by Apollo Client, but you can change them to whatever names your client uses.
 
 ```js title="index.js"
 const clientEnforcementPlugin = {
-  requestDidStart: ({request, logger}) => {
+  requestDidStart: ({ request, logger }) => {
     let clientName = request.http.headers.get('apollographql-client-name');
-    let clientVersion = request.http.headers.get(
-      'apollographql-client-version'
-    );
+    let clientVersion = request.http.headers.get('apollographql-client-version');
 
     if (!clientName) {
       let logString = `Execution Denied: Operation has no identified client`;
@@ -40,7 +38,7 @@ const clientEnforcementPlugin = {
     }
 
     return {
-      parsingDidStart({queryHash, request}) {
+      parsingDidStart({ queryHash, request }) {
         if (!request.operationName) {
           logger.debug(`Unnamed Operation: ${queryHash}`);
 
@@ -51,21 +49,20 @@ const clientEnforcementPlugin = {
             clientName: clientName,
             clientVersion: clientVersion,
             exception: {
-              message: `All operations must be named`
-            }
+              message: `All operations must be named`,
+            },
           });
 
           throw error;
         }
-      }
+      },
     };
-  }
+  },
 };
 
 const server = new ApolloServer({
   gateway,
-  subscriptions: false,
-  plugins: [clientEnforcementPlugin]
+  plugins: [clientEnforcementPlugin],
 });
 ```
 

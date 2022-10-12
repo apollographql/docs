@@ -49,7 +49,7 @@ Helpfully, Apollo libraries use a [signature algorithm](#signature-algorithm) to
 
 > ⚠️ **This algorithm is subject to change.** This article describes the signature algorithm as of the release of Apollo Server 3.6.1. It is provided here for informational purposes, not as a canonical specification.
 
-Feel free to [jump to an example](#example-signature) or [view the source](https://github.com/apollographql/apollo-server/blob/main/packages/apollo-server-core/src/plugin/usageReporting/defaultUsageReportingSignature.ts).
+Feel free to [jump to an example](#example-signature) or [view the source](https://github.com/apollographql/apollo-utils/blob/main/packages/usageReporting/src/signature.ts).
 
 The signature algorithm performs the following modifications on an operation to generate its signature:
 
@@ -146,16 +146,19 @@ The signature algorithm's primary purpose is to group together operations that d
 ## Logging signatures at runtime
 To view operation signature hashes in your own logging tools, you can create an [Apollo Server plugin](https://www.apollographql.com/docs/apollo-server/integrations/plugins/) that accesses hash values from the shared `context`. The relevant values are available in the `queryHash` and `operationName` properties:
 
+<MultiCodeBlock>
 
-```js {6-7} title="index.js"
+```ts title="index.ts"
 const logOperationSignaturePlugin = {
   async requestDidStart() {
     return {
       async didResolveOperation(ctx) {
+        //highlight-start
         console.log({
           queryHash: ctx.queryHash,
           operationName: ctx.operationName
         });
+        //highlight-end
       }
     };
   }
@@ -166,3 +169,4 @@ const server = new ApolloServer({
   plugins: [logOperationSignaturePlugin]
 });
 ```
+</MultiCodeBlock>

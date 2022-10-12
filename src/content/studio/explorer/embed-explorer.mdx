@@ -14,10 +14,10 @@ In Apollo Server [v3.8.0](https://github.com/apollographql/apollo-server/blob/ma
 You use the `ApolloServerPluginLandingPageLocalDefault` plugin to configure the landing page in your local development environment, and you use `ApolloServerPluginLandingPageProductionDefault` for production environments:
 
 ```js
-const {
- ApolloServerPluginLandingPageProductionDefault,
- ApolloServerPluginLandingPageLocalDefault
-} = require('apollo-server-core');
+import {
+  ApolloServerPluginLandingPageLocalDefault,
+  ApolloServerPluginLandingPageProductionDefault 
+} from '@apollo/server/plugin/landingPage/default';
 
 let plugins = [];
 if (process.env.NODE_ENV === 'production') {
@@ -27,9 +27,9 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 const server = new ApolloServer({
-    typeDefs,
-    resolvers,
-    plugins
+  typeDefs,
+  resolvers,
+  plugins
 });
 ```
 
@@ -58,9 +58,9 @@ For more information, see the [landing page plugin API reference](/apollo-server
 
 5. Still in the dialog, use the tabs above the code snippet to select the snippet for your use case:
 
-    * Use **React** for React apps where you can `npm install` the `@apollo/explorer` package.
-    * Use **JavaScript** for non-React JavaScript apps where you can `npm install` the `@apollo/explorer` package.
-    * Use **Built file on CDN** to use Apollo's CDN-hosted embedded Explorer.
+    - Use **React** for React apps where you can `npm install` the `@apollo/explorer` package.
+    - Use **JavaScript** for non-React JavaScript apps where you can `npm install` the `@apollo/explorer` package.
+    - Use **Built file on CDN** to use Apollo's CDN-hosted embedded Explorer.
 
 6. Click **Copy** to copy the snippet, then paste it into your code.
 
@@ -70,9 +70,9 @@ For more information, see the [landing page plugin API reference](/apollo-server
 
 You can prepopulate your embedded Explorer with an operation from one of your existing Explorer tabs. If you do, the embedded Explorer includes all of the following automatically on load:
 
-* The operation you selected
-* Any variable names and values defined in the operation's associated tab that are _used_ by the operation
-* All header names and values defined in the operation's associated tab
+- The operation you selected
+- Any variable names and values defined in the operation's associated tab that are _used_ by the operation
+- All header names and values defined in the operation's associated tab
 
 To prepopulate a default operation, use one of the following methods:
 
@@ -271,7 +271,7 @@ You might want to do this if you need to include specific headers in every reque
 
 By default, the embedded Explorer uses the default `fetch` function to make requests, which passes `{ credentials: 'omit' }`.
 
-You can set `includeCookies` to `true` if you instead want the Explorer to pass `{ credentials: 'include' }` for its requests. 
+You can set `includeCookies` to `true` if you instead want the Explorer to pass `{ credentials: 'include' }` for its requests.
 
 If you pass the `handleRequest` option, this option is ignored.
 

@@ -152,15 +152,16 @@ If you are looking at your data [in the table layout](#table-layout-for-response
 
 > Enable **Inlined traces** from the Explorer's Settings tab.
 
-If you're using Apollo Server 2.18+, you can see traces from your responses inlined in the Explorer by adding the `ApolloServerPluginInlineTrace` plugin to your server's configuration:
+If you're using Apollo Server, you can see traces from your responses inlined in the Explorer by adding the `ApolloServerPluginInlineTrace` plugin to your server's configuration:
 
-```
-import { ApolloServerPluginInlineTrace } from "apollo-server-core";
+```ts
+import { ApolloServerPluginInlineTrace } from '@apollo/server/plugin/inlineTrace';
+
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  plugins: [ApolloServerPluginInlineTrace()],
-})
+  plugins: [ApolloServerPluginInlineTrace()]
+});
 ```
 
 Turning on the inlined traces feature in the Explorer's settings tells the Explorer to forward a special header to your server to request that it return tracing information along with its response.
