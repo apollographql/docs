@@ -42,14 +42,14 @@ app.use(protect);
 If you're using `@apollo/server`'s Express integration (i.e.[`expressMiddleware`](/apollo-server/api/express-middleware)), you can add `overload-protection` via Express middleware by adding the highlighted lines to your server creation:
 
 ```js title="index.js"
-import {ApolloServer} from '@apollo/server';
-import {expressMiddleware} from '@apollo/server/express4';
-import {ApolloServerPluginDrainHttpServer} from '@apollo/server/plugin/drainHttpServer';
+import { ApolloServer } from '@apollo/server';
+import { expressMiddleware } from '@apollo/server/express4';
+import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
 import express from 'express';
 import http from 'http';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import {typeDefs, resolvers} from './schema';
+import { typeDefs, resolvers } from './schema';
 // highlight-start
 import protect from 'overload-protection';
 protect('express');
@@ -62,13 +62,13 @@ async function startApolloServer(typeDefs, resolvers) {
   const server = new ApolloServer({
     typeDefs,
     resolvers,
-    plugins: [ApolloServerPluginDrainHttpServer({httpServer})]
+    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
   });
 
   await server.start();
   app.use('/graphql', cors(), bodyParser.json(), expressMiddleware(server));
 
-  await new Promise(resolve => httpServer.listen({port: 4000}, resolve));
+  await new Promise((resolve) => httpServer.listen({ port: 4000 }, resolve));
   console.log(`🚀 Server ready at http://localhost:4000/graphql`);
 }
 // Note the top-level await here!
