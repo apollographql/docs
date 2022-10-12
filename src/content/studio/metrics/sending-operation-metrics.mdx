@@ -46,7 +46,7 @@ Apollo Server defines its agent for performing these tasks in [the usage reporti
 
 Apollo Studio's reporting endpoint accepts batches of traces that are encoded in **protocol buffer** format. Each trace corresponds to the execution of a single GraphQL operation, including a breakdown of the timing and error information for each field that's resolved as part of the operation.
 
-The schema for this protocol buffer is defined as the `Report` message in the [TypeScript reference implementation](https://github.com/apollographql/apollo-server/blob/main4/packages/usage-reporting-protobuf/src/reports.proto).
+The schema for this protocol buffer is defined as the `Report` message in the [TypeScript reference implementation](https://github.com/apollographql/apollo-server/blob/main/packages/usage-reporting-protobuf/src/reports.proto).
 
 > This document describes how to create a report whose `tracesPerQuery` objects consist solely of a list of detailed execution traces in the `trace` array. Apollo Studio now allows your server to describe usage as a mix of detailed execution traces and pre-aggregated statistics (released in Apollo Server 2.24), which leads to much more efficient reports. This document does not yet describe how to generate these statistics. It also does not describe how to support the "referencing operations" feature of [the Fields page](./field-usage/).
 
