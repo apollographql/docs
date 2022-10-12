@@ -103,7 +103,7 @@ const query = `
       }
     }
 
-    allMarkdownRemark {
+    allMarkdownRemark(filter: {fields: {slug: {regex: "/\/ios\/.*\/?api/"}}}) {
       nodes {
         ...NodeFragment
         htmlAst
