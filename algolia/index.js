@@ -42,6 +42,8 @@ async function transformer({data}) {
   const records = allPages
     // exclude internal-only pages
     .filter(page => !isInternal[page.parent.sourceInstanceName])
+    // exclude ios API pages that match the pattern /ios/api/ or /ios/*/api/
+    .filter(page => !page.fields.slug.match(/\/ios\/.*\/?api/))
     // create multiple records per page, but keep a flat array
     .flatMap(page => {
       const {
@@ -103,7 +105,7 @@ const query = `
       }
     }
 
-    allMarkdownRemark(filter: {fields: {slug: {regex: "/\/ios\/.*\/?api/"}}}) {
+    allMarkdownRemark {
       nodes {
         ...NodeFragment
         htmlAst
