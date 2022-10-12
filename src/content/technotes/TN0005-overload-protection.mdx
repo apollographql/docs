@@ -64,9 +64,9 @@ const server = new ApolloServer({
   plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
 });
 
+// Note the top-level `await` calls below!
 await server.start();
 app.use('/graphql', cors(), bodyParser.json(), expressMiddleware(server));
-// Note the top-level await here!
 await new Promise((resolve) => httpServer.listen({ port: 4000 }, resolve));
 console.log(`🚀 Server ready at http://localhost:4000/graphql`);
 ```
