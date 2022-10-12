@@ -15,7 +15,7 @@ We recommend that you complete this checklist before your supergraph begins hand
     - For example, the [React client uses the `name` and `version` attributes](/react/api/core/ApolloClient#name) in the constructor options.
   - If you're using a third-party GraphQL client, set the `apollographql-client-name` and `apollographql-client-version` HTTP headers for each request to identify your client.
   - For an example of enforcing client identification in your gateway, see [this technote for Client ID enforcement](/technotes/TN0001-client-id-enforcement/).
-  
+
 ## Server-side
 
 - For security, disable introspection for all production GraphQL servers.
@@ -39,22 +39,20 @@ We recommend that you complete this checklist before your supergraph begins hand
     - Whenever possible, avoid making multiple calls to data sources within a single resolver.
     - Understand [query plan execution](/federation/query-plans) to help understand slow operations and optimize your supergraph to avoid them.
 
-
 ### Apollo Gateway APQ example
 
 This example uses both the [`buildService`](/federation/api/apollo-gateway/#buildservice) option and the [`RemoteGraphQLDataSource`](/federation/api/apollo-gateway/#apq) class to enable APQ to each subgraph.
 
 ```js
-const { ApolloServer } = require('@apollo/server');
-const { startStandaloneServer } = require('@apollo/server/standalone');
-const { ApolloGateway, RemoteGraphQLDataSource } = require('@apollo/gateway');
-const { readFileSync } = require('fs');
-
+import {ApolloServer} from '@apollo/server';
+import {startStandaloneServer} from '@apollo/server/standalone';
+import {ApolloGateway, RemoteGraphQLDataSource} from '@apollo/gateway';
+import {readFileSync} from 'fs';
 
 async function startApolloGateway() {
   const gateway = new ApolloGateway({
-    supergraphSdl: readFileSync("./supergraph.graphql").toString(),
-    buildService: ({ url })=>{
+    supergraphSdl: readFileSync('./supergraph.graphql').toString(),
+    buildService: ({url}) => {
       return new RemoteGraphQLDataSource({url, apq: true});
     }
   });
@@ -63,7 +61,9 @@ async function startApolloGateway() {
     gateway
   });
 
-  const { url } = await startStandaloneServer(server);
+  const {url} = await startStandaloneServer(server);
   console.log(`🚀  Server ready at ${url}`);
 }
+
+await startApolloGateway();
 ```
