@@ -40,10 +40,19 @@ async function transformer({data}) {
 
   const allPages = allMarkdownRemark.nodes.concat(allMdx.nodes);
   const records = allPages
-    // exclude internal-only pages
-    .filter(page => !isInternal[page.parent.sourceInstanceName])
-    // exclude ios API pages that match the pattern /ios/api/ or /ios/*/api/
-    .filter(page => !page.fields.slug.match(/\/ios\/.*\/?api/))
+    .filter(page => {
+      // exclude internal-only pages
+      if (!isInternal[page.parent.sourceInstanceName]) {
+        return true;
+      }
+
+      // exclude ios API pages that match the pattern /ios/api/ or /ios/*/api/
+      if (!page.fields.slug.match(/\/ios\/(.*\/)?api\/?/)) {
+        return true;
+      }
+
+      return false;
+    })
     // create multiple records per page, but keep a flat array
     .flatMap(page => {
       const {
