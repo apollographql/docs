@@ -18,13 +18,13 @@ import {
   Stack,
   useDisclosure
 } from '@chakra-ui/react';
+import {FaNodeJs} from 'react-icons/fa';
 import {ReactComponent as Federation} from '../../assets/icons/federation.svg';
-import {FiChevronDown, FiGrid} from 'react-icons/fi';
+import {FiChevronDown, FiFileText, FiGrid} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
-import {IoBookOutline, IoRocketSharp} from 'react-icons/io5';
+import {IoRocketSharp} from 'react-icons/io5';
 import {ReactComponent as Router} from '../../assets/icons/router.svg';
 import {ReactComponent as Rover} from '../../assets/icons/rover.svg';
-import {ReactComponent as Satellite} from '../../assets/icons/satellite.svg';
 import {ReactComponent as Schema} from '../../assets/icons/schema.svg';
 import {SiKotlin, SiReact, SiSwift} from 'react-icons/si';
 
@@ -35,17 +35,17 @@ CustomIcon.propTypes = {
 };
 
 export const DOCSET_ICONS = {
-  react: <SiReact />,
-  ios: <SiSwift />,
-  android: <SiKotlin />, // TODO: update algolia index to be called "kotlin"
-  server: <CustomIcon icon={Satellite} />,
-  apollo: <CustomIcon icon={ApolloMark} />,
+  default: <CustomIcon icon={ApolloMark} />,
+  'apollo-client': <SiReact />,
+  'apollo-ios': <SiSwift />,
+  'apollo-kotlin': <SiKotlin />,
+  'apollo-server': <FaNodeJs />,
   federation: <CustomIcon icon={Federation} />,
   studio: <CustomIcon icon={Schema} />,
   rover: <CustomIcon icon={Rover} />,
   router: <CustomIcon icon={Router} />,
   odyssey: <IoRocketSharp />,
-  technotes: <IoBookOutline />
+  technotes: <FiFileText />
 };
 
 export function DocsetMenu({docset, versions = [], currentVersion, ...props}) {
@@ -82,7 +82,7 @@ export function DocsetMenu({docset, versions = [], currentVersion, ...props}) {
           <ModalCloseButton />
           <Stack spacing="4" p="6">
             <DocsetGroup title="Get started">
-              <DocsetButton to="/" leftIcon={DOCSET_ICONS.apollo}>
+              <DocsetButton to="/" leftIcon={DOCSET_ICONS.default}>
                 Docs Home
               </DocsetButton>
               <DocsetButton
@@ -101,7 +101,10 @@ export function DocsetMenu({docset, versions = [], currentVersion, ...props}) {
               </DocsetButton>
             </DocsetGroup>
             <DocsetGroup title="Technical reference">
-              <DocsetButton leftIcon={DOCSET_ICONS.server} to="/apollo-server">
+              <DocsetButton
+                leftIcon={DOCSET_ICONS['apollo-server']}
+                to="/apollo-server"
+              >
                 Server
               </DocsetButton>
               <DocsetButton leftIcon={DOCSET_ICONS.router} to="/router">
@@ -115,13 +118,19 @@ export function DocsetMenu({docset, versions = [], currentVersion, ...props}) {
               </DocsetButton>
             </DocsetGroup>
             <DocsetGroup title="Apollo Client">
-              <DocsetButton leftIcon={DOCSET_ICONS.react} to="/react">
+              <DocsetButton
+                leftIcon={DOCSET_ICONS['apollo-client']}
+                to="/react"
+              >
                 React
               </DocsetButton>
-              <DocsetButton leftIcon={DOCSET_ICONS.ios} to="/ios">
+              <DocsetButton leftIcon={DOCSET_ICONS['apollo-ios']} to="/ios">
                 iOS
               </DocsetButton>
-              <DocsetButton leftIcon={DOCSET_ICONS.android} to="/kotlin">
+              <DocsetButton
+                leftIcon={DOCSET_ICONS['apollo-kotlin']}
+                to="/kotlin"
+              >
                 Kotlin
               </DocsetButton>
             </DocsetGroup>

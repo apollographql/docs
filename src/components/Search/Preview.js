@@ -19,15 +19,18 @@ import {
 } from '@chakra-ui/react';
 import {FiChevronRight} from 'react-icons/fi';
 
+const DOCSET_TITLES = {
+  'apollo-client': 'React',
+  'apollo-ios': 'iOS',
+  'apollo-kotlin': 'Kotlin',
+  'apollo-server': 'Server'
+};
+
 function getDocsetTitle(docset) {
-  switch (docset) {
-    case 'ios':
-      return 'iOS';
-    case 'android':
-      return 'Kotlin';
-    default:
-      return upperFirst(docset);
+  if (docset in DOCSET_TITLES) {
+    return DOCSET_TITLES[docset];
   }
+  return upperFirst(docset);
 }
 
 export default function Preview({preview}) {
