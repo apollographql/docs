@@ -69,6 +69,11 @@ async function transformer({data}) {
         categories.push('client');
       }
 
+      // omit older version docs (anything with a slash in the path) from results
+      if (/\w\//.test(sourceInstanceName)) {
+        return [];
+      }
+
       return createRecords({
         children: (mdxAST || htmlAst).children,
         url,
@@ -82,7 +87,6 @@ async function transformer({data}) {
           type: 'docs',
           docset,
           slug,
-          isCurrentVersion: !/\w\//.test(sourceInstanceName),
           pageviews: allGAData[url]?.[METRICS.uniquePageViews] || 0,
           categories
         }

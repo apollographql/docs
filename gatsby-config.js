@@ -163,12 +163,7 @@ const plugins = [
           transformer,
           settings: {
             ...algoliaSettings,
-            attributesForFaceting: ['categories', 'docset', 'type'],
-            // put docs for current version at top, then by page views and index
-            customRanking: [
-              'desc(isCurrentVersion)',
-              ...algoliaSettings.customRanking
-            ]
+            attributesForFaceting: ['categories', 'docset', 'type']
           }
         }
       ]
