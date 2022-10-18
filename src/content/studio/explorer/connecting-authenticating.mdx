@@ -177,12 +177,14 @@ Function that sets a new value for the environment variable with the specified `
 
 ##### `explorer.fetch`
 
-`(href: string, options?: { method?: string, body?: string | null, headers?: Record<string, string> }) => Promise<{ code: number, body: string, json: () => any }>`
+`(href: string, options?: { method?: string, body?: string | null, headers?: Record<string, string>, credentials: 'include' | 'omit' | 'same-origin' }) => Promise<{ code: number, body: string, json: () => any }>`
 
 </td>
 <td>
 
-Function for making HTTP requests to external services from within a preflight script.
+Function for making HTTP requests to external services from within a preflight script.  
+
+Network requests are initiated from an origin of `https://preflight-request.apollographql.com`, please ensure the appropriate CORS headers are sent for those requests.
 
 </td>
 </tr>
