@@ -1,6 +1,6 @@
 # Apollo Docs
 
-This repo contains the code responsible for building the Apollo Docs site. It also houses the content for the Apollo Basics and Studio **docsets**. We also export shared utilities and components from the [`@apollo/chakra-helpers`](./packages/chakra-helpers) package in the `packages` directory.
+This repo contains the code responsible for building the Apollo Docs site. It also houses the content for the Apollo Basics and GraphOS **docsets**. We also export shared utilities and components from the [`@apollo/chakra-helpers`](./packages/chakra-helpers) package in the `packages` directory.
 
 > We use the word **docset** to describe an individual docs website. For example, "I just updated the Android docset".
 
@@ -95,7 +95,7 @@ Check out the [`package.json`](./package.json) to see how these scripts work!
 
 ## Faster startup
 
-The Studio and Apollo basics docs content lives in this repo. To spin up a development environment serving only these docsets, there's the `start:local` script. This will result in much faster startup time since we're not sourcing any remote data. Use this script if you're working on changes in either of those docsets or website UI changes.
+The GraphOS and Apollo basics docs content lives in this repo. To spin up a development environment serving only these docsets, there's the `start:local` script. This will result in much faster startup time since we're not sourcing any remote data. Use this script if you're working on changes in either of those docsets or website UI changes.
 
 ```sh
 npm run start:local
@@ -108,7 +108,7 @@ The docs content is written and maintained in the following places. Many of them
 ### Local
 
 - [Apollo Basics](./src/content/basics)
-- [Apollo Studio](./src/content/studio)
+- [Apollo GraphOS](./src/content/graphos)
 
 ### Remote
 
@@ -158,7 +158,7 @@ The `config.json` file lives at the root of its docset's content directory, and 
 To create a local docset, add a new directory to the `src/content` directory of this repo, and drop in an `index.md` file and a `config.json` file. Next, head over to the `sources/local.yml` file and add a line mapping the URL path that you want the docset to live at to the location of its content.
 
 ```yml
-studio: src/content/studio
+graphos: src/content/graphos
 ```
 
 Restart your local development environment and the new docset will be available to peruse and develop. 🚀

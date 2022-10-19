@@ -23,7 +23,8 @@ const DOCSET_TITLES = {
   'apollo-client': 'React',
   'apollo-ios': 'iOS',
   'apollo-kotlin': 'Kotlin',
-  'apollo-server': 'Server'
+  'apollo-server': 'Server',
+  graphos: 'GraphOS'
 };
 
 function getDocsetTitle(docset) {

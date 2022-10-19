@@ -41,7 +41,7 @@ export const DOCSET_ICONS = {
   'apollo-kotlin': <SiKotlin />,
   'apollo-server': <FaNodeJs />,
   federation: <CustomIcon icon={Federation} />,
-  studio: <CustomIcon icon={Schema} />,
+  graphos: <CustomIcon icon={Schema} />,
   rover: <GoTerminal />,
   router: <CustomIcon icon={Router} />,
   odyssey: <IoRocketSharp />,
@@ -93,7 +93,7 @@ export function DocsetMenu({docset, versions = [], currentVersion, ...props}) {
               </DocsetButton>
             </DocsetGroup>
             <DocsetGroup title="Build your supergraph">
-              <DocsetButton leftIcon={DOCSET_ICONS.studio} to="/studio">
+              <DocsetButton leftIcon={DOCSET_ICONS.graphos} to="/graphos">
                 GraphOS
               </DocsetButton>
               <DocsetButton leftIcon={DOCSET_ICONS.federation} to="/federation">

@@ -10,7 +10,7 @@
     },
     "Documentation Sets": {
       "Build Your Supergraph": {
-        "GraphOS": "/studio/",
+        "GraphOS": "/graphos/",
         "Apollo Federation": "/federation/"
       },
       "Technical Reference": {

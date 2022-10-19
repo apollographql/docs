@@ -43,8 +43,8 @@ export const productCategory: Category = {
   title: 'Product',
   links: [
     {
-      text: 'Apollo Studio',
-      href: 'https://www.apollographql.com/docs/studio/'
+      text: 'Apollo GraphOS',
+      href: 'https://www.apollographql.com/docs/graphos/'
     },
     {
       text: 'Apollo Federation',
