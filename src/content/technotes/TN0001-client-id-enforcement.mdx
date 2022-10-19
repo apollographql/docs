@@ -5,9 +5,9 @@ description: Require client details and operation names to help monitor schema u
 tags: [server, observability]
 ---
 
-As part of Apollo Studio metrics reporting, servers can [tag reported operations with the requesting client's name and version](https://www.apollographql.com/docs/studio/metrics/client-awareness). This helps graph maintainers understand which clients are using which fields in the schema.
+As part of Apollo Studio metrics reporting, servers can [tag reported operations with the requesting client's name and version](/graphos/metrics/client-awareness). This helps graph maintainers understand which clients are using which fields in the schema.
 
-Clients can (and should) also [name their GraphQL operations](https://www.apollographql.com/docs/react/data/operation-best-practices/#name-all-operations), which provides more context around how and where data is being used.
+Clients can (and should) also [name their GraphQL operations](/react/data/operation-best-practices/#name-all-operations), which provides more context around how and where data is being used.
 
 Together, these pieces of information help teams monitor their graph and make changes to it safely. We strongly encourage that your GraphQL gateway _require_ client details _and_ operation names from all requesting clients.
 
@@ -19,9 +19,11 @@ If you're using Apollo Server for your gateway, you can require client metadata 
 
 ```js title="index.js"
 const clientEnforcementPlugin = {
-  requestDidStart: ({ request, logger }) => {
+  requestDidStart: ({request, logger}) => {
     let clientName = request.http.headers.get('apollographql-client-name');
-    let clientVersion = request.http.headers.get('apollographql-client-version');
+    let clientVersion = request.http.headers.get(
+      'apollographql-client-version'
+    );
 
     if (!clientName) {
       let logString = `Execution Denied: Operation has no identified client`;
@@ -38,7 +40,7 @@ const clientEnforcementPlugin = {
     }
 
     return {
-      parsingDidStart({ queryHash, request }) {
+      parsingDidStart({queryHash, request}) {
         if (!request.operationName) {
           logger.debug(`Unnamed Operation: ${queryHash}`);
 
@@ -49,20 +51,20 @@ const clientEnforcementPlugin = {
             clientName: clientName,
             clientVersion: clientVersion,
             exception: {
-              message: `All operations must be named`,
-            },
+              message: `All operations must be named`
+            }
           });
 
           throw error;
         }
-      },
+      }
     };
-  },
+  }
 };
 
 const server = new ApolloServer({
   gateway,
-  plugins: [clientEnforcementPlugin],
+  plugins: [clientEnforcementPlugin]
 });
 ```
 
@@ -74,7 +76,7 @@ If clients are already consuming your graph and _are not_ providing client metad
 
 If you have other existing headers in your HTTP requests that can be parsed to extract some client info, you can extract the info from there.
 
-If you do change the identifying headers, also update the [Usage Reporting Plugin](https://www.apollographql.com/docs/studio/metrics/client-awareness/#advanced-apollo-server-configuration) to use the new headers so that the proper client info is also sent to Studio.
+If you do change the identifying headers, also update the [Usage Reporting Plugin](/graphos/metrics/client-awareness/#advanced-apollo-server-configuration) to use the new headers so that the proper client info is also sent to Studio.
 
 ### Ask clients to update their requests
 

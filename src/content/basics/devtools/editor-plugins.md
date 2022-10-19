@@ -20,10 +20,10 @@ The extension enables you to:
 
 ## Getting started
 
-To get all of the benefits of the VS Code experience, it's best to link the schema that is being developed against **before** installing the extension. The best way to do that is by [registering a schema](https://www.apollographql.com/docs/studio/schema-registry/#registering-a-schema-manually) to the Apollo schema registry. Once that's done:
+To get all of the benefits of the VS Code experience, it's best to link the schema that is being developed against **before** installing the extension. The best way to do that is by [registering a schema](/graphos/schema-registry/#registering-a-schema-manually) to the Apollo schema registry. Once that's done:
 
 1. Create an `apollo.config.js` file at the root of the project.
-2. Obtain a [Personal API key](./../../studio/api-keys) from Apollo Studio.
+2. Obtain a [Personal API key](/graphos/api-keys) from Apollo Studio.
 
 ### Setting up an Apollo config
 
@@ -123,7 +123,7 @@ Because of GraphQL's strongly-typed schema, editors not only know about which fi
 
 GraphQL's flexibility can make it difficult to predict the cost of an operation. Without insight into how expensive an operation is, developers can accidentally write queries that place strain on their graph API's underlying backends. Thanks to the Apollo platform's integration with VS Code and our trace warehouse, teams can avoid these performance issues altogether by instantly seeing the cost of a query right in their editor.
 
-To turn on tracing for your GraphQL server, please visit our [guide](https://www.apollographql.com/docs/references/setup-analytics/).
+To turn on tracing for your GraphQL server, please visit our [guide](/references/setup-analytics/).
 
 The VS Code extension will show inline performance diagnostics when connected to a service with reported metrics in Apollo Studio. As operations are typed, any fields that take longer than 1ms to respond will be annoated to the right of the field inline! This gives team members a picture of how long the operation will take as more and more fields are added to operations or fragments.
 
@@ -141,7 +141,7 @@ Navigating large codebases can be difficult, but the Apollo GraphQL extension ma
 
 ### Graph variant switching
 
-Apollo supports publishing multiple versions ([variants](https://www.apollographql.com/docs/studio/schema-registry/#registering-a-schema-to-a-variant)) of a schema. This is useful for developing on a future development schema and preparing your clients to conform to that schema. To switch between graph variants, open the Command Palette (`cmd + shift + p` on mac), search "Apollo" and choose the "Apollo: Select Schema Tag" option.
+Apollo supports publishing multiple versions ([variants](/graphos/schema-registry/#registering-a-schema-to-a-variant)) of a schema. This is useful for developing on a future development schema and preparing your clients to conform to that schema. To switch between graph variants, open the Command Palette (`cmd + shift + p` on mac), search "Apollo" and choose the "Apollo: Select Schema Tag" option.
 
 ## Troubleshooting
 

@@ -109,11 +109,7 @@ As another common example of exposed implementation details, here we can see how
 ```graphql
 extend type Mutation {
   postProduct(name: String!, description: String): Product
-  patchProduct(
-    id: ID!,
-    name: String,
-    description: String
-  ): Product
+  patchProduct(id: ID!, name: String, description: String): Product
 }
 ```
 
@@ -123,10 +119,7 @@ A better approach would look like this:
 extend type Mutation {
   createProduct(name: String!, description: String): Product
   updateProductName(id: ID!, name: String!): Product
-  updateProductDescription(
-    id: ID!,
-    description: String!
-  ): Product
+  updateProductDescription(id: ID!, description: String!): Product
 }
 ```
 
@@ -269,7 +262,7 @@ As a prerequisite to using an abstract type in a subgraph, that subgraph must be
 
 ### Create semantically meaningful interfaces
 
-A common misuse of interfaces is to use them simply to express a contract for shared fields between types. While this is certainly an aspect of their intended use, they should only be used when you need to return an object or a set of objects from a field *and* those objects may represent a variety of different types with some fields in common. For example:
+A common misuse of interfaces is to use them simply to express a contract for shared fields between types. While this is certainly an aspect of their intended use, they should only be used when you need to return an object or a set of objects from a field _and_ those objects may represent a variety of different types with some fields in common. For example:
 
 ```graphql
 interface Pet {
@@ -366,7 +359,7 @@ extend type Query {
 
 After a service's schema has been updated with new `@deprecated` directives, it's important to communicate the deprecations beyond the SDL as well. Using a dedicated Slack channel or team meetings may serve as appropriate communication channels for such notices, and they should be delivered with any additional migration instructions for client teams.
 
-At this point, a crucial question still remains: "When will it be safe to remove the deprecated field?" To answer this question with certainty that you won't cause any breaking changes to client applications, you must lean on your observability tooling. Specifically, tracing data can provide insight into what clients may still be using the deprecated fields so appropriate follow-ups can be actioned. GraphQL observability tools such as [Apollo Studio](https://www.apollographql.com/docs/studio/) will check any changes pushed for registered schemas against a recent window of operation tracing data to ensure that a deprecated field rollover can be completed without causing any breaking changes to existing clients.
+At this point, a crucial question still remains: "When will it be safe to remove the deprecated field?" To answer this question with certainty that you won't cause any breaking changes to client applications, you must lean on your observability tooling. Specifically, tracing data can provide insight into what clients may still be using the deprecated fields so appropriate follow-ups can be actioned. GraphQL observability tools such as [Apollo Studio](/graphos/) will check any changes pushed for registered schemas against a recent window of operation tracing data to ensure that a deprecated field rollover can be completed without causing any breaking changes to existing clients.
 
 ## Best practice #7: Handle errors in a client-friendly way
 
@@ -396,9 +389,7 @@ The `data` key will contain a `null` user and the `errors` key in the response c
   "errors": [
     {
       "type": "NOT_FOUND",
-      "path": [
-        "user"
-      ],
+      "path": ["user"],
       "locations": [
         {
           "line": 7,
@@ -435,7 +426,7 @@ The detailed error response that is required by the GraphQL specification and fu
 
 For these reasons, the default approach to handling errors is best suited for things that are truly errors. In other words, they should be used when something happened that ordinarily wouldn't happen during the execution of a GraphQL operation. These kinds of errors could include an unavailable service, an exceeded query cost limit, or a syntax error that occurs during development. They are exceptional occurrences outside of the API domain and are typically also outside a client application's end user's control.
 
-Lasty, as a best practice, stack traces should be removed from an error's `extensions` key in production. This can be done by setting the `debug` option to `false` in the Apollo Server constructor, or by setting the `NODE_ENV` environment variable to `production` or `test`. Please see the [Apollo Server documentation](https://www.apollographql.com/docs/apollo-server/data/errors/) for more information on handling, masking, and logging errors in production environments.
+Lasty, as a best practice, stack traces should be removed from an error's `extensions` key in production. This can be done by setting the `debug` option to `false` in the Apollo Server constructor, or by setting the `NODE_ENV` environment variable to `production` or `test`. Please see the [Apollo Server documentation](/apollo-server/data/errors/) for more information on handling, masking, and logging errors in production environments.
 
 ### Represent errors as data to communicate other possible states
 

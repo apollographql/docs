@@ -5,6 +5,7 @@ module.exports = {
       files: ['*.mdx'],
       globals: {
         Button: 'readonly',
+        ButtonLink: 'readonly',
         ExpansionPanel: 'readonly',
         MultiCodeBlock: 'readonly',
         YouTube: 'readonly',

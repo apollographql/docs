@@ -134,7 +134,7 @@ A requested field might not be resolved for any of these reasons:
 
 ### `@key` and `@requires` fields in a federated graph
 
-> This case applies only to graphs that use [Apollo Federation](https://www.apollographql.com/docs/federation).
+> This case applies only to graphs that use [Apollo Federation](/federation).
 
 Let's say our federated graph includes these two subgraph schemas:
 
@@ -182,11 +182,11 @@ query GetAllReviews {
 }
 ```
 
-This query's execution starts in the Reviews subgraph, but it needs to obtain each `Product`'s `name` from the Products subgraph. As part of this process, the Products subgraph must [resolve references](https://www.apollographql.com/docs/federation/entities/#resolving) to `Product`s that are provided by the Reviews subgraph.
+This query's execution starts in the Reviews subgraph, but it needs to obtain each `Product`'s `name` from the Products subgraph. As part of this process, the Products subgraph must [resolve references](/federation/entities/#resolving) to `Product`s that are provided by the Reviews subgraph.
 
 To help resolve these references, the Reviews subgraph _must_ return each `Product`'s `id` field, even though that field isn't included in the original query. This is because `id` is a `@key` field for `Product`.
 
-Therefore, this query contributes one **field execution** and zero **requesting operations** to `Product.id`. Similar logic applies to fields that use the [`@requires` directive](https://www.apollographql.com/docs/federation/entities/#extending-an-entity-with-computed-fields-advanced).
+Therefore, this query contributes one **field execution** and zero **requesting operations** to `Product.id`. Similar logic applies to fields that use the [`@requires` directive](/federation/entities/#extending-an-entity-with-computed-fields-advanced).
 
 ## Reporting field usage
 
@@ -208,13 +208,13 @@ If you have a [federated graph](https://apollographql.com/docs/federation), your
 
 To report metrics for field executions, your GraphQL server can run any recent version of Apollo Server 2.x or 3.x.
 
-If you have a [federated graph](https://apollographql.com/docs/federation), your subgraphs must support federated tracing. For compatible libraries, see the **FTV1** column of [this table](https://www.apollographql.com/docs/federation/other-servers/).
+If you have a [federated graph](https://apollographql.com/docs/federation), your subgraphs must support federated tracing. For compatible libraries, see the **FTV1** column of [this table](/federation/other-servers/).
 
 > If _some_ of your subgraphs support federated tracing and others _don't_, only field executions in compatible subgraphs are reported to Apollo.
 
 ### Reporting with Federation
 
-If you are using [Apollo Federation](https://apollographql.com/docs/federation), only the [Gateway](https://www.apollographql.com/docs/federation/gateway) or [Router](https://www.apollographql.com/docs/router/) needs to be configured to [send metrics to Studio](./usage-reporting/). Subgraphs do not need to send any metrics to Studio directly, as they will send GraphQL specific metrics to the Gateway/Router which will then be responsible for publishing data.
+If you are using [Apollo Federation](https://apollographql.com/docs/federation), only the [Gateway](/federation/gateway) or [Router](/router/) needs to be configured to [send metrics to Studio](./usage-reporting/). Subgraphs do not need to send any metrics to Studio directly, as they will send GraphQL specific metrics to the Gateway/Router which will then be responsible for publishing data.
 
 ### Performance considerations
 

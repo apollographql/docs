@@ -2,7 +2,7 @@
 title: The Apollo CLI
 ---
 
-> ⚠️ **Important:** All `apollo service:*` commands are now **deprecated** in favor of commands in the [Rover CLI](https://www.apollographql.com/docs/rover/).
+> ⚠️ **Important:** All `apollo service:*` commands are now **deprecated** in favor of commands in the [Rover CLI](/rover/).
 
 The **Apollo CLI** provides useful commands for interacting with every component of the Apollo platform, including Apollo Client, Apollo Server, and Apollo Studio.
 
@@ -30,7 +30,7 @@ npm install -g apollo
 
 ## Provide an API key
 
-Like all other tools, the Apollo CLI requires an API key to communicate with Apollo Studio. For each of your projects, [obtain a graph API key](https://www.apollographql.com/docs/studio/api-keys/#graph-api-keys) for the project's associated graph, and set that key as the value of `APOLLO_KEY` in your application's `.env` file:
+Like all other tools, the Apollo CLI requires an API key to communicate with Apollo Studio. For each of your projects, [obtain a graph API key](/graphos/api-keys/#graph-api-keys) for the project's associated graph, and set that key as the value of `APOLLO_KEY` in your application's `.env` file:
 
 ```js title=".env"
 APOLLO_KEY=service:docs-example-graph:NYKgCqwfCyYPIm84WVXCdw
@@ -48,7 +48,7 @@ Most of the Apollo CLI's commands are in the following namespaces:
 
 - `client` (such as `apollo client:codegen`) for interactions involving Apollo Client and Apollo Studio
 - `service` (such as `apollo service:check`) for interactions involving Apollo Server and Apollo Studio
-  - ⚠️ **Important:** All `apollo service:*` commands are now **deprecated** in favor of commands in the [Rover CLI](https://www.apollographql.com/docs/rover/).
+  - ⚠️ **Important:** All `apollo service:*` commands are now **deprecated** in favor of commands in the [Rover CLI](/rover/).
 
 For a full list of commands in a particular namespace, use the `apollo help` command:
 

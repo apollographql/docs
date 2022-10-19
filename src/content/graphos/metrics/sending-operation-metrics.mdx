@@ -54,7 +54,7 @@ As a starting point, we recommend implementing an extension to the GraphQL execu
 
 An example of a `FullTracesReport` message, represented as JSON, is provided [below](#example-fulltracesreport-message).
 
-> Many server runtimes already support emitting tracing information as a [GraphQL extension](https://github.com/apollographql/apollo-tracing). Such extensions are available for [Node](https://www.apollographql.com/docs/apollo-server/api/plugin/usage-reporting/), [Ruby](https://github.com/uniiverse/apollo-tracing-ruby), [Scala](https://github.com/sangria-graphql/sangria-slowlog#apollo-tracing-extension), [Java](https://github.com/graphql-java/graphql-java/pull/577), [Elixir](https://github.com/sikanhe/apollo-tracing-elixir), and [.NET](https://graphql-dotnet.github.io/docs/getting-started/metrics/). If you're working on adding metrics reporting functionality for one of these languages, reading through that tracing instrumentation is a good place to start. For other languages, we recommend consulting the [Apollo Server usage reporting plugin](/apollo-server/api/plugin/usage-reporting).
+> Many server runtimes already support emitting tracing information as a [GraphQL extension](https://github.com/apollographql/apollo-tracing). Such extensions are available for [Node](/apollo-server/api/plugin/usage-reporting/), [Ruby](https://github.com/uniiverse/apollo-tracing-ruby), [Scala](https://github.com/sangria-graphql/sangria-slowlog#apollo-tracing-extension), [Java](https://github.com/graphql-java/graphql-java/pull/577), [Elixir](https://github.com/sikanhe/apollo-tracing-elixir), and [.NET](https://graphql-dotnet.github.io/docs/getting-started/metrics/). If you're working on adding metrics reporting functionality for one of these languages, reading through that tracing instrumentation is a good place to start. For other languages, we recommend consulting the [Apollo Server usage reporting plugin](/apollo-server/api/plugin/usage-reporting).
 
 ### Operation signing
 
@@ -128,7 +128,7 @@ We recommend implementing retries with backoff when you encounter `5xx` response
 
 ### Implementing additional reporting features
 
-The reference TypeScript implementation includes several features that you might want to include in your implementation. All of these features are implemented in the usage reporting plugin itself, and are documented [the plugin's API reference](https://www.apollographql.com/docs/apollo-server/api/plugin/usage-reporting/).
+The reference TypeScript implementation includes several features that you might want to include in your implementation. All of these features are implemented in the usage reporting plugin itself, and are documented [the plugin's API reference](/apollo-server/api/plugin/usage-reporting/).
 
 For example, you can restrict which information is sent to Studio, particularly to avoid reporting personal data. Because personal data most commonly appears in variables and headers, the TypeScript agent offers options to `sendVariablesValues` and `sendHeaders`.
 

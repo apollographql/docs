@@ -42,8 +42,8 @@ Specifically, we'll examine scenarios that:
 
 The release guidelines for each scenario should generally apply to all release management systems, whether we're deploying to Kubernetes, serverless, or bare metal. Some details might change depending on whether we have a manual deployment process, a continuous delivery process, or something in between. This guide assumes the use of the [Apollo Studio][apollostudio] for publishing and validating schemas, as well as [Apollo Managed Federation][managedfederation] for propagating supergraph schemas to our gateway servers.
 
-[apollostudio]: https://www.apollographql.com/docs/studio/
-[managedfederation]: https://www.apollographql.com/docs/federation/managed-federation/overview/
+[apollostudio]: /graphos/
+[managedfederation]: /federation/managed-federation/overview/
 
 ## Backward compatible subgraph schema changes
 
@@ -83,7 +83,7 @@ In practice, however, this rarely matters. Due to the declarative nature of Grap
 
 If we enable [Schema Change Notifications][notifications], Apollo Studio will automatically notify our colleagues that the new schema is available right after the gateway updates.
 
-[notifications]: https://www.apollographql.com/docs/studio/schema-change-integration/
+[notifications]: /graphos/schema-change-integration/
 
 ### Concurrent subgraph schema changes
 
@@ -109,7 +109,7 @@ If the build check against the `current` variant fails, we'll need to coordinate
 
 Once clients start using the new schema changes, rolling back a subgraph schema change is the same as making a backward incompatible schema change. This may be difficult or impossible to do depending on client usage. For this reason, it's important to test our new schema changes thoroughly before clients start using the new schema in their operations.
 
-If clients are not yet using the schema changes, we most likely don't need to roll them back — they have no effect until operations start using them.
+If clients are not yet using the schema changes, we most likely don't need to roll them back — they have no effect until operations start using them.
 
 If circumstances require a rollback, the safest process is to revert the change in the subgraph code repository and perform the full release process, publishing the subgraph schema and rolling out the new code together.
 
@@ -147,7 +147,7 @@ The release steps for backward incompatible changes are similar to those for bac
 3. Continue to track usage until it reaches zero (or to a minimally acceptable level, for example, where a field is still in use by an older version of a mobile application that is no longer supported).
 4. [Perform the release steps for a backward compatible change](#release-steps).
 
-[clientids]: https://www.apollographql.com/docs/studio/client-awareness/#setup
+[clientids]: /graphos/client-awareness/#setup
 
 ### Sequencing schema publishing with service deployments
 
@@ -167,7 +167,7 @@ If circumstances require a rollback, the safest process is to revert the change 
 
 Shared types like enums and non-entity object types (also known as [value types][valuetypes]) must be identical across subgraphs. A mismatch raises an error during composition, hindering the ability to update the gateway as subgraphs change. Because of this, it's best think of shared type updates as a change management process for all subgraphs together.
 
-[valuetypes]: https://www.apollographql.com/docs/federation/value-types/
+[valuetypes]: /federation/value-types/
 
 The most straightforward approach is to perform the [subgraph schema change process](#release-steps) for each subgraph that contains the shared type.
 
@@ -192,7 +192,7 @@ If a change to a shared type does not require changes to runtime code (e.g. addi
 2. Manually publish them using [Rover][rover], one after the other, updating the gateway after the final publish.
 3. Commit the changes to the respective repositories. The next release will be a no-op because Apollo Studio already has these changes.
 
-[rover]: https://www.apollographql.com/docs/rover/
+[rover]: /rover/
 
 We might choose to keep a copy of subgraph schemas in a separate code repository for review and auditing purposes, as well as a convenient location for making and publishing these manual changes.
 
@@ -259,7 +259,7 @@ Because the query planning change should not require changes to our runtime code
 3. Manually publish them using [Rover][rover], one after the other, updating the gateway after the second publish.
 4. Commit the changes to the respective repositories. The next release will be a no-op because the Apollo Studio already has these changes.
 
-[rover]: https://www.apollographql.com/docs/rover/
+[rover]: /rover/
 
 In the event of an issue, we can quickly publish the previous versions of the subgraph schemas to "roll back".
 
@@ -289,11 +289,11 @@ This process allows for rolling back changes after Release #2 because the data s
 
 We can configure the gateway to forward headers to subgraph services by [customizing the subgraph data source][customizereqs].
 
-[customizereqs]: https://www.apollographql.com/docs/federation/gateway/#customizing-requests
+[customizereqs]: /federation/gateway/#customizing-requests
 
 ## Changes to subgraph resolvers
 
-Changing the behavior of a resolver (such as calling a new data source, changing the computation of a value, or optimizing execution by adding [Dataloaders](https://www.apollographql.com/docs/apollo-server/data/fetching-rest#using-with-dataloader)) might be performed in a single release for low-risk changes.
+Changing the behavior of a resolver (such as calling a new data source, changing the computation of a value, or optimizing execution by adding [Dataloaders](/apollo-server/data/fetching-rest#using-with-dataloader)) might be performed in a single release for low-risk changes.
 
 Because a resolver might be called in various contexts (nested at different layers of an operation) it can be challenging to reason about the effects of our change. We might choose to progressively release the change using feature flags or canary deploys.
 
