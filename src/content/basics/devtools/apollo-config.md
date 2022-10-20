@@ -27,7 +27,7 @@ module.exports = {
 
 There are a few different ways you can link your client to a schema:
 
-1. Use the Apollo [schema registry](/graphos/schema-registry/)
+1. Use the Apollo [schema registry](/graphos/schema/cli-registration/)
 2. With a remote endpoint (from a running server)
 3. With a local schema file
 
