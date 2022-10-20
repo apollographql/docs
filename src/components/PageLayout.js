@@ -69,7 +69,7 @@ export default function Page({
     `
   );
 
-  const {pageRefCallback, pageWidthPx, pageWidth} = usePageWidthContext();
+  const {pageRefCallback, pageWidthPx} = usePageWidthContext();
 
   const {docset, versions, currentVersion, navItems, algoliaFilters} =
     pageContext;
@@ -155,9 +155,10 @@ export default function Page({
       >
         {banner}
         <Flex
-          key={pageWidth}
           ref={pageRefCallback}
-          maxW={pageWidthPx}
+          style={{
+            maxWidth: pageWidthPx
+          }}
           mx="auto"
           align="flex-start"
           px={{base: 6, md: 10}}
