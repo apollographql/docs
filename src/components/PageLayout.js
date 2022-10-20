@@ -3,7 +3,13 @@ import Footer from './Footer';
 import Header, {TOTAL_HEADER_HEIGHT} from './Header';
 import MobileNav from './MobileNav';
 import PropTypes from 'prop-types';
-import React, {Fragment, useCallback, useContext} from 'react';
+import React, {
+  Fragment,
+  useCallback,
+  useContext,
+  useEffect,
+  useState
+} from 'react';
 import Sidebar, {
   SIDEBAR_WIDTH_BASE,
   SIDEBAR_WIDTH_XL,
@@ -87,6 +93,12 @@ export default function Page({
     [docset, versions, currentVersion]
   );
 
+  const [now, setNow] = useState(Date.now());
+
+  useEffect(() => {
+    setNow(Date.now());
+  }, []);
+
   return (
     <>
       <GatsbySeo
@@ -155,6 +167,7 @@ export default function Page({
       >
         {banner}
         <Flex
+          key={now}
           ref={pageRefCallback}
           maxW={pageWidthPx}
           mx="auto"
