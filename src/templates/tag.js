@@ -2,6 +2,7 @@ import PageLayout, {usePageLayoutProps} from '../components/PageLayout';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {NotesList} from '../components/TechNotes';
+import {PageWidthProvider} from '../components/PageWidthContext';
 import {PathContext} from '../utils';
 import {graphql} from 'gatsby';
 
@@ -43,7 +44,7 @@ export default function Tags({pageContext, data, location}) {
   });
 
   return (
-    <>
+    <PageWidthProvider>
       <PathContext.Provider
         value={{
           uri: location.pathname,
@@ -55,6 +56,6 @@ export default function Tags({pageContext, data, location}) {
           <NotesList notes={data.notes.nodes} />
         </PageLayout>
       </PathContext.Provider>
-    </>
+    </PageWidthProvider>
   );
 }
