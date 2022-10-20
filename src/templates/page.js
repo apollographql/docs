@@ -5,8 +5,10 @@ import React from 'react';
 import {GatsbySeo} from 'gatsby-plugin-next-seo';
 import {PageWidthProvider} from '../components/PageWidthContext';
 import {graphql} from 'gatsby';
+import {useClientTick} from '../utils';
 
 export default function PageTemplate({data, location, pageContext}) {
+  useClientTick();
   const page = (
     <PageWidthProvider>
       <Page
