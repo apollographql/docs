@@ -3,10 +3,6 @@ title: Get started with GraphOS
 description: Create your first Apollo supergraph
 ---
 
-import ObtainGraphApiKey from '../shared/obtain-graph-api-key.mdx';
-import RegisterCli from '../shared/register-cli.mdx';
-import RegisterFederatedCli from '../shared/register-federated-cli.mdx';
-
 Hello! 👋 This quickstart gets you up and running with GraphOS and your first supergraph. **None of this setup requires a paid plan.**
 
 To complete these steps, it's helpful to have one of the following available:
@@ -20,18 +16,16 @@ To complete these steps, it's helpful to have one of the following available:
 
 <blockquote>
 
-
 **If you already have an Apollo account,** and you created your organization prior to 4 October 2022, you might need to **create a new organization** to create cloud supergraphs:
 
 <img
   src="./img/organization-list.jpg"
-  class="screenshot"
+  className="screenshot"
   alt="Studio organization list"
   width="300"
 />
 
 [Learn about upgrading an existing organization.](./org/plans#upgrading-to-a-current-plan)
-
 
 </blockquote>
 
@@ -41,18 +35,18 @@ To complete these steps, it's helpful to have one of the following available:
 
 2. Choose a signup method (GitHub or username/password).
 
-    Studio then shows a signup form (its details vary depending on your signup method):
+   Studio then shows a signup form (its details vary depending on your signup method):
 
-    <img
+   <img
      src="./img/signup-form.jpg"
      class="screenshot"
      alt="Studio signup form"
      width="400"
-    />
+   />
 
 3. Complete the signup form.
 
-    * If you want to customize your organization's details (such as its name or ID), you can uncheck **Create an organization for my automatically**.
+   - If you want to customize your organization's details (such as its name or ID), you can uncheck **Create an organization for my automatically**.
 
 4. Click **Create Account**.
 
@@ -87,85 +81,88 @@ You now have an Apollo Studio organization, but it doesn't contain any graphs! L
 
 1. From your new organization in [Apollo Studio](https://studio.apollographql.com/), navigate to the **Supergraphs** tab if it isn't already open.
 
-    Because you haven't created any graphs yet, Studio shows the following:
+   Because you haven't created any graphs yet, Studio shows the following:
 
-    <img
+   <img
      src="./img/studio-welcome.jpg"
      class="screenshot"
      alt="Welcome message for new Studio orgs"
      width="400"
-    />
+   />
 
 2. Click **Connect your GraphQL API**. The following dialog appears:
 
-    <img
+   <img
      src="./img/supergraph-create-dialog.jpg"
      class="screenshot"
      alt="Supergraph creation dialog"
      width="400"
-    />
+   />
 
 3. Provide your GraphQL API's **Endpoint URL**.
-    - This is the same URL that client applications currently use to query your API.
-    - **Example setup:** `https://flyby-locations-sub.herokuapp.com/`
 
-    After you provide the URL, Studio attempts to fetch your API's schema from it via introspection. The result of that fetch is shown beneath the text box:
+   - This is the same URL that client applications currently use to query your API.
+   - **Example setup:** `https://flyby-locations-sub.herokuapp.com/`
 
-    <img
+   After you provide the URL, Studio attempts to fetch your API's schema from it via introspection. The result of that fetch is shown beneath the text box:
+
+   <img
      src="./img/supergraph-schema-fetch.jpg"
      class="screenshot"
      alt="Displayed result of API schema fetch"
      width="400"
-    />
+   />
 
 4. **If the schema fetch failed,** click **Advanced options** (otherwise, proceed to the next step):
 
-    <img
+   <img
      src="./img/supergraph-create-advanced-options.jpg"
      class="screenshot"
      alt="Advanced options for providing API schema"
      width="400"
-    />
+   />
 
-    - If your GraphQL server requires certain HTTP headers for Studio to introspect it, click **Provide HTTP Headers** to specify them.
-    - Otherwise, click **Upload your schema directly** to provide your API's schema as plaintext SDL.
+   - If your GraphQL server requires certain HTTP headers for Studio to introspect it, click **Provide HTTP Headers** to specify them.
+   - Otherwise, click **Upload your schema directly** to provide your API's schema as plaintext SDL.
 
 5. Provide a **Name** for your API.
-    - The name should reflect the data or capabilities that your API provides.
-    - **Example setup:** `locations`
+
+   - The name should reflect the data or capabilities that your API provides.
+   - **Example setup:** `locations`
 
 6. Click **Next**.
-    - If the **Next** button is inactive, Studio hasn't obtained your API's schema! Make sure to provide it using one of the methods described in the previous few steps.
 
-    The following dialog appears:
+   - If the **Next** button is inactive, Studio hasn't obtained your API's schema! Make sure to provide it using one of the methods described in the previous few steps.
 
-    <img
+   The following dialog appears:
+
+   <img
      src="./img/supergraph-id-name.jpg"
      class="screenshot"
      alt="Setting an ID and name for a new supergraph"
      width="400"
-    />
+   />
 
 7. Provide an ID and a name for your new supergraph.
 
-    - The ID is **immutable** and must be unique across all of Apollo. You'll use this value to reference your supergraph from various tools, such as the Rover CLI.
-    - The name is displayed throughout Studio and helps your team distinguish between your different graphs. You can change your supergraph's name at any time.
+   - The ID is **immutable** and must be unique across all of Apollo. You'll use this value to reference your supergraph from various tools, such as the Rover CLI.
+   - The name is displayed throughout Studio and helps your team distinguish between your different graphs. You can change your supergraph's name at any time.
 
 8. Click **Next**. The following dialog appears:
 
-    <img
+   <img
      src="./img/supergraph-variant.jpg"
      class="screenshot"
      alt="Setting a variant for a new supergraph"
      width="400"
-    />
+   />
 
-    Every graph in GraphOS has one or more **variants**. Each variant represents a different environment where the graph runs (such as staging or production).
+   Every graph in GraphOS has one or more **variants**. Each variant represents a different environment where the graph runs (such as staging or production).
 
 9. Specify a name for your supergraph's first variant.
 
-    - Studio provides a default suggestion of `main`. Other common variant names include `production`, `staging`, `development`, and `test`.
-    - You'll be able to create more variants later!
+   - Studio provides a default suggestion of `main`. Other common variant names include `production`, `staging`, `development`, and `test`.
+   - You'll be able to create more variants later!
 
 10. Click **Create Supergraph**.
 
@@ -173,7 +170,7 @@ Nice work! You've created your first cloud supergraph, which is now listed in yo
 
 <img
   src="./img/supergraph-list.jpg"
-  class="screenshot"
+  className="screenshot"
   alt="An organization's list of cloud supergraphs"
   width="500"
 />
@@ -194,7 +191,7 @@ While you're viewing _any_ page for a variant, the following navigation is shown
 
 <img
   src="./img/variant-pages.jpg"
-  class="screenshot"
+  className="screenshot"
   alt="List of pages for a graph variant in Studio"
   width="100"
 />
@@ -207,19 +204,19 @@ We'll cover some of these pages in later steps, but feel free to click around an
 
 <ExpansionPanel title="Click to expand">
 
-| Page | Description |
-|------|-------------|
-| **README** | Displays the variant's editable Markdown-formatted README, along with other important details about the variant (such as its graph ref and router URL). [Learn more](./studio-graph-features/#the-readme-page) |
-| **Schema** | Documentation for all your supergraph's types and fields. Supports filtering definitions by name, subgraph, and other values. [Learn more](./studio-graph-features/#the-schema-page) |
-| **Explorer** | A powerful IDE for building and executing operations against your supergraph. [Learn more](./explorer/explorer) |
-| **Subgraphs** | Displays the details for each separate GraphQL API that's part of your supergraph. (Each API is called a **subgraph**.) [Learn more](./cloud-routing/overview) |
-| **Changelog** | Displays a historical diff of additions, modifications, and deletions made to your supergraph's schema. |
-| **Fields** | Displays field-level metrics for your supergraph, indicating how frequently each field is included in client operations. [Learn more](./metrics/field-usage) |
-| **Clients** | Displays operation metrics for the variant, broken down by individual clients. This feature requires that clients identify themselves in their requests to your router. [Learn more](./metrics/client-awareness) |
-| **Operations** | Displays an overview of usage metrics for the variant, including request and error rates. Supports filtering by date range. [Learn more](./metrics/usage-reporting) |
-| **Checks** | Displays the results of schema checks that have been run for the variant. [Learn more](./schema-checks) |
-| **Launches** | Displays the results of recent launches executed for your supergraph. A launch occurs whenever changes are made to one of your subgraph schemas, resulting in an update to your router. [Learn more](./launches) |
-| **Settings** | Configuration options for the individual variant, along with high-level options for the entire supergraph. |
+| Page           | Description                                                                                                                                                                                                      |
+| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **README**     | Displays the variant's editable Markdown-formatted README, along with other important details about the variant (such as its graph ref and router URL). [Learn more](./studio-graph-features/#the-readme-page)   |
+| **Schema**     | Documentation for all your supergraph's types and fields. Supports filtering definitions by name, subgraph, and other values. [Learn more](./studio-graph-features/#the-schema-page)                             |
+| **Explorer**   | A powerful IDE for building and executing operations against your supergraph. [Learn more](./explorer/explorer)                                                                                                  |
+| **Subgraphs**  | Displays the details for each separate GraphQL API that's part of your supergraph. (Each API is called a **subgraph**.) [Learn more](./cloud-routing/overview)                                                   |
+| **Changelog**  | Displays a historical diff of additions, modifications, and deletions made to your supergraph's schema.                                                                                                          |
+| **Fields**     | Displays field-level metrics for your supergraph, indicating how frequently each field is included in client operations. [Learn more](./metrics/field-usage)                                                     |
+| **Clients**    | Displays operation metrics for the variant, broken down by individual clients. This feature requires that clients identify themselves in their requests to your router. [Learn more](./metrics/client-awareness) |
+| **Operations** | Displays an overview of usage metrics for the variant, including request and error rates. Supports filtering by date range. [Learn more](./metrics/usage-reporting)                                              |
+| **Checks**     | Displays the results of schema checks that have been run for the variant. [Learn more](./schema-checks)                                                                                                          |
+| **Launches**   | Displays the results of recent launches executed for your supergraph. A launch occurs whenever changes are made to one of your subgraph schemas, resulting in an update to your router. [Learn more](./launches) |
+| **Settings**   | Configuration options for the individual variant, along with high-level options for the entire supergraph.                                                                                                       |
 
 </ExpansionPanel>
 
@@ -230,7 +227,7 @@ Before we try executing operations on your supergraph, we need to make sure your
 Go to your variant's **Settings** page, then click **Cloud Routing**:
 
 <img
-  class="screenshot"
+  className="screenshot"
   alt="Configuring the routing for your cloud supergraph in Apollo Studio"
   src="./img/cloud-routing/configuration-main.jpg"
 />
@@ -246,7 +243,7 @@ headers:
     locations: # This value matches your subgraph's name.
       request:
         - propagate:
-            matching: ".*"
+            matching: '.*'
 ```
 
 Let's modify this default config to work with your clients and your subgraph.
@@ -297,13 +294,13 @@ If the value of any required header includes a secure credential (such as an acc
 On the **Cloud Routing** page, click **Save a secret**. The following dialog appears:
 
 <img
-  class="screenshot"
+  className="screenshot"
   alt="Adding a secret to your router"
   src="./img/cloud-routing/add-secret.jpg"
   width="500"
 />
 
-Enter a name and value for your secret. **You can't view a secret's value after you save it**, so make sure that the value is correct before saving. When you're ready, click **Save secret**. 
+Enter a name and value for your secret. **You can't view a secret's value after you save it**, so make sure that the value is correct before saving. When you're ready, click **Save secret**.
 
 Your secret is encrypted and stored. Now you can use the secret's value in your router's configuration YAML.
 
@@ -317,14 +314,14 @@ headers:
     locations: # This value matches your subgraph's name.
       request:
         - propagate:
-            matching: ".*"
+            matching: '.*'
         # highlight-start
         - insert:
-            name: "Authorization"
-            value: "Bearer ${env.MY_SECRET}"
+            name: 'Authorization'
+            value: 'Bearer ${env.MY_SECRET}'
         - insert:
-            name: "X-CUSTOM-HEADER"
-            value: "Custom value"
+            name: 'X-CUSTOM-HEADER'
+            value: 'Custom value'
         # highlight-end
 ```
 
@@ -340,7 +337,7 @@ From your organization's **Supergraphs** tab, select your new variant and then o
 
 <img
   src="./img/explorer-new-graph.jpg"
-  class="screenshot"
+  className="screenshot"
   alt="The default Explorer view for a new supergraph"
 />
 
@@ -350,16 +347,14 @@ Because you've created a cloud supergraph, operations you run in the Explorer ar
 
 <blockquote>
 
-
 **If the Explorer returns errors for all operations,** GraphOS might not be finished provisioning your router. If this is the case, an **INITIATING ENDPOINT** label is shown at the top of the page:
 
 <img
-  class="screenshot"
+  className="screenshot"
   alt="Label in Studio indicating a router hasn't finished provisioning"
   src="./img/initiating-endpoint.jpg"
   width="500"
 />
-
 
 </blockquote>
 
@@ -371,7 +366,7 @@ Go to your variant's **Operations** page, which looks like this:
 
 <img
   src="./img/operations-quickstart.jpg"
-  class="screenshot"
+  className="screenshot"
   alt="The Operations page in Studio after executing an operation"
 />
 
@@ -384,6 +379,7 @@ Your supergraph is ready to start receiving client operations! If you have exist
 Similarly, any _new_ client applications should use your router's URL.
 
 > ⚠️ **Important considerations:**
+>
 > - For all browser-based clients, make sure their origin is allowed in your router's [CORS rules](#cors-rules).
 > - Only update clients that communicate with the correct instance of your GraphQL API! For example, if your API has staging and production instances, only update clients that communicate with the instance used by this supergraph variant.
 
@@ -391,7 +387,7 @@ Your router's URL is available from the top of your variant's README page:
 
 <img
   src="./img/router-url.jpg"
-  class="screenshot"
+  className="screenshot"
   alt="Router URL shown on the README page"
   width="500"
 />

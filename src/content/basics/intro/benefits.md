@@ -44,7 +44,7 @@ query GetPetsByShelter {
 
 This query describes the shape of the data we want to receive from the GraphQL server. The server takes care of combining and filtering back-end data to return _exactly_ what we ask for. This keeps payload sizes small, especially compared to a REST endpoint that might return hundreds of unnecessary fields.
 
-To execute a query like the one above, the page uses a GraphQL client such as [Apollo Client](https://www.apollographql.com/docs/react/), with code that resembles the following (in the case of a React app):
+To execute a query like the one above, the page uses a GraphQL client such as [Apollo Client](/react/), with code that resembles the following (in the case of a React app):
 
 ```jsx title="mainpage.jsx"
 // Define the query
@@ -84,7 +84,7 @@ Thanks to GraphQL's [strong typing](https://graphql.org/learn/schema) and built-
 
 ### What is Apollo GraphOS?
 
-Apollo provides a cloud-hosted collection of tools that help you build your graph, measure its performance, and grow it safely. These tools are together known as [**Apollo GraphOS**](/studio/).
+Apollo provides a cloud-hosted collection of tools that help you build your graph, measure its performance, and grow it safely. These tools are together known as [**Apollo GraphOS**](/graphos/).
 
 After registering your schema with GraphOS, you can use the **Apollo Studio Explorer** to inspect all of its types and fields. You can also build and run queries against your running server:
 
@@ -100,7 +100,7 @@ The Apollo Client DevTools extension for [Chrome](https://chrome.google.com/webs
 
 GraphQL's adoption has risen steadily since Facebook published the original [specification](https://spec.graphql.org/) in 2015. For more and more organizations, the benefits of GraphQL have taken it from a curious engineer's hack-week experiment to the heart of the enterprise data layer.
 
-GraphQL scales with the requirements of even the largest organizations, largely because of its [powerful tooling](#graphql-enables-powerful-tooling) and its compatibility with a [federated architecture](https://www.apollographql.com/docs/federation/).
+GraphQL scales with the requirements of even the largest organizations, largely because of its [powerful tooling](#graphql-enables-powerful-tooling) and its compatibility with a [federated architecture](/federation/).
 
 In a federated architecture (also known as a **supergraph**), a single GraphQL schema is split across multiple back-end services. Each team in an organization can then own exactly the services (and the corresponding parts of the schema) that they should.
 
@@ -127,20 +127,20 @@ GraphQL introduces a new conceptual model for representing and interacting with 
 - Back-end developers must come up to speed with how to handle incoming requests from the frontend.
 - Developers across the organization must collaborate on a single, product-driven GraphQL schema and appoint individuals as the official maintainers of that schema.
 
-The Apollo [docs](https://www.apollographql.com/docs/), [blog](https://www.apollographql.com/blog/), and [community forum](https://community.apollographql.com) are all here to help your organization adopt GraphQL and take full advantage of it.
+The Apollo [docs](/), [blog](https://www.apollographql.com/blog/), and [community forum](https://community.apollographql.com) are all here to help your organization adopt GraphQL and take full advantage of it.
 
 ### Potential for slow operations
 
-Your [GraphQL schema](https://www.apollographql.com/docs/apollo-server/schema/schema/) defines which types and fields your clients can query. Your GraphQL server's [resolvers](https://www.apollographql.com/docs/apollo-server/data/resolvers/) define how those types and fields are populated from your data stores.
+Your [GraphQL schema](/apollo-server/schema/schema/) defines which types and fields your clients can query. Your GraphQL server's [resolvers](/apollo-server/data/resolvers/) define how those types and fields are populated from your data stores.
 
 Depending on your schema and your resolver definitions, your server might inadvertently support GraphQL operations that execute very slowly, or even max out your server's resources.
 
-Consequently, it's important to design your schema such that it supports the operations your clients need, _without_ supporting unnecessary operations that affect performance. It's also helpful to set up [trace reporting](https://www.apollographql.com/docs/studio/setup-analytics/) for your GraphQL server, enabling you to identify and improve slow operations.
+Consequently, it's important to design your schema such that it supports the operations your clients need, _without_ supporting unnecessary operations that affect performance. It's also helpful to set up [trace reporting](/graphos/setup-analytics/) for your GraphQL server, enabling you to identify and improve slow operations.
 
-[Learn about query-driven schema design](https://www.apollographql.com/docs/apollo-server/schema/schema/#query-driven-schema-design)
+[Learn about query-driven schema design](/apollo-server/schema/schema/#query-driven-schema-design)
 
 ### Incompatibility with web browser caching
 
-Although [Apollo Client](https://www.apollographql.com/docs/react/) provides powerful client-side [caching features](https://www.apollographql.com/docs/react/caching/cache-configuration/), those features often require some configuration to get the most out of them. The _automatic_ caching provided by your _web browser_ does not interact well with GraphQL.
+Although [Apollo Client](/react/) provides powerful client-side [caching features](/react/caching/cache-configuration/), those features often require some configuration to get the most out of them. The _automatic_ caching provided by your _web browser_ does not interact well with GraphQL.
 
 Web browsers cache fetched data according to its URL. With GraphQL, you fetch all data from the _same_ URL (the URL of your GraphQL server). Consequently, you can't rely on the cached value for this URL.
