@@ -65,10 +65,3 @@ export function useFieldTableStyles() {
     }
   };
 }
-
-export function useClientTick() {
-  const [, tick] = useState(0);
-  useEffect(() => {
-    tick(1);
-  }, []);
-}
