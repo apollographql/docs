@@ -25,6 +25,7 @@ import {FiChevronsRight} from 'react-icons/fi';
 import {GatsbySeo} from 'gatsby-plugin-next-seo';
 import {PathContext} from '../utils';
 import {graphql, useStaticQuery} from 'gatsby';
+import {usePageWidthContext} from './PageWidthContext';
 
 export function usePageLayoutProps(props) {
   const paddingTop = useToken('space', 10);
@@ -67,6 +68,8 @@ export default function Page({
       }
     `
   );
+
+  const {pageRefCallback, pageWidthPx} = usePageWidthContext();
 
   const {docset, versions, currentVersion, navItems, algoliaFilters} =
     pageContext;
@@ -152,7 +155,8 @@ export default function Page({
       >
         {banner}
         <Flex
-          maxW="7xl"
+          ref={pageRefCallback}
+          maxW={pageWidthPx}
           mx="auto"
           align="flex-start"
           px={{base: 6, md: 10}}
