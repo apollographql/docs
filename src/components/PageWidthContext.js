@@ -3,6 +3,7 @@ import React, {
   createContext,
   useCallback,
   useContext,
+  // useEffect,
   useRef,
   useState
 } from 'react';
@@ -22,6 +23,12 @@ const PageWidthContext = createContext(null);
  * }} context value
  */
 export const usePageWidthContext = () => {
+  // const [, tick] = useState(0);
+
+  // useEffect(() => {
+  //   tick(t => t + 1);
+  // }, []);
+
   const value = useContext(PageWidthContext);
   if (!value) {
     // Default values and stubs in case the PageWidthProvider is not in the tree
@@ -102,10 +109,7 @@ export const PageWidthProvider = ({children}) => {
   );
 
   const togglePageWidth = useCallback(() => {
-    if (pageWidth === 'normal') {
-      return setPageWidth('jumbo');
-    }
-    return setPageWidth('normal');
+    setPageWidth(pageWidth === 'normal' ? 'jumbo' : 'normal');
   }, [pageWidth, setPageWidth]);
 
   // Calculate the page width in pixels from the current state
