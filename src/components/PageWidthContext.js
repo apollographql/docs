@@ -3,6 +3,7 @@ import React, {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useRef,
   useState
 } from 'react';
@@ -46,6 +47,10 @@ export const PAGE_JUMBO_WIDTH = 1800;
  * @param {{children: React.ReactNode}} props
  */
 export const PageWidthProvider = ({children}) => {
+  const [, tick] = useState(0);
+  useEffect(() => {
+    tick(t => t + 1);
+  }, []);
   const [pageWidth, setPageWidth] = useLocalStorage('page-width', 'normal');
   const [showExpandButton, setShowExpandButton] = useState(false);
   /**

@@ -5,10 +5,8 @@ import {Button, Flex, Heading, Text, chakra} from '@chakra-ui/react';
 import {FiChevronLeft} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
 import {GatsbySeo} from 'gatsby-plugin-next-seo';
-import {useClientTick} from '../utils';
 
 export default function NotFound() {
-  useClientTick();
   return (
     <>
       <GatsbySeo title="Not found" />

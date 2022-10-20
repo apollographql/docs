@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {NotesList} from '../components/TechNotes';
 import {PageWidthProvider} from '../components/PageWidthContext';
-import {PathContext, useClientTick} from '../utils';
+import {PathContext} from '../utils';
 import {graphql} from 'gatsby';
 
 export const pageQuery = graphql`
@@ -38,8 +38,6 @@ Tags.propTypes = {
 };
 
 export default function Tags({pageContext, data, location}) {
-  useClientTick();
-
   const pageProps = usePageLayoutProps({
     pageContext,
     title: `Tagged with "${pageContext.tag}"`
