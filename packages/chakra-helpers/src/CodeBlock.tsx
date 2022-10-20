@@ -30,7 +30,7 @@ export const LineNumbersContext = createContext(true);
 const isHighlightComment = (token, comment = 'highlight-line') => {
   return (
     token.types.includes('comment') &&
-    new RegExp(`\\b${comment}$`).test(token.content)
+    new RegExp(`\\b${comment}\\s?`).test(token.content)
   );
 };
 
@@ -40,10 +40,13 @@ const isHighlightStart = (line, comment = 'highlight-start') =>
 const isHighlightEnd = line => isHighlightStart(line, 'highlight-end');
 
 const getCodeWithoutHighlightComments = (code: string) => {
-  const highlightRegex =
+  const highlightStarCommentRegex = /\/\* highlight-line \*\/\s?/gm;
+  const highlightSlashCommentRegex =
     /\/\/ (highlight-line|highlight-start|highlight-end)$/gm;
 
-  return code.replace(highlightRegex, '');
+  return code
+    .replace(highlightStarCommentRegex, '')
+    .replace(highlightSlashCommentRegex, '');
 };
 
 type MarkdownCodeBlockProps = {
