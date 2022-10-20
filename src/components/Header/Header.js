@@ -10,11 +10,13 @@ import {
   Flex,
   HStack,
   IconButton,
+  Tooltip,
   useColorMode,
   useColorModeValue
 } from '@chakra-ui/react';
-import {FiMaximize2, FiMinimize2, FiMoon, FiSun} from 'react-icons/fi';
+import {FiMoon, FiSun} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
+import {TbViewportNarrow, TbViewportWide} from 'react-icons/tb';
 import {usePageWidthContext} from '../PageWidthContext';
 import {useTagColors} from '../../utils';
 
@@ -103,23 +105,46 @@ export function Header({children, algoliaFilters}) {
           <Box fill="current" as={ApolloMark} h="8" />
         </HStack>
         {showExpandButton && (
+          <Tooltip
+            label={
+              pageWidth === 'jumbo'
+                ? 'Collapse to default width'
+                : 'Expand to extended width'
+            }
+          >
+            <IconButton
+              ml="auto"
+              mr="2"
+              fontSize="xl"
+              variant="ghost"
+              onClick={togglePageWidth}
+              icon={
+                pageWidth === 'jumbo' ? (
+                  <TbViewportNarrow />
+                ) : (
+                  <TbViewportWide />
+                )
+              }
+            />
+          </Tooltip>
+        )}
+        <Tooltip
+          label={
+            colorMode === 'dark'
+              ? 'Switch to light mode'
+              : 'Switch to dark mode'
+          }
+        >
           <IconButton
-            ml="auto"
+            ml={showExpandButton ? undefined : 'auto'}
             mr="2"
             fontSize="xl"
             variant="ghost"
-            onClick={togglePageWidth}
-            icon={pageWidth === 'jumbo' ? <FiMinimize2 /> : <FiMaximize2 />}
+            onClick={toggleColorMode}
+            icon={colorMode === 'dark' ? <FiSun /> : <FiMoon />}
           />
-        )}
-        <IconButton
-          ml={showExpandButton ? undefined : 'auto'}
-          mr="2"
-          fontSize="xl"
-          variant="ghost"
-          onClick={toggleColorMode}
-          icon={colorMode === 'dark' ? <FiSun /> : <FiMoon />}
-        />
+        </Tooltip>
+
         {process.env.ALGOLIA_SEARCH_KEY && (
           <Search algoliaFilters={algoliaFilters} />
         )}
