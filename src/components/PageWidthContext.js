@@ -3,7 +3,6 @@ import React, {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useRef,
   useState
 } from 'react';
@@ -24,15 +23,6 @@ const PageWidthContext = createContext(null);
  */
 export const usePageWidthContext = () => {
   const value = useContext(PageWidthContext);
-
-  const [, tick] = useState(0);
-
-  useEffect(() => {
-    tick(t => t + 1);
-    console.log(value);
-  }, []);
-
-  console.log(value);
 
   if (!value) {
     // Default values and stubs in case the PageWidthProvider is not in the tree

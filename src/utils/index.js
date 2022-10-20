@@ -1,4 +1,4 @@
-import {createContext} from 'react';
+import {createContext, useEffect, useState} from 'react';
 import {join, relative} from 'path';
 import {useColorModeValue} from '@chakra-ui/react';
 import {withPrefix} from 'gatsby';
@@ -64,4 +64,11 @@ export function useFieldTableStyles() {
       }
     }
   };
+}
+
+export function useClientTick() {
+  const [, tick] = useState(0);
+  useEffect(() => {
+    tick(1);
+  }, []);
 }
