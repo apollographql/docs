@@ -45,7 +45,7 @@ module.exports = {
 };
 ```
 
-> **Note:** you must have a [registered schema](/graphos/schema-registry/#registering-a-schema) for features like VS Code intellisense, which requires knowledge of your schema, to work properly.
+> **Note:** you must have a [published schema](/graphos/schema/cli-registration/) for features like VS Code intellisense, which requires knowledge of your schema, to work properly.
 
 If you're tracking different versions of your schema in the registry using graph variants, you can link your client to a specific variant like so:
 
