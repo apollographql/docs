@@ -23,13 +23,17 @@ const PageWidthContext = createContext(null);
  * }} context value
  */
 export const usePageWidthContext = () => {
+  const value = useContext(PageWidthContext);
+
   const [, tick] = useState(0);
 
   useEffect(() => {
     tick(t => t + 1);
+    console.log(value);
   }, []);
 
-  const value = useContext(PageWidthContext);
+  console.log(value);
+
   if (!value) {
     // Default values and stubs in case the PageWidthProvider is not in the tree
     return {
