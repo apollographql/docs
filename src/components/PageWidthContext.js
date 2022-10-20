@@ -3,7 +3,7 @@ import React, {
   createContext,
   useCallback,
   useContext,
-  // useEffect,
+  useEffect,
   useRef,
   useState
 } from 'react';
@@ -23,11 +23,11 @@ const PageWidthContext = createContext(null);
  * }} context value
  */
 export const usePageWidthContext = () => {
-  // const [, tick] = useState(0);
+  const [, tick] = useState(0);
 
-  // useEffect(() => {
-  //   tick(t => t + 1);
-  // }, []);
+  useEffect(() => {
+    tick(t => t + 1);
+  }, []);
 
   const value = useContext(PageWidthContext);
   if (!value) {

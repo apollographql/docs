@@ -156,9 +156,7 @@ export default function Page({
         {banner}
         <Flex
           ref={pageRefCallback}
-          style={{
-            maxWidth: pageWidthPx
-          }}
+          maxW={pageWidthPx}
           mx="auto"
           align="flex-start"
           px={{base: 6, md: 10}}
