@@ -124,7 +124,7 @@ export function DocsetMenu({docset, versions = [], currentVersion, ...props}) {
               <DocsetButton
                 leftIcon={DOCSET_ICONS.router}
                 to="/router"
-                tooltipLabel="Routing for supergraphs"
+                tooltipLabel="High-performance router executable for self-hosted supergraphs"
               >
                 Router
               </DocsetButton>
