@@ -161,7 +161,7 @@ export function DocsetMenu({docset, versions = [], currentVersion, ...props}) {
               <DocsetButton
                 leftIcon={DOCSET_ICONS['apollo-kotlin']}
                 to="/kotlin"
-                tooltipLabel="Apollo Client for Kotlin"
+                tooltipLabel="GraphQL client library for Kotlin and Android"
               >
                 Kotlin
               </DocsetButton>
