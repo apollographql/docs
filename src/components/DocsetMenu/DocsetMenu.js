@@ -92,7 +92,7 @@ export function DocsetMenu({docset, versions = [], currentVersion, ...props}) {
               <DocsetButton
                 to="https://www.apollographql.com/tutorials/"
                 leftIcon={DOCSET_ICONS.odyssey}
-                tooltipLabel="Fun, interactive courses with videos and assessments"
+                tooltipLabel="Fun, interactive courses with videos and quizzes"
               >
                 Odyssey Tutorials
               </DocsetButton>
@@ -117,7 +117,7 @@ export function DocsetMenu({docset, versions = [], currentVersion, ...props}) {
               <DocsetButton
                 leftIcon={DOCSET_ICONS['apollo-server']}
                 to="/apollo-server"
-                tooltipLabel="Apollo Server docs"
+                tooltipLabel="Node.js GraphQL server library for standalone use or as a subgraph"
               >
                 Server
               </DocsetButton>
