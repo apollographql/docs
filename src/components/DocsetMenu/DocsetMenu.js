@@ -138,7 +138,7 @@ export function DocsetMenu({docset, versions = [], currentVersion, ...props}) {
               <DocsetButton
                 leftIcon={DOCSET_ICONS.technotes}
                 to="/technotes"
-                tooltipLabel="Technical articles for specialized topics"
+                tooltipLabel="In-depth articles on specialized topics"
               >
                 Tech Notes
               </DocsetButton>
