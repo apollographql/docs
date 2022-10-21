@@ -154,7 +154,7 @@ export function DocsetMenu({docset, versions = [], currentVersion, ...props}) {
               <DocsetButton
                 leftIcon={DOCSET_ICONS['apollo-ios']}
                 to="/ios"
-                tooltipLabel="Apollo Client for iOS"
+                tooltipLabel="GraphQL client library for iOS"
               >
                 iOS
               </DocsetButton>
