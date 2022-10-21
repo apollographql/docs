@@ -85,7 +85,7 @@ export function DocsetMenu({docset, versions = [], currentVersion, ...props}) {
               <DocsetButton
                 to="/"
                 leftIcon={DOCSET_ICONS.default}
-                tooltipLabel="Home page"
+                tooltipLabel="Introduction to Apollo"
               >
                 Docs Home
               </DocsetButton>
