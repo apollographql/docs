@@ -11,20 +11,22 @@
     "Introduction": "/",
     "Sandbox (no account required)": "/explorer/sandbox",
     "Platform API": "/platform-api",
-    "Quickstart": {
-      "1️⃣ Create your supergraph": "/getting-started",
-      "2️⃣ Supergraph next steps": "/next-steps"
+    "Quickstarts": {
+      "Cloud (recommended)": "/getting-started",
+      "Self-hosted (advanced)": "/self-hosted",
+      "Next steps": "/next-steps"
     },
     "Working with Supergraphs": {
       "Overview": "/org/graphs",
       "Publishing schemas": "/schema/cli-registration",
       "Local development": "/local-development",
-      "Graphs in Studio": "/studio-graph-features",
+      "Managing graphs in Studio": "/studio-graph-features",
       "Supergraph-specific Studio features": "/federated-graphs"
     },
-    "Cloud Routing": {
-      "Overview": "/cloud-routing/overview",
-      "Configuring": "/cloud-routing/configuration"
+    "Routing for Supergraphs": {
+      "Cloud routing overview": "/cloud-routing/overview",
+      "Configuring cloud routing": "/cloud-routing/configuration",
+      "Self-hosted routing (advanced)": "/cloud-routing/self-hosted"
     },
     "The Explorer": {
       "Overview": "/explorer/explorer",
