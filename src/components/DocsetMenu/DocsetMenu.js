@@ -147,7 +147,7 @@ export function DocsetMenu({docset, versions = [], currentVersion, ...props}) {
               <DocsetButton
                 leftIcon={DOCSET_ICONS['apollo-client']}
                 to="/react"
-                tooltipLabel="Apollo Client for React"
+                tooltipLabel="GraphQL client library for React and JavaScript"
               >
                 React
               </DocsetButton>
