@@ -21,7 +21,13 @@ export default function DocsetButton({to, tooltipLabel, ...props}) {
       };
 
   return (
-    <Tooltip hasArrow label={tooltipLabel} placement="top">
+    <Tooltip
+      hasArrow
+      label={tooltipLabel}
+      placement="top"
+      fontSize="md"
+      bg="primary"
+    >
       <Button
         {...linkProps}
         colorScheme={path.join('/', docsetPath) === to ? 'indigo' : 'gray'}
