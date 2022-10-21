@@ -92,7 +92,7 @@ export function DocsetMenu({docset, versions = [], currentVersion, ...props}) {
               <DocsetButton
                 to="https://www.apollographql.com/tutorials/"
                 leftIcon={DOCSET_ICONS.odyssey}
-                tooltipLabel="Apollo tutorials"
+                tooltipLabel="Fun, interactive courses with videos and assessments"
               >
                 Odyssey Tutorials
               </DocsetButton>
