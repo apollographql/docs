@@ -15,9 +15,9 @@ export default function DocsetButton({to, tooltipLabel, ...props}) {
         to
       }
     : {
-        as: Link,
+        as: 'a',
         href: to,
-        isExternal: true
+        target: '_blank'
       };
 
   return (
