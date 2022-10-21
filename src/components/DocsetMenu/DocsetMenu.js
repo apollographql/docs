@@ -108,7 +108,7 @@ export function DocsetMenu({docset, versions = [], currentVersion, ...props}) {
               <DocsetButton
                 leftIcon={DOCSET_ICONS.federation}
                 to="/federation"
-                tooltipLabel="Build a unified supergraph"
+                tooltipLabel="Architecture for building a unified supergraph from multiple GraphQL APIs"
               >
                 Federation
               </DocsetButton>
