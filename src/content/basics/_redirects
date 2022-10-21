@@ -38,6 +38,9 @@
 /platform/* /docs/studio/:splat
 /references/graph-manager-data-privacy/ /docs/studio/data-privacy/
 
+# Move Studio docs to GraphOS
+/studio/* /docs/graphos/:splat
+
 # Move Full-stack Quickstart to Odyssey
 /tutorial/introduction https://www.apollographql.com/tutorials/fullstack-quickstart/introduction
 /tutorial/schema/ https://www.apollographql.com/tutorials/fullstack-quickstart/building-a-schema

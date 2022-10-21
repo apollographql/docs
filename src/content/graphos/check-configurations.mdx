@@ -88,7 +88,7 @@ To request other filtering or threshold mechanisms, please get in touch with us 
 
 You might want to check schema changes against multiple environments, such as production, staging, and beta. Each of these environments might have a slightly different schema to support features that are experimental or in active development. In GraphOS, these schemas are represented as [variants](./org/graphs/#variants) of a single graph.
 
-You specify which variant you want to check against in the [graph ref](https://www.apollographql.com/docs/rover/conventions/#graph-refs) you provide to `rover subgraph check`:
+You specify which variant you want to check against in the [graph ref](/rover/conventions/#graph-refs) you provide to `rover subgraph check`:
 
 ```bash
 rover subgraph check docs-example-graph@staging --name products --schema ./schema.graphql

@@ -1,0 +1,40 @@
+/schema/registry/ /docs/graphos/org/graphs/
+
+/dev-graphs/ /docs/graphos/
+/operation-registry/ /docs/graphos/
+/performance/ /docs/graphos/metrics/operation-signatures/
+/setup-analytics/ /docs/graphos/metrics/usage-reporting/
+/datadog-integration/ /docs/graphos/metrics/datadog-integration/
+/client-awareness/ /docs/graphos/metrics/client-awareness/
+/explorer/ /docs/graphos/explorer/explorer/
+/embed-explorer/ /docs/graphos/explorer/embed-explorer/
+/graph-access-permissions/ /docs/graphos/studio-graph-features/#managing-access-permissions
+
+# Move managed federation docs into Federation docset
+/managed-federation/overview/ /docs/federation/managed-federation/overview/
+/managed-federation/monitoring/ /docs/federation/managed-federation/monitoring/#metrics-and-observability
+/managed-federation/deployment/ /docs/federation/managed-federation/deployment/#the-servicepush-lifecycle
+/managed-federation/federated-schema-checks/ /docs/federation/managed-federation/federated-schema-checks/
+/managed-federation/setup/ /docs/federation/managed-federation/setup/
+/managed-federation/advanced-topics/ /docs/federation/managed-federation/advanced-topics/
+
+# Slack content folded into Notifications article
+/slack-integration/ /docs/graphos/notification-setup/#slack
+
+# Migrate schema validation to schema checks
+/schema-validation/ /docs/graphos/schema-checks/
+
+/graph-manager-data-privacy/ /docs/graphos/data-privacy/
+/schema-registry/ /docs/graphos/schema/registry/
+/accounts-organizations/ /docs/graphos/org/account/
+
+/federation/ /docs/graphos/managed-federation/overview/
+
+/integrations/ /docs/graphos/github-integration/
+
+/editor-plugins/ /docs/devtools/editor-plugins/
+
+/graph-manager-overview /docs/graphos
+/tracing /docs/graphos/performance
+/errors /docs/graphos/performance
+/vscode /docs/graphos/editor-plugins

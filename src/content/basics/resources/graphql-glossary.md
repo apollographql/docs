@@ -7,11 +7,11 @@ As you explore the GraphQL ecosystem, you might encounter some unfamiliar terms 
 
 ## Apollo
 
-An open-source implementation of GraphQL that helps you manage data between the cloud and your UI. The Apollo platform is pluggable into your existing architecture and features production-ready tooling that helps you scale GraphQL across your organization ([Server](https://www.apollographql.com/docs/apollo-server/getting-started/), [Client](https://www.apollographql.com/docs/react/), and [Studio](https://www.apollographql.com/docs/studio/)).
+An open-source implementation of GraphQL that helps you manage data between the cloud and your UI. The Apollo platform is pluggable into your existing architecture and features production-ready tooling that helps you scale GraphQL across your organization ([Server](/apollo-server/getting-started/), [Client](/react/), and [Studio](/graphos/)).
 
 ## Automatic Persisted Queries (APQ)
 
-A technique for improving GraphQL network performance with zero build-time configuration by reducing request size over the wire. A smaller signature reduces bandwidth use and speeds up client loading times. [See the Apollo Server docs.](https://www.apollographql.com/docs/apollo-server/features/apq/).
+A technique for improving GraphQL network performance with zero build-time configuration by reducing request size over the wire. A smaller signature reduces bandwidth use and speeds up client loading times. [See the Apollo Server docs.](/apollo-server/features/apq/).
 
 ## Argument
 
@@ -54,7 +54,7 @@ The query above uses `admins` and `managers` as aliases for the `users` field.
 
 ## Data source
 
-A pattern for fetching data from a particular service, with built-in support for caching, deduplication, and error handling. When deploying GraphQL as a layer between your apps and existing APIs and services, [data sources](https://www.apollographql.com/docs/apollo-server/data/fetching-rest) provide the best experience for fetching and caching data from REST endpoints.
+A pattern for fetching data from a particular service, with built-in support for caching, deduplication, and error handling. When deploying GraphQL as a layer between your apps and existing APIs and services, [data sources](/apollo-server/data/fetching-rest) provide the best experience for fetching and caching data from REST endpoints.
 
 ## Deferred query
 
@@ -169,7 +169,7 @@ In the schema definition above, `id`, `firstName`, and `lastName` are fields of 
 
 ## Fragment
 
-A selection set of fields that can be shared between multiple query operations. [See the documentation.](https://www.apollographql.com/docs/react/data/fragments/)
+A selection set of fields that can be shared between multiple query operations. [See the documentation.](/react/data/fragments/)
 
 ```graphql
 fragment UserData on User {
@@ -204,7 +204,7 @@ const typeDefs = gql`
 
 ## GraphQL server
 
-A server that contains a GraphQL schema and can resolve operations that are executed against that schema. [Apollo Server](https://www.apollographql.com/docs/apollo-server/) is an example of a GraphQL server.
+A server that contains a GraphQL schema and can resolve operations that are executed against that schema. [Apollo Server](/apollo-server/) is an example of a GraphQL server.
 
 ## Introspection
 
@@ -224,7 +224,7 @@ Introspection should be [disabled in production](https://www.apollographql.com/b
 
 ## Mutation
 
-A GraphQL operation that creates, modifies, or destroys data. [See the documentation](https://www.apollographql.com/docs/react/data/mutations/).
+A GraphQL operation that creates, modifies, or destroys data. [See the documentation](/react/data/mutations/).
 
 ```graphql
 mutation AddTodo($type: String!) {
@@ -237,7 +237,7 @@ mutation AddTodo($type: String!) {
 
 ## Normalization
 
-A technique for transforming the response of a query operation before saving it to [Apollo Client's `InMemoryCache`](https://www.apollographql.com/docs/react/advanced/caching/#normalization). The result is split into individual objects, creating a unique identifier for each object, and storing those objects in a flattened data structure. [See the documentation.](https://www.apollographql.com/docs/react/caching/cache-configuration/#data-normalization)
+A technique for transforming the response of a query operation before saving it to [Apollo Client's `InMemoryCache`](/react/advanced/caching/#normalization). The result is split into individual objects, creating a unique identifier for each object, and storing those objects in a flattened data structure. [See the documentation.](/react/caching/cache-configuration/#data-normalization)
 
 ## Object Type
 
@@ -281,7 +281,7 @@ The operations above are named `AddTodo` and `GetHuman`.
 
 Representation of a GraphQL operation(query, mutation, or subscription). These operations can be directly executable or normalized to a more simplified form. Normalization transforms an operation deterministically to reduce the number of possible forms it could take. For example, many normalization algorithms sort the fields of the operation to remove field order from the possible representations of an operation. Other normalization algorithms replace in-line variables(literals) with empty, null, or zero values, sort fragments, remove whitespace, or remove aliases.
 
-The following example shows the [default signature algorithm for performance monitoring](https://www.apollographql.com/docs/studio/performance/#operation-signatures). The first signature is before and the second is after normalization, which hides literal, sorts fields, removes aliases, and removes whitespace:
+The following example shows the [default signature algorithm for performance monitoring](/graphos/performance/#operation-signatures). The first signature is before and the second is after normalization, which hides literal, sorts fields, removes aliases, and removes whitespace:
 
 ```
 query getHuman {
@@ -357,7 +357,7 @@ const resolvers = {
 
 ## Schema
 
-A GraphQL [schema](https://www.apollographql.com/docs/apollo-server/schema/schema/) is at the center of any GraphQL server implementation and describes the functionality available to the clients which connect to it.
+A GraphQL [schema](/apollo-server/schema/schema/) is at the center of any GraphQL server implementation and describes the functionality available to the clients which connect to it.
 
 ## Schema Definition Language (SDL)
 
@@ -394,7 +394,7 @@ The central source of truth for your schema. It enables schema registration, sch
 
 ## Schema versioning
 
-Refers to the need to evolve a schema over time. As a schema evolves, there is a potential for introducing breaking changes to clients. The Apollo CLI assists schema evolution by checking schema changes for breaking changes using Apollo Studio. Read more in our article about [schema checks](https://www.apollographql.com/docs/studio/schema-checks/#set-up-schema-checks).
+Refers to the need to evolve a schema over time. As a schema evolves, there is a potential for introducing breaking changes to clients. The Apollo CLI assists schema evolution by checking schema changes for breaking changes using Apollo Studio. Read more in our article about [schema checks](/graphos/schema-checks/#set-up-schema-checks).
 
 ## Subscription
 
@@ -415,7 +415,7 @@ subscription onCommentAdded($repoFullName: String!){
 
 ## Scalar type
 
-A type that qualifies the data a GraphQL field resolves. GraphQL ships with some scalar types out of the box; **Int**, **Float**, **String**, **Boolean** and **ID**. You can also define [custom scalars](https://www.apollographql.com/docs/apollo-server/schema/custom-scalars/).
+A type that qualifies the data a GraphQL field resolves. GraphQL ships with some scalar types out of the box; **Int**, **Float**, **String**, **Boolean** and **ID**. You can also define [custom scalars](/apollo-server/schema/custom-scalars/).
 
 ## Type system
 
@@ -443,4 +443,4 @@ client.query({ query: getUserQuery, variables: { userId: 1 } });
 
 ## Whole response caching
 
-A technique used to cache entire results of GraphQL queries. This process improves performance by preventing the fetching of the same results from the server if it has been obtained before. Read more about GraphQL query caching in our [guide for caching with Apollo Server](https://www.apollographql.com/docs/apollo-server/performance/caching).
+A technique used to cache entire results of GraphQL queries. This process improves performance by preventing the fetching of the same results from the server if it has been obtained before. Read more about GraphQL query caching in our [guide for caching with Apollo Server](/apollo-server/performance/caching).

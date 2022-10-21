@@ -12,13 +12,13 @@ Options for composing your supergraph schema _besides_ managed federation are de
 
 ### Build status webhook
 
-This approach uses the [build status webhook](/studio/build-status-notification) to trigger redeployment of a gateway or router by updating on successful builds with a composed supergraph schema provided by Apollo Studio. The payload of the webhook contains a URL to download the composed schema.
+This approach uses the [build status webhook](/graphos/build-status-notification) to trigger redeployment of a gateway or router by updating on successful builds with a composed supergraph schema provided by Apollo Studio. The payload of the webhook contains a URL to download the composed schema.
 
 The advantage of this approach is that you have a confirmed build that composes successfully. However, the webhook notification is sent _before_ operation checks are run against your historical operation data. This means you should [run schema checks with Rover as part of your CI/CD pipeline](/rover/commands/subgraphs/#checking-subgraph-schema-changes).
 
 ### Local composition
 
-**If you're using [Contracts](/studio/contracts/)**, local composition cannot be used. Instead, use the [build status webhook](#build-status-webhook) as described above.
+**If you're using [Contracts](/graphos/contracts/)**, local composition cannot be used. Instead, use the [build status webhook](#build-status-webhook) as described above.
 
 You can use the [Rover CLI](/rover/) to compose your supergraph schema as part of your CI/CD pipeline. You then provide this schema directly to your gateway or router.
 
@@ -27,7 +27,7 @@ The process for setting this up can vary depending on your CI tooling, but you a
 - Keep track of all your subgraphs and their routing URLs
 - Be able to trigger the build on any new updates to any subgraphs
 
-You can use the [build status webhook](/studio/build-status-notification) to track this information if you want to use Apollo Studio but prefer performing composition locally.
+You can use the [build status webhook](/graphos/build-status-notification) to track this information if you want to use Apollo Studio but prefer performing composition locally.
 
 To run the `rover supergraph compose` command, you need access to each subgraph's schema SDL. There are a few ways to do this:
 
@@ -120,19 +120,19 @@ This option provides the most customizability, but it also requires writing addi
 If we were to write the same file watcher function as above as a `SupergraphManager`, it would look like:
 
 ```ts
-import { SupergraphManager } from '@apollo/gateway';
-import { SupergraphSdlHookOptions } from '@apollo/gateway/dist/config';
+import {SupergraphManager} from '@apollo/gateway';
+import {SupergraphSdlHookOptions} from '@apollo/gateway/dist/config';
 import * as chokidar from 'chokidar';
-import { readFile } from 'fs/promises';
+import {readFile} from 'fs/promises';
 
 export class FileWatcherManager implements SupergraphManager {
   private filename: string;
 
-  constructor({ filename }: { filename: string }) {
+  constructor({filename}: {filename: string}) {
     this.filename = filename;
   }
 
-  public async initialize({ update, healthCheck }: SupergraphSdlHookOptions) {
+  public async initialize({update, healthCheck}: SupergraphSdlHookOptions) {
     let watcher = chokidar.watch(this.filename);
 
     watcher.on('change', async () => {
@@ -152,7 +152,7 @@ export class FileWatcherManager implements SupergraphManager {
       supergraphSdl: await readFile(this.filename, 'utf-8'),
       cleanup: async () => {
         await watcher.close();
-      },
+      }
     };
   }
 }
@@ -162,7 +162,7 @@ To use your custom `SupergraphManager`, you instantiate it and pass it as the `s
 
 ```ts
 const gateway = new ApolloGateway({
-  supergraphSdl: new FileWatcherManager({ filename: './supergraph.graphql' }),
+  supergraphSdl: new FileWatcherManager({filename: './supergraph.graphql'})
 });
 ```
 
@@ -180,10 +180,10 @@ If you're using `@apollo/gateway` locally and are able to query your subgraphs (
 const gateway = new ApolloGateway({
   supergraphSdl: new IntrospectAndCompose({
     subgraphs: [
-      { name: 'products', url: 'https://products-service.dev/graphql' },
-      { name: 'reviews', url: 'https://reviews-service.dev/graphql' },
-    ],
-  }),
+      {name: 'products', url: 'https://products-service.dev/graphql'},
+      {name: 'reviews', url: 'https://reviews-service.dev/graphql'}
+    ]
+  })
 });
 ```
 

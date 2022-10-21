@@ -33,7 +33,7 @@ generateCacheKey(
 ): string;
 ```
 
-The [requestContext](https://github.com/apollographql/apollo-server/blob/578dc68831d93d5809b78174d6179c10afc8c2ef/packages/server/src/externalTypes/requestPipeline.ts#L38) parameter holds data about the running GraphQL request, such as the request / response objects as well as the [context object](https://www.apollographql.com/docs/apollo-server/data/resolvers/#the-context-argument) that is passed to your resolver functions. Any portion of these data objects can be used as part of your cache key.
+The [requestContext](https://github.com/apollographql/apollo-server/blob/578dc68831d93d5809b78174d6179c10afc8c2ef/packages/server/src/externalTypes/requestPipeline.ts#L38) parameter holds data about the running GraphQL request, such as the request / response objects as well as the [context object](/apollo-server/data/resolvers/#the-context-argument) that is passed to your resolver functions. Any portion of these data objects can be used as part of your cache key.
 
 The `keyData` parameter can be used to ensure the uniqueness of your key. In most cases, hashing this variable should be enough to generate a unique key per operation. In fact, the [default implementation](https://github.com/apollographql/apollo-server/blob/578dc68831d93d5809b78174d6179c10afc8c2ef/packages/plugin-response-cache/src/ApolloServerPluginResponseCache.ts#L182) hashes a `JSON.stringify` version of this parameter as the cache key.
 
@@ -98,15 +98,15 @@ Redis clients currently offer no way to batch delete entries based on a pattern.
 The following snippet is from [the repo mentioned above](https://github.com/apollosolutions/response-cache-eviction):
 
 ```ts
-import { createClient, RedisClientType } from 'redis';
+import {createClient, RedisClientType} from 'redis';
 
 const deleteByPrefix = async (prefix: string) => {
-  const client = createClient({ url: 'redis://localhost:6379' });
+  const client = createClient({url: 'redis://localhost:6379'});
   await client.connect();
 
   const scanIterator = client.scanIterator({
     MATCH: `keyv:fqc:${prefix}*`,
-    COUNT: 2000,
+    COUNT: 2000
   });
 
   let keys = [];

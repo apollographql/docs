@@ -4,7 +4,7 @@ title: Build status notifications (preview)
 
 > Build status notifications require an [Enterprise plan](https://www.apollographql.com/pricing/). They are currently in preview.
 
-You can [configure Apollo Studio](./notification-setup) to notify your team via webhook whenever Apollo attempts to build a new supergraph schema for your [federated graph](https://www.apollographql.com/docs/federation/). The notification indicates whether the build succeeded and provides a temporary URL to the new supergraph schema if so.
+You can [configure Apollo Studio](./notification-setup) to notify your team via webhook whenever Apollo attempts to build a new supergraph schema for your [federated graph](/federation/). The notification indicates whether the build succeeded and provides a temporary URL to the new supergraph schema if so.
 
 You can configure separate change notifications for each [variant](./org/graphs/#variants) of your graph.
 
@@ -45,4 +45,4 @@ interface ResponseShape {
 
 - **If the build fails**, `buildErrors` is an array of `BuildError` objects that describe the errors that occurred during the build. Otherwise, this field is not present.
 
-- The value of `variantID` is in the format `graphID@variantName` (e.g., `mygraph@staging`). This format is known as a [graph ref](https://www.apollographql.com/docs/rover/conventions/#graph-refs).
+- The value of `variantID` is in the format `graphID@variantName` (e.g., `mygraph@staging`). This format is known as a [graph ref](/rover/conventions/#graph-refs).
