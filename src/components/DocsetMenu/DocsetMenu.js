@@ -131,7 +131,7 @@ export function DocsetMenu({docset, versions = [], currentVersion, ...props}) {
               <DocsetButton
                 leftIcon={DOCSET_ICONS.rover}
                 to="/rover"
-                tooltipLabel="CLI for managing graphs"
+                tooltipLabel="Command-line tool for managing graphs"
               >
                 Rover CLI
               </DocsetButton>
