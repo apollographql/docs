@@ -3,7 +3,13 @@ import Footer from './Footer';
 import Header, {TOTAL_HEADER_HEIGHT} from './Header';
 import MobileNav from './MobileNav';
 import PropTypes from 'prop-types';
-import React, {Fragment, useCallback, useContext} from 'react';
+import React, {
+  Fragment,
+  useCallback,
+  useContext,
+  useEffect,
+  useState
+} from 'react';
 import Sidebar, {
   SIDEBAR_WIDTH_BASE,
   SIDEBAR_WIDTH_XL,
@@ -25,6 +31,7 @@ import {FiChevronsRight} from 'react-icons/fi';
 import {GatsbySeo} from 'gatsby-plugin-next-seo';
 import {PathContext} from '../utils';
 import {graphql, useStaticQuery} from 'gatsby';
+import {usePageWidthContext} from './PageWidthContext';
 
 export function usePageLayoutProps(props) {
   const paddingTop = useToken('space', 10);
@@ -68,6 +75,8 @@ export default function Page({
     `
   );
 
+  const {pageRefCallback, pageWidthPx} = usePageWidthContext();
+
   const {docset, versions, currentVersion, navItems, algoliaFilters} =
     pageContext;
   const titleFont = encodeURIComponent('Source Sans Pro');
@@ -83,6 +92,12 @@ export default function Page({
     ),
     [docset, versions, currentVersion]
   );
+
+  const [now, setNow] = useState(Date.now());
+
+  useEffect(() => {
+    setNow(Date.now());
+  }, []);
 
   return (
     <>
@@ -152,7 +167,9 @@ export default function Page({
       >
         {banner}
         <Flex
-          maxW="7xl"
+          key={now}
+          ref={pageRefCallback}
+          maxW={pageWidthPx}
           mx="auto"
           align="flex-start"
           px={{base: 6, md: 10}}

@@ -3,11 +3,18 @@ import Page from '../components/Page';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {GatsbySeo} from 'gatsby-plugin-next-seo';
+import {PageWidthProvider} from '../components/PageWidthContext';
 import {graphql} from 'gatsby';
 
 export default function PageTemplate({data, location, pageContext}) {
   const page = (
-    <Page file={data.file} uri={location.pathname} pageContext={pageContext} />
+    <PageWidthProvider>
+      <Page
+        file={data.file}
+        uri={location.pathname}
+        pageContext={pageContext}
+      />
+    </PageWidthProvider>
   );
   return pageContext.internal ? (
     <>
