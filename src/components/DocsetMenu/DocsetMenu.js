@@ -101,7 +101,7 @@ export function DocsetMenu({docset, versions = [], currentVersion, ...props}) {
               <DocsetButton
                 leftIcon={DOCSET_ICONS.graphos}
                 to="/graphos"
-                tooltipLabel="A cloud platform for your supergraph"
+                tooltipLabel="Cloud platform for building, managing, and collaborating on your supergraph"
               >
                 GraphOS
               </DocsetButton>
