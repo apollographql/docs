@@ -82,21 +82,34 @@ export function DocsetMenu({docset, versions = [], currentVersion, ...props}) {
           <ModalCloseButton />
           <Stack spacing="4" p="6">
             <DocsetGroup title="Get started">
-              <DocsetButton to="/" leftIcon={DOCSET_ICONS.default}>
+              <DocsetButton
+                to="/"
+                leftIcon={DOCSET_ICONS.default}
+                tooltipLabel="Home page"
+              >
                 Docs Home
               </DocsetButton>
               <DocsetButton
                 to="https://www.apollographql.com/tutorials/"
                 leftIcon={DOCSET_ICONS.odyssey}
+                tooltipLabel="Apollo tutorials"
               >
                 Odyssey Tutorials
               </DocsetButton>
             </DocsetGroup>
             <DocsetGroup title="Build your supergraph">
-              <DocsetButton leftIcon={DOCSET_ICONS.graphos} to="/graphos">
+              <DocsetButton
+                leftIcon={DOCSET_ICONS.graphos}
+                to="/graphos"
+                tooltipLabel="A cloud platform for your supergraph"
+              >
                 GraphOS
               </DocsetButton>
-              <DocsetButton leftIcon={DOCSET_ICONS.federation} to="/federation">
+              <DocsetButton
+                leftIcon={DOCSET_ICONS.federation}
+                to="/federation"
+                tooltipLabel="Build a unified supergraph"
+              >
                 Federation
               </DocsetButton>
             </DocsetGroup>
@@ -104,16 +117,29 @@ export function DocsetMenu({docset, versions = [], currentVersion, ...props}) {
               <DocsetButton
                 leftIcon={DOCSET_ICONS['apollo-server']}
                 to="/apollo-server"
+                tooltipLabel="Apollo Server docs"
               >
                 Server
               </DocsetButton>
-              <DocsetButton leftIcon={DOCSET_ICONS.router} to="/router">
+              <DocsetButton
+                leftIcon={DOCSET_ICONS.router}
+                to="/router"
+                tooltipLabel="Routing for supergraphs"
+              >
                 Router
               </DocsetButton>
-              <DocsetButton leftIcon={DOCSET_ICONS.rover} to="/rover">
+              <DocsetButton
+                leftIcon={DOCSET_ICONS.rover}
+                to="/rover"
+                tooltipLabel="CLI for managing graphs"
+              >
                 Rover CLI
               </DocsetButton>
-              <DocsetButton leftIcon={DOCSET_ICONS.technotes} to="/technotes">
+              <DocsetButton
+                leftIcon={DOCSET_ICONS.technotes}
+                to="/technotes"
+                tooltipLabel="Technical articles for specialized topics"
+              >
                 Tech Notes
               </DocsetButton>
             </DocsetGroup>
@@ -121,15 +147,21 @@ export function DocsetMenu({docset, versions = [], currentVersion, ...props}) {
               <DocsetButton
                 leftIcon={DOCSET_ICONS['apollo-client']}
                 to="/react"
+                tooltipLabel="Apollo Client for React"
               >
                 React
               </DocsetButton>
-              <DocsetButton leftIcon={DOCSET_ICONS['apollo-ios']} to="/ios">
+              <DocsetButton
+                leftIcon={DOCSET_ICONS['apollo-ios']}
+                to="/ios"
+                tooltipLabel="Apollo Client for iOS"
+              >
                 iOS
               </DocsetButton>
               <DocsetButton
                 leftIcon={DOCSET_ICONS['apollo-kotlin']}
                 to="/kotlin"
+                tooltipLabel="Apollo Client for Kotlin"
               >
                 Kotlin
               </DocsetButton>
