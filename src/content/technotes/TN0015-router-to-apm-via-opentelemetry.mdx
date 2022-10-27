@@ -28,7 +28,7 @@ Additionally, we'd recommend adding the `batch` processor to enable batch reques
 
 An example configuration for New Relic would look like the below.
 
-```yaml
+```yaml title="collector-config.yaml"
 receivers:
   otlp:
     protocols:
@@ -62,7 +62,7 @@ service:
 
 The Router will then need to be connected directly to the Collector instance; an example configuration is shown below.
 
-```yaml
+```yaml title="router.yaml"
 cors:
   allow_any_origin: true
 supergraph:
@@ -87,7 +87,7 @@ Aside from using an OpenTelemtry Collector, as noted above, you can also have ea
 
 An example of this configuration for New Relic would look like:
 
-```yaml
+```yaml title="router.yaml"
 cors:
   allow_any_origin: true
 supergraph:
