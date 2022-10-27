@@ -1,0 +1,113 @@
+---
+title: Contracts usage patterns
+id: TN0015
+tags: [observability, router]
+---
+
+Application performance monitoring (APM) tools are critical for many organizations, and having direct insight into how your graph is performing is an important piece of overall observability into your systems' stability and performance. The Apollo Router and subgraphs aren't any different. While you may currently instrument your existing subgraphs with your APM's tooling, you may need to connect Apollo Router as well to get a clear view of your graph's health.
+
+Thankfully, there's an answer on connecting the two pieces of software together: [OpenTelemetry](https://opentelemetry.io/). We've previously discussed utilizing [OpenTelemetry previously to connect to Prometheus](/technotes/TN0003-opentelemetry-traces-to-prometheus), and much of the same will apply to this use-case as well.
+
+There are two ways to connect the Router to your APM using OpenTelemetry:
+
+- Using an OpenTelemetry Collector
+- Connecting directly
+
+For our examples, we'll be connecting to New Relic, however this would apply to any APM that supports OpenTelemetry as an ingest option, such as Honeycomb or Dynatrace.
+
+## Using OpenTelemetry Collector (preferred)
+
+This is the preferred approach for two reasons:
+
+- Allows for a centralized reporter when running multiple Router instances.
+- Allows for processing and exporting to multiple locations beyond your APM, such as a local Prometheus instance.
+
+You'll need have an instance of [OpenTelemetry Collector](https://opentelemetry.io/docs/collector/) to export to your APM. A basic configuration would require both an OpenTelemetry Protocol (OTLP) receiver (for the Router) and an exporter (to forward to your APM of choice).
+
+Additionally, we'd recommend adding the `batch` processor to enable batch requests to each listed exporter.
+
+An example configuration for New Relic would look like the below.
+
+```yaml
+receivers:
+  otlp:
+    protocols:
+      grpc:
+      http:
+        cors:
+          allowed_origins:
+            - http://*
+            - https://*
+
+exporters:
+  otlp:
+    endpoint: ${OTEL_EXPORTER_OTLP_ENDPOINT}
+    headers:
+      api-key: ${NEW_RELIC_LICENSE_KEY}
+
+processors:
+  batch:
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      exporters: [otlp]
+      processors: [batch]
+    metrics:
+      receivers: [otlp]
+      exporters: [otlp]
+      processors: [batch]
+```
+
+The Router will then need to be connected directly to the Collector instance; an example configuration is shown below.
+
+```yaml
+cors:
+  allow_any_origin: true
+supergraph:
+  listen: 0.0.0.0:4000
+telemetry:
+  metrics:
+    otlp:
+      endpoint: http://COLLECTOR_ADDRESS:4317
+  tracing:
+    trace_config:
+      service_name: "router"
+      service_namespace: "apollo"
+    otlp:
+      endpoint: http://COLLECTOR_ADDRESS:4317
+```
+
+For more information on configuration options, see the documentation on both [capturing metrics](/router/configuration/metrics#using-opentelemetry-collector) and [capturing traces](/router/configuration/tracing#opentelemetry-collector-via-otlp) using OpenTelemetry Collector.
+
+## Connecting directly
+
+Aside from using an OpenTelemtry Collector, as noted above, you can also have each Apollo Router instance send data directly to your APM. Much like with the above Collector configuration, you can simply use the Apollo Router's YAML configuration to set the export to use a header (or in this case, metadata) along with the traces/metrics for passing the token.
+
+An example of this configuration for New Relic would look like:
+
+```yaml
+cors:
+  allow_any_origin: true
+supergraph:
+  listen: 0.0.0.0:4000
+telemetry:
+  metrics:
+    otlp:
+      endpoint: https://otlp.nr-data.net
+      grpc:
+        metadata:
+          "api-key": ["${env.NEW_RELIC_LICENSE_KEY}"]
+  tracing:
+    trace_config:
+      service_name: "router"
+      service_namespace: "apollo"
+    otlp:
+      endpoint: https://otlp.nr-data.net
+      grpc:
+        metadata:
+          "api-key": ["${env.NEW_RELIC_LICENSE_KEY}"]
+```
+
+This uses the `NEW_RELIC_LICENSE_KEY` environment variable for passing the key using the Router's [variable expansion feature](/router/configuration/overview#variable-expansion) to avoid putting sensitive tokens within the configuration.
