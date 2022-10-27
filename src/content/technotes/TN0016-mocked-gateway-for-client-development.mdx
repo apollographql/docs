@@ -1,0 +1,120 @@
+---
+title: "Patterns to Increase Development Velocity: Using Gateway Mocks"
+id: TN0016
+tags: [gateway, best practices, schema design, federation]
+---
+
+## Introduction to the series
+
+This technote is the start of a larger series intended to help organizations increase development velocity during their various stage of the graph journey. While this technote specifically covers a method that can increase velocity at every stage of your journey, others may relate only to early stages, and others for graphs later in maturity.
+
+## Problem statement
+
+As you begin to grow your graph, you may soon realize that your client teams are often waiting on subgraph owners to make agreed upon changes to the schema. This is especially common in earlier stages of your graph journey, where your graph has an agreed-upon structure, but has not been implemented yet from your subgraph team(s). Mocking your graph as you build both your clients and subgraphs can help enable teams to work in tandem and removes dependencies on one another.
+
+Being able to work in parallel helps increase your development speed, and Apollo has a few suggested ways to enable parallel development during your graph evolution. If time to release isn't an important metric in your journey, this pattern likely isn't a good fit.
+
+## Plan your schema
+
+This pattern requires that your schema has been determined by both client and backend teams as part of a larger [governance strategy](/enterprise-guide/graph-administration#governance).
+
+In general, we recommended defining your schema ahead of time regardless of whether you implement this strategy or not, as it allows for teams to create an expressive, agreed-upon schema that empowers both backend and client teams to have input in the result.
+
+### New Schema
+
+If starting on a new schema, especially for those new to GraphQL at their organization, teams will need the time to get familiarized with the terminologies and clients/server libraries. Once familiarized, it is possible the schema needs to evolve, requiring potentially slight changes to the existing schema.
+
+Due to this, it is important to start with fundamentals and best-practices, such as those listed on [Odyssey](https://www.apollographql.com/tutorials), [Principled GraphQL](https://principledgraphql.com/), and [Enterprise Guide](/enterprise-guide/introduction) and design the schema afterwards.
+
+Once finished, you can begin onto [mocking the schema](#mocking-the-schema).
+
+### Schema Changes
+
+Schema changes operate in much the same way as your first schema, especially in a planning capacity. As new features are inevitably made, it's important to think about how quickly you need to ship.
+
+Consider a fictional company with the following basic subgraph schema:
+
+```graphql
+type Product @key(fields: "id") {
+  id: ID!
+  upc: ID!
+  title: String!
+}
+
+type Query {
+  topProducts: [Product!]!
+}
+```
+
+As the company grew, they wanted to include a new feature for giving suggested products for the user to see on the product page. They might make a change to:
+
+```graphql
+type Product @key(fields: "id") {
+  id: ID!
+  upc: ID!
+  title: String!
+  suggestedProducts: [Product!]!
+}
+
+type Query {
+  topProducts: [Product!]!
+}
+```
+
+Which may take significant time for the team to build as they consider leveraging machine learning or other mechanics. As the feature is simple, the client teams would likely want to slot this work in show the list of suggested products while the implementation is finalizing.
+
+As a result, this pattern is a great fit as it enables parallel work for both the subgraph team to finalize the backend implementation and client team(s) to finalize the UI implementation.
+
+Your new feature may allow for this, and if so, you can begin onto [mocking the schema](#mocking-the-schema).
+
+## Mocking the schema
+
+Now that you have either a new schema or changes, it's important to upload it into [Apollo Studio](https://studio.apollographql.com) for three reasons:
+
+1. It allows for a centralized view of the schema, along with a [mocked view of the schema](/graphos/explorer/additional-features/#mocked-responses).
+2. It allows for the samples referenced below to automatically update on changes, allowing for a deployed version of the samples to be referenced by all developers.
+3. For client teams using code generation tools, especially those in Apollo's clients, it's possible to use Studio as a source of the schema allowing for easier development.
+
+We recommend using a variant of your new/existing production graph ID. If considering this pattern for schema changes, this also ensures proposed changes aren't breaking using [schema checks](/graphos/schema-checks) against production traffic.
+
+Once uploaded, we recommend using one of the following two samples depending on use:
+
+- [For testing proposed changes against an already-live schema, created by Apollo's Solutions Architecture team](https://github.com/apollosolutions/apollo-faker-demo)
+- [For first starting a new schema, created by GitHub user setchy](https://github.com/setchy/apollo-server-4-mocked-federation)
+
+### For proposed changes
+
+To mock proposed changes (such as adding a new type/field), we'd recommend using the sample created by Apollo's Solutions Architecture team, linked above, as it requires a pre-existing GraphQL API to be running. To get started, run:
+
+```graphql
+mkdir mocked_gateway
+export APOLLO_KEY=key_from_studio #replace with the actual key from Apollo Studio
+cd mocked_gateway
+touch proposed.graphql
+npx github:@apollosolutions/apollo-faker-demo --graphref <yourgraph>@<variant> --remote https://yourapi.com/graphql
+```
+
+And then modify the `proposed.graphql` file with the proposed changes. There are configuration options available leveraging the `@graphql-tools/mock` package, and can be modified as denoted in [the sample's README file, under step 5](https://github.com/apollosolutions/apollo-faker-demo#usage).
+
+### For new schemas
+
+For new schemas, we'd recommend using the sample by setchy. To get started, run the following:
+
+```bash
+git clone https://github.com/setchy/apollo-server-4-mocked-federation
+cd apollo-server-4-mocked-federation
+npm install
+cp .env.template .env
+```
+
+Afterwards, edit the `.env` file with the appropriate values from Apollo Studio, and then run the following to start the server:
+
+```bash
+npm run dev
+```
+
+The sample leverages `@graphql-tools/mock` to power the mocks, and can be extended following the [package's documentation page](https://www.the-guild.dev/graphql/tools/docs/mocking).
+
+This gateway can then be used either locally (such as for local client development) or as a hosted gateway internally to be used by client developers.
+
+The data is mocked, however it doesn't require any work from server teams to support and will match the schema as it exists within Apollo Studio. As we're using Apollo Studio for the schema, schema changes will automatically be pulled ensuring client developers are working on the latest version.
