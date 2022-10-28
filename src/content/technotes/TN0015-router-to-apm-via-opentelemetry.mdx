@@ -1,5 +1,5 @@
 ---
-title: Apollo Router Traces & Metrics to APMs Using OpenTelemetry
+title: Sending Apollo Router traces and metrics to APM tools using OpenTelemetry
 id: TN0015
 tags: [observability, router]
 ---
@@ -15,18 +15,18 @@ There are two ways to connect the Router to your APM using OpenTelemetry:
 
 For our examples, we'll be connecting to New Relic, however this would apply to any APM that supports OpenTelemetry as an ingest option, such as Honeycomb or Dynatrace.
 
-## Using OpenTelemetry Collector (preferred)
+## Using OpenTelemetry Collector (recommended)
 
-This is the preferred approach for two reasons:
+We recommend using the OpenTelemetry Collector to send router metrics to your APM tool for the following reasons:
 
-- Allows for a centralized reporter when running multiple Router instances.
-- Allows for processing and exporting to multiple locations beyond your APM, such as a local Prometheus instance.
+- The collector provides a centralized reporter when running multiple router instances.
+- The collector enables you to processing and send metrics to _multiple_ locations beyond your APM tool, such as a local Prometheus instance.
 
-You'll need have an instance of [OpenTelemetry Collector](https://opentelemetry.io/docs/collector/) to export to your APM. A basic configuration would require both an OpenTelemetry Protocol (OTLP) receiver (for the Router) and an exporter (to forward to your APM of choice).
+You'll need an instance of the [OpenTelemetry Collector](https://opentelemetry.io/docs/collector/) to export to your APM tool. A basic configuration requires both an OpenTelemetry Protocol (OTLP) receiver (for the router) and an exporter (to forward to your APM tool).
 
-Additionally, we'd recommend adding the `batch` processor to enable batch requests to each listed exporter.
+Additionally, we recommend adding the `batch` processor to enable batch requests to each listed exporter.
 
-An example configuration for New Relic would look like the below.
+Here's an example collector configuration for New Relic:
 
 ```yaml title="collector-config.yaml"
 receivers:
@@ -60,7 +60,7 @@ service:
       processors: [batch]
 ```
 
-The Router will then need to be connected directly to the Collector instance; an example configuration is shown below.
+The router then needs to connect directly to the collector instance. Here's an example router configuration for that:
 
 ```yaml title="router.yaml"
 cors:
@@ -83,9 +83,9 @@ For more information on configuration options, see the documentation on both [ca
 
 ## Connecting directly
 
-Aside from using an OpenTelemtry Collector, as noted above, you can also have each Apollo Router instance send data directly to your APM. Much like with the above Collector configuration, you can simply use the Apollo Router's YAML configuration to set the export to use a header (or in this case, metadata) along with the traces/metrics for passing the token.
+Instead of using the OpenTelemetry Collector, you can configure your Apollo Router instances to send data directly to your APM tool. To do so, you modify the router's YAML configuration file to set the export to use a header (or in this case, metadata), along with the traces/metrics for passing the token.
 
-An example of this configuration for New Relic would look like:
+Here's an example router configuration for connecting directly to New Relic:
 
 ```yaml title="router.yaml"
 cors:
@@ -110,4 +110,4 @@ telemetry:
           "api-key": ["${env.NEW_RELIC_LICENSE_KEY}"]
 ```
 
-This uses the `NEW_RELIC_LICENSE_KEY` environment variable for passing the key using the Router's [variable expansion feature](/router/configuration/overview#variable-expansion) to avoid putting sensitive tokens within the configuration.
+This uses the `NEW_RELIC_LICENSE_KEY` environment variable for passing the key using the router's [variable expansion feature](/router/configuration/overview#variable-expansion) to avoid including sensitive tokens in the configuration.
