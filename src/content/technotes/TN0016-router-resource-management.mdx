@@ -1,0 +1,44 @@
+---
+title: Managing Apollo Router resources in Kubernetes
+id: TN0016
+tags: [router, best practices, kubernetes]
+---
+
+Determining the correct resource requests and limits for your application pods in a Kubernetes system is not an exact science. Your specific needs depend on many factors, including:
+
+- The cardinality of unique operation shapes
+- The latency of underlying subgraphs and data sources
+- The size of responses
+- The complexity of query plans
+
+Our general recommendation for Kubernetes is to start with these requests and limits:
+
+```yaml
+resources:
+  requests:
+    memory: '1gb'
+    cpu: '1000m'
+  limits:
+    memory: '2gb'
+    # no CPU limit to avoid throttling
+```
+
+When using [Horizontal pod autoscaling](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/), we recommend targeting 90% utilization:
+
+```yaml
+metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 90
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 90
+```
+
+The Apollo Router starts up quickly, but when using [Managed Federation](/router/managed-federation/overview/), the router has to fetch the supergraph schema from Apollo Uplink before it can start serving traffic. We recommend measuring your router's startup time and lowering the `averageUtilization` if your startup time is longer due to Uplink latency or the size of your supergraph schema.
