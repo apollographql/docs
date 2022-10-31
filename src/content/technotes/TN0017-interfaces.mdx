@@ -1,0 +1,147 @@
+---
+title: Recommended usage for GraphQL interfaces
+id: TN0017
+tags: [schema design, federation]
+---
+
+GraphQL interfaces enable schema fields to return one of multiple object types, all of which must _implement_ that interface. To implement an interface, an object type must define all fields that are included in that interface (otherwise, the schema is invalid):
+
+```graphql
+interface Media {
+  title: String!
+}
+
+type Book implements Media {
+  title: String!
+  author: String!
+}
+```
+
+Because interfaces can enforce this requirement on implementing object types, it can be tempting to create interfaces _purely_ to enforce field definitions. The following schema requires a `name` field on all of its object types by declaring that those types implement the `Nameable` interface:
+
+<p style="margin-bottom: 0;">❌</p>
+
+```graphql
+interface Nameable {
+  name: String
+}
+
+type Cat implements Nameable {
+  name: String
+  meowVolume: Int
+}
+
+type Dog implements Nameable {
+  name: String
+  barkVolume: Int
+}
+
+type Owner implements Nameable {
+  name: String
+  cats: [Cat]
+  dogs: [Dog]
+}
+
+type Query {
+  owners: [Owner]
+}
+```
+
+**This is not a recommended use for interfaces!** Note that in this schema, `Nameable` is never used as the return type for a field. This means that clients have no way to take advantage of this polymorphic relationship in their operations.
+
+The lack of valid client use cases indicates a code smell. The `Nameable` interface is unnecessary, and it might cause problems when making changes to your schema in the future. And because distributing an interface across subgraphs presents its own challenges, removing unnecessary interfaces usually makes life simpler.
+
+In the next example, we specify that both the `Cat` and `Dog` types implement the `Pet` interface so that we can return a polymorphic list of both Cats and Dogs in the `Owner.pets` field. Now that there's a valid client use case for polymorphism, using an interface is justified.
+
+<p style="margin-bottom: 0;">✅</p>
+
+```graphql
+interface Pet {
+  name: String
+}
+
+type Cat implements Pet {
+  name: String
+  meowVolume: Int
+}
+
+type Dog implements Pet {
+  name: String
+  barkVolume: Int
+}
+
+type Owner {
+  name: String
+  pets: [Pet]
+}
+
+type Query {
+  owners: [Owner]
+}
+```
+
+## Implications of adding new implementing types
+
+When a client includes a field returning an abstract type in an operation, they usually enumerate which fields from the _concrete_ types they're interested in with "conditional fragments", like so:
+
+```graphql
+query OwnersAndPets {
+  owners {
+    name
+    pets {
+      name
+      ... on Cat {
+        meowVolume
+      }
+      ... on Dog {
+        barkVolume
+      }
+    }
+  }
+}
+```
+
+> If `Pet` were a _union_ instead of an interface (`union Pet = Cat | Dog`), then _all_ requested fields would need to be included in conditional fragments. It wouldn't be possible to include the `name` field outside of a fragment, even though the two types both happen to define that field.
+
+If your API adds additional possible types to the abstract type, clients must change their operations to select data from those new types. Although this isn't a _breaking_ change, this situation warrants some defensive programming.
+
+```ts
+// Trigger a TypeScript error if a new type is introduced but
+// we haven't added a switch case for it.
+const assertUnknown = (x: never) =>
+  console.log(`Unknown Pet type: ${(x as any).__typename}`);
+
+switch (pet.__typename) {
+  case 'Cat':
+    console.log(`Cat meows ${pet.meowVolume}`);
+    break;
+  case 'Dog':
+    console.log(`Dog barks ${pet.barkVolume}`);
+    break;
+  default:
+    assertUnknown(pet);
+    console.log('Fallback behavior');
+}
+```
+
+> When using graphql-code-generator, accessing known interface fields like `Pet.name` will trigger a TypeScript error. See [issue 8538](https://github.com/dotansimha/graphql-code-generator/issues/8538) for more discussion.
+
+```kotlin
+// `when` must be used as an expression to require exhaustivity
+val result = when (pet.__typename) {
+  "Cat" -> println("Cat meows ${pet.onCat?.meowVolume}")
+  "Dog" -> println("Dog barks ${pet.onDog?.barkVolume}")
+  else -> println("Unknown animal ${pet.__typename}")
+}
+```
+
+```swift
+switch pet.__typename {
+case "Cat":
+    print("Cat meows \(pet.asCat?.meowVolume ?? 0)")
+case "Dog":
+    print("Dog barks \(pet.asDog?.barkVolume ?? 0)")
+default:
+    print("Unknown animal \(pet.__typename)")
+}
+```
