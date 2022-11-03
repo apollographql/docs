@@ -1,4 +1,5 @@
 /schema/registry/ /docs/graphos/org/graphs/
+/schema/schema-reporting /docs/graphos/schema/cli-registration/
 
 /dev-graphs/ /docs/graphos/
 /operation-registry/ /docs/graphos/
