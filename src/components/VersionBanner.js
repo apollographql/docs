@@ -3,7 +3,7 @@ import React from 'react';
 import {Box, Link} from '@chakra-ui/react';
 import {Link as GatsbyLink} from 'gatsby';
 
-export default function VersionBanner({to, versionLabels}) {
+export default function VersionBanner({to, versionLabels, children}) {
   const [defaultVersionNumber, currentVersionNumber] = versionLabels.map(
     label => {
       // parse version number from label, i.e. "v2.6"
@@ -20,7 +20,7 @@ export default function VersionBanner({to, versionLabels}) {
         : 'a previous'}{' '}
       version of this software.{' '}
       <Link as={GatsbyLink} to={to} fontWeight="semibold">
-        Switch to the latest stable version
+        {children}
       </Link>
     </Box>
   );
@@ -28,5 +28,6 @@ export default function VersionBanner({to, versionLabels}) {
 
 VersionBanner.propTypes = {
   to: PropTypes.string.isRequired,
-  versionLabels: PropTypes.array.isRequired
+  versionLabels: PropTypes.array.isRequired,
+  children: PropTypes.node
 };

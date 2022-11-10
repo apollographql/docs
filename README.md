@@ -133,6 +133,10 @@ The `config.json` file lives at the root of its docset's content directory, and 
 {
   "title": "Apollo Server",
   "version": "v3",
+  "versionBanner": {
+    "link": "/v3-deprecation-page",
+    "content": "Check out the deprecation page."
+  },
   "algoliaFilters": ["docset:server", ["docset:react", "docset:federation"]],
   "sidebar": {
     "Introduction": "/",
@@ -152,6 +156,7 @@ The `config.json` file lives at the root of its docset's content directory, and 
 | version        | no        | A string representing the version of the software that is being documented, i.e. "v3". This value is shown in the version dropdown if multiple versions of a docset are configured.                                                                                                                               |
 | algoliaFilters | no        | An array of filters that affect the ranking of search results when a search is made within a particular docset. This is passed to Algolia as an `optionalFilters` parameter, which you can learn more about [here](https://www.algolia.com/doc/api-reference/api-parameters/optionalFilters/).                    |
 | internal       | no        | Set to `true` if you want your docset to be [internal-only](#internal-only-docsets).                                                                                                                                                                                                                              |
+| versionBanner  | no        | A JSON object used to customize the `VersionBanner` link url and text.                                                                                                                                                                                                                                            |
 
 ### Adding a local docset
 
