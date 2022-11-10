@@ -17,7 +17,8 @@
 /getting-started/ /docs/graphos/quickstart/cloud/
 /next-steps/ /docs/graphos/quickstart/next-steps/
 /self-hosted/ /docs/graphos/quickstart/self-hosted/
-/cloud-routing/* /docs/graphos/routing/:splat
+/cloud-routing/overview/ /docs/graphos/routing/cloud/
+/cloud-routing/configuration/ /docs/graphos/routing/cloud-configuration/
 
 /schema/registry/ /docs/graphos/org/graphs/
 /schema/schema-reporting /docs/graphos/schema/cli-registration/
