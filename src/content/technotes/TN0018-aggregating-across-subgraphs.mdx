@@ -160,7 +160,7 @@ QueryPlan {
     },
     Parallel {
       Flatten(path: "search.@") {
-        Fetch(service: "one") {
+        Fetch(service: "books") {
           {
             ... on Book {
               __typename
@@ -177,7 +177,7 @@ QueryPlan {
         },
       },
       Flatten(path: "search.@") {
-        Fetch(service: "two") {
+        Fetch(service: "movies") {
           {
             ... on Movie {
               __typename
