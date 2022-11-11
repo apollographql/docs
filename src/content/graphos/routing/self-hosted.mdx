@@ -3,7 +3,7 @@ title: Self-hosted routing in GraphOS
 description: Host your supergraph's router in your own infrastructure
 ---
 
-> ⚠️ **Important:** If you're just getting started with GraphOS, we recommend instead [creating a cloud supergraph](../getting-started/).
+> ⚠️ **Important:** If you're just getting started with GraphOS, we recommend instead [creating a cloud supergraph](../quickstart/cloud/).
 >
 > Self-hosted supergraphs are recommended only for organizations that need to host their router in their own infrastructure, usually to satisfy advanced performance or compliance requirements.
 >
@@ -24,14 +24,14 @@ flowchart LR;
   class clients secondary;
 ```
 
-A supergraph with this structure is called a [self-hosted supergraph](../org/graphs/#self-hosted-supergraphs). Here are some reasons why your organization might need to use self-hosted routing instead of [cloud routing](./overview/) (where Apollo hosts your router for you):
+A supergraph with this structure is called a [self-hosted supergraph](../graphs/overview/#self-hosted-supergraphs). Here are some reasons why your organization might need to use self-hosted routing instead of [cloud routing](./cloud/) (where Apollo hosts your router for you):
 
 - **Compliance.** All of your supergraph's components must be hosted in a particular region to adhere to compliance requirements.
 - **Performance.** You need to minimize latency between your router and subgraphs by enabling them to communicate _without_ traversing the public internet (e.g., by hosting all components in a VPC).
-- **Customization.** You need to configure your router's behavior beyond what's currently possible with [cloud routing](./configuration/).
+- **Customization.** You need to configure your router's behavior beyond what's currently possible with [cloud routing](./cloud-configuration/).
 
 With the exception of Apollo-managed routing, self-hosted supergraphs benefit from all of the same GraphOS features as cloud supergraphs (metrics reporting, schema checks, the Explorer, and so on).
 
 ## Creating a self-hosted supergraph
 
-Organizations with any Apollo plan can create self-hosted supergraphs. To learn how, see the [self-hosted quickstart](../self-hosted/).
+Organizations with any Apollo plan can create self-hosted supergraphs. To learn how, see the [self-hosted quickstart](../quickstart/self-hosted/).

@@ -9,7 +9,7 @@ Sandbox provides access to the following Apollo Studio features:
 
 - [The Explorer](./explorer/)
 - Schema reference
-- [Schema checks](../schema-checks/) and diffs against registered graphs (for logged-in users)
+- [Schema checks](../delivery/schema-checks/) and diffs against registered graphs (for logged-in users)
 
 You can use Sandbox offline and without an Apollo account. You also [embed Sandbox](#embedding-sandbox) on your own website.
 
@@ -63,7 +63,7 @@ In addition to viewing the diff on this page, you can click **Run a Check** in t
 
 ## Schema checks
 
-If you log in to Apollo Studio from Sandbox, you can run [schema checks](../schema-checks/) between your Sandbox schema and any graph you have access to in the Apollo registry.
+If you log in to Apollo Studio from Sandbox, you can run [schema checks](../delivery/schema-checks/) between your Sandbox schema and any graph you have access to in the Apollo registry.
 
 > Organization members with the [**Consumer** role](../org/members/#organization-wide-member-roles) cannot run schema checks.
 
@@ -200,7 +200,7 @@ The URL of the GraphQL endpoint that Sandbox introspects on initial load. Sandbo
 The default value is `http://localhost:4000`.
 
 **You should only pass non-production endpoints to Sandbox**. Sandbox is powered by schema introspection, and we recommend [disabling introspection in production](https://www.apollographql.com/blog/graphql/security/why-you-should-disable-graphql-introspection-in-production/).
-To provide a "Sandbox-like" experience for production endpoints, we recommend using either a [public variant](../studio-graph-features/#public-variants) or the [embedded Explorer](./embed-explorer).
+To provide a "Sandbox-like" experience for production endpoints, we recommend using either a [public variant](../graphs/studio-features/#public-variants) or the [embedded Explorer](./embed-explorer).
 
 </td>
 </tr>

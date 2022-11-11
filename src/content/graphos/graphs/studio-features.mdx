@@ -2,19 +2,19 @@
 title: Managing graphs in Apollo Studio
 ---
 
-This article describes Apollo Studio features for all [graph types](./org/graphs/#graph-types). For features specific to supergraphs, see also [Supergraph-specific Studio features](./federated-graphs/).
+This article describes Apollo Studio features for all [graph types](./overview/#graph-types). For features specific to supergraphs, see also [Supergraph-specific Studio features](./federated-graphs/).
 
 ## Creating graphs
 
-**To create a cloud supergraph,** see the [GraphOS quickstart](./getting-started/).
+**To create a cloud supergraph,** see the [GraphOS quickstart](../quickstart/cloud/).
 
-**To create a _non_-cloud graph** (i.e., a self-hosted supergraph or a monograph), see [this section](./org/graphs/#creating-graphs).
+**To create a _non_-cloud graph** (i.e., a self-hosted supergraph or a monograph), see [this section](./overview/#creating-graphs).
 
 ## Viewing graph details
 
 After selecting an organization in Apollo Studio, click on a particular graph variant to view its README, schema, data, and settings. All of a Studio organization's members can access the data and settings for every graph that belongs to that organization.
 
-> Enterprise accounts can set [member roles](./org/members/#organization-wide-member-roles) to configure fine-grained access for individual members of their organization.
+> Enterprise accounts can set [member roles](../org/members/#organization-wide-member-roles) to configure fine-grained access for individual members of their organization.
 
 ### The README page
 
@@ -29,7 +29,7 @@ When a user opens one of your graph's variants in Apollo Studio, its **README pa
 
 Like the typical homepage for a Git repository, this page displays a Markdown-based README that you can edit with any content you like.
 
-> **Note:** Only organization members with the [**Org Admin**, **Graph Admin**, **Contributor**, or **Documenter** role](./org/members/) can edit a variant's README. If a variant is [protected](#protected-variants-enterprise-only), **Contributor**s _cannot_ edit its README.
+> **Note:** Only organization members with the [**Org Admin**, **Graph Admin**, **Contributor**, or **Documenter** role](../org/members/) can edit a variant's README. If a variant is [protected](#protected-variants-enterprise-only), **Contributor**s _cannot_ edit its README.
 
 **Each variant has its own README.** If you edit one variant's README, those edits are _not_ applied to other variants. Among other uses, this enables you to provide different information to external consumers in a [public variant](#public-variants).
 
@@ -80,7 +80,7 @@ Apollo Studio provides helpful views for exploring your registered schema:
 
 Apollo Studio provides a powerful **Explorer** IDE that helps you visualize your graph and run queries against it. It's available from your graph's Explorer tab in Studio.
 
-> [Learn about the Explorer.](./explorer/explorer/)
+> [Learn about the Explorer.](../explorer/explorer/)
 
 #### The Schema page
 
@@ -89,7 +89,7 @@ The Schema page lists the different kinds of definitions in your schema (objects
 <img
   className="screenshot"
   alt="Schema page list of type definitions in Studio"
-  src="./img/schema-page-list.jpg"
+  src="../img/schema-page-list.jpg"
   width="300"
 />
 
@@ -98,7 +98,7 @@ Select a kind of definition to view a table of all corresponding types:
 <img
   className="screenshot"
   alt="Schema page list of type definitions in Studio"
-  src="./img/schema-page-table.jpg"
+  src="../img/schema-page-table.jpg"
 />
 
 Each type definition in the table includes:
@@ -116,7 +116,7 @@ The top of the Schema page provides a **Filter Schema** box you can use to find 
 <img
   className="screenshot"
   alt="Schema page filter box and dropdowns"
-  src="./img/schema-page-filters.jpg"
+  src="../img/schema-page-filters.jpg"
   width="600"
 />
 
@@ -247,13 +247,13 @@ Include results that take a GraphQL argument with any of the the specified names
 The Changelog page in Studio displays a timeline of changes made to your graph's schema:
 
 <img
-  src="./img/changelog-page.jpg"
+  src="../img/changelog-page.jpg"
   className="screenshot"
   alt="Schema Changelog tab"
   width="450"
 />
 
-**Only schema changes that you publish to Studio are included in this timeline**, which is one of the most important reasons to [include schema publishing in your continuous delivery pipeline](./schema/cli-registration/#publishing-with-continuous-delivery).
+**Only schema changes that you publish to Studio are included in this timeline**, which is one of the most important reasons to [include schema publishing in your continuous delivery pipeline](../schema/cli-registration/#publishing-with-continuous-delivery).
 
 ## Managing access permissions
 
@@ -265,7 +265,7 @@ You can enable public access for individual variants of your graph. If you do, *
   - This shows the variant's README.
 - Schema
 - Explorer
-  - You can also [embed the Explorer](./explorer/embed-explorer/) on your own webpage.
+  - You can also [embed the Explorer](../explorer/embed-explorer/) on your own webpage.
 
 This enables consumers of your graph to learn about your graph's schema and any special usage information (such as authentication details) that you've documented in [the public variant's README](#the-readme-page). They can also run properly authenticated operations against your graph with the Explorer.
 
@@ -273,14 +273,14 @@ People outside your organization can't view any _other_ pages for a public varia
 
 #### Making a variant public
 
-> Only organization members with the [**Org Admin** or **Graph Admin** role](./org/members/) can toggle a variant's public visibility.
+> Only organization members with the [**Org Admin** or **Graph Admin** role](../org/members/) can toggle a variant's public visibility.
 
 1. Go to your variant's Settings page and open the **This Variant** tab.
 2. Find the Public card and click **Change**:
 
    <img
      class="screenshot"
-     src="./img/toggle-public-protected-variant.png"
+     src="../img/toggle-public-protected-variant.png"
      alt="Toggle public variant in Studio"
      width="400"
    />
@@ -293,14 +293,14 @@ After you make a variant public, you can click the variant's **PUBLIC** label at
 
 <img
   className="screenshot"
-  src="./img/public-variant-label.jpg"
+  src="../img/public-variant-label.jpg"
   alt="Public variant label in Studio"
   width="400"
 />
 
 ### Protected variants (Enterprise only)
 
-If you have an Enterprise plan, you can designate particular variants of a graph as **protected variants**. Making a variant protected specifically affects the ability of users with the [**Contributor** role](./org/members/#organization-wide-member-roles) to make certain changes to the variant:
+If you have an Enterprise plan, you can designate particular variants of a graph as **protected variants**. Making a variant protected specifically affects the ability of users with the [**Contributor** role](../org/members/#organization-wide-member-roles) to make certain changes to the variant:
 
 - **Contributor**s _cannot_ push schema updates to a protected variant.
 - **Contributor**s _cannot_ manage Explorer-related settings for a protected variant, like setting its URL.

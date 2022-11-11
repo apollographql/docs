@@ -4,7 +4,7 @@ title: Setting up Apollo Studio notifications
 
 Apollo Studio can notify your team about changes to your graph and its performance. These notifications help you stay up to date and address issues as they arise.
 
-> If you don't have an Apollo Studio organization yet, [get started](getting-started/).
+> If you don't have an Apollo Studio organization yet, [get started](../quickstart/cloud/).
 
 ## Supported notifications and channels
 
@@ -34,7 +34,7 @@ Currently, Studio can send each of these notification types to the channel(s) in
    <img src="./img/add-new-alert.jpg" class="screenshot" width="500" alt="Add new alert button" />
 4. Select a notification type and click **Next**:
    <img src="./img/add-notification.jpg" class="screenshot" width="500" alt="Notification creation modal" />
-5. In the dropdown, select which [variant](./org/graphs/#variants) of your graph you want to receive notifications for.
+5. In the dropdown, select which [variant](../graphs/overview/#variants) of your graph you want to receive notifications for.
 6. Select an existing configured channel to send notifications to, or select which type of new channel you want to configure:
    <img src="./img/create-new-channel.jpg" class="screenshot" width="400" alt="Notification creation modal" />
 7. Click **Next**.

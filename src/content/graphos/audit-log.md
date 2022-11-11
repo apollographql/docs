@@ -49,8 +49,8 @@ An audit log's **Resource_Type** column indicates what type of resource each act
 | -------------------- | --------------------------------------------------- |
 | `ACCOUNT`            | A Studio [organization](./org/organizations/).      |
 | `USER`               | A Studio user.                                      |
-| `GRAPH`              | A Studio [graph](./org/graphs/).                    |
-| `GRAPH_VARIANT`      | A graph [variant](./org/graphs/#variants). |
+| `GRAPH`              | A Studio [graph]./graphs/overview/).                    |
+| `GRAPH_VARIANT`      | A graph [variant](./graphs/overview/#variants). |
 | `GRAPH_API_KEY`      | A graph [API key](./api-keys/).                     |
 | `USER_API_KEY`       | A user [API key](./api-keys/).                      |
 | `ZENDESK_TICKET`     | An Apollo support ticket.                           |
@@ -98,8 +98,8 @@ These actions are applied to a variety of [resource types](#resource-types), inc
 
 | Action type                       | Description                                                                               |
 | --------------------------------- | ----------------------------------------------------------------------------------------- |
-| `IGNORE_OPERATION_IN_CHECKS`      | Ignores a particular GraphQL operation when running [schema checks](./schema-checks/).    |
-| `MARK_CHANGES_SAFE_FOR_OPERATION` | Marks a particular set of changes as safe when running [schema checks](./schema-checks/). |
+| `IGNORE_OPERATION_IN_CHECKS`      | Ignores a particular GraphQL operation when running [schema checks](./delivery/schema-checks/).    |
+| `MARK_CHANGES_SAFE_FOR_OPERATION` | Marks a particular set of changes as safe when running [schema checks](./delivery/schema-checks/). |
 | `TOGGLE_DATADOG`                  | Enables or disables [Datadog metrics forwarding](./metrics/datadog-integration/).         |
 
 ### Studio plan
