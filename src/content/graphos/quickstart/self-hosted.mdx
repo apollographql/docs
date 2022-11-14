@@ -53,7 +53,7 @@ Let's set these up first!
 
 To manage our supergraph with GraphOS, we need an Apollo account. Let's create one if you don't have one yet.
 
-Complete the first step of <a href="./getting-started/#1-create-your-apollo-account" target="_blank">Get started with GraphOS</a> (**Create your Apollo account**), then return here.
+Complete the first step of <a href="./cloud/#1-create-your-apollo-account" target="_blank">Get started with GraphOS</a> (**Create your Apollo account**), then return here.
 
 #### Create a graph in Apollo Studio
 
@@ -472,8 +472,8 @@ rover subgraph publish YOUR_GRAPH_REF \
 If the command is successful, you'll see output like the following:
 
 ```
-A new subgraph called 'locations' for the 'docs-example-graph@current' graph was created
-The gateway for the 'docs-example-graph' graph was updated with a new schema, composed from the updated 'locations' subgraph
+A new subgraph called 'locations' was created in 'docs-example-graph@main'
+The supergraph schema for 'docs-example-graph@main' was updated, composed from the updated 'locations' subgraph
 ```
 
 Nice! If you open your graph's details in Studio now, you'll see types and fields from our `locations` subgraph listed on the Schema page:
@@ -510,7 +510,7 @@ It's time to enable our router to fetch its supergraph schema from GraphOS. To d
     ```bash
     APOLLO_KEY=your-api-key \
     APOLLO_GRAPH_REF=your-graph-id@your-variant \
-    ./router
+    ./router --dev
     ```
 
     Then, make the following changes:
@@ -521,18 +521,19 @@ It's time to enable our router to fetch its supergraph schema from GraphOS. To d
 
 3. Paste the edited command into your terminal and run it.
 
-    This time there's no error, and you'll see output similar to the following:
+    This time there's no error, and you'll see output similar to the following (timestamps omitted for clarity):
 
     <ExpansionPanel title="Click to expand">
 
     ```
-    2022-07-27T23:49:11.362235Z  INFO apollo_router::executable: Apollo Router v0.12.0 // (c) Apollo Graph, Inc. // Licensed as ELv2 (https://go.apollo.dev/elv2)
-    2022-07-27T23:49:11.367689Z  INFO apollo_router::state_machine: transitioned to startup
-    2022-07-27T23:49:11.368352Z  INFO apollo_router::state_machine: transitioned to startup
-    2022-07-27T23:49:12.968871Z  INFO apollo_router::plugins::telemetry::metrics::apollo: Apollo Studio usage reporting is enabled. See https://go.apollo.dev/o/data for details
-    2022-07-27T23:49:12.975441Z  INFO apollo_router::router_factory: list of plugins plugin_details=[("apollo.telemetry", "apollo_router::plugins::telemetry::Telemetry"), ("experimental.include_subgraph_errors", "apollo_router::plugins::include_subgraph_errors::IncludeSubgraphErrors"), ("apollo.csrf", "apollo_router::plugins::csrf::Csrf")]
-    2022-07-27T23:49:13.175090Z  INFO apollo_router::axum_http_server_factory: GraphQL endpoint exposed at http://127.0.0.1:4000/ 🚀
-    2022-07-27T23:49:13.175546Z  INFO apollo_router::state_machine: transitioned to running
+    INFO Apollo Router v1.3.0 // (c) Apollo Graph, Inc. // Licensed as ELv2 (https://go.apollo.dev/elv2)
+    INFO Anonymous usage data is gathered to inform Apollo product development.  See https://go.apollo.dev/o/privacy for more info.
+    INFO Running with *development* mode settings which facilitate development experience (e.g., introspection enabled)
+    INFO Apollo Studio usage reporting is enabled. See https://go.apollo.dev/o/data for details
+    INFO creating apollo exporter spaceport_endpoint=https://127.0.0.1:62894/
+    INFO creating apollo exporter spaceport_endpoint=https://127.0.0.1:62894/
+    INFO healthcheck endpoint exposed at http://127.0.0.1:8088/health
+    INFO GraphQL endpoint exposed at http://127.0.0.1:4001/ 🚀
     ```
 
     </ExpansionPanel>
@@ -543,7 +544,7 @@ It's time to enable our router to fetch its supergraph schema from GraphOS. To d
 
     (Most cloud deployment environments provide a helpful way to set environment variables, so this issue is mostly limited to local development.)
 
-Now that our router is running, we can quickly open our browser to [localhost:4000](http://localhost:4000/) to explore our composed schema in Apollo Sandbox:
+Now that our router is running, we can quickly open our browser to `localhost:4000` to explore our composed schema in Apollo Sandbox:
 
 <img src="../img/gateway_sandbox.jpg" class="screenshot" alt="Schema view in Apollo Sandbox" width="600" />
 
