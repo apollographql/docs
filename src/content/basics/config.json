@@ -16,7 +16,8 @@
       "Technical Reference": {
         "Apollo Server": "/apollo-server/",
         "Apollo Router": "/router/",
-        "Rover CLI": "/rover/"
+        "Rover CLI": "/rover/",
+        "Tech Notes": "/technotes/"
       },
       "Apollo Client": {
         "React": "/react/",
