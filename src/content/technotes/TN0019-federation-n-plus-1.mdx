@@ -24,10 +24,10 @@ In a monolithic GraphQL server, the execution engine takes these steps:
 1. Resolve the `Query.topReviews` field, which returns a list of `Review`s.
 2. For each `Review` in the list, resolve the `Review.product` field.
 
-If the `Query.topReviews` field returns 10 reviews, then the executor resolves `Review.product` field 10 times. If the `Reviews.product` field makes a database or REST query for a single `Product`, then we'll see 10 unique calls to the data source. This is suboptimal for two reasons:
+If the `Query.topReviews` field returns 10 reviews, then the executor resolves `Review.product` field 10 times. If the `Reviews.product` field makes a database or REST query for a single `Product`, then we'll see 10 unique calls to the data source. This is suboptimal for the following reasons:
 
-1. It's more efficient to fetch the 10 products in a single query (e.g. `SELECT * FROM products WHERE id IN (<product ids>)`).
-2. If any reviews refer to the _same_ product, then we're wasting resources fetching something we already have.
+- It's more efficient to fetch the 10 products in a single query (e.g. `SELECT * FROM products WHERE id IN (<product ids>)`).
+- If any reviews refer to the _same_ product, then we're wasting resources fetching something we already have.
 
 The solution for monolithic GraphQL APIs is the [dataloader](https://github.com/graphql/dataloader) pattern. All GraphQL server implementations support this pattern. The [Apollo Server documentation explains how to use the JavaScript implementation](/apollo-server/data/fetching-data#batching-and-caching) in Node.js servers.
 
@@ -65,8 +65,8 @@ type Product @key(fields: "id") {
 
 Fortunately, query planning handles N+1 queries for entities like the `Product` type by default! The query plan for this operation works like this:
 
-1. First, we `Fetch` the list of `Review`s from the Reviews subgraph using the root field `Query.topProducts`. We also ask for the `id`s of each associated review.
-2. Next, we extract the `Product` _entity references_ and `Fetch` them in a **batch** to the Product subgraph's `Query._entities` root field.
+1. First, we `Fetch` the list of `Review`s from the Reviews subgraph using the root field `Query.topReviews`. We also ask for the `id` of each associated review.
+2. Next, we extract the `Product` _entity references_ and `Fetch` them in a **batch** to the Products subgraph's `Query._entities` root field.
 3. After we get back the `Product` entities, we merge them into the list of `Review`s, indicated by the `Flatten` step.
 
 ```mermaid
@@ -116,7 +116,7 @@ QueryPlan {
 
 ## Writing efficient entity resolvers
 
-In most subgraph implementations, including [`@apollo/subgraph`](/federation/api/apollo-subgraph), we don't write the `Query._entities` resolver directly. Instead, we have a [reference resolver API](/federation/entities#2-define-a-reference-resolver) for resolving an individual entity reference.
+In most subgraph implementations (including [`@apollo/subgraph`](/federation/api/apollo-subgraph)), we don't write the `Query._entities` resolver directly. Instead, we have a [reference resolver API](/federation/entities#2-define-a-reference-resolver) for resolving an individual entity reference:
 
 ```js
 const resolvers = {
@@ -128,7 +128,7 @@ const resolvers = {
 };
 ```
 
-The motivation for this API relates to a subtle, critical aspect of the [subgraph specification](/federation/subgraph-spec): **the order of entity references must match the order of returned entities**. If the entities resolved by the `Query._entities` field come back in the wrong order, the results are merged with the wrong entities and we'll have incorrect results. To avoid this footgun, most subgraph libraries handle entity order for you.
+The motivation for this API relates to a subtle, critical aspect of the [subgraph specification](/federation/subgraph-spec): **the order of entity references must match the order of returned entities**. If the entities resolved by the `Query._entities` field come back in the wrong order, the results are merged with the wrong entities and we'll have incorrect results. To avoid this issue, most subgraph libraries handle entity order for you.
 
 This does reintroduce the N+1 query problem: in the example above, we'll call `fetchProductByID` once for each entity reference.
 
