@@ -350,8 +350,6 @@ To compose a supergraph schema for our router, GraphOS needs the following infor
 
 Fortunately, we have all of this information! Let's collect it in our project.
 
-
-
 Do the following in your router project's root directory:
 
 1. Create a new file called `locations.graphql` and paste the following schema into it:
@@ -448,26 +446,64 @@ Do the following in your router project's root directory:
 
 With our subgraph schemas ready, we now can use the Rover CLI's `subgraph publish` command to publish those schemas to GraphOS.
 
-Run the following from your project directory, substituting your Studio graph's **graph ref** where indicated:
+In [Apollo Studio](https://studio.apollographql.com/), click the graph you created back in the first step. Because we haven't published a schema to it yet, the following dialog appears:
+
+<img
+  src="../img/register-schema-dialog.jpg"
+  class="screenshot"
+  alt="Schema registration options"
+  width="600"
+/>
+
+This dialog shows an example Rover command for publishing a subgraph schema. Copy that command and paste it into your text editor so we can modify it.
+
+Edit the command like so:
+
+1. Change the value of the `--name` option to `locations`
+    - This will be our first subgraph's name.
+2. Change the value of the `--schema` option to `./locations.graphql`
+    - This is the path to the schema for our Locations subgraph.
+3. Change the value of the `--routing-url` option to:
+    - `https://flyby-locations-sub.herokuapp.com/` 
+    - This is the URL that our router will use to communicate with the Locations subgraph.
+
+When you're done, the command resembles the following:
+
+```shell {1-2}
+APOLLO_KEY=<API_KEY> \
+rover subgraph publish <GRAPH_REF> \
+  --name locations \
+  --schema ./locations.graphql \
+  --routing-url https://flyby-locations-sub.herokuapp.com/  
+```
+
+<blockquote>
+
+Note that this command includes two custom values: an **API key** and a **graph ref**.
+
+- Rover uses the **API key** to authenticate with GraphOS. The key's permissions are scoped to this particular graph, which means Rover can't use it to perform operations on any _other_ graph.
+  - If you [authenticated Rover with GraphOS](#authenticate-rover-with-graphos) earlier, you don't actually _need_ to provide an API key to this command via `APOLLO_KEY` (although it's fine to do so).
 
 <ExpansionPanel title="What's a graph ref?">
 
-A **graph ref** uniquely identifies a particular variant of a registered graph in GraphOS. Every graph ref is a string with the following format:
+A **graph ref** uniquely identifies a particular **variant** of a particular graph in GraphOS. Every graph ref is a string with the following format:
 
 `graph-id@variant-name`
 
-If you open your graph's README page in Apollo Studio, its graph ref is displayed as the top-level header of the page:
+- The value before the `@` is your graph's unique ID in GraphOS.
+- The value after the `@` is the name of the graph variant you're interacting with.
+
+Each **variant** of a graph represents a different _environment_ where that graph runs (such as staging and production). For this quickstart, you can keep the default suggested variant name or change it to anything else you like (e.g., `quickstart`). Just make sure to provide the _same_ graph ref to every command in this quickstart!
+
+_After_ you've published a schema to a particular variant, that variant's graph ref is always available at the top of its README page:
 
 <img class="screenshot" alt="Graph ref in Studio" src="../img/studio-graph-ref.jpg" width="300"/>
 
 </ExpansionPanel>
 
-```shell {1}
-rover subgraph publish YOUR_GRAPH_REF \
-  --routing-url https://flyby-locations-sub.herokuapp.com/ \
-  --schema ./locations.graphql \
-  --name locations
-```
+</blockquote>
+
+When you're finished modifying the command, paste it into your terminal and run it from your router project's root directory.
 
 If the command is successful, you'll see output like the following:
 
@@ -480,10 +516,10 @@ Nice! If you open your graph's details in Studio now, you'll see types and field
 
 <img class="screenshot" alt="Locations subgraph schema in Studio" src="../img/qs-studio-schema.jpg" width="300"/>
 
-Next, let's do the same thing for our `reviews` subgraph, **again substituting your graph ref where indicated**:
+Next, let's do the same thing for our `reviews` subgraph, **again substituting your graph ref**:
 
 ```shell {1}
-rover subgraph publish YOUR_GRAPH_REF \
+rover subgraph publish graph-id@variant-name \
   --routing-url https://flyby-reviews-sub.herokuapp.com/ \
   --schema ./reviews.graphql \
   --name reviews
@@ -613,7 +649,7 @@ Nice work! We've registered two **subgraph schemas** with GraphOS, and we've set
 
 If we now publish changes to one of our subgraph schemas, our running router _automatically_ fetches the corresponding changes to the supergraph schema (assuming composition succeeds).
 
-Next, we'll cover some of the most common and important actions to perform on your supergraph, including:
+In the next article, we'll cover some of the most common and important actions to perform on your supergraph, including:
 
 - Updating subgraph schemas
 - Adding another subgraph
