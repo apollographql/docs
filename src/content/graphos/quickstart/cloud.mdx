@@ -10,13 +10,13 @@ To complete these steps, it's helpful to have one of the following available:
 - The URL of your running GraphQL server, with introspection enabled
 - Your GraphQL server's schema, as plaintext SDL
 
-**If you don't have either, that's okay!** You can still try out GraphOS with an example GraphQL server. To do so, provide all values labeled **Example setup** in the steps below.
+**If you don't have either, that's okay!** You can still try out GraphOS with an example GraphQL server. To do so, provide all values labeled **🚀 Example setup** in the steps below.
 
 ## 1. Create your Apollo account
 
 <blockquote>
 
-**If you already have an Apollo account,** and you created your organization prior to 4 October 2022, you might need to **create a new organization** to create cloud supergraphs:
+**If you already have an Apollo account,** and you created your organization prior to October 2022, you might need to **create a new organization** to create cloud supergraphs:
 
 <img
   src="../img/organization-list.jpg"
@@ -25,7 +25,7 @@ To complete these steps, it's helpful to have one of the following available:
   width="300"
 />
 
-[Learn about upgrading an existing organization.](../org/plans#upgrading-to-a-current-plan)
+_Some_ legacy organizations can upgrade to a current plan. [See details.](../org/plans#upgrading-to-a-current-plan)
 
 </blockquote>
 
@@ -56,28 +56,32 @@ You're all set! Studio automatically redirects you to your newly created organiz
 
 You now have an Apollo Studio organization, but it doesn't contain any graphs! Let's create your first **cloud supergraph**, which will incorporate your existing GraphQL API.
 
-> A **cloud supergraph** automatically provisions a GraphOS-managed **router** in front of your API. Clients query your router instead of querying your API directly.
->
-> With this architecture, you can later combine _multiple_ APIs into a single graph, all orchestrated by the router!
->
-> ```mermaid
-> flowchart LR;
->   clients(Clients);
->   subgraph "GraphOS";
->   router(["Serverless<br/>cloud router"]);
->   end;
->   subgraph "Your infrastructure";
->   api[Your GraphQL API];
->   secondapi[Second API];
->   thirdapi[Third API];
->   router --- api
->   router -.- secondapi & thirdapi
->   end;
->   clients --- router;
->   style secondapi stroke-dasharray: 4 5
->   style thirdapi stroke-dasharray: 4 5
->   class clients secondary;
-> ```
+<blockquote>
+
+A **cloud supergraph** automatically provisions a GraphOS-managed **router** in front of your API. Clients query your router instead of querying your API directly.
+
+With this architecture, you can later combine _multiple_ APIs into a single graph, all orchestrated by the router!
+
+```mermaid
+flowchart LR;
+  clients(Clients);
+  subgraph "GraphOS";
+  router(["Router"]);
+  end;
+  subgraph "Your infrastructure";
+  api[Your GraphQL API];
+  secondapi[Second API];
+  thirdapi[Third API];
+  router --- api
+  router -.- secondapi & thirdapi
+  end;
+  clients --- router;
+  style secondapi stroke-dasharray: 4 5
+  style thirdapi stroke-dasharray: 4 5
+  class clients secondary;
+```
+
+</blockquote>
 
 1. From your new organization in [Apollo Studio](https://studio.apollographql.com/), navigate to the **Supergraphs** tab if it isn't already open.
 
@@ -102,7 +106,7 @@ You now have an Apollo Studio organization, but it doesn't contain any graphs! L
 3. Provide your GraphQL API's **Endpoint URL**.
 
    - This is the same URL that client applications currently use to query your API.
-   - **Example setup:** `https://flyby-locations-sub.herokuapp.com/`
+   - **🚀 Example setup:** `https://flyby-locations-sub.herokuapp.com/`
 
    After you provide the URL, Studio attempts to fetch your API's schema from it via introspection. The result of that fetch is shown beneath the text box:
 
@@ -125,10 +129,10 @@ You now have an Apollo Studio organization, but it doesn't contain any graphs! L
    - If your GraphQL server requires certain HTTP headers for Studio to introspect it, click **Provide HTTP Headers** to specify them.
    - Otherwise, click **Upload your schema directly** to provide your API's schema as plaintext SDL.
 
-5. Provide a **Name** for your API.
+5. Provide a **Subgraph Name** for your API. This name uniquely identifies your API among any _other_ APIs you might add to the supergraph later.
 
    - The name should reflect the data or capabilities that your API provides.
-   - **Example setup:** `locations`
+   - **🚀 Example setup:** `locations`
 
 6. Click **Next**.
 

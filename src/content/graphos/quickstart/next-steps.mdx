@@ -27,7 +27,7 @@ When you first set up your cloud supergraph, Apollo Studio fetches your existing
 flowchart LR;
   clients(Clients);
   subgraph "GraphOS";
-  router(["Serverless<br/>cloud router"]);
+  router(["Router"]);
   end;
   subgraph "Your infrastructure";
   api["Subgraph A<br/>(Your GraphQL API)"];
@@ -41,7 +41,7 @@ This initial schema fetch is a one-time action to help you get started. Whenever
 
 Whenever you update your subgraph's schema, you need to **publish** those changes with the Rover CLI. [Learn about publishing subgraph schemas.](../schema/cli-registration/#subgraph-schemas)
 
-After learning about this publishing process, you should [integrate it into your CI workflow](#set-up-continuous-delivery).
+After learning about the publishing process, you should [integrate it into your CI workflow](#set-up-continuous-delivery).
 
 ### Add a subgraph
 
@@ -51,7 +51,7 @@ One of the most powerful features of a supergraph is that it can combine _multip
 flowchart LR;
   clients(Clients);
   subgraph "GraphOS";
-  router(["Serverless<br/>cloud router"]);
+  router(["Router"]);
   end;
   subgraph "Your infrastructure";
   api[Subgraph A];
@@ -103,7 +103,7 @@ With a supergraph architecture, clients should _never_ query your individual sub
 flowchart LR;
   clients(Clients);
   subgraph "GraphOS";
-  router(["Serverless<br/>cloud router"]);
+  router(["Router"]);
   end;
   subgraph "Your infrastructure";
   api["Subgraph A<br/>(Your GraphQL API)"];

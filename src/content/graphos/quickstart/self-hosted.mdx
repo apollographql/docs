@@ -518,8 +518,9 @@ Nice! If you open your graph's details in Studio now, you'll see types and field
 
 Next, let's do the same thing for our `reviews` subgraph, **again substituting your graph ref**:
 
-```shell {1}
-rover subgraph publish graph-id@variant-name \
+```shell {1-2}
+APOLLO_KEY=<API_KEY> \
+rover subgraph publish <GRAPH_REF> \
   --routing-url https://flyby-reviews-sub.herokuapp.com/ \
   --schema ./reviews.graphql \
   --name reviews
@@ -534,6 +535,8 @@ Every time we publish a subgraph schema, GraphOS automatically composes _all_ of
 ## 5. Connect the router to GraphOS
 
 It's time to enable our router to fetch its supergraph schema from GraphOS. To do that, we'll need a **graph API key** that we set as the value of an environment variable.
+
+In theory, we _could_ use the same API key that we just provided to the `rover subgraph publish` command. However, it's recommended practice to create a separate API key for each system that communicates with GraphOS. This reduces the impact whenever you need to _replace_ an API key that might be compromised.
 
 > ⚠️ **API keys are secret credentials.** Never share them outside your organization or commit them to version control. Delete and replace API keys that you believe are compromised.
 
@@ -552,12 +555,12 @@ It's time to enable our router to fetch its supergraph schema from GraphOS. To d
     Then, make the following changes:
 
     * Replace `your-api-key` with your graph API key.
-    * Replace `your-graph-id@your-variant` with your graph's **graph ref**.
+    * Replace `your-graph-id@your-variant` with your variant's **graph ref**.
         * _For a refresher on graph refs, see [Step 4](#4-publish-your-subgraph-schemas)._
 
 3. Paste the edited command into your terminal and run it.
 
-    This time there's no error, and you'll see output similar to the following (timestamps omitted for clarity):
+    This time there's no error, and you'll see output similar to the following (timestamps omitted for brevity):
 
     <ExpansionPanel title="Click to expand">
 
@@ -598,7 +601,7 @@ Go to your variant's Operations page in Studio, which looks like this:
   alt="The Operations page in Studio after executing an operation"
 />
 
-The test queries you executed in the previous step should already be represented on this page! After you update all of your clients to query your router, the Operations page becomes vital to monitoring your supergraph's performance.
+The test queries you executed in the previous step should already be represented on this page! (If they aren't there yet, check the page again in a few minutes.) After you update all of your clients to query your router, the Operations page becomes vital to monitoring your supergraph's performance.
 
 ## 7. Deploy your router and connect clients
 
@@ -649,7 +652,7 @@ Nice work! We've registered two **subgraph schemas** with GraphOS, and we've set
 
 If we now publish changes to one of our subgraph schemas, our running router _automatically_ fetches the corresponding changes to the supergraph schema (assuming composition succeeds).
 
-In the next article, we'll cover some of the most common and important actions to perform on your supergraph, including:
+In the next article, we'll cover some of the most common and important actions to perform on your new supergraph, including:
 
 - Updating subgraph schemas
 - Adding another subgraph
