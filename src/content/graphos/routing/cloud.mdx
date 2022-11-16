@@ -7,13 +7,13 @@ description: In GraphOS
 >
 >[See details about plans.](https://www.apollographql.com/pricing/)
 
-When you [create a cloud supergraph](../getting-started/#2-create-your-first-supergraph) with Apollo Studio, GraphOS automatically provisions and manages a **router** that sits in front of your GraphQL API:
+When you [create a cloud supergraph](../quickstart/cloud/#2-create-your-first-supergraph) with Apollo Studio, GraphOS automatically provisions and manages a **router** that sits in front of your GraphQL API:
 
 ```mermaid
 flowchart LR;
   clients(Clients);
   subgraph "GraphOS";
-  router(["Serverless<br/>cloud router"]);
+  router(["Router"]);
   end;
   subgraph "Your infrastructure";
   api[Your GraphQL API];
@@ -29,7 +29,7 @@ Clients send operations to your router's public endpoint, _instead of_ sending t
 flowchart LR;
   clients(Clients);
   subgraph "GraphOS";
-  router(["Serverless<br/>cloud router"]);
+  router(["Router"]);
   end;
   subgraph "Your infrastructure";
   subgraphA[Subgraph A];
@@ -44,7 +44,7 @@ With this supergraph architecture (also known as [Apollo Federation](/federation
 
 ## Initializing your router
 
-Your router is provisioned _automatically_ whenever you create a cloud supergraph in Studio, or whenever you create a new [variant](../org/graphs/#variants) for an _existing_ cloud supergraph. Each variant has its own distinct router.
+Your router is provisioned _automatically_ whenever you create a cloud supergraph in Studio, or whenever you create a new [variant](../graphs/overview/#variants) for an _existing_ cloud supergraph. Each variant has its own distinct router.
 
 When you first create your variant, the router provisioning process can take a few minutes. If this process hasn't completed yet for a particular variant, an **INITIATING ENDPOINT** label is shown at the top of the variant's page in Studio:
 
@@ -57,7 +57,7 @@ When you first create your variant, the router provisioning process can take a f
 
 ## Configuring your router
 
-See [Configuring cloud routing](./configuration).
+See [Configuring cloud routing](./cloud-configuration).
 
 ## Cloud routing FAQ
 

@@ -11,20 +11,22 @@
     "Introduction": "/",
     "Sandbox (no account required)": "/explorer/sandbox",
     "Platform API": "/platform-api",
-    "Quickstart": {
-      "1️⃣ Create your supergraph": "/getting-started",
-      "2️⃣ Supergraph next steps": "/next-steps"
+    "Quickstarts": {
+      "Cloud (recommended)": "/quickstart/cloud",
+      "Self-hosted (advanced)": "/quickstart/self-hosted",
+      "Next steps": "/quickstart/next-steps"
     },
     "Working with Supergraphs": {
-      "Overview": "/org/graphs",
+      "Overview": "/graphs/overview",
       "Publishing schemas": "/schema/cli-registration",
-      "Local development": "/local-development",
-      "Graphs in Studio": "/studio-graph-features",
-      "Supergraph-specific Studio features": "/federated-graphs"
+      "Local development": "/graphs/local-development",
+      "Managing graphs in Studio": "/graphs/studio-features",
+      "Supergraph-specific Studio features": "/graphs/federated-graphs"
     },
-    "Cloud Routing": {
-      "Overview": "/cloud-routing/overview",
-      "Configuring": "/cloud-routing/configuration"
+    "Routing for Supergraphs": {
+      "Cloud routing overview": "/routing/cloud",
+      "Configuring cloud routing": "/routing/cloud-configuration",
+      "Self-hosted routing (advanced)": "/routing/self-hosted"
     },
     "The Explorer": {
       "Overview": "/explorer/explorer",
@@ -42,19 +44,19 @@
       "Operation signatures": "/metrics/operation-signatures"
     },
     "Schema Delivery": {
-      "Schema checks": "/schema-checks",
-      "Configuring schema checks": "/check-configurations",
-      "Launches": "/launches",
-      "Contracts (enterprise only)": "/contracts",
-      "Validating client operations": "/validating-client-operations",
-      "Connecting to GitHub": "/github-integration"
+      "Schema checks": "/delivery/schema-checks",
+      "Configuring schema checks": "/delivery/check-configurations",
+      "Launches": "/delivery/launches",
+      "Contracts (enterprise only)": "/delivery/contracts",
+      "Validating client operations": "/delivery/validating-client-operations",
+      "Connecting to GitHub": "/delivery/github-integration"
     },
     "Notifications": {
-      "Setup": "/notification-setup",
-      "Daily reports": "/daily-reports",
-      "Schema changes": "/schema-change-integration",
-      "Performance alerts (experimental)": "/performance-alerts",
-      "Build status (preview)": "/build-status-notification"
+      "Setup": "/notifications/notification-setup",
+      "Daily reports": "/notifications/daily-reports",
+      "Schema changes": "/notifications/schema-change-integration",
+      "Performance alerts (experimental)": "/notifications/performance-alerts",
+      "Build status (preview)": "/notifications/build-status-notification"
     },
     "Security": {
       "API keys": "/api-keys",

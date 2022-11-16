@@ -1,3 +1,25 @@
+# Reorganize file structure in GraphOS docset
+/check-configurations/ /docs/graphos/delivery/check-configurations/
+/contracts/ /docs/graphos/delivery/contracts/
+/github-integration/ /docs/graphos/delivery/github-integration/
+/launches/ /docs/graphos/delivery/launches/
+/schema-checks/ /docs/graphos/delivery/schema-checks/
+/validating-client-operations/ /docs/graphos/delivery/validating-client-operations/
+/federated-graphs/ /docs/graphos/graphs/federated-graphs/
+/local-development/ /docs/graphos/graphs/local-development/
+/org/graphs/ /docs/graphos/graphs/overview/
+/studio-graph-features/ /docs/graphos/graphs/studio-features/
+/build-status-notification/ /docs/graphos/graphs/build-status-notification/
+/daily-reports/ /docs/graphos/notifications/daily-reports/
+/notification-setup/ /docs/graphos/notifications/notification-setup/
+/performance-alerts/ /docs/graphos/notifications/performance-alerts/
+/schema-change-integration/ /docs/graphos/notifications/schema-change-integration/
+/getting-started/ /docs/graphos/quickstart/cloud/
+/next-steps/ /docs/graphos/quickstart/next-steps/
+/self-hosted/ /docs/graphos/quickstart/self-hosted/
+/cloud-routing/overview/ /docs/graphos/routing/cloud/
+/cloud-routing/configuration/ /docs/graphos/routing/cloud-configuration/
+
 /schema/registry/ /docs/graphos/org/graphs/
 /schema/schema-reporting /docs/graphos/schema/cli-registration/
 
@@ -29,7 +51,7 @@
 /schema-registry/ /docs/graphos/schema/registry/
 /accounts-organizations/ /docs/graphos/org/account/
 
-/federation/ /docs/graphos/managed-federation/overview/
+/federation/ /docs/federation/managed-federation/overview/
 
 /integrations/ /docs/graphos/github-integration/
 
