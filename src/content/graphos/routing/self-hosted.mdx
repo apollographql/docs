@@ -34,4 +34,96 @@ With the exception of Apollo-managed routing, self-hosted supergraphs benefit fr
 
 ## Creating a self-hosted supergraph
 
-Organizations with any Apollo plan can create self-hosted supergraphs. To learn how, see the [self-hosted quickstart](../quickstart/self-hosted/).
+Organizations with any Apollo plan can create self-hosted supergraphs. See the instructions for your organization's [plan type](../org/plans/):
+
+> If you just created your organization as part of creating your account, it's on a **Serverless** plan type.
+
+<ExpansionPanel title="Serverless plans">
+
+1. Go to your organization's **Supergraphs** tab in [Apollo Studio](https://studio.apollographql.com/).
+
+    - **If you see this dialog...**
+
+        <img
+          src="../img/studio-welcome.jpg"
+          class="screenshot"
+          alt="Welcome message for new Studio orgs"
+          width="350"
+        />
+
+        ...then click **Coming from Apollo Odyssey, or want to connect a self-managed router?**
+
+    - **Otherwise,** find the following notice in the bottom-right corner of the page:
+
+        <img
+          src="../img/classic-graph-flow.jpg"
+          class="screenshot"
+          alt="Link to classic graph flow"
+          width="300"
+        />
+
+        Click **Head over to our classic graph flow**.
+
+    In either case, Studio displays the following dialog for creating a graph:
+
+    <img
+      className="screenshot"
+      src="../img/graph-creation.jpg"
+      width="350"
+      style="margin-bottom: 20px;"
+    />
+
+2. Specify an organization and title for your graph.
+
+3. Leave the **Graph Architecture** as **Supergraph (default)**.
+
+4. Click **Next**. A dialog like the following appears:
+
+    <img
+     src="../img/register-schema-dialog.jpg"
+     class="screenshot"
+     alt="Schema registration options"
+     width="500"
+    />
+
+5. Leave the **Supergraph Pipeline Track** dropdown set to its default value.
+
+Your graph has been created, and your Studio organization now includes a **Classic Graphs** tab in addition to its **Supergraphs** tab.
+
+> Note that the **Supergraphs** tab is only for _cloud_ supergraphs. Your self-hosted supergraphs are under the **Classic Graphs** tab.
+
+</ExpansionPanel>
+
+<ExpansionPanel title="Enterprise and legacy plans">
+
+1. Go to your organization's **Graphs** tab in [Apollo Studio](https://studio.apollographql.com/).
+
+2. Click **New Graph** in the top right. Studio displays the following dialog:
+
+    <img
+      className="screenshot"
+      src="../img/graph-creation.jpg"
+      width="350"
+      style="margin-bottom: 20px;"
+    />
+
+3. Specify an organization and title for your graph.
+
+3. Leave the **Graph Architecture** as **Supergraph (default)**.
+
+5. Click **Next**. A dialog like the following appears:
+
+    <img
+     src="../img/register-schema-dialog.jpg"
+     class="screenshot"
+     alt="Schema registration options"
+     width="500"
+    />
+
+6. Leave the **Supergraph Pipeline Track** dropdown set to its default value.
+
+Your graph has been created.
+
+</ExpansionPanel>
+
+For more information, see the [self-hosted quickstart](../quickstart/self-hosted/).
