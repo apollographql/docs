@@ -134,8 +134,11 @@ The `config.json` file lives at the root of its docset's content directory, and 
   "title": "Apollo Server",
   "version": "v3",
   "versionBanner": {
-    "link": "/v3-deprecation-page",
-    "content": "Check out the deprecation page."
+    "link": {
+      "to": "/v3-deprecation-page",
+      "content": "Check out the deprecation page",
+    },
+    "message": "Apollo Server v3 is no longer maintained."
   },
   "algoliaFilters": ["docset:server", ["docset:react", "docset:federation"]],
   "sidebar": {

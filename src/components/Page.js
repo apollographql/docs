@@ -260,13 +260,20 @@ export default function Page({file, pageContext, uri}) {
         <PageLayout
           {...pageProps}
           banner={
-            defaultVersion && defaultVersion.slug !== basePath ? (
+            versionBanner ? (
+              <VersionBanner
+                versionLabels={[]}
+                to={versionBanner.link.to}
+                message={versionBanner.message}
+              >
+                {versionBanner.link.content}
+              </VersionBanner>
+            ) : defaultVersion && defaultVersion.slug !== basePath ? (
               <VersionBanner
                 versionLabels={[defaultVersion.label, currentVersion]}
-                to={versionBanner?.link ?? '/' + defaultVersion.slug}
+                to={'/' + defaultVersion.slug}
               >
-                {versionBanner?.content ??
-                  'Switch to the latest stable version.'}
+                Switch to the latest stable version.
               </VersionBanner>
             ) : null
           }
