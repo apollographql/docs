@@ -33,7 +33,7 @@ Start the process by making a "federated graph of one". Your existing monolith c
 1. Set up [header propagation](/router/configuration/header-propagation/) so that the monolith receives any necessary headers from the router.
 1. Set up internal routing rules to redirect client requests to the Apollo Router instead of your monolith.
 1. Enable usage metrics reporting to Apollo Studio.
-1. Add [subgraph checks](/graphos/schema-checks/) to your monolith's CI pipeline.
+1. Add [subgraph checks](/graphos/delivery/schema-checks/) to your monolith's CI pipeline.
 
 At this point, client requests go to your new Apollo Router instead of the monolith, but it's serving the same schema so clients won't know the difference.
 
@@ -231,7 +231,7 @@ Inevitably, some query plans become more complex while you're migrating types be
 
 ### 1. Make your monolith a real subgraph
 
-Now that you have a migration plan, you can start making schema and code changes. The first change is to add the [Apollo Federation subgraph specification](/federation/federation-spec/) to the monolith. The steps involved depend on which [Apollo-Federation-compatible library](/federation/supported-subgraphs/) you use with your monolith's language and framework.
+Now that you have a migration plan, you can start making schema and code changes. The first change is to add the [Apollo Federation subgraph specification](/federation/subgraph-spec/) to the monolith. The steps involved depend on which [Apollo-Federation-compatible library](/federation/supported-subgraphs/) you use with your monolith's language and framework.
 
 The most important functionality to add is defining your entities (by adding `@key` directives) and adding their [reference resolvers](/federation/subgraphs#3-define-an-entity).
 

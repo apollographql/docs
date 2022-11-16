@@ -76,16 +76,16 @@ The GraphOS platform provides an ever-growing collection of tools and services t
 
 **These features are core to GraphOS:**
 
-- [**Cloud routing.**](/graphos/cloud-routing/overview)
+- [**Cloud routing.**](/graphos/routing/cloud/)
   - GraphOS automatically provisions and hosts a router for each of your supergraphs. Clients query your router instead of individual subgraphs, which enables the router to automatically collect operation metrics that you can then visualize in Apollo Studio.
 - **The schema registry.**
   - GraphOS tracks the GraphQL schemas for all of your individual subgraphs, and it also handles **composing** those subgraph schemas into one _supergraph_ schema for your router.
 - **Safe schema delivery.**
-  - The [schema checks](/graphos/schema-checks/) feature of GraphOS enables you to verify whether proposed changes to a subgraph will cause an issue with _other_ subgraphs, or with any of your existing clients.
+  - The [schema checks](/graphos/delivery/schema-checks/) feature of GraphOS enables you to verify whether proposed changes to a subgraph will cause an issue with _other_ subgraphs, or with any of your existing clients.
   - Whenever you update a subgraph schema, GraphOS composes a new _supergraph_ schema for your router. If composition succeeds, your router automatically begins using its new schema.
-  - You can view the results of each [launch](/graphos/launches/) that takes place whenever you update a subgraph schema, helping you resolve any issues that might occur.
+  - You can view the results of each [launch](/graphos/delivery/launches/) that takes place whenever you update a subgraph schema, helping you resolve any issues that might occur.
 - **An interface for every use case.**
-  - [Apollo Studio](https://studio.apollographql.com) is the primary web interface for GraphOS. Among other capabilities, you use Studio to create your organization and its supergraphs, view [schemas](/graphos/studio-graph-features/#the-schema-page) and [metrics](/graphos/metrics/usage-reporting), and test out operations in [the Explorer](/graphos/explorer/explorer/).
+  - [Apollo Studio](https://studio.apollographql.com) is the primary web interface for GraphOS. Among other capabilities, you use Studio to create your organization and its supergraphs, view [schemas](/graphos/graphs/studio-features/#the-schema-page) and [metrics](/graphos/metrics/usage-reporting), and test out operations in [the Explorer](/graphos/explorer/explorer/).
   - [The Rover CLI](/rover/getting-started/) is the primary _command-line_ interface for GraphOS. Among other capabilities, you use Rover to publish subgraph schemas to the registry, run schema checks from CI, and test out your supergraph within your development environment.
   - If you want to automate your own workflows outside of Studio or Rover, you can use the official [GraphOS Platform API](/graphos/platform-api) to do so. We'll expose more GraphOS capabilities through the Platform API over time.
 
@@ -150,12 +150,12 @@ To implement a supergraph, you set up its [individual parts](#whats-in-a-supergr
 
 - **If you're new to GraphQL**, we recommend starting your supergraph journey with the [Lift-off tutorial series](https://www.apollographql.com/tutorials/lift-off-part1/).
     - Familiarizing yourself with fundamental GraphQL concepts is an important prerequisite to getting the most out of your supergraph.
-- **If you're already using GraphQL**, we recommend jumping in with your first GraphOS cloud supergraph. [See the quickstart!](/graphos/getting-started/)
+- **If you're already using GraphQL**, we recommend jumping in with your first GraphOS cloud supergraph. [See the quickstart!](/graphos/quickstart/cloud/)
     - You can also check out the [Voyage tutorial series](https://www.apollographql.com/tutorials/voyage-part1) to learn how to create a complete supergraph from scratch.
 
 ### Implementing the graph router
 
-If you [create a **cloud supergraph**](/graphos/getting-started/) with GraphOS, Apollo provisions and hosts your supergraph's router for you!
+If you [create a **cloud supergraph**](/graphos/quickstart/cloud/) with GraphOS, Apollo provisions and hosts your supergraph's router for you!
 
 For enterprise organizations that need to run their router in their own infrastructure, Apollo provides two libraries that can act as a graph router:
 
@@ -196,7 +196,7 @@ We have loads of helpful resources to help you start your supergraph journey:
 - Interactive tutorials with [Apollo Odyssey](https://www.apollographql.com/tutorials/)
     - [Lift-off](https://www.apollographql.com/tutorials/lift-off-part1) (for getting started with GraphQL)
     - [Voyage](https://www.apollographql.com/tutorials/voyage-part1) (for getting started with your supergraph)
-- A quickstart for [creating your cloud supergraph with GraphOS](/graphos/getting-started/)
+- A quickstart for [creating your cloud supergraph with GraphOS](/graphos/quickstart/cloud/)
     - Get started with your own GraphQL API, or try out the platform with an Apollo-hosted example supergraph.
 - An [example supergraph repo](https://github.com/apollographql/supergraph-demo-fed2) with a detailed README and multiple subgraph definitions
 
