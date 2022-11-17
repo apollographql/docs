@@ -195,7 +195,7 @@ export default function Page({file, pageContext, uri}) {
 
   const {frontmatter, headings} = childMdx || childMarkdownRemark;
   const {title, description, toc, tags} = frontmatter;
-  const {versions, currentVersion, navItems} = pageContext;
+  const {versions, currentVersion, navItems, versionBanner} = pageContext;
 
   const pageProps = usePageLayoutProps({
     pageContext,
@@ -240,7 +240,6 @@ export default function Page({file, pageContext, uri}) {
       </Button>
     );
   }, [gitRemote, basePath, relativePath]);
-
   return (
     <>
       <Global
@@ -261,11 +260,21 @@ export default function Page({file, pageContext, uri}) {
         <PageLayout
           {...pageProps}
           banner={
-            defaultVersion && defaultVersion.slug !== basePath ? (
+            versionBanner ? (
+              <VersionBanner
+                versionLabels={[]}
+                to={versionBanner.link.to}
+                message={versionBanner.message}
+              >
+                {versionBanner.link.content}
+              </VersionBanner>
+            ) : defaultVersion && defaultVersion.slug !== basePath ? (
               <VersionBanner
                 versionLabels={[defaultVersion.label, currentVersion]}
                 to={'/' + defaultVersion.slug}
-              />
+              >
+                Switch to the latest stable version.
+              </VersionBanner>
             ) : null
           }
           subtitle={

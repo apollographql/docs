@@ -3,7 +3,7 @@ title: Supergraph next steps
 description: Get the most out of GraphOS
 ---
 
-After you [create your cloud supergraph](./getting-started/) in Apollo Studio, read below to learn about some of the next steps you should take to get the most out of it and the entire GraphOS platform.
+After you [create a supergraph](./cloud/) in Apollo Studio, read below to learn about some of the next steps you should take to get the most out of it and the entire GraphOS platform.
 
 > For the most part, you can perform these next steps in any order. But you should definitely start by [installing the Rover CLI](#first-install-the-rover-cli).
 
@@ -15,7 +15,7 @@ The Rover CLI is the primary command-line interface for interacting with GraphOS
 
 ## Run your supergraph locally
 
-See [this article](./local-development/).
+See [this article](../graphs/local-development/).
 
 ## Subgraph actions
 
@@ -27,7 +27,7 @@ When you first set up your cloud supergraph, Apollo Studio fetches your existing
 flowchart LR;
   clients(Clients);
   subgraph "GraphOS";
-  router(["Serverless<br/>cloud router"]);
+  router(["Router"]);
   end;
   subgraph "Your infrastructure";
   api["Subgraph A<br/>(Your GraphQL API)"];
@@ -39,9 +39,9 @@ flowchart LR;
 
 This initial schema fetch is a one-time action to help you get started. Whenever your API's schema _changes_, Studio _doesn't_ automatically fetch it again. This means your router _doesn't know_ about those changes. Clients can't include any new schema fields in their queries until your router _does_ know about the changes!
 
-Whenever you update your subgraph's schema, you need to **publish** those changes with the Rover CLI. [Learn about publishing subgraph schemas.](./schema/cli-registration/#subgraph-schemas)
+Whenever you update your subgraph's schema, you need to **publish** those changes with the Rover CLI. [Learn about publishing subgraph schemas.](../schema/cli-registration/#subgraph-schemas)
 
-After learning about this publishing process, you should [integrate it into your CI workflow](#set-up-continuous-delivery).
+After learning about the publishing process, you should [integrate it into your CI workflow](#set-up-continuous-delivery).
 
 ### Add a subgraph
 
@@ -51,7 +51,7 @@ One of the most powerful features of a supergraph is that it can combine _multip
 flowchart LR;
   clients(Clients);
   subgraph "GraphOS";
-  router(["Serverless<br/>cloud router"]);
+  router(["Router"]);
   end;
   subgraph "Your infrastructure";
   api[Subgraph A];
@@ -65,7 +65,7 @@ flowchart LR;
 
 With this architecture, different teams in your organization can each maintain their own subgraph. This helps teams work in parallel, because they aren't all contributing to the same single codebase.
 
-**To add a subgraph to your supergraph, you publish its schema!** This uses the exact same Rover command as [updating an _existing_ subgraph](#update-a-subgraph-schema). The only difference is that you provide the name of the _new_ subgraph to the command. [Learn about publishing subgraph schemas.](./schema/cli-registration/#subgraph-schemas)
+**To add a subgraph to your supergraph, you publish its schema!** This uses the exact same Rover command as [updating an _existing_ subgraph](#update-a-subgraph-schema). The only difference is that you provide the name of the _new_ subgraph to the command. [Learn about publishing subgraph schemas.](../schema/cli-registration/#subgraph-schemas)
 
 ### Enable federation features
 
@@ -91,9 +91,9 @@ After you make these changes, you can start using powerful federation features i
 Every time you want to make changes to one of your subgraphs, you should do the following:
 
 1. Verify that your proposed changes won't break your supergraph _or_ any of your existing clients.
-    - To do this, you set up [schema checks](./schema-checks/) for your supergraph.
+    - To do this, you set up [schema checks](../delivery/schema-checks/) for your supergraph.
 2. Whenever you deploy verified changes, always publish your updated subgraph schema to GraphOS as part of that deployment.
-    - For a basic example of this, see [Publishing with continuous delivery](./schema/cli-registration/#publishing-with-continuous-delivery).
+    - For a basic example of this, see [Publishing with continuous delivery](../schema/cli-registration/#publishing-with-continuous-delivery).
 
 ### Disable client-subgraph communication
 
@@ -103,7 +103,7 @@ With a supergraph architecture, clients should _never_ query your individual sub
 flowchart LR;
   clients(Clients);
   subgraph "GraphOS";
-  router(["Serverless<br/>cloud router"]);
+  router(["Router"]);
   end;
   subgraph "Your infrastructure";
   api["Subgraph A<br/>(Your GraphQL API)"];
@@ -125,7 +125,7 @@ For more information, see [Securing your subgraphs](/federation/building-supergr
 
 ### Configure notifications
 
-GraphOS can send you various types of notifications via a few different channels (including Slack and Pagerduty). These notifications can include a daily metrics report, schema change updates, and experimental performance alerts. [Set up notifications.](./notification-setup/)
+GraphOS can send you various types of notifications via a few different channels (including Slack and Pagerduty). These notifications can include a daily metrics report, schema change updates, and experimental performance alerts. [Set up notifications.](../notifications/notification-setup/)
 
 ### Invite team members
 
@@ -138,7 +138,7 @@ If you've created a Studio organization to collaborate with your team, invite yo
 A supergraph variant's **Clients** page enables you to view operation metrics, segmented by your different clients:
 
 <img
-  src="./img/client-awareness/overview.jpg"
+  src="../img/client-awareness/overview.jpg"
   class="screenshot"
   alt="Client awareness overview"
   width="400"

@@ -29,29 +29,6 @@ const gatsbyRemarkPlugins = [
 const plugins = [
   'gatsby-plugin-svgr',
   '@chakra-ui/gatsby-plugin',
-  {
-    resolve: 'gatsby-plugin-sitemap',
-    options: {
-      query: `
-        {
-          site {
-            siteMetadata {
-              siteUrl
-            }
-          }
-          allSitePage {
-            nodes {
-              path
-              pageContext
-            }
-          }
-        }
-      `,
-      resolvePages: ({allSitePage}) =>
-        // filter out internal pages
-        allSitePage.nodes.filter(page => !page.pageContext.internal)
-    }
-  },
   'gatsby-plugin-combine-redirects', // local plugin
   'gatsby-plugin-loadable-components-ssr',
   {
@@ -178,6 +155,32 @@ const plugins = [
     }
   }
 ];
+
+if (process.env.CONTEXT === 'production') {
+  plugins.push({
+    resolve: 'gatsby-plugin-sitemap',
+    options: {
+      query: `
+        {
+          site {
+            siteMetadata {
+              siteUrl
+            }
+          }
+          allSitePage {
+            nodes {
+              path
+              pageContext
+            }
+          }
+        }
+      `,
+      resolvePages: ({allSitePage}) =>
+        // filter out internal pages
+        allSitePage.nodes.filter(page => !page.pageContext.internal)
+    }
+  });
+}
 
 if (process.env.DOCS_LOCAL) {
   plugins.push(

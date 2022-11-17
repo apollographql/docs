@@ -10,7 +10,7 @@ import {Link} from 'gatsby';
 <p>
   <Button
     colorScheme="indigo"
-    to="/graphos/getting-started/"
+    to="/graphos/quickstart/cloud/"
     as={Link}
     style={{
       marginRight: '10px'
@@ -33,16 +33,16 @@ These features (along with many others) are available to organizations on the **
 
 > [Learn about Apollo plans.](https://www.apollographql.com/pricing/)
 
-- [**Cloud routing.**](./cloud-routing/overview)
+- [**Cloud routing.**](./routing/cloud/)
   - GraphOS automatically provisions and hosts a router for each of your supergraphs. Clients query your router instead of individual subgraphs, which enables the router to automatically collect operation metrics that you can then visualize in Apollo Studio.
 - **The schema registry.**
   - GraphOS tracks the GraphQL schemas for all of your individual subgraphs, and it also handles **composing** those subgraph schemas into one _supergraph_ schema for your router.
 - **Safe schema delivery.**
-  - The [schema checks](./schema-checks/) feature of GraphOS enables you to verify whether proposed changes to a subgraph will cause an issue with _other_ subgraphs, or with any of your existing clients.
+  - The [schema checks](./delivery/schema-checks/) feature of GraphOS enables you to verify whether proposed changes to a subgraph will cause an issue with _other_ subgraphs, or with any of your existing clients.
   - Whenever you update a subgraph schema, GraphOS composes a new _supergraph_ schema for your router. If composition succeeds, your router automatically begins using its new schema.
-  - You can view the results of each [launch](./launches/) that takes place whenever you update a subgraph schema, helping you resolve any issues that might occur.
+  - You can view the results of each [launch](./delivery/launches/) that takes place whenever you update a subgraph schema, helping you resolve any issues that might occur.
 - **An interface for every use case.**
-  - [Apollo Studio](https://studio.apollographql.com) is the primary web interface for GraphOS. Among other capabilities, you use Studio to create your organization and its supergraphs, view [schemas](./studio-graph-features/#the-schema-page) and [metrics](./metrics/usage-reporting), and test out operations in [the Explorer](./explorer/explorer/).
+  - [Apollo Studio](https://studio.apollographql.com) is the primary web interface for GraphOS. Among other capabilities, you use Studio to create your organization and its supergraphs, view [schemas](./graphs/studio-features/#the-schema-page) and [metrics](./metrics/usage-reporting), and test out operations in [the Explorer](./explorer/explorer/).
   - [The Rover CLI](/rover/getting-started/) is the primary _command-line_ interface for GraphOS. Among other capabilities, you use Rover to publish subgraph schemas to the registry, run schema checks from CI, and test out your supergraph within your development environment.
   - If you want to automate your own workflows outside of Studio or Rover, you can use the official [GraphOS Platform API](./platform-api) to do so. We'll expose more GraphOS capabilities through the Platform API over time.
 
@@ -50,9 +50,9 @@ These features (along with many others) are available to organizations on the **
 
 These additional features are available to organizations on an **Enterprise** plan:
 
-- **Self-hosted routing.**
+- [**Self-hosted routing.**](./routing/self-hosted/)
   - Deploy your supergraph's router inside your own infrastructure, enabling you to maximize its performance and fully customize its behavior. Self-deployed routers use [the same powerful technology](/router/) that cloud routing uses under the hood.
-- **Supergraph filtering with [contracts](./contracts/).**
+- **Supergraph filtering with [contracts](./delivery/contracts/).**
   - Deploy multiple instances of your router that use different filtered subsets of your supergraph's schema. Different clients can then communicate with different routers, limiting them to whichever types and fields they should have access to.
 - **Extended data retention.**
   - Your supergraph's historical operation metrics are available for visualization in Studio significantly longer than with a **Serverless** plan.
@@ -71,7 +71,7 @@ In addition to the features above, an Enterprise plan provides access to our Gra
 
 <Button
   colorScheme="indigo"
-  to="/graphos/getting-started/"
+  to="/graphos/quickstart/cloud/"
   as={Link}
   style={{
     marginRight: '10px'

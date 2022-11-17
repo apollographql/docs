@@ -9,7 +9,7 @@ You can review the results of schema checks inside Apollo Studio, helping you ma
 
 <img
   className="screenshot"
-  src="./img/schema-checks/checks-studio.jpg"
+  src="../img/schema-checks/checks-studio.jpg"
   alt="Schema check results in Studio"
   width="300"
 />
@@ -24,7 +24,7 @@ GraphOS can perform the following types of schema checks:
 
 - [**Composition checks.**](#federated-composition-checks) For supergraphs, verify whether your proposed changes to a subgraph schema will successfully compose with your _other_ subgraph schemas.
 
-- **[Contract checks](./contracts/) (enterprise only).** When running schema checks on a source variant, also check whether your proposed schema changes will break any downstream contract variants.
+- **[Contract checks](../delivery/contracts/) (enterprise only).** When running schema checks on a source variant, also check whether your proposed schema changes will break any downstream contract variants.
 
 > **Most of this article covers operation checks.**
 > * For details on composition checks, [see this section](#federated-composition-checks).
@@ -35,17 +35,17 @@ GraphOS can perform the following types of schema checks:
 To enable schema checks for your supergraph, do the following if you haven't yet:
 
 1. Make sure you've published all of your subgraph schemas to GraphOS, and that those schemas are up to date.
-    - [Learn how to publish schemas.](./schema/cli-registration/)
+    - [Learn how to publish schemas.](../schema/cli-registration/)
 2. Make sure your supergraph is reporting metrics to GraphOS. GraphOS uses these metrics to help determine when a type or field can be modified or removed safely.
-    - If you have a [cloud supergraph](./org/graphs/#cloud-supergraphs), your router reports metrics automatically.
-   - [Setup for other graphs](./metrics/sending-operation-metrics/)
+    - If you have a [cloud supergraph](../graphs/overview/#cloud-supergraphs), your router reports metrics automatically.
+   - [Setup for other graphs](../metrics/sending-operation-metrics/)
 3. [Install the Rover CLI](/rover/getting-started/) in your development environment and [authenticate it with Apollo Studio](/rover/configuring/#authenticating-with-apollo-studio).
 
 ## Running your first check
 
 Let's say you've made local changes to one of your subgraph schemas. After you [complete the prerequisites](#prerequisites), you can run schema checks against those changes with the `rover subgraph check` command.
 
-> If you have a [monograph](./org/graphs/#monographs) (not recommended), use [`rover graph`](/rover/commands/graphs/#checking-schema-changes) commands instead of `rover subgraph` commands.
+> If you have a [monograph](../graphs/overview/#monographs) (not recommended), use [`rover graph`](/rover/commands/graphs/#checking-schema-changes) commands instead of `rover subgraph` commands.
 
 The `rover subgraph check` command looks like this:
 
@@ -102,7 +102,7 @@ The output also includes a Studio URL that provides full details on the changes 
 
 <img
   className="screenshot"
-  src="./img/schema-checks/service-check-page.png"
+  src="../img/schema-checks/service-check-page.png"
   alt="Service check page in Apollo Studio"
 />
 
@@ -116,7 +116,7 @@ In cases like this, you can **override** a flagged change in Apollo Studio from 
 
 <img
   className="screenshot"
-  src="./img/schema-checks/mark-operation.png"
+  src="../img/schema-checks/mark-operation.png"
   alt="Service check page in Apollo Studio"
   width="500"
 />
@@ -136,7 +136,7 @@ You can rerun checks from inside Studio:
 
 <img
   className="screenshot"
-  src="./img/schema-checks/rerun-check.png"
+  src="../img/schema-checks/rerun-check.png"
   alt="Rerun check in Apollo Studio"
 />
 
@@ -156,7 +156,7 @@ Results of both check types are available in Studio from your graph's Checks pag
 
 <img
   className="screenshot"
-  src="./img/schema-checks/checks-studio.jpg"
+  src="../img/schema-checks/checks-studio.jpg"
   alt="Schema check results in Studio"
   width="300"
 />
@@ -218,7 +218,7 @@ If you're using GitHub, you can install the [Apollo Studio GitHub app](https://g
 
 <img
   className="screenshot"
-  src="./img/schema-checks/github-check.png"
+  src="../img/schema-checks/github-check.png"
   alt="GitHub Status View"
 />
 

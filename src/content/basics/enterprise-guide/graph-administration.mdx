@@ -103,11 +103,11 @@ The gateway will send this tracing data to Apollo Studio where it may be used fo
 
 ![A federated trace representation in Apollo Studio](../images/enterprise-guide/apollo-studio-federated-trace.jpg)
 
-When Apollo Server is used to power subgraphs, this tracing data is provided out-of-the-box via the [inline trace plugin](/apollo-server/api/plugin/inline-trace/#using-the-plugin). Many [third-party federation libraries](/federation/supported-subgraphs/) also expose federated tracing data. Note that not all third-party federation libraries will necessarily provide field-level tracing data in a response, but the gateway's aggregated trace will still show the total time spent in the service even though the detailed field resolver data won't be available for that portion of the query plan.
+When Apollo Server is used to power subgraphs, this tracing data is provided out-of-the-box via the [inline trace plugin](/apollo-server/api/plugin/inline-trace/#using-the-plugin). Many [third-party federation libraries](/federation/building-supergraphs/supported-subgraphs/) also expose federated tracing data. Note that not all third-party federation libraries will necessarily provide field-level tracing data in a response, but the gateway's aggregated trace will still show the total time spent in the service even though the detailed field resolver data won't be available for that portion of the query plan.
 
 ### Integration with other observability tools
 
-Many teams use additional observability tools to monitor application performance and these tools may also be integrated with a federated graph. Apollo Studio connects directly with [DataDog](/graphos/datadog-integration/) and many other integrations are possible too, either through a custom Apollo Server plugin in the gateway, a custom `RemoteGraphQLDataSource`, or by carrying specific headers throughout a request.
+Many teams use additional observability tools to monitor application performance and these tools may also be integrated with a federated graph. Apollo Studio connects directly with [Datadog](/graphos/metrics/datadog-integration/) and many other integrations are possible too, either through a custom Apollo Server plugin in the gateway, a custom `RemoteGraphQLDataSource`, or by carrying specific headers throughout a request.
 
 For example, when using AWS CloudWatch an `aws-request-id` header must is included with the request, but by default, Apollo Server's [usage reporting plugin](/apollo-server/api/plugin/usage-reporting/) excludes all headers. However, the usage reporting plugin can be configured to include this header in its traces as follows:
 
