@@ -1,15 +1,15 @@
 ---
-title: GraphOS quickstart for self-hosted supergraphs
-description: Host your supergraph's router in your own infrastructure
+title: Setting up a self-hosted supergraph
+description: Host your enterprise router in your own infrastructure
 ---
 
-> ⚠️ **Important:** If you're just getting started with GraphOS, we recommend instead [creating a cloud supergraph](./cloud/).
+> ⚠️ **Important:** If you're just getting started with GraphOS, instead [create a cloud supergraph](./cloud/).
 >
-> Self-hosted supergraphs are recommended only for organizations that need to host their router in their own infrastructure, usually to satisfy advanced performance or compliance requirements.
+> Self-hosted supergraphs are an enterprise-only feature for organizations with advanced performance or compliance requirements.
 >
-> If you _do_ need to host your supergraph's router in your own infrastructure, you might also benefit from the expanded features of an [Enterprise plan](https://www.apollographql.com/pricing/). Please [contact us](https://www.apollographql.com/contact-sales/).
+> If your organization might benefit from the expanded features of an [Enterprise plan](https://www.apollographql.com/pricing/). Please [contact us](https://www.apollographql.com/contact-sales/).
 
-Hello! 👋 This quickstart gets you up and running with GraphOS and a self-hosted supergraph. **None of this setup requires a paid plan.**
+This tutorial helps you get you up and running with GraphOS and a self-hosted supergraph. You can complete this tutorial even if your organization _doesn't_ currently have an Enterprise plan, enabling you to test out this functionality.
 
 ## Supergraph concepts
 
@@ -38,7 +38,7 @@ The router uses a special GraphQL schema called the **supergraph schema**. This 
 
 A **_self-hosted_ supergraph** is a supergraph with a router that you host and manage in your _own infrastructure_. This is in contrast to a [**cloud supergraph**](./cloud/), which uses a router that's hosted and managed by Apollo.
 
-We'll cover these concepts in more detail as we proceed through the steps below. Let's jump in!
+We'll cover these concepts in more detail as we proceed through the steps below.
 
 ## 1. Set up Apollo tools
 
@@ -47,7 +47,7 @@ This quickstart uses the following Apollo tools:
 * **Apollo Studio.** This is the primary web interface for GraphOS. Studio helps you monitor, manage, and collaborate on your supergraph.
 * **The Rover CLI.** This is the primary _command-line_ interface for GraphOS. Rover helps you interact with your graphs and their schemas.
 
-Let's set these up first!
+Let's set these up first.
 
 #### Create an Apollo account
 
@@ -652,7 +652,7 @@ Nice work! We've registered two **subgraph schemas** with GraphOS, and we've set
 
 If we now publish changes to one of our subgraph schemas, our running router _automatically_ fetches the corresponding changes to the supergraph schema (assuming composition succeeds).
 
-In the next article, we'll cover some of the most common and important actions to perform on your new supergraph, including:
+Next, we'll cover some of the most common and important actions to perform on your new supergraph, including:
 
 - Updating subgraph schemas
 - Adding another subgraph

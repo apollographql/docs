@@ -3,11 +3,11 @@ title: Self-hosted routing in GraphOS
 description: Host your supergraph's router in your own infrastructure
 ---
 
-> ⚠️ **Important:** If you're just getting started with GraphOS, we recommend instead [creating a cloud supergraph](../quickstart/cloud/).
+> ⚠️ **Important:** If you're just getting started with GraphOS, instead [create a cloud supergraph](../quickstart/cloud/).
 >
-> Self-hosted supergraphs are recommended only for organizations that need to host their router in their own infrastructure, usually to satisfy advanced performance or compliance requirements.
+> Self-hosted supergraphs are an enterprise-only feature for organizations with advanced performance or compliance requirements.
 >
-> If you _do_ need to host your supergraph's router in your own infrastructure, you might also benefit from the expanded features of an [Enterprise plan](https://www.apollographql.com/pricing/). Please [contact us](https://www.apollographql.com/contact-sales/).
+> If your organization might benefit from the expanded features of an [Enterprise plan](https://www.apollographql.com/pricing/). Please [contact us](https://www.apollographql.com/contact-sales/).
 
 Some organizations with advanced requirements need to host every part of their supergraph in their own infrastructure, _including_ the supergraph's router:
 
@@ -24,7 +24,7 @@ flowchart LR;
   class clients secondary;
 ```
 
-A supergraph with this structure is called a [self-hosted supergraph](../graphs/overview/#self-hosted-supergraphs). Here are some reasons why your organization might need to use self-hosted routing instead of [cloud routing](./cloud/) (where Apollo hosts your router for you):
+A supergraph with this structure is called a [self-hosted supergraph](../graphs/overview/#self-hosted-supergraphs). Here are some reasons why an enterprise organization might need to use self-hosted routing instead of [cloud routing](./cloud/) (where Apollo hosts your router for you):
 
 - **Compliance.** All of your supergraph's components must be hosted in a particular region to adhere to compliance requirements.
 - **Performance.** You need to minimize latency between your router and subgraphs by enabling them to communicate _without_ traversing the public internet (e.g., by hosting all components in a VPC).
@@ -34,7 +34,9 @@ With the exception of Apollo-managed routing, self-hosted supergraphs benefit fr
 
 ## Creating a self-hosted supergraph
 
-Organizations with any Apollo plan can create self-hosted supergraphs. See the instructions for your organization's [plan type](../org/plans/):
+Organizations with any Apollo plan type can create self-hosted supergraphs to test out this functionality before moving to an Enterprise plan.
+
+See the instructions for your organization's [plan type](../org/plans/):
 
 > If you just created your organization as part of creating your account, it's on a **Serverless** plan type.
 
@@ -126,4 +128,4 @@ Your graph has been created.
 
 </ExpansionPanel>
 
-For more information, see the [self-hosted quickstart](../quickstart/self-hosted/).
+For more information, see [Setting up a self-hosted supergraph](../quickstart/self-hosted/).
