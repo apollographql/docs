@@ -5,32 +5,6 @@ description: Familiarize yourself with common GraphQL terms
 
 As you explore the GraphQL ecosystem, you might encounter some unfamiliar terms and phrases along the way. To help you on your journey, we've defined some of the most common GraphQL vocabulary here in this handy cheat sheet.
 
-## Apollo
-
-An open-source implementation of GraphQL that helps you manage data between the cloud and your UI. The Apollo platform is pluggable into your existing architecture and features production-ready tooling that helps you scale GraphQL across your organization ([Server](/apollo-server/getting-started/), [Client](/react/), and [Studio](/graphos/)).
-
-## Automatic Persisted Queries (APQ)
-
-A technique for improving GraphQL network performance with zero build-time configuration by reducing request size over the wire. A smaller signature reduces bandwidth use and speeds up client loading times. [See the Apollo Server docs.](/apollo-server/features/apq/).
-
-## Argument
-
-A key-value pair associated with a particular [schema](#schema) field, enabling you to pass data to customize that field's return value. Argument values can be passed as literal values (as shown below for clarity) or via [variables](#variable) (recommended).
-
-```graphql
-query GetHuman {
-  human(id: "200") {
-    name
-    height(unit: "meters")
-  }
-}
-```
-
-The query above provides two arguments:
-
-- The `id` argument for the `human` field (indicating which `Human` object to return)
-- The `unit` argument for the `height` field (indicating which unit of measurement to use for the return value)
-
 ## Alias
 
 An alternative name provided for a query field to avoid conflicts during data fetching. Use an alias if a query fetches multiple instances of the same field, as shown:
@@ -51,6 +25,28 @@ query AdminsAndManagers {
 ```
 
 The query above uses `admins` and `managers` as aliases for the `users` field.
+
+## Argument
+
+A key-value pair associated with a particular [schema](#schema) field, enabling you to pass data to customize that field's return value. Argument values can be passed as literal values (as shown below for clarity) or via [variables](#variable) (recommended).
+
+```graphql
+query GetHuman {
+  human(id: "200") {
+    name
+    height(unit: "meters")
+  }
+}
+```
+
+The query above provides two arguments:
+
+- The `id` argument for the `human` field (indicating which `Human` object to return)
+- The `unit` argument for the `height` field (indicating which unit of measurement to use for the return value)
+
+## Automatic Persisted Queries (APQ)
+
+A technique for improving GraphQL network performance with zero build-time configuration by reducing request size over the wire. A smaller signature reduces bandwidth use and speeds up client loading times. [See the Apollo Server docs.](/apollo-server/performance/apq/).
 
 ## Data source
 
@@ -237,7 +233,7 @@ mutation AddTodo($type: String!) {
 
 ## Normalization
 
-A technique for transforming the response of a query operation before saving it to [Apollo Client's `InMemoryCache`](/react/advanced/caching/#normalization). The result is split into individual objects, creating a unique identifier for each object, and storing those objects in a flattened data structure. [See the documentation.](/react/caching/cache-configuration/#data-normalization)
+A technique for transforming the response of a query operation before saving it to Apollo Client's in-memory cache. The result is split into individual objects, creating a unique identifier for each object, and storing those objects in a flattened data structure. [See the documentation.](/react/caching/overview#data-normalization)
 
 ## Object Type
 
@@ -279,9 +275,13 @@ The operations above are named `AddTodo` and `GetHuman`.
 
 ## Operation signature
 
-Representation of a GraphQL operation(query, mutation, or subscription). These operations can be directly executable or normalized to a more simplified form. Normalization transforms an operation deterministically to reduce the number of possible forms it could take. For example, many normalization algorithms sort the fields of the operation to remove field order from the possible representations of an operation. Other normalization algorithms replace in-line variables(literals) with empty, null, or zero values, sort fragments, remove whitespace, or remove aliases.
+The normalized representation of a particular GraphQL operation (query, mutation, or subscription). Normalizing an operation transforms it deterministically to reduce the number of possible forms it could take. For example, many normalization algorithms sort an operation's fields alphabetically.
 
-The following example shows the [default signature algorithm for performance monitoring](/graphos/performance/#operation-signatures). The first signature is before and the second is after normalization, which hides literal, sorts fields, removes aliases, and removes whitespace:
+Other normalization algorithms replace in-line variables(literals) with empty, null, or zero values, sort fragments, remove whitespace, or remove aliases.
+
+The following example shows the [default signature algorithm for GraphOS metrics reporting](/graphos/performance/#operation-signatures). 
+
+Here's an operation definition _before_ normalization:
 
 ```
 query getHuman {
@@ -292,7 +292,7 @@ query getHuman {
 }
 ```
 
-The normalized operation signature:
+And here's that operation's signature after normalization, which hides literals, sorts fields, removes aliases, and removes whitespace:
 
 ```
 query getHuman { human(id: 0) { height weight(unit: "") } }
@@ -338,7 +338,7 @@ function ExchangeRates() {
 
 ## Resolver
 
-A function that connects schema fields and types to various backends. Resolvers provide the instructions for turning a GraphQL operation into data. It can retrieve data from or write data to anywhere, including a SQL, No-SQL, or graph database, a micro-service, and a REST API. Resolvers can also return strings, ints, null, and other primitives.
+A function that populates data for a particular field in a GraphQL schema. Resolvers provide the instructions for turning a GraphQL operation into data. It can retrieve data from or write data to anywhere, including a SQL, No-SQL, or graph database, a micro-service, and a REST API. Resolvers can also return strings, ints, null, and other primitives.
 
 ```js
 const resolvers = {
@@ -394,7 +394,7 @@ The central source of truth for your schema. It enables schema registration, sch
 
 ## Schema versioning
 
-Refers to the need to evolve a schema over time. As a schema evolves, there is a potential for introducing breaking changes to clients. The Apollo CLI assists schema evolution by checking schema changes for breaking changes using Apollo Studio. Read more in our article about [schema checks](/graphos/schema-checks/#set-up-schema-checks).
+Refers to the need to evolve a schema over time. As a schema evolves, there's the potential to introduce breaking changes to clients. Apollo GraphOS assists with schema evolution by checking proposed schema changes for breaking changes. [Learn more about schema checks.](/graphos/delivery/schema-checks/)
 
 ## Subscription
 
@@ -433,7 +433,7 @@ query GetUser($userId: ID!) {
 }
 ```
 
-In the query above, `userId` is a variable. The variable and its type are declared in the operation signature, signified by a `$`. The type of the variable here is a non-nullable `ID`. It's important to note that variable types must match the type of the arguments that they fill.
+In the query above, `userId` is a variable. The variable and its type are declared in the operation signature, signified by a `$`. The type of the variable here is a non-nullable `ID`. A variable's type _must_ match the type of any argument it's used for.
 
 The `userId` variable is included in the operation by Apollo Client like so:
 
