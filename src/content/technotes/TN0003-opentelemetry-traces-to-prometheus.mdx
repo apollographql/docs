@@ -4,6 +4,10 @@ id: TN0003
 tags: [server, observability]
 ---
 
+> Self-hosting the Apollo Router is limited to Apollo Enterprise plans. Other plan types use [managed cloud routing with GraphOS](/graphos/routing/cloud/).
+>
+> [Learn about Apollo plans.](https://www.apollographql.com/pricing/)
+
 Operation traces provide insight into performance issues that are occurring at various execution points in your graph. However, individual traces don't provide a view of your graph's broader performance.
 
 Helpfully, you can convert your operation traces into aggregated metrics without requiring manual instrumentation. To accomplish this, we'll use `spanmetricsprocessor` in an OpenTelemetry Collector instance to automatically generate metrics from our existing trace spans.
