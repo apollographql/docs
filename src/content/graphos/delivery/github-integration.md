@@ -4,7 +4,7 @@ title: Connecting Apollo Studio to GitHub
 
 To enhance the convenience and helpfulness of [schema checks](./schema-checks/), the Apollo Studio app for GitHub adds links to schema check results on the pull requests that initiate them:
 
-<img class="screenshot" src="./img/integrations/github-integration.jpg" alt="GitHub status view" width="500" />
+<img class="screenshot" src="../img/integrations/github-integration.jpg" alt="GitHub status view" width="500" />
 
 ## Install the GitHub application
 
