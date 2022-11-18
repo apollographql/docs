@@ -93,12 +93,18 @@ query GetTopProductsAndReviews {
   topProducts {
     id
     name
-    reviews @defer { #highlight-line
-      score
+    # highlight-start
+    ... @defer {
+      reviews { #highlight-line
+        score
+      }
     }
+    # highlight-end
   }
 }
 ```
+
+> As shown, `@defer` is always applied to a **GraphQL fragment** that contains the deferred fields. You _don't_ apply `@defer` directly to individual fields. 
 
 With the above query, the router understands that it _can_ return the result of its first sub-query as soon as its available, instead of waiting for the result of the _second_ sub-query. Later, it returns the result of the second sub-query when it's ready.
 
@@ -134,7 +140,11 @@ query GetTopProducts {
   topProducts {
     id
     name
-    price @defer
+    # highlight-start
+    ... @defer {
+      price @defer
+    }
+    # highlight-end
   }
 }
 ```
@@ -159,7 +169,7 @@ For a client to be able to defer entity fields in your supergraph, _all_ of the 
   - This functionality is currently supported in [Apollo Client](/react/data/defer) (preview) and [Apollo Kotlin](/docs/kotlin/fetching/defer) (experimental).
 - Your supergraph must be one of:
   - A [cloud supergraph](../graphs/overview#cloud-supergraphs)
-  - A [self-hosted supergraph](../graphs/overview/#self-hosted-supergraphs) running the [Apollo Router](/router/) (_not_ the Node.js Apollo Gateway)
+  - A [self-hosted supergraph](../graphs/overview/#self-hosted-supergraphs) running the [Apollo Router](/router/)
 - Your subgraphs must each use a [subgraph-compatible GraphQL server library](/federation/building-supergraphs/supported-subgraphs).
 - You must [define one or more entities](/federation/entities) in your subgraph schemas.
   - Otherwise, your router can't defer any fields besides the root-level fields of the `Query` type.
