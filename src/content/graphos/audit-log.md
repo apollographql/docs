@@ -3,7 +3,9 @@ title: Audit log of material Studio events
 description: Download a log of all material events that have occured in your account
 ---
 
-Organizations with a [Studio Enterprise plan](http://apollographql.com/pricing) can export and download an audit log of all material events that have occurred in the organization over a given timeframe. You can find the interface to request an export of auditable events under the **Audit** tab of your organization's homepage:
+Organizations with an [Enterprise plan](http://apollographql.com/pricing) can export and download an audit log of all material events that have occurred in the organization over a given timeframe.
+
+The interface for requesting an export of auditable events is available under the **Audit** tab of your organization's homepage in Apollo Studio:
 
 <img src="https://user-images.githubusercontent.com/5922187/127679934-e862077a-0ce0-4e3a-89db-ad9e621111ff.png" class="screenshot" alt="Apollo Studio audit log" />
 
