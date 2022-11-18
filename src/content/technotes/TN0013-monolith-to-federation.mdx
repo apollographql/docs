@@ -231,9 +231,9 @@ Inevitably, some query plans become more complex while you're migrating types be
 
 ### 1. Make your monolith a real subgraph
 
-Now that you have a migration plan, you can start making schema and code changes. The first change is to add the [Apollo Federation subgraph specification](/federation/subgraph-spec/) to the monolith. The steps involved depend on which [Apollo-Federation-compatible library](/federation/supported-subgraphs/) you use with your monolith's language and framework.
+Now that you have a migration plan, you can start making schema and code changes. The first change is to add the [Apollo Federation subgraph specification](/federation/subgraph-spec/) to the monolith. The steps involved depend on which [Apollo-Federation-compatible library](/federation/building-supergraphs/supported-subgraphs/) you use with your monolith's language and framework.
 
-The most important functionality to add is defining your entities (by adding `@key` directives) and adding their [reference resolvers](/federation/subgraphs#3-define-an-entity).
+The most important functionality to add is defining your entities (by adding `@key` directives) and adding their [reference resolvers](/federation/entities#defining-an-entity).
 
 ### 2. Deploy your new subgraph
 
@@ -255,7 +255,7 @@ After your new subgraph is deployed, set up [schema checks and publishes](/rover
 
 1. Start by marking all the value types (enums and non-entity object types) you're going to move to the subgraph as `@shareable` in the monolith.
 2. Copy the types and fields over to the subgraph schema and port their resolvers from the monolith.
-3. Deploy the subgraph and test it by making calls to it directly. Use the [`_entities` root field](/federation/subgraphs/#query_entities) to test joins between entities.
+3. Deploy the subgraph and test it by making calls to it directly. Use the [`_entities` root field](/federation/building-supergraphs/subgraphs-overview/#query_entities) to test joins between entities.
 
 When you're satisfied with the behavior and performance of your new subgraph, you can start moving all traffic to it and cleaning up the monolith.
 
