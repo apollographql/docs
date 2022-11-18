@@ -2,7 +2,7 @@
 title: Managing organization members
 ---
 
-A Studio organization can have any number of members, and each member can be assigned a **role** that defines their capabilities within the organization.
+A GraphOS organization can have any number of members, and each member can be assigned a **role** that defines their capabilities within the organization.
 
 ## Organization-wide member roles
 
@@ -17,8 +17,8 @@ Each organization member has one of the following roles:
 | **Contributor**            | Can push new schemas to graphs, but cannot configure graph settings or integrations. Intended for back-end developers who are authorized to make changes to graphs. _Cannot_ push schema changes to [protected variants](../graphs/studio-features/#protected-variants-enterprise-only).                                                |                        Enterprise only                         |
 | **Documenter**             | Has all permissions of the Observer role, plus the ability to edit graph READMEs, descriptions, and similar non-operational metadata.                                                                                                                                                                                  |                        Enterprise only                         |
 | **Observer**               | Has view-only access to the organization's graph data, such as schemas and metrics. Can also execute queries in the Explorer. Intended for back-end developers who are _not_ authorized to make changes to graphs.                                                                                                     |                        Enterprise only                         |
-| **Consumer** (free)        | <p>Has view-only access to the organization's graph _schemas_, but not metrics. Can also execute queries in the Explorer. Intended for application developers building clients against a graph.</p><p>This role is available to all plan types, including Free. **Consumer** members do not count as billed users.</p> |                              All                               |
-| **Billing Manager** (free) | <p>Has management access to organization-level configuration and billing. Can also remove members (but not invite them). No access to graphs. [Learn more](#billing-managers)</p><p>This role is available to all paid plan types. **Billing Manager** members do not count as billed users.</p>                       |                Enterprise, Serverless, and Team                |
+| **Consumer**        | <p>Has view-only access to the organization's graph _schemas_, but not metrics. Can also execute queries in the Explorer. Intended for application developers building clients against a graph.</p><p>This role is available to all plan types. For legacy Team plans, **Consumer** members do not count as billed users.</p> |                              All                               |
+| **Billing Manager** | <p>Has management access to organization-level configuration and billing. Can also remove members (but not invite them). No access to graphs. [Learn more](#billing-managers)</p><p>This role is available to all paid plan types. For legacy Team plans, **Billing Manager** members do not count as billed users.</p>                       |                All paid plan types               |
 
 Only members with the **Org Admin** role can assign roles to other members. You can see which role you have in a particular organization from your [user settings page](https://studio.apollographql.com/user-settings), or from the organization's Members tab.
 
@@ -44,9 +44,10 @@ When **Contributor**s in an organization create a new graph, they are automatica
 | Remove members                                                     |     ✓     |             |                                                                             |                       |          |
 | View and edit billing information                                  |     ✓     |             |                                                                             |                       |          |
 | Manage organization configuration (name, avatar, etc.)             |     ✓     |             |                                                                             |                       |          |
+| Export [audit logs](../audit-log) (enterprise only)                                            |     ✓     |             |                                                                             |                       |          |
 | Delete the organization                                            |     ✓     |             |                                                                             |                       |          |
 | Manage which users have access to graphs                           |     ✓     |      ✓      |                                                                             |                       |          |
-| Manage graph integrations (Datadog, Slack, etc.)                   |     ✓     |      ✓      |                                                                             |                       |          |
+| Manage graph integrations (Slack, Datadog, etc.)                   |     ✓     |      ✓      |                                                                             |                       |          |
 | View and manage graph API keys                                     |     ✓     |      ✓      |                                                                             |                       |          |
 | Modify schema checks configuration                                 |     ✓     |      ✓      |                                                                             |                       |          |
 | Delete and rename graphs                                           |     ✓     |      ✓      |                                                                             |                       |          |
@@ -55,7 +56,7 @@ When **Contributor**s in an organization create a new graph, they are automatica
 | Create new variants                                                |     ✓     |      ✓      | Non-[protected](../graphs/studio-features/#protected-variants-enterprise-only) variants only |                       |          |
 | Push schemas to a graph                                            |     ✓     |      ✓      | Non-[protected](../graphs/studio-features/#protected-variants-enterprise-only) variants only |                       |          |
 | Manage Explorer settings (URL, etc)                                |     ✓     |      ✓      | Non-[protected](../graphs/studio-features/#protected-variants-enterprise-only) variants only |                       |          |
-| Create [Deployed Graphs](../graphs/overview/)                                |     ✓     |      ✓      |                                      ✓                                      |                       |          |
+| Create graphs                                |     ✓     |      ✓      |                                      ✓                                      |                       |          |
 | Edit variant READMEs                                               |     ✓     |      ✓      |                                      ✓                                      |    Documenter only    |          |
 | Run [schema checks](../delivery/schema-checks)                              |     ✓     |      ✓      |                                      ✓                                      |           ✓           |          |
 | See the schemas of subgraphs in federated graphs                   |     ✓     |      ✓      |                                      ✓                                      |           ✓           |          |
@@ -64,12 +65,6 @@ When **Contributor**s in an organization create a new graph, they are automatica
 | Query graphs with the Explorer                                     |     ✓     |      ✓      |                                      ✓                                      |           ✓           |    ✓     |
 
 > Currently, graph usage metrics and traces are not displayed to **Consumer**s via the Studio web app, but they are not blocked at the API layer. We intend to remove this capability from **Consumer**s, but for the time being you should understand that **Consumer**s are not fully prevented from accessing these metrics and traces.
-
-> In January 2021, we made the following changes to our role structure:
->
-> - We removed the ability of **Observer**s to view integration settings, because some of these settings contain sensitive information.
-> - We significantly reduced the permissions of the **Contributor** role, making it much closer to **Observer** plus the ability to perform a small set of write operations on non-protected variants.
-> - We added the **Graph Admin** role. This role is nearly identical to the former **Contributor** role. As part of the transition, we changed all existing **Contributor**s to **Graph Admin**s. The only difference between the old **Contributor** role and the new **Graph Admin** role is that **Graph Admin**s can delete graphs (and manage graph overrides, a new feature released simultaneously).
 
 ### Billing managers
 
