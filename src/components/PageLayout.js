@@ -169,7 +169,7 @@ export default function Page({
         <Flex
           key={now}
           ref={pageRefCallback}
-          maxW={'var(--docs-page-width)'}
+          maxW={`var(${DOCS_PAGE_WIDTH_VAR})`}
           mx="auto"
           align="flex-start"
           px={{base: 6, md: 10}}
