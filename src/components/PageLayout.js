@@ -27,11 +27,11 @@ import {
   Tooltip,
   useToken
 } from '@chakra-ui/react';
+import {DOCS_PAGE_WIDTH_VAR, usePageWidthContext} from './PageWidthContext';
 import {FiChevronsRight} from 'react-icons/fi';
 import {GatsbySeo} from 'gatsby-plugin-next-seo';
 import {PathContext} from '../utils';
 import {graphql, useStaticQuery} from 'gatsby';
-import {usePageWidthContext} from './PageWidthContext';
 
 export function usePageLayoutProps(props) {
   const paddingTop = useToken('space', 10);
