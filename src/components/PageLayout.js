@@ -75,7 +75,7 @@ export default function Page({
     `
   );
 
-  const {pageRefCallback, pageWidthPx} = usePageWidthContext();
+  const {pageRefCallback} = usePageWidthContext();
 
   const {docset, versions, currentVersion, navItems, algoliaFilters} =
     pageContext;
@@ -169,7 +169,7 @@ export default function Page({
         <Flex
           key={now}
           ref={pageRefCallback}
-          maxW={pageWidthPx}
+          maxW={'var(--docs-page-width)'}
           mx="auto"
           align="flex-start"
           px={{base: 6, md: 10}}

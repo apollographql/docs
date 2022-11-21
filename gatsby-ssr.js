@@ -1,4 +1,9 @@
 import React from 'react';
+import {
+  DOCS_PAGE_WIDTH_VAR,
+  PAGE_JUMBO_WIDTH,
+  PAGE_NORMAL_WIDTH
+} from './src/components/PageWidthContext';
 
 export const onRenderBody = ({setHeadComponents}) =>
   setHeadComponents([
@@ -11,6 +16,22 @@ export const onRenderBody = ({setHeadComponents}) =>
           ffWidgetScript.type = 'text/javascript';
           ffWidgetScript.src = 'https://freddyfeedback.com/widget/freddyfeedback.js';
           document.head.appendChild(ffWidgetScript);
+        `
+      }}
+    />,
+    <script
+      key="extend-fix"
+      dangerouslySetInnerHTML={{
+        __html: `
+          const pageWidth = JSON.parse(localStorage.getItem('page-width2') ?? "\\"normal\\"");
+          
+          const PAGE_NORMAL_WIDTH = ${PAGE_NORMAL_WIDTH};
+          const PAGE_JUMBO_WIDTH = ${PAGE_JUMBO_WIDTH};
+
+          const pageWidthPx = (pageWidth === 'normal' ? PAGE_NORMAL_WIDTH : PAGE_JUMBO_WIDTH) + 'px';
+
+          const root = document.querySelector(':root');
+          root.style.setProperty('${DOCS_PAGE_WIDTH_VAR}', pageWidthPx + 'px');
         `
       }}
     />
