@@ -3,6 +3,7 @@ import React, {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useRef,
   useState
 } from 'react';
@@ -40,6 +41,7 @@ export const usePageWidthContext = () => {
 
 export const PAGE_NORMAL_WIDTH = 1120;
 export const PAGE_JUMBO_WIDTH = 1800;
+export const DOCS_PAGE_WIDTH_VAR = '--docs-page-width';
 
 /**
  * PageWidthProvider that must be used
@@ -109,6 +111,11 @@ export const PageWidthProvider = ({children}) => {
   // Calculate the page width in pixels from the current state
   const pageWidthPx =
     pageWidth === 'normal' ? PAGE_NORMAL_WIDTH : PAGE_JUMBO_WIDTH;
+
+  useEffect(() => {
+    const root = document.querySelector(':root');
+    root.style.setProperty(DOCS_PAGE_WIDTH_VAR, pageWidthPx + 'px');
+  }, [pageWidthPx]);
 
   // Create a context provider with values
   return (

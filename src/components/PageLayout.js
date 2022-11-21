@@ -27,11 +27,11 @@ import {
   Tooltip,
   useToken
 } from '@chakra-ui/react';
+import {DOCS_PAGE_WIDTH_VAR, usePageWidthContext} from './PageWidthContext';
 import {FiChevronsRight} from 'react-icons/fi';
 import {GatsbySeo} from 'gatsby-plugin-next-seo';
 import {PathContext} from '../utils';
 import {graphql, useStaticQuery} from 'gatsby';
-import {usePageWidthContext} from './PageWidthContext';
 
 export function usePageLayoutProps(props) {
   const paddingTop = useToken('space', 10);
@@ -75,7 +75,7 @@ export default function Page({
     `
   );
 
-  const {pageRefCallback, pageWidthPx} = usePageWidthContext();
+  const {pageRefCallback} = usePageWidthContext();
 
   const {docset, versions, currentVersion, navItems, algoliaFilters} =
     pageContext;
@@ -169,7 +169,7 @@ export default function Page({
         <Flex
           key={now}
           ref={pageRefCallback}
-          maxW={pageWidthPx}
+          maxW={`var(${DOCS_PAGE_WIDTH_VAR})`}
           mx="auto"
           align="flex-start"
           px={{base: 6, md: 10}}
