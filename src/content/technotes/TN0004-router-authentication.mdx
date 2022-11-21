@@ -4,11 +4,15 @@ id: TN0004
 tags: [server, router, auth]
 ---
 
+> Self-hosting the Apollo Router is limited to Apollo Enterprise plans. Other plan types use [managed cloud routing with GraphOS](/graphos/routing/cloud/).
+>
+> [Learn about Apollo plans.](https://www.apollographql.com/pricing/)
+
 When using the Apollo Router as the entry point to your federated supergraph, you have a few options for authenticating incoming client requests:
 
-* [Delegate authentication to your subgraphs.](#authenticate-in-subgraphs)
-* [Add an ingress filter](#add-an-ingress-filter) to your supergraph.
-* [Create a custom router plugin](#create-a-custom-plugin).
+- [Delegate authentication to your subgraphs.](#authenticate-in-subgraphs)
+- [Add an ingress filter](#add-an-ingress-filter) to your supergraph.
+- [Create a custom router plugin](#create-a-custom-plugin).
 
 ## Authenticate in subgraphs
 
