@@ -23,7 +23,7 @@ export const onRenderBody = ({setHeadComponents}) =>
       key="extend-fix"
       dangerouslySetInnerHTML={{
         __html: `
-          const pageWidth = JSON.parse(localStorage.getItem('page-width2') ?? "\\"normal\\"");
+          const pageWidth = JSON.parse(localStorage.getItem('page-width') ?? "\\"normal\\"");
           
           const PAGE_NORMAL_WIDTH = ${PAGE_NORMAL_WIDTH};
           const PAGE_JUMBO_WIDTH = ${PAGE_JUMBO_WIDTH};
