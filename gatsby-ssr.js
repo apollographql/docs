@@ -31,7 +31,7 @@ export const onRenderBody = ({setHeadComponents}) =>
           const pageWidthPx = (pageWidth === 'normal' ? PAGE_NORMAL_WIDTH : PAGE_JUMBO_WIDTH) + 'px';
 
           const root = document.querySelector(':root');
-          root.style.setProperty('${DOCS_PAGE_WIDTH_VAR}', pageWidthPx + 'px');
+          root.style.setProperty('${DOCS_PAGE_WIDTH_VAR}', pageWidthPx);
         `
       }}
     />
