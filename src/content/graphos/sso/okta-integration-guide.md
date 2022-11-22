@@ -45,7 +45,7 @@ This guide walks through configuring Okta as the identity provider (IdP) for Gra
 
 4. Configure Attribute Statements  
     > ⚠️ These four attribute statements are required for a seamless experience into Apollo Studio.
-    * Set **sub**: this uniquely identifies the user to Apollo Studio. This is typically email or username.
+    * Set **sub**: Uniquely identifies the user to Apollo Studio. Typically email.
     * Set **email**
     * Set **given_name**
     * Set **family_name**
