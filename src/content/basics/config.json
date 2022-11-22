@@ -1,51 +1,120 @@
 {
   "title": "Docs Home",
   "sidebar": {
-    "Home": "/",
-    "What is the supergraph?": "/intro/platform",
-    "Why adopt GraphQL?": "/intro/benefits",
-    "Tutorials": {
-      "Lift-off series & certification": "https://www.apollographql.com/tutorials/lift-off-part1/",
-      "Full-stack quickstart": "https://www.apollographql.com/tutorials/fullstack-quickstart/introduction"
-    },
-    "Documentation Sets": {
-      "Build Your Supergraph": {
-        "GraphOS": "/graphos/",
-        "Apollo Federation": "/federation/"
+    "My Apollo journey": "/",
+    "Learn GraphQL": {
+      "Tutorials": "https://odyssey.apollographql.com/",
+      "Benefits of GraphQL": "/benefits",
+      "The schema": {
+        "Basic types and fields": "/types-fields",
+        "Unions and interfaces": "/unions-interfaces",
+        "Directives": "/directives"
       },
-      "Technical Reference": {
-        "Apollo Server": "/apollo-server/",
-        "Apollo Router": "/router/",
-        "Rover CLI": "/rover/",
-        "Tech Notes": "/technotes/"
+      "Operations": {
+        "Queries and mutations": "/operations",
+        "Fragments": "/fragments",
+        "How to call a GraphQL API": "/call"
       },
-      "Apollo Client": {
-        "React": "/react/",
-        "iOS": "/ios/",
-        "Kotlin": "/kotlin/"
+      "Best practices": {
+        "Principled GraphQL": "https://principledgraphql.com",
+        "Schema design": "/schema-best-practices",
+        "Naming conventions": "/conventions",
+        "GraphQL vs. REST": "/rest"
+      },
+      "Reference": {
+        "Glossary": "/resources/graphql-glossary",
+        "FAQ": "/resources/faq"
       }
     },
-    "Development Tools": {
-      "Apollo extension for VS Code": "/devtools/editor-plugins",
-      "Configuring Apollo projects": "/devtools/apollo-config",
-      "The Apollo CLI (partially deprecated)": "/devtools/cli"
+    "The GraphOS Platform": {
+      "Quickstart 🚀": {
+        "1️⃣ Create your supergraph": "/quickstart/cloud",
+        "2️⃣ Next steps": "/quickstart/next-steps"
+      },
+      "Parts of a Supergraph": {
+        "Subgraphs": "/subgraphs",
+        "The routing layer": "/routing"
+      },
+      "Product Releases": {
+        "Launch stages": "/resources/product-launch-stages",
+        "Elastic License v2 FAQ": "/resources/elastic-license-v2-faq"
+      }
     },
-    "Resources": {
-      "Principled GraphQL": "https://principledgraphql.com",
-      "Glossary": "/resources/graphql-glossary",
-      "GraphQL FAQ": "/resources/faq",
-      "Elastic License v2 FAQ": "/resources/elastic-license-v2-faq",
-      "Product launch stages": "/resources/product-launch-stages"
+    "Building Subgraphs": {
+      "Developing": {
+        "Start from a template": "/templates",
+        "Local development": "/local",
+        "All supported libraries": "/supported"
+      },
+      "Adding Entities": {
+        "Defining and resolving": "/defining",
+        "@defer support": "/defer",
+        "Federating entities (advanced)": "/federating"
+      },
+      "Deploying": {
+        "Vercel": "/vercel",
+        "AWS": "/aws",
+        "GCP": "/gcp"
+      }
     },
-    "Enterprise Guide": {
-      "Introduction": "/enterprise-guide/introduction",
-      "GraphQL consolidation": "/enterprise-guide/graphql-consolidation",
-      "Federated schema design": "/enterprise-guide/federated-schema-design",
-      "Graph administration": "/enterprise-guide/graph-administration",
-      "Graph security": "/enterprise-guide/graph-security",
-      "Change management": "/enterprise-guide/change-management",
-      "Federation case studies": "/enterprise-guide/federation-case-studies",
-      "Additional resources": "/enterprise-guide/additional-resources"
+    "Schema Delivery": {
+      "Publishing schemas to GraphOS": "/schema/cli-registration",
+      "Schema checks": "/delivery/schema-checks",
+      "Configuring schema checks": "/delivery/check-configurations",
+      "Launches": "/delivery/launches",
+      "Contracts (enterprise only)": "/delivery/contracts",
+      "Validating client operations": "/delivery/validating-client-operations",
+      "Connecting to GitHub": "/delivery/github-integration"
+    },
+    "Apollo Studio": {
+      "Sandbox (no account required)": "/explorer/sandbox",
+      "Platform API": "/platform-api",
+      "Managing graphs": {
+        "Managing graphs in Studio": "/graphs/studio-features",
+        "Supergraph-specific Studio features": "/graphs/federated-graphs",
+        "Self-hosted setup (enterprise only)": "/quickstart/self-hosted"
+      },
+      "The Explorer": {
+        "Connecting and authenticating": "/explorer/connecting-authenticating",
+        "Operation collections": "/explorer/operation-collections",
+        "Embedded Explorer": "/explorer/embed-explorer",
+        "Additional features": "/explorer/additional-features"
+      },
+      "Metrics Reporting": {
+        "Operation metrics": "/metrics/usage-reporting",
+        "Field usage": "/metrics/field-usage",
+        "Segmenting by client": "/metrics/client-awareness",
+        "Datadog forwarding (enterprise only)": "/metrics/datadog-integration",
+        "Sending metrics to GraphOS": "/metrics/sending-operation-metrics",
+        "Operation signatures": "/metrics/operation-signatures"
+      },
+      "Notifications": {
+        "Setup": "/notifications/notification-setup",
+        "Daily reports": "/notifications/daily-reports",
+        "Schema changes": "/notifications/schema-change-integration",
+        "Performance alerts (experimental)": "/notifications/performance-alerts",
+        "Build status (preview)": "/notifications/build-status-notification"
+      },
+      "Managing Accounts": {
+        "Organizations": "/org/organizations",
+        "Members, roles, and permissions": "/org/members",
+        "Plans and billing": "/org/plans",
+        "User account": "/org/account"
+      }
+    },
+    "Federating a Supergraph": {
+      "Adding a new subgraph": "/adding-subgraph/",
+      "Federated schemas": {
+        "Sharing types between subgraphs": "/federated-types/sharing-types",
+        "Federating entities": "/federating",
+        "Federated directives": "/federated-types/federated-directives",
+        "Advanced schema design": "/advanced/schema-design",
+        "Composition": "/federated-types/composition"
+      },
+      "Migration": {
+        "Moving from Federation 1": "/federation-2/moving-to-federation-2",
+        "Migrating from schema stitching": "/migrating-from-stitching"
+      }
     }
   }
 }

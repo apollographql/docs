@@ -40,7 +40,7 @@ function NavButton({isActive, depth, children, ...props}) {
   return (
     <Button
       h="auto"
-      py={depth ? 1.5 : 2.5} // give top level nav items larger padding
+      py={depth ? 1.0 : 1.5} // give top level nav items larger padding
       whiteSpace="normal"
       variant="ghost"
       roundedLeft="none"
@@ -49,7 +49,7 @@ function NavButton({isActive, depth, children, ...props}) {
       {...buttonProps}
       {...props}
     >
-      <chakra.span pl={depth * 2}>{children}</chakra.span>
+      <chakra.span pl={depth * 4}>{children}</chakra.span>
     </Button>
   );
 }
