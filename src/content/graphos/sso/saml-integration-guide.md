@@ -1,5 +1,6 @@
 ---
 title: SAML Integration Guide
+description: Configure SAML identity provider for GraphOS SSO
 ---
 
 This guide walks through configuring a SAML identity provider (IdP) for GraphOS Studio.  You will need administrative access to your SSO Identity Provider (IdP).

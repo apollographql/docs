@@ -1,5 +1,6 @@
 ---
 title: Azure AD Integration Guide
+description: Configure Azure AD as identity provider for GraphOS SSO
 ---
 
 This guide walks through configuring SSO for GraphOS Studio by using Azure AD as an identity provider (IdP) using PingOne's email invite method.

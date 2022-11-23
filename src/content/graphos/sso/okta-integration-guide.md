@@ -1,5 +1,6 @@
 ---
 title: Okta Integration Guide
+description: Configure Okta as identity provider for GraphOS SSO
 ---
 
 This guide walks through configuring Okta as the identity provider (IdP) for GraphOS Studio.  An Okta account with administrator privileges is required.
