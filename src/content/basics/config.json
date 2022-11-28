@@ -16,10 +16,10 @@
         "How to call a GraphQL API": "/call"
       },
       "Best practices": {
-        "Principled GraphQL": "https://principledgraphql.com",
         "Schema design": "/schema-best-practices",
         "Naming conventions": "/conventions",
-        "GraphQL vs. REST": "/rest"
+        "GraphQL vs. REST": "/rest",
+        "Principled GraphQL": "https://principledgraphql.com"
       },
       "Reference": {
         "Glossary": "/resources/graphql-glossary",
@@ -46,9 +46,8 @@
         "Local development": "/local",
         "All supported libraries": "/supported"
       },
-      "Adding Entities": {
+      "Creating Entities": {
         "Defining and resolving": "/defining",
-        "@defer support": "/defer",
         "Federating entities (advanced)": "/federating"
       },
       "Deploying": {
@@ -64,7 +63,8 @@
       "Launches": "/delivery/launches",
       "Contracts (enterprise only)": "/delivery/contracts",
       "Validating client operations": "/delivery/validating-client-operations",
-      "Connecting to GitHub": "/delivery/github-integration"
+      "Connecting to GitHub": "/delivery/github-integration",
+      "Uplink": "/uplink"
     },
     "Apollo Studio": {
       "Sandbox (no account required)": "/explorer/sandbox",
@@ -108,13 +108,24 @@
         "Sharing types between subgraphs": "/federated-types/sharing-types",
         "Federating entities": "/federating",
         "Federated directives": "/federated-types/federated-directives",
-        "Advanced schema design": "/advanced/schema-design",
+        "Federated schema design": "/advanced/schema-design",
         "Composition": "/federated-types/composition"
       },
       "Migration": {
         "Moving from Federation 1": "/federation-2/moving-to-federation-2",
         "Migrating from schema stitching": "/migrating-from-stitching"
       }
+    },
+    "Supergraph Performance": {
+      "@defer support": "/defer",
+      "Caching": "/caching",
+      "Query plans": "/query-plans"
+    },
+    "Security": {
+      "API keys": "/api-keys",
+      "Audit log (enterprise only)": "/audit-log",
+      "Sub-processors": "/sub-processors",
+      "Data privacy and compliance": "/data-privacy"
     }
   }
 }
