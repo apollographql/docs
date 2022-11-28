@@ -1,5 +1,5 @@
 ---
-title: Adding a subgraph
+title: Creating a new subgraph
 description: With the Rover CLI
 ---
 
@@ -23,9 +23,13 @@ flowchart LR;
 
 With this architecture, different teams in your organization can each maintain their own subgraph. This helps teams work in parallel, because they aren't all contributing to the same single codebase.
 
-## Starting from scratch
+## Starting from a template
 
-The easiest way to get started with a new subgraph is to use the [Rover CLI's template command](/rover/commands/template). `rover template` generates the skeleton of a new subgraph so you can immediately begin implementing resolvers. Here are the templates available today:
+The fastest way to create a new subgraph is to start with one of the templates provided by the [Rover CLI](/rover/commands/template). The `rover template` command generates the skeleton of a new subgraph for you, so you can immediately begin defining your schema and implementing your resolvers.
+
+> If your installed version of Rover doesn't include the `template` command (or if you don't have Rover installed at all), [install the latest version.](/rover/getting-started/)
+
+Templates are currently available for the following libraries and languages:
 
 | Name                    | Language   | ID                                 | Repo                                                                                    |
 |-------------------------|------------|------------------------------------|-----------------------------------------------------------------------------------------|
@@ -38,20 +42,29 @@ The easiest way to get started with a new subgraph is to use the [Rover CLI's te
 | async-graphql with Axum | Rust       | subgraph-rust-async-graphql        | https://github.com/apollographql/subgraph-template-rust-async-graphql                   |
 | Apollo Server (TS)      | TypeScript | subgraph-typescript-apollo-server  | https://github.com/apollographql/subgraph-template-typescript-apollo-server-boilerplate |
 
-You start by generating boilerplate using `rover template use` with the ID of the template you want. For example, this command will create a new directory called `my-subgraph` that contains the boilerplate code for a subgraph written in TypeScript using the Apollo Server library:
+You start by running `rover template use`, providing it the ID of your chosen template. For example, the following command creates a new directory called `my-subgraph` that contains the boilerplate code for a subgraph written in TypeScript using the Apollo Server library:
 
 ```bash
 rover subgraph use subgraph-typescript-apollo-server my-subgraph
 ```
 
-Once the boilerplate is generated, you can start filling in your business logic. The generated code includes example resolvers for `Query`, `Mutation`, as well as entities to use as your starting point. All templates also come with example GitHub Actions workflows to make [publishing your schema in CI/CD](../../schemas/publishing#publishing-with-continuous-delivery) take only a couple steps.
+After generating the boilerplate code, you can start filling in your business logic. The generated code includes example resolvers for `Query` and `Mutation`, along with some [entity types](/federation/entities/) to use as your starting point. All templates also come with example GitHub Actions workflows to help with [publishing your schema in CI/CD](../../schemas/publishing#publishing-with-continuous-delivery).
 
-## Adding an existing graph
+When you're ready to add your new subgraph to your supergraph, [see below](#adding-to-your-supergraph).
 
-As long as your graph was implemented using a [library which supports federation](/federation/building-supergraphs/supported-subgraphs), you can add your graph to a supergraph using these steps:
+## Starting with an existing API
 
-1. Enable federation support via your implementing library.
-2. [Check your schema](/federation/managed-federation/federated-schema-checks) and handle any conflicts
-3. Set up your CI/CD to check and [publish schema](../../schemas/publishing) changes
+If you have an existing GraphQL API that you want to use as a subgraph, confirm whether it uses a [subgraph-compatible library](/federation/building-supergraphs/supported-subgraphs).
+
+- **If it does,** consult the library's documentation to determine how to enable its support for Apollo Federation.
+- **If it doesn't,** first move the subgraph to a compatible library.
+## Adding to your supergraph
+
+When you're ready to add a new subgraph to your existing GraphOS supergraph, do the following:
+
+1. Enable federation support in your subgraph library.
+    - If you [built from a template](#starting-from-a-template), federation support is already enabled. Otherwise, consult the documentation for your chosen library.
+2. [Check your schema](/federation/managed-federation/federated-schema-checks) against your existing supergraph and handle any conflicts.
+3. Set up your CI/CD pipeline to perform checks and also [publish your subgraph schema](../../schemas/publishing).
 
 Once the schema is published—your graph is now a subgraph in your supergraph, and you can start using other federation features!
