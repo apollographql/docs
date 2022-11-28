@@ -26,8 +26,8 @@ This guide walks through configuring a SAML identity provider (IdP) for GraphOS 
      * **given_name**
      * **family_name**
 
-2. Assign users to Apollo GraphOS Studio application  
-   > ⚠️ Make sure to assign users to the newly created `Apollo GraphOS Studio` application for testing.
+2. Assign users to Apollo GraphOS Studio application.  
+   > ⚠️ Reach out to your SSO or Identity & Access Management team to assign the relevant groups or users to `Apollo GraphOS Studio`.
 
 3. Send your Apollo contact one of the following:
    * Identity provider (IdP) SAML XML metadata file (preferred)
