@@ -1,84 +1,98 @@
 ---
-title: Azure AD Integration Guide
-description: Configure Azure AD as identity provider for GraphOS SSO
+title: Setting up Apollo SSO with Azure AD
 ---
 
-This guide walks through configuring SSO for GraphOS Studio by using Azure AD as an identity provider (IdP) using PingOne's email invite method.
+> ⚠️ Single sign-on (SSO) is available only for [Enterprise plans](https://www.apollographql.com/pricing/).
 
-> ⚠️ This is necessary in situations where Apollo's default entity ID (`PingConnect`) is already being used by another application and the alternative entity ID, which is a GUID, cannot be used with Azure.  
+This guide walks through configuring Azure Active Directory (Azure AD) as your Apollo organization's identity provider (IdP) for single sign-on (SSO).
 
-## Create an Azure AD App Registration
-1. Navigate to [Azure Portal](http://portal.azure.com/) and navigate to **Azure Active Directory**.
-1. In the left pane, select **App Registrations**, and then in the top ribbon select **+ New Registration**.
-1. On the **Register an application page**:
-   * Provide a friendly name for the PingOne client (e.g., `Apollo GraphOS Studio`).
-   * Under **Supported account types** select which type of Microsoft accounts will have access.
-   * Leave **Redirect URI** empty. You will provide this information later.  
+> These steps use PingOne's email invite method, because in some cases Apollo's default entity ID (`PingConnect`) might already be used by another application in your organization.
+
+## 1. Create an Azure AD app registration
+
+1. Go to your [Azure Portal](http://portal.azure.com/) and then navigate to **Azure Active Directory**.
+2. In the left pane, select **App Registrations**. Then in the top ribbon select **+ New Registration**.
+3. On the **Register an application** page, provide the following information:
+   - Provide a friendly name for the PingOne client (e.g., `Apollo GraphOS Studio`).
+   - Under **Supported account types**, select which Microsoft account types will have access.
+   - Leave **Redirect URI** empty. You'll provide this information later.  
     
-<img
-  src="../img/sso/azure-app-registration.gif"
-  alt="Azure App Registration"
-  class="screenshot"
-/>
+    <img
+      src="../img/sso/azure-app-registration.gif"
+      alt="Azure App Registration"
+      class="screenshot"
+    />
 
-### Retrieve Endpoint URL & Client ID
-1. In the **Overview** section of your newly created **App Registration**, copy and paste the “Application (client) ID” to a local text file.
-1. Also, in the **Overview** section, select **Endpoints** on the top menu and copy and paste the “OpenID Connect metadata document“ URL to the same local text file.  
+    Then click **Create**.
+
+## 2. Retrieve your endpoint URL and client ID
+
+1. From the **Overview** section of your newly created app registration, copy and paste your **Application (client) ID** into a local text file.
+2. Still in the **Overview** section, select **Endpoints** from the top menu.
+3. Copy and paste the **OpenID Connect metadata document** URL into the same local text file:
   
-<img
-  src="../img/sso/azure-client-id-endpoint.gif"
-  alt="Azure endpoint URL and client ID"
-  class="screenshot"
-/> 
+    <img
+      src="../img/sso/azure-client-id-endpoint.gif"
+      alt="Azure endpoint URL and client ID"
+      class="screenshot"
+    /> 
 
-### Create a Client Secret 
-1. On the landing page of your app registration, select **Certificates & secrets** from the left hand pane.
-1. Select **+ New client secret** and create a new secret. Copy and paste the **Value** field to the same text file you created earlier.
+## 3. Create a client secret 
 
-<img
-  src="../img/sso/azure-client-secret.gif"
-  alt="Azure client secret"
-  class="screenshot"
-/> 
+1. From the **Certificates & secrets** section of your app registration, click **+ New client secret** and create a new secret. 
 
-### Configure API Permissions
-1. On the landing page of your app registration, select **API permissions**.
-1. Check if **User.Read** is listed by default. If it is not, add it manually:
-   * Select **+ Add a permission > Microsoft Graph > Application permissions**.
-   * Search for Group, expand, and select **Group.Read.All**. **Save** changes.
-   * If **User.Read** was not auto created, repeat the process for this permission.
-1. Back on the **API Permissions** page, select **Grant admin consent** next to the **+ Add a permission** button. Doing this ensures your users don't need to grant consent during SSO.
+2. Copy and paste the secret's **Value** field to the same text file you created earlier:
 
-<img
-  src="../img/sso/azure-configure-api-permissions.gif"
-  alt="Azure configure API permissions"
-  class="screenshot"
-/> 
+    <img
+      src="../img/sso/azure-client-secret.gif"
+      alt="Azure client secret"
+      class="screenshot"
+    /> 
 
-4. In the left options pane, select **Manifest**.
-   * Find the **"groupMembershipClaims"** and change it from null to either `All` or `SecurityGroup`. This ensures that the group membership claim is included in the access token during SSO.
-   * **Save** changes.
+## 4. Configure API permissions
 
-<img
-  src="../img/sso/azure-manifest.png"
-  alt="Azure manifest"
-  class="screenshot"
-/> 
 
-## Integrate PingOne with Azure AD
-1. Once you have received your PingOne SSO invitation email, select the enrollment link to create a new account or sign-in with an existing account.
+
+1. From the **API permissions** section of your app registration, check whether `User.Read` is listed by default. If isn't, add it manually:
+   1. Select **+ Add a permission > Microsoft Graph > Application permissions**.
+   2. Search for `Group`, expand, and select **Group.Read.All**.
+   3. **Save** your changes.
+   3. If `User.Read` was not auto created, repeat this process for `User.Read`.
+
+2. Also from the **API Permissions** section, select **Grant admin consent** next to the **+ Add a permission** button. Doing this ensures that your users don't need to grant consent during SSO.
+
+    <img
+      src="../img/sso/azure-configure-api-permissions.gif"
+      alt="Azure configure API permissions"
+      class="screenshot"
+    /> 
+
+3. From the **Manifest** section of your app registration, find the `groupMembershipClaims` property. Change its value from `null` to either `All` or `SecurityGroup`.
+    - This ensures that the group membership claim is included in the access token during SSO.
+4. **Save** your changes.
+
+    <img
+      src="../img/sso/azure-manifest.png"
+      alt="Azure manifest"
+      class="screenshot"
+    /> 
+
+## 5. Integrate PingOne with Azure AD
+
+1. After you receive your PingOne SSO invitation email, click the enrollment link to create a new account or sign in with an existing account.
 2. On the landing page, select **Setup** on the top ribbon.
-3. Select **Connect to an Identity Repository > Microsoft Azure AD** and select **Next**.
-4. On the **Configure Your Microsoft Azure Connection** modal:
-   * Copy and paste the endpoint URL, client ID, and client secret values saved earlier from Azure AD.  
-   * Select **Verify**. PingOne will verify that it can query the endpoint or endpoints you've specified.
-   * For **Scope**, select the OAuth scopes that you'd like to include in authentication requests, then select **Next**.
+3. Select **Connect to an Identity Repository > Microsoft Azure AD** and click **Next**.
+4. From the **Configure Your Microsoft Azure Connection** modal:
+   1. Copy and paste the endpoint URL, client ID, and client secret values saved earlier from Azure AD.  
+   2. Select **Verify**. PingOne will verify that it can query the endpoint(s) you've specified.
+   3. For **Scope**, select the OAuth scopes to include in authentication requests.
+   4. Click **Next**.
 
-<img
-  src="../img/sso/azure-pingone-connection.gif"
-  alt="Azure PingOne connection"
-  class="screenshot"
-/> 
+    <img
+      src="../img/sso/azure-pingone-connection.gif"
+      alt="Azure PingOne connection"
+      class="screenshot"
+    /> 
 
 5. In Step 2 of the wizard, copy the **PingOne Redirect URI** and paste it on the Azure AD app registration.
    * Redirect URIs can be configured from the **Overview** section of your app registration under the **Essentials** menu in Azure AD.
@@ -98,7 +112,7 @@ This guide walks through configuring SSO for GraphOS Studio by using Azure AD as
    * Each of your Azure group members are automatically added to the corresponding PingOne groups when the user initially signs on (SSO) to PingOne. This is PingOne's just-in-time user provisioning.
 8. Select **Save** to complete the Azure AD to PingOne connection.
 
-## Configure the OIDC Application
+## 6. Configure the OIDC Application
 Once you have successfully configured the Azure AD to PingOne identity bridge, the last step is to configure and enable GraphOS Studio as an OIDC application. The configuration for this application should already be initialized and can be accessed via the **Complete your Application Configuration** reminder under **Applications** in the PingOne admin console.
 
 1. Select **Meteor Development Group - Apollo Studio** under **Complete your Application Configuration**.
@@ -116,5 +130,6 @@ Once you have successfully configured the Azure AD to PingOne identity bridge, t
 5. On step 7 (**Group Access**), select the groups you want to grant access to SSO for GraphOS Studio. 
 6. Select **Done** to complete the configuration!
 
-## Notify Apollo
-Once you have completed the steps above, reach out to your Apollo contact.  They will complete the SSO setup process.
+## 7. Notify Apollo
+
+After you complete the steps above, reach out to your Apollo contact. They will complete your SSO setup.

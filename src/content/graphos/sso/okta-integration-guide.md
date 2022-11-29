@@ -1,15 +1,15 @@
 ---
-title: Okta Integration Guide
-description: Configure Okta as identity provider for GraphOS SSO
+title: Setting up Apollo SSO with Okta
 ---
 
-This guide walks through configuring Okta as the identity provider (IdP) for GraphOS Studio.  An Okta account with administrator privileges is required.
+> ⚠️ Single sign-on (SSO) is available only for [Enterprise plans](https://www.apollographql.com/pricing/).
 
-1. Create App Integration
-    * Navigate to the _Applications_ view.  
-    * Select the **Create App Integration** button.  
-    * From within the _Create a new app integration_ modal select the **SAML 2.0** option.  
-    * Select the **Next** button.
+This guide walks through configuring Okta as your Apollo organization's identity provider (IdP) for single sign-on (SSO). These steps require an Okta account with administrator privileges.
+
+## 1. Create an app integration
+
+1. From your Okta Administrator Dashboard, navigate to the **Applications** view.  
+2. Click **Create App Integration**. The following dialog appears:
 
     <img
      src="../img/sso/okta-create-app-integration.png"
@@ -17,40 +17,50 @@ This guide walks through configuring Okta as the identity provider (IdP) for Gra
      class="screenshot"
     />
 
-2. Create SAML Integration  
-    * Set **App name**: `Apollo GraphOS Studio`  
-    * Set **App logo**: [Apollo logo](../img/sso/apollo-sk-logo.png) (optional)  
-    * Select the **Next** button.
+3. Select **SAML 2.0** as your sign-in method.  
+4. Click **Next**. The **Create SAML Integration** dialog appears.
 
+    
+## 2. Create a new SAML integration
+
+The **Create SAML Integration** dialog includes multiple steps:
+
+1. In the **General Settings** step, provide the following values:
+
+    - **App name**: `Apollo GraphOS Studio`  
+    - **App logo**: [Apollo logo](../img/sso/apollo-sk-logo.png) (optional)  
+    
     <img
      src="../img/sso/okta-create-saml-integration.png"
      alt="Okta create saml integration step"
      class="screenshot"
     />
-    
-3. SAML Settings  
 
-    * Set **Single Sign On URL**: `https://sso.connect.pingidentity.com/sso/sp/ACS.saml2`  
-    * Check the _Use this for Recipient URL and Destination URL_ checkbox.  
-    * Set **Audience URI (SP Entity ID)**: `PingConnect`  
+    Then click **Next**.
     
-        > ⚠️ If `PingConnect` already exists use `fd76e619-6c0a-461c-912d-418278929d60`
+2. In the **Configure SAML** step, provide the following values:
 
-    * Set **Default RelayState**: `https://pingone.com/1.0/fd76e619-6c0a-461c-912d-418278929d60`  
+    - **Single sign on URL**: `https://sso.connect.pingidentity.com/sso/sp/ACS.saml2`  
+        * Also check **Use this for Recipient URL and Destination URL**.  
+    - **Audience URI (SP Entity ID)**: `PingConnect`  
+    
+        > ⚠️ If `PingConnect` already exists, use `fd76e619-6c0a-461c-912d-418278929d60`
+
+    - **Default RelayState**: `https://pingone.com/1.0/fd76e619-6c0a-461c-912d-418278929d60`  
 
     <img
      src="../img/sso/okta-configure-saml.png"
      alt="Okta configure SAML"
      class="screenshot"
-    />   
+    />
 
-4. Configure Attribute Statements  
-    > ⚠️ These four attribute statements are required for a seamless experience into Apollo Studio.
-    * Set **sub**: Uniquely identifies the user to Apollo Studio. Typically email.
-    * Set **email**
-    * Set **given_name**
-    * Set **family_name**
-    * Select the **Next** button.
+3. Still in the **Configure SAML** step, scroll down to **Attribute Statements**. Set values for the following attributes:
+
+    - **sub**: `user.email`
+      - The **sub** attribute should uniquely identify any particular user to GraphOS. In most cases, `user.email` provides this unique mapping.
+    - **email**: `user.email`
+    - **given_name**: `user.firstName`
+    - **family_name**: `user.lastName`
 
     <img
      src="../img/sso/okta-attribute-statements.png"
@@ -58,32 +68,35 @@ This guide walks through configuring Okta as the identity provider (IdP) for Gra
      class="screenshot"
     />   
 
+    Then click **Next**.
 
-5. Feedback
-    * Select the **I'm an Okta customer adding an internal app** option.  
-    * Select the **Finish** button.
+4. In the **Feedback** step, provide the following values:
+    - Select **I'm an Okta customer adding an internal app**. 
 
     <img
      src="../img/sso/okta-feedback.png"
      alt="Okta feedback"
      class="screenshot"
-    />       
+    />
 
-6. Send SAML metadata to Apollo
-    * Scroll down, and in the right hand column select the **View SAML setup instructions** button.
+    Then click **Finish**.      
+
+## 3. Send SAML metadata to Apollo
+
+1. From your new SAML integration's details page, scroll down and click **View SAML setup instructions** on the right side:
 
     <img
-     src="../img/sso/okta-settings.png"
-     alt="Okta settings"
-     class="screenshot"
+      src="../img/sso/okta-settings.png"
+      alt="Okta settings"
+      class="screenshot"
     />     
 
-    * Copy and paste contents of the **IDP metadata** textbox into a text file.
+2. In the dialog that appears, copy and paste the contents of the **IDP metadata** textbox into a text file:
 
     <img
-     src="../img/sso/okta-idp-metadata.png"
-     alt="Okta IdP metadata"
-     class="screenshot"
+      src="../img/sso/okta-idp-metadata.png"
+      alt="Okta IdP metadata"
+      class="screenshot"
     /> 
 
-    * Send the file to your Apollo contact.  They will continue the SSO setup.
+3. Send the text file to your Apollo contact. They will complete your SSO setup.
