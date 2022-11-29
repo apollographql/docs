@@ -18,7 +18,7 @@
     "Working with Supergraphs": {
       "Overview": "/graphs/overview",
       "Publishing schemas": "/schema/cli-registration",
-      "Creating a new subgraph": "/graphs/adding-a-subgraph",
+      "Creating a new subgraph": "/graphs/creating-a-subgraph",
       "Local development": "/graphs/local-development",
       "Managing graphs in Studio": "/graphs/studio-features",
       "Supergraph-specific Studio features": "/graphs/federated-graphs",
