@@ -17,7 +17,7 @@ This guide walks through configuring a generic SAML-based identity provider (IdP
 
 1. Create a new application in your SSO environment. While doing so, set the following values:
 
-    * **App Name**:  `Apollo GraphOS Studio` 
+    * **App Name**:  `Apollo GraphOS` 
     * **App logo**: [Apollo logo](../img/sso/apollo-sk-logo.png) (optional) 
 
 2. If possible, upload the appropriate Apollo SAML metadata for your organization:
@@ -53,8 +53,8 @@ This guide walks through configuring a generic SAML-based identity provider (IdP
     - **given_name**: `user.firstName`
     - **family_name**: `user.lastName`
 
-7. Assign users to the Apollo GraphOS Studio application.
-    - Reach out to your SSO or Identity & Access Management team for help assigning the relevant groups and users to `Apollo GraphOS Studio`.
+7. Assign users to the Apollo GraphOS application.
+    - Reach out to your SSO or Identity & Access Management team for help assigning the relevant groups and users to `Apollo GraphOS`.
 
 8. Send your Apollo contact your identity provider (IdP) SAML XML metadata file.
     
