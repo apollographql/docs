@@ -45,7 +45,7 @@ Templates are currently available for the following libraries and languages:
 You start by running `rover template use`, providing it the ID of your chosen template. For example, the following command creates a new directory called `my-subgraph` that contains the boilerplate code for a subgraph written in TypeScript using the Apollo Server library:
 
 ```bash
-rover subgraph use subgraph-typescript-apollo-server my-subgraph
+rover template use subgraph-typescript-apollo-server my-subgraph
 ```
 
 After generating the boilerplate code, you can start filling in your business logic. The generated code includes example resolvers for `Query` and `Mutation`, along with some [entity types](/federation/entities/) to use as your starting point. All templates also come with example GitHub Actions workflows to help with [publishing your schema in CI/CD](../../schemas/publishing#publishing-with-continuous-delivery).
