@@ -27,7 +27,7 @@ The **Create SAML Integration** dialog includes multiple steps:
 
 1. In the **General Settings** step, provide the following values:
 
-    - **App name**: `Apollo GraphOS Studio`  
+    - **App name**: `Apollo GraphOS`  
     - **App logo**: [Apollo logo](../img/sso/apollo-sk-logo.jpg) (optional)
     
     <img

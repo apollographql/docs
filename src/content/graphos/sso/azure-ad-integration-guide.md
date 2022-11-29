@@ -13,7 +13,7 @@ This guide walks through configuring Azure Active Directory (Azure AD) as your A
 1. Go to your [Azure Portal](http://portal.azure.com/) and then navigate to **Azure Active Directory**.
 2. In the left pane, select **App Registrations**. Then in the top ribbon click **+ New Registration**.
 3. On the **Register an application** page, provide the following information:
-   - Provide a friendly name for the PingOne client (e.g., `Apollo GraphOS Studio`).
+   - Provide a friendly name for the PingOne client (such as `Apollo GraphOS` or `PingOneConnect`).
    - Under **Supported account types**, select which Microsoft account types will have access.
    - Leave **Redirect URI** empty. You'll provide this information later.  
     
@@ -23,7 +23,7 @@ This guide walks through configuring Azure Active Directory (Azure AD) as your A
       class="screenshot"
     />
 
-    Then click **Create**.
+    Then click **Register**.
 
 ## 2. Retrieve your endpoint URL and client ID
 
