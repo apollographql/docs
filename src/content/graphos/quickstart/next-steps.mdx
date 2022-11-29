@@ -43,11 +43,37 @@ Whenever you update your subgraph's schema, you need to **publish** those change
 
 After learning about the publishing process, you should [integrate it into your CI workflow](#set-up-continuous-delivery).
 
-### Add a subgraph
+### Add another subgraph
 
-See [this article](../graphs/adding-a-subgraph/).
+One of the most powerful features of a supergraph is that it can combine _multiple_ GraphQL APIs into a _single_ graph:
 
+```mermaid
+flowchart LR;
+  clients(Clients);
+  subgraph "GraphOS";
+  router(["Router"]);
+  end;
+  subgraph "Your infrastructure";
+  api[Subgraph A];
+  secondapi[Subgraph B];
+  thirdapi[Subgraph C];
+  router --- api & secondapi & thirdapi
+  end;
+  clients --- router;
+  class clients secondary;
+```
 
+With this architecture, different teams in your organization can each maintain their own subgraph. This helps teams work in parallel, because they aren't all contributing to the same single codebase.
+
+#### 1. Build your new subgraph
+
+See [Creating a new subgraph](../graphs/creating-a-subgraph/).
+
+#### 2. Add the subgraph to your supergraph
+
+**To add a subgraph to your supergraph, you publish its schema!** This uses the exact same Rover command as [updating an _existing_ subgraph](#update-a-subgraph-schema). The only difference is that you provide the name of the _new_ subgraph to the command.
+
+[Learn about publishing subgraph schemas.](../schema/cli-registration/#subgraph-schemas)
 
 ### Enable federation features
 
