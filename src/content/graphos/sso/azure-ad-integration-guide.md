@@ -11,7 +11,7 @@ This guide walks through configuring Azure Active Directory (Azure AD) as your A
 ## 1. Create an Azure AD app registration
 
 1. Go to your [Azure Portal](http://portal.azure.com/) and then navigate to **Azure Active Directory**.
-2. In the left pane, select **App Registrations**. Then in the top ribbon select **+ New Registration**.
+2. In the left pane, select **App Registrations**. Then in the top ribbon click **+ New Registration**.
 3. On the **Register an application** page, provide the following information:
    - Provide a friendly name for the PingOne client (e.g., `Apollo GraphOS Studio`).
    - Under **Supported account types**, select which Microsoft account types will have access.
@@ -57,7 +57,7 @@ This guide walks through configuring Azure Active Directory (Azure AD) as your A
    1. Select **+ Add a permission > Microsoft Graph > Application permissions**.
    2. Search for `Group`, expand, and select **Group.Read.All**.
    3. **Save** your changes.
-   3. If `User.Read` was not auto created, repeat this process for `User.Read`.
+   4. If `User.Read` was not auto created, repeat this process for `User.Read`.
 
 2. Also from the **API Permissions** section, select **Grant admin consent** next to the **+ Add a permission** button. Doing this ensures that your users don't need to grant consent during SSO.
 
@@ -75,12 +75,12 @@ This guide walks through configuring Azure Active Directory (Azure AD) as your A
       src="../img/sso/azure-manifest.png"
       alt="Azure manifest"
       class="screenshot"
-    /> 
+    />
 
 ## 5. Integrate PingOne with Azure AD
 
 1. After you receive your PingOne SSO invitation email, click the enrollment link to create a new account or sign in with an existing account.
-2. On the landing page, select **Setup** on the top ribbon.
+2. On the landing page, click **Setup** on the top ribbon.
 3. Select **Connect to an Identity Repository > Microsoft Azure AD** and click **Next**.
 4. From the **Configure Your Microsoft Azure Connection** modal:
    1. Copy and paste the endpoint URL, client ID, and client secret values saved earlier from Azure AD.  
@@ -99,36 +99,40 @@ This guide walks through configuring Azure Active Directory (Azure AD) as your A
    * Select **Redirect URIs > Add a platform > Web** and enter the Redirect URI you copied from PingOne. Select **Configure** to save changes.
    * Back on the PingOne configuration wizard, select **Next** after copying and pasting the URI.
 
-<img
-  src="../img/sso/azure-pingone-redirect-uri.gif"
-  alt="Azure PingOne redirect URI"
-  class="screenshot"
-/> 
+    <img
+      src="../img/sso/azure-pingone-redirect-uri.gif"
+      alt="Azure PingOne redirect URI"
+      class="screenshot"
+    /> 
 
-6. On Step 3, configure the **Map Attributes** section by mapping the incoming attributes or claims from Azure AD to PingOne. You can leave this with the default Attribute Mapping.
-7. On Step 4, choose whether or not you would like to synchronize your user groups from Azure AD to your PingOne user groups. 
-   * The permissions **User.Read** and **Group.Read.All** are required for synchronization to be successful.
-   * Any PingOne user groups that do not exist in your Azure provider will be replaced by the Azure groups.
-   * Each of your Azure group members are automatically added to the corresponding PingOne groups when the user initially signs on (SSO) to PingOne. This is PingOne's just-in-time user provisioning.
-8. Select **Save** to complete the Azure AD to PingOne connection.
+6. In Step 3 of the wizard, configure the **Map Attributes** section by mapping the incoming attributes or claims from Azure AD to PingOne. You can leave this with the default Attribute Mapping.
+
+7. In Step 4 of the wizard, choose whether or not to synchronize your user groups from Azure AD to your PingOne user groups.
+   - The permissions **User.Read** and **Group.Read.All** are required for synchronization to be successful.
+   - Any PingOne user groups that do not exist in your Azure provider will be replaced by the Azure groups.
+   - Each of your Azure group members are automatically added to the corresponding PingOne groups when the user initially signs on (SSO) to PingOne. This is PingOne's just-in-time user provisioning.
+
+8. Click **Save** to finish connecting Azure AD to PingOne.
 
 ## 6. Configure the OIDC Application
-Once you have successfully configured the Azure AD to PingOne identity bridge, the last step is to configure and enable GraphOS Studio as an OIDC application. The configuration for this application should already be initialized and can be accessed via the **Complete your Application Configuration** reminder under **Applications** in the PingOne admin console.
+
+After you successfully configure the identity bridge between Azure AD and PingOne, you need to configure and enable Apollo as an OIDC application. The configuration for this application should already be initialized, and you can access it via the **Complete your Application Configuration** reminder under **Applications** in the PingOne admin console.
 
 1. Select **Meteor Development Group - Apollo Studio** under **Complete your Application Configuration**.
-> ⚠️ If the **Add OIDC Application** wizard doesn’t automatically pop-up, select the **SAML** tab and then select the **OIDC** tab.
 
-<img
-  src="../img/sso/azure-oidc-application.gif"
-  alt="PingOne OIDC application"
-  class="screenshot"
-/> 
+    > ⚠️ If the **Add OIDC Application** wizard doesn’t automatically pop-up, select the **SAML** tab and then select the **OIDC** tab.
 
-2. On step 1 of the **Add OIDC Application** wizard, configure the application name, description, category, and icon (optional).
-3. Select **Next** on steps 2-5; these are pre configured by default. 
-4. On step 6 (**Attribute Mapping**), it is required to map email to email and sub to preferred_username. You may map more attributes for given name, family name, and others. 
-5. On step 7 (**Group Access**), select the groups you want to grant access to SSO for GraphOS Studio. 
-6. Select **Done** to complete the configuration!
+    <img
+      src="../img/sso/azure-oidc-application.gif"
+      alt="PingOne OIDC application"
+      class="screenshot"
+    />
+
+2. In Step 1 of the **Add OIDC Application** wizard, configure the application name, description, category, and icon (optional).
+3. Click **Next** for Steps 2-5 (these are configured by default). 
+4. In Step 6 of the wizard (**Attribute Mapping**), you _must_ map `email` to `email` and `sub` to `preferred_username`. You can optionally map more attributes for given name, family name, and others. 
+5. In Step 7 of the wizard (**Group Access**), select whichever groups should receive SSO access to Apollo.
+6. Click **Done** to complete the configuration.
 
 ## 7. Notify Apollo
 

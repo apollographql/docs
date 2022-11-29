@@ -69,7 +69,7 @@
       "Members, roles, and permissions": "/org/members",
       "Plans and billing": "/org/plans",
       "User account": "/org/account",
-      "Single sign-on (SSO)": {
+      "Single Sign-On (SSO)": {
         "Okta": "/sso/okta-integration-guide",
         "Azure AD": "/sso/azure-ad-integration-guide",
         "SAML": "/sso/saml-integration-guide"
