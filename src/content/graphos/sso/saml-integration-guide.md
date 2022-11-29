@@ -1,37 +1,67 @@
 ---
-title: SAML Integration Guide
-description: Configure SAML identity provider for GraphOS SSO
+title: Setting up Apollo SSO with a SAML-based IdP
 ---
 
-This guide walks through configuring a SAML identity provider (IdP) for GraphOS Studio.  You will need administrative access to your SSO Identity Provider (IdP).
+> ⚠️ Single sign-on (SSO) is available only for [Enterprise plans](https://www.apollographql.com/pricing/).
 
-1. Create a new application in your SSO environment:
-   * Set **App Name**:  `Apollo GraphOS Studio` 
-   * Set **App logo**: [Apollo logo](../img/sso/apollo-sk-logo.png) (optional) 
-   * If possible, upload Apollo's SAML metadata:
-     * If the Entity ID of `PingConnect` **has not** been used: [apollo_studio_pingconnect_metadata.xml](apollo_studio_pingconnect_metadata.xml)
-     * If the Entity ID of `PingConnect` **has** been used: [apollo_studio_guid_metadata.xml](apollo_studio_guid_metadata.xml)
-     > ⚠️  If you require Authn requests to be signed please inform your Apollo contact.  They will provide a separate metadata file.
-   * Validate/set **Single Sign on URL** _or_ **ACS URL**: `https://sso.connect.pingidentity.com/sso/sp/ACS.saml2`.  This value may also be used for the following fields:  
-     * **Recipient**
-     * **ACS (Consumer) URL Validator**
-     * **ACS (Consumer) URL**
-   * Validate/set **Entity ID**:
-     * If `PingConnect` **has not** been used, use it.
-     * If `PingConnect` **has** been used, use `fd76e619-6c0a-461c-912d-418278929d60`.
-   * Validate/set **RelayState**: `https://pingone.com/1.0/fd76e619-6c0a-461c-912d-418278929d60`
-   * Validate/set user attributes:
-     * **sub**: Uniquely identifies the user to Apollo Studio. Typically email.
-     * **email**
-     * **given_name**
-     * **family_name**
+This guide walks through configuring a generic SAML-based identity provider (IdP) for use with Apollo single sign-on (SSO). These steps require administrative access to your IdP.
 
-2. Assign users to Apollo GraphOS Studio application.  
-   > ⚠️ Reach out to your SSO or Identity & Access Management team to assign the relevant groups or users to `Apollo GraphOS Studio`.
+<blockquote>
 
-3. Send your Apollo contact one of the following:
-   * Identity provider (IdP) SAML XML metadata file (preferred)
-   * In lieu of an IdP SAML XML metadata file, the following:
-     * IdP entity ID
-     * IdP single sign-on URL / SSO URL
-     * IdP x509 certificate
+**If you use Okta or Azure Active Directory as your identity provider**, instead see the corresponding guide for your tool:
+
+- [Okta](./okta-integration-guide/)
+- [Azure AD](./azure-ad-integration-guide/)
+
+</blockquote>
+
+1. Create a new application in your SSO environment. While doing so, set the following values:
+
+    * **App Name**:  `Apollo GraphOS Studio` 
+    * **App logo**: [Apollo logo](../img/sso/apollo-sk-logo.png) (optional) 
+
+2. If possible, upload the appropriate Apollo SAML metadata for your organization:
+    * If your organization **does not** already use the Entity ID `PingConnect`: [apollo_studio_pingconnect_metadata.xml](apollo_studio_pingconnect_metadata.xml)
+    * If your organization **does** already use `PingConnect`: [apollo_studio_guid_metadata.xml](apollo_studio_guid_metadata.xml)
+    
+    > ⚠️ If your organization requires Authn requests to be signed, please inform your Apollo contact. They will provide a different metadata file.
+
+3. Set your **Single Sign on URL** _or_ **ACS URL** to the following: 
+
+    `https://sso.connect.pingidentity.com/sso/sp/ACS.saml2`
+    
+    You can also use this value for the following fields:
+
+    * **Recipient**
+    * **ACS (Consumer) URL Validator**
+    * **ACS (Consumer) URL**
+
+4. Set your **Entity ID** according to the following:
+    * If your organization **does not** already use `PingConnect` as an Entity ID, use `PingConnect`.
+    * If your organization **does** already use `PingConnect`, use the following value:
+        
+        `fd76e619-6c0a-461c-912d-418278929d60`
+
+5. Set your **RelayState** to the following value:
+    
+    `https://pingone.com/1.0/fd76e619-6c0a-461c-912d-418278929d60`
+
+6. Set the following user attributes:
+    - **sub**: `user.email`
+      - The **sub** attribute should uniquely identify any particular user to GraphOS. In most cases, `user.email` provides this unique mapping.
+    - **email**: `user.email`
+    - **given_name**: `user.firstName`
+    - **family_name**: `user.lastName`
+
+7. Assign users to the Apollo GraphOS Studio application.
+    - Reach out to your SSO or Identity & Access Management team for help assigning the relevant groups and users to `Apollo GraphOS Studio`.
+
+8. Send your Apollo contact your identity provider (IdP) SAML XML metadata file.
+    
+    **If you can't send this file,** send one of the following instead:
+
+    - IdP entity ID
+    - IdP single sign-on URL / SSO URL
+    - IdP x509 certificate
+
+9. Your Apollo contact will complete your SSO setup.
