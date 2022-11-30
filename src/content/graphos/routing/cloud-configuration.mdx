@@ -17,7 +17,7 @@ This page shows the following information:
   - Every cloud router's URL is on a subdomain of `apollographos.net`.
 - Your router's current status and [launch history](../delivery/launches#launch-status)
 - Any [secrets](#managing-secrets) you've added
-- Your router's [YAML-based configuration](#router-configuration-yaml) 
+- Your router's [YAML-based configuration](#router-configuration-yaml)
 
 ## Managing secrets
 
@@ -34,7 +34,7 @@ To add a new secret, click **Save a secret**. The following dialog appears:
   width="500"
 />
 
-Enter a name and value for your secret. **You can't view a secret's value after you save it**, so make sure that the value is correct before saving. When you're ready, click **Save secret**. 
+Enter a name and value for your secret. **You can't view a secret's value after you save it**, so make sure that the value is correct before saving. When you're ready, click **Save secret**.
 
 Your secret is encrypted and stored. You can then use the secret's value in your router's YAML configuration.
 
@@ -55,6 +55,7 @@ You can configure certain aspects of your router's behavior in the **Router conf
 
 - [HTTP headers](#http-header-rules) that the router sends to your subgraphs
 - [CORS rules](#cors-settings) for browser-based applications connecting to the router
+- [Subgraph error inclusion](#subgraph-error-inclusion) to expose subgraph errors to clients including Apollo Explorer.
 
 After you make any changes to your YAML configuration, you must **save** those changes (`CMD+S` or `CTRL+S`) for those changes to take effect.
 
@@ -218,26 +219,26 @@ headers:
 
 > For a more general introduction to CORS and common considerations, see the following sections:
 >
-> * [Why use CORS?](/apollo-server/security/cors#why-use-cors)
-> * [Choosing CORS options for your project](/apollo-server/security/cors#choosing-cors-options-for-your-project)
+> - [Why use CORS?](/apollo-server/security/cors#why-use-cors)
+> - [Choosing CORS options for your project](/apollo-server/security/cors#choosing-cors-options-for-your-project)
 
 By default, the router enables _only_ Apollo Studio to initiate browser connections to it. If your supergraph serves data to other browser-based applications, you need to do one of the following in the `cors` section of your **Router configuration YAML**:
 
-* Add the origins of those web applications to the router's list of allowed `origins`.
-    * Use this option if there is a known, finite list of web applications that consume your cloud supergraph.
-* Add a regex that matches the origins of those web applications to the router's list of allowed `origins`.
-    * This option comes in handy if you want to match origins against a pattern, see the example below that matches subdomains of a specific namespace.
-* Enable the `allow_any_origin` option.
-    * Use this option if your supergraph is a public API with arbitrarily many web app consumers.
-    * With this option enabled, the router sends the [wildcard (`*`)](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin#directives) value for the `Access-Control-Allow-Origin` header. This enables _any_ website to initiate browser connections to it (but they can't provide cookies or other credentials).
+- Add the origins of those web applications to the router's list of allowed `origins`.
+  - Use this option if there is a known, finite list of web applications that consume your cloud supergraph.
+- Add a regex that matches the origins of those web applications to the router's list of allowed `origins`.
+  - This option comes in handy if you want to match origins against a pattern, see the example below that matches subdomains of a specific namespace.
+- Enable the `allow_any_origin` option.
 
-* You _must_ use the `origins` + `match_origins` option if clients need to [authenticate their requests with cookies](#passing-credentials).
+  - Use this option if your supergraph is a public API with arbitrarily many web app consumers.
+  - With this option enabled, the router sends the [wildcard (`*`)](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin#directives) value for the `Access-Control-Allow-Origin` header. This enables _any_ website to initiate browser connections to it (but they can't provide cookies or other credentials).
+
+- You _must_ use the `origins` + `match_origins` option if clients need to [authenticate their requests with cookies](#passing-credentials).
 
 The following snippet includes an example of each option (use either `allow_any_origin`, or `origins + match_origins`):
 
 ```yaml
 cors:
-
   # Set to true to allow any origin
   # (Defaults to false)
   allow_any_origin: true
@@ -293,7 +294,6 @@ The following snippet shows all CORS configuration defaults for your router:
 # CORS (Cross Origin Resource Sharing)
 #
 cors:
-
   # Set to true to allow any origin
   allow_any_origin: false
 
@@ -328,3 +328,24 @@ cors:
 #### Response `Vary` header
 
 A plugin may set a response `Vary` header. If, after all plugins are processed, there is no response `Vary` header, then the router will add one with a value of "origin".
+
+## Subgraph error inclusion
+
+By default, your cloud supergraph redacts the details of subgraph errors in its responses to clients. The router instead returns a default error with the following message:
+
+```
+Subgraph errors redacted
+```
+
+This redaction prevents potential leaks of sensitive information to the client. Using the `include_subgraph_errors` plugin, you can configure the router to propagate subgraph errors to clients instead. You can do this for all subgraphs, or on a per-subgraph basis.
+
+To configure subgraph error inclusion, add the `include_subgraph_errors` plugin to your [YAML config file](./overview/#yaml-config-file), like so:
+
+```yaml title="router.yaml"
+include_subgraph_errors:
+  all: true # Propagate errors from all subraphs
+  subgraphs:
+    products: false # Do not propagate errors from the products subgraph
+```
+
+Any configuration under the `subgraphs` key takes precedence over configuration under the `all` key. In the example above, subgraph errors are included from all subgraphs _except_ the `products` subgraph.
