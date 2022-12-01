@@ -22,9 +22,8 @@ export function NotesList({notes}) {
             <RelativeLink href={note.childMdx.fields.slug}>
               {note.childMdx.frontmatter.title}
             </RelativeLink>
-            <span>
-              Last Updated{' '}
-              {getBrowserCompatibleDate(note)}
+            <span style={{flexShrink: 0}}>
+              Last Updated {getBrowserCompatibleDate(note)}
             </span>
           </Flex>
         </ListItem>

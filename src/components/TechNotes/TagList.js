@@ -1,9 +1,9 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import {Button, Wrap, WrapItem} from '@chakra-ui/react';
-import {Link as GatsbyLink, graphql, useStaticQuery} from 'gatsby';
-import {kebabCase} from 'lodash';
+import {graphql, useStaticQuery} from 'gatsby';
 
-export function TagList() {
+export function TagList({onClick, selected}) {
   const {
     allMdx: {group}
   } = useStaticQuery(
@@ -26,8 +26,11 @@ export function TagList() {
         .map(group => (
           <WrapItem key={group.tag}>
             <Button
-              as={GatsbyLink}
-              to={`/technotes/tags/${kebabCase(group.tag)}`}
+              size="sm"
+              onClick={() =>
+                group.tag === selected ? onClick() : onClick(group.tag)
+              }
+              isActive={group.tag === selected}
             >
               {group.tag} ({group.totalCount})
             </Button>
@@ -36,3 +39,8 @@ export function TagList() {
     </Wrap>
   );
 }
+
+TagList.propTypes = {
+  selected: PropTypes.string,
+  onClick: PropTypes.func.isRequired
+};
