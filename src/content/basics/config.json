@@ -1,8 +1,10 @@
 {
   "title": "Docs Home",
   "sidebar": {
-    "My Apollo journey": "/",
-    "Learn GraphQL": {
+    "My Apollo Journey": {
+      "TBD": "/tbd"
+    },
+    "GraphQL 101": {
       "Tutorials": "https://odyssey.apollographql.com/",
       "Benefits of GraphQL": "/benefits",
       "The schema": {
@@ -26,31 +28,22 @@
         "FAQ": "/resources/faq"
       }
     },
-    "The GraphOS Platform": {
+    "Build your Supergraph": {
+      "What's a supergraph?": "/intro",
       "Quickstart 🚀": {
         "1️⃣ Create your supergraph": "/quickstart/cloud",
         "2️⃣ Next steps": "/quickstart/next-steps"
       },
-      "Parts of a Supergraph": {
-        "Subgraphs": "/subgraphs",
-        "The routing layer": "/routing"
-      },
-      "Product Releases": {
-        "Launch stages": "/resources/product-launch-stages",
-        "Elastic License v2 FAQ": "/resources/elastic-license-v2-faq"
-      }
-    },
-    "Building Subgraphs": {
-      "Developing": {
+      "Create Subgraphs": {
         "Start from a template": "/templates",
         "Local development": "/local",
         "All supported libraries": "/supported"
       },
-      "Creating Entities": {
+      "Add Entities": {
         "Defining and resolving": "/defining",
         "Federating entities (advanced)": "/federating"
       },
-      "Deploying": {
+      "Deploy Subgraphs": {
         "Vercel": "/vercel",
         "AWS": "/aws",
         "GCP": "/gcp"
@@ -102,8 +95,8 @@
         "User account": "/org/account"
       }
     },
-    "Federating a Supergraph": {
-      "Adding a new subgraph": "/adding-subgraph/",
+    "Federation": {
+      "Introduction": "/fed-intro",
       "Federated schemas": {
         "Sharing types between subgraphs": "/federated-types/sharing-types",
         "Federating entities": "/federating",
@@ -116,16 +109,19 @@
         "Migrating from schema stitching": "/migrating-from-stitching"
       }
     },
-    "Supergraph Performance": {
-      "@defer support": "/defer",
-      "Caching": "/caching",
-      "Query plans": "/query-plans"
-    },
     "Security": {
       "API keys": "/api-keys",
       "Audit log (enterprise only)": "/audit-log",
       "Sub-processors": "/sub-processors",
       "Data privacy and compliance": "/data-privacy"
+    },
+    "Performance": {
+      "@defer support": "/defer",
+      "Caching": "/caching",
+      "Query plans": "/query-plans"
+    },
+    "Tech Notes": {
+      "TBD": "/tbd2"
     }
   }
 }
