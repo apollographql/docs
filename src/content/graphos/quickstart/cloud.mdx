@@ -54,13 +54,13 @@ You're all set! Studio automatically redirects you to your newly created organiz
 
 ## 2. Create your first supergraph
 
-You now have an Apollo Studio organization, but it doesn't contain any graphs! Let's create your first **cloud supergraph**, which will incorporate your existing GraphQL API.
+You now have an Apollo Studio organization, but it doesn't contain any graphs yet. Let's create your first **cloud supergraph**, which will incorporate your existing GraphQL API.
 
 <blockquote>
 
 A **cloud supergraph** automatically provisions a GraphOS-managed **router** in front of your API. Clients query your router instead of querying your API directly.
 
-With this architecture, you can later combine _multiple_ APIs into a single graph, all orchestrated by the router!
+With this architecture, you can later combine _multiple_ APIs into a single graph, all orchestrated by the router:
 
 ```mermaid
 flowchart LR;
@@ -169,9 +169,11 @@ Your GraphQL API is now the first **subgraph** in a cloud supergraph. Later, we'
 
 ## 3. Learn about your variant
 
-Now that you've created your supergraph's first variant, let's look at the helpful views that Studio provides for it.
+When you created your supergraph, you also created its first **variant** (which is named `main`). Every graph in GraphOS has one or more variants. Each variant represents a different environment where the graph runs (such as staging or production).
 
-From your **Supergraphs** tab, click the name of the variant you just created. (In the screenshot above, that's **main**.) This opens your variant's README page.
+Let's look at the helpful views that Studio provides for your variant!
+
+From your **Supergraphs** tab, click your graph's `main` variant. This opens the variant's README page.
 
 The README is great for documenting your supergraph so team members can learn the basics of how to work with it. It supports Markdown syntax like a typical README in a Git repository.
 
