@@ -2,7 +2,15 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import RelativeLink from '../RelativeLink';
 import moment from 'moment';
-import {Flex, List, ListItem} from '@chakra-ui/react';
+import {
+  Table,
+  TableContainer,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr
+} from '@chakra-ui/react';
 
 const getBrowserCompatibleDate = note => {
   // The date string here look like "2022-11-01 16:39:41 -0400"
@@ -15,20 +23,32 @@ const getBrowserCompatibleDate = note => {
 
 export function NotesList({notes}) {
   return (
-    <List spacing="1">
-      {notes.map(note => (
-        <ListItem key={note.childMdx.id}>
-          <Flex justify="space-between">
-            <RelativeLink href={note.childMdx.fields.slug}>
-              {note.childMdx.frontmatter.title}
-            </RelativeLink>
-            <span style={{flexShrink: 0}}>
-              Last Updated {getBrowserCompatibleDate(note)}
-            </span>
-          </Flex>
-        </ListItem>
-      ))}
-    </List>
+    <TableContainer>
+      <Table variant="unstyled">
+        <Thead>
+          <Tr>
+            <Th>Title</Th>
+            <Th>Last updated</Th>
+          </Tr>
+        </Thead>
+        <Tbody>
+          {notes.map(note => (
+            <Tr key={note.childMdx.id}>
+              <Td>
+                <RelativeLink href={note.childMdx.fields.slug}>
+                  {note.childMdx.frontmatter.title}
+                </RelativeLink>
+              </Td>
+              <Td>
+                <span style={{whiteSpace: 'nowrap'}}>
+                  {getBrowserCompatibleDate(note)}
+                </span>
+              </Td>
+            </Tr>
+          ))}
+        </Tbody>
+      </Table>
+    </TableContainer>
   );
 }
 
