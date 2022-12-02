@@ -40,7 +40,7 @@ Tags.propTypes = {
 export default function Tags({pageContext, data, location}) {
   const pageProps = usePageLayoutProps({
     pageContext,
-    title: `Tagged with "${pageContext.tag}"`
+    title: `Tagged with “${pageContext.tag}”`
   });
 
   return (
