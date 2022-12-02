@@ -60,14 +60,42 @@ The list includes each subgraph's name and routing URL, along with type and fiel
 
 ### Adding a new subgraph
 
-To add a new subgraph to a variant of your cloud supergraph, you [publish that subgraph's schema](../schema/cli-registration/) using the Rover CLI. In your command, make sure to specify the correct values for the following:
+You can add your new subgraph to your GraphOS supergraph in any of the following ways:
 
-* The graph and variant to publish to
-* The name for the subgraph
-* The routing URL that your router will use to communicate with the subgraph
+* [In Apollo Studio](#adding-a-subgraph-in-apollo-studio)
+* [Via the Rover CLI](#adding-a-subgraph-via-the-rover-cli)
 
-You can also click **Add a subgraph** on your variant's Subgraphs page to view instructions for publishing a subgraph schema.
+#### Adding a subgraph in Apollo Studio
 
+1. Go to your variant's Subgraphs page in Studio:
+
+    <img
+      src="../img/federated-graphs/subgraphs-page.jpg"
+      class="screenshot"
+      alt="Variant subgraphs page in Studio"
+      width="550"
+    />
+
+2. Click **Add a subgraph**. The following dialog appears:
+
+    <img
+      src="../img/federated-graphs/add-subgraph-dialog.jpg"
+      class="screenshot"
+      alt="Dialog for adding a subgraph in Studio"
+      width="450"
+    />
+
+3. Provide your subgraph's **Routing URL** (this is the URL that your supergraph's router will use to communicate with the subgraph), along with a **Subgraph Name**.
+
+4. If Studio can't fetch your subgraph's schema automatically from the routing URL, click **Advanced options** to provide the schema another way (such as by pasting the schema directly or introspecting a locally running server).
+
+5. Click **Add Subgraph**. When the action completes, your new subgraph is listed on the Subgraphs page.
+
+#### Adding a subgraph via the Rover CLI
+
+To add a subgraph to your supergraph with Rover, you publish the subgraph's schema! To do this, you use the exact same Rover command as [updating an _existing_ subgraph](#update-a-subgraph-schema). The only difference is that you provide the name of the _new_ subgraph to the command.
+
+[Learn about publishing subgraph schemas.](../schema/cli-registration/#subgraph-schemas)
 
 ### Modifying a subgraph
 
