@@ -9,9 +9,13 @@ function recursiveMap(
 ) {
   return React.Children.map(children, child => {
     if (!React.isValidElement(child)) {
-      return child
-        .replace(/% apiKey %/g, apiKey)
-        .replace(/% graphRef %/g, graphRef);
+      if (typeof child === 'string') {
+        return child
+          .replace(/% apiKey %/g, apiKey)
+          .replace(/% graphRef %/g, graphRef);
+      }
+
+      return child;
     }
 
     return React.cloneElement(
