@@ -1,19 +1,10 @@
 import React from 'react';
 import {Button} from '@chakra-ui/react';
 import {FiArrowRight} from 'react-icons/fi';
-import {gql, useQuery} from '@apollo/client';
-
-const GET_USER = gql`
-  query GetUser {
-    me {
-      id
-      name
-    }
-  }
-`;
+import {useUser} from '../../utils';
 
 export default function StudioButton() {
-  const {data} = useQuery(GET_USER);
+  const {user} = useUser();
   return (
     <Button
       ml="2"
@@ -26,7 +17,7 @@ export default function StudioButton() {
       rel="noopener noreferrer"
       d={{base: 'none', lg: 'flex'}}
     >
-      {data?.me ? 'Launch' : 'Try'} Apollo Studio
+      {user ? 'Launch' : 'Try'} Apollo Studio
     </Button>
   );
 }

@@ -49,6 +49,7 @@ import {Global} from '@emotion/react';
 import {MDXProvider} from '@mdx-js/react';
 import {MDXRenderer} from 'gatsby-plugin-mdx';
 import {PathContext, useFieldTableStyles} from '../utils';
+import {ReplaceApiKey} from './ReplaceApiKey';
 import {TOTAL_HEADER_HEIGHT} from './Header';
 import {YouTube} from './YouTube';
 import {dirname, join} from 'path';
@@ -163,7 +164,8 @@ const mdxComponents = {
   TypeScriptApiBox,
   TypescriptApiBox: TypeScriptApiBox,
   EmbeddableExplorer,
-  ButtonLink
+  ButtonLink,
+  ReplaceApiKey
 };
 
 const {processSync} = rehype()
