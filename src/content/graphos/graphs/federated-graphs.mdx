@@ -45,6 +45,56 @@ This helps you test out adding new subgraphs (or removing existing ones) in non-
 
 When you [publish a subgraph's schema](../schema/cli-registration/), you can specify which variant of the supergraph you're publishing that schema to.
 
+### Adding a variant
+
+You can add a new variant to your existing GraphOS supergraph in the following ways:
+
+* [In Apollo Studio](#adding-a-variant-in-apollo-studio) (cloud supergraphs only)
+* [Via the Rover CLI](#adding-a-variant-via-the-rover-cli)
+
+#### Adding a variant in Apollo Studio
+
+> This method of adding a variant is available only to cloud supergraphs. For other graph types, see [Adding a variant via the Rover CLI](#adding-a-variant-via-the-rover-cli)
+
+1. Go to your supergraph's Settings page in Studio and navigate to **This Graph > Variants**:
+
+    <img
+      src="../img/federated-graphs/variant-settings.jpg"
+      class="screenshot"
+      alt="Variant settings page in Studio"
+    />
+
+2. Click **Add a variant**. The following dialog appears:
+
+    <img
+      src="../img/federated-graphs/add-variant-1.jpg"
+      class="screenshot"
+      alt="Step 1 for adding a variant in Studio"
+      width="450"
+    />
+
+3. Provide a **Variant Name** and click **Continue**. The next step in the dialog appears:
+
+    <img
+      src="../img/federated-graphs/add-variant-2.jpg"
+      class="screenshot"
+      alt="Step 2 for adding a variant in Studio"
+      width="450"
+    />
+
+4. Provide your first subgraph's **Routing URL** (this is the URL that your new variant's router will use to communicate with the subgraph), along with a **Subgraph Name**.
+    - Creating a new supergraph variant always requires also creating the first subgraph for that variant.
+
+5. If Studio can't fetch your subgraph's schema automatically from the routing URL, click **Advanced options** to provide the schema another way (such as by pasting the schema directly or introspecting a locally running server).
+
+6. Click **Add a new variant**. When the action completes, your new variant is listed on your organization's homepage in Studio.
+
+#### Adding a variant via the Rover CLI
+
+To add a new variant to your supergraph with Rover, you publish its first subgraph's schema! To do this, you use the exact same Rover command as [updating an _existing_ subgraph](../quickstart/next-steps/#update-a-subgraph-schema). The only difference is that you provide the name of the new variant to the command.
+
+[Learn about publishing subgraph schemas.](../schema/cli-registration/#subgraph-schemas)
+
 ## Managing subgraphs
 
 After you create a [cloud supergraph](./overview/#cloud-supergraphs) (or a new variant of one), you can view a list of its associated subgraphs from the variant's Subgraphs page:
@@ -60,12 +110,14 @@ The list includes each subgraph's name and routing URL, along with type and fiel
 
 ### Adding a new subgraph
 
-You can add your new subgraph to your GraphOS supergraph in any of the following ways:
+You can add your new subgraph to your GraphOS supergraph in the following ways:
 
-* [In Apollo Studio](#adding-a-subgraph-in-apollo-studio)
+* [In Apollo Studio](#adding-a-subgraph-in-apollo-studio) (cloud supergraphs only)
 * [Via the Rover CLI](#adding-a-subgraph-via-the-rover-cli)
 
 #### Adding a subgraph in Apollo Studio
+
+> This method of adding a subgraph is available only to cloud supergraphs. For other graph types, see [Adding a subgraph via the Rover CLI](#adding-a-subgraph-via-the-rover-cli)
 
 1. Go to your variant's Subgraphs page in Studio:
 
@@ -93,7 +145,7 @@ You can add your new subgraph to your GraphOS supergraph in any of the following
 
 #### Adding a subgraph via the Rover CLI
 
-To add a subgraph to your supergraph with Rover, you publish the subgraph's schema! To do this, you use the exact same Rover command as [updating an _existing_ subgraph](#update-a-subgraph-schema). The only difference is that you provide the name of the _new_ subgraph to the command.
+To add a subgraph to your supergraph with Rover, you publish the subgraph's schema! To do this, you use the exact same Rover command as [updating an _existing_ subgraph](../quickstart/next-steps/#update-a-subgraph-schema). The only difference is that you provide the name of the _new_ subgraph to the command.
 
 [Learn about publishing subgraph schemas.](../schema/cli-registration/#subgraph-schemas)
 

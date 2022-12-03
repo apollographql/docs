@@ -73,6 +73,14 @@ See [Creating a new subgraph](../graphs/creating-a-subgraph/).
 
 See [Adding a new subgraph](../graphs/federated-graphs#adding-a-new-subgraph).
 
+### Add another variant
+
+Most supergraphs have multiple **variants**, each of which represents that supergraph running in a different environment (production, staging, and so on).
+
+If your supergraph runs in multiple environments, you sould create a different variant for each.
+
+[Learn how to create variants.](../graphs/federated-graphs/#adding-a-variant)
+
 ### Enable federation features
 
 Supergraphs use an architecture called **Apollo Federation**. Federation is at its most powerful when your subgraphs _share_ responsibility for some of your schema's types, instead of defining mutually exclusive types and fields.
