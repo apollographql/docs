@@ -28,13 +28,18 @@ function recursiveMap(
 
 function findApiKey(user) {
   if (user) {
-    for (const {account} of user.memberships) {
-      for (const {id, variants, apiKeys} of account.graphs) {
-        if (apiKeys?.length) {
-          const graphRef = `${id}@${variants[0].name}`;
-          return [graphRef, apiKeys[0].token];
-        }
-      }
+    const [graph] = user.memberships
+      .flatMap(({account}) => account.graphs)
+      .filter(graph => graph.apiKeys?.length)
+      .sort(
+        (a, b) =>
+          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+      );
+
+    if (graph) {
+      const {id, variants, apiKeys} = graph;
+      const graphRef = `${id}@${variants[0].name}`;
+      return [graphRef, apiKeys[0].token];
     }
   }
 
