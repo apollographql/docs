@@ -59,7 +59,8 @@ export function Header({children, algoliaFilters}) {
   return (
     <Box pos="sticky" top="0" zIndex="2">
       <Eyebrow>
-        Join us for GraphQL Summit, October 10-12 in San Diego. Early bird tickets now available!
+        Join us for GraphQL Summit, October 10-12 in San Diego. Early bird
+        tickets now available!
       </Eyebrow>
       <Flex
         align="center"
@@ -79,6 +80,14 @@ export function Header({children, algoliaFilters}) {
             align="center"
             d={{base: 'none', md: 'flex'}}
           >
+            <Box
+              as={ApolloLogo}
+              fill="current"
+              role="img"
+              aria-label="Apollo logo"
+              h="6"
+              mt="0.5" // offset to vertically align better w/ docs tag
+            />
             <Box
               as={ApolloLogo}
               fill="current"
