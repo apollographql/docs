@@ -183,6 +183,21 @@ if (process.env.CONTEXT === 'production') {
   });
 }
 
+const isLocalMode = process.env.DOCS_MODE === 'local';
+
+plugins.push(
+  ...Object.entries(remoteSources).map(([name, {remote, branch}]) => ({
+    resolve: '@theowenyoung/gatsby-source-git',
+    options: {
+      remote,
+      name,
+      branch,
+      rootDir: 'docs/source',
+      patterns: isLocalMode ? 'config.json' : undefined
+    }
+  }))
+);
+
 if (process.env.DOCS_LOCAL) {
   plugins.push(
     'gatsby-plugin-local-docs', // local plugin
@@ -207,19 +222,7 @@ if (process.env.DOCS_LOCAL) {
     }))
   );
 
-  if (process.env.DOCS_MODE !== 'local') {
-    plugins.push(
-      ...Object.entries(remoteSources).map(([name, {remote, branch}]) => ({
-        resolve: '@theowenyoung/gatsby-source-git',
-        options: {
-          remote,
-          name,
-          branch,
-          rootDir: 'docs/source'
-        }
-      }))
-    );
-  } else {
+  if (isLocalMode) {
     plugins.push('gatsby-plugin-local-docs');
   }
 }
