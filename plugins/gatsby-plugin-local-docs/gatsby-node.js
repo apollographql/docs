@@ -10,6 +10,10 @@ exports.createSchemaCustomization = ({actions: {createTypes}}) => {
     type MarkdownRemarkFrontmatter {
       description: String
     }
+
+    type FileFields {
+      gitLogLatestDate: String
+    }
   `;
   createTypes(typeDefs);
 };
