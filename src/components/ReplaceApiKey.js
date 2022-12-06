@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import reactStringReplace from 'react-string-replace';
+import {FiChevronDown} from 'react-icons/fi';
 import {useUser} from '../utils';
 
 function recursiveMap(
@@ -10,9 +12,15 @@ function recursiveMap(
   return React.Children.map(children, child => {
     if (!React.isValidElement(child)) {
       if (typeof child === 'string') {
-        return child
-          .replace(/% apiKey %/g, apiKey)
-          .replace(/% graphRef %/g, graphRef);
+        return (
+          <>
+            {reactStringReplace(child, /% apiKey %/g, () => (
+              <span>
+                {apiKey} <FiChevronDown />
+              </span>
+            ))}
+          </>
+        );
       }
 
       return child;

@@ -10,8 +10,6 @@ import ObtainGraphApiKey from '../../shared/obtain-graph-api-key.mdx';
 
 Both the Apollo Router and Apollo Server use the same mechanism to enable operation metrics reporting to GraphOS:
 
-<ReplaceApiKey>
-
 1. Obtain a **graph API key** from Studio.
 
    <ObtainGraphApiKey />
@@ -23,11 +21,9 @@ Both the Apollo Router and Apollo Server use the same mechanism to enable operat
 3. Use the obtained values to set the following environment variables in your environment _before_ starting up your router/server:
 
    ```bash
-   export APOLLO_KEY=% apiKey %
-   export APOLLO_GRAPH_REF=% graphRef %
+   export APOLLO_KEY=<YOUR_API_KEY>
+   export APOLLO_GRAPH_REF=<YOUR_GRAPH_REF>
    ```
-
-</ReplaceApiKey>
 
 > Consult your production environment's documentation to learn how to set its environment variables.
 

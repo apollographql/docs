@@ -257,12 +257,15 @@ export const CodeBlock = ({
                                 {line
                                   // filter out "highlight-line" comments
                                   .filter(token => !isHighlightComment(token))
-                                  .map((token, key) => (
-                                    <span
-                                      key={key}
-                                      {...getTokenProps({token, key})}
-                                    />
-                                  ))}
+                                  .map((token, key) => {
+                                    console.log('token', token);
+                                    return (
+                                      <span
+                                        key={key}
+                                        {...getTokenProps({token, key})}
+                                      />
+                                    );
+                                  })}
                               </Box>
                             </Box>
                           </Flex>
