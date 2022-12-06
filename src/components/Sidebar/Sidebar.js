@@ -51,7 +51,15 @@ export function Sidebar({children, configs, isHidden}) {
       }}
       onMouseLeave={() => setActiveDocset(null)}
     >
-      <Box overflow="auto" borderRightWidth={1}>
+      <Box
+        overflow="auto"
+        borderRightWidth={1}
+        onMouseOver={event => {
+          if (event.target === event.currentTarget) {
+            setActiveDocset(null);
+          }
+        }}
+      >
         <List>
           {Object.entries(configs)
             .filter(

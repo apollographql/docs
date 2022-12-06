@@ -121,6 +121,7 @@ function NavGroup({group, depth}) {
     <div>
       <NavButton
         mb="1"
+        textAlign="left"
         fontWeight="strong"
         isActive={isActive}
         data-group={!depth && isActive}
