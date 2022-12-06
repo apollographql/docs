@@ -6,6 +6,8 @@ import {
   Box,
   Button,
   Flex,
+  HStack,
+  Heading,
   IconButton,
   Tooltip,
   chakra,
@@ -15,7 +17,13 @@ import {BsChevronContract, BsChevronExpand} from 'react-icons/bs';
 import {FiChevronsLeft} from 'react-icons/fi';
 import {flattenNavItems} from '../../utils';
 
-export function SidebarNav({navItems, onHide, darkBg = 'gray.800', children}) {
+export function SidebarNav({
+  docset,
+  navItems,
+  onHide,
+  darkBg = 'gray.800',
+  children
+}) {
   const bg = useColorModeValue('white', darkBg);
 
   const navGroups = useMemo(
@@ -60,7 +68,10 @@ export function SidebarNav({navItems, onHide, darkBg = 'gray.800', children}) {
   return (
     <>
       <Box p="2" pl="0" pos="sticky" top="0" bg={bg} zIndex="1">
-        {children}
+        <HStack px="4">
+          {children}
+          <Heading size="md">{docset}</Heading>
+        </HStack>
         <Flex>
           <Button
             mr="auto"
@@ -115,6 +126,7 @@ export function SidebarNav({navItems, onHide, darkBg = 'gray.800', children}) {
 
 SidebarNav.propTypes = {
   children: PropTypes.node,
+  docset: PropTypes.string.isRequired,
   navItems: PropTypes.array.isRequired,
   onHide: PropTypes.func,
   darkBg: PropTypes.string
