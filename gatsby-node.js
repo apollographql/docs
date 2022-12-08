@@ -89,16 +89,7 @@ const getNavItems = items =>
 exports.createPages = async ({actions, graphql}) => {
   const {data} = await graphql(`
     {
-      pages: allFile(
-        filter: {
-          extension: {in: ["md", "mdx"]}
-          # ignore files marked as hidden
-          # TODO(lenny): remove this when no longer needed. the query fails to
-          # execute if zero files include "hidden" (it's no longer a valid field
-          # on the input type).
-          childMdx: {frontmatter: {hidden: {ne: true}}}
-        }
-      ) {
+      pages: allFile(filter: {extension: {in: ["md", "mdx"]}}) {
         nodes {
           id
           gitRemote {
