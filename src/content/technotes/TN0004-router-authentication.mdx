@@ -30,8 +30,9 @@ To pass `Authentication` headers from client requests to your subgraphs, add the
 ```yaml
 headers:
   all:
-    - propagate:
-        named: authorization
+    request:
+     - propagate:
+          named: authorization
 ```
 
 **Pros**
