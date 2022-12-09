@@ -175,7 +175,7 @@ flowchart LR;
 
 Each GraphOS-managed router is an instance of the [Apollo Router](/router/) running in its own managed container. These instances use the _same_ mechanisms to report operation metrics to GraphOS as an Apollo Router instance running in _any other_ environment! The only difference is that metrics reporting is _always_ enabled for a cloud supergraph's router.
 
-**As with all other 
+**GraphOS-managed routers do not persist or log any response data returned by your subgraphs.** They _only_ assemble this data into responses for requesting clients. 
 
 ## What data does GraphOS log about operations executed in the Explorer?
 
