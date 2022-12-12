@@ -67,36 +67,17 @@ export const MarkdownCodeBlock = ({
     className = 'language-text',
     children: innerChildren,
     metastring,
-    'data-meta': dataMeta
+    'data-meta': dataMeta,
+    hidden = props.hidden ?? false // prioritize markdown hidden prop from child.props, then look at parent props. else default to false
   } = child.props;
-
-  // prioritize markdown hidden prop from child.props
-  // then look at parent props
-  // else default to false
-  const hidden =
-    child.props.hidden !== undefined
-      ? child.props.hidden
-      : props.hidden !== undefined
-      ? props.hidden
-      : false;
 
   const meta = metastring || dataMeta;
   const {
     title = null,
     highlight = null,
     showLineNumbers = defaultShowLineNumbers,
-    ...rest
+    disableCopy = props.disableCopy ?? false // prioritize markdown disableCopy prop from meta, then look at parent props. else default to false
   } = meta ? fenceparser(meta) : {};
-
-  // prioritize markdown disableCopy prop from meta
-  // then look at parent props
-  // else default to false
-  const disableCopy =
-    rest.disableCopy !== undefined
-      ? rest.disableCopy
-      : props.disableCopy !== undefined
-      ? props.disableCopy
-      : false;
 
   const linesToHighlight = highlight
     ? rangeParser(Object.keys(highlight).toString())
