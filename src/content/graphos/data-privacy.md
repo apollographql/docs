@@ -100,6 +100,8 @@ You can configure Apollo Server 4 to provide _additional_ error details (such as
 
 ##### Apollo Server 2 and 3
 
+> Note that Apollo Server versions 2 and 3 are [deprecated](/apollo-server/previous-versions/).
+
 By default, Apollo Server versions 2 and 3 report _all_ error details to GraphOS, including messages and extensions.
 
 You can use the [usage reporting plugin's `rewriteError` option](/apollo-server/v3/api/plugin/usage-reporting#rewriteerror) to filter or transform errors before they're stored in GraphOS. Use this to strip sensitive data from errors or filter "safe" errors from Studio reports.
