@@ -30,17 +30,18 @@ All data sent to GraphOS is sent to an endpoint with one of the following base U
 | **Latest URLs**                                       |
 | `https://usage-reporting.api.apollographql.com`       | Metrics reporting from the [Apollo Router](/router/configuration/apollo-telemetry) (v0.1.0+), [Apollo Server](./metrics/sending-operation-metrics/) (v2.18.0+), and third-party API servers                   |
 | `https://schema-reporting.api.apollographql.com`      | Schema registration via schema reporting in Apollo Server (v2.18.0+) and third-party API servers           |
-| `https://graphql.api.apollographql.com`               | All [Rover CLI](/rover/)  commands and legacy [Apollo CLI](/devtools/cli/)(v2.31+) commands that communicate with GraphOS (and the Studio web UI)                                                                        |
+| `https://api.apollographql.com/graphql`               | All [Rover CLI](/rover/) (v0.6+) commands that communicate with GraphOS, along with all requests to the [GraphOS Platform API](./platform-api/)
 | `https://uplink.api.apollographql.com`                | Apollo Server with Apollo Gateway (v0.34.0+) with [managed federation](/federation/managed-federation/overview/) and Apollo Router (v0.1.0+) with [managed federation](/federation/managed-federation/overview/)                                                                                                 |
 | `https://aws.uplink.api.apollographql.com`            | Apollo Server with Apollo Gateway (v0.45.0+) with [managed federation](/federation/managed-federation/overview/) and Apollo Router (v0.1.0+) with [managed federation](/federation/managed-federation/overview/)                                                                                                 |
 | **Active legacy URLs**                                |
 | `https://engine-report.apollodata.com`                | Metrics reporting from Apollo Server (v2.0-2.17.x)                                                                                                                                                               |
 | `https://edge-server-reporting.api.apollographql.com` | Schema registration via schema reporting in Apollo Server (v2.15.0-2.17.x)                                                                                                                                       |
-| `https://engine-graphql.apollographql.com`            | All Apollo CLI (v2.30 and earlier) commands that communicate with Studio                                                                                                                                         |
+| `https://engine-graphql.apollographql.com`            | All legacy Apollo CLI (v2.30 and earlier) commands that communicate with GraphOS                                                                                                                                         |
 | `https://storage.googleapis.com`                      | Apollo Server with Apollo Gateway (v0.15.1 and earlier) with [managed federation](/federation/managed-federation/overview/), or with the operation registry plugin (v0.3.1 and earlier) |
 | `https://federation.api.apollographql.com`            | Apollo Server with Apollo Gateway (v0.16.0-v0.33.0) with [managed federation](/federation/managed-federation/overview/)                                                                                          |
 | `https://storage-secrets.api.apollographql.com`       | Apollo Server with Apollo Gateway (v0.16.0-v0.33.0) with [managed federation](/federation/managed-federation/overview/), or with the operation registry plugin                |
 | `https://operations.api.apollographql.com`            | Apollo Server with the operation registry plugin (v0.4.1+)                                                                                                                              |
+| `https://graphql.api.apollographql.com`               | All [Rover CLI](/rover/) (prior to v0.6) commands and legacy [Apollo CLI](/devtools/cli/)(v2.31+) commands that communicate with GraphOS                                                           |
 
 
 If your environment uses a corporate proxy or firewall, you might need to configure it to allow outbound traffic to these domains. Note that data might be sent to multiple endpoints in a given domain.
@@ -105,7 +106,7 @@ You can use the [usage reporting plugin's `rewriteError` option](/apollo-server/
 
 ### Query operation strings
 
-The Apollo Router and Apollo Server both report a normalized string representation of each query operation to GraphOS. By default, this [normalization algorithm](/graphos/metrics/operation-signatures/) will strip out string literals that are sent in arguments. However, we highly recommend that users **do not include sensitive data (such as passwords or personally identifiable information) in operation strings**. Instead, include this information in [GraphQL variables](#graphql-variables), which you can send selectively.
+The Apollo Router and Apollo Server both report a normalized string representation of each query operation to GraphOS. By default, this [normalization algorithm](/graphos/metrics/operation-signatures/) strips out string literals that are passed as arguments. However, we highly recommend that users **do not include sensitive data (such as passwords or personally identifiable information) in operation strings**. Instead, include this information in [GraphQL variables](#graphql-variables), which you can send selectively.
 
 ### Operation traces
 
@@ -132,7 +133,7 @@ You can set a value for the [usage reporting plugin's `sendVariableValues` optio
 In versions of Apollo Server 2 _prior_ to 2.7.0, **all** of an operation's GraphQL
 variable values are sent to GraphOS by default.
 
-If you're using an earlier version of Apollo Server, it's recommended that you update. If you can't update for whatever reason, you can use the [`privateVariables` reporting option](/apollo-server/v2/migration-engine-plugins/#options-for-apolloserverpluginusagereporting) to specify the names of variables that should _not_ be sent to Studio. You can also set this option to `false` to prevent all variables from being sent. This reporting option is deprecated and will not be available in future versions of Apollo Server.
+If you're using an earlier version of Apollo Server, it's recommended that you update. If you can't update for whatever reason, you can use the [`privateVariables` reporting option](/apollo-server/v2/migration-engine-plugins/#options-for-apolloserverpluginusagereporting) to specify the names of variables that should _not_ be sent to GraphOS. You can also set this option to `false` to prevent all variables from being sent. This reporting option is deprecated and will not be available in future versions of Apollo Server.
 
 #### Apollo Router
 
@@ -155,19 +156,16 @@ You can, however, configure reporting options for all other HTTP headers.
 
 #### Apollo Server 2.7.0 and later
 
-In Apollo Server 2.7.0 and later, **none** of an
-operation's HTTP headers is sent to Apollo Studio by default.
+In Apollo Server 2.7.0 and later, **none** of an operation's HTTP headers is sent to GraphOS by default.
 
-You can set a value for the [usage reporting plugin's `sendHeaders` option](/apollo-server/api/plugin/usage-reporting/#sendheaders) to specify a different strategy for reporting
-some or all of your HTTP headers.
+You can set a value for the [usage reporting plugin's `sendHeaders` option](/apollo-server/api/plugin/usage-reporting/#sendheaders) to specify a different strategy for reporting some or all of your HTTP headers.
 
 #### Apollo Server prior to 2.7.0
 
-In versions of Apollo Server 2 _prior_ to 2.7.0, **all** of an operation's HTTP headers
-(except the confidential headers listed [above](#http-headers)) are sent to Apollo Studio by default.
+In versions of Apollo Server 2 _prior_ to 2.7.0, **all** of an operation's HTTP headers (except the confidential headers listed [above](#http-headers)) are sent to GraphOS by default.
 
 If you're using an earlier version of Apollo Server, it's recommended that you
-update. If you can't update for whatever reason, you can use the [`privateHeaders` reporting option](/apollo-server/v2/migration-engine-plugins/#options-for-apolloserverpluginusagereporting) to specify the names of variables that should _not_ be sent to Studio. You can also set this option to `false` to prevent all headers from being sent. This reporting option is deprecated and will not be available in future versions of Apollo Server.
+update. If you can't update for whatever reason, you can use the [`privateHeaders` reporting option](/apollo-server/v2/migration-engine-plugins/#options-for-apolloserverpluginusagereporting) to specify the names of variables that should _not_ be sent to GraphOS. You can also set this option to `false` to prevent all headers from being sent. This reporting option is deprecated and will not be available in future versions of Apollo Server.
 
 #### Apollo Router
 
@@ -242,13 +240,13 @@ If you have any questions (including interest in a Data Processing Addendum or D
 
 ## Requesting deletion of data
 
-To request the deletion of specific data from your Apollo Studio organization, please email **support@apollographql.com** with the subject `Data deletion request`.
+To request the deletion of specific data from your Apollo organization, please email **support@apollographql.com** with the subject `Data deletion request`.
 
 In your email, please include the following:
 
 - A description of the data that needs to be deleted
 - An approximate timestamp of when that data was reported to Apollo
-- The ID of the Apollo Studio graph that the data is associated with
+- The ID of the graph that the data is associated with
 
 > **Important:** Currently, data deletion is performed across _all variants_ of an affected graph. Per-variant deletion is not available.
 
