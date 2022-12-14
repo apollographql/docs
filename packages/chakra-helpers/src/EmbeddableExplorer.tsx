@@ -1,18 +1,16 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {ApolloExplorerReact} from '@apollo/explorer';
+import {ApolloExplorer} from '@apollo/explorer/react';
 import {Box, useColorMode} from '@chakra-ui/react';
 import {outdent} from 'outdent';
 
 type EmbeddableExplorerProps = {
   graphRef?: string;
-  endpointUrl?: string;
   document?: string;
 };
 
 export const EmbeddableExplorer = ({
   graphRef = 'Apollo-Fullstack-Demo-o3tsz8@current',
-  endpointUrl = 'https://apollo-fullstack-tutorial.herokuapp.com/graphql',
   document = outdent`
     query GetLaunches {
       launches {
@@ -39,12 +37,8 @@ export const EmbeddableExplorer = ({
         }
       }}
     >
-      <ApolloExplorerReact
-        // give the component a key or else multiple explorers get rendered when
-        // the color mode changes
-        key={colorMode}
+      <ApolloExplorer
         className="embed"
-        endpointUrl={endpointUrl}
         graphRef={graphRef}
         persistExplorerState={false}
         initialState={{
@@ -53,6 +47,7 @@ export const EmbeddableExplorer = ({
             theme: colorMode
           }
         }}
+        //__testLocal__
       />
     </Box>
   );
@@ -60,6 +55,5 @@ export const EmbeddableExplorer = ({
 
 EmbeddableExplorer.propTypes = {
   graphRef: PropTypes.string,
-  endpointUrl: PropTypes.string,
   document: PropTypes.string
 };
