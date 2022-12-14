@@ -52,11 +52,14 @@ const getCodeWithoutHighlightComments = (code: string) => {
 type MarkdownCodeBlockProps = {
   children: ReactNode;
   isPartOfMultiCode?: boolean;
+  disableCopy?: boolean;
+  hidden?: boolean;
 };
 
 export const MarkdownCodeBlock = ({
   children,
-  isPartOfMultiCode
+  isPartOfMultiCode,
+  ...props
 }: MarkdownCodeBlockProps): JSX.Element => {
   const defaultShowLineNumbers = useContext(LineNumbersContext);
   const [child] = Array.isArray(children) ? children : [children];
@@ -65,7 +68,7 @@ export const MarkdownCodeBlock = ({
     children: innerChildren,
     metastring,
     'data-meta': dataMeta,
-    hidden = false
+    hidden = props.hidden ?? false // prioritize markdown hidden prop from child.props, then look at parent props. else default to false
   } = child.props;
 
   const meta = metastring || dataMeta;
@@ -73,8 +76,9 @@ export const MarkdownCodeBlock = ({
     title = null,
     highlight = null,
     showLineNumbers = defaultShowLineNumbers,
-    disableCopy = false
+    disableCopy = props.disableCopy ?? false // prioritize markdown disableCopy prop from meta, then look at parent props. else default to false
   } = meta ? fenceparser(meta) : {};
+
   const linesToHighlight = highlight
     ? rangeParser(Object.keys(highlight).toString())
     : [];
