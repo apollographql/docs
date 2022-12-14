@@ -1,0 +1,58 @@
+---
+title: Supergraph stewardship
+id: TN0025
+tags: [best practices]
+---
+
+## Governance
+
+Initial GraphQL adoption often emerges either from within a single team or a small number of teams, and at that scale, managing governance concerns may be handled on an informal basis. However, the move toward a consolidated graph requires a more intentional approach. Given the evolutionary nature of a federated graph, strong governance practices are needed to help maintain its integrity while simultaneously driving its adoption across teams.
+
+The establishment of a data governance group is an important factor in the success of any consolidation project. This group may be thought of as the "GraphQL Center of Excellence" within a company and it should represent a cross-section of key graph stakeholders. Ultimately, the governance of a federated graph is largely concerned with empowering the people who will contribute to and consume it with processes that will help them operate as good citizens of the graph. Once the graph governance group has been established, the work largely focuses on setting standards that help maintain the quality of the graph, facilitate its continuous evolution, support its operation, and enforce standards for client usage.
+
+### Establishing the graph governance group
+
+To set company-wide standards for the graph, a graph governance group should be established. This group acts as a cross-team, collaborative governing body for the graph. It also establishes best practices related to graph maintenance and administration and provides ongoing education for graph contributors and consumers.
+
+At a minimum, the governance group should consist of one representative from each of these stakeholder categories (though ideally, each subgraph service and client team will have representation):
+
+| Stakeholder                   | Role                                                                                                                                                                  | Ownership                                                                       |
+| ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| **Executive Sponsor**         | Provides approval to help ensure the prioritization of the project                                                                                                    | Owns resourcing for the overall initiative                                      |
+| **Graph Champion**            | Is the driving force behind the initial consolidation project and is instrumental in obtaining executive sponsorship                                                  | Owns internal training and onboarding to the graph                              |
+| **Subgraph Lead**             | Represents a subgraph service (usually the team lead and may also be a Graph Champion)                                                                                | Owns service boundary resources                                                 |
+| **Product Manager**           | Helps shape schema design within service boundaries                                                                                                                   | Owns the representation of the service boundary in the graph                    |
+| **DevOps Representative**     | Ensures consistent CI/CD pipelines for subgraphs                                                                                                                      | Owns CI/CD pipeline requirements and underlying infrastructure and tooling      |
+| **Client Developer Advocate** | Advocates for client consumption patterns in relation to schema design and evolution (representation from every client team is not required, though would be helpful) | Owns graph consumer tooling and SDKs (partners with a relevant Product Manager) |
+
+Ideally, the graph governance group should be formed at the outset of a consolidation project. If a similar GraphQL Center of Excellence already exists, its composition should be evaluated to ensure that the key graph stakeholders that will be involved in the consolidation project have adequate representation within the group.
+
+An appropriate meeting cadence for this governance group will vary by company needs and the complexity of the consolidation work at hand, though in most cases, the group members will likely need to meet on a more frequent basis at the outset of a consolidation project. Once a federated graph is running in production, a regular meeting cadence should still be maintained to help support graph evolution as well as expanding its adoption across teams.
+
+### Setting standards for graph management
+
+Once established, the graph governance group is responsible for setting best practices related to the company's consolidated graph, communicating and enforcing those practices, and evolving them as needed over time. Generally, these concerns may be categorized into three main areas: Graph Integrity, Graph Operation, and Graph Usage. Suggested practices for each area are outlined below.
+
+#### Graph integrity
+
+Reconciling naming conventions and how entities are conceptualized, referenced, and extended across domains can be a challenging aspect of an initial consolidation project. These concerns will require ongoing attention afterward too as the graph evolves and new subgraph services are incorporated into it. Documenting naming conventions, guidelines for entity and value type updates, as well as type and field migration workflows helps service owners make informed decisions about how they can evolve their portion of the schema. The governance group should also formalize a review process for proposed schema changes and an architectural review process for adding new subgraph services before they are incorporated into the broader graph.
+
+Once changes are made to the graph, teams that contribute to and consume the API must be informed. Regular rhythms and processes should be established for synchronously and asynchronously communicating schema updates to internal teams, especially when rolling over deprecated fields. In addition, Apollo Studio can be configured to post schema change notifications directly in a Slack channel, and it also exposes a schema change webhook for general use with other services and tools.
+
+#### Graph operation
+
+Having the right observability tools in place is a key factor in maintaining smooth graph operations and minimizing mean time to recovery when something unexpected happens. As previously discussed, federated traces provide insight into API usage at the field, operation, and client levels in Apollo Studio and this data can be used to tune performance, debug errors, and support a safe rollover strategy for deprecated fields (and performance reports and alerts can also be pushed directly to a Slack channel from Apollo Studio).
+
+The governance group should proactively establish performance best practices that support graph operation. For example, caching may happen at various levels in the stack—from the normalized cache in Apollo Client, to Automatic Persisted Queries that support edge caching with CDNs, to full response caching at the gateway or subgraph level—and service owners and client teams alike must be aware of what the standard practices are within the graph. Similar guidelines may be provided for areas such as using data loaders to batch requests to underlying data sources, providing minimal unit test coverage for subgraph resolvers, and running automated performance tests for known operations.
+
+#### Graph usage
+
+As previously discussed, it's a best practice for clients to identify themselves by name and version before querying data from the graph, and clients should also assign names to all of the operations they send to the API. Ideally, these operation names are defined using a shared naming scheme, so it will be the role of the graph governance group to set, communicate, and enforce these naming standards.
+
+Additionally, the governance group may wish to set standards for using query variables instead of literals as operation arguments. This measure will help minimize operation cardinality and take advantage of some of Apollo Studio's reporting optimizations in the gateway. And to guard against potentially abusive operations, the governance group may also put appropriate mechanisms in place to limit query depth, breadth, and overall cost.
+
+### Onboarding and supporting teams
+
+When it comes to driving adoption of the graph, one of the most important functions a governance group can serve is supporting teams as they are onboarded to the graph, both as contributors and consumers. Similarly, the graph governance group can also help support ongoing education through the establishment of an company-wide "Community of Practice" for the unified graph, and GraphQL in general.
+
+For an extensive list of links to learning materials to help support internal GraphQL training at your company, please see the [additional resources section](./additional-resources/) of this guide.
