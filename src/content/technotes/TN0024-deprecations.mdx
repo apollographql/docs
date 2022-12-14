@@ -1,0 +1,45 @@
+---
+title: Schema deprecations
+id: TN0024
+tags: [schema design, best practices]
+---
+
+## Best practice #6: Leverage SDL and tooling to manage deprecations
+
+Your graph governance group should outline a company-wide field rollover strategy to gracefully handle type and field deprecations throughout the unified graph. We'll discuss graph administration and governance concerns in-depth in the next section, so here we'll focus on more tactical considerations when deprecating fields in a GraphQL schema.
+
+GraphQL APIs can be versioned, but at Apollo, we have seen that it is far more common for enterprises to leverage GraphQL's inherently evolutionary nature and iterate their APIs on a rapid and incremental basis. Doing so, however, requires clear communication with API consumers, and especially when field deprecations are required.
+
+### Use the `@deprecated` type system directive
+
+As a first step, the `@deprecated` directive, which is [defined in the GraphQL specification](https://spec.graphql.org/June2018/#sec--deprecated), should be applied when deprecating fields or enum values in a schema. Its single `reason` argument can also provide the API consumer some direction about what to do instead of using that field or enum value. For instance, in our earlier `products` example we can indicate that a related `topProducts` query has been deprecated as follows:
+
+```graphql
+extend type Query {
+  """
+  Fetch a simple list of products with an offset
+  """
+  topProducts(
+    "How many products to retrieve per page."
+    first: Int = 5
+  ): [Product] @deprecated(reason: "Use `products` instead.")
+
+  """
+  Fetch a paginated list of products based on a filter type.
+  """
+  products(
+    "How many products to retrieve per page."
+    first: Int = 5
+    "Begin paginating results after a product ID."
+    after: Int = 0
+    "Filter products based on a type."
+    type: ProductType = LATEST
+  ): ProductConnection
+}
+```
+
+### Use operation traces to assess when it's safe to remove fields
+
+After a service's schema has been updated with new `@deprecated` directives, it's important to communicate the deprecations beyond the SDL as well. Using a dedicated Slack channel or team meetings may serve as appropriate communication channels for such notices, and they should be delivered with any additional migration instructions for client teams.
+
+At this point, a crucial question still remains: "When will it be safe to remove the deprecated field?" To answer this question with certainty that you won't cause any breaking changes to client applications, you must lean on your observability tooling. Specifically, tracing data can provide insight into what clients may still be using the deprecated fields so appropriate follow-ups can be actioned. GraphQL observability tools such as [Apollo Studio](/graphos/) will check any changes pushed for registered schemas against a recent window of operation tracing data to ensure that a deprecated field rollover can be completed without causing any breaking changes to existing clients.
