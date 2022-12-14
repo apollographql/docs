@@ -1,5 +1,15 @@
 # @apollo/chakra-helpers
 
+## 1.5.0
+
+### Minor Changes
+
+- [#312](https://github.com/apollographql/docs/pull/312) [`dc1735f`](https://github.com/apollographql/docs/commit/dc1735f85dc44c7ba173f5ec48905d8b26038c5a) Thanks [@jgarrow](https://github.com/jgarrow)! - Add disableCopy and hidden props to MarkdownCodeBlock
+
+### Patch Changes
+
+- [#253](https://github.com/apollographql/docs/pull/253) [`2047581`](https://github.com/apollographql/docs/commit/2047581cfaf474bb188fe48ab8165b8c864a48ad) Thanks [@BlenderDude](https://github.com/BlenderDude)! - Updated parsing to address new highlighted line style
+
 ## 1.4.1
 
 ### Patch Changes
