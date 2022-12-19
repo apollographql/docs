@@ -15,7 +15,7 @@ Together, these pieces of information help teams monitor their graph and make ch
 
 If you're using Apollo Server for your gateway, you can require client metadata in every incoming request with a [custom plugin](/apollo-server/integrations/plugins/):
 
-> The header names used below are the default headers sent by Apollo Client, but you can change them to whatever names your client uses.
+> The header names used below are the default headers sent by Apollo Client, but you can change them to whatever names your client uses. Additionally, these changes should be reflected in the [usage reporting plugin](/apollo-server/api/plugin/usage-reporting/#generateclientinfo).
 
 <MultiCodeBlock>
 
