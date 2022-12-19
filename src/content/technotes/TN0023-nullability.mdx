@@ -18,6 +18,27 @@ While it's important to make informed decisions about nullability when initially
 
 As mentioned previously, converting a nullable argument or input field for a mutation to non-null may lead to breaking changes for clients. As a result, specifying non-null arguments and input fields on mutations can help you avoid this breaking change scenario in the future. Doing so, however, will typically require that you design finer-grained mutations and avoid using "everything but the kitchen sink" input types as arguments that are filled with nullable fields to account for all possible use cases.
 
+❌
+
+```graphql
+# Two nullable arguments is ambiguous — what happens if we provide both? None?
+type Query {
+  user(id: ID, username: String): User
+}
+```
+
+✅
+
+```graphql
+# Separate fields with non-nullable arguments is clearer, and it's easier to
+# evolve because converting a non-nullable argument to nullable is not a
+# breaking change.
+type Query {
+  userById(id: ID!): User
+  userByUsername(username: String!): User
+}
+```
+
 This approach also enhances the overall expressiveness of the schema and provides more transparency in your observability tools about how arguments impact overall performance (this is especially true for queries). What's more, it also shifts the burden away from graph consumers to guess exactly which fields need to be included in a mutation to achieve their desired result.
 
 And as an additional tip when you do use nullable arguments and input fields, consider providing a default value to improve the overall expressiveness of a schema by making default behaviors more transparent. In this example, we can improve the `type` argument by adding an `ALL` value to its corresponding `ProductType` enum and setting the default value to `ALL`. As a result, we no longer need to provide specific directions about this behavior in the argument's description string:
