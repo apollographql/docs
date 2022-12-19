@@ -1,0 +1,68 @@
+---
+title: Nullability
+id: TN0023
+tags: [schema design, federation]
+---
+
+## Make intentional choices about nullability
+
+All fields in GraphQL are nullable by default and it's often best to err on the side of embracing that default behavior as new fields are initially added to a schema. However, where warranted, non-null fields and arguments (denoted with a trailing `!`) are an important mechanism that can help improve the expressiveness and predictability of a schema. Non-null fields can also be a win for clients because they will know exactly where to expect values to be returned when handling query responses. Non-null fields and arguments do, of course, come with trade-offs, and it's important to weigh the implications of each choice you make about nullability for every type, field, and argument in a schema.
+
+## Plan for backward compatibility
+
+Including non-null fields and arguments in a schema makes that schema harder to evolve where a client expects a previously non-null field's value to be provided in a response. For example, if a non-null `email` field on a `User` type is converted to a nullable field, will the clients that use that field be prepared to handle this potentially null value after the schema is updated? Similarly, if the schema changes in such a way that a client is suddenly expected to send a previously nullable argument with a request, then this may also result in a breaking change.
+
+While it's important to make informed decisions about nullability when initially designing a service's schema, you will inevitably be faced with making a breaking change of this nature as a schema naturally evolves. When this happens, GraphOS's [field usage data](/graphos/metrics/field-usage) can give you insight into how those fields are used currently in different operations and across different clients. This visibility will help you identify issues proactively and allow you to communicate these changes to impacted clients in advance so they can avoid unexpected errors.
+
+## Minimize nullable arguments and input fields
+
+As mentioned previously, converting a nullable argument or input field for a mutation to non-null may lead to breaking changes for clients. As a result, specifying non-null arguments and input fields on mutations can help you avoid this breaking change scenario in the future. Doing so, however, will typically require that you design finer-grained mutations and avoid using "everything but the kitchen sink" input types as arguments that are filled with nullable fields to account for all possible use cases.
+
+❌
+
+```graphql
+# Two nullable arguments is ambiguous — what happens if we provide both? None?
+type Query {
+  user(id: ID, username: String): User
+}
+```
+
+✅
+
+```graphql
+# Separate fields with non-nullable arguments is clearer, and it's easier to
+# evolve because converting a non-nullable argument to nullable is not a
+# breaking change.
+type Query {
+  userById(id: ID!): User
+  userByUsername(username: String!): User
+}
+```
+
+This approach also enhances the overall expressiveness of the schema and provides more transparency in your observability tools about how arguments impact overall performance (this is especially true for queries). What's more, it also shifts the burden away from graph consumers to guess exactly which fields need to be included in a mutation to achieve their desired result.
+
+And as an additional tip when you do use nullable arguments and input fields, consider providing a default value to improve the overall expressiveness of a schema by making default behaviors more transparent. In this example, we can improve the `type` argument by adding an `ALL` value to its corresponding `ProductType` enum and setting the default value to `ALL`. As a result, we no longer need to provide specific directions about this behavior in the argument's description string:
+
+```graphql
+type Query {
+  "Fetch a paginated list of products based on a filter."
+  products(
+    # ...
+
+    "Filter products based on a type."
+    type: ProductType = ALL
+  ): ProductConnection
+}
+
+enum ProductType {
+  ALL
+  BOOKS
+  MOVIES
+}
+```
+
+## Weigh the implications of non-null entity references
+
+When adding fields to a schema that are resolved with data from third-party data sources, the conventional advice is to make these fields nullable given the potential for the request to fail or for the data source to make breaking changes without warning. Federated graphs add an interesting dimension to these considerations given that many of the entities in the graph may be backed by data sources that are not in a given service's immediate control.
+
+The matter of whether you should make referenced entities nullable in a subgraph's schema will depend on your existing architecture and internal SLAs and will likely need to be assessed on a case-by-case basis. Keep in mind the implication that nullability has on error handling—specifically, when a value cannot be resolved for a non-null field, then the null result bubbles up to the nearest nullable parent—and consider whether it's better to have a partial result or no result at all if a request for an entity fails.
