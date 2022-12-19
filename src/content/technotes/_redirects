@@ -8,6 +8,7 @@
 /TN0004 /docs/technotes/TN0004-router-authentication
 /TN0005 /docs/technotes/TN0005-overload-protection
 /TN0007 /docs/technotes/TN0007-testing-in-a-federated-architecture-unit-tests
+/docs/technotes/TN0007-testing-in-a-federated-architecture-unit-tests /docs/technotes/TN0007-testing-with-apollo-federation
 /TN0008 /docs/technotes/TN0008-production-readiness-checklist
 /TN0009 /docs/technotes/TN0009-gateway-performance
 /TN0010 /docs/technotes/TN0010-response-type-pattern
@@ -21,4 +22,3 @@
 /TN0018 /docs/technotes/TN0018-aggregating-across-subgraphs
 /TN0019 /docs/technotes/TN0019-federation-n-plus-1
 /TN0020 /docs/technotes/TN0020-mocked-gateway-for-client-development
-/TN0021 /docs/technotes/TN0021-testing-with-federation
