@@ -43,7 +43,8 @@ const plugins = [
       icon: 'src/assets/favicon.svg'
     }
   },
-  'gatsby-plugin-offline',
+  // 'gatsby-plugin-offline',
+  'gatsby-plugin-remove-serviceworker',
   {
     resolve: 'gatsby-plugin-apollo',
     options: {
