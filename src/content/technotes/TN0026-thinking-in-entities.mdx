@@ -37,7 +37,7 @@ type Product @key(fields: "upc") {
 
 The `@key` directive indicates that the reviews subgraph will be able to identify a product by its UPC value and therefore be able to connect to a product based on its `upc` primary key field, but the reviews subgraph does not need to be aware of any other details about a given product.
 
-Referencing entities is a key feature of federation, but it's only half of the story. While an entity will be owned by a single subgraph, other subgraphs may wish to add additional fields to the entity's type to provide a more holistic representation of the entity in the graph. Doing so is a simple as adding the additional field to the extended type in a non-originating subgraph. For example, a reviews subgraph's schema may add a `reviews` field to the extended `Product` type that was originally defined in the products subgraph:
+Referencing entities is a key feature of federation, but it's only half of the story. While an entity will be owned by a single subgraph, other subgraphs might wish to add additional fields to the entity's type to provide a more holistic representation of the entity in the graph. Doing so is a simple as adding the additional field to the extended type in a non-originating subgraph. For example, a reviews subgraph's schema might add a `reviews` field to the extended `Product` type that was originally defined in the products subgraph:
 
 ```graphql title="Reviews Subgraph"
 type Review {
@@ -55,12 +55,12 @@ When extending entities, it's important to keep in mind that **the entity's orig
 
 ### Work from the entities outward
 
-When migrating from a client-only or monolithic GraphQL pattern, that work begins by identifying what entities will be exposed in the first subgraph extracted from the larger schema. When migrating from an architecture consisting of BFF-based GraphQL APIs or any other architecture of multiple overlapping graphs, the work of identifying entities (and determining new subgraph boundaries, in general) may be a bit more complex and involve some degree of negotiation with respect to type ownership, as well as a migration process to help account for any breaking changes that may result for clients.
+When migrating from a client-only or monolithic GraphQL pattern, that work begins by identifying what entities will be exposed in the first subgraph extracted from the larger schema. When migrating from an architecture consisting of BFF-based GraphQL APIs or any other architecture of multiple overlapping graphs, the work of identifying entities (and determining new subgraph boundaries, in general) might be a bit more complex and involve some degree of negotiation with respect to type ownership, as well as a migration process to help account for any breaking changes that might result for clients.
 
 Whatever your architectural starting point, Apollo Federation was designed to allow the work of identifying entities and defining subgraph boundaries to be done in an incremental, non-disruptive fashion. Beginning to identify these entities is also the essential prerequisite for adopting the other schema design best practices that will follow.
 
 For more information on entity usage and capabilities, please see the [Entities documentation page](/federation/entities/).
 
-### @defer and Entities
+### `@defer` and Entities
 
-Entities aren't just useful to connect data across subgraphs; entities can be used to enable [@defer support within your supergraph by using entity-based defer within the Apollo Router](/router/executing-operations/defer-support). By creating entities within your graph, you can then have the router handle the asynchronous fetching of data to enable full defer support which can have material user experience improvements via an improved time to first byte, among other metrics.
+Entities aren't just useful for connecting data across subgraphs. You can also use entities to enable the new [`@defer` directive for client-controlled prioritization of response data](https://github.com/graphql/graphql-wg/blob/main/rfcs/DeferStream.md). The Apollo Router can [defer resolution of fields in entities](/router/executing-operations/defer-support) (and root fields) and handle sending data back to the client in prioritized chunks. By defining types as entities within your graph, clients can improve perceived user experience by adding a directive to their operations.
