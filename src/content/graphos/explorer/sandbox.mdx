@@ -39,6 +39,8 @@ When you open Sandbox, it automatically attempts to connect to a GraphQL server 
   width="300"
 />
 
+You can also change the endpoint via a [URL parameter](#url-parameters).
+
 > To try out Sandbox with an example GraphQL API, you can set the URL to:
 >
 > ```
@@ -120,6 +122,41 @@ Sandbox automatically reconnects whenever your internet connection is restored. 
 ## Operation collections in Sandbox
 
 See [this section](./operation-collections/#sandbox-collections).
+
+## URL parameters
+
+You can customize a few things about Sandbox when first loading the page via URL parameters—this enables users to skip a few steps when loading Sandbox from a link. These are all the parameters available:
+
+| Parameter   | Description                                                                                                                  |
+|-------------|------------------------------------------------------------------------------------------------------------------------------|
+| `endpoint`  | The URL of the GraphQL endpoint that Sandbox introspects and sends requests to. The default value is `http://localhost:4000` |
+| `document`  | The GraphQL query that should be populated in the operation panel                                                            |
+| `variables` | The variables for the query that should be set below the operation panel, must be a JSON object.                             |
+| `headers`   | Headers that should be included in requests to the `endpoint`, populated below the operation panel, must be a JSON object.   |
+
+For example, the following URL sets each of these parameters:
+
+```
+https://studio.apollographql.com/sandbox/explorer?endpoint=http://localhost:4200&document=query hello($name: String!) { hello(name: $name)}&variables={"name": "Sandbox User"}&headers={"Cache-Control": "no-cache"}
+```
+
+> Note that, for readability, the above URL is not URL-encoded. Most browsers will automatically encode the URL for you, but it is best practice to URL-encode the parameters before providing them to a user.
+
+This URL results in Sandbox loading like the following screenshots:
+
+<img
+    class="screenshot"
+    src="../img/sandbox-url-parameters-1.jpg"
+    alt="Sandbox with endpoint, document, and variables pre-populated"
+    width="500"
+/>
+
+<img
+    class="screenshot"
+    src="../img/sandbox-url-parameters-2.jpg"
+    alt="Sandbox with headers pre-populated"
+    width="500"
+/>
 
 ## Embedding Sandbox
 
