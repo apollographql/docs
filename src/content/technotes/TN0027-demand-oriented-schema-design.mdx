@@ -1,0 +1,159 @@
+---
+title: Demand oriented schema design
+id: TN0027
+tags: [federation, schema design]
+---
+
+## Best practice #2: Design schemas in a demand-oriented, abstract way
+
+The shift to a common graph is often motivated in part by a desire to simplify how clients access the data they need from a GraphQL API backed by a distributed service architecture. And while GraphQL offers the promise of taking a client-driven approach to API design and development, it provides no inherent guarantee that any given schema will lend itself to real client use cases.
+
+To best support the client applications that consume data from our federated graph, we must intentionally design schemas in an abstract, demand-oriented way. This concept is formalized as one of the [Agility principles](https://principledgraphql.com/agility) in Principled GraphQL, stating that a schema should not be tightly coupled to any particular client, nor should it expose implementation details of any particular service.
+
+### Prioritize client needs, but not just one client's needs
+
+Creating a schema that is simultaneously demand-oriented while avoiding the over-prioritization of a single client's needs requires some upfront work—specifically, client teams should be consulted early on in the API design process. From a data-graph-as-a-product perspective, this is an essential form of foundational research to ensure the product satisfies user needs. This research should also continue to happen on an ongoing basis as the graph and client requirements evolve.
+
+Client teams should drive these discussions wherever possible. That means in practice, instead of providing a draft schema to a client team and asking for feedback, it's better to work through exercises where you ask client team members to explain exactly what data is needed to render particular views and have them suggest what the ideal shape of that data would be. It is then the task of the schema designers to aggregate this feedback and reconcile it against the broader product experiences that you want to drive via your graph.
+
+When thinking about driving product experiences via the graph, keep in mind that the overall schema of the graph is a representation of your product and each federated schema is the representation of a domain boundary within the product. This is why Apollo Federation excels at supporting omni-channel product strategies—the graph can be designed in a demand-oriented way that's based on product functions and the clients that query the graph can, in turn, evolve along with those functions.
+
+### Keep service implementation details out of the schema
+
+Client team consultation can also help you avoid another schema design pitfall, which is allowing the schema to be unduly influenced by backing services or data sources.
+
+Other approaches to GraphQL consolidation can make it challenging to side-step this concern, but federation allows you to design your schema in a way that expresses the natural relationships between the types in the graph. For example, in a distributed GraphQL architecture without federation, foreign key-like fields may be necessary for a subgraph's schema to join the nodes of your graph together:
+
+```graphql
+type Review {
+  id: ID!
+  productID: ID
+}
+```
+
+With federation, however, a reviews service's schema can represent a true subset of the complete graph:
+
+```graphql
+extend type Product @key(fields: "id") {
+  id: ID! @external
+}
+
+type Review {
+  id: ID!
+  product: Product
+}
+```
+
+As another common example of exposed implementation details, here we can see how an underlying REST API data source could influence the names of mutations in a service's schema:
+
+```graphql
+extend type Mutation {
+  postProduct(name: String!, description: String): Product
+  patchProduct(id: ID!, name: String, description: String): Product
+}
+```
+
+A better approach would look like this:
+
+```graphql
+extend type Mutation {
+  createProduct(name: String!, description: String): Product
+  updateProductName(id: ID!, name: String!): Product
+  updateProductDescription(id: ID!, description: String!): Product
+}
+```
+
+The revised `Mutation` fields better describe what is happening from a client's perspective and offer a finer-grained approach to handling updates to a product's name and description values where those updates need to be handled independently in a client application. Using two separate update mutations also helps disambiguate what would happen if a client sent the `patchProduct` mutation with no `name` or `description` arguments (because the mutation could handle updating one value or the other, but does not require both for any given operation) and saves the subgraph from having to handle these errors at runtime. We'll speak more on the use cases for finer-grained mutations in the next section.
+
+As a final, related point on hiding implementation details in the schema, we should also avoid exposing fields in a schema that clients don't have any reason to use. If a schema is intentionally and iteratively developed based on the aggregation of product functions and client use cases, then this issue can easily be avoided.
+
+However, when tools are used to auto-generate a GraphQL schema based on backing data sources, then you will almost invariably end up with fields in your schema that clients don't need but may develop unintended use cases for in the future, which will make your schema harder to evolve over the longer term. This is why, at Apollo, we generally discourage the use of schema auto-generation tools—they lead you in precisely the opposite direction of taking a client-first approach to schema design.
+
+## Best practice #3: Prioritize schema expressiveness
+
+A good GraphQL schema will convey meaning about the underlying nodes in a graph, as well as the relationships between those nodes. There are multiple dimensions to schema expressiveness—many of which overlap with other schema design best practices—but here we'll focus specifically on standardizing naming and formatting conventions across services, designing purposeful fields in a schema, and augmenting an inherently expressive schema with thorough documentation directly in its SDL to maximize usability.
+
+### Standardize naming and formatting conventions
+
+> _There are only two hard things in Computer Science: cache invalidation and naming things._
+>
+> — Phil Karlton
+
+Arguably, the "naming things" aspect of this observation grows even more challenging when trying to name things consistently across a distributed GraphQL architecture supported by many teams! (The same goes for caching, but we'll cover that topic separately later on.)
+
+Being consistent about how you name things may go without saying, but it’s even more important when composing schemas from multiple subgraphs into a single federated GraphQL API. The [One Graph principle](https://principledgraphql.com/integrity/#1-one-graph) that drives federation is meant to help improve consistency for clients, and that consistency should include naming conventions. For example, having a `users` query defined in one service and a `getProducts` query defined in another doesn't provide a very consistent or predictable experience for graph consumers. Similar to fields, type naming and name-spacing conventions should also be standardized across the graph.
+
+Additionally, when a company already has multiple GraphQL APIs in use that will be rolled into the federated graph, the names of the types within those existing schemas may collide. In these instances, a decision must be made about whether those colliding types should become an entity within the graph or a value type, or if some kind of name-spaced approach is warranted.
+
+The outset of a migration project to a federated graph is the right time to take stock of what naming conventions are currently used in existing GraphQL schemas within the company, determine what conventions will become standardized, onboard teams to those conventions, and plan for deprecations and rollovers as needed. Additionally, there should also be a thorough review process in place as the graph evolves to ensure that new fields, types, and services adhere to these conventions.
+
+#### A brief sidebar on pagination conventions
+
+Another important area of standardization when consolidating GraphQL APIs is providing clients a consistent experience for paginating field results across services. On this topic, we offer these high-level guidelines:
+
+- Add pagination when it's necessary. Don't add pagination arguments to a field when a basic list will suffice.
+- When pagination is warranted, leverage your consolidation efforts as an opportunity to standardize type system elements that support pagination (for example, arguments and pagination-related object types and enums).
+- Standardizing pagination across your graph doesn't mean preferring one style of pagination over another (for example, offset-based or cursor-based pagination). Choose the right tool for the job, but ensure that each style of pagination is implemented consistently across services.
+- Your company's graph governance group should actively enforce pagination standards across your subgraphs to maintain consistency for clients.
+
+### Design fields around specific use cases
+
+As mentioned previously, a GraphQL schema should be designed around client use cases, and ideally, the fields that are added to a schema to support those use cases will be single-purpose. In practice, this means having more specific, finer-grained mutations and queries.
+
+While it's still important to ensure that we don't expose unneeded fields in a schema, that doesn't mean we should avoid adding additional queries and mutations to a schema if they are driven by client needs. For example, having two `userById` and `userByUsername` queries may be a better choice than a single `user` query that accepts either a name or ID as a nullable argument. Because the more generalized `user` query could fetch a user by name or ID it necessitates nullable arguments, which creates ambiguity for the client about what will happen if the query is submitted with neither of those arguments included.
+
+Convoluted input types can also complicate the observability story for your graph. If an input is used to contain query arguments, then each additional field added to the input can make it increasingly opaque as to what field may be the root cause of a particularly slow query when viewing an operation's traces in your observability tools.
+
+Taking a finer-grained approach also applies to update-related mutations. For example, rather than having a single `updateAccount` mutation to rule them all, use more purpose-driven mutations when these values are updated independently by clients. For example, consider this series of mutations used to update a user's account information:
+
+```graphql
+extend type Mutation {
+  addSecondaryEmail(email: String!): Account
+  changeBillingAddress(address: AddressInput!): Account
+  updateFullName(name: String!): Account
+}
+```
+
+If any of these values needed to be updated simultaneously or not at all, then it would make sense to bundle the updates into a coarser-grained mutation. But with this caveat aside, opting for finer-grained mutations helps avoid the same pitfalls as finer-grained queries do and saves you from doing extra validation work at runtime to determine that the submitted arguments will lead to a logical outcome for a mutation.
+
+As a final note on field use cases, fields within a schema can be leveraged as an entry point to what authenticated users can do within that schema. A common pattern is to add a `viewer` or `me` query to an API, and the [GitHub GraphQL API](https://docs.github.com/en/free-pro-team@latest/graphql) provides a notable example of this pattern:
+
+```graphql
+extend type Query {
+  # ...
+  "The currently authenticated user."
+  viewer: User!
+}
+```
+
+### Document types, fields, and arguments
+
+A well-documented schema isn't just a nicety in GraphQL. The imperative to document the various aspects of a schema is codified in the [GraphQL specification](https://spec.graphql.org/June2018/#sec-Descriptions). The specification states that documentation is a "first-class feature of GraphQL type systems" and goes further to say that all types, fields, arguments, and other definitions that can be described should include a description unless they are self-descriptive.
+
+So while in many regards a well-designed, expressive schema will be self-documenting, using the SDL-supported description syntax to fully describe how the types, fields, and arguments in an API behave will provide an extra measure of transparency for graph consumers. For example:
+
+```graphql
+extend type Query {
+  """
+  Fetch a paginated list of products based on a filter.
+  """
+  products(
+    "How many products to retrieve per page."
+    first: Int = 5
+
+    "Begin paginating results after a product ID."
+    after: Int = 0
+
+    """
+    Filter products based on a type.
+
+    Products with any type are returned by default.
+    """
+    type: ProductType
+  ): ProductConnection
+}
+```
+
+In the example above, we see how a thoroughly described `products` query may look when the query and each of its arguments are documented. And just as with naming conventions, it's important to establish standards for documentation across a federated graph from its inception to ensure consistency for API consumers. Similarly, there should also be governance measures in place to ensure that documentation standards are adhered to as the schema continues to evolve.
+
+And as a final note, when documenting subgraphs' schema files, we can't add descriptions strings above extended types (including extended `Query` and `Mutation` types in subgraph schemas) because the GraphQL specification states that only type definitions can have descriptions, not type extensions.
