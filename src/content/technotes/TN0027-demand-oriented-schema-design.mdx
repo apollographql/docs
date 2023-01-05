@@ -4,7 +4,7 @@ id: TN0027
 tags: [federation, schema design]
 ---
 
-## Best practice #2: Design schemas in a demand-oriented, abstract way
+## Design schemas in a demand-oriented, abstract way
 
 The shift to a common graph is often motivated in part by a desire to simplify how clients access the data they need from a GraphQL API backed by a distributed service architecture. And while GraphQL offers the promise of taking a client-driven approach to API design and development, it provides no inherent guarantee that any given schema will lend itself to real client use cases.
 
@@ -34,8 +34,8 @@ type Review {
 With federation, however, a reviews service's schema can represent a true subset of the complete graph:
 
 ```graphql
-extend type Product @key(fields: "id") {
-  id: ID! @external
+type Product @key(fields: "id") {
+  id: ID!
 }
 
 type Review {
@@ -69,7 +69,7 @@ As a final, related point on hiding implementation details in the schema, we sho
 
 However, when tools are used to auto-generate a GraphQL schema based on backing data sources, then you will almost invariably end up with fields in your schema that clients don't need but may develop unintended use cases for in the future, which will make your schema harder to evolve over the longer term. This is why, at Apollo, we generally discourage the use of schema auto-generation tools—they lead you in precisely the opposite direction of taking a client-first approach to schema design.
 
-## Best practice #3: Prioritize schema expressiveness
+## Prioritize schema expressiveness
 
 A good GraphQL schema will convey meaning about the underlying nodes in a graph, as well as the relationships between those nodes. There are multiple dimensions to schema expressiveness—many of which overlap with other schema design best practices—but here we'll focus specifically on standardizing naming and formatting conventions across services, designing purposeful fields in a schema, and augmenting an inherently expressive schema with thorough documentation directly in its SDL to maximize usability.
 
@@ -149,7 +149,7 @@ extend type Query {
 
     Products with any type are returned by default.
     """
-    type: ProductType
+    type: ProductType = ALL
   ): ProductConnection
 }
 ```
