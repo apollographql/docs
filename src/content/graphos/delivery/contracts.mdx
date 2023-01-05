@@ -245,6 +245,10 @@ Your contract will filter types and fields from its source variant according to 
 - **If the Included Tags list is non-empty**, the contract schema _excludes_ each union type and object/interface field _unless_ it's tagged with an _included_ tag.
   - Each object and interface type is _included_ as long as _at least one_ of its fields is included (unless the type is explicitly excluded)
   - The contract schema _excludes_ a type or field if it's tagged with both an included tag _and_ an excluded tag.
+- **If you enabled the feature to hide unreachable types**, the contract schema _excludes_ objects, interfaces, unions, inputs, enums, and scalars _unless_ they are tagged with an _included_ tag.
+  - A type is considered unreachable when:
+    - There does not exist a path from a [root operation type](https://spec.graphql.org/October2021/#sec-Root-Operation-Types) to the type itself.
+    - There does not exist a path from a [executable-directive](https://spec.graphql.org/October2021/#ExecutableDirectiveLocation) to the type itself.
 
 > 💡 In Apollo Federation 2, if you want to exclude a type or field from your _source variant's_ API schema _and_ all of its contract schemas, you can use the `@inaccessible` directive instead of `@tag`. For details, see [Using `@inaccessible`](/federation/federated-types/sharing-types/#using-inaccessible).
 
