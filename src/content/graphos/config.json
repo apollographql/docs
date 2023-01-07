@@ -28,7 +28,7 @@
       "Cloud routing overview": "/routing/cloud",
       "Configuring cloud routing": "/routing/cloud-configuration",
       "Self-hosted routing (enterprise only)": "/routing/self-hosted",
-      "Router-based @defer support": "/routing/defer"
+      "Using @defer": "/routing/defer"
     },
     "The Explorer": {
       "Overview": "/explorer/explorer",
