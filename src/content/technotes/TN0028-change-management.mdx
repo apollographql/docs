@@ -71,13 +71,9 @@ During Step 4, our system will most likely end up in an inconsistent state, wher
 
 When the subgraphs update first, a client _could_ request the new schema elements, and the Router will raise an operation validation error because it is not yet aware of changes.
 
-In practice, however, this rarely matters. Due to the declarative nature of GraphQL, clients must update their operations to use the new schema elements. **Clients aren’t polling our schema's introspection response to discover new fields and immediately start requesting them.** (Also, Apollo recommends [disabling introspection in production][disableprod]!) Only after the system reaches a consistent state will we announce the availability of these new schema elements to clients.
+In practice, however, this rarely matters. Due to the declarative nature of GraphQL, clients must update their operations to use the new schema elements. **Clients aren’t polling our schema's introspection response to discover new fields and immediately start requesting them.** (Also, Apollo recommends [disabling introspection in production](https://www.apollographql.com/blog/graphql/security/why-you-should-disable-graphql-introspection-in-production/) Only after the system reaches a consistent state will we announce the availability of these new schema elements to clients.
 
-[disableprod]: https://www.apollographql.com/blog/graphql/security/why-you-should-disable-graphql-introspection-in-production/
-
-If we enable [Schema Change Notifications][notifications], Apollo GraphOS will automatically notify our colleagues that the new schema is available right after the Router receives the updated supergraph schema.
-
-[notifications]: /graphos/notifications/schema-change-integration/
+If we enable [Schema Change Notifications](/graphos/notifications/schema-change-integration/), Apollo GraphOS will automatically notify our colleagues that the new schema is available right after the Router receives the updated supergraph schema.
 
 ### Concurrent subgraph schema changes
 
@@ -90,7 +86,7 @@ Most of the time we can focus on a single subgraph, but it is possible to encoun
 
 The solution is to encounter the build error much earlier in the process. As soon as Team A merges a changeset, Team B should run build checks against that change.
 
-We can accomplish this by creating a special variant of our graph that tracks the `main` branch of each code repository. Apollo GraphOS provides a default variant called `current` for just this use-case. This requires that:
+We can accomplish this by creating a special variant of our graph that tracks the `main` branch of each code repository. Apollo GraphOS provides a default variant called `current` for just this use-case, but any variant can be used for this purpose. This requires that:
 
 - Each repository immediately publishes the subgraph schema to the `current` variant each time we merge a change to the `main` branch, even if we won't release the change for a while.
 - We run build checks for a proposed change against the `current` variant (to catch build errors quickly) as well as our production variants (to run operation checks against live traffic).
