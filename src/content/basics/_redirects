@@ -52,3 +52,14 @@
 /tutorial/queries/ https://www.apollographql.com/tutorials/fullstack-quickstart/fetching-data-with-queries
 /tutorial/mutations/ https://www.apollographql.com/tutorials/fullstack-quickstart/updating-data-with-mutations
 /tutorial/local-state/ https://www.apollographql.com/tutorials/fullstack-quickstart/managing-local-state
+
+# Redirect enterprise guide to tech notes
+/enterprise-guide /docs/
+/enterprise-guide/introduction /docs/
+/enterprise-guide/graphql-consolidation /docs/technotes/TN0022-graphql-adoption-patterns
+/enterprise-guide/federated-schema-design /docs/technotes/tags/schema-design
+/enterprise-guide/graph-administration /docs/technotes/TN0025-supergraph-stewardship
+/enterprise-guide/graph-security /docs/technotes/TN0021-graph-security
+/enterprise-guide/change-management /docs/technotes/TN0028-change-management
+/enterprise-guide/federation-case-studies https://www.apollographql.com/customers
+/enterprise-guide/additional-resources /docs/
