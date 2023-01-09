@@ -1,5 +1,5 @@
 ---
-title: Change management in Apollo Federation
+title: Deploying API changes with Managed Federation and GraphOS
 id: TN0028
 tags: [federation, best practices]
 ---
@@ -26,25 +26,18 @@ graph LR
 
 Allowing teams to independently update the components they own is a key benefit of federation. However, understanding and de-risking changes to a component can be challenging, especially because changes might require cascading changes in other components. This is especially true for GraphQL schema definitions, which must be coordinated between subgraph services and the Router.
 
-This section covers the most common change management scenarios in a federated architecture using the Managed Federation features of Apollo GraphOS. We'll consider the proper sequencing of release events, how Apollo tooling makes managing changes easier, and when progressive delivery techniques like blue-green deploys are useful.
+This document will cover the basic release steps that involvev changes to an existing [supergraph API](/federation/federated-types/overview). We will not go into depth on deploying changes to runtime code or the Router runtime configuration. Specifically, we'll examine two scenarios, both of which involve introducing changes to an existing federated API schema
 
-Specifically, we'll examine scenarios that:
-
-- Involve a schema change
   - [Backward compatible subgraph schema changes](#backward-compatible-subgraph-schema-changes)
   - [Backward _incompatible_ subgraph schema changes](#backward-incompatible-subgraph-schema-changes)
-- Involve schema changes in multiple subgraphs
-  - [Changes to shared types](#changes-to-shared-types)
-  - [Changes to query planning](#changes-to-query-planning-field-migrations-entity-ownership-changes-etc)
-- Don't involve schema changes
-  - [Changes to a data source](#changes-to-a-data-source)
-  - [Changes to subgraph resolvers](#changes-to-subgraph-resolvers)
-  - [Changes to Router logic/configuration](#changes-to-router-logic-or-configuration)
 
-The release guidelines for each scenario should generally apply to all release management systems, whether we're deploying to Kubernetes, serverless, or bare metal. Some details might change depending on whether we have a manual deployment process, a continuous delivery process, or something in between. This guide assumes the use of the [Apollo GraphOS][apollographos] for publishing and validating schemas, as well as [Apollo Managed Federation][managedfederation] for propagating supergraph schemas to our Router servers.
+This guide assumes the general use of [Apollo GraphOS](/graphos/) and some of it's specific features:
 
-[apollographos]: /graphos/
-[managedfederation]: /federation/managed-federation/overview/
+- [Managed Federation](/federation/managed-federation/overview/) for propagating the supergraph schema to your Router at runtime
+- [Rover](/rover/) for publishing subgraph schemas and running [Schema Checks](/graphos/delivery/schema-checks)
+- [Apollo Studio](https://studio.apollographql.com/) for viewing GraphOS metrics and determining things like when it's safe to remove fields.
+
+The release guidelines for each scenario should generally apply to all release management systems, whether we're deploying to Kubernetes, serverless, or bare metal. Some details might change depending on whether we have a manual deployment process, a continuous delivery process, or something in between.
 
 ## Backward compatible subgraph schema changes
 
@@ -116,9 +109,9 @@ If circumstances require a rollback, the safest process is to revert the change 
 
 ### Staged schema change releases
 
-Instead of attempting rollbacks of schema changes, we may want to release our changes in stages, such as alpha, beta, and generally-available (GA). The "Contracts" feature of GraphOS makes this process simple:
+Instead of attempting rollbacks of schema changes, we may want to release our changes in stages, such as alpha, beta, and generally-available (GA). The [Contracts](/graphos/delivery/contracts/) feature of GraphOS makes this process simple:
 
-1. "Tag" new elements of our schema with labels for the targeted release:
+1. Mark elements of our schema with the '@tag' directive for the targeted release:
 
    ```graphql
    type Product {
@@ -127,7 +120,7 @@ Instead of attempting rollbacks of schema changes, we may want to release our ch
    }
    ```
 
-2. Configure our GA variant to be a "contract" that filters out all fields tagged "alpha" or "beta".
+2. Configure our GA variant to be a contract that filters out all fields tagged "alpha" or "beta".
 3. Configure a separate beta variant to exclude the "alpha" tag, and another alpha variant that doesn't exclude anything.
 4. Set up three separate Routers configured to use the alpha, beta, and GA variants.
 5. Perform the standard release process. Because we've tagged our new field with "alpha", the schema for the beta and GA variants will not change. This gives us plenty of opportunity to test our change with alpha versions of our clients.
@@ -166,153 +159,9 @@ Assuming we've performed the pre-work and reduced usage of relevant types and fi
 
 If circumstances require a rollback, the safest process is to revert the change in the subgraph code repository and perform the full release process, publishing the subgraph schema and rolling out the new code together.
 
-## Changes to query planning (field migrations, entity ownership changes, etc.)
-
-Query planning changes involve changes to federation metadata that affect how the Router fetches data from subgraphs without changing the schema itself. This requires making changes to more than one subgraph schema. Because it involves changes to at least three services (the Router plus two subgraphs), safely rolling out changes and being able to roll them back if we encounter errors is critical.
-
-Apollo strongly recommends that we isolate query planning changes from other kinds of schema or implementation changes. All services should be already have working resolvers to support the new query plans.
-
-Consider the scenario of moving a field on an entity from one subgraph (Subgraph A) to another (Subgraph B). After the migration, Subgraph B takes on the responsibility for resolving the field.
-
-```graphql title="Before"
-# Subgraph A
-type User @key(fields: "id") {
-  id: ID!
-  fieldToMigrate: String
-}
-
-# Subgraph B
-type User @key(fields: "id") {
-  id: ID! 
-}
-```
-
-```graphql title="After"
-# Subgraph A
-type User @key(fields: "id") {
-  id: ID!
-  fieldToMigrate: String
-}
-
-# Subgraph B
-type User @key(fields: "id") {
-  id: ID!
-  fieldToMigrate: String @override(from: "A")
-}
-```
-
-> For more information on this topic, check out our federation docs on [Migrating entities and fields](/federation/entities-advanced/#migrating-entities-and-fields)
-
-### Release steps
-
-When determining the safest sequence of events, we must make sure that our resolvers are in place _before_ the Router's query planning logic changes.
-
-In this example, we must release Subgraph B first so that its resolver for `fieldToMigrate` is in production before the Router starts creating new query plans.
-
-1. In the Subgraph B repository, commit a changeset containing the schema change and the resolver implementations to the release branch, then trigger the release pipeline.
-2. The release pipeline executes: building artifacts, triggering a rolling deploy of Subgraph B, and publishing subgraph SDL.
-
-   At this point, the Router continues to generate the the same query plans with Subgraph A as the owner of the `User.fieldToMigrate` field. **Composition is broken**, so Apollo GraphOS does not publish the new supergraph to the Router.
-
-3. In the Subgraph A repository, commit a changeset containing the schema change to the release branch, then trigger the release pipeline. **For rollback purposes, we should leave the resolver for `User.fieldToMigrate` in place.**
-4. The release pipeline executes: building artifacts, triggering a rolling deploy of Subgraph A, and publishing subgraph SDL.
-
-   As soon as the pipeline publishes the subgraph schema, composition resolves and Router update. They will now create query plans that use Subgraph B to resolve the field.
-
-In the event of an issue with the new query plans, rolling this change back requires re-publishing the subgraph schemas. We can accomplish this by releasing the previous versions of the subgraphs in the reverse order, but that may take too much time in the midst of an outage.
-
-### Release alternative: manual schema publishing
-
-Because the query planning change should not require changes to our runtime code, we could choose to publish schemas _without_ deploying our services. The process would be:
-
-1. Release a version of Subgraph B with the field resolver in place (but inactive without the schema defining it.)
-2. Edit the subgraph schemas for both Subgraph A and Subgraph B.
-3. Manually publish them using [Rover][rover], one after the other, updating the Router after the second publish.
-4. Commit the changes to the respective repositories. The next release will be a no-op because Apollo Studio already has these changes.
-
-[rover]: /rover/
-
-In the event of an issue, we can quickly publish the previous versions of the subgraph schemas to "roll back".
-
-We might choose to keep a copy of subgraph schemas in a separate code repository for review and auditing purposes, as well as a convenient location for making and publishing these manual changes.
-
-## Changes to a data source
-
-Changing a data source safely requires three separate releases to avoid downtime. This process should be very familiar; it is standard practice for any kind of database migration or API change in a service-oriented architecture.
-
-1. Release #1: Make a backward compatible change to the data source
-
-   For example, add a column to a database and backfill the data using an async process.
-
-2. Release #2: Update calling sites in subgraphs
-
-   For example, change SQL queries to use new column.
-
-3. Remove unneeded code/data
-
-   For example, drop the unused column.
-
-This process allows for rolling back changes after Release #2 because the data source supports the previous version of subgraph resolvers.
-
-### Progressive delivery techniques
-
-**Feature flags**: we might choose to leverage feature flags in Release #2, enabling a quick rollback if we discover a problem in the data or implementation. In order to "pin" users to a specific flag value and ensure a consistent experience during the rollout, pass a user-identifying header though each layer of the system.
-
-We can configure the Router to forward headers to subgraph services by [customizing the subgraph data source][customizereqs].
-
-[customizereqs]: federation/building-supergraphs/router/#customizing-requests
-
-## Changes to subgraph resolvers
-
-Changing the behavior of a resolver (such as calling a new data source, changing the computation of a value, or optimizing execution by adding [Dataloaders](/apollo-server/data/fetching-rest#using-with-dataloader)) might be performed in a single release for low-risk changes.
-
-Because a resolver might be called in various contexts (nested at different layers of an operation) it can be challenging to reason about the effects of our change. We might choose to progressively release the change using feature flags or canary deploys.
-
-Because this change does not require changes to other components, it allows rolling back the subgraph service should an issue arise in the new code.
-
-### Progressive delivery techniques
-
-**Feature flags**: we might choose to leverage feature flags, breaking up the release into multiple steps, enabling a quick rollback if we discover a problem in the implementation. In order to "pin" users to a specific flag value and ensure a consistent experience during the rollout, pass a user-identifying header though each layer of the system.
-
-1. Author the resolver to provide both old and new codepaths gated by a feature flag.
-2. Release the new code. The new codepath is enabled for zero users by default, so the release should have no impact on current behavior.
-3. Progressively enable the feature flag for more users, monitoring error rates or support inquiries.
-4. Once the feature flag is enabled for 100% of users, remove the old codepath and perform a clean-up release.
-
-**Canary or blue-green deploys**: instead of adding complexity to our resolver by supporting two codepaths and selecting one based on a feature flag, we can choose to simply author the new resolver and release it more carefully.
-
-1. Author the new resolver in the subgraph code repository.
-2. Release the new code using a canary deployment mechanism.
-3. Observe error rates or other relevant metrics (either manually, or with an automated progressive delivery controller like [Flagger][flagger]).
-4. If metrics are acceptable, release the new code to all replicas.
-5. If metrics are unacceptable, cancel the canary deployment, roll back the release, and revert the code change.
-
-[flagger]: https://flagger.app/
-
-## Changes to Router logic or configuration
-
-The Router is critical infrastructure and should be treated as such. Although we can treat releases as standard rolling deploys, it's highly recommended to use progressive delivery techniques like canary or blue-green deploys.
-
-### Progressive delivery techniques
-
-Deploying Router changes without schema changes using a blue-green deployment process is straightforward, whether we're manually deploying to separate replica sets or clusters, or using a automated progressive delivery controller like [Flagger][flagger].
-
-1. Author the new logic or configuration change in the Router code repository.
-2. Release the new code to the inactive replica set.
-3. Incrementally shift traffic to the replica set containing the changes either manually, or with an automated progressive delivery controller.
-4. Observe error rates or other relevant metrics.
-5. If metrics are acceptable, shift all traffic to the replica set.
-6. If metrics are unacceptable, shift traffic back to the old replica set, cancel the deployment, and revert the code change.
-
-## Summary
-
-It can feel overwhelming to consider all the ways the components in a federated architecture interact. By considering this finite set of change scenarios independently, it becomes clearer which processes and techniques are useful.
-
-Key takeaways:
+## Key takeaways:
 
 - Isolate types of changes from other types. When possible, don't release schema changes and implementation/configuration changes at the same time.
+- Publish subgraph schemas to the "current" variant immediately after merging code and run build checks against the "current" variant to catch subgraph compatibility issues long before a production release. (The longer the delay between merge and deploy, the more important this step is.)
 - Sequencing Router/subgraph schema changes isn't as critical in practice as we might think, especially if we use tools like deprecation workflows, usage reporting, and schema change notifications to manage client operations.
 - Think about our API schema as a document that always moves forward. While rollbacks of code and configuration must be supported, "rolling back" our published API creates confusions for clients and consumers. Instead of trying to support API rollbacks, consider implementing a staged rollout process for API changes.
-- Using two replica sets for the Router enables blue-green deployments and safer releases containing logic or configuration changes in this critical production service.
-- Publish subgraph schemas to the "current" variant immediately after merging code and run build checks against the "current" variant to catch subgraph compatibility issues long before a production release. (The longer the delay between merge and deploy, the more important this step is.)
-- Pass stable user identifiers through all layers of the stack to enable consistent per-user results when using feature flags.
