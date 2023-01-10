@@ -27,6 +27,7 @@
 /TN0023 /docs/technotes/TN0023-nullability
 /TN0024 /docs/technotes/TN0024-deprecations
 /TN0025 /docs/technotes/TN0025-supergraph-stewardship
-/TNOO26 /docs/technotes/TN0026-thinking-in-entities
+/TN0026 /docs/technotes/TN0026-thinking-in-entities
 /TN0027 /docs/technotes/TN0027-demand-oriented-schema-design
 /TN0028 /docs/technotes/TN0028-change-management
+/TN0029 /docs/technotes/TN0029-relay-style-connections
