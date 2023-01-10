@@ -67,7 +67,7 @@ type PageInfo {
 
 </ExpansionPanel>
 
-It's worth noting that Facebook designed connections for their Newsfeed feature with these features:
+It's worth noting that Facebook designed the Connections specification for their Newsfeed feature with these features in mind:
 
 - It uses cursor-based pagination.
 - It supports paging backward (with the `before` cursor) and forward (with the `after` cursor).
@@ -87,7 +87,7 @@ No, unless you're using the Relay client. But its popularity outside of the Rela
 
 Consider the ["Zero, One, Infinity" rule](https://en.wikipedia.org/wiki/Zero_one_infinity_rule) — can you definitively assert that your list will never require pagination or other metadata about the relationship?
 
-Apollo recommends always using a wrapper type for lists.
+Apollo recommends always using a wrapper type for lists so that you can gracefully evolve your schema without breaking existing clients.
 
 ### Do I have to implement the entire connection specification?
 
