@@ -15,58 +15,54 @@ Together, these pieces of information help teams monitor their graph and make ch
 
 If you're using Apollo Server for your gateway, you can require client metadata in every incoming request with a [custom plugin](/apollo-server/integrations/plugins/):
 
-> The header names used below are the default headers sent by Apollo Client, but you can change them to whatever names your client uses.
+> The header names used below are the default headers sent by Apollo Client, but you can change them to whatever names your client uses. Additionally, these changes should be reflected in the [usage reporting plugin](/apollo-server/api/plugin/usage-reporting/#generateclientinfo).
 
-```js title="index.js"
-const clientEnforcementPlugin = {
-  requestDidStart: ({request, logger}) => {
-    let clientName = request.http.headers.get('apollographql-client-name');
-    let clientVersion = request.http.headers.get(
-      'apollographql-client-version'
-    );
+<MultiCodeBlock>
 
-    if (!clientName) {
-      let logString = `Execution Denied: Operation has no identified client`;
-      logger.debug(logString);
+```ts title="index.ts"
+function clientEnforcementPlugin(): ApolloServerPlugin<BaseContext> {
+  return {
+    async requestDidStart() {
+      return {
+        async didResolveOperation(requestContext) {
+          const clientName = requestContext.request.http.headers.get(
+            "apollographql-client-name"
+          );
+          const clientVersion = requestContext.request.http.headers.get(
+            "apollographql-client-version"
+          );
 
-      throw new ApolloError(logString);
-    }
+          if (!clientName) {
+            const logString = `Execution Denied: Operation has no identified client`;
+            requestContext.logger.debug(logString);
+            throw new GraphQLError(logString);
+          }
 
-    if (!clientVersion) {
-      let logString = `Execution Denied: Client ${clientName} has no identified version`;
-      logger.debug(logString);
+          if (!clientVersion) {
+            const logString = `Execution Denied: Client ${clientName} has no identified version`;
+            requestContext.logger.debug(logString);
+            throw new GraphQLError(logString);
+          }
 
-      throw new ApolloError(logString);
-    }
+          if (!requestContext.operationName) {
+            const logString = `Unnamed Operation: ${requestContext.queryHash}. All operations must be named`;
+            requestContext.logger.debug(logString);
 
-    return {
-      parsingDidStart({queryHash, request}) {
-        if (!request.operationName) {
-          logger.debug(`Unnamed Operation: ${queryHash}`);
-
-          let error = new ApolloError('Execution denied: Unnamed operation');
-
-          Object.assign(error.extensions, {
-            queryHash: queryHash,
-            clientName: clientName,
-            clientVersion: clientVersion,
-            exception: {
-              message: `All operations must be named`
-            }
-          });
-
-          throw error;
-        }
-      }
-    };
-  }
-};
-
+            throw new GraphQLError(logString);
+          }
+        },
+      };
+    },
+  };
+}
 const server = new ApolloServer({
-  gateway,
-  plugins: [clientEnforcementPlugin]
+  typeDefs,
+  resolvers,
+  plugins: [clientEnforcementPlugin()],
 });
 ```
+
+</MultiCodeBlock>
 
 ## Adding enforcement for existing clients
 
