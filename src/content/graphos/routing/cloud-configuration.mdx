@@ -55,7 +55,7 @@ You can configure certain aspects of your router's behavior in the **Router conf
 
 - [HTTP headers](#http-header-rules) that the router sends to your subgraphs
 - [CORS rules](#cors-settings) for browser-based applications connecting to the router
-- [Subgraph error inclusion](#subgraph-error-inclusion) to expose subgraph errors to clients including Apollo Explorer.
+- [Subgraph error inclusion](#subgraph-error-inclusion) to expose subgraph errors to querying clients (including the Apollo Explorer).
 
 After you make any changes to your YAML configuration, you must **save** those changes (`CMD+S` or `CTRL+S`) for those changes to take effect.
 
@@ -329,7 +329,7 @@ cors:
 
 A plugin may set a response `Vary` header. If, after all plugins are processed, there is no response `Vary` header, then the router will add one with a value of "origin".
 
-## Subgraph error inclusion
+### Subgraph error inclusion
 
 By default, your cloud supergraph redacts the details of subgraph errors in its responses to clients. The router instead returns a default error with the following message:
 
@@ -337,11 +337,11 @@ By default, your cloud supergraph redacts the details of subgraph errors in its 
 Subgraph errors redacted
 ```
 
-This redaction prevents potential leaks of sensitive information to the client. Using the `include_subgraph_errors` plugin, you can configure the router to propagate subgraph errors to clients instead. You can do this for all subgraphs, or on a per-subgraph basis.
+This redaction prevents potential leaks of sensitive information to clients.
 
-To configure subgraph error inclusion, add the `include_subgraph_errors` plugin to your [YAML config file](./overview/#yaml-config-file), like so:
+If you instead want to propagate subgraph errors to clients, you can add the `include_subgraph_errors` key to your router's YAML configuration, like so:
 
-```yaml title="router.yaml"
+```yaml
 include_subgraph_errors:
   all: true # Propagate errors from all subraphs
   subgraphs:
