@@ -59,6 +59,12 @@ When you first create your variant, the router provisioning process can take a f
 
 See [Configuring cloud routing](./cloud-configuration).
 
+## Cloud launches
+
+Publishing a new subgraph schema or editing your router's configuration triggers a new [launch](/graphos/delivery/launches/). Every launch automatically deploys new router instances for your supergraph.
+
+> A router deployment might fail due to a platform incident or schema composition issues. To resolve this, try republishing your subgraph schema.
+
 ## Cloud routing FAQ
 
 #### What happens if my cloud router goes down?
