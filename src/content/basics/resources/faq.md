@@ -177,7 +177,7 @@ Many apps and sites are powered almost completely by an API such as a GraphQL sc
 
 [Apollo Studio](https://studio.apollographql.com) is a great tool to track many of these things. It allows close inspection of fields to make it easy to see both total response times as well as how long each field took to execute.
 
-Apollo Studio also has some integrations to make monitoring easier. The [Slack Integration](/graphos/integrations#slack) delivers daily reports to give teams a quick overview of the health of their schema. The [Datadog integration](/graphos/integrations#datadog)) works with existing Datadog accounts, to help teams track schema performance.
+Apollo Studio also has some integrations to make monitoring easier. The [Slack integration](/graphos/notifications/notification-setup/) delivers daily reports to give teams a quick overview of the health of their schema. The enterprise [Datadog integration](/graphos/metrics/datadog-integration/) works with existing Datadog accounts to help teams track schema performance.
 
 ## 4. Moving a product to GraphQL
 
@@ -191,10 +191,10 @@ Keeping all schema code together makes sense for smaller projects, but once a pr
 
 ### How can I test my client?
 
-`react-apollo` comes with everything needed to test a client app that makes queries to a GraphQL schema. Read the [Testing React Components](/react/recipes/testing/) guide to learn more.
+Apollo Client comes with everything needed to test a client app that makes queries to a GraphQL server. For details, see [Testing React components](/react/development-testing/testing).
 
-### How can I safely make changes to the schema?
+### How can I safely make changes to my schema?
 
-Schemas naturally evolve over time. GraphQL schemas are more resilient to change than other APIs, but there are still occasions where breaking changes will need to happen to support new functionality. The [versioning guide](/graphos/schema-registry/#registering-a-schema) explains in more detail what kinds of changes are safe to make, and what kinds could break existing clients.
+Schemas naturally evolve over time. GraphQL schemas are more resilient to change than other APIs, but there are still occasions where breaking changes are necessary to support new functionality. [This section](/graphos/delivery/schema-checks#types-of-schema-changes) explains in more detail which kinds of changes are always safe to make, and which kinds might break existing clients.
 
-Additionally, using the [Apollo CLI](../devtools/cli/) with Apollo Studio provides the tools needed to [validate schema changes](/graphos/schema-checks/) over time. This makes collaboration easier and more transparent.
+The [schema checks](/graphos/delivery/schema-checks) feature of Apollo GraphOS helps you identify potentially breaking schema changes _before_ you make them.

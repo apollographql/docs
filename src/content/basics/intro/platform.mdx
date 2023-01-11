@@ -163,7 +163,7 @@ For enterprise organizations that need to run their router in their own infrastr
     - This is a high-performance binary written in Rust that adds [minimal latency to request processing](https://www.apollographql.com/blog/announcement/backend/apollo-router-our-graphql-federation-runtime-in-rust/), even with extremely high traffic.
     - Because the Apollo Router is a precompiled binary, you don't need to write any boilerplate code around it to deploy it to your backend. All it needs is a configuration file for any behavior you want to customize.
     - Cloud supergraph routers use the Apollo Router under the hood.
-- [Apollo Server](/federation/gateway/) with `@apollo/gateway`
+- [Apollo Server](/federation/building-supergraphs/router#nodejs-gateway-setup) with `@apollo/gateway`
     - This is Apollo's open-source Node.js GraphQL server library, which you can configure to act as a supergraph gateway.
 
 If you get started with one of these libraries and later decide to switch to the other, you can do so without making any changes to the rest of your supergraph.

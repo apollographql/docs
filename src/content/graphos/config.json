@@ -24,10 +24,11 @@
       "Supergraph-specific Studio features": "/graphs/federated-graphs",
       "Self-hosted setup (enterprise only)": "/quickstart/self-hosted"
     },
-    "Routing for Supergraphs": {
+    "Routing": {
       "Cloud routing overview": "/routing/cloud",
       "Configuring cloud routing": "/routing/cloud-configuration",
-      "Self-hosted routing (enterprise only)": "/routing/self-hosted"
+      "Self-hosted routing (enterprise only)": "/routing/self-hosted",
+      "Using @defer": "/routing/defer"
     },
     "The Explorer": {
       "Overview": "/explorer/explorer",
