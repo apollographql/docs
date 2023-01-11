@@ -246,7 +246,7 @@ Your contract will filter types and fields from its source variant according to 
   - Each object and interface type is _included_ as long as _at least one_ of its fields is included (unless the type is explicitly excluded)
   - The contract schema _excludes_ a type or field if it's tagged with both an included tag _and_ an excluded tag.
 - **If you enable the option to hide unreachable types**, the contract schema _excludes_ each unreachable object, interface, union, input, enum, and scalar _unless_ it's tagged with an _included_ tag.
-  - A type is considered unreachable when:
+  - A type is considered **unreachable** in a schema if there exists no path to that type from _either_ a [root operation type](https://spec.graphql.org/October2021/#sec-Root-Operation-Types) or an [executable-directive](https://spec.graphql.org/October2021/#ExecutableDirectiveLocation).
     - There does not exist a path from a [root operation type](https://spec.graphql.org/October2021/#sec-Root-Operation-Types) to the type itself.
     - There does not exist a path from a [executable-directive](https://spec.graphql.org/October2021/#ExecutableDirectiveLocation) to the type itself.
 
