@@ -20,7 +20,7 @@ Both [cloud supergraphs](../graphs/overview/#cloud-supergraphs) and [self-hosted
 
 > ⚠️ **Deferring query fields requires a defer-compatible client library.** These libraries support receiving query data incrementally via multipart HTTP responses.
 >
-> Defer support is currently available in Apollo Client for [Web](/react/data/defer) and [Kotlin (experimental)](/docs/kotlin/fetching/defer).
+> Defer support is currently available in Apollo Client for [Web](/react/data/defer) and [Kotlin (experimental)](/kotlin/fetching/defer).
 
 If you're using a defer-compatible client, you apply the `@defer` directive to fragments in your queries to specify which fields you want to defer:
 
@@ -145,7 +145,7 @@ To use `@defer` successfully, your supergraph and its clients must meet the requ
 ### General requirements
 
 - Clients must support receiving deferred query responses as multipart HTTP responses.
-  - This functionality is currently supported in Apollo Client for [Web](/react/data/defer) and [Kotlin (experimental)](/docs/kotlin/fetching/defer).
+  - This functionality is currently supported in Apollo Client for [Web](/react/data/defer) and [Kotlin (experimental)](/kotlin/fetching/defer).
 - Your supergraph must be one of:
   - A [cloud supergraph](../graphs/overview#cloud-supergraphs)
   - A [self-hosted supergraph](../graphs/overview/#self-hosted-supergraphs) running the [Apollo Router](/router/)
