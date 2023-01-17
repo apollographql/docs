@@ -331,7 +331,7 @@ Operation checks will run against a maximum of 10,000 distinct operations. A war
 
 GraphOS tracks operation usage, however, in order to group duplicate operations, we use [operation signatures](../metrics/operation-signatures) which denormalize the arguments and inputs. This means that the result of the operation signature does not track which fields on input types that are used.
 
-For example, GraphOS will not be able track how many times the field `firstName` is used in this schema:
+For example, GraphOS will not be able to track how many times the input field `GetUsersInput.firstName` is used in this schema:
 
 ```graphql
 type Query {
