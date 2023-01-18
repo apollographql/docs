@@ -4,9 +4,8 @@ id: TN0029
 tags: [best practices, schema design]
 ---
 
-### What are Relay-style connections?
 
-[Relay](https://relay.dev) is an opinionated GraphQL client, and the [Connections specification](https://relay.dev/graphql/connections.htm) defines a pattern for expressing one-to-many relationships in a GraphQL schema.
+[Relay](https://relay.dev) is an opinionated GraphQL client, and its associated [Connections specification](https://relay.dev/graphql/connections.htm) defines a pattern for expressing one-to-many relationships in a GraphQL schema:
 
 ```graphql
 query MyPosts($cursor: String) {
@@ -91,25 +90,25 @@ It's worth noting that Facebook designed the Connections specification for their
 
 These features might not perfectly meet your requirements or the capabilities of your downstream data sources.
 
-### Do I have to use Relay-style connections?
+## Do I have to use Relay-style connections?
 
 No, unless you're using the Relay client. But its popularity outside of the Relay ecosystem is worth taking advantage of:
 
-- Many developers are familiar with the pattern.
+- Many developers are familiar with the connection pattern.
 - It encapsulates several schema design best practices.
 - It's designed to be future-proof and support gradual evolution of your GraphQL schema.
 
-### Do I even need a wrapper type for my lists?
+## Do I even need a wrapper type for my lists?
 
 Consider the ["Zero, One, Infinity" rule](https://en.wikipedia.org/wiki/Zero_one_infinity_rule) — can you definitively assert that your list will never require pagination or other metadata about the relationship?
 
-Using a wrapper type for lists allows you to gracefully evolve your schema without breaking existing clients.
+Using a wrapper type for lists enables you to evolve your schema gracefully without breaking existing clients.
 
-### Do I have to implement the entire connection specification?
+## Do I have to implement the entire connection specification?
 
-No, you can use a subset of the specification. This allows adding features over time to reach compliance with the specification (if necessary).
+No, you can use a subset of the specification. You can implement additional parts over time to reach full compliance with the specification (if necessary).
 
-If your downstream data sources don't support paging backward, you can drop those features:
+If your downstream data sources don't support paging backward, you limit your implementation to forward pagination:
 
 <ExpansionPanel title="An example with only forward pagination">
 
@@ -226,11 +225,11 @@ type PageInfo {
 
 </ExpansionPanel>
 
-### Are there other ways to design your schema for pagination?
+## Are there other ways to design my schema for pagination?
 
-Yes. If your requirements or downstream capabilities don't fit the Relay-style connections spec, we recommend using a different set of conventions so that it's clear to graph consumers that they shouldn't expect to use Relay connection patterns.
+Yes. If your requirements or downstream capabilities don't fit the Relay-style connections spec, we recommend using a visibly different set of conventions so that it's clear to graph consumers that they shouldn't expect to use Relay connection patterns.
 
-Here's an example of pagination that uses page offsets and supports a UI for jumping to a specific page.
+Here's an example of pagination that uses page offsets and supports a UI for jumping to a specific page:
 
 <ExpansionPanel title="An alternative to Relay-style connections">
 
@@ -286,11 +285,11 @@ type Post {
 
 </ExpansionPanel>
 
-### Can I use Relay-style connections with Apollo Federation?
+## Can I use Relay-style connections with Apollo Federation?
 
-Yes! You define the schema and resolvers for the connection relationship within a single subgraph so Federation has almost no ramifications on the pattern.
+Yes! You define the schema and resolvers for the connection relationship within a single subgraph, so federation has almost no ramifications on the pattern.
 
-The one exception is the `PageInfo` type, which is commonly has a consistent defintion for all connections. You must mark it as `@shareable` to define it in multiple subgraphs.
+The one exception is the `PageInfo` type, which commonly has a consistent definition for all connections. You must mark this type's definition as `@shareable` to define it in multiple subgraphs:
 
 ```graphql
 type PageInfo @shareable {
