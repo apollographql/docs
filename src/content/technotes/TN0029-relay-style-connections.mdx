@@ -41,12 +41,24 @@ type User {
   posts(first: Int, after: String, last: Int, before: String): PostConnection!
 }
 
+"""
+This wrapper type contains the list of "edges" and
+pagination metadata.
+"""
 type PostConnection {
   edges: [PostEdge!]!
   pageInfo: PageInfo!
 }
 
+"""
+The "edge" wrapper contains metadata about the item in the
+list. By default it's just a cursor indicating the position
+of the item in the list, but additional metadata is allowed.
+"""
 type PostEdge {
+  """
+  The "node" is the actual item in the list.
+  """
   node: Post
   cursor: String!
 }
@@ -57,6 +69,10 @@ type Post {
   content: String
 }
 
+"""
+The specification includes the pagination metadata
+in a common type.
+"""
 type PageInfo {
   hasNextPage: Boolean!
   hasPreviousPage: Boolean!
