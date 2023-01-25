@@ -61,7 +61,7 @@ The bad news is that a graph which processes a high cardinality of operations th
 
 Again, this isn't a big concern in most real world applications as operations are normally executed more than once, and the cardinality of operations is hopefully much smaller than the total number of possible operation permutations for a given schema. 
 
-With non public GraphQL API's, simply implementing APQ's is often enough to mitigate this issue. This is due to the fact that tee number of operations hitting the production graph is finite and are typically called more than once during the lifecycle of a server deployment, resulting in more cache hits.
+With non public GraphQL API's, simply implementing APQ's is often enough to mitigate this issue as the number of operations hitting the production graph is finite and are typically called more than once during the lifecycle of a server deployment, resulting in more cache hits.
 
 While outside the scope of this article, mitigating this issue if it occurs for public APIs can be a bit more involved, but still possible though techniques like rate limiting and query costing. While it's helpful to be aware of these potential bottlenecks, know that in most cases this won't be an issue, and if they ever do become an issue, they can mostly be mitigated with existing, built in software provided by Apollo.
 
