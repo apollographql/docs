@@ -43,7 +43,7 @@ In addition, consider testing for different scenarios such as peak usage, unexpe
 
 More than likely, your performance bottlenecks will be at the application level (resolvers and beyond), not in the Router or GraphQL execution engine.
 
-When we were starting our first load tests for the early alpha version of the Router, we had to create test suites to run against the Router and the Gateway. To fully reach the bottlenecks in the gateway using realistic load patterns, we had to remove almost all latency in the subgraphs. Saying nothing about the performance improvements in the static binary that is the Router, which is drastically more performant. For most real world setups, the time spent in the subgraph resolver code and the underlying data sources will be the bottleneck. 
+When we were starting our first load tests for the early alpha version of the Router, we had to create test suites to run against the Router and the Gateway. To fully reach the bottlenecks in the gateway using realistic load patterns, we had to remove almost all latency in the subgraphs. For most real world setups, the time spent in the subgraph resolver code and the underlying data sources will be the bottleneck. 
 
 > _If you are running the node.js Gateway and looking to boost performance, check out our Tech Note on [Improving Gateway Performance](technotes/TN0009-gateway-performance/)_
 
