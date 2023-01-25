@@ -55,7 +55,7 @@ When a GraphQL API encounters a new operation, the operation must be parsed into
 
 All of these steps must happen for the initial request of every unique operation against your graph. 
 
-The good news is that most of these steps are highly cacheable, so subsequent calls can bypass most of those steps (all but the actual execution). Apollo has several built-in features that take advantage of this, like [Automatic Persisted Queries (APQs)](apollo-server/performance/apq/). APQ's are on by default in Apollo Server and just a simple configuration setting in Apollo Client to enable them. 
+The good news is that most of these steps are highly cacheable, so subsequent calls can bypass most of those steps (all but the actual execution). Apollo has several built-in features that take advantage of this, such as [Automatic Persisted Queries (APQs)](apollo-server/performance/apq/). APQ's are on by default in Apollo Server/Gateway and the Apollo Router, and just a simple configuration setting in Apollo Client to enable them. 
 
 The bad news is that a graph which processes a high cardinality of operations that are only executed once, can't take advantage of most of these features.
 
