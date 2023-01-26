@@ -1,0 +1,206 @@
+### Scripting
+
+Similar to tools like Postman, the Explorer can run custom **preflight scripts** before each GraphQL operation.
+In general, the main purpose of scripting is to populate environment variables that can be used as header values or graphql variables.
+Scripts can also be useful for debugging purposes.
+
+There are two places in the Explorer to write these scripts:
+
+- Global Preflight Script
+
+  - This script is identical for every team member that uses the Explorer with a particular variant. Global preflight scripts are especially useful for managing authentication flows like OAuth, for example by refreshing an access token.
+  - The global preflight script applies to a _single variant_ of a particular graph, so you can define different ones for each of your graph's environments.
+
+- Operation Level Scripts
+
+  - Each operation in an [operation collection] can define a preflight script which executes before the operation runs.
+
+Execution order:
+
+Global preflight script -> operation script -> operation
+
+_note_: Scripts can reference and run other saved operations which may also define their own scripts creating a chain of preflight script execution.
+
+#### ⚠️ Important considerations for preflight scripts
+
+- All team members with access to a variant can _view_ that variant's preflight script.
+- For [protected variants](../graphs/studio-features/#protected-variants-enterprise-only), only organization members with the [`Graph Admin` role](../org/members/#organization-wide-member-roles) can _create or edit_ a variant's preflight script.
+  - For _non_-protected variants, members with the `Contributor` role can also modify the preflight script.
+- Preflight scripts are stored in the Apollo cloud in plaintext.
+  - **Do not include secret credentials in preflight scripts!** Instead, team members can provide their individual credentials in the Explorer via [environment variables](#environment-variables).
+- Team members can [disable](#disabling-preflight-scripts) the execution of a preflight script.
+
+#### Creating a global preflight script
+
+To create a global preflight script:
+
+1. [Open Apollo Studio](https://studio.apollographql.com/) and then open the Explorer for the graph and variant you want to create a script for.
+
+2. Open the Explorer's Settings tab and scroll down to the **Preflight script** section:
+
+   <img
+     class="screenshot"
+     src="../img/preflight-script.jpg"
+     alt="Preflight script settings in the Explorer"
+     width="500"
+   />
+
+3. Click **Add script**. The following dialog appears:
+
+   <img
+     class="screenshot"
+     src="../img/preflight-script-edit.jpg"
+     alt="Editing preflight scripts in the Explorer"
+     width="600"
+   />
+
+4. Click **Show snippets** to display a list of common helpful actions you can perform from your preflight script (such as sending HTTP requests and interacting with Explorer environment variables).
+
+5. Develop your script in the **Script editor** panel. As you develop, you can click **Test script** to test its execution. Console messages are printed in the **Console output** panel.
+
+6. When your script is ready, click **Save**. Studio stores your script.
+
+You're done! After you save your script, it's automatically loaded for any team member that uses the Explorer with the associated variant.
+
+#### Preflight script API reference
+
+These symbols are available within the scope of a preflight script. Snippets for each are available via the **Show snippets** link in the preflight script dialog.
+
+<table class="field-table api-ref">
+  <thead>
+    <tr>
+      <th>Name /<br/>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+
+<tbody>
+
+<tr>
+<td>
+
+##### `explorer.environment.get`
+
+`(key: string) => Readonly`
+
+</td>
+<td>
+
+Function that returns the current value of the environment variable with the specified `key`.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `explorer.environment.set`
+
+`(key: string, value: JSONValue) => void`
+
+</td>
+<td>
+
+Function that sets a new value for the environment variable with the specified `key`.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `explorer.fetch`
+
+`(href: string, options?: { method?: string, body?: string | null, headers?: Record<string, string>, credentials: 'include' | 'omit' | 'same-origin' }) => Promise<{ code: number, body: string, json: () => any }>`
+
+</td>
+<td>
+
+Function for making HTTP requests to external services from within a preflight script.
+
+Network requests are initiated from an origin of `https://preflight-request.apollographql.com`, please ensure the appropriate CORS headers are sent for those requests.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `explorer.runOperation`
+
+`(href: string, options?: { method?: string, body?: string | null, headers?: Record<string, string>, credentials: 'include' | 'omit' | 'same-origin' }) => Promise<{ code: number, body: string, json: () => any }>`
+
+</td>
+<td>
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `explorer.prompt`
+
+`(msg: string, defaultResponse?: string) => Promise<string | null>`
+
+</td>
+<td>
+
+Function that prompts the user for input and returns the value in a promise. If the user cancels the prompt, the promise resolves to `null`.
+
+The prompt supports Markdown rendering of the `msg` parameter.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `explorer.request.body`
+
+`{ query: string; variables: { [key in string]?: JSONValue } | null; operationName: string | undefined; }`
+
+</td>
+<td>
+
+The body of the `POST` request that's sent to the configured GraphQL endpoint for the current operation.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `explorer.CryptoJS`
+
+</td>
+<td>
+
+This exposes the `crypto-js` package for use within your preflight script. For available functions, [see the documentation](https://www.npmjs.com/package/crypto-js).
+
+</td>
+
+</tr>
+</tbody>
+</table>
+
+#### Disabling preflight scripts
+
+By default, a variant's preflight script runs automatically before every GraphQL operation that's executed in the Explorer. Team members can temporarily disable the script from the **Preflight script** section of the Settings tab. To do so, toggle the switch to **OFF**:
+
+<img
+  class="screenshot"
+  src="../img/preflight-script-disable.jpg"
+  alt="Disabling preflight scripts in the Explorer"
+  width="500"
+/>
+
+#### Creating an operation script:
+
+Operation scripts are only available on operations that are saved in a [collection](link).
+
+1. Select an operation from the Operation Collections menu
+
+2. Select the Script tab and press the + Add Script button
+
+-- figure out how to explain that the rest of the steps are the same --
