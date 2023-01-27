@@ -78,7 +78,9 @@ Additionally, by providing a NotAuthenticatedError as part of the response union
 
 </aside>
 
-Then by separating the mutation and query identities we are able to; separate (a) actions that can be performed on identities from (b) queries which can be performed on identities.
+Then by separating the mutation and query identities we are able to separate:
+* Actions that can be performed on identities.
+* Queries which can be performed on identities.
 
 ```graphql
 type MutableAnonymousIdentity implements MutableIdentity @key(fields: "id") {
