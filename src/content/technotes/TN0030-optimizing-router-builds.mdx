@@ -13,8 +13,9 @@ Some cloud build pipelines such as Google Cloud Build, will require changes to t
 The router will also download a large collection of dependencies during the build process each build by default. We can use [Kaniko](https://github.com/GoogleContainerTools/kaniko) to cache intermediate build layers.
 
 In this example for Google Cloud Build, we have replaced the standard docker [gcr.io/cloud-builders/docker](http://gcr.io/cloud-builders/docker) container image, with [gcr.io/kaniko-project/executor](http://gcr.io/kaniko-project/executor).
-This is all thats needed to enable caching of the intermediate build steps which will be pushed to the destination container repo as soon as each layer is built.
-So even failed builds will contribute to increased build speeds as successful layers are cached. We also change the default `options.machineType` value to `E2_HIGHCPU_8`, this is because the default worker pool doesn’t have the cpu or memory resources necessary to compile the router.
+This is all that's needed to enable caching of the intermediate build steps. Each step will be pushed to the destination container repo as soon as each layer is built, so even failed builds will contribute to increased build speeds as successful layers are cached. 
+
+We also changed the default `options.machineType` value to `E2_HIGHCPU_8`, this is because the default worker pool doesn’t have the CPU or memory resources necessary to compile the router.
 
 ```yaml
 #cloudbuild.yaml
