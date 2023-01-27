@@ -31,8 +31,6 @@ When load testing a graph in production, it's a good idea to exclude load test m
 
 > _consider excluding load test metrics from other parts of your system, as it applies._
 
-Another option is to create named operations that follow a naming convention that signals they are being used as part of a load test. Be sure to have the ability to segment this data from actual production traffic.
-
 ## Use a Realistic Load Pattern that Resembles Production Usage
 
 Load test results are most helpful if they closely match the patterns of production traffic. Take a graph that only has a set number of internal client applications as an example. The applications have a pre-defined number of operations that hit production. It wouldn't make sense to generate 200,000 unique operations as part of a load test if the total number actual operations is several orders of magnitude less than that. It's important to simulate realistic patterns during load testing to ensure the results are relevant and useful for improving performance.
@@ -41,30 +39,16 @@ In addition, consider testing for different scenarios such as peak usage, unexpe
 
 ## Potential Bottlenecks
 
-More than likely, your performance bottlenecks will be at the application level (resolvers and beyond), not in the Router or GraphQL execution engine.
-
-When we were starting our first load tests for the early alpha version of the Router, we had to create test suites to run against the Router and the Gateway. To fully reach the bottlenecks in the gateway using realistic load patterns, we had to remove almost all latency in the subgraphs. For most real world setups, the time spent in the subgraph resolver code and the underlying data sources will be the bottleneck. 
-
-> _If you are running the node.js Gateway and looking to boost performance, check out our Tech Note on [Improving Gateway Performance](technotes/TN0009-gateway-performance/)_
-
-The most likely scenario in which you'll see degraded performance at these layers is when the number of unique operations is high.
+More than likely, your performance bottlenecks will be at the application level (resolvers and beyond), not in the Router or GraphQL execution engine. When we created our first load tests for the early alpha version of the Router, we had to create test suites to run against the Router and the Gateway. To fully reach the bottlenecks in the Gateway using realistic load patterns, we had to remove almost all latency in the subgraphs. For most real world setups, the time spent in the subgraph resolver code and the underlying data sources will be the bottleneck. The most likely scenario in which you'll see degraded performance at these layers is when the number of unique operations is high.
 
 ### Operation Cardinality
 
-When a GraphQL API encounters a new operation, the operation must be parsed into the proper format, validated against the existing schema, and then finally executed. The Router goes through the additional step of [query planning](federation/query-plans) as well. These steps can often account for some noticeable runtime overhead and latency if the volume of unique operations is high enough. 
-
-All of these steps must happen for the initial request of every unique operation against your graph. 
+When a GraphQL API encounters a new operation, the operation must be parsed into the proper format, validated against the existing schema, and then finally executed. The Router goes through the additional step of [query planning](federation/query-plans) as well. These steps can often account for some noticeable runtime overhead and latency if the volume of unique operations is high enough. All of these steps must happen for the initial request of every unique operation against your graph. 
 
 The good news is that most of these steps are highly cacheable, so subsequent calls can bypass most of those steps (all but the actual execution). Apollo has several built-in features that take advantage of this, such as [Automatic Persisted Queries (APQs)](apollo-server/performance/apq/). APQ's are on by default in Apollo Server/Gateway and the Apollo Router, and just a simple configuration setting in Apollo Client to enable them. 
 
-The bad news is that a graph which processes a high cardinality of operations that are only executed once, can't take advantage of most of these features.
-
-Again, this isn't a big concern in most real world applications as operations are normally executed more than once, and the cardinality of operations is hopefully much smaller than the total number of possible operation permutations for a given schema. 
+The bad news is that a graph which processes a high cardinality of operations that are only executed once, can't take advantage of most of these features. Again, this isn't a big concern in most real world applications as operations are normally executed more than once, and the cardinality of operations is hopefully much smaller than the total number of possible operation permutations for a given schema. 
 
 With non public GraphQL API's, simply implementing APQ's is often enough to mitigate this issue as the number of operations hitting the production graph is finite and are typically called more than once during the lifecycle of a server deployment, resulting in more cache hits.
 
 While outside the scope of this article, mitigating this issue if it occurs for public APIs can be a bit more involved, but still possible though techniques like rate limiting and query costing. While it's helpful to be aware of these potential bottlenecks, know that in most cases this won't be an issue, and if they ever do become an issue, they can mostly be mitigated with existing, built in software provided by Apollo.
-
-## Summary
-
-Load testing a GraphQL API is similar to load testing other types of APIs, with just a few unique considerations. By focusing on testing services in isolation, using observability tooling for performance insights, and using a realistic load pattern that resembles production usage, you can ensure a successful load test and gather actionable insight into your Graph's performance.
