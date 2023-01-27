@@ -10,7 +10,7 @@ Building the Apollo Router including custom plugins from source is a memory-expe
 
 Some cloud build pipelines such as Google Cloud Build, will require changes to the default build configuration in order to increase the memory and CPU capacity of the build worker pool.
 
-The router will also download a large collection of dependencies during the build process, as such we can use the [Kaniko](https://github.com/GoogleContainerTools/kaniko) project which will cache intermediate build layers.
+The router will also download a large collection of dependencies during the build process each build by default. We can use [Kaniko](https://github.com/GoogleContainerTools/kaniko) to cache intermediate build layers.
 
 In this example for Google Cloud Build we have replaced the standard docker [gcr.io/cloud-builders/docker](http://gcr.io/cloud-builders/docker) container image, with [gcr.io/kaniko-project/executor](http://gcr.io/kaniko-project/executor).
 This is all thats needed to enable caching of the intermediate build steps which will be pushed to the destination container repo as soon as each layer is built.
