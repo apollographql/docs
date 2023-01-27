@@ -57,7 +57,7 @@ Access-Control-Allow-Credentials: true
 
 Once configured, requests sent from `https://studio.apollographql.com` will carry the cookies from your domain when you run queries with the Explorer. If you're logged in on your domain, requests from the Explorer will also be logged in. If you log out on your domain and the cookie is removed, requests from the Explorer will be logged out.
 
-### Environment variables --todo: make own page, or move to scripting
+### Environment variables
 
 The Explorer's Settings tab includes a section for providing Environment Variables. Here, you can provide sensitive information that you can then include in header values or [preflight scripts](#preflight-scripts). This enables you to share operations (including headers) with other team members _without_ exposing sensitive data.
 
@@ -81,4 +81,169 @@ You can then include that environment variable in header values with double curl
 
 If you share this operation with team members, your value for `token` is _not_ shared, and other users can provide their own value.
 
--- todo: note about scripting, add link to page
+### Preflight scripts
+
+Similar to tools like Postman, the Explorer can run a custom **preflight script** before each GraphQL operation that's executed by your team members. This script is identical for every team member that uses the Explorer with a particular variant. Preflight scripts are especially useful for managing authentication flows like OAuth, for example by refreshing an access token.
+
+Each preflight script applies to a _single variant_ of a particular graph, so you can define different scripts for each of your graph's environments.
+
+#### ⚠️ Important considerations for preflight scripts
+
+- All team members with access to a variant can _view_ that variant's preflight script.
+- For [protected variants](../graphs/studio-features/#protected-variants-enterprise-only), only organization members with the [`Graph Admin` role](../org/members/#organization-wide-member-roles) can _create or edit_ a variant's preflight script.
+  - For _non_-protected variants, members with the `Contributor` role can also modify the preflight script.
+- Preflight scripts are stored in the Apollo cloud in plaintext.
+  - **Do not include secret credentials in preflight scripts!** Instead, team members can provide their individual credentials in the Explorer via [environment variables](#environment-variables).
+- Team members can [disable](#disabling-preflight-scripts) the execution of a preflight script.
+
+#### Creating a preflight script
+
+To create a preflight script:
+
+1. [Open Apollo Studio](https://studio.apollographql.com/) and then open the Explorer for the graph and variant you want to create a script for.
+
+2. Open the Explorer's Settings tab and scroll down to the **Preflight script** section:
+
+   <img
+     class="screenshot"
+     src="../img/preflight-script.jpg"
+     alt="Preflight script settings in the Explorer"
+     width="500"
+   />
+
+3. Click **Add script**. The following dialog appears:
+
+   <img
+     class="screenshot"
+     src="../img/preflight-script-edit.jpg"
+     alt="Editing preflight scripts in the Explorer"
+     width="600"
+   />
+
+4. Click **Show snippets** to display a list of common helpful actions you can perform from your preflight script (such as sending HTTP requests and interacting with Explorer environment variables).
+
+5. Develop your script in the **Script editor** panel. As you develop, you can click **Test script** to test its execution. Console messages are printed in the **Console output** panel.
+
+6. When your script is ready, click **Save**. Studio stores your script.
+
+You're done! After you save your script, it's automatically loaded for any team member that uses the Explorer with the associated variant.
+
+#### Preflight script API reference
+
+These symbols are available within the scope of a preflight script. Snippets for each are available via the **Show snippets** link in the preflight script dialog.
+
+<table class="field-table api-ref">
+  <thead>
+    <tr>
+      <th>Name /<br/>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+
+<tbody>
+
+<tr>
+<td>
+
+##### `explorer.environment.get`
+
+`(key: string) => Readonly`
+
+</td>
+<td>
+
+Function that returns the current value of the environment variable with the specified `key`.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `explorer.environment.set`
+
+`(key: string, value: JSONValue) => void`
+
+</td>
+<td>
+
+Function that sets a new value for the environment variable with the specified `key`.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `explorer.fetch`
+
+`(href: string, options?: { method?: string, body?: string | null, headers?: Record<string, string>, credentials: 'include' | 'omit' | 'same-origin' }) => Promise<{ code: number, body: string, json: () => any }>`
+
+</td>
+<td>
+
+Function for making HTTP requests to external services from within a preflight script.  
+
+Network requests are initiated from an origin of `https://preflight-request.apollographql.com`, please ensure the appropriate CORS headers are sent for those requests.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `explorer.prompt`
+
+`(msg: string, defaultResponse?: string) => Promise<string | null>`
+
+</td>
+<td>
+
+Function that prompts the user for input and returns the value in a promise. If the user cancels the prompt, the promise resolves to `null`.  
+
+The prompt supports Markdown rendering of the `msg` parameter.  
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `explorer.request.body`
+
+`{ query: string; variables: { [key in string]?: JSONValue } | null; operationName: string | undefined; }`
+
+</td>
+<td>
+
+The body of the `POST` request that's sent to the configured GraphQL endpoint for the current operation.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `explorer.CryptoJS`
+
+</td>
+<td>
+
+This exposes the `crypto-js` package for use within your preflight script. For available functions, [see the documentation](https://www.npmjs.com/package/crypto-js).
+
+</td>
+
+</tr>
+</tbody>
+</table>
+
+#### Disabling preflight scripts
+
+By default, a variant's preflight script runs automatically before every GraphQL operation that's executed in the Explorer. Team members can temporarily disable the script from the **Preflight script** section of the Settings tab. To do so, toggle the switch to **OFF**:
+
+<img
+  class="screenshot"
+  src="../img/preflight-script-disable.jpg"
+  alt="Disabling preflight scripts in the Explorer"
+  width="500"
+/>
