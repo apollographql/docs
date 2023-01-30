@@ -1,0 +1,47 @@
+---
+title: Securing a subgraph
+description: With GraphOS
+---
+
+It's important that subgraphs are [not directly accessible](/federation/building-supergraphs/subgraphs-overview/#securing-your-subgraphs) from anything except your Router. This article is a step-by-step guide to securing a subgraph when using [GraphOS Cloud Routing](/graphos/routing/cloud).
+
+## 1. Create a secret
+
+The key to authenticating requests to your subgraph is to have a secret token which only the router and the subgraph know. There are many ways to generate a random secret, for example, your password manager should have a "generate password" function which can serve the role.
+
+For completeness, here are some commands that will generate a suitably random secret if you have the appropriate tool installed:
+
+1. `openssl rand -base64 256`
+2. `python -c "import secrets; print(secrets.token_urlsafe(256))"`
+3. `node -e "console.log(require('crypto').randomBytes(256).toString('base64'));"`
+
+## 2. Add the secret to the router config
+
+Within the variant settings for your graph, there is a "Cloud Routing" section. In this section, you can add a new secret as well as configure that secret to be used for a specific subgraph (see [Managing secrets](/graphos/routing/cloud-configuration#managing-secrets) for more info).
+
+We recommend creating one secret per subgraph, and using the header name `Router-Authorization`, like this:
+
+```yaml
+headers:
+  subgraphs:
+    products:
+      request:
+        - insert:
+          name: "Router-Authorization"
+          value: "${env.PRODUCTS_SUBGRAPH_SECRET}"
+    users:
+      request:
+        - insert:
+          name: "Router-Authorization"
+          value: "${env.USERS_SUBGRAPH_SECRET}"
+```
+
+## 3. Configure the subgraph to require the secret
+
+The configuration of the subgraph is going to depend greatly on your framework and hosting provider. Typically, there will be a way to save the secret in your hosting provider and have it injected as an environment variable to your subgraph. Then, you will read this environment variable in your subgraph and enforce authentication using it. All the [templates from Rover](/graphos/graphs/creating-a-subgraph#starting-from-a-template) have this functionality built in—just make sure to set the `ROUTER_SECRET` environment variable. If you already have a subgraph, you can look at the relevant template code for an example.
+
+[//]: # (TODO: Update the templates to do this!)
+
+## 4. Test it
+
+First, verify that your Router can still query the subgraph by running a query which includes fields from that subgraph in Apollo Studio. Then, try to query the subgraph directly (e.g., via [Apollo Studio Sandbox](/graphos/explorer/sandbox)) and verify that you get an error.
