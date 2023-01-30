@@ -13,10 +13,10 @@ Using a known device-type list can be useful in cases where a structured interfa
 
 ```graphql
 enum UIDeviceType {
-	MOBILE
-	WEB
-	ROKU
-	APPLETV
+  MOBILE
+  WEB
+  ROKU
+  APPLETV
 }
 
 interface UIApp {}
@@ -38,14 +38,14 @@ A similar device-based SDUI with Contracts could be used to remove interface com
 
 ```graphql
 type UIApp {
-	spotlight: UISpotlightComponent @tag(name: "DESKTOP")
-	dashboard: UIDashboardComponent
-	mobileMenu: UIMenuComponent @tag(name: "MOBILE")
-	menu: UIMenuComponent @tag(name: "WEB")
+  spotlight: UISpotlightComponent @tag(name: "DESKTOP")
+  dashboard: UIDashboardComponent
+  mobileMenu: UIMenuComponent @tag(name: "MOBILE")
+  menu: UIMenuComponent @tag(name: "WEB")
 }
 
 type Query {
-	app: UIApp!
+  app: UIApp!
 }
 ```
 
@@ -72,12 +72,12 @@ type AppUserMenu {
 type AppNavbar {
   logo: AppLogo
   items: [AppLink]
-	user: AppUserMenu
+  user: AppUserMenu
 }
 
 type AppMobileMenu {
   items: [AppLink]
-	user: AppUserMenu
+  user: AppUserMenu
 }
 
 type AppHomePage {
@@ -88,8 +88,8 @@ type WebApp {
   navbar: AppNavbar
   menu: AppMobileMenu
   home: AppHomePage
-	settings: AppSettingsPage
-	profile: AppProfilePage
+  settings: AppSettingsPage
+  profile: AppProfilePage
 }
 
 type Query {
@@ -155,13 +155,13 @@ interface UIScreen implements UIComponent {
   navbar: UINavbar
   menu: UIMenu
   main: UILayout
-	sidebar: UISidebar
+  sidebar: UISidebar
 }
 
 enum UIPage {
-	HOME
-	DASHBOARD
-	SETTINGS
+  HOME
+  DASHBOARD
+  SETTINGS
 }
 
 type Query {
