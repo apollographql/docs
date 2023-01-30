@@ -238,7 +238,9 @@ The legal terms and policies that apply to Apollo's corporate websites and custo
 
 #### Where can I get more help?
 
-If you have any questions (including interest in a Data Processing Addendum or DPA), or encounter any issues, please reach out to [support](https://studio.apollographql.com/support).
+If you have any additional questions or encounter any issues, please [reach out to support](https://studio.apollographql.com/support).
+
+Organizations with an Enterprise plan can request a Data Processing Addendum (DPA) from support.
 
 ## Requesting deletion of data
 
