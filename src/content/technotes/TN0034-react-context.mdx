@@ -1,0 +1,102 @@
+---
+title: React Context with Apollo Client
+id: TN0034
+tags: [client]
+---
+React Context provides a way to pass data through the component tree without having to pass props down manually at every level in your application which is also known as props-drilling.
+
+Props-drilling can cause problems when you need to rename a property or update the data type and can cause bloat within your application as each component in the tree needs to be aware of properties they may not be using. Instead our data will be accessible through a React Hook, which can be called anywhere in the nested component tree.
+
+To help show how to avoid props-drilling, we'll first configure two components to use React Context: `QueryResultProvider` and `useQueryResult`.
+
+The `QueryResultProvider` component is used to wrap a component tree, providing it with the context for a specific GraphQL query. The component takes in a `query` which is a GraphQL query, and optionally  `variables` which is passed to the query. It uses the `useQuery` hook from the Apollo Client to execute the query and get the query data, loading, and error values. These values are then saved in the context.
+
+```tsx
+import React, { createContext, useContext } from 'react';
+import { ApolloQueryResult, OperationVariables, useQuery } from '@apollo/client';
+
+interface QueryResult<TData> {
+  data?: TData;
+  error?: any;
+  loading: boolean;
+}
+
+interface QueryContextValue<TData> {
+  queryData: QueryResult<TData>;
+  refetch: () => Promise<ApolloQueryResult<TData>>;
+}
+
+const QueryResultContext = createContext<QueryContextValue<any>>({
+  queryData: { loading: true },
+  refetch: () => Promise.resolve({} as ApolloQueryResult<any>),
+});
+
+interface QueryResultProviderProps<TVariables extends OperationVariables | undefined = {}> {
+  query: any;
+  variables?: TVariables;
+  children: React.ReactNode;
+}
+
+export const QueryResultProvider = ({ query, variables, children }: QueryResultProviderProps) => {
+  const { data, error, loading, refetch } = useQuery(query, { variables });
+  const value = { queryData: { data, error, loading }, refetch };
+  return (
+    <QueryContext.Provider value={value}>{children}</QueryContext.Provider>
+  );
+}
+
+export const useQueryResult = <TData = any>(): QueryResult<TData> => {
+  const context = useContext(QueryResultContext);
+  if (!context) {
+    throw new Error(
+      'useQueryResult must be used within a QueryResultProvider'
+    );
+  }
+  return context.queryResult;
+}
+```
+
+In this example, we use the `QueryResultProvider` component to wrap the `Users` component, providing it with the `GET_USERS` query. The `Users` component then uses the `useQueryResult` hook to access the data, loading state, and error from the query context.
+
+```tsx
+import { QueryProvider, useQueryData } from './query-context';
+import { gql } from '@apollo/client';
+
+const GET_USERS = gql`
+  query GetUsers {
+    users {
+      id
+      name
+    }
+  }
+`;
+
+interface IUser {
+	id: string
+	name: string
+}
+
+const Users = () => {
+  const { data, loading, error } = useQueryResult<IUser>();
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+
+  return (
+    <div>
+      <h1>Users</h1>
+      <ul>
+        {data.users.map(user => (
+          <li key={user.id}>{user.name}</li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+const App = () => (
+  <QueryResultProvider query={GET_USERS}>
+    <Users />
+  </QueryResultProvider>
+);
+```
