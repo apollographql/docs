@@ -206,7 +206,7 @@ By default, a variant's preflight script runs automatically before every GraphQL
 
 #### Creating an operation script:
 
-Operation scripts are only available on operations that are saved in a [collection](link).
+Operation scripts are only available on operations that are saved in a [collection](./operation-collections/).
 
 1. Select an operation from the Operation Collections menu
 
@@ -214,7 +214,7 @@ Operation scripts are only available on operations that are saved in a [collecti
      class="screenshot"
      src="../img/select-operation.png"
      alt="Selecting an operation"
-     width="600"
+     width="400"
    />
 
 2. Select the Script tab and press the + Add Script button
@@ -223,10 +223,36 @@ Operation scripts are only available on operations that are saved in a [collecti
      class="screenshot"
      src="../img/script-tab-new.png"
      alt="Adding a new operation script"
+     width="500"
+   />
+
+3. The operation script editor modal is very similar to the preflight script modal.
+
+   <img
+     class="screenshot"
+     src="../img/op-script-modal.png"
+     alt="Editing operation scripts in the Explorer"
      width="600"
    />
 
--- figure out how to explain that the rest of the steps are the same --
-If scripts accidentally reference each other creating circular depedency, the Explorer will try a few more times in case ther is script logic that
+For guidance on using this modal, refer to the section "Creating a Preflight Script".
 
-### Handlebar syntax in the variables editor
+#### Handlebars in the Variables Pane
+
+It is possible to use handlebars to evaluate environment variables. Consider the following setup:
+
+<img
+  class="screenshot"
+  src="../img/handlebars-1.png"
+  alt="Using handlebars in the variables pane"
+  width="600"
+/>
+
+However you may need to retrieve data from an operation with a script to correctly set the variable.
+
+<img
+  class="screenshot"
+  src="../img/op-script.png"
+  alt="An example operation script"
+  width="600"
+/>
