@@ -28,7 +28,7 @@ type AppleTVApp implements UIApp {}
 type RokuApp implements UIApp {}
 
 type Query {
-	app(type: UIDeviceType! = WEB): UIApp!
+  app(type: UIDeviceType! = WEB): UIApp!
 }
 ```
 
@@ -66,7 +66,7 @@ type AppLink {
 }
 
 type AppUserMenu {
-	user: User
+  user: User
 }
 
 type AppNavbar {
@@ -151,7 +151,7 @@ interface UILayout implements UIComponent {
 
 interface UIScreen implements UIComponent {
   id: ID
-	current: UIPage
+  current: UIPage
   navbar: UINavbar
   menu: UIMenu
   main: UILayout
