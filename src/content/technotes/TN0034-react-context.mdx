@@ -7,7 +7,7 @@ React Context provides a way to pass data through the component tree without hav
 
 Props-drilling can cause problems when you need to rename a property or update the data type and can cause bloat within your application as each component in the tree needs to be aware of properties they may not be using. Instead our data will be accessible through a React Hook, which can be called anywhere in the nested component tree.
 
-The following code defines two main components: `QueryResultProvider` and `useQueryResult`.
+To help show how to avoid props-drilling, we'll first configure two components to use React Context: `QueryResultProvider` and `useQueryResult`.
 
 The `QueryResultProvider` component is used to wrap a component tree, providing it with the context for a specific GraphQL query. The component takes in a `query` which is a GraphQL query, and optionally  `variables` which is passed to the query. It uses the `useQuery` hook from the Apollo Client to execute the query and get the query data, loading, and error values. These values are then saved in the context.
 
