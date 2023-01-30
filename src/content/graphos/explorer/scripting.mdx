@@ -16,6 +16,10 @@ There are two places in the Explorer to write these scripts:
 #### Operation Scripts
 
 - Each operation in an [Operation collection](./operation-collections/) can define a script which executes before the operation runs.
+- Operation Scripts have the same capabilities as the preflight script, the main differences are:
+  - There can be as many scripts as there are saved operations
+  - The order in which they execute
+  - The access controls for viewing and editing are slightly different (need to ask what's different exactly)
 
 #### ⚠️ Important considerations for preflight scripts
 
@@ -135,8 +139,8 @@ Function for executing other saved operations. If the target operation has defin
 
 Note about parameters:
 
-- If scope is undefined, graphRef is required
-- f graphRef is undefined, scope is required
+- If `scope` is `undefined`, `graphRef` is required
+- If `graphRef` is `undefined`, `scope` is required
 
 </td>
 </tr>
@@ -206,7 +210,21 @@ Operation scripts are only available on operations that are saved in a [collecti
 
 1. Select an operation from the Operation Collections menu
 
+   <img
+     class="screenshot"
+     src="../img/select-operation.png"
+     alt="Selecting an operation"
+     width="600"
+   />
+
 2. Select the Script tab and press the + Add Script button
+
+   <img
+     class="screenshot"
+     src="../img/script-tab-new.png"
+     alt="Adding a new operation script"
+     width="600"
+   />
 
 -- figure out how to explain that the rest of the steps are the same --
 If scripts accidentally reference each other creating circular depedency, the Explorer will try a few more times in case ther is script logic that
