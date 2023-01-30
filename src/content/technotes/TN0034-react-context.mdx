@@ -56,7 +56,7 @@ export const useQueryResult = <TData = any>(): QueryResult<TData> => {
 }
 ```
 
-In this example, the `QueryResultProvider` component is being used to wrap the `Users` component, providing it with the `GET_USERS` query. The `Users` component then uses the `useQueryResult` hook to access the data, loading state, and error from the query context.
+In this example, we use the `QueryResultProvider` component to wrap the `Users` component, providing it with the `GET_USERS` query. The `Users` component then uses the `useQueryResult` hook to access the data, loading state, and error from the query context.
 
 ```tsx
 import { QueryProvider, useQueryData } from './query-context';
