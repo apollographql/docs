@@ -21,29 +21,29 @@ Take for example this mock ecommerce schema which allows us to display a list of
 
 ```graphql
 type Product @key(fields: "id") {
-	id: ID!
+  id: ID!
   name: String
   # other product fields...
 }
 
 type ProductsCarousel {
-	products: [Product]
-	count: Int
+  products: [Product]
+  count: Int
 }
 
 type ProductsList {
-	products: [Product]
-	count: Int
+  products: [Product]
+  count: Int
 }
 
 type ProductsError {
-	message: String!
+  message: String!
 }
 
 union FeaturedProductsResponse = ProductsList | ProductsCarousel | ProductsError
 
 type Query {
-	featuredProducts: FeaturedProductsResponse
+  featuredProducts: FeaturedProductsResponse
 }
 ```
 
@@ -51,28 +51,28 @@ While querying `Query.featuredProducts` the client can now render multiple speci
 
 ```graphql
 fragment productFields on Product {
-	id
-	name
-	price
+  id
+  name
+  price
 }
 
 query FeaturedProductsCollection {
-	featuredProducts {
-		__typename
-		... on ProductsList {
-			products {
-				...productFields
-			}
-		}
-		... on ProductsCarousel {
-			products {
-				...productFields			
-			}
-		}
-		... on ProductsError {
-			message
-		}
-	}
+  featuredProducts {
+    __typename
+    ... on ProductsList {
+      products {
+        ...productFields
+      }
+    }
+    ... on ProductsCarousel {
+      products {
+        ...productFields			
+      }
+    }
+    ... on ProductsError {
+      message
+    }
+  }
 }
 ```
 
@@ -84,8 +84,8 @@ const { data } = useQuery(FeaturedProductsCollection);
 // Maps GraphQL __typename to UI component
 const TYPE_COMPONENTS = {
   ProductList: ListComponent,
-	ProductCarousel: CarouselComponent,
-	ProductError: ErrorComponent
+  ProductCarousel: CarouselComponent,
+  ProductError: ErrorComponent
 };
 
 const component = TYPE_COMPONENTS[data.featuredProducts.__typename];
