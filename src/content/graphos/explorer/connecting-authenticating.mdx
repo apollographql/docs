@@ -81,11 +81,28 @@ You can then include that environment variable in header values with double curl
 
 If you share this operation with team members, your value for `token` is _not_ shared, and other users can provide their own value.
 
-### Preflight scripts
+### Scripting
 
-Similar to tools like Postman, the Explorer can run a custom **preflight script** before each GraphQL operation that's executed by your team members. This script is identical for every team member that uses the Explorer with a particular variant. Preflight scripts are especially useful for managing authentication flows like OAuth, for example by refreshing an access token.
+Similar to tools like Postman, the Explorer can run custom **preflight scripts** before each GraphQL operation.
+In general, the main purpose of scripting is to populate environment variables that can be used as header values or graphql variables.
+Scripts can also be useful for debugging purposes.
 
-Each preflight script applies to a _single variant_ of a particular graph, so you can define different scripts for each of your graph's environments.
+There are two places in the Explorer to write these scripts:
+
+#### Preflight Script
+
+- It may be helpful to think of this as the global or parent preflight script,
+  since as long as the feature is turned on in the settings it will always execute before any other script or operation
+- This script is identical for every team member that uses the Explorer with a particular variant. Global preflight scripts are especially useful for managing authentication flows like OAuth, for example by refreshing an access token.
+- The global preflight script applies to a _single variant_ of a particular graph, so you can define different ones for each of your graph's environments.
+
+#### Operation Scripts
+
+- Each operation in an [Operation collection](./operation-collections/) can define a script which executes before the operation runs.
+- Operation Scripts have the same capabilities as the preflight script, the main differences are:
+  - There can be as many scripts as there are saved operations
+  - The order in which they execute
+  - The access controls for viewing and editing are slightly different (need to ask what's different exactly)
 
 #### ⚠️ Important considerations for preflight scripts
 
@@ -95,6 +112,8 @@ Each preflight script applies to a _single variant_ of a particular graph, so yo
 - Preflight scripts are stored in the Apollo cloud in plaintext.
   - **Do not include secret credentials in preflight scripts!** Instead, team members can provide their individual credentials in the Explorer via [environment variables](#environment-variables).
 - Team members can [disable](#disabling-preflight-scripts) the execution of a preflight script.
+- Scripts can use the `explorer.runOperation` method to execute other saved operations which may also define their own scripts
+  creating a chain of script & operation execution.
 
 #### Creating a preflight script
 
@@ -182,9 +201,29 @@ Function that sets a new value for the environment variable with the specified `
 </td>
 <td>
 
-Function for making HTTP requests to external services from within a preflight script.  
+Function for making HTTP requests to external services from within a preflight script.
 
 Network requests are initiated from an origin of `https://preflight-request.apollographql.com`, please ensure the appropriate CORS headers are sent for those requests.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `explorer.runOperation`
+
+`(options: { scope?: 'personal' | 'shared' | 'sandbox'; graphRef?: string | null; collectionName: string; operationName: string; headers?: Record<string, string>; variables?: JSONObject; }) => Promise<{ result: ExecutionResult<JSONObject> | undefined; code: number; }>`
+
+</td>
+<td>
+
+Function for executing other saved operations. If the target operation has defined its own script, it will run before its operation.
+
+Note about parameters:
+
+- If `scope` is `undefined`, `graphRef` is required
+- If `graphRef` is `undefined`, `scope` is required
 
 </td>
 </tr>
@@ -199,9 +238,9 @@ Network requests are initiated from an origin of `https://preflight-request.apol
 </td>
 <td>
 
-Function that prompts the user for input and returns the value in a promise. If the user cancels the prompt, the promise resolves to `null`.  
+Function that prompts the user for input and returns the value in a promise. If the user cancels the prompt, the promise resolves to `null`.
 
-The prompt supports Markdown rendering of the `msg` parameter.  
+The prompt supports Markdown rendering of the `msg` parameter.
 
 </td>
 </tr>
@@ -246,4 +285,68 @@ By default, a variant's preflight script runs automatically before every GraphQL
   src="../img/preflight-script-disable.jpg"
   alt="Disabling preflight scripts in the Explorer"
   width="500"
+/>
+
+#### Creating an operation script:
+
+Operation scripts are only available on operations that are saved in a [collection](./operation-collections/).
+
+1. Select an operation from the Operation Collections menu
+
+   <img
+     class="screenshot"
+     src="../img/select-operation.png"
+     alt="Selecting an operation"
+     width="400"
+   />
+
+2. Select the Script tab and press the + Add Script button
+
+   <img
+     class="screenshot"
+     src="../img/script-tab-new.png"
+     alt="Adding a new operation script"
+     width="500"
+   />
+
+3. The operation script editor modal is very similar to the preflight script modal.
+
+   <img
+     class="screenshot"
+     src="../img/op-script-modal.png"
+     alt="Editing operation scripts in the Explorer"
+     width="600"
+   />
+
+For guidance on using this modal, refer to the section "Creating a Preflight Script".
+
+**Double check that this toggle is in the desired position**
+
+Found in the Explorer settings:
+
+<img
+  class="screenshot"
+  src="../img/op-switch.png"
+  alt="Editing operation scripts in the Explorer"
+  width="600"
+/>
+
+#### Handlebars in the Variables Pane
+
+It is possible to use handlebars to evaluate environment variables. Consider the following setup:
+
+<img
+  class="screenshot"
+  src="../img/handlebars-1.png"
+  alt="Using handlebars in the variables pane"
+  width="600"
+/>
+
+However you may need to retrieve data from an operation with a script to correctly set the variable.
+
+<img
+  class="screenshot"
+  src="../img/op-script.png"
+  alt="An example operation script"
+  width="600"
 />
