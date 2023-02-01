@@ -1,0 +1,46 @@
+---
+title: Load testing a federated GraphQL API
+id: TN0035
+tags: [testing, performance]
+---
+
+When it comes to load testing a GraphQL API, the process is similar to that of any other type of API, and the majority of considerations will remain the same. However, there are certain distinctions specific to GraphQL and the Apollo ecosystem that are worth considering before conducting a load test.
+
+It's important to note that the purpose of this article is to bring attention to these unique considerations for load testing with GraphQL, rather than serving as a comprehensive guide on the setup and execution of GraphQL load tests.
+
+## What to Load Test
+
+When load testing a GraphQL API, there are two main ways to run the test:
+
+-   Testing your entire deployed application stack
+-   Testing each deployed service in isolation
+
+Both approaches have benefits and tradeoffs. Testing services in isolation allows you to test the limits of each service independently and provides valuable data for making performance improvements for each independent service. However, it may not give insight into where to focus efforts to make the most impact on the end-user experience. Running a full stack test is better suited for finding these types of bottlenecks, but may offer little insight into the limits of other services. We recommend focusing on testing services in isolation to maximize insight into not only the current bottlenecks, but also potential ones. This doesn't mean full stack tests should be avoided, as they have their place.
+
+## Use Observability Tooling for Performance Insights
+
+A load test is only as valuable as the information obtained after running it. Having the proper observability setup is crucial for a successful load test. When load testing a GraphQL API, you want metrics that are GraphQL-aware and provide insight into the runtime and execution behavior of production operations. [Apollo GraphOS' metrics engine](/graphos/metrics/usage-reporting/) provides this deep insight into operations by allowing you to see things like slow operations and [field-level performance metrics](/graphos/metrics/usage-reporting/#resolver-level-traces) on every operation.
+
+Gathering trace data can have a noticable impact on performance, so consider running tests with tracing disabled to measure peak load. Enabling traces during loads tests will help illuminate which parts of your graph are slow and what resolvers could be optimized. Our docs on [tracing performance considerations](/graphos/metrics/field-usage#performance-considerations) go into more detail about how to modify tracing behavior. The Router can emits metrics for [time spent processing a request](/router/configuration/metrics/#:~:text=apollo_router_processing_time), outside of waiting for external or subgraph requests. Combined, both the Router and tracing metrics provide plenty of detail to diagnose performance issues after a load test.
+
+Apollo offers first-class support for sending metrics outside Apollo Studio to any system that supports the [Open Telemetry](/federation/opentelemetry/) protocol (OTLP) as well as a built-in Datadog integration for enterprise customers.
+
+## Don't Pollute Production Metrics
+
+When load testing a graph in production, exclude load test metrics from live production metrics. For metrics sent to GraphOS, consider sending load test traffic to a dedicated schema variant, i.e. `My-Graph@load-variant`. This will allow you to cleanly separate production metrics from load tests. 
+
+> _consider excluding load test metrics from other parts of your system, as it applies._
+
+## Use a Realistic Load Pattern that Resembles Production Usage
+
+Load test results are most helpful if they closely match the patterns of production traffic. Take a graph that only has a set number of internal client applications as an example. The applications have a pre-defined number of operations that hit production. It wouldn't make sense to generate 200,000 unique operations as part of a load test if the total number actual operations is several orders of magnitude less than that. It's important to simulate realistic patterns during load testing to ensure the results are relevant and useful for improving performance. In addition, consider testing for different scenarios such as peak usage, unexpected traffic spikes, and long-term usage patterns to ensure the GraphQL API can handle various types of load.
+
+## Potential Bottlenecks
+
+Performance bottlenecks will likley be at the application level (resolvers and beyond), not in the Router or GraphQL execution engine. When we created our first load tests for the early alpha version of the Router, we had to create test suites to run against the Router and the Gateway. To fully reach the bottlenecks in the Gateway using realistic load patterns, we had to remove almost all latency in the subgraphs. For most real world setups, the time spent in the subgraph resolver code and the underlying data sources will be the bottleneck. The most likely scenario in which you'll see degraded performance at these layers is when the number of unique operations is high.
+
+### Operation Cardinality
+
+When a GraphQL API encounters a new operation, the operation must be parsed into the proper format, validated against the existing schema, and then finally executed. The Router goes through the additional step of [query planning](federation/query-plans) as well. These steps can account for some noticeable runtime overhead and latency if the volume of unique operations is high enough. All of these steps must happen for the initial request of every unique operation against your graph. 
+
+Most of these steps are highly cacheable. Apollo has several built-in features that take advantage of this, such as [Automatic Persisted Queries (APQs)](apollo-server/performance/apq/). APQ's are on by default in Apollo Server/Gateway and the Apollo Router, and just a simple configuration setting in Apollo Client to enable them. A graph which processes a high cardinality of operations that are only executed once, can't take advantage of most of these features. This isn't a big concern in most real world applications as operations are normally executed more than once.
