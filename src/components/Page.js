@@ -324,7 +324,7 @@ export default function Page({file, pageContext, uri}) {
                 </Heading>
                 <TableOfContents headings={headings} />
                 <Stack align="flex-start" spacing="3" mt="8">
-                  <FeedbackButton />
+                  <FeedbackButton title={title} />
                   {editOnGitHub}
                   <Button
                     as="a"
