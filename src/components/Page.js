@@ -43,7 +43,6 @@ import {
   MultiCodeBlockContext
 } from '@apollo/chakra-helpers';
 import {FaDiscourse, FaGithub} from 'react-icons/fa';
-import {FiStar} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
 import {Global} from '@emotion/react';
 import {MDXProvider} from '@mdx-js/react';
@@ -72,6 +71,7 @@ import 'prismjs/components/prism-swift';
 import 'prismjs/components/prism-tsx';
 import 'prismjs/components/prism-typescript';
 import 'prismjs/components/prism-yaml';
+import {FeedbackButton} from './FeedbackButton';
 
 // use JS syntax highlighting for rhai codeblocks
 Prism.languages.rhai = Prism.languages.javascript;
@@ -324,14 +324,7 @@ export default function Page({file, pageContext, uri}) {
                 </Heading>
                 <TableOfContents headings={headings} />
                 <Stack align="flex-start" spacing="3" mt="8">
-                  <Button
-                    onClick={() => window.freddyWidget?.show()}
-                    variant="link"
-                    size="lg"
-                    leftIcon={<FiStar />}
-                  >
-                    Rate article
-                  </Button>
+                  <FeedbackButton title={title} />
                   {editOnGitHub}
                   <Button
                     as="a"
