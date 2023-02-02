@@ -1,6 +1,7 @@
 import {createContext} from 'react';
+import {gql} from '@apollo/client';
 import {join, relative} from 'path';
-import {useColorModeValue} from '@chakra-ui/react';
+import {useColorModeValue, useQuery} from '@chakra-ui/react';
 import {withPrefix} from 'gatsby';
 
 export const NavContext = createContext();
@@ -65,3 +66,21 @@ export function useFieldTableStyles() {
     }
   };
 }
+
+const GET_USER = gql`
+  query GetUser {
+    me {
+      id
+      name
+    }
+  }
+`;
+
+export const useUser = () => {
+  const {data, loading, error} = useQuery(GET_USER);
+  return {
+    user: data?.me,
+    loading,
+    error
+  };
+};
