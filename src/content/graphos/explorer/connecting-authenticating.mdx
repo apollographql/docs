@@ -59,7 +59,9 @@ Once configured, requests sent from `https://studio.apollographql.com` will carr
 
 ### Environment variables
 
-The Explorer's Settings tab includes a section for providing Environment Variables. Here, you can provide sensitive information that you can then include in header values or [scripts](#scripting). This enables you to share operations (including headers) with other team members _without_ exposing sensitive data.
+The Explorer's Settings tab includes a section for providing Environment Variables.
+Here, you can provide sensitive information that you can then include in header values or graphql variables, or [scripts](#scripting).
+This enables you to share operations (including headers) with other team members _without_ exposing sensitive data.
 
 For example, you can define a `token` environment variable like so:
 
@@ -78,6 +80,18 @@ You can then include that environment variable in header values with double curl
   alt="Setting Explorer headers with environment variables"
   width="400"
 />
+
+Or in graphql variables values with double curly braces, as shown: 
+
+<img
+  class="screenshot"
+  src="../img/explorer-environment-variables-graphql-variables.png"
+  alt="Setting Explorer graphql variables with environment variables"
+  width="400"
+/>
+
+Or in a script using `explorer.environment.get('token')`
+
 
 If you share this operation with team members, your value for `token` is _not_ shared, and other users can provide their own value.
 
@@ -386,24 +400,3 @@ This exposes the `crypto-js` package for use within your script. For available f
 </tr>
 </tbody>
 </table>
-
-#### Handlebars in the Variables Pane
-
-It is possible to use handlebars to evaluate environment variables. Consider the following setup:
-
-<img
-  class="screenshot"
-  src="../img/handlebars-1.png"
-  alt="An example of how to use handlebars in the variables pane. The name of our environment variable is wrapped with two enclosing curly braces on either side, all inside a string. 
-  Assuming the environment variable has been populated and we use its name within the handlbars it will be interpolated to the desired value during the operation."
-  width="600"
-/>
-
-However you may need to retrieve data from an operation with a script to correctly set the variable.
-
-<img
-  class="screenshot"
-  src="../img/op-script.png"
-  alt="An example operation script"
-  width="600"
-/>
