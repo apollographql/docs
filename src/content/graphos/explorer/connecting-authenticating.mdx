@@ -27,7 +27,7 @@ Access-Control-Allow-Credentials: true
 
 ## Authentication
 
-The Explorer currently enables you to authenticate via [request headers](#request-headers), [cookies](#cookies), and [preflight scripts](#preflight-scripts).
+The Explorer currently enables you to authenticate via [request headers](#request-headers), [cookies](#cookies), and [scripts](#scripting).
 
 > If your graph has authentication requirements that aren't covered by these options, please contact **support@apollographql.com** with questions or feedback.
 
@@ -59,7 +59,7 @@ Once configured, requests sent from `https://studio.apollographql.com` will carr
 
 ### Environment variables
 
-The Explorer's Settings tab includes a section for providing Environment Variables. Here, you can provide sensitive information that you can then include in header values or [preflight scripts](#preflight-scripts). This enables you to share operations (including headers) with other team members _without_ exposing sensitive data.
+The Explorer's Settings tab includes a section for providing Environment Variables. Here, you can provide sensitive information that you can then include in header values or [scripts](#scripting). This enables you to share operations (including headers) with other team members _without_ exposing sensitive data.
 
 For example, you can define a `token` environment variable like so:
 
@@ -83,7 +83,7 @@ If you share this operation with team members, your value for `token` is _not_ s
 
 ### Scripting
 
-Similar to tools like Postman, the Explorer can run custom **preflight scripts** before each GraphQL operation.
+Similar to tools like Postman, the Explorer can run custom **scripts** before each GraphQL operation.
 In general, the main purpose of scripting is to populate environment variables that can be used as header values or graphql variables.
 Scripts can also be useful for debugging purposes.
 
@@ -147,9 +147,64 @@ To create a preflight script:
 
 You're done! After you save your script, it's automatically loaded for any team member that uses the Explorer with the associated variant.
 
-#### Preflight script API reference
+#### Disabling preflight scripts
 
-These symbols are available within the scope of a preflight script. Snippets for each are available via the **Show snippets** link in the preflight script dialog.
+By default, a variant's preflight script runs automatically before every GraphQL operation that's executed in the Explorer. Team members can temporarily disable the script from the **Preflight script** section of the Settings tab. To do so, toggle the switch to **OFF**:
+
+<img
+  class="screenshot"
+  src="../img/preflight-script-disable.jpg"
+  alt="Disabling preflight scripts in the Explorer"
+  width="500"
+/>
+
+#### Creating an operation script:
+
+Operation scripts are only available on operations that are saved in a [collection](./operation-collections/).
+
+1. Select an operation from the Operation Collections menu
+
+   <img
+     class="screenshot"
+     src="../img/select-operation.png"
+     alt="Selecting an operation"
+     width="400"
+   />
+
+2. Select the Script tab and press the + Add Script button
+
+   <img
+     class="screenshot"
+     src="../img/script-tab-new.png"
+     alt="Adding a new operation script"
+     width="500"
+   />
+
+3. The operation script editor modal is very similar to the preflight script modal.
+
+   <img
+     class="screenshot"
+     src="../img/op-script-modal.png"
+     alt="Editing operation scripts in the Explorer"
+     width="600"
+   />
+
+For guidance on using this modal, refer to the section [Creating a Preflight Script](#creating-a-preflight-script).
+
+**Enable Operation Scripts**
+
+Operation Scripts are disabled by default, each user will need to go into the explorer settings and enable them. 
+
+<img
+  class="screenshot"
+  src="../img/op-switch.png"
+  alt="Editing operation scripts in the Explorer"
+  width="600"
+/>
+
+#### Script API reference
+
+These symbols are available within the scope of a script. Snippets for each are available via the **Show snippets** link in the script dialog.
 
 <table class="field-table api-ref">
   <thead>
@@ -268,68 +323,13 @@ The body of the `POST` request that's sent to the configured GraphQL endpoint fo
 </td>
 <td>
 
-This exposes the `crypto-js` package for use within your preflight script. For available functions, [see the documentation](https://www.npmjs.com/package/crypto-js).
+This exposes the `crypto-js` package for use within your script. For available functions, [see the documentation](https://www.npmjs.com/package/crypto-js).
 
 </td>
 
 </tr>
 </tbody>
 </table>
-
-#### Disabling preflight scripts
-
-By default, a variant's preflight script runs automatically before every GraphQL operation that's executed in the Explorer. Team members can temporarily disable the script from the **Preflight script** section of the Settings tab. To do so, toggle the switch to **OFF**:
-
-<img
-  class="screenshot"
-  src="../img/preflight-script-disable.jpg"
-  alt="Disabling preflight scripts in the Explorer"
-  width="500"
-/>
-
-#### Creating an operation script:
-
-Operation scripts are only available on operations that are saved in a [collection](./operation-collections/).
-
-1. Select an operation from the Operation Collections menu
-
-   <img
-     class="screenshot"
-     src="../img/select-operation.png"
-     alt="Selecting an operation"
-     width="400"
-   />
-
-2. Select the Script tab and press the + Add Script button
-
-   <img
-     class="screenshot"
-     src="../img/script-tab-new.png"
-     alt="Adding a new operation script"
-     width="500"
-   />
-
-3. The operation script editor modal is very similar to the preflight script modal.
-
-   <img
-     class="screenshot"
-     src="../img/op-script-modal.png"
-     alt="Editing operation scripts in the Explorer"
-     width="600"
-   />
-
-For guidance on using this modal, refer to the section [Creating a Preflight Script](#creating-a-preflight-script).
-
-**Double check that this toggle is in the desired position**
-
-Found in the Explorer settings:
-
-<img
-  class="screenshot"
-  src="../img/op-switch.png"
-  alt="Editing operation scripts in the Explorer"
-  width="600"
-/>
 
 #### Handlebars in the Variables Pane
 
