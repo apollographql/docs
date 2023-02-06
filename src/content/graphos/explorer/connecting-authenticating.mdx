@@ -101,8 +101,8 @@ There are two places in the Explorer to write these scripts:
 - Each operation in an [Operation collection](./operation-collections/) can define a script which executes before the operation runs.
 - Operation Scripts have the same capabilities as the preflight script, the main differences are:
   - There can be as many scripts as there are saved operations
-  - The order in which they execute
-  - The access controls for viewing and editing are slightly different (need to ask what's different exactly)
+  - Operation Scripts are executed after the variants Preflight Script
+  - The access controls for editing Operation Scripts is the same as the collection they are on
 
 #### ⚠️ Important considerations for preflight scripts
 
