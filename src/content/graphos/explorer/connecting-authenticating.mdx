@@ -27,7 +27,7 @@ Access-Control-Allow-Credentials: true
 
 ## Authentication
 
-The Explorer currently enables you to authenticate via [request headers](#request-headers), [cookies](#cookies), and [preflight scripts](#preflight-scripts).
+The Explorer currently enables you to authenticate via [request headers](#request-headers), [cookies](#cookies), and [scripts](#scripting).
 
 > If your graph has authentication requirements that aren't covered by these options, please contact **support@apollographql.com** with questions or feedback.
 
@@ -59,7 +59,7 @@ Once configured, requests sent from `https://studio.apollographql.com` will carr
 
 ### Environment variables
 
-The Explorer's Settings tab includes a section for providing Environment Variables. Here, you can provide sensitive information that you can then include in header values or [preflight scripts](#preflight-scripts). This enables you to share operations (including headers) with other team members _without_ exposing sensitive data.
+The Explorer's Settings tab includes a section for providing Environment Variables. Here, you can provide sensitive information that you can then include in header values or [scripts](#scripting). This enables you to share operations (including headers) with other team members _without_ exposing sensitive data.
 
 For example, you can define a `token` environment variable like so:
 
@@ -83,37 +83,91 @@ If you share this operation with team members, your value for `token` is _not_ s
 
 ### Scripting
 
-Similar to tools like Postman, the Explorer can run custom **preflight scripts** before each GraphQL operation.
-In general, the main purpose of scripting is to populate environment variables that can be used as header values or graphql variables.
-Scripts can also be useful for debugging purposes.
+Similar to tools like Postman, the Explorer can run custom **scripts** before each GraphQL operation.
+The main purpose of scripting is to populate environment variables that can be used as header values or graphql variables. 
+This can be especially useful for managing authentication flows like OAuth, for example by refreshing an access token.
 
-There are two places in the Explorer to write these scripts:
+There are two places in the Explorer to write these scripts. Each variant can have a **preflight script** and each operation in an [Operation collection](./operation-collections/) can have a **operation script**
 
-#### Preflight Script
+### Differences between scripts
 
-- It may be helpful to think of this as the global or parent preflight script,
-  since as long as the feature is turned on in the settings it will always execute before any other script or operation
-- This script is identical for every team member that uses the Explorer with a particular variant. Global preflight scripts are especially useful for managing authentication flows like OAuth, for example by refreshing an access token.
-- The global preflight script applies to a _single variant_ of a particular graph, so you can define different ones for each of your graph's environments.
+<table class="field-table api-ref">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Preflight Script</th>
+      <th>Operation Script</th>
+    </tr>
+  </thead>
+<tbody>
+<tr>
+<td>
 
-#### Operation Scripts
+##### View access
+</td>
+<td>
 
-- Each operation in an [Operation collection](./operation-collections/) can define a script which executes before the operation runs.
-- Operation Scripts have the same capabilities as the preflight script, the main differences are:
-  - There can be as many scripts as there are saved operations
-  - The order in which they execute
-  - The access controls for viewing and editing are slightly different (need to ask what's different exactly)
+Anyone who can view the variant can view script
+</td>
+<td>
 
-#### ⚠️ Important considerations for preflight scripts
+Anyone who can view the collection the operation belongs to can view the script
+</td>
+</tr>
+<tr>
+<td>
 
-- All team members with access to a variant can _view_ that variant's preflight script.
-- For [protected variants](../graphs/studio-features/#protected-variants-enterprise-only), only organization members with the [`Graph Admin` role](../org/members/#organization-wide-member-roles) can _create or edit_ a variant's preflight script.
-  - For _non_-protected variants, members with the `Contributor` role can also modify the preflight script.
-- Preflight scripts are stored in the Apollo cloud in plaintext.
+##### Write access
+</td>
+<td>
+
+For [protected variants](../graphs/studio-features/#protected-variants-enterprise-only), only organization members with the [`Graph Admin` role](../org/members/#organization-wide-member-roles) can _create or edit_ a variant's preflight script.
+For _non_-protected variants, members with the `Contributor` role can also modify the preflight script.
+</td>
+<td>
+
+Anyone who can edit the collection the operation belongs to can _create or edit_ the script
+</td>
+</tr>
+<tr>
+<td>
+
+##### Enabling
+</td>
+<td>
+
+Preflight scripts default enabled/disabled status is set globally on the variant, users can choose to disabled it for themselves
+</td>
+<td>
+
+Operation scripts are enabled per user, so each user needs to enable them in the explorer settings for them to run
+</td>
+</tr>
+<tr>
+<td>
+
+##### Execution Order
+</td>
+<td>
+
+Preflight scripts always execute first (before GraphQL operations and operation scripts)
+</td>
+<td>
+
+Operation scripts execute after any Preflight Script thats defined, and before the GraphQL operation
+</td>
+</tr>
+</tbody>
+</table>
+
+#### ⚠️ Important considerations for scripts
+
+- All team members with access to a variant or operation the script is on can _view_ the script.
+- Scripts are stored in the Apollo cloud in plaintext.
   - **Do not include secret credentials in preflight scripts!** Instead, team members can provide their individual credentials in the Explorer via [environment variables](#environment-variables).
-- Team members can [disable](#disabling-preflight-scripts) the execution of a preflight script.
-- Scripts can use the `explorer.runOperation` method to execute other saved operations which may also define their own scripts
-  creating a chain of script & operation execution.
+- Team members can [disable](#disabling-preflight-scripts) the execution of a preflight script
+- Team members need to [enable](#enable-operation-scripts) the execution of operation scripts
+- Scripts can use the `explorer.runOperation` method to execute saved operations which may also have scripts, and those can also call `explorer.runOperation`. These will all be chained together.
 
 #### Creating a preflight script
 
@@ -125,7 +179,7 @@ To create a preflight script:
 
    <img
      class="screenshot"
-     src="../img/preflight-script.jpg"
+     src="../img/preflight-script.png"
      alt="Preflight script settings in the Explorer"
      width="500"
    />
@@ -147,9 +201,66 @@ To create a preflight script:
 
 You're done! After you save your script, it's automatically loaded for any team member that uses the Explorer with the associated variant.
 
-#### Preflight script API reference
+#### Disabling preflight scripts
 
-These symbols are available within the scope of a preflight script. Snippets for each are available via the **Show snippets** link in the preflight script dialog.
+By default, a variant's preflight script runs automatically before every GraphQL operation that's executed in the Explorer.
+Team members can temporarily disable the script from the **Scripts** in the **Personal Settings** section of the Explorer Settings tab.
+To do so, toggle the switch to **OFF**:
+
+<img
+  class="screenshot"
+  src="../img/preflight-script-disable.png"
+  alt="Disabling preflight scripts in the Explorer"
+  width="500"
+/>
+
+#### Creating an operation script:
+
+Operation scripts are only available on operations that are saved in a [collection](./operation-collections/).
+
+1. Select an operation from the Operation Collections menu
+
+   <img
+     class="screenshot"
+     src="../img/select-operation.png"
+     alt="Selecting an operation"
+     width="400"
+   />
+
+2. Select the Script tab and press the + Add Script button
+
+   <img
+     class="screenshot"
+     src="../img/script-tab-new.png"
+     alt="Adding a new operation script"
+     width="500"
+   />
+
+3. The operation script editor modal is very similar to the preflight script modal.
+
+   <img
+     class="screenshot"
+     src="../img/op-script-modal.png"
+     alt="Editing operation scripts in the Explorer"
+     width="600"
+   />
+
+For guidance on using this modal, refer to the section [Creating a Preflight Script](#creating-a-preflight-script).
+
+#### Enable Operation Scripts
+
+Operation Scripts are disabled by default, each user will need to go into the explorer settings and enable them. 
+
+<img
+  class="screenshot"
+  src="../img/op-switch.png"
+  alt="Editing operation scripts in the Explorer"
+  width="600"
+/>
+
+#### Script API reference
+
+These symbols are available within the scope of a script. Snippets for each are available via the **Show snippets** link in the script dialog.
 
 <table class="field-table api-ref">
   <thead>
@@ -222,8 +333,8 @@ Function for executing other saved operations. If the target operation has defin
 
 Note about parameters:
 
-- If `scope` is `undefined`, `graphRef` is required
-- If `graphRef` is `undefined`, `scope` is required
+- If `scope` is `sandbox`, `graphRef` will default to `null`
+- If `graphRef` is `null`, `scope` will default to 'sandbox'
 
 </td>
 </tr>
@@ -268,68 +379,13 @@ The body of the `POST` request that's sent to the configured GraphQL endpoint fo
 </td>
 <td>
 
-This exposes the `crypto-js` package for use within your preflight script. For available functions, [see the documentation](https://www.npmjs.com/package/crypto-js).
+This exposes the `crypto-js` package for use within your script. For available functions, [see the documentation](https://www.npmjs.com/package/crypto-js).
 
 </td>
 
 </tr>
 </tbody>
 </table>
-
-#### Disabling preflight scripts
-
-By default, a variant's preflight script runs automatically before every GraphQL operation that's executed in the Explorer. Team members can temporarily disable the script from the **Preflight script** section of the Settings tab. To do so, toggle the switch to **OFF**:
-
-<img
-  class="screenshot"
-  src="../img/preflight-script-disable.jpg"
-  alt="Disabling preflight scripts in the Explorer"
-  width="500"
-/>
-
-#### Creating an operation script:
-
-Operation scripts are only available on operations that are saved in a [collection](./operation-collections/).
-
-1. Select an operation from the Operation Collections menu
-
-   <img
-     class="screenshot"
-     src="../img/select-operation.png"
-     alt="Selecting an operation"
-     width="400"
-   />
-
-2. Select the Script tab and press the + Add Script button
-
-   <img
-     class="screenshot"
-     src="../img/script-tab-new.png"
-     alt="Adding a new operation script"
-     width="500"
-   />
-
-3. The operation script editor modal is very similar to the preflight script modal.
-
-   <img
-     class="screenshot"
-     src="../img/op-script-modal.png"
-     alt="Editing operation scripts in the Explorer"
-     width="600"
-   />
-
-For guidance on using this modal, refer to the section [Creating a Preflight Script](#creating-a-preflight-script).
-
-**Double check that this toggle is in the desired position**
-
-Found in the Explorer settings:
-
-<img
-  class="screenshot"
-  src="../img/op-switch.png"
-  alt="Editing operation scripts in the Explorer"
-  width="600"
-/>
 
 #### Handlebars in the Variables Pane
 
