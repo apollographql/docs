@@ -10,24 +10,24 @@ Depending on your GraphQL server's settings, you might need to configure the Exp
 
 ## CORS policies
 
-Requests from the Explorer go straight from your browser to your GraphQL server, so your endpoint will see requests coming from the `https://studio.apollographql.com` domain.
+Requests from the Explorer go straight from your browser to your GraphQL server, so your endpoint sees requests coming from this domain: `https://studio.apollographql.com`
 
-It's common for public endpoints to have [CORS policies](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) that restrict which domains can query them. If your endpoint has CORS protections enabled, you probably need to safelist `https://studio.apollographql.com` in your CORS policy to use the Explorer.
+It's common for public endpoints to set [CORS policies](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) that restrict which domains can query them. If your endpoint has CORS protections enabled, you probably need to safelist `https://studio.apollographql.com` in your CORS policy to use the Explorer.
 
 To do so, include the following header(s) in your server's responses:
 
 ```bash
 Access-Control-Allow-Origin: https://studio.apollographql.com
 
-# Include this one only if your server also authenticates via cookies.
+# Include this only if your server *also* authenticates via cookies.
 Access-Control-Allow-Credentials: true
 ```
 
-> If you can't change your CORS policy, you might be able to create a proxy for your endpoint and point the Explorer to the proxy instead. CORS policies are enforced by browsers, and the proxy won't have the same issues communicating to your endpoint.
+> If you can't change your CORS policy, you might be able to create a proxy for your endpoint and point the Explorer to the proxy instead. CORS policies are enforced by browsers, and the proxy won't have the same issues communicating with your endpoint.
 
 ## Authentication
 
-The Explorer currently enables you to authenticate via [request headers](#request-headers), [cookies](#cookies), and [scripts](#scripting).
+The Explorer provides features to help you authenticate via [request headers](#request-headers), [cookies](#cookies), and [scripts](#scripting).
 
 > If your graph has authentication requirements that aren't covered by these options, please contact **support@apollographql.com** with questions or feedback.
 
@@ -35,7 +35,7 @@ The Explorer currently enables you to authenticate via [request headers](#reques
 
 The bottom panel of the Explorer includes a Headers tab where you can set headers that are included in your operation's HTTP request.
 
-Headers can include the values of [environment variables](#environment-variables), which are specified with double curly braces as shown:
+Headers can include the values of [environment variables](#environment-variables), which are injected using double curly braces as shown:
 
 <img
   class="screenshot"
@@ -46,33 +46,46 @@ Headers can include the values of [environment variables](#environment-variables
 
 ### Cookies
 
-If your server uses cookies to authenticate, you can configure your endpoint to share those cookies with `https://studio.apollographql.com`.
+If your server uses cookies to authenticate, you can configure your endpoint to share those cookies with `https://studio.apollographql.com`
 
-To set this up, your [cookie's value must contain `SameSite=None; Secure`](https://www.chromium.org/updates/same-site). Additionally, these CORS headers must be present in your server's response to Studio:
+To set this up, your [cookie's value must contain `SameSite=None; Secure`](https://www.chromium.org/updates/same-site). Additionally, the following CORS headers must be present in your server's response to Studio:
 
 ```bash
 Access-Control-Allow-Origin: https://studio.apollographql.com
 Access-Control-Allow-Credentials: true
 ```
 
-Once configured, requests sent from `https://studio.apollographql.com` will carry the cookies from your domain when you run queries with the Explorer. If you're logged in on your domain, requests from the Explorer will also be logged in. If you log out on your domain and the cookie is removed, requests from the Explorer will be logged out.
+Once configured, requests sent from `https://studio.apollographql.com` include the cookies from your domain when you run queries with the Explorer. If you're logged in on your domain, requests from the Explorer will also be logged in. If you log out on your domain and the cookie is removed, requests from the Explorer will be logged out.
 
 ### Environment variables
 
-The Explorer's Settings tab includes a section for providing Environment Variables.
-Here, you can provide sensitive information that you can then include in header values or graphql variables, or [scripts](#scripting).
-This enables you to share operations (including headers) with other team members _without_ exposing sensitive data.
+The Explorer's Settings tab includes a section for defining environment variables. Here, you can provide sensitive information that you can then inject into header values, GraphQL variables, or [scripts](#scripting).
+This enables you to share operations (including their headers) with other team members _without_ exposing this sensitive data.
 
-For example, you can define a `token` environment variable like so:
+#### Defining
+
+You define environment variables in the Explorer's Settings tab, like so:
 
 <img
   class="screenshot"
   src="../img/explorer-environment-variables.jpg"
   alt="Setting Explorer environment variables"
-  width="300"
+  width="400"
 />
 
-You can then include that environment variable in header values with double curly braces, as shown:
+If you share an operation that uses environment variables with your team members, your _values_ for those environment variables are _not_ shared, and other users can provide their own values.
+
+#### Injecting
+
+You can inject your Explorer environment variables into any of the following:
+
+- [HTTP header values](#header-values)
+- [GraphQL variable values](#graphql-variables)
+- [Custom scripts](#custom-scripts)
+
+##### Header values
+
+Inject an environment variable into an HTTP header value by surrounding the variable's name with double curly braces, as shown:
 
 <img
   class="screenshot"
@@ -81,109 +94,55 @@ You can then include that environment variable in header values with double curl
   width="400"
 />
 
-Or in graphql variables values with double curly braces, as shown: 
+##### GraphQL variables
+
+Inject an environment variable into a GraphQL variable value by surrounding the variable's name with double curly braces, as shown:
 
 <img
   class="screenshot"
   src="../img/explorer-environment-variables-graphql-variables.png"
   alt="Setting Explorer graphql variables with environment variables"
-  width="400"
+  width="600"
 />
 
-Or in a script using `explorer.environment.get('token')`
+##### Custom scripts
 
+If you create a [custom script](#scripting) that runs before an operation executes, that script can access an environment variable's value like so:
 
-If you share this operation with team members, your value for `token` is _not_ shared, and other users can provide their own value.
+```js
+const secretToken = explorer.environment.get('token');
+```
 
-### Scripting
+## Scripting
 
-Similar to tools like Postman, the Explorer can run custom **scripts** before each GraphQL operation.
-The main purpose of scripting is to populate environment variables that can be used as header values or graphql variables. 
-This can be especially useful for managing authentication flows like OAuth, for example by refreshing an access token.
+Similar to tools like Postman, the Explorer can run custom scripts before executing each GraphQL operation. These JavaScript-based scripts often populate the values of [environment variables](#environment-variables) that are then injected into HTTP header values or GraphQL variables. This can be especially useful for managing authentication flows like OAuth, for example by refreshing an expired access token.
 
-There are two places in the Explorer to write these scripts. Each variant can have a **preflight script** and each operation in an [Operation collection](./operation-collections/) can have a **operation script**
+### Script types
 
-### Differences between scripts
+You can define two different types of scripts:
 
-<table class="field-table api-ref">
-  <thead>
-    <tr>
-      <th></th>
-      <th>Preflight Script</th>
-      <th>Operation Script</th>
-    </tr>
-  </thead>
-<tbody>
-<tr>
-<td>
+- [**Preflight scripts.**](#preflight-scripts) You can define a _single_ preflight script _per variant_ of a graph. This script runs before _every Explorer operation_ that's executed against the associated variant (unless a user individually [disables the script](#disabling-preflight-scripts)).
+    - Preflight scripts are especially helpful for enabling organization-wide Explorer authentication against your graph.
+- [**Operation scripts.**](#operation-scripts) If you use [operation collections](./operation-collections/), you can define a separate script for each saved operation in a collection. This script runs before the corresponding operation is executed (as long as a user individually [enables the script](#enabling-operation-scripts)).
+    - Operation scripts are especially helpful for debugging the behavior of individual operations when they're provided various values.
 
-##### View access
-</td>
-<td>
+> If an Explorer operation runs _both_ types of scripts, the preflight script runs _before_ the operation script.
 
-Anyone who can view the variant can view script
-</td>
-<td>
+### Important considerations for Explorer scripts
 
-Anyone who can view the collection the operation belongs to can view the script
-</td>
-</tr>
-<tr>
-<td>
+- Scripts are stored in the Apollo cloud **in plaintext**.
+  - **Do not include secret credentials in scripts!** Instead, team members can provide their individual credentials to the Explorer via [environment variables](#environment-variables).
+- If a team member has view access to a particular graph variant or operation collection, that team member can _also_ view any scripts associated with that variant/collection.
+- Preflight scripts are _enabled_ by default, and individual team members can [disable them](#disabling-preflight-scripts).
+- Operation scripts are _disabled_ by default, and individual team members can [enable them](#enabling-operation-scripts).
 
-##### Write access
-</td>
-<td>
+### Preflight scripts
 
-For [protected variants](../graphs/studio-features/#protected-variants-enterprise-only), only organization members with the [`Graph Admin` role](../org/members/#organization-wide-member-roles) can _create or edit_ a variant's preflight script.
-For _non_-protected variants, members with the `Contributor` role can also modify the preflight script.
-</td>
-<td>
+#### Creating preflight scripts
 
-Anyone who can edit the collection the operation belongs to can _create or edit_ the script
-</td>
-</tr>
-<tr>
-<td>
-
-##### Enabling
-</td>
-<td>
-
-Preflight scripts default enabled/disabled status is set globally on the variant, users can choose to disabled it for themselves
-</td>
-<td>
-
-Operation scripts are enabled per user, so each user needs to enable them in the explorer settings for them to run
-</td>
-</tr>
-<tr>
-<td>
-
-##### Execution Order
-</td>
-<td>
-
-Preflight scripts always execute first (before GraphQL operations and operation scripts)
-</td>
-<td>
-
-Operation scripts execute after any Preflight Script thats defined, and before the GraphQL operation
-</td>
-</tr>
-</tbody>
-</table>
-
-#### ⚠️ Important considerations for scripts
-
-- All team members with access to a variant or operation the script is on can _view_ the script.
-- Scripts are stored in the Apollo cloud in plaintext.
-  - **Do not include secret credentials in preflight scripts!** Instead, team members can provide their individual credentials in the Explorer via [environment variables](#environment-variables).
-- Team members can [disable](#disabling-preflight-scripts) the execution of a preflight script
-- Team members need to [enable](#enable-operation-scripts) the execution of operation scripts
-- Scripts can use the `explorer.runOperation` method to execute saved operations which may also have scripts, and those can also call `explorer.runOperation`. These will all be chained together.
-
-#### Creating a preflight script
+> For [protected variants](../graphs/studio-features/#protected-variants-enterprise-only), only organization members with the **Graph Admin** role can create or edit a variant's preflight script.
+>
+> For _non_-protected variants, members with the **Contributor** role can also modify the preflight script.
 
 To create a preflight script:
 
@@ -217,9 +176,7 @@ You're done! After you save your script, it's automatically loaded for any team 
 
 #### Disabling preflight scripts
 
-By default, a variant's preflight script runs automatically before every GraphQL operation that's executed in the Explorer.
-Team members can temporarily disable the script from the **Scripts** in the **Personal Settings** section of the Explorer Settings tab.
-To do so, toggle the switch to **OFF**:
+By default, a variant's preflight script runs automatically before every GraphQL operation that's executed in the Explorer. Team members can individually disable the script from the **Personal Settings > Scripts** section of the Explorer's Settings tab:
 
 <img
   class="screenshot"
@@ -228,11 +185,18 @@ To do so, toggle the switch to **OFF**:
   width="500"
 />
 
-#### Creating an operation script:
+To do so, toggle the switch to **OFF**.
 
-Operation scripts are only available on operations that are saved in a [collection](./operation-collections/).
 
-1. Select an operation from the Operation Collections menu
+### Operation scripts
+
+#### Creating operation scripts
+
+> You can only create operation scripts for operations that are saved in an [operation collection](./operation-collections/).
+>
+> Only organization members with edit access to a particular operation collection can create or edit operation scripts for that collection.
+
+1. From the Explorer, open an operation from the Operation Collections menu:
 
    <img
      class="screenshot"
@@ -241,7 +205,7 @@ Operation scripts are only available on operations that are saved in a [collecti
      width="400"
    />
 
-2. Select the Script tab and press the + Add Script button
+2. From the Explorer's bottom panel, select the Script tab and click **+ Add Script**:
 
    <img
      class="screenshot"
@@ -250,31 +214,39 @@ Operation scripts are only available on operations that are saved in a [collecti
      width="500"
    />
 
-3. The operation script editor modal is very similar to the preflight script modal.
+    The following modal appears:
 
-   <img
+    <img
      class="screenshot"
      src="../img/op-script-modal.png"
      alt="Editing operation scripts in the Explorer"
      width="600"
-   />
+    />
 
-For guidance on using this modal, refer to the section [Creating a Preflight Script](#creating-a-preflight-script).
+3. Create, test, and save your script.
+    
+    - For details on script creation, see [Creating preflight scripts](#creating-preflight-scripts).
 
-#### Enable Operation Scripts
+#### Enabling operation scripts
 
-Operation Scripts are disabled by default, each user will need to go into the explorer settings and enable them. 
+By default, operation scripts are **disabled** for each individual user. Users can enable operation scripts from the Explorer's Settings tab:
 
 <img
   class="screenshot"
   src="../img/op-switch.png"
   alt="Editing operation scripts in the Explorer"
-  width="600"
+  width="500"
 />
 
-#### Script API reference
+### Chaining operations
 
-These symbols are available within the scope of a script. Snippets for each are available via the **Show snippets** link in the script dialog.
+A script can use the [`explorer.runOperation`](#explorerrunoperation) function to execute _another_ operation that's saved in a collection. That operation might in turn have its _own_ script, which can _also_ call `explorer.runOperation`.
+
+You can use this mechanism to chain together a sequence of operations for more advanced authentication flows.
+
+### Scripting API reference
+
+These symbols are available within the scope of both preflight scripts and operation scripts. Snippets for these symbols are available via the **Show snippets** link in the scripting dialog.
 
 <table class="field-table api-ref">
   <thead>
@@ -326,9 +298,9 @@ Function that sets a new value for the environment variable with the specified `
 </td>
 <td>
 
-Function for making HTTP requests to external services from within a preflight script.
+Function for making HTTP requests to external services from within a script.
 
-Network requests are initiated from an origin of `https://preflight-request.apollographql.com`, please ensure the appropriate CORS headers are sent for those requests.
+Network requests are initiated from an origin of `https://preflight-request.apollographql.com`. Make sure the appropriate CORS headers are sent for those requests.
 
 </td>
 </tr>
@@ -345,10 +317,8 @@ Network requests are initiated from an origin of `https://preflight-request.apol
 
 Function for executing other saved operations. If the target operation has defined its own script, it will run before its operation.
 
-Note about parameters:
-
-- If `scope` is `sandbox`, `graphRef` will default to `null`
-- If `graphRef` is `null`, `scope` will default to 'sandbox'
+- If `scope` is `sandbox`, `graphRef` defaults to `null`.
+- If `graphRef` is `null`, `scope` defaults to 'sandbox'.
 
 </td>
 </tr>
