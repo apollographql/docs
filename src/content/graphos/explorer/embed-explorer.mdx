@@ -269,13 +269,15 @@ You might want to do this if you need to include specific headers in every reque
 </td>
 <td>
 
-By default, the embedded Explorer uses the default `fetch` function to make requests, which passes `{ credentials: 'omit' }`.
+By default, the embedded Explorer uses the includeCookies connection setting of your variant in studio.
 
 You can set `includeCookies` to `true` if you instead want the Explorer to pass `{ credentials: 'include' }` for its requests.
 
 If you pass the `handleRequest` option, this option is ignored.
 
 Read more about the `fetch` API and credentials [here](https://developer.mozilla.org/en-US/docs/Web/API/fetch#credentials).
+
+This config option is **deprecated** in favor of using the includeCookies connection setting on your variant in Studio
 </td>
 </tr>
 
