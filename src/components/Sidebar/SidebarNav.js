@@ -18,8 +18,6 @@ import {flattenNavItems} from '../../utils';
 export function SidebarNav({navItems, onHide, darkBg = 'gray.800', children}) {
   const bg = useColorModeValue('white', darkBg);
 
-  console.log({navItems});
-
   const navGroups = useMemo(
     () => flattenNavItems(navItems).filter(item => item.children),
     [navItems]
