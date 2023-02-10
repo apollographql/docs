@@ -28,6 +28,7 @@ const getItemPaths = (items, basePath) =>
   );
 
 const Tags = ({tags}) => {
+  if (!Array.isArray(tags)) return null; // if it's not an array, don't render anything
   return tags.map((tag, index) => {
     let TagIcon;
     let TagTooltip;
@@ -42,7 +43,7 @@ const Tags = ({tags}) => {
     }
     if (!TagIcon || !TagTooltip) return null;
     return (
-      <Tooltip zIndex={999} key={index} label={TagTooltip} fontSize="md">
+      <Tooltip key={index} label={TagTooltip} fontSize="md">
         <chakra.span ml="6px">{TagIcon}</chakra.span>
       </Tooltip>
     );
