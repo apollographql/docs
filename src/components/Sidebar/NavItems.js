@@ -10,8 +10,8 @@ import {
   useColorModeValue
 } from '@chakra-ui/react';
 import {FiChevronDown, FiChevronRight, FiExternalLink} from 'react-icons/fi';
+import {IoFlaskOutline, IoPartlySunnyOutline} from 'react-icons/io5';
 import {Link as GatsbyLink} from 'gatsby';
-import {HiOutlineBuildingOffice2} from 'react-icons/hi2';
 import {
   PathContext,
   getFullPath,
@@ -19,6 +19,7 @@ import {
   isUrl,
   useTagColors
 } from '../../utils';
+import {TbComponents} from 'react-icons/tb';
 
 export const GA_EVENT_CATEGORY_SIDEBAR = 'Sidebar';
 export const NavContext = createContext();
@@ -37,8 +38,20 @@ const Tags = ({tags}) => {
 
         switch (tag) {
           case 'enterprise':
-            tagIcon = <HiOutlineBuildingOffice2 />;
-            tagTooltip = 'Enterprise only';
+            tagIcon = <TbComponents />;
+            tagTooltip = 'Enterprise feature';
+            break;
+          case 'graphos':
+            tagIcon = <TbComponents />;
+            tagTooltip = 'Requires GraphOS';
+            break;
+          case 'preview':
+            tagIcon = <IoPartlySunnyOutline />;
+            tagTooltip = 'Preview feature';
+            break;
+          case 'experimental':
+            tagIcon = <IoFlaskOutline />;
+            tagTooltip = 'Experimental feature';
             break;
           default:
             return null;
