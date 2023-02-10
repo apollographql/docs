@@ -4,11 +4,13 @@ import {
   Button,
   Collapse,
   Stack,
+  Tooltip,
   chakra,
   useColorModeValue
 } from '@chakra-ui/react';
 import {FiChevronDown, FiChevronRight, FiExternalLink} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
+import {HiOutlineBuildingOffice2} from 'react-icons/hi2';
 import {
   PathContext,
   getFullPath,
@@ -25,7 +27,33 @@ const getItemPaths = (items, basePath) =>
     children ? getItemPaths(children, basePath) : getFullPath(path, basePath)
   );
 
-function NavButton({isActive, depth, children, ...props}) {
+const Tags = ({tags}) => {
+  return tags.map((tag, index) => {
+    let TagIcon;
+    let TagTooltip;
+
+    switch (tag) {
+      case 'enterprise':
+        TagIcon = <HiOutlineBuildingOffice2 />;
+        TagTooltip = 'Enterprise only';
+        break;
+      default:
+        return null;
+    }
+    if (!TagIcon || !TagTooltip) return null;
+    return (
+      <Tooltip zIndex={999} key={index} label={TagTooltip} fontSize="md">
+        <chakra.span ml="6px">{TagIcon}</chakra.span>
+      </Tooltip>
+    );
+  });
+};
+
+Tags.propTypes = {
+  tags: PropTypes.array
+};
+
+function NavButton({isActive, depth, children, tags, ...props}) {
   const [activeBg, activeTextColor] = useTagColors();
   const activeHoverBg = useColorModeValue('indigo.100', 'indigo.300');
 
@@ -49,7 +77,9 @@ function NavButton({isActive, depth, children, ...props}) {
       {...buttonProps}
       {...props}
     >
-      <chakra.span pl={depth * 2}>{children}</chakra.span>
+      <chakra.span display="flex" alignItems="center" pl={depth * 2}>
+        {children} {tags && <Tags tags={tags} />}
+      </chakra.span>
     </Button>
   );
 }
@@ -57,7 +87,8 @@ function NavButton({isActive, depth, children, ...props}) {
 NavButton.propTypes = {
   children: PropTypes.node.isRequired,
   isActive: PropTypes.bool,
-  depth: PropTypes.number.isRequired
+  depth: PropTypes.number.isRequired,
+  tags: PropTypes.array
 };
 
 function NavGroup({group, depth}) {
@@ -133,6 +164,7 @@ export default function NavItems({items, depth = 0}) {
               as="a"
               depth={depth}
               href={item.path}
+              tags={item.tags || false}
               {...buttonProps}
             >
               {item.title}
@@ -149,6 +181,7 @@ export default function NavItems({items, depth = 0}) {
             depth={depth}
             as={GatsbyLink}
             to={path}
+            tags={item.tags || false}
           >
             {item.title}
           </NavButton>
@@ -160,5 +193,6 @@ export default function NavItems({items, depth = 0}) {
 
 NavItems.propTypes = {
   items: PropTypes.array.isRequired,
-  depth: PropTypes.number
+  depth: PropTypes.number,
+  tags: PropTypes.array
 };

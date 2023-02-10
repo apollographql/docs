@@ -74,17 +74,24 @@ exports.onCreateNode = async ({node, getNode, loadNodeContent, actions}) => {
 
 const getNavItems = items =>
   // turn a sidebar configuration object to an array of nav items
-  Object.entries(items).map(([title, path]) =>
-    typeof path === 'string'
-      ? {title, path} // links are treated normally
-      : {
-          title,
-          // generate an id for each group, for use with the sidebar nav state
-          id: v5(JSON.stringify(path), v5.DNS),
-          // recurse over its children and turn them into nav items
-          children: getNavItems(path)
-        }
-  );
+  Object.entries(items).map(([title, path]) => {
+    if (Array.isArray(path)) {
+      // path is an array, so we handle the tags syntax
+      const pagePath = path[0];
+      const tags = path[1];
+      return {title, path: pagePath, tags};
+    } else if (typeof path === 'object') {
+      return {
+        title,
+        // generate an id for each group, for use with the sidebar nav state
+        id: v5(JSON.stringify(path), v5.DNS),
+        // recurse over its children and turn them into nav items
+        children: getNavItems(path)
+      };
+    } else {
+      return {title, path}; // links are treated normally
+    }
+  });
 
 exports.createPages = async ({actions, graphql}) => {
   const {data} = await graphql(`
