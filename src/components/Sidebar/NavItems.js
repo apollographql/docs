@@ -3,6 +3,7 @@ import React, {createContext, useContext} from 'react';
 import {
   Button,
   Collapse,
+  Flex,
   Stack,
   Tooltip,
   chakra,
@@ -28,30 +29,32 @@ const getItemPaths = (items, basePath) =>
   );
 
 const Tags = ({tags}) => {
-  if (!Array.isArray(tags)) return null; // if it's not an array, don't render anything
-  return tags.map((tag, index) => {
-    let tagIcon;
-    let tagTooltip;
+  return (
+    <>
+      {tags.map((tag, index) => {
+        let tagIcon;
+        let tagTooltip;
 
-    switch (tag) {
-      case 'enterprise':
-        tagIcon = <HiOutlineBuildingOffice2 />;
-        tagTooltip = 'Enterprise only';
-        break;
-      default:
-        return null;
-    }
-    if (!tagIcon || !tagIcon) return null;
-    return (
-      <Tooltip key={index} label={tagTooltip} fontSize="md">
-        <chakra.span ml="6px">{tagIcon}</chakra.span>
-      </Tooltip>
-    );
-  });
+        switch (tag) {
+          case 'enterprise':
+            tagIcon = <HiOutlineBuildingOffice2 />;
+            tagTooltip = 'Enterprise only';
+            break;
+          default:
+            return null;
+        }
+        return (
+          <Tooltip key={index} label={tagTooltip} fontSize="md">
+            <chakra.span ml="6px">{tagIcon}</chakra.span>
+          </Tooltip>
+        );
+      })}
+    </>
+  );
 };
 
 Tags.propTypes = {
-  tags: PropTypes.array
+  tags: PropTypes.array.isRequired
 };
 
 function NavButton({isActive, depth, children, tags, ...props}) {
@@ -78,9 +81,9 @@ function NavButton({isActive, depth, children, tags, ...props}) {
       {...buttonProps}
       {...props}
     >
-      <chakra.span display="flex" alignItems="center" pl={depth * 2}>
+      <Flex as="span" align="center" pl={depth * 2}>
         {children} {tags && <Tags tags={tags} />}
-      </chakra.span>
+      </Flex>
     </Button>
   );
 }
@@ -165,7 +168,7 @@ export default function NavItems({items, depth = 0}) {
               as="a"
               depth={depth}
               href={item.path}
-              tags={item.tags ?? undefined}
+              tags={item.tags}
               {...buttonProps}
             >
               {item.title}
@@ -182,7 +185,7 @@ export default function NavItems({items, depth = 0}) {
             depth={depth}
             as={GatsbyLink}
             to={path}
-            tags={item.tags ?? undefined}
+            tags={item.tags}
           >
             {item.title}
           </NavButton>
