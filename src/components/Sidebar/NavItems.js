@@ -3,11 +3,14 @@ import React, {createContext, useContext} from 'react';
 import {
   Button,
   Collapse,
+  Flex,
   Stack,
+  Tooltip,
   chakra,
   useColorModeValue
 } from '@chakra-ui/react';
 import {FiChevronDown, FiChevronRight, FiExternalLink} from 'react-icons/fi';
+import {IoFlaskOutline, IoPartlySunnyOutline} from 'react-icons/io5';
 import {Link as GatsbyLink} from 'gatsby';
 import {
   PathContext,
@@ -16,6 +19,7 @@ import {
   isUrl,
   useTagColors
 } from '../../utils';
+import {TbComponents} from 'react-icons/tb';
 
 export const GA_EVENT_CATEGORY_SIDEBAR = 'Sidebar';
 export const NavContext = createContext();
@@ -25,7 +29,48 @@ const getItemPaths = (items, basePath) =>
     children ? getItemPaths(children, basePath) : getFullPath(path, basePath)
   );
 
-function NavButton({isActive, depth, children, ...props}) {
+const Tags = ({tags}) => {
+  return (
+    <>
+      {tags.map((tag, index) => {
+        let tagIcon;
+        let tagTooltip;
+
+        switch (tag) {
+          case 'enterprise':
+            tagIcon = <TbComponents />;
+            tagTooltip = 'Enterprise feature';
+            break;
+          case 'graphos':
+            tagIcon = <TbComponents />;
+            tagTooltip = 'Requires GraphOS';
+            break;
+          case 'preview':
+            tagIcon = <IoPartlySunnyOutline />;
+            tagTooltip = 'Preview feature';
+            break;
+          case 'experimental':
+            tagIcon = <IoFlaskOutline />;
+            tagTooltip = 'Experimental feature';
+            break;
+          default:
+            return null;
+        }
+        return (
+          <Tooltip key={index} label={tagTooltip} fontSize="md">
+            <chakra.span ml="6px">{tagIcon}</chakra.span>
+          </Tooltip>
+        );
+      })}
+    </>
+  );
+};
+
+Tags.propTypes = {
+  tags: PropTypes.array.isRequired
+};
+
+function NavButton({isActive, depth, children, tags, ...props}) {
   const [activeBg, activeTextColor] = useTagColors();
   const activeHoverBg = useColorModeValue('indigo.100', 'indigo.300');
 
@@ -49,7 +94,9 @@ function NavButton({isActive, depth, children, ...props}) {
       {...buttonProps}
       {...props}
     >
-      <chakra.span pl={depth * 2}>{children}</chakra.span>
+      <Flex as="span" align="center" pl={depth * 2}>
+        {children} {tags && <Tags tags={tags} />}
+      </Flex>
     </Button>
   );
 }
@@ -57,7 +104,8 @@ function NavButton({isActive, depth, children, ...props}) {
 NavButton.propTypes = {
   children: PropTypes.node.isRequired,
   isActive: PropTypes.bool,
-  depth: PropTypes.number.isRequired
+  depth: PropTypes.number.isRequired,
+  tags: PropTypes.array
 };
 
 function NavGroup({group, depth}) {
@@ -133,6 +181,7 @@ export default function NavItems({items, depth = 0}) {
               as="a"
               depth={depth}
               href={item.path}
+              tags={item.tags}
               {...buttonProps}
             >
               {item.title}
@@ -149,6 +198,7 @@ export default function NavItems({items, depth = 0}) {
             depth={depth}
             as={GatsbyLink}
             to={path}
+            tags={item.tags}
           >
             {item.title}
           </NavButton>
@@ -160,5 +210,6 @@ export default function NavItems({items, depth = 0}) {
 
 NavItems.propTypes = {
   items: PropTypes.array.isRequired,
-  depth: PropTypes.number
+  depth: PropTypes.number,
+  tags: PropTypes.array
 };

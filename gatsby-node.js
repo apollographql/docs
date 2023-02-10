@@ -74,17 +74,42 @@ exports.onCreateNode = async ({node, getNode, loadNodeContent, actions}) => {
 
 const getNavItems = items =>
   // turn a sidebar configuration object to an array of nav items
-  Object.entries(items).map(([title, path]) =>
-    typeof path === 'string'
-      ? {title, path} // links are treated normally
-      : {
+
+  {
+    const navItems = [];
+    const entries = Object.entries(items);
+
+    for (const [title, path] of entries) {
+      if (Array.isArray(path) && Array.isArray(path[1])) {
+        navItems.push({
+          title,
+          path: path[0],
+          tags: path[1]
+        });
+        continue;
+      }
+
+      if (typeof path === 'object') {
+        navItems.push({
           title,
           // generate an id for each group, for use with the sidebar nav state
           id: v5(JSON.stringify(path), v5.DNS),
           // recurse over its children and turn them into nav items
           children: getNavItems(path)
-        }
-  );
+        });
+        continue;
+      }
+
+      if (typeof path === 'string') {
+        navItems.push({
+          title,
+          path
+        });
+      }
+    }
+
+    return navItems;
+  };
 
 exports.createPages = async ({actions, graphql}) => {
   const {data} = await graphql(`
