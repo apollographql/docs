@@ -22,12 +22,22 @@
       "Local development": "/graphs/local-development",
       "Managing graphs in Studio": "/graphs/studio-features",
       "Supergraph-specific Studio features": "/graphs/federated-graphs",
-      "Self-hosted setup": ["/quickstart/self-hosted", ["enterprise"]]
+      "Self-hosted setup": [
+        "/quickstart/self-hosted",
+        [
+          "enterprise"
+        ]
+      ]
     },
     "Routing": {
       "Cloud routing overview": "/routing/cloud",
       "Configuring cloud routing": "/routing/cloud-configuration",
-      "Self-hosted routing": ["/routing/self-hosted", ["enterprise"]],
+      "Self-hosted routing": [
+        "/routing/self-hosted",
+        [
+          "enterprise"
+        ]
+      ],
       "Using @defer": "/routing/defer"
     },
     "The Explorer": {
@@ -41,7 +51,12 @@
       "Operation metrics": "/metrics/usage-reporting",
       "Field usage": "/metrics/field-usage",
       "Segmenting by client": "/metrics/client-awareness",
-      "Datadog forwarding": ["/metrics/datadog-integration", ["enterprise"]],
+      "Datadog forwarding": [
+        "/metrics/datadog-integration",
+        [
+          "enterprise"
+        ]
+      ],
       "Sending metrics to GraphOS": "/metrics/sending-operation-metrics",
       "Operation signatures": "/metrics/operation-signatures"
     },
@@ -49,7 +64,12 @@
       "Schema checks": "/delivery/schema-checks",
       "Configuring schema checks": "/delivery/check-configurations",
       "Launches": "/delivery/launches",
-      "Contracts": ["/delivery/contracts", ["enterprise"]],
+      "Contracts": [
+        "/delivery/contracts",
+        [
+          "enterprise"
+        ]
+      ],
       "Validating client operations": "/delivery/validating-client-operations",
       "Connecting to GitHub": "/delivery/github-integration"
     },
@@ -57,12 +77,27 @@
       "Setup": "/notifications/notification-setup",
       "Daily reports": "/notifications/daily-reports",
       "Schema changes": "/notifications/schema-change-integration",
-      "Performance alerts (experimental)": "/notifications/performance-alerts",
-      "Build status (preview)": "/notifications/build-status-notification"
+      "Performance alerts": [
+        "/notifications/performance-alerts",
+        [
+          "experimental"
+        ]
+      ],
+      "Build status": [
+        "/notifications/build-status-notification",
+        [
+          "enterprise"
+        ]
+      ]
     },
     "Security": {
       "API keys": "/api-keys",
-      "Audit log": ["/audit-log", ["enterprise"]],
+      "Audit log": [
+        "/audit-log",
+        [
+          "enterprise"
+        ]
+      ],
       "Sub-processors": "/sub-processors",
       "Data privacy and compliance": "/data-privacy"
     },
@@ -72,9 +107,24 @@
       "Plans and billing": "/org/plans",
       "User account": "/org/account",
       "Single Sign-On (SSO)": {
-        "Okta": "/sso/okta-integration-guide",
-        "Azure AD": "/sso/azure-ad-integration-guide",
-        "SAML": "/sso/saml-integration-guide"
+        "Okta": [
+          "/sso/okta-integration-guide",
+          [
+            "enterprise"
+          ]
+        ],
+        "Azure AD": [
+          "/sso/azure-ad-integration-guide",
+          [
+            "enterprise"
+          ]
+        ],
+        "SAML": [
+          "/sso/saml-integration-guide",
+          [
+            "enterprise"
+          ]
+        ]
       }
     }
   }
