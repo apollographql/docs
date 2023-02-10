@@ -77,8 +77,7 @@ const getNavItems = items =>
   Object.entries(items).map(([title, path]) => {
     if (Array.isArray(path)) {
       // path is an array, so we handle the tags syntax
-      const pagePath = path[0];
-      const tags = path[1];
+      const [pagePath, tags] = path;
       return {title, path: pagePath, tags};
     } else if (typeof path === 'object') {
       return {

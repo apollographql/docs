@@ -30,21 +30,21 @@ const getItemPaths = (items, basePath) =>
 const Tags = ({tags}) => {
   if (!Array.isArray(tags)) return null; // if it's not an array, don't render anything
   return tags.map((tag, index) => {
-    let TagIcon;
-    let TagTooltip;
+    let tagIcon;
+    let tagTooltip;
 
     switch (tag) {
       case 'enterprise':
-        TagIcon = <HiOutlineBuildingOffice2 />;
-        TagTooltip = 'Enterprise only';
+        tagIcon = <HiOutlineBuildingOffice2 />;
+        tagTooltip = 'Enterprise only';
         break;
       default:
         return null;
     }
-    if (!TagIcon || !TagTooltip) return null;
+    if (!tagIcon || !tagIcon) return null;
     return (
-      <Tooltip key={index} label={TagTooltip} fontSize="md">
-        <chakra.span ml="6px">{TagIcon}</chakra.span>
+      <Tooltip key={index} label={tagTooltip} fontSize="md">
+        <chakra.span ml="6px">{tagIcon}</chakra.span>
       </Tooltip>
     );
   });
@@ -165,7 +165,7 @@ export default function NavItems({items, depth = 0}) {
               as="a"
               depth={depth}
               href={item.path}
-              tags={item.tags || false}
+              tags={item.tags ?? undefined}
               {...buttonProps}
             >
               {item.title}
@@ -182,7 +182,7 @@ export default function NavItems({items, depth = 0}) {
             depth={depth}
             as={GatsbyLink}
             to={path}
-            tags={item.tags || false}
+            tags={item.tags ?? undefined}
           >
             {item.title}
           </NavButton>
