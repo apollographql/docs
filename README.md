@@ -235,7 +235,7 @@ It's important to note that you must sign in to and out of your account using St
 
 ### Sidebar annotations
 
-If you would like an icon with a tooltip for any use-case across the sidebar navigation items (preview tag, experimental tag, etc) - this can be achieved by using an array for the path, where the 0 index is the path, and index 1 is an array of tags.
+If you would like an icon with a tooltip for any use case across the sidebar navigation items (preview tag, experimental tag, etc.), you can use an array for the path, where the first item is the URL path, and the second item is an array of tags.
 
 ```json
 {
