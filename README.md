@@ -233,6 +233,21 @@ If a visitor to that page is logged in to Apollo Studio **and** is a member of o
 
 It's important to note that you must sign in to and out of your account using Studio or Odyssey, as the docs don't currently have their own sign in form. For local development, sign in to the staging Studio.
 
+### Sidebar annotations
+
+If you would like an icon with a tooltip for any use case across the sidebar navigation items (preview tag, experimental tag, etc.), you can use an array for the path, where the first item is the URL path, and the second item is an array of tags.
+
+```json
+{
+  "Performance alerts": [
+    "/notifications/performance-alerts", // nav item path
+    ["experimental"] // array of tags
+  ],
+}
+```
+
+We currently support tags for `enterprise`, `preview` & `experimental`.
+
 ### Redirect rules
 
 Redirects can continue to be written in the `_redirects` file in the `docs/source` directory of each docset. These redirects can be written in the [Netlify redirects syntax](https://docs.netlify.com/routing/redirects/#syntax-for-the-redirects-file), but come with one catch. The `from` path must be relative to the root of the particular docset that the redirect pertains to, but the `to` path must be relative to the root of the `apollographql.com` domain. That means that the path you want to redirect the user to must include the `/docs` path prefix to redirect to a page in the docs.
