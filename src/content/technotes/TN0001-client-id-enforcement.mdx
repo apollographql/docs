@@ -20,6 +20,44 @@ If you're using Apollo Server for your gateway, you can require client metadata 
 > The header names used below are the default headers sent by Apollo Client, but you can change them to whatever names your client uses. Additionally, these changes should be reflected in the [usage reporting plugin](/apollo-server/api/plugin/usage-reporting/#generateclientinfo).
 
 <MultiCodeBlock>
+```rhai title="client-id.rhai"
+fn supergraph_service(service) {
+    const request_callback = Fn("process_request");
+    service.map_request(request_callback);
+  }
+
+fn process_request(request) {
+  log_info("processing request");
+  let valid_clients = ["1", "2"];
+  let valid_client_names = ["apollo-client"];
+  if ("apollographql-client-version" in request.headers && "apollographql-client-name" in request.headers) {
+    let client_header = request.headers["apollographql-client-version"];
+    let name_header = request.headers["apollographql-client-name"];
+  
+    if !valid_clients.contains(client_header) {
+      log_error("Invalid client ID provided");
+      throw #{
+        status: 401,
+        message: "Invalid client ID provided"
+      };
+    }
+    if !valid_client_names.contains(name_header) {
+      log_error("Invalid client name provided");
+      throw #{
+        status: 401,
+        message: "Invalid client name provided"
+      };
+    }
+  }
+  else {
+    log_error("No client headers set");
+    throw #{
+      status: 401,
+      message: "No client headers set"
+    };
+  }    
+}
+```
 
 ```ts title="index.ts"
 function clientEnforcementPlugin(): ApolloServerPlugin<BaseContext> {
@@ -63,6 +101,7 @@ const server = new ApolloServer({
   plugins: [clientEnforcementPlugin()],
 });
 ```
+
 ```js title="index.js"
 function clientEnforcementPlugin() {
   return {
@@ -102,45 +141,6 @@ const server = new ApolloServer({
   plugins: [clientEnforcementPlugin()],
 });
 ```
-
-```rhai title="client-id.rhai"
-fn supergraph_service(service) {
-    const request_callback = Fn("process_request");
-    service.map_request(request_callback);
-  }
-
-fn process_request(request) {
-    let valid_clients = ["1", "2"];
-    let valid_client_names = ["apollo-client"];
-    if ("apollographql-client-version" in request.headers && "apollographql-client-name" in request.headers) {
-      let client_header = request.headers["apollographql-client-version"];
-      let name_header = request.headers["apollographql-client-name"];
-    
-    if !valid_clients.contains(client_header) {
-      log_error("Invalid client ID provided");
-      throw #{
-        status: 401,
-        message: "Invalid client ID provided"
-      };
-    }
-    if !valid_client_names.contains(name_header) {
-      log_error("Invalid client name provided");
-      throw #{
-        status: 401,
-        message: "Invalid client name provided"
-      };
-    }
-  }
-  else {
-    log_error("No client headers set");
-    throw #{
-      status: 401,
-      message: "No client headers set"
-    };
-  }    
-}
-```
-
 </MultiCodeBlock>
 
 ## Adding enforcement for existing clients
