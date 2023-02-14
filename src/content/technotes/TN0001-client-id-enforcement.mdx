@@ -11,6 +11,8 @@ Clients can (and should) also [name their GraphQL operations](/react/data/operat
 
 Together, these pieces of information help teams monitor their graph and make changes to it safely. We strongly encourage that your GraphQL gateway _require_ client details _and_ operation names from all requesting clients.
 
+Customers using Apollo Router and Managed Federation should enable client awareness through the [router configuration file](/router/managed-federation/client-awareness/) directly.
+
 ## Enforcing in Apollo Server
 
 If you're using Apollo Server for your gateway, you can require client metadata in every incoming request with a [custom plugin](/apollo-server/integrations/plugins/):
@@ -60,6 +62,83 @@ const server = new ApolloServer({
   resolvers,
   plugins: [clientEnforcementPlugin()],
 });
+```
+```js title="index.js"
+function clientEnforcementPlugin() {
+  return {
+    async requestDidStart() {
+      return {
+        async didResolveOperation(requestContext) {
+          const clientName = requestContext.request.http.headers.get('apollographql-client-name');
+
+          const clientVersion = requestContext.request.http.headers.get('apollographql-client-version');
+
+          if (!clientName) {
+            const logString = `Execution Denied: Operation has no identified client`;
+            requestContext.logger.debug(logString);
+            throw new GraphQLError(logString);
+          }
+
+          if (!clientVersion) {
+            const logString = `Execution Denied: Client ${clientName} has no identified version`;
+            requestContext.logger.debug(logString);
+            throw new GraphQLError(logString);
+          }
+
+          if (!requestContext.operationName) {
+            const logString = `Unnamed Operation: ${requestContext.queryHash}. All operations must be named`;
+            requestContext.logger.debug(logString);
+
+            throw new GraphQLError(logString);
+          }
+        },
+      };
+    },
+  };
+}
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  plugins: [clientEnforcementPlugin()],
+});
+```
+
+```rhai title="client-id.rhai"
+fn supergraph_service(service) {
+    const request_callback = Fn("process_request");
+    service.map_request(request_callback);
+  }
+
+fn process_request(request) {
+    let valid_clients = ["1", "2"];
+    let valid_client_names = ["apollo-client"];
+    if ("apollographql-client-version" in request.headers && "apollographql-client-name" in request.headers) {
+      let client_header = request.headers["apollographql-client-version"];
+      let name_header = request.headers["apollographql-client-name"];
+    
+    if !valid_clients.contains(client_header) {
+      log_error("Invalid client ID provided");
+      throw #{
+        status: 401,
+        message: "Invalid client ID provided"
+      };
+    }
+    if !valid_client_names.contains(name_header) {
+      log_error("Invalid client name provided");
+      throw #{
+        status: 401,
+        message: "Invalid client name provided"
+      };
+    }
+  }
+  else {
+    log_error("No client headers set");
+    throw #{
+      status: 401,
+      message: "No client headers set"
+    };
+  }    
+}
 ```
 
 </MultiCodeBlock>
