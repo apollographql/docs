@@ -13,7 +13,7 @@ Together, these pieces of information help teams monitor their graph and make ch
 
 ## Enforcing in Apollo Router
 
-Customers using Apollo Router and Managed Federation should enable client awareness through the [router configuration file](/router/managed-federation/client-awareness/) directly. 
+Apollo router supports client awareness by default if the client sets the `apollographql-client-name` and `apollographql-client-id` in their requests. These values can be overriden using the [router configuration file](/router/managed-federation/client-awareness/) directly.
 
 Client headers can also be enforced using a [Rhai script](/router/customizations/rhai) on every incoming request.
 
@@ -117,6 +117,10 @@ If clients are already consuming your graph and _are not_ providing client metad
 
 If you have other existing headers in your HTTP requests that can be parsed to extract some client info, you can extract the info from there.
 
+#### Apollo Router
+Client awareness headers should be overridden using the [router configuration file](/router/managed-federation/client-awareness/#overriding-client-awareness-headers) to use the appropriate header names.
+
+#### Apollo Server
 If you do change the identifying headers, also update the [Usage Reporting Plugin](/apollo-server/api/plugin/usage-reporting) to use the new headers so that the proper client info is also sent to Studio.
 
 ### Ask clients to update their requests
