@@ -71,7 +71,7 @@ Every code of conduct violation report will be treated with seriousness and care
 
 We will respect confidentiality requests for the purpose of protecting victims of abuse. At our discretion, we may publicly name a person about whom we've received harassment complaints, or privately warn third parties about them, if we believe that doing so will increase the safety of our members or the general public. We will not name harassment victims without their affirmative consent.
 
-GraphQL Summit prioritizes marginalized people’s safety over privileged people’s comfort. The administrators will not act on complaints regarding:
+Apollo prioritizes marginalized people’s safety over privileged people’s comfort. The administrators will not act on complaints regarding:
 
 - “Reverse”-isms, including “reverse racism,” “reverse sexism,” and “cisphobia”
 - Reasonable communication of boundaries, such as “leave me alone,” “go away,” or “I’m not discussing this with you.”
