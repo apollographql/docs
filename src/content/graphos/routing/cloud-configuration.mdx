@@ -55,7 +55,8 @@ You can configure certain aspects of your router's behavior in the **Router conf
 
 - [HTTP headers](#http-header-rules) that the router sends to your subgraphs
 - [CORS rules](#cors-settings) for browser-based applications connecting to the router
-- [Subgraph error inclusion](#subgraph-error-inclusion) to expose subgraph errors to querying clients (including the Apollo Explorer).
+- [Subgraph error inclusion](#subgraph-error-inclusion) to expose subgraph errors to querying clients (including the Apollo Explorer)
+* [Introspection](#introspection) to allow resolving introspection queries.
 
 After you make any changes to your YAML configuration, you must **save** those changes (`CMD+S` or `CTRL+S`) for those changes to take effect.
 
@@ -349,3 +350,13 @@ include_subgraph_errors:
 ```
 
 Any configuration under the `subgraphs` key takes precedence over configuration under the `all` key. In the example above, subgraph errors are included from all subgraphs _except_ the `products` subgraph.
+
+### Introspection
+
+By default, your cloud supergraph does not resolve introspection queries. You can enable introspection like so:
+
+```yaml
+# Do not enable introspection for production workloads!
+supergraph:
+  introspection: true
+```
