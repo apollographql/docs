@@ -101,12 +101,14 @@ No, unless you're using the Relay client. But its popularity outside of the Rela
 
 Consider the ["Zero, One, Infinity" rule](https://en.wikipedia.org/wiki/Zero_one_infinity_rule) — can you definitively assert that your list will never require pagination or other metadata about the relationship?
 
-Using a wrapper type for lists provides two benefits:
+Using a wrapper type for lists provides the following benefits:
 
-1. **Easier evolution**: you can return a wrapper type with no pagination in place today and then add pagination without breaking existing clients. If you return a list directly, you can't add pagination metadata later.
-2. **Modeling relationships**: The `Connection` and `Edge` wrapper types support fields that model attributes _of the relationship between entities_ that don't belong in the entities themselves. Consider this example of a many-to-many relationship between `Business` and `Customer`:
+- **Avoid breaking changes.** You can initially return a wrapper type that _doesn't_ use pagination, and then add pagination later without breaking existing clients. If you return a list directly, you _can't_ add pagination metadata later.
+- **Represent entity relationships.** The `Connection` and `Edge` wrapper types support fields that model attributes _of the relationship between entities_ that don't belong in the entities themselves.
 
-   ```graphql {13}
+    Consider this example of a many-to-many relationship between `Business` and `Customer`:
+
+   ```graphql
    type Business {
      id: ID
      customers: CustomerConnection
@@ -119,7 +121,7 @@ Using a wrapper type for lists provides two benefits:
 
    type CustomerEdge {
      node: Customer
-     type: CustomerType
+     type: CustomerType #highlight-line
    }
 
    enum CustomerType {
@@ -134,7 +136,7 @@ Using a wrapper type for lists provides two benefits:
    }
    ```
 
-   A specific `Customer` may shop at one business `IN_STORE` and another `ONLINE`. The `type` is a attribute of the _relationship_, not the business or customer themselves. Without wrapper types, you don't have a place to put this data.
+   A specific `Customer` might shop at one business `IN_STORE` and another `ONLINE`. The `type` is an attribute of the _relationship_, not the business or customer itself. Without wrapper types, you don't have a place to put this data.
 
 ## Do I have to implement the entire connection specification?
 
