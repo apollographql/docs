@@ -4,7 +4,6 @@ id: TN0029
 tags: [best practices, schema design]
 ---
 
-
 [Relay](https://relay.dev) is an opinionated GraphQL client, and its associated [Connections specification](https://relay.dev/graphql/connections.htm) defines a pattern for expressing one-to-many relationships in a GraphQL schema:
 
 ```graphql
@@ -102,7 +101,40 @@ No, unless you're using the Relay client. But its popularity outside of the Rela
 
 Consider the ["Zero, One, Infinity" rule](https://en.wikipedia.org/wiki/Zero_one_infinity_rule) — can you definitively assert that your list will never require pagination or other metadata about the relationship?
 
-Using a wrapper type for lists enables you to evolve your schema gracefully without breaking existing clients.
+Using a wrapper type for lists provides two benefits:
+
+1. **Easier evolution**: you can return a wrapper type with no pagination in place today and then add pagination without breaking existing clients. If you return a list directly, you can't add pagination metadata later.
+2. **Modeling relationships**: The `Connection` and `Edge` wrapper types support fields that model attributes _of the relationship between entities_ that don't belong in the entities themselves. Consider this example of a many-to-many relationship between `Business` and `Customer`:
+
+   ```graphql {13}
+   type Business {
+     id: ID
+     customers: CustomerConnection
+   }
+
+   type CustomerConnection {
+     edges: [CustomerEdge]
+     total: Int
+   }
+
+   type CustomerEdge {
+     node: Customer
+     type: CustomerType
+   }
+
+   enum CustomerType {
+     IN_STORE
+     ONLINE
+     MULTI_CHANNEL
+   }
+
+   type Customer {
+     id: ID
+     shopsAt: BusinessConnection # --snip --
+   }
+   ```
+
+   A specific `Customer` may shop at one business `IN_STORE` and another `ONLINE`. The `type` is a attribute of the _relationship_, not the business or customer themselves. Without wrapper types, you don't have a place to put this data.
 
 ## Do I have to implement the entire connection specification?
 
