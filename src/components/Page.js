@@ -326,7 +326,7 @@ export default function Page({file, pageContext, uri}) {
                   headings={headings}
                   // jc: passing undefined here as headingDepth returns null if it doesn't exist in the frontmatter
                   // and we need undefined in order to make use of default props
-                  headingDepth={headingDepth || undefined}
+                  headingDepth={headingDepth ?? undefined}
                 />
                 <Stack align="flex-start" spacing="3" mt="8">
                   <FeedbackButton title={title} />
