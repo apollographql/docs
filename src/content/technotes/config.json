@@ -7,15 +7,21 @@
       "auth": "/tags/auth",
       "best practices": "/tags/best-practices",
       "caching": "/tags/caching",
+      "client": "/tags/client",
       "contracts": "/tags/contracts",
       "federation": "/tags/federation",
       "gateway": "/tags/gateway",
+      "kubernetes": "/tags/kubernetes",
       "observability": "/tags/observability",
       "performance": "/tags/performance",
       "router": "/tags/router",
       "schema design": "/tags/schema-design",
+      "schema patterns": "/tags/schema-patterns",
+      "security": "/tags/security",
       "server": "/tags/server",
+      "server-driven-ui": "/tags/server-driven-ui",
       "sre": "/tags/sre",
+      "subgraphs": "/tags/subgraphs",
       "testing": "/tags/testing"
     }
   }
