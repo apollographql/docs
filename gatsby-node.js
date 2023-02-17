@@ -210,3 +210,16 @@ exports.createPages = async ({actions, graphql}) => {
     });
   });
 };
+
+exports.createSchemaCustomization = ({actions: {createTypes}}) => {
+  const typeDefs = `
+    type MdxFrontmatter {
+      headingDepth: Int
+    }
+
+    type MarkdownRemarkFrontmatter {
+      headingDepth: Int
+    }
+  `;
+  createTypes(typeDefs);
+};
