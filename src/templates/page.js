@@ -53,6 +53,7 @@ export const pageQuery = graphql`
           description
           toc
           tags
+          headingDepth
         }
       }
       childMarkdownRemark {
@@ -65,6 +66,7 @@ export const pageQuery = graphql`
         frontmatter {
           title
           description
+          headingDepth
         }
       }
     }

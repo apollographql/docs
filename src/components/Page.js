@@ -194,7 +194,7 @@ export default function Page({file, pageContext, uri}) {
   } = file;
 
   const {frontmatter, headings} = childMdx || childMarkdownRemark;
-  const {title, description, toc, tags} = frontmatter;
+  const {title, description, toc, tags, headingDepth} = frontmatter;
   const {versions, currentVersion, navItems, versionBanner} = pageContext;
 
   const pageProps = usePageLayoutProps({
@@ -322,7 +322,12 @@ export default function Page({file, pageContext, uri}) {
                 <Heading size="md" mb="3">
                   {title}
                 </Heading>
-                <TableOfContents headings={headings} />
+                <TableOfContents
+                  headings={headings}
+                  // jc: passing undefined here as headingDepth returns null if it doesn't exist in the frontmatter
+                  // and we need undefined in order to make use of default props
+                  headingDepth={headingDepth ?? undefined}
+                />
                 <Stack align="flex-start" spacing="3" mt="8">
                   <FeedbackButton title={title} />
                   {editOnGitHub}

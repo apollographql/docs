@@ -349,6 +349,16 @@ description: Configuring proxy settings for outgoing requests
 ---
 ```
 
+#### Configuring the table of contents
+
+We can configure which headings are shown in an individual page's table of contents by providing a `headingDepth` frontmatter property. By default, headings up to a depth of 3 (h1, h2, and h3) are shown.
+
+```md
+---
+headingDepth: 4 # show headings up to h4
+---
+```
+
 ### Linking
 
 Links between docs articles should be written as relative paths. For example, if you wanted to link from the `schema/custom-scalars` article in the Apollo Server docs to the `getting-started` page at the root of the content directory, you would write:

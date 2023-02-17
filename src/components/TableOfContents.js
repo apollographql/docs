@@ -1,30 +1,37 @@
 import GithubSlugger from 'github-slugger';
 import PropTypes from 'prop-types';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {Link, List, ListItem} from '@chakra-ui/react';
 
 const MIN_HEADING_DEPTH = 2;
 const MAX_HEADING_DEPTH = 3;
 
-export default function TableOfContents({headings}) {
+export default function TableOfContents({
+  headings,
+  headingDepth = MAX_HEADING_DEPTH
+}) {
   const [activeId, setActiveId] = useState(null);
-
+  const scrollDisabled = useRef(false);
   const toc = useMemo(() => {
     const slugger = new GithubSlugger();
     return headings
       .filter(
         heading =>
-          heading.depth >= MIN_HEADING_DEPTH &&
-          heading.depth <= MAX_HEADING_DEPTH
+          heading.depth >= MIN_HEADING_DEPTH && heading.depth <= headingDepth
       )
       .map(heading => ({
         ...heading,
         id: slugger.slug(heading.value)
       }));
-  }, [headings]);
+  }, [headings, headingDepth]);
 
   useEffect(() => {
     function handleScroll(event) {
+      if (scrollDisabled.current) {
+        scrollDisabled.current = false;
+        return;
+      }
+
       const halfway = event.currentTarget.innerHeight / 2;
       for (let i = toc.length - 1; i >= 0; i--) {
         const {id} = toc[i];
@@ -57,12 +64,14 @@ export default function TableOfContents({headings}) {
               href={'#' + id}
               color={isActive && 'primary'}
               fontWeight={isActive && 'semibold'}
-              onClick={event =>
+              onClick={event => {
+                setActiveId(id);
+                scrollDisabled.current = true;
                 window.gtag?.('event', 'Heading click', {
                   event_category: 'Section Nav',
                   event_label: event.target.innerText
-                })
-              }
+                });
+              }}
             >
               {value}
             </Link>
@@ -74,5 +83,6 @@ export default function TableOfContents({headings}) {
 }
 
 TableOfContents.propTypes = {
-  headings: PropTypes.array.isRequired
+  headings: PropTypes.array.isRequired,
+  headingDepth: PropTypes.number
 };
