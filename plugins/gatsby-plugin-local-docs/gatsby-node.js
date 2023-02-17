@@ -17,6 +17,7 @@ exports.createSchemaCustomization = ({actions: {createTypes}}) => {
     type MdxFrontmatter {
       toc: Boolean # this frontmatter is only used in the docs homepage
       tags: [String] # this is only used by technotes
+      headingDepth: Int
     }
 
     type MarkdownRemarkFrontmatter {

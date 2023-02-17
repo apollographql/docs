@@ -6,22 +6,23 @@ import {Link, List, ListItem} from '@chakra-ui/react';
 const MIN_HEADING_DEPTH = 2;
 const MAX_HEADING_DEPTH = 3;
 
-export default function TableOfContents({headings}) {
+export default function TableOfContents({
+  headings,
+  headingDepth = MAX_HEADING_DEPTH
+}) {
   const [activeId, setActiveId] = useState(null);
-
   const toc = useMemo(() => {
     const slugger = new GithubSlugger();
     return headings
       .filter(
         heading =>
-          heading.depth >= MIN_HEADING_DEPTH &&
-          heading.depth <= MAX_HEADING_DEPTH
+          heading.depth >= MIN_HEADING_DEPTH && heading.depth <= headingDepth
       )
       .map(heading => ({
         ...heading,
         id: slugger.slug(heading.value)
       }));
-  }, [headings]);
+  }, [headings, headingDepth]);
 
   useEffect(() => {
     function handleScroll(event) {
@@ -74,5 +75,6 @@ export default function TableOfContents({headings}) {
 }
 
 TableOfContents.propTypes = {
-  headings: PropTypes.array.isRequired
+  headings: PropTypes.array.isRequired,
+  headingDepth: PropTypes.number
 };

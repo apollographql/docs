@@ -53,6 +53,7 @@ export const pageQuery = graphql`
           description
           toc
           tags
+          headingDepth
         }
       }
       childMarkdownRemark {
