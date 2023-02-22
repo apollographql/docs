@@ -7,7 +7,6 @@ import {ReactComponent as ApolloMark} from '@apollo/space-kit/logos/mark.svg';
 import {
   Box,
   Center,
-  DarkMode,
   Flex,
   HStack,
   IconButton,
@@ -58,103 +57,100 @@ export function Header({children, algoliaFilters}) {
   const {pageWidth, togglePageWidth, showExpandButton} = usePageWidthContext();
 
   return (
-    <DarkMode>
-      <Box pos="sticky" top="0" zIndex="2">
-        <Flex
-          align="center"
-          as="header"
-          px="4"
-          boxSizing="content-box"
-          bg="gray.800"
-          color="white"
-          css={{
-            height: HEADER_HEIGHT,
-            borderBottomWidth: HEADER_BORDER_WIDTH
-          }}
-        >
-          <HStack spacing="4" d={{base: 'none', md: 'flex'}}>
-            <Flex
-              as={GatsbyLink}
-              to="/"
-              align="center"
-              d={{base: 'none', md: 'flex'}}
+    <Box pos="sticky" top="0" zIndex="2">
+      <Flex
+        align="center"
+        as="header"
+        px="4"
+        bg="bg"
+        boxSizing="content-box"
+        css={{
+          height: HEADER_HEIGHT,
+          borderBottomWidth: HEADER_BORDER_WIDTH
+        }}
+      >
+        <HStack spacing="4" d={{base: 'none', md: 'flex'}}>
+          <Flex
+            as={GatsbyLink}
+            to="/"
+            align="center"
+            d={{base: 'none', md: 'flex'}}
+          >
+            <Box
+              as={ApolloLogo}
+              fill="current"
+              role="img"
+              aria-label="Apollo logo"
+              h="6"
+              mt="0.5" // offset to vertically align better w/ docs tag
+            />
+            <Box
+              ml="1.5"
+              px="1.5"
+              fontSize="sm"
+              fontWeight="semibold"
+              textTransform="uppercase"
+              letterSpacing="widest"
+              bg={tagBg}
+              color={tagTextColor}
+              rounded="sm"
             >
-              <Box
-                as={ApolloLogo}
-                fill="current"
-                role="img"
-                aria-label="Apollo logo"
-                h="6"
-                mt="0.5" // offset to vertically align better w/ docs tag
-              />
-              <Box
-                ml="1.5"
-                px="1.5"
-                fontSize="sm"
-                fontWeight="semibold"
-                textTransform="uppercase"
-                letterSpacing="widest"
-                bg={tagBg}
-                color={tagTextColor}
-                rounded="sm"
-              >
-                Docs
-              </Box>
-            </Flex>
-            {children}
-          </HStack>
-          <HStack d={{base: 'flex', md: 'none'}}>
-            {children}
-            <Box fill="current" as={ApolloMark} h="8" />
-          </HStack>
-          {showExpandButton && (
-            <Tooltip
-              label={
-                pageWidth === 'jumbo'
-                  ? 'Collapse to default width'
-                  : 'Expand to extended width'
-              }
-            >
-              <IconButton
-                ml="auto"
-                mr="2"
-                fontSize="xl"
-                variant="ghost"
-                onClick={togglePageWidth}
-                icon={
-                  pageWidth === 'jumbo' ? (
-                    <TbViewportNarrow />
-                  ) : (
-                    <TbViewportWide />
-                  )
-                }
-              />
-            </Tooltip>
-          )}
+              Docs
+            </Box>
+          </Flex>
+          {children}
+        </HStack>
+        <HStack d={{base: 'flex', md: 'none'}}>
+          {children}
+          <Box fill="current" as={ApolloMark} h="8" />
+        </HStack>
+        {showExpandButton && (
           <Tooltip
             label={
-              colorMode === 'dark'
-                ? 'Switch to light mode'
-                : 'Switch to dark mode'
+              pageWidth === 'jumbo'
+                ? 'Collapse to default width'
+                : 'Expand to extended width'
             }
           >
             <IconButton
-              ml={showExpandButton ? undefined : 'auto'}
+              ml="auto"
               mr="2"
               fontSize="xl"
               variant="ghost"
-              onClick={toggleColorMode}
-              icon={colorMode === 'dark' ? <FiSun /> : <FiMoon />}
+              onClick={togglePageWidth}
+              icon={
+                pageWidth === 'jumbo' ? (
+                  <TbViewportNarrow />
+                ) : (
+                  <TbViewportWide />
+                )
+              }
             />
           </Tooltip>
+        )}
+        <Tooltip
+          label={
+            colorMode === 'dark'
+              ? 'Switch to light mode'
+              : 'Switch to dark mode'
+          }
+        >
+          <IconButton
+            ml={showExpandButton ? undefined : 'auto'}
+            mr="2"
+            fontSize="xl"
+            variant="ghost"
+            onClick={toggleColorMode}
+            icon={colorMode === 'dark' ? <FiSun /> : <FiMoon />}
+          />
+        </Tooltip>
 
-          {process.env.ALGOLIA_SEARCH_KEY && (
-            <Search algoliaFilters={algoliaFilters} />
-          )}
-          <StudioButton />
-        </Flex>
-      </Box>
-    </DarkMode>
+        {process.env.ALGOLIA_SEARCH_KEY && (
+          <Search algoliaFilters={algoliaFilters} />
+        )}
+        <StudioButton />
+      </Flex>
+    </Box>
   );
 }
 

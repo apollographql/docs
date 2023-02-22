@@ -4,11 +4,7 @@ import Header, {TOTAL_HEADER_HEIGHT} from './Header';
 import MobileNav from './MobileNav';
 import PropTypes from 'prop-types';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
-import Sidebar, {
-  SIDEBAR_WIDTH_BASE,
-  SIDEBAR_WIDTH_XL,
-  SidebarNav
-} from './Sidebar';
+import Sidebar, {PAGE_SIDEBAR_MARGIN, SidebarNav} from './Sidebar';
 import getShareImage from '@jlengstorf/get-share-image';
 import useLocalStorage from 'react-use/lib/useLocalStorage';
 import {
@@ -151,17 +147,12 @@ export default function Page({
         </Tooltip>
       </Fade>
       <Sidebar configs={configs} isHidden={sidebarHidden}>
-        <SidebarNav
-          docset={docset}
-          navItems={navItems}
-          onHide={() => setSidebarHidden(true)}
-        />
+        <SidebarNav docset={docset} navItems={navItems} />
       </Sidebar>
       <Box
         marginLeft={{
           base: 0,
-          md: sidebarHidden ? 0 : SIDEBAR_WIDTH_BASE,
-          xl: sidebarHidden ? 0 : SIDEBAR_WIDTH_XL
+          md: sidebarHidden ? 0 : PAGE_SIDEBAR_MARGIN
         }}
         transitionProperty="margin-left"
         transitionDuration="normal"

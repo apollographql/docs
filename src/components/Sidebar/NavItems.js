@@ -4,14 +4,15 @@ import {
   Button,
   Collapse,
   Flex,
+  HStack,
   Stack,
   Tooltip,
   chakra,
   useColorModeValue
 } from '@chakra-ui/react';
 import {FiChevronDown, FiChevronRight, FiExternalLink} from 'react-icons/fi';
-import {IoFlaskOutline, IoPartlySunnyOutline} from 'react-icons/io5';
 import {Link as GatsbyLink} from 'gatsby';
+import {IoFlaskOutline, IoPartlySunnyOutline} from 'react-icons/io5';
 import {
   PathContext,
   getFullPath,
@@ -88,9 +89,9 @@ function NavButton({isActive, depth, children, tags, ...props}) {
       py={depth ? 1.5 : 2.5} // give top level nav items larger padding
       whiteSpace="normal"
       variant="ghost"
-      roundedLeft="none"
-      roundedRight="full"
       fontWeight="normal"
+      textAlign="left"
+      justifyContent="flex-start"
       {...buttonProps}
       {...props}
     >
@@ -119,13 +120,12 @@ function NavGroup({group, depth}) {
 
   return (
     <div>
-      <NavButton
-        mb="1"
-        textAlign="left"
+      <HStack
+        as="button"
+        mb="2"
         fontWeight="strong"
         isActive={isActive}
         data-group={!depth && isActive}
-        rightIcon={isOpen ? <FiChevronDown /> : <FiChevronRight />}
         onClick={() => {
           const open = !isOpen;
           setNav({
@@ -138,10 +138,10 @@ function NavGroup({group, depth}) {
             value: Number(open)
           });
         }}
-        depth={depth}
       >
-        {group.title}
-      </NavButton>
+        <span>{group.title}</span>
+        {isOpen ? <FiChevronDown /> : <FiChevronRight />}
+      </HStack>
       <Collapse unmountOnExit in={isOpen}>
         <NavItems
           uri={uri}
@@ -162,7 +162,7 @@ NavGroup.propTypes = {
 export default function NavItems({items, depth = 0}) {
   const {basePath, uri} = useContext(PathContext);
   return (
-    <Stack spacing="1" align="flex-start" pb={depth && 3}>
+    <Stack pb={depth && 3}>
       {items.map((item, index) => {
         if (item.children) {
           return <NavGroup key={index} group={item} depth={depth} />;

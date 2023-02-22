@@ -2,30 +2,11 @@ import NavItems, {GA_EVENT_CATEGORY_SIDEBAR, NavContext} from './NavItems';
 import PropTypes from 'prop-types';
 import React, {useMemo} from 'react';
 import useLocalStorage from 'react-use/lib/useLocalStorage';
-import {
-  Box,
-  Button,
-  Flex,
-  HStack,
-  Heading,
-  IconButton,
-  Tooltip,
-  chakra,
-  useColorModeValue
-} from '@chakra-ui/react';
 import {BsChevronContract, BsChevronExpand} from 'react-icons/bs';
-import {FiChevronsLeft} from 'react-icons/fi';
+import {Button, Flex, Heading, chakra} from '@chakra-ui/react';
 import {flattenNavItems} from '../../utils';
 
-export function SidebarNav({
-  docset,
-  navItems,
-  onHide,
-  darkBg = 'gray.800',
-  children
-}) {
-  const bg = useColorModeValue('white', darkBg);
-
+export function SidebarNav({docset, navItems}) {
   const navGroups = useMemo(
     () => flattenNavItems(navItems).filter(item => item.children),
     [navItems]
@@ -67,56 +48,41 @@ export function SidebarNav({
 
   return (
     <>
-      <Box p="2" pl="0" pos="sticky" top="0" bg={bg} zIndex="1">
-        <HStack px="4">
-          {children}
-          <Heading size="md">{docset}</Heading>
-        </HStack>
-        <Flex>
-          <Button
-            mr="auto"
-            size="sm"
-            variant="ghost"
-            roundedRight="full"
-            roundedLeft="none"
-            isDisabled={!navGroups.length}
-            leftIcon={
-              isAllExpanded ? <BsChevronContract /> : <BsChevronExpand />
-            }
-            onClick={() => {
-              const expanded = !isAllExpanded;
-              setLocalNavState(
-                navGroups.reduce(
-                  (acc, group) => ({
-                    ...acc,
-                    [group.id]: expanded
-                  }),
-                  {}
-                )
-              );
-              window.gtag?.('event', 'Toggle all', {
-                event_category: GA_EVENT_CATEGORY_SIDEBAR,
-                event_label: expanded ? 'expand' : 'collapse'
-              });
-            }}
-          >
-            {isAllExpanded ? 'Collapse' : 'Expand'} all
-          </Button>
-          {onHide && (
-            <Tooltip label="Hide sidebar">
-              <IconButton
-                size="sm"
-                variant="ghost"
-                fontSize="md"
-                onClick={onHide}
-                icon={<FiChevronsLeft />}
-              />
-            </Tooltip>
-          )}
-        </Flex>
-      </Box>
-      <NavContext.Provider value={{nav, setNav: setLocalNavState}}>
-        <chakra.nav pt="1" pr="2" pb="4">
+      <Flex p="4" pos="sticky" top="0" zIndex="1">
+        <Heading size="md">{docset}</Heading>
+        <Button
+          ml="auto"
+          size="xs"
+          variant="ghost"
+          isDisabled={!navGroups.length}
+          leftIcon={isAllExpanded ? <BsChevronContract /> : <BsChevronExpand />}
+          onClick={() => {
+            const expanded = !isAllExpanded;
+            setLocalNavState(
+              navGroups.reduce(
+                (acc, group) => ({
+                  ...acc,
+                  [group.id]: expanded
+                }),
+                {}
+              )
+            );
+            window.gtag?.('event', 'Toggle all', {
+              event_category: GA_EVENT_CATEGORY_SIDEBAR,
+              event_label: expanded ? 'expand' : 'collapse'
+            });
+          }}
+        >
+          {isAllExpanded ? 'Collapse' : 'Expand'} all
+        </Button>
+      </Flex>
+      <NavContext.Provider
+        value={{
+          nav,
+          setNav: setLocalNavState
+        }}
+      >
+        <chakra.nav px="4">
           <NavItems items={navItems} />
         </chakra.nav>
       </NavContext.Provider>
@@ -125,9 +91,6 @@ export function SidebarNav({
 }
 
 SidebarNav.propTypes = {
-  children: PropTypes.node,
   docset: PropTypes.string.isRequired,
-  navItems: PropTypes.array.isRequired,
-  onHide: PropTypes.func,
-  darkBg: PropTypes.string
+  navItems: PropTypes.array.isRequired
 };
