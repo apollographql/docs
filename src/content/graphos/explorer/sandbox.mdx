@@ -287,8 +287,6 @@ Set `hideCookieToggle` to `false` to enable users of your embedded Sandbox insta
 </td>
 <td>
 
-By default, the embedded Sandbox uses your `includeCookies` value from your Sandbox connection settings.
-
 You can set `includeCookies` to `true` if you instead want the Explorer to pass `{ credentials: 'include' }` for its requests.
 
 If you pass the `handleRequest` option, this option is ignored.
@@ -296,6 +294,172 @@ If you pass the `handleRequest` option, this option is ignored.
 Read more about the `fetch` API and credentials [here](https://developer.mozilla.org/en-US/docs/Web/API/fetch#credentials).
 
 This config option is **deprecated** in favor of using the Sandbox connection settings cookie toggle and setting the default value via `initialState.includeCookies`.
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `initialState`
+
+`Object`
+
+</td>
+<td>
+
+An object containing additional options related to the state of the embedded Sandbox on page load.
+
+For supported subfields, see [`initialState` options](#initialstate-options).
+
+</td>
+</tr>
+
+</tbody>
+</table>
+
+### `initialState` options
+
+These are the fields you can include in the `initialState` option you pass to `new EmbeddedSandbox`:
+
+<table class="field-table api-ref">
+  <thead>
+    <tr>
+      <th>Name /<br/>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+
+<tbody>
+
+<tr>
+<td>
+
+##### `includeCookies`
+
+`boolean`
+
+</td>
+<td>
+
+By default, the embedded Sandbox does not show the **Include cookies** toggle in its connection settings.
+
+You can set `includeCookies` to `true` if you instead want the Sandbox to pass `{ credentials: 'include' }` for its requests.
+
+If you pass `hideCookieToggle` to true, users will default to your setting for `includeCookies`, but will be able to toggle this on and off.
+
+If you pass the `handleRequest` option, this option is ignored.
+
+Read more about the `fetch` API and credentials [here](https://developer.mozilla.org/en-US/docs/Web/API/fetch#credentials).
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `document`
+
+`string`
+
+</td>
+<td>
+
+A URI-encoded operation to populate in the Sandbox's editor on load.
+
+If you omit this, the Sandbox initially loads an example query based on your schema.
+
+Example:
+
+```jsx
+intialState: {
+  document: `
+  query ExampleQuery {
+    books {
+      title
+    }
+  }
+`;
+}
+```
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `variables`
+
+`string`
+
+</td>
+<td>
+
+A URI-encoded, serialized object containing initial variable values to populate in the Explorer on load.
+
+If provided, these variables should apply to the initial query you provide for [`document`](#document).
+
+Example:
+
+```jsx
+intialState: {
+  variables: {
+    userID: "abc123"
+  },
+}
+```
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `headers`
+
+`string`
+
+</td>
+<td>
+
+A URI-encoded, serialized object containing initial HTTP header values to populate in the Explorer on load.
+
+Example:
+
+```jsx
+initialState: {
+  headers: {
+    authorization: "Bearer abc123";
+  }
+}
+```
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `collectionId` & `operationId`
+
+`string`
+
+</td>
+<td>
+
+The id of a collection, paired with an operation id to populate in the Explorer on load.
+You can find these values from a registered graph in Studio by clicking on the ... next to an operation
+in the Explorer of that graph & selecting 'Copy operation & collection ids'.
+
+Example:
+
+```jsx
+initialState: {
+  collectionId: 'abc1234',
+  operationId: 'xyz1234'
+}
+```
+
 </td>
 </tr>
 
