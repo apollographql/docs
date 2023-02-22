@@ -19,7 +19,7 @@
       "Overview": "/graphs/overview",
       "Publishing schemas": "/schema/cli-registration",
       "Creating a new subgraph": "/graphs/creating-a-subgraph",
-      "Securing a subgraph": "/graphs/securing-a-subgraph",
+      "Securing subgraphs": "/graphs/securing-a-subgraph",
       "Local development": "/graphs/local-development",
       "Managing graphs in Studio": "/graphs/studio-features",
       "Supergraph-specific Studio features": "/graphs/federated-graphs",
