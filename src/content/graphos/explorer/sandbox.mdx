@@ -486,5 +486,32 @@ initialState: {
 </td>
 </tr>
 
+<tr>
+<td>
+
+##### `sharedHeaders`
+
+`Record<string, string>`
+
+</td>
+<td>
+
+These headers are not editable by users of this Sandbox, and they are applied to every tab your users open. Users can choose to uncheck them.
+
+These are the only headers that will apply to your introspection query in Sandbox.
+
+Example:
+
+```jsx
+initialState: {
+  sharedHeaders: {
+    authorization: "Bearer abc123";
+  }
+}
+```
+
+</td>
+</tr>
+
 </tbody>
 </table>
