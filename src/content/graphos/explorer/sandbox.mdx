@@ -287,7 +287,7 @@ Set `hideCookieToggle` to `false` to enable users of your embedded Sandbox insta
 </td>
 <td>
 
-You can set `includeCookies` to `true` if you instead want the Explorer to pass `{ credentials: 'include' }` for its requests.
+You can set `includeCookies` to `true` if you instead want the Sandbox to pass `{ credentials: 'include' }` for its requests.
 
 If you pass the `handleRequest` option, this option is ignored.
 
@@ -395,7 +395,7 @@ intialState: {
 </td>
 <td>
 
-A URI-encoded, serialized object containing initial variable values to populate in the Explorer on load.
+A URI-encoded, serialized object containing initial variable values to populate in the Sandbox on load.
 
 If provided, these variables should apply to the initial query you provide for [`document`](#document).
 
@@ -422,7 +422,7 @@ intialState: {
 </td>
 <td>
 
-A URI-encoded, serialized object containing initial HTTP header values to populate in the Explorer on load.
+A URI-encoded, serialized object containing initial HTTP header values to populate in the Sandbox on load.
 
 Example:
 
@@ -447,7 +447,7 @@ initialState: {
 </td>
 <td>
 
-The id of a collection, paired with an operation id to populate in the Explorer on load.
+The id of a collection, paired with an operation id to populate in the Sandbox on load.
 You can find these values from a registered graph in Studio by clicking on the ... next to an operation
 in the Explorer of that graph & selecting 'Copy operation & collection ids'.
 
