@@ -18,10 +18,10 @@ flowchart LR;
   end;
 ```
 
-- **The routing layer** is powered by a particular version of the [Apollo Router](/router/).
+- **The router** is powered by a particular version of the [Apollo Router](/router/).
     - This is true for all supergraph types ([cloud](./overview/#cloud-supergraphs) and [self-hosted](./overview/#self-hosted-supergraphs)).
 - **The GraphOS build pipeline** uses a particular version of Apollo Federation to compose your router's supergraph schema.
-    - If you use the [Rover CLI](/rover/) to compose your supergraph schema, this is true for Rover as well.
+    - If you use the [Rover CLI](/rover/) to compose your supergraph schema, this is true for Rover as well. In this case, you effectively maintain your _own_ build pipeline.
 - **Your subgraph schemas** might each use special directives that were first introduced in a particular version of Apollo Federation.
 
 These components _each_ target support for a particular version of [Apollo Federation](/federation/), the architecture that underpins every supergraph. Because of this, it's important to make sure these various Federation versions remain compatible with each other as you make updates to individual components.
@@ -30,26 +30,26 @@ These components _each_ target support for a particular version of [Apollo Feder
 
 **To avoid runtime or composition errors,** your supergraph's components should _always_ maintain the following relationship between their targeted Apollo Federation versions:
 
-> (**Router** fed. version) ≥ (**Composition** fed. version) ≥ (**Subgraph** fed. version)
+> (**Router** fed. version) ≥ (**Build Pipeline** fed. version) ≥ (**Subgraph** fed. version)
 
 To maintain this relationship, always update these supergraph components in order from **left to right**:
 
 ```mermaid
 graph LR;
-  router(1. Routing Layer)
-  router --> pipeline(2. Composition Pipeline);
+  router(1. Router)
+  router --> pipeline(2. Build Pipeline);
   pipeline --> subgrahs(3. Subgraph Schemas);
 ```
 
-## 1. Update your routing layer
+## 1. Update your router
 
-The method you use to update your routing layer depends on which type of supergraph you have:
+The method you use to update your router depends on which type of supergraph you have:
 
  - **If you have a [self-hosted supergraph](./overview/#self-hosted-supergraphs),** you [download the latest Apollo Router binary](/router/quickstart#1-download-and-extract-the-apollo-router-binary) in every environment where your router runs.
 
-- **If you have a [serverless cloud supergraph](./overview/#cloud-supergraphs),** GraphOS _automatically_ updates your routing layer to the latest supported version whenever that version changes.
+- **If you have a [serverless cloud supergraph](./overview/#cloud-supergraphs),** GraphOS _automatically_ updates your router to the latest supported version whenever that version changes.
     
-    - You can see which Apollo Router version you're running from the **Cloud Routing** section of your variant's Settings page in [Studio](https://studio.apollographql.com/):
+    - You can see which Apollo Router version you're running from the **Cloud Router** section of your variant's Settings page in [Studio](https://studio.apollographql.com/):
 
     <img
       src="../img/router-status.jpg"
@@ -62,7 +62,7 @@ For details on each Apollo Router version's corresponding Apollo _Federation_ ve
 
 ## 2. Update your build pipeline
 
-Whenever you [publish a change to a subgraph schema](../schema/cli-registration/#subgraph-schemas), GraphOS initiates a build that composes your graph's new _supergraph_ schema. From [Apollo Studio](https://studio.apollographql.com/), you can configure which version of Apollo Federation the build pipeline uses to perform this composition.
+Whenever you make an operational change to your graph (such as [publishing changes to a subgraph schema](../schema/cli-registration/#subgraph-schemas)), GraphOS initiates a **build** that composes your graph's new _supergraph_ schema. From [Apollo Studio](https://studio.apollographql.com/), you can configure which version of Apollo Federation the build pipeline uses to perform this composition.
 
 > GraphOS enables you to choose between _minor_ versions of Federation (such as `2.1`). Each option automatically uses the latest supported _patch_ release of that minor version (such as `2.1.4`).
 >
@@ -88,7 +88,7 @@ Whenever you [publish a change to a subgraph schema](../schema/cli-registration/
 
 3. Select a Federation version from the **Supergraph Pipeline Track** dropdown and click **Save**.
 
-GraphOS will begin using the selected Federation version with the graph's next build.
+GraphOS immediately initiates a new build using the selected Federation version, and all future builds also use the selected version.
 
 ### Composing with the Rover CLI
 
@@ -106,7 +106,7 @@ subgraphs:
   # ...
 ```
 
-- If `federation_version` is `2`, the command uses the _very latest release of Federation_.
+- If `federation_version` is `2`, the command uses the _very latest release of Federation 2_.
 - If `federation_version` is `2.1`, the command uses the most recent _patch_ release of Federation 2.1.
 - If `federation_version` is `=2.1.2`, the command uses _exactly_ Federation 2.1.2.
 
@@ -114,7 +114,7 @@ subgraphs:
 
 ## 3. Update subgraph schemas (as needed)
 
-After both your [routing layer](#1-update-your-routing-layer) _and_ your [build pipeline](#2-update-your-build-pipeline) support a particular minimum version of Apollo Federation, your subgraphs can use features that were first introduced in that version.
+After both your [router](#1-update-your-router) _and_ your [build pipeline](#2-update-your-build-pipeline) support a particular minimum version of Apollo Federation, your subgraphs can use features that were first introduced in that version.
 
 > You _don't need_ to update any subgraph schema that _doesn't_ use newly introduced Apollo Federation features. Different subgraph schemas can target different Federation versions as needed. Ultimately, your [build pipeline](#2-update-your-build-pipeline) determines which version of composition is actually used to create the supergraph schema.
 
@@ -135,17 +135,19 @@ As an example, the [`@interfaceObject` directive](/federation/federated-types/fe
 
 4. Apply the `@interfaceObject` directive to relevant locations in your subgraph schema.
 
-Because you've already updated your [routing layer](#1-update-your-routing-layer) and [build pipeline](#2-update-your-build-pipeline), the next time you deploy your subgraph and publish its schema to GraphOS, every component in your supergraph will be prepared to interact a schema that includes the `@interfaceObject` directive you've added.
+Because you've already updated your [router](#1-update-your-router) and [build pipeline](#2-update-your-build-pipeline), the next time you deploy your subgraph and publish its schema to GraphOS, every component in your supergraph will be prepared to interact a schema that includes the `@interfaceObject` directive you've added.
 
 ## Why is this update order necessary?
 
 GraphOS supergraphs use the [Apollo Federation 2](/federation/) architecture. Federation 2 is _itself_ a versioned technology (2.2, 2.3, etc.), and each version introduces changes and additions to the set of supported [subgraph directives](/federation/federated-types/federated-directives/).
 
-- Each version of the Apollo Router is compiled against a particular version of Federation 2 (for details, [see this table](/router/federation-version-support)). Any given router version is backward compatible with _previous_ versions of Federation. However, it _isn't_ compatible with _more recent_ versions.
+- Each version of the Apollo Router is compiled against a particular version of Federation 2 (for details, [see this table](/router/federation-version-support)). Any given router version is backward compatible with _previous_ versions of Federation. However, it _isn't_ compatible with _newer_ versions.
 
-    Therefore, it's important to update your routing layer _first_, before any _other_ supergraph component begins using a later Federation 2 version. Otherwise, you might cause your router to break by providing it a supergraph schema that it doesn't support.
+    Therefore, it's important to update your router _first_, before any _other_ supergraph component begins using a later Federation 2 version. Otherwise, you might cause your router to break by providing it a supergraph schema that it doesn't support.
 
-- Your graph's **Supergraph Pipeline Track** setting in Apollo Studio determines which version of Federation 2 is used to compose your supergraph schema. This composition process will fail if one of your subgraph schemas uses a directive that was introduced in a Federation version later than your chosen pipeline track.
+- Your graph's **Supergraph Pipeline Track** setting in Apollo Studio determines which version of Federation 2 is used to compose your supergraph schema. This composition process fails if one of your subgraph schemas uses a directive that was introduced in a Federation version later than your chosen pipeline track.
+
+    - In the case of a failed build, GraphOS continues to provide your router with the supergraph schema from the most recent _successful_ build.
 
 - Finally, subgraph schemas are where you _actually apply_ new Federation 2 directives. You need to update your subgraph library to a version that recognizes all directives that you use in your schema.
 
