@@ -145,7 +145,8 @@ Results of all schema checks are available in Studio from your graph's Checks pa
 You can click on a composition check to view its result. If composition succeeded, you can view the composed supergraph schema. Regardless of success, you can view the proposed subgraph schema.
 
 ## Operation checks
-GraphOS also validates schema changes with **operation checks** _after_ the changes have passed **composition checks**. Operation checks look at your [reported operations](#prerequisites) to your graph and flag any clients and operations that would be affected by this change. This is because a schema change, like removing a field, will pass composition checks if the resulting supergraph is a valid schema, but it could still cause runtime errors for clients that are actively using the schema.
+
+GraphOS also validates schema changes with **operation checks** _after_ the changes have passed **composition checks**. Operation checks look at your [reported operations](#prerequisites) to your graph and flag any clients and operations that would be affected by this change. Because changes like removing a field will pass **composition checks** if the resulting supergraph is a valid schema, however it could still cause runtime errors for clients that are actively using the schema.
 
 ### Overriding flagged changes
 
