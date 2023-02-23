@@ -148,3 +148,10 @@ We use [Changesets](https://github.com/changesets/changesets) to automate the pu
 To publish a new version, first add a changeset to your PR using `npx changeset add`. Follow the prompts in your terminal to select the version bump for this release, and add a message describing what is being changed.
 
 After this PR gets merged to main, a new PR will be opened automatically that increments the package version. When this PR is merged, [a GitHub action](../../.github/workflows/release-pr.yml) will be run that publishes the package to NPM.
+
+## Working on Chakra Helpers & the Docs at the same time
+
+1. Run `npm workspace @apollo/chakra-helpers start`
+2. Run `npm run start:local` in another terminal
+  
+Now your local docs will use your local chakra changes
