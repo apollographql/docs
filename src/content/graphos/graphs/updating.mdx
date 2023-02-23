@@ -92,24 +92,26 @@ GraphOS immediately initiates a new build using the selected Federation version,
 
 ### Composing with the Rover CLI
 
-The [Rover CLI](/rover/) enables you to compose a supergraph schema via [the `rover supergraph compose` command](/rover/commands/supergraphs#composing-a-supergraph-schema). You _don't_ usually need to run this command if your router is connected to GraphOS.
+If you host your own Apollo Router instance, you can use the [Rover CLI](/rover/) to compose its supergraph schema via [the `rover supergraph compose` command](/rover/commands/supergraphs#composing-a-supergraph-schema).
 
-If you _do_ use this command, it selects which version of composition to use based on the `federation_version` key in the YAML configuration file you pass:
+> ⚠️ **Performing composition with Rover is not recommended.** Instead, perform composition via the [GraphOS build pipeline](#2-update-your-build-pipeline) to help ensure a consistent schema delivery process across all of your graph's environments.
+
+If you _do_ perform composition with `rover supergraph compose`, the command uses the _exact_ version of composition you specify via the `federation_version` key in the YAML configuration file you pass:
 
 ```bash
 rover supergraph compose --config ./supergraph.yaml
 ```
 
 ```yaml title="supergraph.yaml"
-federation_version: 2 #highlight-line
+federation_version: =2.3.2 #highlight-line
 subgraphs:
   # ...
 ```
 
-- If `federation_version` is `2`, the command uses the _very latest release of Federation 2_.
-- If `federation_version` is `2.1`, the command uses the most recent _patch_ release of Federation 2.1.
-- If `federation_version` is `=2.1.2`, the command uses _exactly_ Federation 2.1.2.
+This value **must** target a _specific patch release_ (`2.3.1`, `2.3.2`, etc.), and it must start with an equals sign (`=`).
 
+> ⚠️ **Important:** If you _don't_ provide a value for `federation_version`, Rover prints a warning and chooses a composition version according to [this logic](/rover/commands/supergraphs#automatic-updates). **This is dangerous!** Rover might use a newer composition version than what your router supports, resulting in a supergraph schema that causes the router to fail on startup.
+>
 > [Learn more about setting a Rover composition version](/rover/commands/supergraphs#setting-a-composition-version).
 
 ## 3. Update subgraph schemas (as needed)
