@@ -31,7 +31,7 @@ export function Sidebar({children, configs, isHidden}) {
   const sidebarRef = useRef();
 
   const pathContext = useContext(PathContext);
-  const [activeDocset, setActiveDocset] = useState('react');
+  const [activeDocset, setActiveDocset] = useState(null);
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 

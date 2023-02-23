@@ -48,7 +48,7 @@ export function SidebarNav({docset, navItems}) {
 
   return (
     <>
-      <Flex p="4" pos="sticky" top="0" zIndex="1">
+      <Flex p="4" pos="sticky" top="0" zIndex="1" bg="bg">
         <Heading size="md">{docset}</Heading>
         <Button
           ml="auto"
