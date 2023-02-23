@@ -1,25 +1,39 @@
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useRef, useState} from 'react';
-import {Box, List, ListItem, chakra, useColorModeValue} from '@chakra-ui/react';
+import {
+  Box,
+  Icon,
+  List,
+  ListItem,
+  chakra,
+  useColorModeValue
+} from '@chakra-ui/react';
 import {PathContext} from '../../utils';
 import {SidebarNav} from './SidebarNav';
 import {TOTAL_HEADER_HEIGHT} from '../Header';
+import {mockDocset, sidebarMenu} from './sidebar.config';
 
 const SIDEBAR_WIDTH = 280;
-const COLLAPSED_SIDEBAR_WIDTH = 93;
+const COLLAPSED_SIDEBAR_WIDTH = 85;
 
 export const PAGE_SIDEBAR_MARGIN = SIDEBAR_WIDTH + COLLAPSED_SIDEBAR_WIDTH;
 
 export const SIDEBAR_WIDTH_BASE = 450;
 export const SIDEBAR_WIDTH_XL = 500;
 
+const {categories} = sidebarMenu;
+
 export function Sidebar({children, configs, isHidden}) {
+  configs = {
+    ...configs,
+    ...mockDocset
+  };
   const sidebarRef = useRef();
 
   const pathContext = useContext(PathContext);
   const [activeDocset, setActiveDocset] = useState('react');
 
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     // scroll the active nav group into view if one exists
@@ -75,51 +89,75 @@ export function Sidebar({children, configs, isHidden}) {
         }}
       >
         <List p="4">
-          {Object.entries(configs)
-            .filter(
-              ([path, config]) =>
-                (path === '/' || !path.includes('/')) && !config.internal
-            )
-            .map(([path, config]) => {
-              const isActiveMenu = activeDocset === path;
-              const isActivePath = pathContext.basePath === path;
-              return (
-                <ListItem
-                  py="2"
-                  px="4"
-                  onFocus={() => setActiveDocset(path)}
-                  onMouseEnter={() => setActiveDocset(path)}
-                  key={path}
-                  fontSize="sm"
-                  fontWeight="semibold"
-                  textTransform="uppercase"
-                  letterSpacing="wider"
-                  position="relative"
-                  _after={{
-                    content: '""',
-                    display: isActivePath ? 'block' : 'none',
-                    width: '4',
-                    bg: 'purple.500',
-                    position: 'absolute',
-                    left: '100%',
-                    top: 0,
-                    bottom: 0
-                  }}
-                  borderRadius="md"
-                  borderRightRadius={isActivePath ? 0 : undefined}
-                  bg={
-                    isActivePath
-                      ? 'purple.500'
-                      : isActiveMenu
-                      ? 'whiteAlpha.300'
-                      : 'inherit'
+          {categories.map(category => {
+            return (
+              <ListItem
+                fontSize="13px"
+                fontFamily="mono"
+                key={category.name}
+                color="#fff"
+                mb="2"
+                sx={{
+                  '.hide-when-closed': {
+                    opacity: sidebarOpen ? '100' : '0'
                   }
-                  tabIndex="0"
-                >
-                  {config.docset}
-                </ListItem>
-              );
-            })}
+                }}
+              >
+                <chakra.span mb="2" display="block">
+                  {category.name}
+                </chakra.span>
+                {category.items.map(item => {
+                  const {docset} = item;
+                  const isActiveMenu = activeDocset === docset;
+                  const isActivePath = pathContext.basePath === docset;
+                  return (
+                    <ListItem
+                      fontFamily="body"
+                      key={item.title}
+                      py="2"
+                      px="4"
+                      display="flex"
+                      alignItems="center"
+                      onFocus={() => setActiveDocset(docset)}
+                      onMouseEnter={() => setActiveDocset(docset)}
+                      fontSize="sm"
+                      fontWeight="semibold"
+                      letterSpacing="wider"
+                      position="relative"
+                      _after={{
+                        content: '""',
+                        display: isActivePath ? 'block' : 'none',
+                        width: '4',
+                        bg: 'purple.500',
+                        position: 'absolute',
+                        left: '100%',
+                        top: 0,
+                        bottom: 0
+                      }}
+                      borderRadius="md"
+                      borderRightRadius={isActivePath ? 0 : undefined}
+                      bg={
+                        isActivePath
+                          ? 'purple.500'
+                          : isActiveMenu
+                          ? 'whiteAlpha.300'
+                          : 'inherit'
+                      }
+                      tabIndex="0"
+                    >
+                      <Icon w="5" h="5" mr="2" as={item.icon} />{' '}
+                      <chakra.span
+                        transition="opacity ease-in-out 100ms"
+                        opacity={sidebarOpen ? '100' : '0'}
+                      >
+                        {item.title}
+                      </chakra.span>
+                    </ListItem>
+                  );
+                })}
+              </ListItem>
+            );
+          })}
         </List>
       </Box>
       <Box
