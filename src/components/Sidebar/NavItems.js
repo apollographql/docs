@@ -7,19 +7,12 @@ import {
   HStack,
   Stack,
   Tooltip,
-  chakra,
-  useColorModeValue
+  chakra
 } from '@chakra-ui/react';
 import {FiChevronDown, FiChevronRight, FiExternalLink} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
 import {IoFlaskOutline, IoPartlySunnyOutline} from 'react-icons/io5';
-import {
-  PathContext,
-  getFullPath,
-  isPathActive,
-  isUrl,
-  useTagColors
-} from '../../utils';
+import {PathContext, getFullPath, isPathActive, isUrl} from '../../utils';
 import {TbComponents} from 'react-icons/tb';
 
 export const GA_EVENT_CATEGORY_SIDEBAR = 'Sidebar';
@@ -72,30 +65,32 @@ Tags.propTypes = {
 };
 
 function NavButton({isActive, depth, children, tags, ...props}) {
-  const [activeBg, activeTextColor] = useTagColors();
-  const activeHoverBg = useColorModeValue('indigo.100', 'indigo.300');
-
-  const buttonProps = isActive && {
-    bg: activeBg,
-    color: activeTextColor,
-    _hover: {
-      bg: activeHoverBg
-    }
-  };
-
   return (
     <Button
       h="auto"
-      py={depth ? 1.5 : 2.5} // give top level nav items larger padding
+      py="2"
+      lineHeight="base"
       whiteSpace="normal"
       variant="ghost"
       fontWeight="normal"
       textAlign="left"
       justifyContent="flex-start"
-      {...buttonProps}
+      data-depth={depth}
+      sx={
+        isActive && {
+          bg: 'purple.500',
+          color: 'white',
+          _hover: {
+            bg: 'purple.600'
+          },
+          _active: {
+            bg: 'purple.700'
+          }
+        }
+      }
       {...props}
     >
-      <Flex as="span" align="center" pl={depth * 2}>
+      <Flex as="span" align="center">
         {children} {tags && <Tags tags={tags} />}
       </Flex>
     </Button>
@@ -122,9 +117,9 @@ function NavGroup({group, depth}) {
     <div>
       <HStack
         as="button"
-        mb="2"
+        py="2"
         fontWeight="strong"
-        isActive={isActive}
+        css={{scrollMarginTop: 56}}
         data-group={!depth && isActive}
         onClick={() => {
           const open = !isOpen;
@@ -162,7 +157,15 @@ NavGroup.propTypes = {
 export default function NavItems({items, depth = 0}) {
   const {basePath, uri} = useContext(PathContext);
   return (
-    <Stack pb={depth && 3}>
+    <Stack
+      sx={
+        // add some extra padding to sidebar groups
+        depth > 0 && {
+          pt: 2,
+          pb: 1
+        }
+      }
+    >
       {items.map((item, index) => {
         if (item.children) {
           return <NavGroup key={index} group={item} depth={depth} />;
