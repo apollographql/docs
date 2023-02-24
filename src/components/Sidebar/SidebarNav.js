@@ -49,6 +49,7 @@ export function SidebarNav({docset, navItems}) {
   return (
     <>
       <Flex p="4" pos="sticky" top="0" zIndex="1" bg="bg">
+        {/* TODO: the docset title below should match the title in the left sidebar */}
         <Heading size="md">{docset}</Heading>
         <Button
           ml="auto"
