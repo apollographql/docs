@@ -20,15 +20,13 @@ Schema checks are **free** as part of [all Apollo plans](https://www.apollograph
 
 GraphOS can perform the following types of schema checks:
 
-- **Operation checks.** Compare your proposed schema changes against historical operations to verify whether the changes will break any of your graph's active clients.
-
 - [**Composition checks.**](#composition-checks) For supergraphs, verify whether your proposed changes to a subgraph schema will successfully compose with your _other_ subgraph schemas.
+
+- [**Operation checks.**](#operation-checks) Compare your proposed schema changes against historical operations to verify whether the changes will break any of your graph's active clients.
 
 - **[Contract checks](../delivery/contracts/) (enterprise only).** When running schema checks on a source variant, also check whether your proposed schema changes will break any downstream contract variants.
 
-> **Most of this article covers operation checks.**
-> * For details on composition checks, [see this section](#composition-checks).
-> * For details on contract checks, [see this article](./contracts/).
+> **Most of this article covers composition and operation checks. For details on contract checks, [see this article](./contracts/).**
 
 ## Prerequisites
 
@@ -101,6 +99,8 @@ Each change to the schema is labeled either `PASS` or `FAIL`.
 
 > **Note:** Because breaking changes are detected by analyzing recent operations, your graph _must_ be [reporting metrics to GraphOS](#prerequisites) for schema checks to work. **If there are no operation metrics to compare against, all potentially dangerous schema changes are labeled `FAIL`.**
 
+The `rover subgraph check` command returns a nonzero result if any check fails.
+
 The output also includes a Studio URL that provides full details on the changes and their impact on existing clients and operations:
 
 <img
@@ -110,26 +110,6 @@ The output also includes a Studio URL that provides full details on the changes 
 />
 
 > If you've [integrated schema checks with your GitHub PRs](#integrating-with-github), the "Details" link in your GitHub check takes you to this same details page.
-
-### Overriding flagged changes
-
-Occasionally, schema checks might flag a change that you know is safe. For example, you might change an input type's field from nullable to non-null when you are certain that your clients _never_ provide a null value for that field.
-
-In cases like this, you can **override** a flagged change in Apollo Studio from the associated check's details page:
-
-<img
-  className="screenshot"
-  src="../img/schema-checks/mark-operation.png"
-  alt="Service check page in Apollo Studio"
-  width="500"
-/>
-
-You override flagged changes on an operation-by-operation basis. For each operation with flagged changes, you can override those changes in the following ways:
-
-- **Mark the changes as safe.** In this case, schema checks will _not_ flag these exact changes for the operation in any future execution. This effectively "approves" the changes for the operation.
-  - If a future check detects approved changes along with _new_ unsafe changes to the operation, the new unsafe changes _will_ be flagged.
-- **Ignore the operation.** In this case, schema checks will completely ignore the operation when checking _all_ changes in any future execution.
-  - This option is useful when you know an operation originates _only_ from clients or client versions that you don't actively support.
 
 ### Rerunning checks
 
@@ -149,11 +129,11 @@ The new check incorporates any changes made to excluded or included clients, che
 
 ## Composition checks
 
-When you run `subgraph check`, GraphOS performs a **composition check** _before_ it performs operation checks. A composition check verifies that changes you make to a subgraph schema are compatible with your _other_ subgraph schemas, enabling them to compose into a _supergraph_ schema ([learn more](/federation/federated-types/composition/)).
+When you run `subgraph check`, GraphOS performs a **composition check** _before_ it performs any other checks. A composition check verifies that changes you make to a subgraph schema are valid GraphQL definitions and are compatible with your _other_ subgraph schemas, enabling them to compose into a _supergraph_ schema ([learn more](/federation/federated-types/composition/)).
 
-> If a composition check fails, Studio does _not_ then perform operation checks for the provided schema.
+> If a composition check fails, Studio does _not_ then perform additional checks for the provided schema.
 
-Results of both check types are available in Studio from your graph's Checks page:
+Results of all schema checks are available in Studio from your graph's Checks page:
 
 <img
   className="screenshot"
@@ -164,7 +144,32 @@ Results of both check types are available in Studio from your graph's Checks pag
 
 You can click on a composition check to view its result. If composition succeeded, you can view the composed supergraph schema. Regardless of success, you can view the proposed subgraph schema.
 
-The `rover subgraph check` command returns a nonzero result if a composition check _or_ operation check fails.
+## Operation checks
+
+GraphOS also validates schema changes with **operation checks** _after_ the changes have passed **composition checks**. Operation checks look at your [reported operations](#prerequisites) to your graph and flag any clients and operations that would be affected by this change. Because changes like removing a field will pass **composition checks** if the resulting supergraph is a valid schema, however it could still cause runtime errors for clients that are actively using the schema.
+
+### Overriding flagged changes
+
+Occasionally, schema checks might flag a change that you know is safe. For example, you might change an input type's field from nullable to non-null when you are certain that your clients _never_ provide a null value for that field.
+
+In cases like this, you can **override** a flagged change in Apollo Studio from the associated check's details page:
+
+<img
+  className="screenshot"
+  src="../img/schema-checks/mark-operation.png"
+  alt="Service check page in Apollo Studio"
+  width="500"
+/>
+
+You override flagged changes on an operation-by-operation basis. For each operation with flagged changes, you can override those changes in the following ways:
+
+- **Mark the changes as safe.** In this case, schema checks will _not_ flag these exact changes for the operation in any future execution. This effectively "approves" the changes for the operation.
+- If a future check detects approved changes along with _new_ unsafe changes to the operation, the new unsafe changes _will_ be flagged.
+- **Ignore the operation.** In this case, schema checks will completely ignore the operation when checking _all_ changes in any future execution.
+- This option is useful when you know an operation originates _only_ from clients or client versions that you don't actively support.
+
+## Contract checks (enterprise only)
+For more info on Contract/downstream checks, see our [Contracts page](../delivery/contracts/).
 
 ## Using in CI
 
@@ -317,8 +322,31 @@ These changes are detected by schema checks, but they are "safe." They never aff
 | `ENUM_VALUE_DESCRIPTION_CHANGE` | An existing enum value's description changed. |
 | `ARG_DESCRIPTION_CHANGE`        | An existing argument's description changed.   |
 
-### Limits
+## Limits
 
-#### Operation Cardinality
+### Operation check cardinality
 
-Checks will run against a maximum of 10,000 distinct operations. A warning message will display on the UI when a larger cardinality has been reached.
+Operation checks will run against a maximum of 10,000 distinct operations. A warning message will display on the UI when a larger cardinality has been reached.
+
+### Input field usage reporting
+
+GraphOS tracks operation usage, however, in order to group duplicate operations, we use [operation signatures](../metrics/operation-signatures) which denormalize the arguments and inputs. This means that the result of the operation signature does not track which fields on input types that are used.
+
+For example, GraphOS will not be able to track how many times the input field `GetUsersInput.firstName` is used in this schema:
+
+```graphql
+type Query {
+  getUsers(filters: GetUsersInput): [User]
+}
+
+input GetUsersInput {
+  firstName: String
+  lastName: String
+}
+
+type User {
+  id: ID!
+  firstName: String!
+  lastName: String!
+}
+```
