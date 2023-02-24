@@ -19,7 +19,7 @@ import {SidebarNav} from './SidebarNav';
 import {TOTAL_HEADER_HEIGHT} from '../Header';
 
 const SIDEBAR_WIDTH = 280;
-const COLLAPSED_SIDEBAR_WIDTH = 85;
+const COLLAPSED_SIDEBAR_WIDTH = 88;
 
 export const PAGE_SIDEBAR_MARGIN = SIDEBAR_WIDTH + COLLAPSED_SIDEBAR_WIDTH;
 
@@ -98,7 +98,12 @@ export function Sidebar({children, configs, isHidden}) {
           <Stack
             p="4"
             spacing="4"
-            divider={<StackDivider borderColor="whiteAlpha.300" />}
+            divider={
+              <StackDivider
+                css={{width: !sidebarOpen && 56}}
+                borderColor="whiteAlpha.300"
+              />
+            }
           >
             <SidebarCategory title="Start">
               <SidebarCategoryLink docset="/" icon={<AiOutlineHome />}>
