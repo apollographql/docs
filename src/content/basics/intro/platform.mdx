@@ -153,13 +153,13 @@ To implement a supergraph, you set up its [individual parts](#whats-in-a-supergr
 - **If you're already using GraphQL**, we recommend jumping in with your first GraphOS cloud supergraph. [See the quickstart!](/graphos/quickstart/cloud/)
     - You can also check out the [Voyage tutorial series](https://www.apollographql.com/tutorials/voyage-part1) to learn how to create a complete supergraph from scratch.
 
-### Implementing the graph router
+### Implementing the router
 
 If you [create a **cloud supergraph**](/graphos/quickstart/cloud/) with GraphOS, Apollo provisions and hosts your supergraph's router for you!
 
-For enterprise organizations that need to run their router in their own infrastructure, Apollo provides two libraries that can act as a graph router:
+For enterprise organizations that need to run their router in their own infrastructure, Apollo provides two libraries that can act as a router:
 
-- [The Apollo Router](/router/) (recommended)
+- [The Apollo Router](/router/) (strongly recommended)
     - This is a high-performance binary written in Rust that adds [minimal latency to request processing](https://www.apollographql.com/blog/announcement/backend/apollo-router-our-graphql-federation-runtime-in-rust/), even with extremely high traffic.
     - Because the Apollo Router is a precompiled binary, you don't need to write any boilerplate code around it to deploy it to your backend. All it needs is a configuration file for any behavior you want to customize.
     - Cloud supergraph routers use the Apollo Router under the hood.
