@@ -1,11 +1,13 @@
 import PropTypes from 'prop-types';
 import React, {createContext, useContext} from 'react';
 import {Box, List, ListItem, chakra} from '@chakra-ui/react';
+import {Link as GatsbyLink} from 'gatsby';
 import {PathContext} from '../../utils';
 
 export const DocsetContext = createContext();
 
 export const SidebarCategory = ({children, title}) => {
+  const {sidebarOpen} = useContext(DocsetContext);
   return (
     <div>
       <Box
@@ -14,6 +16,11 @@ export const SidebarCategory = ({children, title}) => {
         letterSpacing="wider"
         fontFamily="mono"
         textTransform="uppercase"
+        sx={{
+          span: {
+            opacity: Number(sidebarOpen)
+          }
+        }}
       >
         {title}
       </Box>
@@ -24,7 +31,7 @@ export const SidebarCategory = ({children, title}) => {
 
 SidebarCategory.propTypes = {
   children: PropTypes.node.isRequired,
-  title: PropTypes.string.isRequired
+  title: PropTypes.node.isRequired
 };
 
 export const SidebarCategoryLink = ({children, icon, docset}) => {
@@ -36,6 +43,8 @@ export const SidebarCategoryLink = ({children, icon, docset}) => {
   return (
     <ListItem
       px="4"
+      as={GatsbyLink}
+      to={docset.startsWith('/') ? docset : `/${docset}`}
       display="flex"
       alignItems="center"
       onFocus={() => setActiveDocset(docset)}
