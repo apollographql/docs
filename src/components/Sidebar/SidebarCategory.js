@@ -35,7 +35,7 @@ export const SidebarCategoryLink = ({children, icon, docset}) => {
   const isActivePath = pathContext.basePath === docset;
   return (
     <ListItem
-      px="3.5"
+      px="4"
       display="flex"
       alignItems="center"
       onFocus={() => setActiveDocset(docset)}
