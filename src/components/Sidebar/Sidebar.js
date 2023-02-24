@@ -127,7 +127,13 @@ export function Sidebar({children, configs, isHidden}) {
                 Tech Notes
               </SidebarCategoryLink>
             </SidebarCategory>
-            <SidebarCategory title="Tools &amp; Libraries">
+            <SidebarCategory
+              title={
+                <>
+                  Tools <span>&amp; Libraries</span>
+                </>
+              }
+            >
               <SidebarCategoryLink docset="rover" icon={DOCSET_ICONS.rover}>
                 Rover CLI
               </SidebarCategoryLink>
