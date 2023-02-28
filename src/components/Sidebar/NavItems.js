@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, {createContext, useContext} from 'react';
 import {
+  Box,
   Button,
   Collapse,
   Flex,
@@ -114,7 +115,7 @@ function NavGroup({group, depth}) {
   );
 
   return (
-    <div>
+    <Box pl={depth * 2}>
       <HStack
         as="button"
         py="2"
@@ -145,7 +146,7 @@ function NavGroup({group, depth}) {
           depth={depth + 1}
         />
       </Collapse>
-    </div>
+    </Box>
   );
 }
 
