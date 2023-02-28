@@ -120,6 +120,12 @@ export function Sidebar({children, configs, isHidden}) {
               >
                 Federation
               </SidebarCategoryLink>
+              <SidebarCategoryLink docset="rover" icon={DOCSET_ICONS.rover}>
+                Rover CLI
+              </SidebarCategoryLink>
+              <SidebarCategoryLink docset="router" icon={DOCSET_ICONS.router}>
+                Apollo Router
+              </SidebarCategoryLink>
               <SidebarCategoryLink
                 docset="technotes"
                 icon={DOCSET_ICONS.technotes}
@@ -134,12 +140,6 @@ export function Sidebar({children, configs, isHidden}) {
                 </>
               }
             >
-              <SidebarCategoryLink docset="rover" icon={DOCSET_ICONS.rover}>
-                Rover CLI
-              </SidebarCategoryLink>
-              <SidebarCategoryLink docset="router" icon={DOCSET_ICONS.router}>
-                Apollo Router
-              </SidebarCategoryLink>
               <SidebarCategoryLink
                 docset="apollo-server"
                 icon={DOCSET_ICONS['apollo-server']}
