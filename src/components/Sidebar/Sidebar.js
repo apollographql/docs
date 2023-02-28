@@ -44,6 +44,29 @@ export function Sidebar({children, configs, isHidden}) {
 
   const leftNavBgColor = useColorModeValue('gray.800', 'gray.900');
 
+  useEffect(() => {
+    const handleWindowClick = event => {
+      if (!sidebarRef.current?.contains(event.target)) {
+        dismissSidebar();
+      }
+    };
+
+    const dismissSidebar = () => {
+      if (sidebarOpen) {
+        setActiveDocset(null);
+        setSidebarOpen(false);
+      }
+    };
+
+    window.addEventListener('click', handleWindowClick);
+    window.addEventListener('scroll', dismissSidebar);
+
+    return () => {
+      window.removeEventListener('click', handleWindowClick);
+      window.removeEventListener('scroll', dismissSidebar);
+    };
+  }, [setActiveDocset, setSidebarOpen, sidebarOpen]);
+
   return (
     <chakra.aside
       ref={sidebarRef}
@@ -67,10 +90,10 @@ export function Sidebar({children, configs, isHidden}) {
         opacity: isHidden ? 0 : 1,
         transform: isHidden ? 'translateX(-100%)' : 'none'
       }}
-      onMouseLeave={() => {
-        setActiveDocset(null);
-        setSidebarOpen(false);
-      }}
+      // onMouseLeave={() => {
+      //   setActiveDocset(null);
+      //   setSidebarOpen(false);
+      // }}
     >
       <Box
         w={SIDEBAR_WIDTH}
