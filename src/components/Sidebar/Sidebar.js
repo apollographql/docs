@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef} from 'react';
 import {AiOutlineHome} from '@react-icons/all-files/ai/AiOutlineHome';
 import {
   Box,
@@ -17,6 +17,7 @@ import {
 import {PathContext} from '../../utils';
 import {SidebarNav} from './SidebarNav';
 import {TOTAL_HEADER_HEIGHT} from '../Header';
+import {useLocalStorage} from 'react-use';
 
 const SIDEBAR_WIDTH = 280;
 const COLLAPSED_SIDEBAR_WIDTH = 88;
@@ -30,9 +31,8 @@ export function Sidebar({children, configs, isHidden}) {
   const sidebarRef = useRef();
 
   const pathContext = useContext(PathContext);
-  const [activeDocset, setActiveDocset] = useState(null);
-
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [activeDocset, setActiveDocset] = useLocalStorage('docs:active', null);
+  const [sidebarOpen, setSidebarOpen] = useLocalStorage('docs:sidebar', false);
 
   useEffect(() => {
     // scroll the active nav group into view if one exists
