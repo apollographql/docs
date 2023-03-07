@@ -83,7 +83,7 @@ flowchart LR;
 
 </blockquote>
 
-1. From your new organization in [Apollo Studio](https://studio.apollographql.com/), navigate to the **Supergraphs** tab if it isn't already open.
+1. From your new organization in [Apollo Studio](https://studio.apollographql.com/), navigate to the **Graphs** tab if it isn't already open.
 
    Because you haven't created any graphs yet, Studio shows the following:
 
@@ -154,7 +154,7 @@ flowchart LR;
 
 8. Click **Create Supergraph**.
 
-Nice work! You've created your first cloud supergraph, which is now listed in your organization's **Supergraphs** tab:
+Nice work! You've created your first cloud supergraph, which is now listed in your organization's **Graphs** tab:
 
 <img
   src="../img/supergraph-list.jpg"
@@ -173,7 +173,7 @@ When you created your supergraph, you also created its first **variant** (which 
 
 Let's look at the helpful views that Studio provides for your variant!
 
-From your **Supergraphs** tab, click your graph's `main` variant. This opens the variant's README page.
+From your **Graphs** tab, click your graph's `main` variant. This opens the variant's README page.
 
 The README is great for documenting your supergraph so team members can learn the basics of how to work with it. It supports Markdown syntax like a typical README in a Git repository.
 
@@ -214,7 +214,7 @@ We'll cover some of these pages in later steps, but feel free to click around an
 
 Before we try executing operations on your supergraph, we need to make sure your router is set up to communicate successfully with both your clients _and_ your subgraph.
 
-Go to your variant's **Settings** page, then click **Cloud Routing**:
+Go to your variant's **Settings** page, then click **Cloud Router**:
 
 <img
   className="screenshot"
@@ -281,7 +281,7 @@ If your subgraph's server requires certain HTTP headers to communicate with it (
 
 If the value of any required header includes a secure credential (such as an access token), let's first create a **router-specific secret** for that credential.
 
-On the **Cloud Routing** page, click **Save a secret**. The following dialog appears:
+On the **Cloud Router** page, click **Save a secret**. The following dialog appears:
 
 <img
   className="screenshot"
@@ -323,7 +323,7 @@ Here, we add two headers: `Authorization` and `X-CUSTOM-HEADER`. The `Authorizat
 
 Let's try executing a query against your new supergraph! To do that, we'll use one of Studio's most powerful features: the **Explorer**. The Explorer is a GraphQL IDE that provides visibility into your supergraph's entire schema and helps you build and run queries against it.
 
-From your organization's **Supergraphs** tab, select your new variant and then open its Explorer page from the left navigation. The Explorer looks like this:
+From your organization's **Graphs** tab, select your new variant and then open its Explorer page from the left navigation. The Explorer looks like this:
 
 <img
   src="../img/explorer-new-graph.jpg"
