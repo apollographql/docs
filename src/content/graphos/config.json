@@ -19,6 +19,7 @@
       "Overview": "/graphs/overview",
       "Publishing schemas": "/schema/cli-registration",
       "Creating a new subgraph": "/graphs/creating-a-subgraph",
+      "Securing subgraphs": "/graphs/securing-a-subgraph",
       "Local development": "/graphs/local-development",
       "Updating your graph": "/graphs/updating",
       "Managing graphs in Studio": "/graphs/studio-features",
