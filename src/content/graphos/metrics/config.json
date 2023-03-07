@@ -1,0 +1,16 @@
+{
+  "title": "Metrics",
+  "sidebar": {
+    "Operation metrics": "/usage-reporting",
+    "Field usage": "/field-usage",
+    "Segmenting by client": "/client-awareness",
+    "Datadog forwarding": [
+      "/datadog-integration",
+      [
+        "enterprise"
+      ]
+    ],
+    "Sending metrics to GraphOS": "/sending-operation-metrics",
+    "Operation signatures": "/operation-signatures"
+  }
+}
