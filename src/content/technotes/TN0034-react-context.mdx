@@ -13,7 +13,11 @@ The `QueryResultProvider` component is used to wrap a component tree, providing 
 
 ```tsx
 import React, { createContext, useContext } from 'react';
-import { ApolloQueryResult, OperationVariables, useQuery } from '@apollo/client';
+import {
+  ApolloQueryResult,
+  OperationVariables,
+  useQuery,
+} from '@apollo/client';
 
 interface QueryResult<TData> {
   data?: TData;
@@ -31,35 +35,41 @@ const QueryResultContext = createContext<QueryContextValue<any>>({
   refetch: () => Promise.resolve({} as ApolloQueryResult<any>),
 });
 
-interface QueryResultProviderProps<TVariables extends OperationVariables | undefined = {}> {
+interface QueryResultProviderProps<
+  TVariables extends OperationVariables | undefined = {}
+> {
   query: any;
   variables?: TVariables;
   children: React.ReactNode;
 }
 
-export const QueryResultProvider = ({ query, variables, children }: QueryResultProviderProps) => {
+export const QueryResultProvider = ({
+  query,
+  variables,
+  children,
+}: QueryResultProviderProps) => {
   const { data, error, loading, refetch } = useQuery(query, { variables });
   const value = { queryData: { data, error, loading }, refetch };
   return (
-    <QueryContext.Provider value={value}>{children}</QueryContext.Provider>
+    <QueryResultContext.Provider value={value}>
+      {children}
+    </QueryResultContext.Provider>
   );
-}
+};
 
-export const useQueryResult = <TData = any>(): QueryResult<TData> => {
+export const useQueryResult = <TData = any,>(): QueryResult<TData> => {
   const context = useContext(QueryResultContext);
   if (!context) {
-    throw new Error(
-      'useQueryResult must be used within a QueryResultProvider'
-    );
+    throw new Error('useQueryResult must be used within a QueryResultProvider');
   }
-  return context.queryResult;
-}
+  return context.queryData;
+};
 ```
 
 In this example, we use the `QueryResultProvider` component to wrap the `Users` component, providing it with the `GET_USERS` query. The `Users` component then uses the `useQueryResult` hook to access the data, loading state, and error from the query context.
 
 ```tsx
-import { QueryProvider, useQueryData } from './query-context';
+import { QueryResultProvider, useQueryResult } from './query-context';
 import { gql } from '@apollo/client';
 
 const GET_USERS = gql`
