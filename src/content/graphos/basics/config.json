@@ -1,17 +1,15 @@
 {
-  "title": "GraphOS",
+  "title": "Building Graphs",
   "algoliaFilters": ["docset:graphos", ["docset:rover", "docset:federation"]],
   "sidebar": {
     "Introduction": "/",
-    "Sandbox (no account required)": "/explorer/sandbox",
     "Platform API": "/platform-api",
     "Quickstart": {
       "1️⃣ Create your supergraph": "/quickstart/cloud",
       "2️⃣ Next steps": "/quickstart/next-steps"
     },
-    "Working with Supergraphs": {
-      "Overview": "/graphs/overview",
-      "Publishing schemas": "/schema/cli-registration",
+    "Working with Graphs": {
+      "Overview": "/graphs",
       "Creating a new subgraph": "/graphs/creating-a-subgraph",
       "Local development": "/graphs/local-development",
       "Managing graphs in Studio": "/graphs/studio-features",
@@ -25,43 +23,12 @@
       "Using @defer": "/routing/defer"
     },
     "The Explorer": {
-      "Overview": "/explorer/explorer",
+      "Overview": "/explorer",
+      "Sandbox (no account required)": "/explorer/sandbox",
       "Connecting and authenticating": "/explorer/connecting-authenticating",
       "Operation collections": "/explorer/operation-collections",
       "Embedding the Explorer": "/explorer/embed-explorer",
       "Additional features": "/explorer/additional-features"
-    },
-    "Schema Delivery": {
-      "Schema checks": "/delivery/schema-checks",
-      "Configuring schema checks": "/delivery/check-configurations",
-      "Launches": "/delivery/launches",
-      "Contracts": ["/delivery/contracts", ["enterprise"]],
-      "Validating client operations": "/delivery/validating-client-operations",
-      "Connecting to GitHub": "/delivery/github-integration"
-    },
-    "Notifications": {
-      "Setup": "/notifications/notification-setup",
-      "Daily reports": "/notifications/daily-reports",
-      "Schema changes": "/notifications/schema-change-integration",
-      "Performance alerts": [
-        "/notifications/performance-alerts",
-        ["experimental"]
-      ],
-      "Build status": [
-        "/notifications/build-status-notification",
-        ["enterprise"]
-      ]
-    },
-    "Managing Accounts": {
-      "Organizations": "/org/organizations",
-      "Members, roles, and permissions": "/org/members",
-      "Plans and billing": "/org/plans",
-      "User account": "/org/account",
-      "Single Sign-On (SSO)": {
-        "Okta": ["/sso/okta-integration-guide", ["enterprise"]],
-        "Azure AD": ["/sso/azure-ad-integration-guide", ["enterprise"]],
-        "SAML": ["/sso/saml-integration-guide", ["enterprise"]]
-      }
     }
   }
 }

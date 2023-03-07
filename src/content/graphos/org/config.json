@@ -1,0 +1,29 @@
+{
+  "title": "Org Management",
+  "sidebar": {
+    "Organizations": "/organizations",
+    "Members, roles, and permissions": "/members",
+    "Plans and billing": "/plans",
+    "User account": "/account",
+    "Single Sign-On (SSO)": {
+      "Okta": [
+        "/sso/okta-integration-guide",
+        [
+          "enterprise"
+        ]
+      ],
+      "Azure AD": [
+        "/sso/azure-ad-integration-guide",
+        [
+          "enterprise"
+        ]
+      ],
+      "SAML": [
+        "/sso/saml-integration-guide",
+        [
+          "enterprise"
+        ]
+      ]
+    }
+  }
+}

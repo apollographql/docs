@@ -1,0 +1,17 @@
+{
+  "title": "Schema Delivery",
+  "sidebar": {
+    "Publishing schemas": "/cli-registration",
+    "Schema checks": "/schema-checks",
+    "Configuring schema checks": "/check-configurations",
+    "Launches": "/launches",
+    "Contracts": [
+      "/contracts",
+      [
+        "enterprise"
+      ]
+    ],
+    "Validating client operations": "/validating-client-operations",
+    "Connecting to GitHub": "/github-integration"
+  }
+}
