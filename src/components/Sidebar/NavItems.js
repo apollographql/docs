@@ -160,12 +160,9 @@ export default function NavItems({items, depth = 0}) {
   return (
     <Stack
       spacing={depth ? 1.5 : 2}
-      sx={
+      py={
         // add some extra padding to sidebar groups
-        depth > 0 && {
-          pt: 1,
-          pb: 1
-        }
+        depth ? 1 : 0
       }
     >
       {items.map((item, index) => {
