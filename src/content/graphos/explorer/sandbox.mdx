@@ -287,15 +287,228 @@ Set `hideCookieToggle` to `false` to enable users of your embedded Sandbox insta
 </td>
 <td>
 
-By default, the embedded Sandbox uses your `includeCookies` value from your Sandbox connection settings.
-
-You can set `includeCookies` to `true` if you instead want the Explorer to pass `{ credentials: 'include' }` for its requests.
+You can set `includeCookies` to `true` if you instead want the Sandbox to pass `{ credentials: 'include' }` for its requests.
 
 If you pass the `handleRequest` option, this option is ignored.
 
 Read more about the `fetch` API and credentials [here](https://developer.mozilla.org/en-US/docs/Web/API/fetch#credentials).
 
 This config option is **deprecated** in favor of using the Sandbox connection settings cookie toggle and setting the default value via `initialState.includeCookies`.
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `initialState`
+
+`Object`
+
+</td>
+<td>
+
+An object containing additional options related to the state of the embedded Sandbox on page load.
+
+For supported subfields, see [`initialState` options](#initialstate-options).
+
+</td>
+</tr>
+
+</tbody>
+</table>
+
+### `initialState` options
+
+These are the fields you can include in the `initialState` option you pass to `new EmbeddedSandbox`:
+
+<table class="field-table api-ref">
+  <thead>
+    <tr>
+      <th>Name /<br/>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+
+<tbody>
+
+<tr>
+<td>
+
+##### `includeCookies`
+
+`boolean`
+
+</td>
+<td>
+
+
+Set this value to `true` if you want the Sandbox to pass `{ credentials: 'include' }` for its requests by default.
+
+If you set `hideCookieToggle` to `false`, users can override this default setting with the **Include cookies** toggle. (By default, the embedded Sandbox does _not_ show the **Include cookies** toggle in its connection settings.)
+
+If you also pass the `handleRequest` option, this option is ignored.
+
+Read more about the `fetch` API and credentials [here](https://developer.mozilla.org/en-US/docs/Web/API/fetch#credentials).
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `document`
+
+`string`
+
+</td>
+<td>
+
+A URI-encoded operation to populate in the Sandbox's editor on load.
+
+If you omit this, the Sandbox initially loads an example query based on your schema.
+
+Example:
+
+```jsx
+intialState: {
+  document: `
+  query ExampleQuery {
+    books {
+      title
+    }
+  }
+`;
+}
+```
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `variables`
+
+`string`
+
+</td>
+<td>
+
+A URI-encoded, serialized object containing initial variable values to populate in the Sandbox on load.
+
+If provided, these variables should apply to the initial query you provide for [`document`](#document).
+
+Example:
+
+```jsx
+intialState: {
+  variables: {
+    userID: "abc123"
+  },
+}
+```
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `headers`
+
+`string`
+
+</td>
+<td>
+
+A URI-encoded, serialized object containing initial HTTP header values to populate in the Sandbox on load.
+
+Example:
+
+```jsx
+initialState: {
+  headers: {
+    authorization: "Bearer abc123";
+  }
+}
+```
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `collectionId` & `operationId`
+
+`string`
+
+</td>
+<td>
+
+The ID of a collection, paired with an operation ID to populate in the Sandbox on load. You can find these values from a registered graph in Studio by clicking the **...** menu next to an operation in the Explorer of that graph and selecting **View operation details**.
+
+Example:
+
+```jsx
+initialState: {
+  collectionId: 'abc1234',
+  operationId: 'xyz1234'
+}
+```
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `pollForSchemaUpdates`
+
+`boolean`
+
+</td>
+<td>
+
+If `true`, the embedded Sandbox periodically polls your `initialEndpoint` for schema updates.
+
+The default value is `true`.
+
+Example:
+
+```jsx
+initialState: {
+  pollForSchemaUpdates: false
+}
+```
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `sharedHeaders`
+
+`Record<string, string>`
+
+</td>
+<td>
+
+Headers that are applied by default to every operation executed by the embedded Sandbox. Users can disable the application of these headers, but they can't modify their values.
+
+The embedded Sandbox _always_ includes these headers in its introspection queries to your `initialEndpoint`.
+
+Example:
+
+```jsx
+initialState: {
+  sharedHeaders: {
+    authorization: "Bearer abc123";
+  }
+}
+```
+
 </td>
 </tr>
 

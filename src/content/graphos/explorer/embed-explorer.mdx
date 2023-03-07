@@ -269,7 +269,7 @@ You might want to do this if you need to include specific headers in every reque
 </td>
 <td>
 
-By default, the embedded Explorer uses your variant's **Include cookies** setting, which you configure from the _non_-emedded Explorer in Studio.
+By default, the embedded Explorer uses your variant's **Include cookies** setting, which you configure from the _non_-embedded Explorer in Studio.
 
 You can set `includeCookies` to `true` if you instead want the Explorer to pass `{ credentials: 'include' }` for its requests.
 
@@ -393,6 +393,30 @@ initialState: {
   headers: {
     authorization: 'Bearer abc123';
   }
+}
+```
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `collectionId` / `operationId`
+
+`string`
+
+</td>
+<td>
+
+The ID of a collection, paired with an operation ID to populate in the Explorer on load. You can find these values in your Studio Explorer by clicking the **...** menu next to an operation you want to embed and selecting **View operation details**.
+
+Example:
+
+```jsx
+initialState: {
+  collectionId: 'abc1234',
+  operationId: 'xyz1234'
 }
 ```
 
