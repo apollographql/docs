@@ -69,7 +69,7 @@ function NavButton({isActive, depth, children, tags, ...props}) {
   return (
     <Button
       h="auto"
-      py="2"
+      py={depth ? 1 : 2}
       lineHeight="base"
       whiteSpace="normal"
       variant="ghost"
@@ -118,7 +118,7 @@ function NavGroup({group, depth}) {
     <Box pl={depth * 2}>
       <HStack
         as="button"
-        py="2"
+        py="1.5"
         fontWeight="strong"
         css={{scrollMarginTop: 56}}
         data-group={!depth && isActive}
@@ -159,10 +159,11 @@ export default function NavItems({items, depth = 0}) {
   const {basePath, uri} = useContext(PathContext);
   return (
     <Stack
+      spacing={depth ? 1.5 : 2}
       sx={
         // add some extra padding to sidebar groups
         depth > 0 && {
-          pt: 2,
+          pt: 1,
           pb: 1
         }
       }

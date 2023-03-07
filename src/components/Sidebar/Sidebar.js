@@ -247,6 +247,7 @@ export function Sidebar({children, configs, isHidden}) {
             ? 'none'
             : `translateX(-${SIDEBAR_WIDTH - COLLAPSED_SIDEBAR_WIDTH}px)`
         }
+        shadow={sidebarOpen ? 'xl' : 'none'}
         transitionProperty="transform"
         transitionDuration="normal"
         transitionTimingFunction="ease-in-out"
