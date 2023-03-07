@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, {createContext, useContext} from 'react';
-import {Box, List, ListItem, chakra} from '@chakra-ui/react';
+import {Box, Flex, List, ListItem, chakra} from '@chakra-ui/react';
 import {Link as GatsbyLink} from 'gatsby';
 import {PathContext} from '../../utils';
 
@@ -10,7 +10,7 @@ export const SidebarCategory = ({children, title}) => {
   const {sidebarOpen} = useContext(DocsetContext);
   return (
     <div>
-      <Box
+      <Flex
         mb="4"
         fontSize="sm"
         letterSpacing="wider"
@@ -23,7 +23,7 @@ export const SidebarCategory = ({children, title}) => {
         }}
       >
         {title}
-      </Box>
+      </Flex>
       <List spacing="2">{children}</List>
     </div>
   );
@@ -34,7 +34,7 @@ SidebarCategory.propTypes = {
   title: PropTypes.node.isRequired
 };
 
-export const SidebarCategoryLink = ({children, icon, docset}) => {
+export const SidebarCategoryLink = ({children, icon, docset, ...props}) => {
   const pathContext = useContext(PathContext);
   const {activeDocset, setActiveDocset, sidebarOpen} =
     useContext(DocsetContext);
@@ -69,6 +69,7 @@ export const SidebarCategoryLink = ({children, icon, docset}) => {
           : 'inherit'
       }
       tabIndex="0"
+      {...props}
     >
       <Box fontSize="2xl">{icon}</Box>
       <chakra.span

@@ -1,8 +1,10 @@
 import PropTypes from 'prop-types';
-import React, {useContext, useEffect, useRef} from 'react';
+import React, {useCallback, useContext, useEffect, useRef} from 'react';
 import {AiOutlineHome} from '@react-icons/all-files/ai/AiOutlineHome';
 import {
   Box,
+  Button,
+  DarkMode,
   Stack,
   StackDivider,
   chakra,
@@ -14,6 +16,7 @@ import {
   SidebarCategory,
   SidebarCategoryLink
 } from './SidebarCategory';
+import {Link as GatsbyLink} from 'gatsby';
 import {PathContext} from '../../utils';
 import {SidebarNav} from './SidebarNav';
 import {TOTAL_HEADER_HEIGHT} from '../Header';
@@ -34,6 +37,13 @@ export function Sidebar({children, configs, isHidden}) {
   const [activeDocset, setActiveDocset] = useLocalStorage('docs:active', null);
   const [sidebarOpen, setSidebarOpen] = useLocalStorage('docs:sidebar', false);
 
+  const dismissSidebar = useCallback(() => {
+    if (sidebarOpen) {
+      setActiveDocset(null);
+      setSidebarOpen(false);
+    }
+  }, [sidebarOpen, setActiveDocset, setSidebarOpen]);
+
   useEffect(() => {
     // scroll the active nav group into view if one exists
     const group = sidebarRef.current.querySelector('[data-group="true"]');
@@ -51,13 +61,6 @@ export function Sidebar({children, configs, isHidden}) {
       }
     };
 
-    const dismissSidebar = () => {
-      if (sidebarOpen) {
-        setActiveDocset(null);
-        setSidebarOpen(false);
-      }
-    };
-
     window.addEventListener('click', handleWindowClick);
     window.addEventListener('scroll', dismissSidebar);
 
@@ -65,7 +68,7 @@ export function Sidebar({children, configs, isHidden}) {
       window.removeEventListener('click', handleWindowClick);
       window.removeEventListener('scroll', dismissSidebar);
     };
-  }, [setActiveDocset, setSidebarOpen, sidebarOpen]);
+  }, [dismissSidebar]);
 
   return (
     <chakra.aside
@@ -133,45 +136,10 @@ export function Sidebar({children, configs, isHidden}) {
                 Home
               </SidebarCategoryLink>
             </SidebarCategory>
-            <SidebarCategory title="GraphOS">
-              <SidebarCategoryLink docset="graphos" icon={DOCSET_ICONS.graphos}>
-                Building Graphs
-              </SidebarCategoryLink>
-              <SidebarCategoryLink
-                docset="graphos/metrics"
-                icon={DOCSET_ICONS.metrics}
-              >
-                Metrics
-              </SidebarCategoryLink>
-              <SidebarCategoryLink
-                docset="graphos/security"
-                icon={DOCSET_ICONS.security}
-              >
-                Security
-              </SidebarCategoryLink>
-              <SidebarCategoryLink
-                docset="federation"
-                icon={DOCSET_ICONS.federation}
-              >
-                Federation
-              </SidebarCategoryLink>
-              <SidebarCategoryLink docset="rover" icon={DOCSET_ICONS.rover}>
-                Rover CLI
-              </SidebarCategoryLink>
-              <SidebarCategoryLink docset="router" icon={DOCSET_ICONS.router}>
-                Apollo Router
-              </SidebarCategoryLink>
-              <SidebarCategoryLink
-                docset="technotes"
-                icon={DOCSET_ICONS.technotes}
-              >
-                Tech Notes
-              </SidebarCategoryLink>
-            </SidebarCategory>
             <SidebarCategory
               title={
                 <>
-                  Tools <span>&amp; Libraries</span>
+                  Tools <span>&nbsp;&amp; Libraries</span>
                 </>
               }
             >
@@ -198,6 +166,72 @@ export function Sidebar({children, configs, isHidden}) {
                 icon={DOCSET_ICONS['apollo-ios']}
               >
                 Client (iOS)
+              </SidebarCategoryLink>
+            </SidebarCategory>
+            <SidebarCategory
+              title={
+                <>
+                  GraphOS{' '}
+                  <chakra.span ml="auto">
+                    <DarkMode>
+                      <Button
+                        as={GatsbyLink}
+                        to="/graphos/quickstart/cloud"
+                        fontFamily="body"
+                        size="xs"
+                        leftIcon={<span>🚀</span>}
+                        colorScheme="yellow"
+                        variant="outline"
+                        onClick={dismissSidebar}
+                      >
+                        Get started
+                      </Button>
+                    </DarkMode>
+                  </chakra.span>
+                </>
+              }
+            >
+              <SidebarCategoryLink docset="graphos" icon={DOCSET_ICONS.graphos}>
+                <span>Building Graphs</span>
+              </SidebarCategoryLink>
+              <SidebarCategoryLink
+                docset="graphos/delivery"
+                icon={DOCSET_ICONS.delivery}
+              >
+                Schema Delivery
+              </SidebarCategoryLink>
+              <SidebarCategoryLink
+                docset="graphos/metrics"
+                icon={DOCSET_ICONS.metrics}
+              >
+                Metrics &amp; Reporting
+              </SidebarCategoryLink>
+              <SidebarCategoryLink
+                docset="graphos/security"
+                icon={DOCSET_ICONS.security}
+              >
+                Security
+              </SidebarCategoryLink>
+              <SidebarCategoryLink
+                docset="federation"
+                icon={DOCSET_ICONS.federation}
+              >
+                Federation
+              </SidebarCategoryLink>
+              <SidebarCategoryLink docset="graphos/org" icon={DOCSET_ICONS.org}>
+                Org Management
+              </SidebarCategoryLink>
+              <SidebarCategoryLink docset="rover" icon={DOCSET_ICONS.rover}>
+                Rover CLI
+              </SidebarCategoryLink>
+              <SidebarCategoryLink docset="router" icon={DOCSET_ICONS.router}>
+                Apollo Router
+              </SidebarCategoryLink>
+              <SidebarCategoryLink
+                docset="technotes"
+                icon={DOCSET_ICONS.technotes}
+              >
+                Tech Notes
               </SidebarCategoryLink>
             </SidebarCategory>
           </Stack>

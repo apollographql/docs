@@ -3,7 +3,7 @@ title: Securing subgraphs
 description: With GraphOS
 ---
 
-To keep your supergraph secure, it's important that your individual subgraphs are [queried  _only_ by your router](/federation/building-supergraphs/subgraphs-overview/#securing-your-subgraphs). That's because your subgraphs expose powerful fields that the router uses to execute operations across them. External clients should _not_ have access to these fields.
+To keep your supergraph secure, it's important that your individual subgraphs are [queried _only_ by your router](/federation/building-supergraphs/subgraphs-overview/#securing-your-subgraphs). That's because your subgraphs expose powerful fields that the router uses to execute operations across them. External clients should _not_ have access to these fields.
 
 This article describes steps for securing your subgraphs when using a [cloud supergraph](/graphos/routing/cloud).
 
@@ -35,13 +35,13 @@ headers:
     products:
       request:
         - insert:
-          name: "Router-Authorization"
-          value: "${env.PRODUCTS_SUBGRAPH_SECRET}"
+          name: 'Router-Authorization'
+          value: '${env.PRODUCTS_SUBGRAPH_SECRET}'
     users:
       request:
         - insert:
-          name: "Router-Authorization"
-          value: "${env.USERS_SUBGRAPH_SECRET}"
+          name: 'Router-Authorization'
+          value: '${env.USERS_SUBGRAPH_SECRET}'
 ```
 
 ## 3. Configure the subgraph to require the secret
@@ -57,12 +57,11 @@ Most cloud providers include a mechanism for saving secrets that are then made a
 >
 > If you have an existing subgraph that wasn't created from a template, you can check a similar template's source code for an example.
 
-
 ## 4. Test the configuration
 
 After adding the shared secret to both your router _and_ subgraph, do the following to confirm that communication has been secured as intended:
 
 1. Verify that your router _can_ still communicate with the subgraph by executing a test query against the router from the Explorer.
-    - Make sure the query includes at least one field from the relevant subgraph!
+   - Make sure the query includes at least one field from the relevant subgraph!
 2. Verify that other clients _can't_ communicate with the subgraph by executing a test query _against the subgraph directly_.
-    - This query should fail with an authorization error.
+   - This query should fail with an authorization error.

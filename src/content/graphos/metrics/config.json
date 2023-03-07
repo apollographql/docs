@@ -1,5 +1,5 @@
 {
-  "title": "Metrics",
+  "title": "Metrics & Reporting",
   "sidebar": {
     "Operation metrics": "/usage-reporting",
     "Field usage": "/field-usage",
@@ -11,6 +11,23 @@
       ]
     ],
     "Sending metrics to GraphOS": "/sending-operation-metrics",
-    "Operation signatures": "/operation-signatures"
+    "Operation signatures": "/operation-signatures",
+    "Notifications": {
+      "Setup": "/notifications/notification-setup",
+      "Daily reports": "/notifications/daily-reports",
+      "Schema changes": "/notifications/schema-change-integration",
+      "Performance alerts": [
+        "/notifications/performance-alerts",
+        [
+          "experimental"
+        ]
+      ],
+      "Build status": [
+        "/notifications/build-status-notification",
+        [
+          "enterprise"
+        ]
+      ]
+    }
   }
 }
