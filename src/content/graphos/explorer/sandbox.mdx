@@ -345,7 +345,7 @@ By default, the embedded Sandbox does not show the **Include cookies** toggle in
 
 Set this value to `true` if you want the Sandbox to pass `{ credentials: 'include' }` for its requests by default.
 
-If you pass `hideCookieToggle` to true, users will default to your setting for `includeCookies`, but will be able to toggle this on and off.
+If you set `hideCookieToggle` to `false`, users can override this default setting with the **Include cookies** toggle. (By default, the embedded Sandbox does _not_ show the **Include cookies** toggle in its connection settings.)
 
 If you pass the `handleRequest` option, this option is ignored.
 
