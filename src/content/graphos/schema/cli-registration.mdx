@@ -8,8 +8,9 @@ import RegisterCli from '../../shared/register-cli.mdx';
 Whenever you make changes to a graph's schema, you should **publish** those changes to Apollo GraphOS using the Rover CLI. Doing so ensures that Apollo always has an up-to-date understanding of your graph.
 
 > ⚠️ **If you haven't installed Rover yet:**
-> 1.  <a href="https://www.apollographql.com/docs/rover/getting-started/" target="_blank">Install the Rover CLI.</a>
-> 2. <a href="https://www.apollographql.com/docs/rover/configuring/" target="_blank">Authenticate Rover</a> with Apollo Studio.
+>
+> 1. [Install the Rover CLI](https://www.apollographql.com/docs/rover/getting-started/").
+> 2. [Authenticate Rover](https://www.apollographql.com/docs/rover/configuring/) with Apollo Studio.
 
 ## Subgraph schemas
 
@@ -36,17 +37,18 @@ graph LR;
 1. Identify the name of the subgraph you're publishing to. You can view the names of your existing subgraphs from your variant's **Subgraphs** page in Studio.
 
 2. **If you're publishing a subgraph for the first time,** _also_ obtain the **routing URL** for that subgraph. This is the URL that your router will use to communicate with the subgraph.
-    - If Studio already knows your subgraph's routing URL, you don't need to provide this value unless you're changing it.
 
-2. Run the `rover subgraph publish` command and provide it your subgraph's schema in one of the ways shown:
+   - If Studio already knows your subgraph's routing URL, you don't need to provide this value unless you're changing it.
 
-    ```bash
-    # Provide a local .graphql file path
-    rover subgraph publish my-graph@my-variant --name locations --routing-url https://flyby-locations-sub.herokuapp.com/ --schema ./schema.graphql
+3. Run the `rover subgraph publish` command and provide it your subgraph's schema in one of the ways shown:
 
-    # Provide an introspection result via stdin
-    rover subgraph introspect http://localhost:4000 | rover subgraph publish my-graph@my-variant --name locations --routing-url https://flyby-locations-sub.herokuapp.com/ --schema -
-    ```
+   ```bash
+   # Provide a local .graphql file path
+   rover subgraph publish my-graph@my-variant --name locations --routing-url https://flyby-locations-sub.herokuapp.com/ --schema ./schema.graphql
+
+   # Provide an introspection result via stdin
+   rover subgraph introspect http://localhost:4000 | rover subgraph publish my-graph@my-variant --name locations --routing-url https://flyby-locations-sub.herokuapp.com/ --schema -
+   ```
 
 Whenever you publish a subgraph schema, GraphOS attempts to **compose** all latest versions of your subgraph schemas into a single **supergraph schema** for your router:
 

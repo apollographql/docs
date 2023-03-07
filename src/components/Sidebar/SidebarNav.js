@@ -51,31 +51,34 @@ export function SidebarNav({docset, navItems}) {
       <Flex p="4" pos="sticky" top="0" zIndex="1" bg="bg">
         {/* TODO: the docset title below should match the title in the left sidebar */}
         <Heading size="md">{docset}</Heading>
-        <Button
-          ml="auto"
-          size="xs"
-          variant="ghost"
-          isDisabled={!navGroups.length}
-          leftIcon={isAllExpanded ? <BsChevronContract /> : <BsChevronExpand />}
-          onClick={() => {
-            const expanded = !isAllExpanded;
-            setLocalNavState(
-              navGroups.reduce(
-                (acc, group) => ({
-                  ...acc,
-                  [group.id]: expanded
-                }),
-                {}
-              )
-            );
-            window.gtag?.('event', 'Toggle all', {
-              event_category: GA_EVENT_CATEGORY_SIDEBAR,
-              event_label: expanded ? 'expand' : 'collapse'
-            });
-          }}
-        >
-          {isAllExpanded ? 'Collapse' : 'Expand'} all
-        </Button>
+        {navGroups.length > 0 && (
+          <Button
+            ml="auto"
+            size="xs"
+            variant="ghost"
+            leftIcon={
+              isAllExpanded ? <BsChevronContract /> : <BsChevronExpand />
+            }
+            onClick={() => {
+              const expanded = !isAllExpanded;
+              setLocalNavState(
+                navGroups.reduce(
+                  (acc, group) => ({
+                    ...acc,
+                    [group.id]: expanded
+                  }),
+                  {}
+                )
+              );
+              window.gtag?.('event', 'Toggle all', {
+                event_category: GA_EVENT_CATEGORY_SIDEBAR,
+                event_label: expanded ? 'expand' : 'collapse'
+              });
+            }}
+          >
+            {isAllExpanded ? 'Collapse' : 'Expand'} all
+          </Button>
+        )}
       </Flex>
       <NavContext.Provider
         value={{

@@ -3,8 +3,6 @@ title: Operation metrics in GraphOS
 description: Understand your supergraph's performance
 ---
 
-import ObtainGraphApiKey from '../../shared/obtain-graph-api-key.mdx';
-
 If you have a [cloud supergraph](../graphs/overview/#cloud-supergraphs), its router _automatically_ reports metrics for the operations that clients run on it.
 
 > For other types of graphs, see [Sending operation metrics to GraphOS](./sending-operation-metrics/).
@@ -42,11 +40,11 @@ If you [enable trace reporting](#enabling-traces) in your subgraphs, Apollo Stud
 
 Shown above, the **Traces** tab for an operation provides a breakdown of timing and error information for _each field_ that's resolved as part of that operation. This helps you identify opportunities to improve your supergraph's overall performance by optimizing whichever resolvers currently act as a bottleneck.
 
-### Enabling traces 
+### Enabling traces
 
 To enable federated trace reporting in your subgraphs, consult the documentation for the GraphQL server library your subgraph uses.
 
-> **Not all subgraph-compatible libraries support federated trace reporting.** 
+> **Not all subgraph-compatible libraries support federated trace reporting.**
 >
 > To confirm the support status for your library, check its **FEDERATED TRACING** entry in [Federation-compatible subgraph implementations](/federation/building-supergraphs/supported-subgraphs).
 

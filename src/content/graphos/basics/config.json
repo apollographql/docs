@@ -31,14 +31,6 @@
       "Embedding the Explorer": "/explorer/embed-explorer",
       "Additional features": "/explorer/additional-features"
     },
-    "Metrics Reporting": {
-      "Operation metrics": "/metrics/usage-reporting",
-      "Field usage": "/metrics/field-usage",
-      "Segmenting by client": "/metrics/client-awareness",
-      "Datadog forwarding": ["/metrics/datadog-integration", ["enterprise"]],
-      "Sending metrics to GraphOS": "/metrics/sending-operation-metrics",
-      "Operation signatures": "/metrics/operation-signatures"
-    },
     "Schema Delivery": {
       "Schema checks": "/delivery/schema-checks",
       "Configuring schema checks": "/delivery/check-configurations",
@@ -59,12 +51,6 @@
         "/notifications/build-status-notification",
         ["enterprise"]
       ]
-    },
-    "Security": {
-      "API keys": "/api-keys",
-      "Audit log": ["/audit-log", ["enterprise"]],
-      "Sub-processors": "/sub-processors",
-      "Data privacy and compliance": "/data-privacy"
     },
     "Managing Accounts": {
       "Organizations": "/org/organizations",

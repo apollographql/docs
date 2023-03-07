@@ -1,0 +1,14 @@
+{
+  "title": "Security",
+  "sidebar": {
+    "API keys": "/api-keys",
+    "Audit log": [
+      "/audit-log",
+      [
+        "enterprise"
+      ]
+    ],
+    "Sub-processors": "/sub-processors",
+    "Data privacy and compliance": "/data-privacy"
+  }
+}

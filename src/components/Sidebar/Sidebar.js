@@ -138,6 +138,18 @@ export function Sidebar({children, configs, isHidden}) {
                 Building Graphs
               </SidebarCategoryLink>
               <SidebarCategoryLink
+                docset="graphos/metrics"
+                icon={DOCSET_ICONS.metrics}
+              >
+                Metrics
+              </SidebarCategoryLink>
+              <SidebarCategoryLink
+                docset="graphos/security"
+                icon={DOCSET_ICONS.security}
+              >
+                Security
+              </SidebarCategoryLink>
+              <SidebarCategoryLink
                 docset="federation"
                 icon={DOCSET_ICONS.federation}
               >

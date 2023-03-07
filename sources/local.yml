@@ -2,6 +2,8 @@
 # TODO: maybe try sourcing content from outside the src directory?
 # https://github.com/gatsbyjs/gatsby/issues/5510
 /: src/content/basics
-graphos: src/content/graphos
+graphos: src/content/graphos/basics
+graphos/metrics: src/content/graphos/metrics
+graphos/security: src/content/graphos/security
 technotes: src/content/technotes
 community: src/content/community
