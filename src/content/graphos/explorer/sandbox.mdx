@@ -470,13 +470,15 @@ initialState: {
 </td>
 <td>
 
-Optional. Defaults to true. If you don't want the embedded Sandbox to poll against your `initialEndpoint` for schema updates, pass `false` here.
+If `true`, the embedded Sandbox periodically polls your `initialEndpoint` for schema updates.
+
+The default value is `true`.
 
 Example:
 
 ```jsx
 initialState: {
-  pollForSchemaUpdates: true
+  pollForSchemaUpdates: false
 }
 ```
 
