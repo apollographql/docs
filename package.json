@@ -106,7 +106,7 @@
     "eslint": "^7.32.0",
     "eslint-plugin-mdx": "^1.11.1",
     "jest": "^27.4.5",
-    "netlify-cli": "^9.13.3"
+    "netlify-cli": "^13.1.1"
   },
   "volta": {
     "node": "16.15.1"
