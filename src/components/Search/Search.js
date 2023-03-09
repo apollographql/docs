@@ -32,7 +32,13 @@ export function Search({algoliaFilters}) {
   );
   return (
     <>
-      <SearchButton mr="2" onClick={onOpen} />
+      <SearchButton
+        mx={{
+          base: 10,
+          md: 88
+        }}
+        onClick={onOpen}
+      />
       <IconButton
         d={{base: 'flex', sm: 'none'}}
         fontSize="xl"
