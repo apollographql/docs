@@ -136,7 +136,10 @@ function NavGroup({group, depth}) {
         }}
       >
         <span>{group.title}</span>
-        {isOpen ? <FiChevronDown /> : <FiChevronRight />}
+        <Box
+          as={isOpen ? FiChevronDown : FiChevronRight}
+          pointerEvents="none"
+        />
       </HStack>
       <Collapse unmountOnExit in={isOpen}>
         <NavItems
