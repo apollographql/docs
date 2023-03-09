@@ -104,51 +104,48 @@ export function Header({children, algoliaFilters}) {
           {children}
           <Box fill="current" as={ApolloMark} h="8" />
         </HStack>
-        {showExpandButton && (
-          <Tooltip
-            label={
-              pageWidth === 'jumbo'
-                ? 'Collapse to default width'
-                : 'Expand to extended width'
-            }
-          >
-            <IconButton
-              ml="auto"
-              mr="2"
-              fontSize="xl"
-              variant="ghost"
-              onClick={togglePageWidth}
-              icon={
-                pageWidth === 'jumbo' ? (
-                  <TbViewportNarrow />
-                ) : (
-                  <TbViewportWide />
-                )
-              }
-            />
-          </Tooltip>
-        )}
-        <Tooltip
-          label={
-            colorMode === 'dark'
-              ? 'Switch to light mode'
-              : 'Switch to dark mode'
-          }
-        >
-          <IconButton
-            ml={showExpandButton ? undefined : 'auto'}
-            mr="2"
-            fontSize="xl"
-            variant="ghost"
-            onClick={toggleColorMode}
-            icon={colorMode === 'dark' ? <FiSun /> : <FiMoon />}
-          />
-        </Tooltip>
-
         {process.env.ALGOLIA_SEARCH_KEY && (
           <Search algoliaFilters={algoliaFilters} />
         )}
-        <StudioButton />
+        <HStack>
+          {showExpandButton && (
+            <Tooltip
+              label={
+                pageWidth === 'jumbo'
+                  ? 'Collapse to default width'
+                  : 'Expand to extended width'
+              }
+            >
+              <IconButton
+                fontSize="xl"
+                variant="ghost"
+                onClick={togglePageWidth}
+                icon={
+                  pageWidth === 'jumbo' ? (
+                    <TbViewportNarrow />
+                  ) : (
+                    <TbViewportWide />
+                  )
+                }
+              />
+            </Tooltip>
+          )}
+          <Tooltip
+            label={
+              colorMode === 'dark'
+                ? 'Switch to light mode'
+                : 'Switch to dark mode'
+            }
+          >
+            <IconButton
+              fontSize="xl"
+              variant="ghost"
+              onClick={toggleColorMode}
+              icon={colorMode === 'dark' ? <FiSun /> : <FiMoon />}
+            />
+          </Tooltip>
+          <StudioButton />
+        </HStack>
       </Flex>
     </Box>
   );

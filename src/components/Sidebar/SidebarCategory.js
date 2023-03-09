@@ -74,7 +74,7 @@ export const SidebarCategoryLink = ({children, icon, docset, ...props}) => {
       <Box fontSize="2xl">{icon}</Box>
       <chakra.span
         py="2"
-        ml="2"
+        ml="3"
         transition="opacity ease-in-out 100ms"
         opacity={sidebarOpen ? '100' : '0'}
       >

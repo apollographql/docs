@@ -7,7 +7,7 @@ export default function StudioButton() {
   const {user} = useUser();
   return (
     <Button
-      ml="2"
+      flexShrink={0}
       colorScheme="indigo"
       variant="ghost"
       rightIcon={<FiArrowRight />}
