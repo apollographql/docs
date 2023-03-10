@@ -154,28 +154,14 @@ exports.createPages = async ({actions, graphql}) => {
     }
   `);
 
-  const configs = data.configs.nodes.reduce((acc, node) => {
+  const configs = data.configs.nodes.reduce((acc, node, _, nodes) => {
     // TODO: convert configs to YAML
-    const content = JSON.parse(node.fields.content);
+    const {fields, gitRemote} = node;
+    const content = JSON.parse(fields.content);
     const {title, version, sidebar, algoliaFilters, internal, versionBanner} =
       content;
 
-    return {
-      ...acc,
-      [node.sourceInstanceName]: {
-        docset: title,
-        currentVersion: version,
-        navItems: getNavItems(sidebar),
-        algoliaFilters,
-        internal,
-        versionBanner
-      }
-    };
-  }, {});
-
-  data.pages.nodes.forEach(({id, gitRemote, sourceInstanceName, children}) => {
-    const [{fields}] = children;
-    const versions = data.configs.nodes
+    const versions = nodes
       .filter(
         node => gitRemote && node.gitRemote?.full_name === gitRemote.full_name
       )
@@ -188,12 +174,28 @@ exports.createPages = async ({actions, graphql}) => {
       })
       .sort((a, b) => b.label.localeCompare(a.label));
 
+    return {
+      ...acc,
+      [node.sourceInstanceName]: {
+        docset: title,
+        currentVersion: version,
+        navItems: getNavItems(sidebar),
+        algoliaFilters,
+        internal,
+        versions,
+        versionBanner
+      }
+    };
+  }, {});
+
+  data.pages.nodes.forEach(({id, sourceInstanceName, children}) => {
+    const [{fields}] = children;
+
     actions.createPage({
       path: fields.slug,
       component: require.resolve('./src/templates/page'),
       context: {
         id,
-        versions,
         configs,
         ...configs[sourceInstanceName]
       }

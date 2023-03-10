@@ -1,9 +1,8 @@
-import DocsetMenu from './DocsetMenu';
 import Footer from './Footer';
 import Header, {TOTAL_HEADER_HEIGHT} from './Header';
 import MobileNav from './MobileNav';
 import PropTypes from 'prop-types';
-import React, {useCallback, useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Sidebar, {PAGE_SIDEBAR_MARGIN, SidebarNav} from './Sidebar';
 import getShareImage from '@jlengstorf/get-share-image';
 import useLocalStorage from 'react-use/lib/useLocalStorage';
@@ -21,7 +20,7 @@ import {DOCS_PAGE_WIDTH_VAR, usePageWidthContext} from './PageWidthContext';
 import {FiChevronLeft, FiChevronsRight} from 'react-icons/fi';
 import {GatsbySeo} from 'gatsby-plugin-next-seo';
 import {PathContext} from '../utils';
-import {graphql, useStaticQuery} from 'gatsby';
+import {graphql, navigate, useStaticQuery} from 'gatsby';
 
 export function usePageLayoutProps(props) {
   const paddingTop = useToken('space', 10);
@@ -71,18 +70,6 @@ export default function Page({
     pageContext;
   const titleFont = encodeURIComponent('Source Sans Pro');
 
-  const renderSwitcher = useCallback(
-    props => (
-      <DocsetMenu
-        docset={docset}
-        versions={versions}
-        currentVersion={currentVersion}
-        {...props}
-      />
-    ),
-    [docset, versions, currentVersion]
-  );
-
   const [now, setNow] = useState(Date.now());
 
   useEffect(() => {
@@ -118,8 +105,15 @@ export default function Page({
         }}
       />
       <Header algoliaFilters={algoliaFilters}>
+        {/* TODO: need to update mobile nav */}
         <MobileNav>
-          <SidebarNav docset={docset} navItems={navItems} darkBg="gray.700">
+          <SidebarNav
+            versions={versions}
+            currentVersion={currentVersion}
+            docset={docset}
+            navItems={navItems}
+            darkBg="gray.700"
+          >
             <IconButton
               ml="-3"
               variant="ghost"
@@ -147,7 +141,15 @@ export default function Page({
         </Tooltip>
       </Fade>
       <Sidebar configs={configs} isHidden={sidebarHidden}>
-        <SidebarNav docset={docset} navItems={navItems} />
+        <SidebarNav
+          versions={versions}
+          currentVersion={currentVersion}
+          docset={docset}
+          navItems={navItems}
+          onVersionChange={version => {
+            navigate(`/${version.slug}`);
+          }}
+        />
       </Sidebar>
       <Box
         marginLeft={{

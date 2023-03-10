@@ -262,8 +262,13 @@ export function Sidebar({children, configs, isHidden}) {
           >
             <SidebarNav
               key={activeDocset}
+              currentVersion={configs[activeDocset].currentVersion}
+              versions={configs[activeDocset].versions}
               docset={configs[activeDocset].docset}
               navItems={configs[activeDocset].navItems}
+              onVersionChange={version => {
+                setActiveDocset(version.slug);
+              }}
             />
           </PathContext.Provider>
         ) : (
