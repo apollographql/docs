@@ -18,7 +18,13 @@ import {BsChevronContract, BsChevronExpand} from 'react-icons/bs';
 import {FiChevronDown} from 'react-icons/fi';
 import {flattenNavItems} from '../../utils';
 
-export function SidebarNav({docset, navItems}) {
+export function SidebarNav({
+  docset,
+  navItems,
+  versions,
+  currentVersion,
+  onVersionChange
+}) {
   const navGroups = useMemo(
     () => flattenNavItems(navItems).filter(item => item.children),
     [navItems]
@@ -65,23 +71,35 @@ export function SidebarNav({docset, navItems}) {
         <chakra.h2 mr="auto" fontSize="xl" fontWeight="semibold">
           {docset}
         </chakra.h2>
-        <Menu>
-          <MenuButton
-            size="sm"
-            ml="2"
-            variant="outline"
-            rightIcon={<FiChevronDown />}
-            as={Button}
-          >
-            v1
-          </MenuButton>
-          <MenuList>
-            <MenuOptionGroup value="v1">
-              <MenuItemOption value="v1">v1</MenuItemOption>
-              <MenuItemOption value="v2">v2</MenuItemOption>
-            </MenuOptionGroup>
-          </MenuList>
-        </Menu>
+        {versions.length > 0 && (
+          <Menu>
+            <MenuButton
+              size="sm"
+              ml="2"
+              variant="outline"
+              rightIcon={<FiChevronDown />}
+              as={Button}
+            >
+              {currentVersion}
+            </MenuButton>
+            <MenuList>
+              <MenuOptionGroup value={currentVersion}>
+                {versions.map((version, index) => (
+                  <MenuItemOption
+                    key={index}
+                    value={version.label}
+                    onClick={event => {
+                      event.stopPropagation();
+                      onVersionChange(version);
+                    }}
+                  >
+                    {version.label}
+                  </MenuItemOption>
+                ))}
+              </MenuOptionGroup>
+            </MenuList>
+          </Menu>
+        )}
       </Flex>
       <NavContext.Provider
         value={{
@@ -130,5 +148,8 @@ export function SidebarNav({docset, navItems}) {
 
 SidebarNav.propTypes = {
   docset: PropTypes.string.isRequired,
-  navItems: PropTypes.array.isRequired
+  navItems: PropTypes.array.isRequired,
+  versions: PropTypes.array,
+  currentVersion: PropTypes.string,
+  onVersionChange: PropTypes.func.isRequired
 };
