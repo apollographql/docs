@@ -107,7 +107,7 @@ export function SidebarNav({
           setNav: setLocalNavState
         }}
       >
-        <chakra.nav px="4">
+        <chakra.nav px="4" pb="3">
           {navGroups.length > 0 && (
             <HStack
               as="button"
