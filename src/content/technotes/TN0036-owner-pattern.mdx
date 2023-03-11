@@ -1,7 +1,7 @@
 ---
 title: Enforcing entity ownership in Apollo Federation
 id: TN0030
-tags: [best practices, federation]
+tags: [federation]
 ---
 
 In Federation 2, the notion of "extending" an entity type is strictly conceptual. All definitions of a type in different subgraphs are merged according to the "shareability" of fields. In the following example, neither subgraph really _owns_ or _extends_ the `Product` entity. Instead, they both _contribute fields_ to it.
