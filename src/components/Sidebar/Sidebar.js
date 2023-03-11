@@ -252,6 +252,7 @@ export function Sidebar({children, configs, isHidden}) {
         transitionDuration="normal"
         transitionTimingFunction="ease-in-out"
         overflow="auto"
+        overscrollBehavior="none"
       >
         {activeDocset ? (
           <PathContext.Provider
