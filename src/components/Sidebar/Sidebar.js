@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, {useCallback, useContext, useEffect, useRef} from 'react';
+import SidebarNav from './SidebarNav';
 import {AiOutlineHome} from '@react-icons/all-files/ai/AiOutlineHome';
 import {
   Box,
@@ -18,7 +19,6 @@ import {
 } from './SidebarCategory';
 import {Link as GatsbyLink} from 'gatsby';
 import {PathContext} from '../../utils';
-import {SidebarNav} from './SidebarNav';
 import {TOTAL_HEADER_HEIGHT} from '../Header';
 import {useLocalStorage} from 'react-use';
 
@@ -32,6 +32,7 @@ export const SIDEBAR_WIDTH_XL = 500;
 
 export function Sidebar({children, configs, isHidden}) {
   const sidebarRef = useRef();
+  const sidebarNavRef = useRef();
 
   const pathContext = useContext(PathContext);
   const [activeDocset, setActiveDocset] = useLocalStorage('docs:active', null);
@@ -93,6 +94,7 @@ export function Sidebar({children, configs, isHidden}) {
         opacity: isHidden ? 0 : 1,
         transform: isHidden ? 'translateX(-100%)' : 'none'
       }}
+      overscrollBehavior="none"
       // onMouseLeave={() => {
       //   setActiveDocset(null);
       //   setSidebarOpen(false);
@@ -118,7 +120,12 @@ export function Sidebar({children, configs, isHidden}) {
           value={{
             activeDocset,
             setActiveDocset,
-            sidebarOpen
+            sidebarOpen,
+            setSidebarOpen,
+            onKeyboardSelect: () => {
+              setSidebarOpen(false);
+              sidebarNavRef.current?.focusFirstLink();
+            }
           }}
         >
           <Stack
@@ -252,7 +259,6 @@ export function Sidebar({children, configs, isHidden}) {
         transitionDuration="normal"
         transitionTimingFunction="ease-in-out"
         overflow="auto"
-        overscrollBehavior="none"
       >
         {activeDocset ? (
           <PathContext.Provider
@@ -263,6 +269,7 @@ export function Sidebar({children, configs, isHidden}) {
           >
             <SidebarNav
               key={activeDocset}
+              ref={sidebarNavRef}
               currentVersion={configs[activeDocset].currentVersion}
               versions={configs[activeDocset].versions}
               docset={configs[activeDocset].docset}

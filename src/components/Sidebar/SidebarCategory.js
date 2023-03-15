@@ -36,8 +36,13 @@ SidebarCategory.propTypes = {
 
 export const SidebarCategoryLink = ({children, icon, docset, ...props}) => {
   const pathContext = useContext(PathContext);
-  const {activeDocset, setActiveDocset, sidebarOpen} =
-    useContext(DocsetContext);
+  const {
+    activeDocset,
+    setActiveDocset,
+    sidebarOpen,
+    setSidebarOpen,
+    onKeyboardSelect
+  } = useContext(DocsetContext);
   const isActiveMenu = activeDocset === docset;
   const isActivePath = pathContext.basePath === docset;
   return (
@@ -47,8 +52,17 @@ export const SidebarCategoryLink = ({children, icon, docset, ...props}) => {
       to={docset.startsWith('/') ? docset : `/${docset}`}
       display="flex"
       alignItems="center"
-      onFocus={() => setActiveDocset(docset)}
+      onFocus={() => {
+        setSidebarOpen(true);
+        setActiveDocset(docset);
+      }}
       onMouseEnter={() => setActiveDocset(docset)}
+      onClick={event => {
+        if (event.nativeEvent.pointerType !== 'mouse') {
+          event.preventDefault();
+          onKeyboardSelect();
+        }
+      }}
       position="relative"
       _after={{
         content: isActivePath && '""',
