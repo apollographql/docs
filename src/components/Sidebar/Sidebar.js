@@ -47,8 +47,6 @@ export function Sidebar({children, configs, isHidden}) {
 
   useEffect(() => {
     // scroll the active nav group into view if one exists
-    // TODO: only do this on initial load
-
     if (!window.isInitiallyLoaded) {
       const group = sidebarRef.current.querySelector('[data-group="true"]');
       if (group) {
