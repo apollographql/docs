@@ -205,6 +205,10 @@ export default function NavItems({items, depth = 0}) {
             as={GatsbyLink}
             to={path}
             tags={item.tags}
+            onClick={() => {
+              window.sidebarScroll =
+                document.getElementById('sidebar').scrollTop;
+            }}
           >
             {item.title}
           </NavButton>
