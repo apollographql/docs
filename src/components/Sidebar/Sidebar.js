@@ -47,9 +47,17 @@ export function Sidebar({children, configs, isHidden}) {
 
   useEffect(() => {
     // scroll the active nav group into view if one exists
-    const group = sidebarRef.current.querySelector('[data-group="true"]');
-    if (group) {
-      group.scrollIntoView();
+    // TODO: only do this on initial load
+
+    if (!window.isInitiallyLoaded) {
+      const group = sidebarRef.current.querySelector('[data-group="true"]');
+      if (group) {
+        group.scrollIntoView();
+      }
+
+      window.isInitiallyLoaded = true;
+    } else {
+      sidebarRef.current.scrollTop = window.sidebarScroll;
     }
   }, []);
 
@@ -73,7 +81,6 @@ export function Sidebar({children, configs, isHidden}) {
 
   return (
     <chakra.aside
-      ref={sidebarRef}
       d={{
         base: 'none',
         md: 'flex'
@@ -245,6 +252,8 @@ export function Sidebar({children, configs, isHidden}) {
         </DocsetContext.Provider>
       </Box>
       <Box
+        ref={sidebarRef}
+        id="sidebar"
         w={SIDEBAR_WIDTH}
         flexShrink="0"
         borderRightWidth={1}

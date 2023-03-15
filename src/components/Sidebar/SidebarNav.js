@@ -24,7 +24,6 @@ const SidebarNav = forwardRef(
 
     useImperativeHandle(ref, () => ({
       focusFirstLink: () => {
-        console.log(navRef.current.querySelector('a'));
         navRef.current.querySelector('a')?.focus();
       }
     }));
