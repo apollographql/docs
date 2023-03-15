@@ -4,4 +4,4 @@ export {
   SIDEBAR_WIDTH_XL,
   PAGE_SIDEBAR_MARGIN
 } from './Sidebar';
-export {SidebarNav} from './SidebarNav';
+export {default as SidebarNav} from './SidebarNav';
