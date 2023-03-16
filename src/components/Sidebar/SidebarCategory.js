@@ -31,17 +31,24 @@ SidebarCategory.propTypes = {
   title: PropTypes.node.isRequired
 };
 
-export const SidebarCategoryLink = ({children, icon, docset, ...props}) => {
+export const SidebarCategoryLink = ({icon, docset, ...props}) => {
   const pathContext = useContext(PathContext);
   const {
+    configs,
     activeDocset,
     setActiveDocset,
     sidebarOpen,
     setSidebarOpen,
     onKeyboardSelect
   } = useContext(DocsetContext);
+
+  const config = configs[docset];
+
   const isActiveMenu = activeDocset === docset;
-  const isActivePath = pathContext.basePath === docset;
+  const isActivePath =
+    pathContext.basePath === docset ||
+    config.versions.some(version => pathContext.basePath === version.slug);
+
   return (
     <ListItem
       px="4"
@@ -89,14 +96,13 @@ export const SidebarCategoryLink = ({children, icon, docset, ...props}) => {
         transition="opacity ease-in-out 100ms"
         opacity={sidebarOpen ? '100' : '0'}
       >
-        {children}
+        {config.docset}
       </chakra.span>
     </ListItem>
   );
 };
 
 SidebarCategoryLink.propTypes = {
-  children: PropTypes.node.isRequired,
   icon: PropTypes.elementType.isRequired,
   docset: PropTypes.string.isRequired
 };
