@@ -12,10 +12,7 @@ export const SidebarCategory = ({children, title}) => {
     <div>
       <Flex
         mb="4"
-        fontSize="sm"
-        letterSpacing="wider"
-        fontFamily="mono"
-        textTransform="uppercase"
+        fontSize="md"
         sx={{
           span: {
             opacity: Number(sidebarOpen)
