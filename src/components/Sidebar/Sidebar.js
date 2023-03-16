@@ -99,10 +99,6 @@ export function Sidebar({children, configs, isHidden}) {
         opacity: isHidden ? 0 : 1,
         transform: isHidden ? 'translateX(-100%)' : 'none'
       }}
-      // onMouseLeave={() => {
-      //   setActiveDocset(null);
-      //   setSidebarOpen(false);
-      // }}
     >
       <Box
         w={SIDEBAR_WIDTH}
@@ -116,13 +112,13 @@ export function Sidebar({children, configs, isHidden}) {
           setSidebarOpen(true);
 
           if (event.target === event.currentTarget) {
-            // TODO: this doesn't work when the mouse is over the scrollbar
             setActiveDocset(null);
           }
         }}
       >
         <DocsetContext.Provider
           value={{
+            configs,
             activeDocset,
             setActiveDocset,
             sidebarOpen,
@@ -144,35 +140,25 @@ export function Sidebar({children, configs, isHidden}) {
             }
           >
             <SidebarCategory title="Start">
-              <SidebarCategoryLink docset="/" icon={<AiOutlineHome />}>
-                Home
-              </SidebarCategoryLink>
+              <SidebarCategoryLink docset="/" icon={<AiOutlineHome />} />
             </SidebarCategory>
             <SidebarCategory title="SDKs">
               <SidebarCategoryLink
                 docset="apollo-server"
                 icon={DOCSET_ICONS['apollo-server']}
-              >
-                Apollo Server
-              </SidebarCategoryLink>
+              />
               <SidebarCategoryLink
                 docset="react"
                 icon={DOCSET_ICONS['apollo-client']}
-              >
-                Client (React / JS)
-              </SidebarCategoryLink>
+              />
               <SidebarCategoryLink
                 docset="kotlin"
                 icon={DOCSET_ICONS['apollo-kotlin']}
-              >
-                Client (Kotlin)
-              </SidebarCategoryLink>
+              />
               <SidebarCategoryLink
                 docset="ios"
                 icon={DOCSET_ICONS['apollo-ios']}
-              >
-                Client (iOS)
-              </SidebarCategoryLink>
+              />
             </SidebarCategory>
             <SidebarCategory
               title={
@@ -203,42 +189,29 @@ export function Sidebar({children, configs, isHidden}) {
               <SidebarCategoryLink
                 docset="graphos/delivery"
                 icon={DOCSET_ICONS.delivery}
-              >
-                Schema Delivery
-              </SidebarCategoryLink>
+              />
               <SidebarCategoryLink
                 docset="graphos/metrics"
                 icon={DOCSET_ICONS.metrics}
-              >
-                Metrics &amp; Reporting
-              </SidebarCategoryLink>
+              />
               <SidebarCategoryLink
                 docset="graphos/security"
                 icon={DOCSET_ICONS.security}
-              >
-                Security
-              </SidebarCategoryLink>
+              />
               <SidebarCategoryLink
                 docset="federation"
                 icon={DOCSET_ICONS.federation}
-              >
-                Federation
-              </SidebarCategoryLink>
-              <SidebarCategoryLink docset="graphos/org" icon={DOCSET_ICONS.org}>
-                Org Management
-              </SidebarCategoryLink>
-              <SidebarCategoryLink docset="rover" icon={DOCSET_ICONS.rover}>
-                Rover CLI
-              </SidebarCategoryLink>
-              <SidebarCategoryLink docset="router" icon={DOCSET_ICONS.router}>
-                Apollo Router
-              </SidebarCategoryLink>
+              />
+              <SidebarCategoryLink
+                docset="graphos/org"
+                icon={DOCSET_ICONS.org}
+              />
+              <SidebarCategoryLink docset="rover" icon={DOCSET_ICONS.rover} />
+              <SidebarCategoryLink docset="router" icon={DOCSET_ICONS.router} />
               <SidebarCategoryLink
                 docset="technotes"
                 icon={DOCSET_ICONS.technotes}
-              >
-                Tech Notes
-              </SidebarCategoryLink>
+              />
             </SidebarCategory>
           </Stack>
         </DocsetContext.Provider>
