@@ -23,7 +23,7 @@ import {TOTAL_HEADER_HEIGHT} from '../Header';
 import {useLocalStorage} from 'react-use';
 
 const SIDEBAR_WIDTH = 280;
-const COLLAPSED_SIDEBAR_WIDTH = 88;
+const COLLAPSED_SIDEBAR_WIDTH = 93;
 
 export const PAGE_SIDEBAR_MARGIN = SIDEBAR_WIDTH + COLLAPSED_SIDEBAR_WIDTH;
 
@@ -99,7 +99,6 @@ export function Sidebar({children, configs, isHidden}) {
         opacity: isHidden ? 0 : 1,
         transform: isHidden ? 'translateX(-100%)' : 'none'
       }}
-      overscrollBehavior="none"
       // onMouseLeave={() => {
       //   setActiveDocset(null);
       //   setSidebarOpen(false);
@@ -112,6 +111,7 @@ export function Sidebar({children, configs, isHidden}) {
         bgColor={leftNavBgColor}
         flexShrink="0"
         overflow="auto"
+        overscrollBehavior="none"
         onMouseOver={event => {
           setSidebarOpen(true);
 
@@ -138,7 +138,7 @@ export function Sidebar({children, configs, isHidden}) {
             spacing="4"
             divider={
               <StackDivider
-                css={{width: !sidebarOpen && 56}}
+                css={{width: !sidebarOpen && COLLAPSED_SIDEBAR_WIDTH - 32}}
                 borderColor="whiteAlpha.300"
               />
             }
@@ -148,13 +148,7 @@ export function Sidebar({children, configs, isHidden}) {
                 Home
               </SidebarCategoryLink>
             </SidebarCategory>
-            <SidebarCategory
-              title={
-                <>
-                  Tools <span>&nbsp;&amp; Libraries</span>
-                </>
-              }
-            >
+            <SidebarCategory title="SDKs">
               <SidebarCategoryLink
                 docset="apollo-server"
                 icon={DOCSET_ICONS['apollo-server']}
@@ -266,6 +260,7 @@ export function Sidebar({children, configs, isHidden}) {
         transitionDuration="normal"
         transitionTimingFunction="ease-in-out"
         overflow="auto"
+        overscrollBehavior="none"
       >
         {activeDocset ? (
           <PathContext.Provider
