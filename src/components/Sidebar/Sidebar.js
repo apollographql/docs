@@ -31,6 +31,7 @@ export const SIDEBAR_WIDTH_BASE = 450;
 export const SIDEBAR_WIDTH_XL = 500;
 
 export function Sidebar({children, configs, isHidden}) {
+  const outerSidebarRef = useRef();
   const sidebarRef = useRef();
   const sidebarNavRef = useRef();
 
@@ -63,7 +64,7 @@ export function Sidebar({children, configs, isHidden}) {
 
   useEffect(() => {
     const handleWindowClick = event => {
-      if (!sidebarRef.current?.contains(event.target)) {
+      if (!outerSidebarRef.current?.contains(event.target)) {
         dismissSidebar();
       }
     };
@@ -79,6 +80,7 @@ export function Sidebar({children, configs, isHidden}) {
 
   return (
     <chakra.aside
+      ref={outerSidebarRef}
       d={{
         base: 'none',
         md: 'flex'
