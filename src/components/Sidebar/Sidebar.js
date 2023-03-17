@@ -6,6 +6,7 @@ import {
   Box,
   Button,
   DarkMode,
+  Flex,
   Stack,
   StackDivider,
   chakra,
@@ -17,7 +18,9 @@ import {
   SidebarCategory,
   SidebarCategoryLink
 } from './SidebarCategory';
+import {FiExternalLink} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
+import {IoSchoolOutline} from 'react-icons/io5';
 import {PathContext} from '../../utils';
 import {TOTAL_HEADER_HEIGHT} from '../Header';
 import {useLocalStorage} from 'react-use';
@@ -143,6 +146,31 @@ export function Sidebar({children, configs, isHidden}) {
           >
             <SidebarCategory title="Start">
               <SidebarCategoryLink docset="/" icon={<AiOutlineHome />} />
+              <Flex
+                as="a"
+                w="full"
+                align="center"
+                href="https://www.apollographql.com/tutorials"
+                target="_blank"
+                onMouseOver={() => setActiveDocset(null)}
+                _hover={{bg: 'whiteAlpha.300'}}
+                px="4"
+                rounded="md"
+              >
+                <Box as={IoSchoolOutline} fontSize="2xl" />
+                <chakra.span
+                  ml="3"
+                  mr="2"
+                  py="2"
+                  opacity={sidebarOpen ? 1 : 0}
+                  transitionProperty="opacity"
+                  transitionDuration="normal"
+                  transitionTimingFunction="ease-in-out"
+                >
+                  Tutorials
+                </chakra.span>
+                <FiExternalLink />
+              </Flex>
             </SidebarCategory>
             <SidebarCategory title="SDKs">
               <SidebarCategoryLink

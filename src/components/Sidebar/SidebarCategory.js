@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, {createContext, useContext} from 'react';
-import {Box, Flex, List, ListItem, chakra} from '@chakra-ui/react';
+import {Box, Flex, Stack, chakra} from '@chakra-ui/react';
 import {Link as GatsbyLink} from 'gatsby';
 import {PathContext} from '../../utils';
 
@@ -21,7 +21,9 @@ export const SidebarCategory = ({children, title}) => {
       >
         {title}
       </Flex>
-      <List spacing="2">{children}</List>
+      <Stack as="nav" spacing="2">
+        {children}
+      </Stack>
     </div>
   );
 };
@@ -50,7 +52,7 @@ export const SidebarCategoryLink = ({icon, docset, ...props}) => {
     config.versions.some(version => pathContext.basePath === version.slug);
 
   return (
-    <ListItem
+    <Box
       px="4"
       as={GatsbyLink}
       to={docset.startsWith('/') ? docset : `/${docset}`}
@@ -93,12 +95,14 @@ export const SidebarCategoryLink = ({icon, docset, ...props}) => {
       <chakra.span
         py="2"
         ml="3"
-        transition="opacity ease-in-out 100ms"
         opacity={sidebarOpen ? '100' : '0'}
+        transitionProperty="opacity"
+        transitionDuration="normal"
+        transitionTimingFunction="ease-in-out"
       >
         {config.docset}
       </chakra.span>
-    </ListItem>
+    </Box>
   );
 };
 
