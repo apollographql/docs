@@ -1,3 +1,4 @@
+import PromoRotatingBanner from '../PromoRotatingBanner';
 import PropTypes from 'prop-types';
 import React from 'react';
 import Search from '../Search';
@@ -58,6 +59,7 @@ export function Header({children, algoliaFilters}) {
 
   return (
     <Box pos="sticky" top="0" zIndex="2">
+      <PromoRotatingBanner />
       <Flex
         align="center"
         as="header"
