@@ -4,10 +4,6 @@
     "Home": "/",
     "What is the supergraph?": "/intro/platform",
     "Why adopt GraphQL?": "/intro/benefits",
-    "Tutorials": {
-      "Lift-off series & certification": "https://www.apollographql.com/tutorials/lift-off-part1/",
-      "Full-stack quickstart": "https://www.apollographql.com/tutorials/fullstack-quickstart/introduction"
-    },
     "Development Tools": {
       "Apollo extension for VS Code": "/devtools/editor-plugins",
       "Configuring Apollo projects": "/devtools/apollo-config",
