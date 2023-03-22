@@ -74,7 +74,7 @@ const SidebarNav = forwardRef(
           <chakra.h2 mr="auto" fontSize="xl" fontWeight="semibold">
             {docset}
           </chakra.h2>
-          {versions.length > 0 && (
+          {versions.length > 1 && (
             <Menu>
               <MenuButton
                 size="sm"
