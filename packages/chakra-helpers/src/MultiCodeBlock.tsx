@@ -16,10 +16,12 @@ export const MultiCodeBlockContext = createContext<{
 }>(null);
 
 type MultiCodeBlockProps = {
+  showTabs?: boolean;
   children: ReactNode;
 };
 
 export const MultiCodeBlock = ({
+  showTabs = true,
   children
 }: MultiCodeBlockProps): JSX.Element => {
   const codeBlocks = React.Children.toArray(children).reduce<
@@ -48,11 +50,13 @@ export const MultiCodeBlock = ({
 
   return (
     <Flex flexDir="column" pt="6">
-      <CodeBlockTabs
-        languages={languages}
-        activeLanguage={renderedLanguage}
-        setLanguage={setLanguage}
-      />
+      {showTabs && (
+        <CodeBlockTabs
+          languages={languages}
+          activeLanguage={renderedLanguage}
+          setLanguage={setLanguage}
+        />
+      )}
       {languages.map(language => (
         <Box
           key={language}
