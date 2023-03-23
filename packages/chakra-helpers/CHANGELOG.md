@@ -1,5 +1,11 @@
 # @apollo/chakra-helpers
 
+## 1.6.0
+
+### Minor Changes
+
+- [#397](https://github.com/apollographql/docs/pull/397) [`626dd27`](https://github.com/apollographql/docs/commit/626dd279761647903792e9e95ac8b45b09fd1312) Thanks [@jchesterman](https://github.com/jchesterman)! - Adding showTabs prop to MultiCodeBlock component
+
 ## 1.5.0
 
 ### Minor Changes
