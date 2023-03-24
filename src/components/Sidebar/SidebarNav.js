@@ -71,10 +71,15 @@ const SidebarNav = forwardRef(
       <>
         <Flex p="4" pos="sticky" top="0" zIndex="1" bg="bg">
           {/* TODO: the docset title below should match the title in the left sidebar */}
-          <chakra.h2 mr="auto" fontSize="xl" fontWeight="semibold">
+          <chakra.h2
+            mr="auto"
+            fontSize="xl"
+            fontWeight="semibold"
+            lineHeight={1.6}
+          >
             {docset}
           </chakra.h2>
-          {versions.length > 1 && (
+          {versions?.length > 1 && (
             <Menu>
               <MenuButton
                 size="sm"
