@@ -12,6 +12,7 @@ export const SidebarCategory = ({children, title}) => {
     <div>
       <Flex
         mb="4"
+        align="center"
         fontSize="md"
         sx={{
           span: {
@@ -49,7 +50,7 @@ export const SidebarCategoryLink = ({icon, docset, ...props}) => {
   const isActiveMenu = activeDocset === docset;
   const isActivePath =
     pathContext.basePath === docset ||
-    config.versions.some(version => pathContext.basePath === version.slug);
+    config.versions?.some(version => pathContext.basePath === version.slug);
 
   return (
     <Box
