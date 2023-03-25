@@ -174,13 +174,12 @@ export default function NavItems({items, depth = 0}) {
         }
 
         if (isUrl(item.path)) {
-          const buttonProps = !item.path.startsWith(
-            'https://www.apollographql.com'
-          ) && {
-            target: '_blank',
-            rel: 'noreferrer noopener',
-            rightIcon: <FiExternalLink />
-          };
+          const buttonProps =
+            !/^https:\/\/www.apollographql.com\/docs(\/|$)/.test(item.path) && {
+              target: '_blank',
+              rel: 'noreferrer noopener',
+              rightIcon: <FiExternalLink />
+            };
           return (
             <NavButton
               key={index}
