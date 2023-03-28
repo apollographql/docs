@@ -1,7 +1,7 @@
 ---
 title: Does Apollo Router replace my API gateway?
 id: TN0037
-tags: [federation, router]
+tags: [federation, router, gateway]
 ---
 
 When comparing Federation to other API technologies in the market today, a natural first comparison to draw is to API gateways. Tools like Apigee, Kong, or your cloud provider offer capabilities to secure, manage, and monitor your API endpoints.
@@ -10,7 +10,7 @@ These gateways usually live at the outermost edges of your companies infrastruct
 The key distinction of the Router is that is not based on URLs or REST endpoints; Apollo Router is a GraphQL-native solution to handle your clients API operations.
 
 ## GraphQL native
-First, let's define what we mean by "GraphQL Native". Apollo Router runs all the client operations against a [supergraph](/intro/platform/).
+First, let's define what we mean by "GraphQL native". Apollo Router runs all the client operations against a [supergraph](/intro/platform/).
 This means operations coming into the Router are not for any random service, they must be a defined and publish [GraphQL subgraphs](/federation/building-supergraphs/subgraphs-overview).
 Subgraphs define the schema and capabilities they want to expose. A well defined GraphQL schema does not just expose all the data available in a company, instead, a [demand-oriented schema](/technotes/TN0027-demand-oriented-schema-design) gives clients access to all of the operations they need to execute, but without over exposing your data.
 Since subgraphs are also the ones that define their service capabilities, the Router can be the central location to enforce standardized rules or policies that are declared by subgraphs, for example, [a directive-based authN/Z plugin](https://www.apollographql.com/blog/platform/financial-services/directive-based-authorization-for-financial-services/).
