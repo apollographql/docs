@@ -26,7 +26,7 @@ Each performance alert you define can apply to either **a specific operation** o
 2. Select the **Reporting** tab.
 3. Find the Performance Alerts card and click **Add a new alert**.
 
-  <img src="./img/add-new-alert.jpg" class="screenshot" width="500" alt="Add new alert button" />
+  <img src="../img/add-new-alert.jpg" class="screenshot" width="500" alt="Add new alert button" />
 
 4. Configure the alert's **Operation Name**, **Trigger**, and **Trigger Value** to suit your needs.
 5. Select a **Channel** to send alerts to. You can select **New Channel** from the dropdown if you haven't yet configured the Slack channel or Pagerduty instance you want to use.
