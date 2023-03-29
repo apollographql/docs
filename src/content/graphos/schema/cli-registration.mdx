@@ -16,7 +16,7 @@ Whenever you make changes to a graph's schema, you should **publish** those chan
 Every supergraph in GraphOS includes one or more subgraphs. You _individually_ publish each subgraph's schema to Apollo with `rover subgraph publish`:
 
 ```bash
-rover subgraph publish --schema ./products.graphql --name products docs-example-graph@current
+rover subgraph publish --schema ./products.graphql --name products docs-example-graph@current --routing-url https://products.example.com
 ```
 
 ```mermaid
@@ -115,7 +115,8 @@ jobs:
           if [ "${CIRCLE_BRANCH}" == "main" ]; then
             rover subgraph publish my-graph@my-variant \
               --schema ./schema.graphql \
-              --name locations
+              --name locations \
+              --routing-url https://products.example.com
           fi
       # highlight-end
 ```
