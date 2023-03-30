@@ -140,7 +140,7 @@ export default function Page({
           />
         </Tooltip>
       </Fade>
-      <Sidebar configs={configs} isHidden={sidebarHidden}>
+      <Sidebar key={now} configs={configs} isHidden={sidebarHidden}>
         <SidebarNav
           versions={versions}
           currentVersion={currentVersion}
