@@ -4,7 +4,7 @@ id: TN0037
 tags: [federation, router, gateway]
 ---
 
-When comparing Federation to other API technologies in the market today, a natural first comparison to draw is to API gateways. Tools like Apigee, Kong, or your cloud provider offer capabilities to secure, manage, and monitor your API endpoints.
+[Apollo Router](https://www.apollographql.com/docs/router) is a high-performant GraphQL gateway that supports [Apollo Federation](https://www.apollographql.com/docs/federation). It handles GraphQL requests that can then be resolved by many GraphQL subraphs underneath. When comparing Router to other API technologies in the market today, a natural first comparison to draw is to API gateways. Tools like Apigee, Kong, or your cloud provider offer capabilities to secure, manage, and monitor your API endpoints.
 These gateways usually live at the outermost edges of your companies infrastructure. Sometimes they are even required by your security team so that all inbound and outbound traffic flows through the same top layer of your tech stack.
 
 The key distinction of the Router is that is not based on URLs or REST endpoints; Apollo Router is a GraphQL-native solution to handle your clients API operations.
@@ -36,8 +36,8 @@ gatewayConfig:
 
 ## Support for non-GraphQL APIs
 GraphQL is an innovative technology that give clients much more control over their operations and a common language for service teams to communicate. However, GraphQL usually is not the one and only API technology used by companies today.
-If you need to have a common gateway to secure REST endpoints and GraphQL endpoints, Apollo Router can be a complimentary tool that lives underneath this higher-level API gateway. You can configure company-wide policies at the outmost edge layer, and anything else that is better defined as a GraphQL-specific policy can be managed by the Router.
-Also, considering a [defense-in-depth](https://csrc.nist.gov/glossary/term/defense_in_depth) security strategy reduces your companies risk and so having both an API gateway and Router applying shared rules can lead to a more secure environment.
+If you need to have a common gateway to secure REST endpoints and GraphQL endpoints, Apollo Router can be a complimentary tool that lives underneath this higher-level API gateway. You can configure company-wide policies at the outermost edge layer, and anything else that is better defined as a GraphQL-specific policy can be managed by the Router.
+In addition, using a [defense-in-depth](https://csrc.nist.gov/glossary/term/defense_in_depth) security strategy reduces your companies risk, so having both an API gateway and Router applying shared rules can lead to a more secure environment.
 
 ```mermaid
 graph LR
