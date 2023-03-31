@@ -42,7 +42,8 @@ export const SidebarCategoryLink = ({icon, docset, ...props}) => {
     setActiveDocset,
     sidebarOpen,
     setSidebarOpen,
-    onKeyboardSelect
+    onKeyboardSelect,
+    clickToSelect
   } = useContext(DocsetContext);
 
   const config = configs[docset];
@@ -60,12 +61,21 @@ export const SidebarCategoryLink = ({icon, docset, ...props}) => {
       display="flex"
       alignItems="center"
       onFocus={() => {
-        setSidebarOpen(true);
-        setActiveDocset(docset);
+        setSidebarOpen?.(true);
+        if (!clickToSelect) {
+          setActiveDocset(docset);
+        }
       }}
-      onMouseEnter={() => setActiveDocset(docset)}
+      onMouseEnter={() => {
+        if (!clickToSelect) {
+          setActiveDocset(docset);
+        }
+      }}
       onClick={event => {
-        if (event.nativeEvent.pointerType !== 'mouse') {
+        if (clickToSelect) {
+          event.preventDefault();
+          setActiveDocset(docset);
+        } else if (event.nativeEvent.pointerType !== 'mouse') {
           event.preventDefault();
           onKeyboardSelect();
         }

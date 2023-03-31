@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Box,
   Drawer,
@@ -9,10 +9,12 @@ import {
   IconButton,
   useDisclosure
 } from '@chakra-ui/react';
+import {DocsetContext, LeftSidebarNav} from './Sidebar';
 import {FiMenu} from 'react-icons/fi';
 
-export default function MobileNav({children}) {
+export default function MobileNav({children, configs}) {
   const {isOpen, onOpen, onClose} = useDisclosure();
+  const [activeDocset, setActiveDocset] = useState(null);
   return (
     <>
       <IconButton
@@ -28,7 +30,21 @@ export default function MobileNav({children}) {
         <DrawerContent>
           <DrawerCloseButton zIndex="1" top="3" />
           <Box overflow="auto" pos="relative" zIndex="0">
-            {children}
+            {activeDocset ? (
+              children
+            ) : (
+              <DocsetContext.Provider
+                value={{
+                  configs,
+                  activeDocset,
+                  setActiveDocset,
+                  sidebarOpen: true,
+                  clickToSelect: true
+                }}
+              >
+                <LeftSidebarNav />
+              </DocsetContext.Provider>
+            )}
           </Box>
         </DrawerContent>
       </Drawer>
@@ -37,5 +53,6 @@ export default function MobileNav({children}) {
 }
 
 MobileNav.propTypes = {
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
+  configs: PropTypes.object.isRequired
 };
