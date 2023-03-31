@@ -120,6 +120,7 @@ function NavGroup({group, depth}) {
         as="button"
         py="1.5"
         fontWeight="strong"
+        textAlign="left"
         css={{scrollMarginTop: 56}}
         data-group={!depth && isActive}
         onClick={() => {

@@ -1,36 +1,18 @@
 import PropTypes from 'prop-types';
 import React, {useCallback, useContext, useEffect, useRef} from 'react';
 import SidebarNav from './SidebarNav';
-import {AiOutlineHome} from '@react-icons/all-files/ai/AiOutlineHome';
+import {Box, chakra} from '@chakra-ui/react';
 import {
-  Box,
-  Button,
-  DarkMode,
-  Stack,
-  StackDivider,
-  chakra,
-  useColorModeValue
-} from '@chakra-ui/react';
-import {DOCSET_ICONS} from '../DocsetMenu';
-import {
-  DocsetContext,
-  SidebarCategory,
-  SidebarCategoryLink
-} from './SidebarCategory';
-import {Link as GatsbyLink} from 'gatsby';
-import {IoSchoolOutline} from 'react-icons/io5';
+  COLLAPSED_SIDEBAR_WIDTH,
+  LeftSidebarNav,
+  SIDEBAR_WIDTH
+} from './LeftSidebarNav';
+import {DocsetContext} from './SidebarCategory';
 import {PathContext} from '../../utils';
-import {Rocket} from 'lucide-react';
 import {TOTAL_HEADER_HEIGHT} from '../Header';
 import {useLocalStorage} from 'react-use';
 
-const SIDEBAR_WIDTH = 280;
-const COLLAPSED_SIDEBAR_WIDTH = 93;
-
 export const PAGE_SIDEBAR_MARGIN = SIDEBAR_WIDTH + COLLAPSED_SIDEBAR_WIDTH;
-
-export const SIDEBAR_WIDTH_BASE = 450;
-export const SIDEBAR_WIDTH_XL = 500;
 
 export function Sidebar({children, configs, isHidden}) {
   const outerSidebarRef = useRef();
@@ -61,8 +43,6 @@ export function Sidebar({children, configs, isHidden}) {
       sidebarRef.current.scrollTop = window.sidebarScroll;
     }
   }, []);
-
-  const leftNavBgColor = useColorModeValue('gray.800', 'gray.900');
 
   useEffect(() => {
     const handleWindowClick = event => {
@@ -104,123 +84,22 @@ export function Sidebar({children, configs, isHidden}) {
         transform: isHidden ? 'translateX(-100%)' : 'none'
       }}
     >
-      <Box
-        w={SIDEBAR_WIDTH}
-        color="white"
-        fontWeight="semibold"
-        bgColor={leftNavBgColor}
-        flexShrink="0"
-        overflow="auto"
-        overscrollBehavior="none"
-        onMouseOver={event => {
-          setSidebarOpen(true);
-
-          if (event.target === event.currentTarget) {
-            setActiveDocset(null);
+      <DocsetContext.Provider
+        value={{
+          configs,
+          activeDocset,
+          setActiveDocset,
+          sidebarOpen,
+          setSidebarOpen,
+          dismissSidebar,
+          onKeyboardSelect: () => {
+            setSidebarOpen(false);
+            sidebarNavRef.current?.focusFirstLink();
           }
         }}
       >
-        <DocsetContext.Provider
-          value={{
-            configs,
-            activeDocset,
-            setActiveDocset,
-            sidebarOpen,
-            setSidebarOpen,
-            onKeyboardSelect: () => {
-              setSidebarOpen(false);
-              sidebarNavRef.current?.focusFirstLink();
-            }
-          }}
-        >
-          <Stack
-            p="4"
-            spacing="4"
-            divider={
-              <StackDivider
-                css={{width: !sidebarOpen && COLLAPSED_SIDEBAR_WIDTH - 32}}
-                borderColor="whiteAlpha.300"
-              />
-            }
-          >
-            <SidebarCategory title="Start">
-              <SidebarCategoryLink docset="/" icon={<AiOutlineHome />} />
-              <SidebarCategoryLink
-                docset="odyssey"
-                icon={<IoSchoolOutline />}
-              />
-            </SidebarCategory>
-            <SidebarCategory title="SDKs">
-              <SidebarCategoryLink
-                docset="apollo-server"
-                icon={DOCSET_ICONS['apollo-server']}
-              />
-              <SidebarCategoryLink
-                docset="react"
-                icon={DOCSET_ICONS['apollo-client']}
-              />
-              <SidebarCategoryLink
-                docset="kotlin"
-                icon={DOCSET_ICONS['apollo-kotlin']}
-              />
-              <SidebarCategoryLink
-                docset="ios"
-                icon={DOCSET_ICONS['apollo-ios']}
-              />
-            </SidebarCategory>
-            <SidebarCategory
-              title={
-                <>
-                  GraphOS{' '}
-                  <chakra.span ml="auto">
-                    <DarkMode>
-                      <Button
-                        as={GatsbyLink}
-                        size="sm"
-                        to="/graphos/quickstart/cloud"
-                        leftIcon={<Box as={Rocket} boxSize="1em" />}
-                        onClick={dismissSidebar}
-                      >
-                        Get started
-                      </Button>
-                    </DarkMode>
-                  </chakra.span>
-                </>
-              }
-            >
-              <SidebarCategoryLink docset="graphos" icon={DOCSET_ICONS.graphos}>
-                <span>Building Graphs</span>
-              </SidebarCategoryLink>
-              <SidebarCategoryLink
-                docset="graphos/delivery"
-                icon={DOCSET_ICONS.delivery}
-              />
-              <SidebarCategoryLink
-                docset="graphos/metrics"
-                icon={DOCSET_ICONS.metrics}
-              />
-              <SidebarCategoryLink
-                docset="graphos/security"
-                icon={DOCSET_ICONS.security}
-              />
-              <SidebarCategoryLink
-                docset="federation"
-                icon={DOCSET_ICONS.federation}
-              />
-              <SidebarCategoryLink
-                docset="graphos/org"
-                icon={DOCSET_ICONS.org}
-              />
-              <SidebarCategoryLink docset="rover" icon={DOCSET_ICONS.rover} />
-              <SidebarCategoryLink docset="router" icon={DOCSET_ICONS.router} />
-              <SidebarCategoryLink
-                docset="technotes"
-                icon={DOCSET_ICONS.technotes}
-              />
-            </SidebarCategory>
-          </Stack>
-        </DocsetContext.Provider>
-      </Box>
+        <LeftSidebarNav />
+      </DocsetContext.Provider>
       <Box
         ref={sidebarRef}
         id="sidebar"
@@ -239,6 +118,10 @@ export function Sidebar({children, configs, isHidden}) {
         transitionTimingFunction="ease-in-out"
         overflow="auto"
         overscrollBehavior="none"
+        onWheel={event => {
+          event.stopPropagation();
+          event.preventDefault();
+        }}
       >
         {activeDocset ? (
           <PathContext.Provider

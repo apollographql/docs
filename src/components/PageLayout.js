@@ -105,8 +105,7 @@ export default function Page({
         }}
       />
       <Header algoliaFilters={algoliaFilters}>
-        {/* TODO: need to update mobile nav */}
-        <MobileNav>
+        <MobileNav configs={configs}>
           <SidebarNav
             versions={versions}
             currentVersion={currentVersion}
@@ -122,7 +121,6 @@ export default function Page({
             />
           </SidebarNav>
         </MobileNav>
-        {/* {renderSwitcher({d: {base: 'none', md: 'flex'}})} */}
       </Header>
       <Fade in={sidebarHidden} unmountOnExit delay={0.25}>
         <Tooltip placement="right" label="Show sidebar">
