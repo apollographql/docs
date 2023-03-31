@@ -25,6 +25,7 @@ API gateways usually have no understanding of all the services underneath them o
 If you wanted to apply a common rule across many services it would be up to the API gateway managers to configure, deploy, and apply that new rule to a set of services rather than the individual service teams.
 
 ```yaml
+# Mock gateway rules
 gatewayConfig:
     myCustomRule:
         tags: [requiresAuth]
