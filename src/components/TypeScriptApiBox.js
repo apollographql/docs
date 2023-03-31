@@ -125,7 +125,7 @@ export default function TypeScriptApiBox({name}) {
 
   // This is just literally the name of the type, nothing fancy, except for references
   function _typeName(type) {
-    if (type.type === 'instrinct') {
+    if (type.type === 'intrinsic') {
       if (type.isArray) {
         return '[' + type.name + ']';
       }
@@ -257,7 +257,7 @@ export default function TypeScriptApiBox({name}) {
       if (rawData.kindString !== 'Constructor') {
         const type = _type(signature, true);
         if (type !== 'void') {
-          returnType = ': ' + _type(signature, true);
+          returnType = ': ' + type;
         }
       }
 
