@@ -17,7 +17,7 @@ import {
   useToken
 } from '@chakra-ui/react';
 import {DOCS_PAGE_WIDTH_VAR, usePageWidthContext} from './PageWidthContext';
-import {FiChevronLeft, FiChevronsRight} from 'react-icons/fi';
+import {FiChevronsRight} from 'react-icons/fi';
 import {GatsbySeo} from 'gatsby-plugin-next-seo';
 import {PathContext} from '../utils';
 import {graphql, navigate, useStaticQuery} from 'gatsby';
@@ -105,22 +105,7 @@ export default function Page({
         }}
       />
       <Header algoliaFilters={algoliaFilters}>
-        <MobileNav configs={configs}>
-          <SidebarNav
-            versions={versions}
-            currentVersion={currentVersion}
-            docset={docset}
-            navItems={navItems}
-            darkBg="gray.700"
-          >
-            <IconButton
-              ml="-3"
-              variant="ghost"
-              size="sm"
-              icon={<FiChevronLeft />}
-            />
-          </SidebarNav>
-        </MobileNav>
+        <MobileNav configs={configs} defaultDocset={docset} />
       </Header>
       <Fade in={sidebarHidden} unmountOnExit delay={0.25}>
         <Tooltip placement="right" label="Show sidebar">

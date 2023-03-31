@@ -98,54 +98,63 @@ export function Sidebar({children, configs, isHidden}) {
           }
         }}
       >
-        <LeftSidebarNav />
-      </DocsetContext.Provider>
-      <Box
-        ref={sidebarRef}
-        id="sidebar"
-        w={SIDEBAR_WIDTH}
-        flexShrink="0"
-        borderRightWidth={1}
-        bg="bg"
-        transform={
-          sidebarOpen
-            ? 'none'
-            : `translateX(-${SIDEBAR_WIDTH - COLLAPSED_SIDEBAR_WIDTH}px)`
-        }
-        shadow={sidebarOpen ? 'xl' : 'none'}
-        transitionProperty="transform"
-        transitionDuration="normal"
-        transitionTimingFunction="ease-in-out"
-        overflow="auto"
-        overscrollBehavior="none"
-        onWheel={event => {
-          event.stopPropagation();
-          event.preventDefault();
-        }}
-      >
-        {activeDocset ? (
-          <PathContext.Provider
-            value={{
-              ...pathContext,
-              basePath: `/${activeDocset}`
-            }}
-          >
-            <SidebarNav
-              key={activeDocset}
-              ref={sidebarNavRef}
-              currentVersion={configs[activeDocset].currentVersion}
-              versions={configs[activeDocset].versions}
-              docset={configs[activeDocset].docset}
-              navItems={configs[activeDocset].navItems}
-              onVersionChange={version => {
-                setActiveDocset(version.slug);
+        <LeftSidebarNav
+          w={SIDEBAR_WIDTH}
+          onMouseOver={event => {
+            setSidebarOpen(true);
+
+            if (event.target === event.currentTarget) {
+              setActiveDocset(null);
+            }
+          }}
+        />
+        <Box
+          ref={sidebarRef}
+          id="sidebar"
+          w={SIDEBAR_WIDTH}
+          flexShrink="0"
+          borderRightWidth={1}
+          bg="bg"
+          transform={
+            sidebarOpen
+              ? 'none'
+              : `translateX(-${SIDEBAR_WIDTH - COLLAPSED_SIDEBAR_WIDTH}px)`
+          }
+          shadow={sidebarOpen ? 'xl' : 'none'}
+          transitionProperty="transform"
+          transitionDuration="normal"
+          transitionTimingFunction="ease-in-out"
+          overflow="auto"
+          overscrollBehavior="none"
+          onWheel={event => {
+            event.stopPropagation();
+            event.preventDefault();
+          }}
+        >
+          {activeDocset ? (
+            <PathContext.Provider
+              value={{
+                ...pathContext,
+                basePath: `/${activeDocset}`
               }}
-            />
-          </PathContext.Provider>
-        ) : (
-          children
-        )}
-      </Box>
+            >
+              <SidebarNav
+                key={activeDocset}
+                ref={sidebarNavRef}
+                currentVersion={configs[activeDocset].currentVersion}
+                versions={configs[activeDocset].versions}
+                docset={configs[activeDocset].docset}
+                navItems={configs[activeDocset].navItems}
+                onVersionChange={version => {
+                  setActiveDocset(version.slug);
+                }}
+              />
+            </PathContext.Provider>
+          ) : (
+            children
+          )}
+        </Box>
+      </DocsetContext.Provider>
     </chakra.aside>
   );
 }
