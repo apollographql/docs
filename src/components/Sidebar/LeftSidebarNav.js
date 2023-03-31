@@ -22,35 +22,20 @@ import {Rocket} from 'lucide-react';
 export const SIDEBAR_WIDTH = 280;
 export const COLLAPSED_SIDEBAR_WIDTH = 93;
 
-export function LeftSidebarNav() {
-  const {
-    setActiveDocset,
-    sidebarOpen,
-    setSidebarOpen,
-    dismissSidebar,
-    clickToSelect
-  } = useContext(DocsetContext);
+export function LeftSidebarNav(props) {
+  const {sidebarOpen, dismissSidebar} = useContext(DocsetContext);
 
   const bgColor = useColorModeValue('gray.800', 'gray.900');
 
   return (
     <Box
-      w={SIDEBAR_WIDTH}
       color="white"
       fontWeight="semibold"
       bgColor={bgColor}
       flexShrink="0"
       overflow="auto"
       overscrollBehavior="none"
-      onMouseOver={event => {
-        if (!clickToSelect) {
-          setSidebarOpen(true);
-
-          if (event.target === event.currentTarget) {
-            setActiveDocset(null);
-          }
-        }
-      }}
+      {...props}
     >
       <Stack
         p="4"

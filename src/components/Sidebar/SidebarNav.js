@@ -7,6 +7,7 @@ import {
   Button,
   Flex,
   HStack,
+  IconButton,
   Menu,
   MenuButton,
   MenuItemOption,
@@ -15,11 +16,14 @@ import {
   chakra
 } from '@chakra-ui/react';
 import {BsChevronContract, BsChevronExpand} from 'react-icons/bs';
-import {FiChevronDown} from 'react-icons/fi';
+import {FiChevronDown, FiChevronLeft} from 'react-icons/fi';
 import {flattenNavItems} from '../../utils';
 
 const SidebarNav = forwardRef(
-  ({docset, navItems, versions, currentVersion, onVersionChange}, ref) => {
+  (
+    {docset, navItems, versions, currentVersion, onVersionChange, onGoBack},
+    ref
+  ) => {
     const navRef = useRef();
 
     useImperativeHandle(ref, () => ({
@@ -69,8 +73,18 @@ const SidebarNav = forwardRef(
 
     return (
       <>
-        <Flex p="4" pos="sticky" top="0" zIndex="1" bg="bg">
-          {/* TODO: the docset title below should match the title in the left sidebar */}
+        <Flex align="center" p="4" pos="sticky" top="0" zIndex="1" bg="bg">
+          {onGoBack && (
+            <IconButton
+              ml="-2.5"
+              mr="1"
+              variant="ghost"
+              size="sm"
+              fontSize="xl"
+              icon={<FiChevronLeft />}
+              onClick={onGoBack}
+            />
+          )}
           <chakra.h2
             mr="auto"
             fontSize="xl"
@@ -82,6 +96,7 @@ const SidebarNav = forwardRef(
           {versions?.length > 1 && (
             <Menu>
               <MenuButton
+                alignSelf="flex-start"
                 size="sm"
                 ml="2"
                 variant="outline"
@@ -160,7 +175,8 @@ SidebarNav.propTypes = {
   navItems: PropTypes.array.isRequired,
   versions: PropTypes.array,
   currentVersion: PropTypes.string,
-  onVersionChange: PropTypes.func
+  onVersionChange: PropTypes.func,
+  onGoBack: PropTypes.func
 };
 
 SidebarNav.displayName = 'SidebarNav';
