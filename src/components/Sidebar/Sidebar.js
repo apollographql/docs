@@ -100,13 +100,7 @@ export function Sidebar({children, configs, isHidden}) {
       >
         <LeftSidebarNav
           w={SIDEBAR_WIDTH}
-          onMouseOver={event => {
-            setSidebarOpen(true);
-
-            if (event.target === event.currentTarget) {
-              setActiveDocset(null);
-            }
-          }}
+          onMouseOver={() => setSidebarOpen(true)}
         />
         <Box
           ref={sidebarRef}
