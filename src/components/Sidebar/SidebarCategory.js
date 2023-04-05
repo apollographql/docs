@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, {createContext, useContext} from 'react';
+import React, {createContext, useContext, useRef} from 'react';
 import {Box, Flex, Stack, chakra} from '@chakra-ui/react';
 import {Link as GatsbyLink} from 'gatsby';
 import {PathContext} from '../../utils';
@@ -46,6 +46,8 @@ export const SidebarCategoryLink = ({icon, docset, ...props}) => {
     clickToSelect
   } = useContext(DocsetContext);
 
+  const timeoutRef = useRef();
+
   const config = configs[docset];
 
   const isActiveMenu = activeDocset === docset;
@@ -68,7 +70,14 @@ export const SidebarCategoryLink = ({icon, docset, ...props}) => {
       }}
       onMouseEnter={() => {
         if (!clickToSelect) {
-          setActiveDocset(docset);
+          timeoutRef.current = setTimeout(() => {
+            setActiveDocset(docset);
+          }, 100);
+        }
+      }}
+      onMouseLeave={() => {
+        if (!clickToSelect) {
+          clearTimeout(timeoutRef.current);
         }
       }}
       onClick={event => {
