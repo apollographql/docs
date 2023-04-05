@@ -1,5 +1,5 @@
 ---
-title: Debugging subgraph requests from Apollo Gateway or Router
+title: Debugging subgraph requests from Apollo Router or Gateway
 id: TN0038
 tags: [federation, gateway, router]
 ---
@@ -16,9 +16,9 @@ To debug your subgraph queries in an Apollo Router instance, we'll leverage [Rha
 
 ```rhai
 fn subgraph_service(service, subgraph) {
-    service.map_request(|request| {
-        log_info(`Subgraph: ${subgraph} Query: ${request.subgraph.body.query}`);
-    });
+  service.map_request(|request| {
+      log_info(`Subgraph: ${subgraph} Query: ${request.subgraph.body.query}`);
+  });
 }
 ```
 
@@ -34,17 +34,17 @@ To debug queries to your subgraphs within an Apollo Gateway instance, we'll leve
 
 ```ts
 class DebugDataSource extends RemoteGraphQLDataSource {
-    willSendRequest({ request }: GraphQLDataSourceProcessOptions<Record<string, any>>): void | Promise<void> {
-        console.log(`Operation name: ${request.operationName}`);
-        console.log(`Query body: ${request.query}`);
-    }
+  willSendRequest({ request }: GraphQLDataSourceProcessOptions<Record<string, any>>): void | Promise<void> {
+      console.log(`Operation name: ${request.operationName}`);
+      console.log(`Query body: ${request.query}`);
+  }
 }
 const gateway = new ApolloGateway({
-    debug: true,
-    supergraphSdl,
-    buildService({ url }) {
-        return new DebugDataSource({ url })
-    },
+  debug: true,
+  supergraphSdl,
+  buildService({ url }) {
+      return new DebugDataSource({ url })
+  },
 });
 ```
 
