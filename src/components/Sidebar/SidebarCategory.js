@@ -46,8 +46,6 @@ export const SidebarCategoryLink = ({icon, docset, ...props}) => {
     clickToSelect
   } = useContext(DocsetContext);
 
-  const timeoutRef = useRef();
-
   const config = configs[docset];
 
   const isActiveMenu = activeDocset === docset;
@@ -68,16 +66,9 @@ export const SidebarCategoryLink = ({icon, docset, ...props}) => {
           setActiveDocset(docset);
         }
       }}
-      onMouseEnter={() => {
-        if (!clickToSelect) {
-          timeoutRef.current = setTimeout(() => {
-            setActiveDocset(docset);
-          }, 100);
-        }
-      }}
-      onMouseLeave={() => {
-        if (!clickToSelect) {
-          clearTimeout(timeoutRef.current);
+      onMouseMoveCapture={({movementY}) => {
+        if (!clickToSelect && movementY === 0) {
+          setActiveDocset(docset);
         }
       }}
       onClick={event => {
