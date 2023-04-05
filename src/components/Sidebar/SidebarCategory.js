@@ -80,6 +80,12 @@ export const SidebarCategoryLink = ({icon, docset, ...props}) => {
           clearTimeout(timeoutRef.current);
         }
       }}
+      onMouseMove={event => {
+        if (!clickToSelect && event.movementY === 0) {
+          clearTimeout(timeoutRef.current);
+          setActiveDocset(docset);
+        }
+      }}
       onClick={event => {
         if (clickToSelect) {
           event.preventDefault();
