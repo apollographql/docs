@@ -69,7 +69,7 @@ function NavButton({isActive, depth, children, tags, ...props}) {
   return (
     <Button
       h="auto"
-      py="1.5"
+      py="1"
       lineHeight="base"
       whiteSpace="normal"
       variant="ghost"
