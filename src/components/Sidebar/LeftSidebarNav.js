@@ -98,10 +98,6 @@ export function LeftSidebarNav(props) {
             icon={DOCSET_ICONS.metrics}
           />
           <SidebarCategoryLink
-            docset="graphos/security"
-            icon={DOCSET_ICONS.security}
-          />
-          <SidebarCategoryLink
             docset="federation"
             icon={DOCSET_ICONS.federation}
           />

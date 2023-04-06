@@ -5,8 +5,7 @@
       "docset:graphos",
       "docset:graphos/delivery",
       "docset:graphos/metrics",
-      "docset:graphos/org",
-      "docset:graphos/security"
+      "docset:graphos/org"
     ],
     [
       "docset:rover",
@@ -18,6 +17,12 @@
     "Members, roles, and permissions": "/members",
     "Plans and billing": "/plans",
     "User account": "/account",
+    "Audit log": [
+      "/audit-log",
+      [
+        "enterprise"
+      ]
+    ],
     "Single Sign-On (SSO)": {
       "Okta": [
         "/sso/okta-integration-guide",
