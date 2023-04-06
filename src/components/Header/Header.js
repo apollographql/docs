@@ -78,16 +78,8 @@ export function Header({children, algoliaFilters}) {
             as={GatsbyLink}
             to="/"
             align="center"
-            d={{base: 'none', md: 'flex'}}
+            display={{base: 'none', md: 'flex'}}
           >
-            <Box
-              as={ApolloLogo}
-              fill="current"
-              role="img"
-              aria-label="Apollo logo"
-              h="6"
-              mt="0.5" // offset to vertically align better w/ docs tag
-            />
             <Box
               as={ApolloLogo}
               fill="current"
