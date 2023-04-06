@@ -5,16 +5,21 @@ description: Save and share frequently used GraphQL operations
 
 You can create **operation collections** in the Apollo Studio Explorer, enabling you to save, organize, and share your organization's frequently used GraphQL operations:
 
-<img src="../img/operation-collections/list-collections.jpg" alt="Explorer collections list" class="screenshot" width="300" />
+<img
+  src="../../img/operation-collections/list-collections.jpg"
+  alt="Explorer collections list"
+  className="screenshot"
+  width="300"
+/>
 
 Each [variant](../graphs/overview/#variants) of a graph has its own set of operation collections. An operation collection can be either **personal** (visible only to you) or **shared** (visible to all organization members who can view the corresponding variant).
 
 **Operation collections help you and your team:**
 
-* Stop writing the same operation over and over
-* Organize common operations by how they're used and who uses them
-* Design, execute, and share operations all in a single interface
-* Onboard new team members
+- Stop writing the same operation over and over
+- Organize common operations by how they're used and who uses them
+- Design, execute, and share operations all in a single interface
+- Onboard new team members
 
 ## Creating a collection
 
@@ -22,15 +27,25 @@ To create an operation collection in the Explorer:
 
 1. [Open Studio](https://studio.apollographql.com/) and navigate to the Explorer.
 
-    <img src="../img/operation-collections/list-collections.jpg" alt="Explorer collections list" class="screenshot" width="300" />
+   <img
+     src="../../img/operation-collections/list-collections.jpg"
+     alt="Explorer collections list"
+     class="screenshot"
+     width="300"
+   />
 
 2. In the top left, select the graph/variant combination you want to create a collection for (e.g., `docs-example-graph/current` in the screenshot above).
 3. Click the "bookmark" tab in the Explorer's left panel to open your collection settings (shown in the screenshot above).
 4. Click **+ Create collection** at the top of either the Personal or the Shared section, depending on which type of collection you want to create.
 
-    A dialog like the following appears:
+   A dialog like the following appears:
 
-    <img src="../img/operation-collections/create-collection.jpg" alt="Create collection dialog" class="screenshot" width="500" />
+   <img
+     src="../../img/operation-collections/create-collection.jpg"
+     alt="Create collection dialog"
+     class="screenshot"
+     width="500"
+   />
 
 5. Provide a name and optional description for your collection.
 6. If you're creating a shared collection, you can click **Advanced permissions for this collection** to specify whether non-admin members of the organization can modify your shared collection and its operations.
@@ -44,23 +59,38 @@ To add operations to a collection:
 
 1. Define at least one operation in the Explorer's editor panel:
 
-    <img src="../img/operation-collections/create-operation.jpg" alt="Example query in the Explorer editor panel" class="screenshot" width="350" />
+   <img
+     src="../../img/operation-collections/create-operation.jpg"
+     alt="Example query in the Explorer editor panel"
+     class="screenshot"
+     width="350"
+   />
 
-    > If you define _multiple_ operations in a single editor, _all_ of those operations are saved together as a single entry in a collection.
+   > If you define _multiple_ operations in a single editor, _all_ of those operations are saved together as a single entry in a collection.
 
 2. Click the "floppy disk" button (shown in the screenshot above) to open the save dialog:
 
-    <img src="../img/operation-collections/save-operation.jpg" alt="Dialog for saving operation to collection" class="screenshot" width="500" />
+   <img
+     src="../../img/operation-collections/save-operation.jpg"
+     alt="Dialog for saving operation to collection"
+     class="screenshot"
+     width="500"
+   />
 
 3. Provide a name for the collection entry, then use the dropdown menu to select a collection to add it to.
 
-    > If you don't see the collection you want, make sure you've selected the correct graph/variant combination in the Explorer.
+   > If you don't see the collection you want, make sure you've selected the correct graph/variant combination in the Explorer.
 
 4. Click **Save**.
 
 That's it! Your newly saved entry appears in its corresponding collection:
 
-<img src="../img/operation-collections/added-operation.jpg" alt="Saved operation shown in left panel" class="screenshot" width="350" />
+<img
+  src="../../img/operation-collections/added-operation.jpg"
+  alt="Saved operation shown in left panel"
+  className="screenshot"
+  width="350"
+/>
 
 If you've saved the entry to a shared collection, it also appears for other authorized members of your organization.
 
@@ -78,12 +108,12 @@ If you've saved the entry to a shared collection, it also appears for other auth
 
 It's often helpful to create a _new_ collection or operation based on an existing one.
 
-* **To clone an entire collection,** click the **•••** button next to its entry in the list and select **Duplicate**.
-  * You can save the new collection to any variant of any graph you have access to, and you can make it personal or shared.
-  * If you're using Apollo Sandbox, you can also save the new collection as a [Sandbox collection](#sandbox-collections).
-  * Cloning a collection creates a new collection with an identical set of operations. Modifying the new collection has no effect on the original.
-* **To clone a single operation,** open it in the editor panel and click the dropdown arrow next to the "floppy disk" icon. Then select **Save As**.
-  * This enables you to save a copy of the operation to any collection for the current variant.
+- **To clone an entire collection,** click the **•••** button next to its entry in the list and select **Duplicate**.
+  - You can save the new collection to any variant of any graph you have access to, and you can make it personal or shared.
+  - If you're using Apollo Sandbox, you can also save the new collection as a [Sandbox collection](#sandbox-collections).
+  - Cloning a collection creates a new collection with an identical set of operations. Modifying the new collection has no effect on the original.
+- **To clone a single operation,** open it in the editor panel and click the dropdown arrow next to the "floppy disk" icon. Then select **Save As**.
+  - This enables you to save a copy of the operation to any collection for the current variant.
 
 ## Sharing collections
 
@@ -105,7 +135,12 @@ If you create a [public variant](../graphs/studio-features/#public-variants) of 
 
 [Apollo Sandbox](./sandbox/) is a special mode of Apollo Studio that doesn't require an Apollo account. If you use Sandbox and _do_ sign in with your Apollo account, you can save personal operation collections that are _specific_ to Sandbox:
 
-<img src="../img/operation-collections/sandbox-collections.jpg" alt="Operation collections in Apollo Sandbox" class="screenshot" width="300" />
+<img
+  src="../../img/operation-collections/sandbox-collections.jpg"
+  alt="Operation collections in Apollo Sandbox"
+  className="screenshot"
+  width="300"
+/>
 
 These Sandbox collections persist regardless of which GraphQL endpoint you connect to.
 

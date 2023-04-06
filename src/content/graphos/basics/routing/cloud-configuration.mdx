@@ -6,9 +6,9 @@ description: In Apollo Studio
 After you [create a cloud supergraph](../quickstart/cloud/), you can view and manage its router's configuration from Apollo Studio. Go to the **Settings** page for your variant in Studio, then click the **Cloud Router** tab:
 
 <img
-  class="screenshot"
+  className="screenshot"
   alt="Configuring the routing for your cloud supergraph in Apollo Studio"
-  src="../img/cloud-routing/configuration-main.jpg"
+  src="../../img/cloud-routing/configuration-main.jpg"
 />
 
 This page shows the following information:
@@ -28,9 +28,9 @@ You can store secret string values that you can then use in your router's [YAML 
 To add a new secret, click **Save a secret**. The following dialog appears:
 
 <img
-  class="screenshot"
+  className="screenshot"
   alt="Adding a secret to your router"
-  src="../img/cloud-routing/add-secret.jpg"
+  src="../../img/cloud-routing/add-secret.jpg"
   width="500"
 />
 
@@ -45,8 +45,8 @@ headers:
   all:
     request:
       - insert:
-          name: "subgraph-token"
-          value: "${env.MY_SECRET}" # highlight-line
+          name: 'subgraph-token'
+          value: '${env.MY_SECRET}' # highlight-line
 ```
 
 ## Router configuration YAML
@@ -56,6 +56,7 @@ You can configure certain aspects of your router's behavior in the **Router conf
 - [HTTP headers](#http-header-rules) that the router sends to your subgraphs
 - [CORS rules](#cors-settings) for browser-based applications connecting to the router
 - [Subgraph error inclusion](#subgraph-error-inclusion) to expose subgraph errors to querying clients (including the Apollo Explorer)
+
 * [Introspection](#introspection) to allow resolving introspection queries.
 
 After you make any changes to your YAML configuration, you must **save** those changes (`CMD+S` or `CTRL+S`) for those changes to take effect.
@@ -78,13 +79,13 @@ headers:
       - propagate:
           matching: ^upstream-header-.*
       - remove:
-          named: "x-legacy-account-id"
+          named: 'x-legacy-account-id'
   subgraphs:
     products: # Header rules for just the products subgraph
       request:
         - insert:
-            name: "router-subgraph-name"
-            value: "products"
+            name: 'router-subgraph-name'
+            value: 'products'
 ```
 
 #### Supported header rules
@@ -111,9 +112,9 @@ Alternatively, you can provide a static string via the `named` option. These `na
 
 ```yaml
 - propagate:
-    named: "x-user-id"
-    default: "abc123"
-    rename: "account-id"
+    named: 'x-user-id'
+    default: 'abc123'
+    rename: 'account-id'
 ```
 
 ##### `remove`
@@ -123,7 +124,7 @@ Enables you to selectively remove headers that were included in the client's req
 ```yaml
 # Do not send this subgraph the "Cookie" header.
 - remove:
-    named: "Cookie"
+    named: 'Cookie'
 - remove:
     # Remove headers that include the legacy 'x-' prefix.
     matching: ^x-.*$
@@ -135,8 +136,8 @@ Enables you to add custom headers to requests going to a specific subgraph. Thes
 
 ```yaml
 - insert:
-    name: "sent-from-our-apollo-router"
-    value: "indeed"
+    name: 'sent-from-our-apollo-router'
+    value: 'indeed'
 ```
 
 #### Rule ordering
@@ -150,7 +151,7 @@ headers:
   all:
     request:
       - remove:
-        named: "test"
+        named: 'test'
       - propagate:
         matching: .*
 ```
@@ -168,7 +169,7 @@ headers:
       - propagate:
         matching: .*
       - remove:
-        named: "test"
+        named: 'test'
 ```
 
 With this ordering, first all headers are added to the propagation list, then the `test` header is removed.
@@ -187,33 +188,33 @@ headers:
           matching: ^upstream-header-.*
       # Propagate matching headers
       - propagate:
-          named: "some-header"
-          default: "default-value"
-          rename: "destination-header"
+          named: 'some-header'
+          default: 'default-value'
+          rename: 'destination-header'
       # Remove the "x-legacy-account-id" header
       - remove:
-          named: "x-legacy-account-id"
+          named: 'x-legacy-account-id'
       # Remove matching headers
       - remove:
           matching: ^x-deprecated-.*
       # Insert the 'my-company' header
       - insert:
-          name: "my-company"
-          value: "acme"
+          name: 'my-company'
+          value: 'acme'
   # Subgraph-specific header rules
   subgraphs:
     products:
       request:
         # Calls to the products subgraph have the "router-subgraph-name" header set to `products`.
         - insert:
-            name: "router-subgraph-name"
-            value: "products"
+            name: 'router-subgraph-name'
+            value: 'products'
     accounts:
       request:
         # Calls to the accounts subgraph have the "router-subgraph-name" header set to `accounts`.
         - insert:
-            name: "router-subgraph-name"
-            value: "accounts"
+            name: 'router-subgraph-name'
+            value: 'accounts'
 ```
 
 ### CORS settings
@@ -254,7 +255,7 @@ cors:
     - https://www.your-app.example.com
     - https://studio.apollographql.com # Keep this so Apollo Studio can run queries against your router
   match_origins:
-    - "https://([a-z0-9]+[.])*api[.]example[.]com" # any host that uses https and ends with .api.example.com
+    - 'https://([a-z0-9]+[.])*api[.]example[.]com' # any host that uses https and ends with .api.example.com
 ```
 
 You can also disable CORS entirely by setting `origins` to an empty list:

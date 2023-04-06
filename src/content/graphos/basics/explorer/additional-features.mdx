@@ -41,7 +41,7 @@ query {
 #### Extracted variable
 
 ```graphql title="query.graphql"
-query($id: ID!) {
+query ($id: ID!) {
   user(id: $id) {
     name
   }
@@ -70,7 +70,7 @@ If you're working with a supergraph in Studio, the Explorer dynamically calculat
 
 <img
   className="screenshot"
-  src="../img/explorer-query-plan.jpg"
+  src="../../img/explorer-query-plan.jpg"
   alt="Query plan in the Explorer"
   width="300"
 />
@@ -85,7 +85,7 @@ There are two display modes for query plans. You can switch between **Show plan 
 
 <img
   className="screenshot"
-  src="../img/explorer-query-plan-diagram.jpg"
+  src="../../img/explorer-query-plan-diagram.jpg"
   alt="Query plan diagram in the Explorer"
   width="600"
 />
@@ -106,7 +106,7 @@ To execute a subscription operation, first specify your subscriptions endpoint a
 
 <img
   className="screenshot"
-  src="../img/explorer-subscriptions-settings.jpg"
+  src="../../img/explorer-subscriptions-settings.jpg"
   alt="Subscription settings in the Explorer"
   width="500"
 />
@@ -115,7 +115,7 @@ When you execute a subscription, a Subscriptions panel appears in the bottom-rig
 
 <img
   className="screenshot"
-  src="../img/explorer-subscriptions-panel.jpg"
+  src="../../img/explorer-subscriptions-panel.jpg"
   alt="Subscriptions panel in the Explorer"
   width="500"
 />
@@ -155,7 +155,7 @@ If you are looking at your data [in the table layout](#table-layout-for-response
 If you're using Apollo Server, you can see traces from your responses inlined in the Explorer by adding the `ApolloServerPluginInlineTrace` plugin to your server's configuration:
 
 ```ts
-import { ApolloServerPluginInlineTrace } from '@apollo/server/plugin/inlineTrace';
+import {ApolloServerPluginInlineTrace} from '@apollo/server/plugin/inlineTrace';
 
 const server = new ApolloServer({
   typeDefs,

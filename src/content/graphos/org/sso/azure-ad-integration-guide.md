@@ -18,7 +18,7 @@ This guide walks through configuring Azure Active Directory (Azure AD) as your A
    - Leave **Redirect URI** empty. You'll provide this information later.  
     
     <img
-      src="../img/sso/azure-app-registration.gif"
+      src="../../img/sso/azure-app-registration.gif"
       alt="Azure App Registration"
       class="screenshot"
     />
@@ -32,7 +32,7 @@ This guide walks through configuring Azure Active Directory (Azure AD) as your A
 3. Copy and paste the **OpenID Connect metadata document** URL into the same local text file:
   
     <img
-      src="../img/sso/azure-client-id-endpoint.gif"
+      src="../../img/sso/azure-client-id-endpoint.gif"
       alt="Azure endpoint URL and client ID"
       class="screenshot"
     /> 
@@ -44,7 +44,7 @@ This guide walks through configuring Azure Active Directory (Azure AD) as your A
 2. Copy and paste the secret's **Value** field to the same text file you created earlier:
 
     <img
-      src="../img/sso/azure-client-secret.gif"
+      src="../../img/sso/azure-client-secret.gif"
       alt="Azure client secret"
       class="screenshot"
     /> 
@@ -62,7 +62,7 @@ This guide walks through configuring Azure Active Directory (Azure AD) as your A
 2. Also from the **API Permissions** section, select **Grant admin consent** next to the **+ Add a permission** button. Doing this ensures that your users don't need to grant consent during SSO.
 
     <img
-      src="../img/sso/azure-configure-api-permissions.gif"
+      src="../../img/sso/azure-configure-api-permissions.gif"
       alt="Azure configure API permissions"
       class="screenshot"
     /> 
@@ -72,7 +72,7 @@ This guide walks through configuring Azure Active Directory (Azure AD) as your A
 4. **Save** your changes.
 
     <img
-      src="../img/sso/azure-manifest.png"
+      src="../../img/sso/azure-manifest.png"
       alt="Azure manifest"
       class="screenshot"
     />
@@ -89,7 +89,7 @@ This guide walks through configuring Azure Active Directory (Azure AD) as your A
    4. Click **Next**.
 
     <img
-      src="../img/sso/azure-pingone-connection.gif"
+      src="../../img/sso/azure-pingone-connection.gif"
       alt="Azure PingOne connection"
       class="screenshot"
     /> 
@@ -100,7 +100,7 @@ This guide walks through configuring Azure Active Directory (Azure AD) as your A
    * Back on the PingOne configuration wizard, select **Next** after copying and pasting the URI.
 
     <img
-      src="../img/sso/azure-pingone-redirect-uri.gif"
+      src="../../img/sso/azure-pingone-redirect-uri.gif"
       alt="Azure PingOne redirect URI"
       class="screenshot"
     /> 
@@ -123,7 +123,7 @@ After you successfully configure the identity bridge between Azure AD and PingOn
     > ⚠️ If the **Add OIDC Application** wizard doesn’t automatically pop-up, select the **SAML** tab and then select the **OIDC** tab.
 
     <img
-      src="../img/sso/azure-oidc-application.gif"
+      src="../../img/sso/azure-oidc-application.gif"
       alt="PingOne OIDC application"
       class="screenshot"
     />

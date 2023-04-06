@@ -90,8 +90,8 @@ Supergraphs use an architecture called **Apollo Federation**. Federation is at i
 To take full advantage of federation features, each of your subgraphs needs to use a GraphQL server library that conforms to the **Apollo Federation subgraph specification**. Fortunately, many popular server libraries do!
 
 1. To check whether your current GraphQL server library supports the subgraph specification, see [this article](/federation/building-supergraphs/supported-subgraphs).
-    - If your library _does_ support the spec, consult its documentation to learn how to enable its federation support. For Apollo Server, see [this article](/apollo-server/using-federation/apollo-subgraph-setup).
-    - If your library _doesn't_ support the spec, consult the library list to find an alternative in your preferred programming language.
+   - If your library _does_ support the spec, consult its documentation to learn how to enable its federation support. For Apollo Server, see [this article](/apollo-server/using-federation/apollo-subgraph-setup).
+   - If your library _doesn't_ support the spec, consult the library list to find an alternative in your preferred programming language.
 2. Enable federation support for all of your subgraphs and deploy the updated subgraphs to your environment.
 
 After you make these changes, you can start using powerful federation features in your subgraphs, including:
@@ -105,9 +105,9 @@ After you make these changes, you can start using powerful federation features i
 Every time you want to make changes to one of your subgraphs, you should do the following:
 
 1. Verify that your proposed changes won't break your supergraph _or_ any of your existing clients.
-    - To do this, you set up [schema checks](../delivery/schema-checks/) for your supergraph.
+   - To do this, you set up [schema checks](../delivery/schema-checks/) for your supergraph.
 2. Whenever you deploy verified changes, always publish your updated subgraph schema to GraphOS as part of that deployment.
-    - For a basic example of this, see [Publishing with continuous delivery](../schema/cli-registration/#publishing-with-continuous-delivery).
+   - For a basic example of this, see [Publishing with continuous delivery](../schema/cli-registration/#publishing-with-continuous-delivery).
 
 ### Disable client-subgraph communication
 
@@ -134,7 +134,6 @@ How you choose to configure this access control depends on your GraphQL server l
 
 For more information, see [Securing your subgraphs](/federation/building-supergraphs/subgraphs-overview#securing-your-subgraphs).
 
-
 ## Studio actions
 
 ### Configure notifications
@@ -152,8 +151,8 @@ If you've created a Studio organization to collaborate with your team, invite yo
 A supergraph variant's **Clients** page enables you to view operation metrics, segmented by your different clients:
 
 <img
-  src="../img/client-awareness/overview.jpg"
-  class="screenshot"
+  src="../../img/client-awareness/overview.jpg"
+  className="screenshot"
   alt="Client awareness overview"
   width="400"
 />

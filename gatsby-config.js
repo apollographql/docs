@@ -233,6 +233,14 @@ if (process.env.DOCS_LOCAL) {
     }))
   );
 
+  plugins.push({
+    resolve: 'gatsby-source-filesystem',
+    options: {
+      name: 'graphos/img',
+      path: 'src/content/graphos/img'
+    }
+  });
+
   if (isLocalMode) {
     plugins.push('gatsby-plugin-local-docs');
   }
