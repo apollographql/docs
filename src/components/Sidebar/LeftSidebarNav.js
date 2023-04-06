@@ -86,9 +86,11 @@ export function LeftSidebarNav(props) {
             </>
           }
         >
-          <SidebarCategoryLink docset="graphos" icon={DOCSET_ICONS.graphos}>
-            <span>Building Graphs</span>
-          </SidebarCategoryLink>
+          <SidebarCategoryLink docset="graphos" icon={DOCSET_ICONS.graphos} />
+          <SidebarCategoryLink
+            docset="graphos/explorer"
+            icon={DOCSET_ICONS.explorer}
+          />
           <SidebarCategoryLink
             docset="graphos/delivery"
             icon={DOCSET_ICONS.delivery}

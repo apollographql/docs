@@ -1,5 +1,5 @@
 {
-  "title": "Building Graphs",
+  "title": "Graph Essentials",
   "algoliaFilters": [
     [
       "docset:graphos",
@@ -45,14 +45,6 @@
         ]
       ],
       "Using @defer": "/routing/defer"
-    },
-    "The Explorer": {
-      "Overview": "/explorer",
-      "Sandbox (no account required)": "/explorer/sandbox",
-      "Connecting and authenticating": "/explorer/connecting-authenticating",
-      "Embedding": "/explorer/embed-explorer",
-      "Operation collections": "/explorer/operation-collections",
-      "Additional features": "/explorer/additional-features"
     }
   }
 }
