@@ -17,7 +17,7 @@ export default function StudioButton() {
       rel="noopener noreferrer"
       d={{base: 'none', lg: 'flex'}}
     >
-      {user ? 'Launch' : 'Try'} Apollo Studio
+      {user ? 'Launch Studio' : 'Try GraphOS'}
     </Button>
   );
 }

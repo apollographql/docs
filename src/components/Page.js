@@ -310,7 +310,7 @@ export default function Page({file, pageContext, uri}) {
             toc !== false ? (
               // hide the table of contents on the home page
               <chakra.aside
-                d={{base: 'none', lg: 'flex'}}
+                d={{base: 'none', xl: 'flex'}}
                 flexDirection="column"
                 ml={{base: 10, xl: 16}}
                 w={250}
