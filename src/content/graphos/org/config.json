@@ -1,5 +1,18 @@
 {
   "title": "Org Management",
+  "algoliaFilters": [
+    [
+      "docset:graphos",
+      "docset:graphos/delivery",
+      "docset:graphos/metrics",
+      "docset:graphos/org",
+      "docset:graphos/security"
+    ],
+    [
+      "docset:rover",
+      "docset:federation"
+    ]
+  ],
   "sidebar": {
     "Organizations": "/organizations",
     "Members, roles, and permissions": "/members",

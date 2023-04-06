@@ -1,6 +1,18 @@
 {
   "title": "Building Graphs",
-  "algoliaFilters": ["docset:graphos", ["docset:rover", "docset:federation"]],
+  "algoliaFilters": [
+    [
+      "docset:graphos",
+      "docset:graphos/delivery",
+      "docset:graphos/metrics",
+      "docset:graphos/org",
+      "docset:graphos/security"
+    ],
+    [
+      "docset:rover",
+      "docset:federation"
+    ]
+  ],
   "sidebar": {
     "Introduction": "/",
     "Platform API": "/platform-api",
