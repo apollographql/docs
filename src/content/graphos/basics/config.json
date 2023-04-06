@@ -13,14 +13,14 @@
     ]
   ],
   "sidebar": {
-    "Introduction": "/",
+    "Intro to GraphOS": "/",
+    "What's a graph?": "/graphs",
     "Platform API": "/platform-api",
     "Quickstart": {
       "1️⃣ Create your supergraph": "/quickstart/cloud",
       "2️⃣ Next steps": "/quickstart/next-steps"
     },
     "Working with Graphs": {
-      "Overview": "/graphs",
       "Creating a new subgraph": "/graphs/creating-a-subgraph",
       "API keys": "/api-keys",
       "Securing subgraphs": "/graphs/securing-a-subgraph",
