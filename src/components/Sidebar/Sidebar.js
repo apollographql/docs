@@ -10,7 +10,7 @@ import {
 import {DocsetContext} from './SidebarCategory';
 import {PathContext} from '../../utils';
 import {TOTAL_HEADER_HEIGHT} from '../Header';
-import {useLocalStorage} from 'react-use';
+import {useKey, useLocalStorage} from 'react-use';
 
 export const PAGE_SIDEBAR_MARGIN = SIDEBAR_WIDTH + COLLAPSED_SIDEBAR_WIDTH;
 
@@ -29,6 +29,8 @@ export function Sidebar({children, configs, isHidden}) {
       setSidebarOpen(false);
     }
   }, [sidebarOpen, setActiveDocset, setSidebarOpen]);
+
+  useKey('Escape', dismissSidebar);
 
   useEffect(() => {
     // scroll the active nav group into view if one exists
