@@ -120,12 +120,6 @@ export function Sidebar({children, configs, isHidden}) {
           transitionProperty="transform"
           transitionDuration="normal"
           transitionTimingFunction="ease-in-out"
-          overflow="auto"
-          overscrollBehavior="none"
-          onWheel={event => {
-            event.stopPropagation();
-            event.preventDefault();
-          }}
         >
           {activeDocset ? (
             <PathContext.Provider

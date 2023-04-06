@@ -6,13 +6,13 @@ import {
   Box,
   Button,
   Flex,
-  HStack,
   IconButton,
   Menu,
   MenuButton,
   MenuItemOption,
   MenuList,
   MenuOptionGroup,
+  Tooltip,
   chakra
 } from '@chakra-ui/react';
 import {BsChevronContract, BsChevronExpand} from 'react-icons/bs';
@@ -73,98 +73,100 @@ const SidebarNav = forwardRef(
 
     return (
       <>
-        <Flex align="center" p="4" pos="sticky" top="0" zIndex="1" bg="bg">
-          {onGoBack && (
-            <IconButton
-              ml="-2.5"
-              mr="1"
-              variant="ghost"
-              size="sm"
-              fontSize="xl"
-              icon={<FiChevronLeft />}
-              onClick={onGoBack}
-            />
-          )}
-          <chakra.h2
-            mr="auto"
-            fontSize="xl"
-            fontWeight="semibold"
-            lineHeight={1.6}
-          >
-            {docset}
-          </chakra.h2>
-          {versions?.length > 1 && (
-            <Menu>
-              <MenuButton
-                alignSelf="flex-start"
+        <Box h="full" overflow="auto" overscrollBehavior="none">
+          <Flex align="center" p="4" pos="sticky" top="0" zIndex="1" bg="bg">
+            {onGoBack && (
+              <IconButton
+                ml="-2.5"
+                mr="1"
+                variant="ghost"
                 size="sm"
-                ml="2"
-                variant="outline"
-                rightIcon={<FiChevronDown />}
-                as={Button}
-              >
-                {currentVersion}
-              </MenuButton>
-              <MenuList>
-                <MenuOptionGroup value={currentVersion}>
-                  {versions.map((version, index) => (
-                    <MenuItemOption
-                      key={index}
-                      value={version.label}
-                      onClick={event => {
-                        event.stopPropagation();
-                        onVersionChange?.(version);
-                      }}
-                    >
-                      {version.label}
-                    </MenuItemOption>
-                  ))}
-                </MenuOptionGroup>
-              </MenuList>
-            </Menu>
-          )}
-        </Flex>
-        <NavContext.Provider
-          value={{
-            nav,
-            setNav: setLocalNavState
-          }}
-        >
-          <chakra.nav px="4" pb="3" ref={navRef}>
-            {navGroups.length > 0 && (
-              <HStack
-                as="button"
-                fontSize="sm"
-                fontWeight="semibold"
-                spacing="1"
-                mb="4"
-                onClick={() => {
-                  const expanded = !isAllExpanded;
-                  setLocalNavState(
-                    navGroups.reduce(
-                      (acc, group) => ({
-                        ...acc,
-                        [group.id]: expanded
-                      }),
-                      {}
-                    )
-                  );
-                  window.gtag?.('event', 'Toggle all', {
-                    event_category: GA_EVENT_CATEGORY_SIDEBAR,
-                    event_label: expanded ? 'expand' : 'collapse'
-                  });
-                }}
-              >
-                <span>{isAllExpanded ? 'Collapse' : 'Expand'} all</span>
-                <Box
-                  as={isAllExpanded ? BsChevronContract : BsChevronExpand}
-                  pointerEvents="none"
-                />
-              </HStack>
+                fontSize="xl"
+                icon={<FiChevronLeft />}
+                onClick={onGoBack}
+              />
             )}
-            <NavItems items={navItems} />
-          </chakra.nav>
-        </NavContext.Provider>
+            <chakra.h2
+              mr="auto"
+              fontSize="xl"
+              fontWeight="semibold"
+              lineHeight={1.6}
+            >
+              {docset}
+            </chakra.h2>
+            {versions?.length > 1 && (
+              <Menu>
+                <MenuButton
+                  alignSelf="flex-start"
+                  size="sm"
+                  ml="2"
+                  variant="outline"
+                  rightIcon={<FiChevronDown />}
+                  as={Button}
+                >
+                  {currentVersion}
+                </MenuButton>
+                <MenuList>
+                  <MenuOptionGroup value={currentVersion}>
+                    {versions.map((version, index) => (
+                      <MenuItemOption
+                        key={index}
+                        value={version.label}
+                        onClick={event => {
+                          event.stopPropagation();
+                          onVersionChange?.(version);
+                        }}
+                      >
+                        {version.label}
+                      </MenuItemOption>
+                    ))}
+                  </MenuOptionGroup>
+                </MenuList>
+              </Menu>
+            )}
+          </Flex>
+          <NavContext.Provider
+            value={{
+              nav,
+              setNav: setLocalNavState
+            }}
+          >
+            <chakra.nav px="4" pb="3" ref={navRef}>
+              <NavItems items={navItems} />
+            </chakra.nav>
+          </NavContext.Provider>
+        </Box>
+        {navGroups.length > 0 && (
+          <Tooltip
+            label={`${isAllExpanded ? 'Collapse' : 'Expand'} all categories`}
+          >
+            <IconButton
+              size="xs"
+              fontSize="md"
+              pos="fixed"
+              bottom="2"
+              right="2"
+              isRound
+              icon={isAllExpanded ? <BsChevronContract /> : <BsChevronExpand />}
+              onClick={() => {
+                const expanded = !isAllExpanded;
+                setLocalNavState(
+                  navGroups.reduce(
+                    (acc, group) => ({
+                      ...acc,
+                      [group.id]: expanded
+                    }),
+                    {}
+                  )
+                );
+                window.gtag?.('event', 'Toggle all', {
+                  event_category: GA_EVENT_CATEGORY_SIDEBAR,
+                  event_label: expanded ? 'expand' : 'collapse'
+                });
+              }}
+            />
+          </Tooltip>
+        )}
       </>
     );
   }
