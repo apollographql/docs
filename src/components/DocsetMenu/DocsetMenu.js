@@ -18,7 +18,7 @@ import {
   Stack,
   useDisclosure
 } from '@chakra-ui/react';
-import {BsFileEarmarkCheck, BsShieldLock} from 'react-icons/bs';
+import {BsFileEarmarkCheck} from 'react-icons/bs';
 import {ReactComponent as Federation} from '../../assets/icons/federation.svg';
 import {FiChevronDown, FiFileText, FiGrid} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
@@ -50,7 +50,6 @@ export const DOCSET_ICONS = {
   odyssey: <IoRocketSharp />,
   technotes: <FiFileText />,
   metrics: <SlChart />,
-  security: <BsShieldLock />,
   org: <VscOrganization />,
   delivery: <BsFileEarmarkCheck />
 };

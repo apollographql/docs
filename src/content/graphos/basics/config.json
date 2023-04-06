@@ -5,8 +5,7 @@
       "docset:graphos",
       "docset:graphos/delivery",
       "docset:graphos/metrics",
-      "docset:graphos/org",
-      "docset:graphos/security"
+      "docset:graphos/org"
     ],
     [
       "docset:rover",
@@ -23,6 +22,7 @@
     "Working with Graphs": {
       "Overview": "/graphs",
       "Creating a new subgraph": "/graphs/creating-a-subgraph",
+      "API keys": "/api-keys",
       "Securing subgraphs": "/graphs/securing-a-subgraph",
       "Local development": "/graphs/local-development",
       "Updating your graph": "/graphs/updating",

@@ -4,7 +4,6 @@
 /: src/content/basics
 graphos: src/content/graphos/basics
 graphos/metrics: src/content/graphos/metrics
-graphos/security: src/content/graphos/security
 graphos/delivery: src/content/graphos/delivery
 graphos/org: src/content/graphos/org
 technotes: src/content/technotes
