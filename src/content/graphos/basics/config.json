@@ -14,8 +14,7 @@
   ],
   "sidebar": {
     "Intro to GraphOS": "/",
-    "What's a graph?": "/graphs",
-    "Platform API": "/platform-api",
+    "Graphs and variants": "/graphs",
     "Quickstart": {
       "1️⃣ Create your supergraph": "/quickstart/cloud",
       "2️⃣ Next steps": "/quickstart/next-steps"
@@ -45,6 +44,11 @@
         ]
       ],
       "Using @defer": "/routing/defer"
+    },
+    "GraphOS Interfaces": {
+      "Studio UI": "https://studio.apollographql.com",
+      "Rover CLI": "https://apollographql.com/docs/rover/",
+      "Platform API": "/platform-api"
     }
   }
 }
