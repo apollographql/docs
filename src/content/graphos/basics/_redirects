@@ -61,3 +61,12 @@
 /tracing /docs/graphos/performance
 /errors /docs/graphos/performance
 /vscode /docs/graphos/editor-plugins
+
+/notifications/* /docs/graphos/metrics/notifications/:splat
+/sso/* /docs/graphos/org/sso/:splat
+
+/schema/cli-registration /docs/graphos/delivery/cli-registration
+/api-keys /docs/graphos/security/api-keys
+/audit-log /docs/graphos/security/audit-log
+/data-privacy /docs/graphos/security/data-privacy
+/sub-processors /docs/graphos/security/sub-processors
