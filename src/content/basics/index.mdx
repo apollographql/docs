@@ -1,7 +1,7 @@
 ---
-title: Apollo Docs Home
-description: Explore the Apollo platform
-toc: false
+title: Apollo Docs
+description: Explore Apollo and GraphOS
+toc: true
 ---
 
 import {ButtonGroup, VStack} from '@chakra-ui/react';
@@ -15,20 +15,42 @@ import {
 import {DOCSET_ICONS} from '../../components/DocsetMenu';
 import {SiDiscourse, SiGithub, SiTwitter, SiYoutube} from 'react-icons/si';
 
-Apollo is a platform for building a [**supergraph**](./intro/platform/), a unified network of all your data, services, and capabilities that connects to your application clients (such as web and native apps). At the heart of the supergraph is a query language called **GraphQL**.
+**Apollo GraphOS** is the developer platform for building a [**supergraph**](./intro/platform/): a unified network of your organization's data and services, all composed into a single distributed **GraphQL API**.
+
+## For GraphQL newcomers
 
 <Odyssey />
 
-## Build your supergraph
+## For API implementers
 
 <DocsetGrid>
-  <Docset
+ <Docset
     icon={DOCSET_ICONS.graphos}
     title="GraphOS"
-    description="Build your supergraph with your team, evolve it safely, and keep it running smoothly."
+    description="Connect any GraphQL API to Apollo's cloud platform to enable powerful features like metrics reporting, schema validation, and the Explorer IDE."
     path="/graphos"
     cta={CTA_LEARN}
   />
+</DocsetGrid>
+
+<DocsetGrid>
+  <Docset
+    icon={DOCSET_ICONS['apollo-server']}
+    title="Apollo Server"
+    description="Build a production-ready GraphQL API in Node.js. Fetch and combine results from multiple data sources."
+    path="/apollo-server"
+  />
+  <Docset
+    icon={DOCSET_ICONS.rover}
+    title="Rover CLI"
+    description="Manage your GraphOS graphs and schemas from the command line."
+    path="/rover"
+  />
+</DocsetGrid>
+
+## For enterprise architects
+
+<DocsetGrid>
   <Docset
     icon={DOCSET_ICONS.federation}
     title="Apollo Federation"
@@ -36,28 +58,11 @@ Apollo is a platform for building a [**supergraph**](./intro/platform/), a unifi
     path="/federation"
     cta={CTA_LEARN}
   />
-</DocsetGrid>
-
-## Technical reference
-
-<DocsetGrid>
-  <Docset
-    icon={DOCSET_ICONS['apollo-server']}
-    title="Apollo Server"
-    description="Configure a production-ready GraphQL server to fetch and combine data from multiple sources."
-    path="/apollo-server"
-  />
   <Docset
     icon={DOCSET_ICONS.router}
     title="Apollo Router"
-    description="A configurable, high-performance graph router for a federated supergraph."
+    description="Deploy your supergraph's router in your own infrastructure and configure it to meet advanced enterprise requirements."
     path="/router"
-  />
-  <Docset
-    icon={DOCSET_ICONS.rover}
-    title="Rover CLI"
-    description="Manage your graphs and schemas from the command line."
-    path="/rover"
   />
   <Docset
     icon={DOCSET_ICONS.technotes}
@@ -66,21 +71,28 @@ Apollo is a platform for building a [**supergraph**](./intro/platform/), a unifi
     path="/technotes"
     cta="Browse tech notes"
   />
+  <Docset
+    icon={DOCSET_ICONS.principled}
+    title="Principled GraphQL"
+    description="Read about the fundamental principles that underlie Apollo's supergraph architecture."
+    path="https://principledgraphql.com/"
+    cta="Visit Principled GraphQL"
+  />
 </DocsetGrid>
 
-### Apollo Client
+## For client developers
 
-Execute GraphQL operations, cache their results, and manage your application's state with one powerful library.
+**Apollo Client** is the industry-standard GraphQL client library. Execute GraphQL operations, cache their results, and manage all of your application's state in one place.
 
 <DocsetGrid>
-  <Docset icon={DOCSET_ICONS['apollo-client']} title="React" path="/react" />
+  <Docset icon={DOCSET_ICONS['apollo-client']} title="React / JS" path="/react" />
   <Docset icon={DOCSET_ICONS['apollo-ios']} title="iOS" path="/ios" />
   <Docset icon={DOCSET_ICONS['apollo-kotlin']} title="Kotlin" path="/kotlin" />
 </DocsetGrid>
 
 <VStack pt="4" spacing="4" textAlign="center" maxW="md" mx="auto">
 
-### Join our community 💬
+<h3> Join our community 💬 </h3>
 
 We love hearing from you! Here are a few ways you can connect with us and other Apollo community members.
 
