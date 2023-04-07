@@ -15,24 +15,20 @@
   "sidebar": {
     "Intro to GraphOS": "/",
     "Graphs and variants": "/graphs",
+    "API keys": "/api-keys",
     "Quickstart": {
-      "1️⃣ Create your supergraph": "/quickstart/cloud",
-      "2️⃣ Next steps": "/quickstart/next-steps"
+      "1. Create your supergraph": "/quickstart/cloud",
+      "2. Next steps": "/quickstart/next-steps"
     },
-    "Working with Graphs": {
+    "Building Subgraphs": {
       "Creating a new subgraph": "/graphs/creating-a-subgraph",
-      "API keys": "/api-keys",
-      "Securing subgraphs": "/graphs/securing-a-subgraph",
       "Local development": "/graphs/local-development",
+      "Securing subgraphs": "/graphs/securing-a-subgraph"
+    },
+    "Graph Administration": {
       "Updating your graph": "/graphs/updating",
       "Managing graphs in Studio": "/graphs/studio-features",
-      "Supergraph-specific Studio features": "/graphs/federated-graphs",
-      "Self-hosted setup": [
-        "/quickstart/self-hosted",
-        [
-          "enterprise"
-        ]
-      ]
+      "Supergraph-specific Studio features": "/graphs/federated-graphs"
     },
     "Routing": {
       "Cloud routing overview": "/routing/cloud",
@@ -43,6 +39,14 @@
           "enterprise"
         ]
       ],
+      "Self-hosted setup": [
+        "/quickstart/self-hosted",
+        [
+          "enterprise"
+        ]
+      ]
+    },
+    "Operation Performance": {
       "Using @defer": "/routing/defer"
     },
     "GraphOS Interfaces": {

@@ -99,11 +99,11 @@ export function LeftSidebarNav(props) {
             docset="graphos/metrics"
             icon={DOCSET_ICONS.metrics}
           />
+          <SidebarCategoryLink docset="graphos/org" icon={DOCSET_ICONS.org} />
           <SidebarCategoryLink
             docset="federation"
             icon={DOCSET_ICONS.federation}
           />
-          <SidebarCategoryLink docset="graphos/org" icon={DOCSET_ICONS.org} />
           <SidebarCategoryLink docset="rover" icon={DOCSET_ICONS.rover} />
           <SidebarCategoryLink docset="router" icon={DOCSET_ICONS.router} />
           <SidebarCategoryLink

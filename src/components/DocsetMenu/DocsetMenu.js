@@ -20,10 +20,10 @@ import {
 } from '@chakra-ui/react';
 import {BsFileEarmarkCheck, BsLayoutTextWindowReverse} from 'react-icons/bs';
 import {ReactComponent as Federation} from '../../assets/icons/federation.svg';
-import {FiChevronDown, FiFileText, FiGrid} from 'react-icons/fi';
+import {FiChevronDown, FiGrid} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
 import {GoTerminal} from 'react-icons/go';
-import {IoRocketSharp} from 'react-icons/io5';
+import {IoDocumentTextOutline, IoRocketSharp} from 'react-icons/io5';
 import {ReactComponent as Router} from '../../assets/icons/router.svg';
 import {ReactComponent as Satellite} from '../../assets/icons/satellite.svg';
 import {ReactComponent as Schema} from '../../assets/icons/schema.svg';
@@ -48,7 +48,7 @@ export const DOCSET_ICONS = {
   rover: <GoTerminal />,
   router: <CustomIcon icon={Router} />,
   odyssey: <IoRocketSharp />,
-  technotes: <FiFileText />,
+  technotes: <IoDocumentTextOutline />,
   metrics: <SlChart />,
   org: <VscOrganization />,
   delivery: <BsFileEarmarkCheck />,
