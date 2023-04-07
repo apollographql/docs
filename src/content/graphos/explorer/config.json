@@ -1,0 +1,24 @@
+{
+  "title": "Explorer IDE",
+  "algoliaFilters": [
+    [
+      "docset:graphos",
+      "docset:graphos/delivery",
+      "docset:graphos/metrics",
+      "docset:graphos/org",
+      "docset:graphos/explorer"
+    ],
+    [
+      "docset:rover",
+      "docset:federation"
+    ]
+  ],
+  "sidebar": {
+    "Overview": "/",
+    "Sandbox (no account required)": "/sandbox",
+    "Connecting and authenticating": "/connecting-authenticating",
+    "Embedding": "/embed-explorer",
+    "Operation collections": "/operation-collections",
+    "Additional features": "/additional-features"
+  }
+}

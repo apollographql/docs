@@ -13,7 +13,7 @@
     ]
   ],
   "sidebar": {
-    "Organizations": "/organizations",
+    "GraphOS organizations": "/organizations",
     "Members, roles, and permissions": "/members",
     "Plans and billing": "/plans",
     "User account": "/account",

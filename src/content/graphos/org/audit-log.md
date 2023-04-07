@@ -1,9 +1,9 @@
 ---
-title: Audit log of material Studio events
-description: Download a log of all material events that have occured in your account
+title: Audit log of material GraphOS events
+description: Download a log of all material events that have occured in your organization
 ---
 
-Organizations with an [Enterprise plan](http://apollographql.com/pricing) can export and download an audit log of all material events that have occurred in the organization over a given timeframe.
+Organizations with a GraphOS [Enterprise plan](http://apollographql.com/pricing) can export and download an audit log of all material events that have occurred in the organization over a given timeframe.
 
 The interface for requesting an export of auditable events is available under the **Audit** tab of your organization's homepage in Apollo Studio:
 
@@ -13,7 +13,7 @@ The interface for requesting an export of auditable events is available under th
 
 ## Creating an audit log export
 
-> Only [Organization Admins](./org/members/#organization-wide-member-roles) can request audit exports.
+> Only [Organization Admins](./members/#organization-wide-member-roles) can request audit exports.
 
 When creating an audit log export, you specify a **time range**, along with optional filters to limit actions to a particular **user** or **graph**. The maximum time range that you can request audits for is 180 days, as definied by our retention policy.
 
@@ -104,7 +104,7 @@ These actions are applied to a variety of [resource types](#resource-types), inc
 | `MARK_CHANGES_SAFE_FOR_OPERATION` | Marks a particular set of changes as safe when running [schema checks](./delivery/schema-checks/). |
 | `TOGGLE_DATADOG`                  | Enables or disables [Datadog metrics forwarding](./metrics/datadog-integration/).         |
 
-### Studio plan
+### GraphOS plan
 
 | Action type                           | Description                                                                                                                                        |
 | ------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |

@@ -1,7 +1,8 @@
 {
   "title": "Odyssey Tutorials",
   "sidebar": {
-    "Lift-off (GraphQL Fundamentals)": {
+    "Browse all tutorials": "https://www.apollographql.com/tutorials/browse",
+    "Lift-off (GraphQL Essentials)": {
       "Part 1: Basics": "https://www.apollographql.com/tutorials/lift-off-part1",
       "Part 2: Resolvers": "https://www.apollographql.com/tutorials/lift-off-part2",
       "Part 3: Arguments": "https://www.apollographql.com/tutorials/lift-off-part3",

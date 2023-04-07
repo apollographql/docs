@@ -2,24 +2,11 @@
 title: Supergraph-specific Studio features
 ---
 
-A **supergraph** (also known as a [federated graph](/federation/)) is a graph that's composed of one or more **subgraphs**:
-
-```mermaid
-graph BT;
-  gateway(["Supergraph (A + B + C)"]);
-  serviceA[Subgraph A];
-  serviceB[Subgraph B];
-  serviceC[Subgraph C];
-  gateway --- serviceA & serviceB & serviceC;
-```
-
-Each subgraph represents an underlying service or set of services that provide their own GraphQL API. Different subgraphs are often owned by different teams in an organization.
-
 Apollo Studio provides tools to help multiple teams collaborate on a supergraph and its subgraphs.
 
 ## Supergraph variants
 
-Each [variant](./overview/#variants) of a Studio supergraph has its own subgraph schemas, supergraph schema, change history, and metrics.
+Each [variant](./#variants) of a Studio supergraph has its own subgraph schemas, supergraph schema, change history, and metrics.
 
 Different variants of a supergraph can even have completely different sets of subgraphs:
 
@@ -43,7 +30,7 @@ graph BT;
 
 This helps you test out adding new subgraphs (or removing existing ones) in non-production environments.
 
-When you [publish a subgraph's schema](../schema/cli-registration/), you can specify which variant of the supergraph you're publishing that schema to.
+When you [publish a subgraph's schema](../delivery/cli-registration/), you can specify which variant of the supergraph you're publishing that schema to.
 
 ### Adding a variant
 
@@ -93,11 +80,11 @@ You can add a new variant to your existing GraphOS supergraph in the following w
 
 To add a new variant to your supergraph with Rover, you publish its first subgraph's schema! To do this, you use the exact same Rover command as [updating an _existing_ subgraph](../quickstart/next-steps/#update-a-subgraph-schema). The only difference is that you provide the name of the new variant to the command.
 
-[Learn about publishing subgraph schemas.](../schema/cli-registration/#subgraph-schemas)
+[Learn about publishing subgraph schemas.](../delivery/cli-registration/#subgraph-schemas)
 
 ## Managing subgraphs
 
-After you create a [cloud supergraph](./overview/#cloud-supergraphs) (or a new variant of one), you can view a list of its associated subgraphs from the variant's Subgraphs page:
+After you create a [cloud supergraph](./#cloud-supergraphs) (or a new variant of one), you can view a list of its associated subgraphs from the variant's Subgraphs page:
 
 <img
   class="screenshot"

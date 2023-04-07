@@ -47,7 +47,7 @@ export function LeftSidebarNav(props) {
           />
         }
       >
-        <SidebarCategory title="Start">
+        <SidebarCategory title="Welcome">
           <SidebarCategoryLink docset="/" icon={<AiOutlineHome />} />
           <SidebarCategoryLink docset="odyssey" icon={<IoSchoolOutline />} />
         </SidebarCategory>
@@ -86,22 +86,24 @@ export function LeftSidebarNav(props) {
             </>
           }
         >
-          <SidebarCategoryLink docset="graphos" icon={DOCSET_ICONS.graphos}>
-            <span>Building Graphs</span>
-          </SidebarCategoryLink>
+          <SidebarCategoryLink docset="graphos" icon={DOCSET_ICONS.graphos} />
           <SidebarCategoryLink
             docset="graphos/delivery"
             icon={DOCSET_ICONS.delivery}
           />
           <SidebarCategoryLink
+            docset="graphos/explorer"
+            icon={DOCSET_ICONS.explorer}
+          />
+          <SidebarCategoryLink
             docset="graphos/metrics"
             icon={DOCSET_ICONS.metrics}
           />
+          <SidebarCategoryLink docset="graphos/org" icon={DOCSET_ICONS.org} />
           <SidebarCategoryLink
             docset="federation"
             icon={DOCSET_ICONS.federation}
           />
-          <SidebarCategoryLink docset="graphos/org" icon={DOCSET_ICONS.org} />
           <SidebarCategoryLink docset="rover" icon={DOCSET_ICONS.rover} />
           <SidebarCategoryLink docset="router" icon={DOCSET_ICONS.router} />
           <SidebarCategoryLink
