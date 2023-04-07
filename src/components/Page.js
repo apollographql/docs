@@ -24,7 +24,6 @@ import {
   Heading,
   ListItem,
   OrderedList,
-  Stack,
   Table,
   Tag,
   Tbody,
@@ -42,7 +41,6 @@ import {
   MultiCodeBlock,
   MultiCodeBlockContext
 } from '@apollo/chakra-helpers';
-import {FaDiscourse, FaGithub} from 'react-icons/fa';
 import {Link as GatsbyLink} from 'gatsby';
 import {Global} from '@emotion/react';
 import {MDXProvider} from '@mdx-js/react';
@@ -72,6 +70,7 @@ import 'prismjs/components/prism-tsx';
 import 'prismjs/components/prism-typescript';
 import 'prismjs/components/prism-yaml';
 import {FeedbackButton} from './FeedbackButton';
+import {FiGithub, FiMessageCircle} from 'react-icons/fi';
 
 // use JS syntax highlighting for rhai codeblocks
 Prism.languages.rhai = Prism.languages.javascript;
@@ -234,12 +233,13 @@ export default function Page({file, pageContext, uri}) {
         href={`${repo}/${join(...repoPath)}`}
         variant="link"
         size="lg"
-        leftIcon={<FaGithub />}
+        leftIcon={<FiGithub />}
       >
         Edit on GitHub
       </Button>
     );
   }, [gitRemote, basePath, relativePath]);
+
   return (
     <>
       <Global
@@ -306,6 +306,34 @@ export default function Page({file, pageContext, uri}) {
             </>
           }
           pagination={<Pagination navItems={navItems} />}
+          bottomNav={
+            <HStack
+              py="4"
+              justify="flex-end"
+              px={{
+                base: 6,
+                md: 10,
+                xl: 12
+              }}
+              borderTopWidth={1}
+              bg="bg"
+              spacing="6"
+              pos="sticky"
+              bottom="0"
+            >
+              <FeedbackButton title={title} />
+              {editOnGitHub}
+              <Button
+                as="a"
+                href="https://community.apollographql.com/"
+                variant="link"
+                size="lg"
+                leftIcon={<FiMessageCircle />}
+              >
+                Discuss in forums
+              </Button>
+            </HStack>
+          }
           aside={
             toc !== false ? (
               // hide the table of contents on the home page
@@ -328,19 +356,6 @@ export default function Page({file, pageContext, uri}) {
                   // and we need undefined in order to make use of default props
                   headingDepth={headingDepth ?? undefined}
                 />
-                <Stack align="flex-start" spacing="3" mt="8">
-                  <FeedbackButton title={title} />
-                  {editOnGitHub}
-                  <Button
-                    as="a"
-                    href="https://community.apollographql.com/"
-                    variant="link"
-                    size="lg"
-                    leftIcon={<FaDiscourse />}
-                  >
-                    Discuss in forums
-                  </Button>
-                </Stack>
               </chakra.aside>
             ) : null
           }
@@ -425,7 +440,6 @@ export default function Page({file, pageContext, uri}) {
               processSync(childMarkdownRemark.html).result
             )}
           </MultiCodeBlockContext.Provider>
-          <Box d={{lg: 'none'}}>{editOnGitHub}</Box>
         </PageLayout>
       </PathContext.Provider>
     </>

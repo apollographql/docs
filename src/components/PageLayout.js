@@ -43,6 +43,7 @@ export default function Page({
   aside,
   paddingTop,
   paddingBottom,
+  bottomNav,
   contentProps
 }) {
   const {uri} = useContext(PathContext);
@@ -169,6 +170,7 @@ export default function Page({
           </Box>
           {aside}
         </Flex>
+        {bottomNav}
         <Footer />
       </Box>
     </>
@@ -184,6 +186,7 @@ Page.propTypes = {
   banner: PropTypes.element,
   pagination: PropTypes.element,
   aside: PropTypes.element,
+  bottomNav: PropTypes.element,
   subtitle: PropTypes.node,
   description: PropTypes.string,
   contentProps: PropTypes.object
