@@ -30,13 +30,10 @@ export function Odyssey() {
       bgImage={`linear-gradient(${['to right', ...gradient]})`}
     >
       <div>
-        <Heading as="h3" size="md" mb="2">
-          New to GraphQL?
-        </Heading>
         <Text fontSize="md">
-          Welcome! Our learning platform, <strong>Odyssey</strong>, is the
-          perfect place to start your journey and learn GraphQL with videos and
-          interactive code challenges.
+          <strong>Welcome!</strong> 👋 Our learning platform, Odyssey, provides{' '}
+          <strong>interactive tutorials</strong> with videos and code challenges
+          to help you launch your journey with GraphQL and Apollo.
         </Text>
       </div>
       <div>

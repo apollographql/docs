@@ -10,14 +10,14 @@ import {Link} from 'gatsby';
 ```mermaid
 flowchart LR;
   clients("GraphQL<br/>Clients");
-  subgraph "<b>GraphOS</b>";
-  registry(["Schema Registry"]);
-  router(["Cloud Routing"]);
+  subgraph "<b>Apollo GraphOS</b>";
+  registry(["Schema<br/>Registry"]);
+  router(["Supergraph<br/>Router"]);
   studio(["Studio UI"]);
   end;
   subgraph "Your infrastructure";
-  products["GraphQL Service<br/>A"];
-  reviews["GraphQL Service<br/>B"];
+  products["GraphQL API<br/>A"];
+  reviews["GraphQL API<br/>B"];
   router --- products & reviews
   end;
   clients -.- router;
