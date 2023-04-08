@@ -1,9 +1,8 @@
-import PageLayout, {usePageLayoutProps} from '../components/PageLayout';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {NotesList} from '../components/TechNotes';
+import {PageSeo} from '../components/PageLayout';
 import {PageWidthProvider} from '../components/PageWidthContext';
-import {PathContext} from '../utils';
 import {graphql} from 'gatsby';
 
 export const pageQuery = graphql`
@@ -33,29 +32,17 @@ export const pageQuery = graphql`
 
 Tags.propTypes = {
   data: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
   pageContext: PropTypes.object.isRequired
 };
 
-export default function Tags({pageContext, data, location}) {
-  const pageProps = usePageLayoutProps({
-    pageContext,
-    title: `Tagged with “${pageContext.tag}”`
-  });
-
+export default function Tags({pageContext, data}) {
   return (
     <PageWidthProvider>
-      <PathContext.Provider
-        value={{
-          uri: location.pathname,
-          basePath: '/technotes',
-          path: '/technotes'
-        }}
-      >
-        <PageLayout {...pageProps}>
-          <NotesList notes={data.notes.nodes} />
-        </PageLayout>
-      </PathContext.Provider>
+      <PageSeo
+        docset={pageContext.docset}
+        title={`Tagged with “${pageContext.tag}”`}
+      />
+      <NotesList notes={data.notes.nodes} />
     </PageWidthProvider>
   );
 }

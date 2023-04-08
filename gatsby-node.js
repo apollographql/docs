@@ -120,6 +120,7 @@ exports.createPages = async ({actions, graphql}) => {
           gitRemote {
             full_name
           }
+          name
           sourceInstanceName
           children {
             ... on Mdx {
@@ -195,7 +196,7 @@ exports.createPages = async ({actions, graphql}) => {
     };
   }, {});
 
-  data.pages.nodes.forEach(({id, sourceInstanceName, children}) => {
+  data.pages.nodes.forEach(({id, sourceInstanceName, children, name}) => {
     const [{fields}] = children;
 
     actions.createPage({
@@ -203,6 +204,8 @@ exports.createPages = async ({actions, graphql}) => {
       component: require.resolve('./src/templates/page'),
       context: {
         id,
+        fileName: name,
+        basePath: sourceInstanceName,
         configs,
         ...configs[sourceInstanceName]
       }
