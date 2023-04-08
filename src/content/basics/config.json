@@ -12,11 +12,6 @@
     "Release Policies": {
       "Product launch stages": "/resources/product-launch-stages",
       "Elastic License v2 FAQ": "/resources/elastic-license-v2-faq"
-    },
-    "Development Tools": {
-      "Apollo extension for VS Code": "/devtools/editor-plugins",
-      "Configuring Apollo projects": "/devtools/apollo-config",
-      "The Apollo CLI (partially deprecated)": "/devtools/cli"
     }
   }
 }

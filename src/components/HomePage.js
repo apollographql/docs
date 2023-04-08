@@ -43,7 +43,7 @@ export function Odyssey() {
           colorScheme="indigo"
           rightIcon={<FiArrowRight />}
         >
-          Try Apollo Odyssey
+          Explore Tutorials
         </Button>
       </div>
     </Grid>
