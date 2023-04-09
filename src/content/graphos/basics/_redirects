@@ -72,5 +72,5 @@
 /sub-processors /docs/graphos/sub-processors
 
 /delivery /docs/graphos/delivery/cli-registration
-/metrics /docs/graphos/metrics/usage-reporting
-/org /docs/graphos/org/organizations
+/metrics/usage-reporting/ /docs/graphos/metrics
+/org/organizations/ /docs/graphos/org

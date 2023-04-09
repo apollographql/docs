@@ -13,7 +13,7 @@
     ]
   ],
   "sidebar": {
-    "Operation metrics": "/usage-reporting",
+    "Operation metrics": "/",
     "Field usage": "/field-usage",
     "Segmenting by client": "/client-awareness",
     "Datadog forwarding": [
