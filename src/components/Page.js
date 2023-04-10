@@ -84,7 +84,8 @@ Prism.languages.rhai = Prism.languages.javascript;
 const LIST_SPACING = 4;
 const HEADINGS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
 
-const SCROLL_MARGIN_TOP = `calc(${PAGE_PADDING_TOP} + ${TOTAL_HEADER_HEIGHT}px)`;
+const PAGE_FOOTER_HEIGHT = 56;
+const SCROLL_MARGIN_TOP = PAGE_PADDING_TOP + TOTAL_HEADER_HEIGHT;
 
 const NESTED_LIST_STYLES = {
   [['ul', 'ol']]: {
@@ -379,8 +380,8 @@ export default function Page({file, pageContext}) {
               w={250}
               flexShrink="0"
               pos="sticky"
-              top={SCROLL_MARGIN_TOP}
-              maxH={`calc(100vh - ${SCROLL_MARGIN_TOP} - ${PAGE_PADDING_BOTTOM})`}
+              css={{top: SCROLL_MARGIN_TOP}}
+              maxH={`calc(100vh - ${SCROLL_MARGIN_TOP}px - ${PAGE_PADDING_BOTTOM}px - ${PAGE_FOOTER_HEIGHT}px)`}
             >
               <Heading size="md" mb="3">
                 {title}
@@ -406,7 +407,6 @@ export default function Page({file, pageContext}) {
         </MultiCodeBlockContext.Provider>
       </PageContent>
       <HStack
-        py="4"
         justify="flex-end"
         px={{
           base: 6,
@@ -418,6 +418,9 @@ export default function Page({file, pageContext}) {
         spacing="6"
         pos="sticky"
         bottom="0"
+        css={{
+          height: PAGE_FOOTER_HEIGHT
+        }}
       >
         <FeedbackButton title={title} />
         {editOnGitHub}

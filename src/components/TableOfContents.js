@@ -51,7 +51,7 @@ export default function TableOfContents({
   }, [toc]);
 
   return (
-    <List overflow="auto" spacing="3.5" pb="10">
+    <List overflow="auto" spacing="3.5">
       {toc.map(({id, value, depth}, index) => {
         const isActive = id === activeId;
         return (
