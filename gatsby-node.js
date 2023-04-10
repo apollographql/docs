@@ -219,6 +219,7 @@ exports.createPages = async ({actions, graphql}) => {
       context: {
         tag: tag.name,
         configs,
+        basePath: 'technotes',
         ...configs.technotes
       }
     });

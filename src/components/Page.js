@@ -32,7 +32,8 @@ import {
   Thead,
   Tr,
   UnorderedList,
-  chakra
+  chakra,
+  useBreakpointValue
 } from '@chakra-ui/react';
 import {
   EmbeddableExplorer,
@@ -203,6 +204,16 @@ export default function Page({file, pageContext}) {
     [versions]
   );
 
+  const editText = useBreakpointValue({
+    base: 'Edit',
+    lg: 'Edit on GitHub'
+  });
+
+  const discussText = useBreakpointValue({
+    base: 'Discuss',
+    lg: 'Discuss in Forums'
+  });
+
   const editOnGitHub = useMemo(() => {
     const repo = `https://github.com/${
       gitRemote?.full_name ?? 'apollographql/docs'
@@ -226,7 +237,7 @@ export default function Page({file, pageContext}) {
         size="lg"
         leftIcon={<FiGithub />}
       >
-        Edit on GitHub
+        {editText}
       </Button>
     );
   }, [gitRemote, basePath, relativePath]);
@@ -417,7 +428,7 @@ export default function Page({file, pageContext}) {
           size="lg"
           leftIcon={<FiMessageCircle />}
         >
-          Discuss in forums
+          {discussText}
         </Button>
       </HStack>
     </>
