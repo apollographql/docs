@@ -65,7 +65,7 @@
 /notifications/* /docs/graphos/metrics/notifications/:splat
 /sso/* /docs/graphos/org/sso/:splat
 
-/schema/cli-registration /docs/graphos/delivery/cli-registration
+/schema/cli-registration /docs/graphos/delivery
 /api-keys /docs/graphos/api-keys
 /audit-log /docs/graphos/org/audit-log
 /data-privacy /docs/graphos/data-privacy
