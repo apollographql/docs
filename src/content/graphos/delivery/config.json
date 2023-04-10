@@ -13,7 +13,7 @@
     ]
   ],
   "sidebar": {
-    "Publishing schemas": "/cli-registration",
+    "Publishing schemas": "/",
     "Schema checks": "/schema-checks",
     "Configuring schema checks": "/check-configurations",
     "Launches": "/launches",
