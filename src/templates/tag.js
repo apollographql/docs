@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import {NotesList} from '../components/TechNotes';
-import {PageSeo} from '../components/PageLayout';
+import {PageContent, PageSeo} from '../components/PageLayout';
 import {PageWidthProvider} from '../components/PageWidthContext';
 import {graphql} from 'gatsby';
 
@@ -36,13 +36,13 @@ Tags.propTypes = {
 };
 
 export default function Tags({pageContext, data}) {
+  const title = `Tagged with “${pageContext.tag}”`;
   return (
     <PageWidthProvider>
-      <PageSeo
-        docset={pageContext.docset}
-        title={`Tagged with “${pageContext.tag}”`}
-      />
-      <NotesList notes={data.notes.nodes} />
+      <PageSeo docset={pageContext.docset} title={title} />
+      <PageContent title={title}>
+        <NotesList notes={data.notes.nodes} />
+      </PageContent>
     </PageWidthProvider>
   );
 }

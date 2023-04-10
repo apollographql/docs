@@ -2,7 +2,7 @@ import Footer from './Footer';
 import Header, {TOTAL_HEADER_HEIGHT} from './Header';
 import MobileNav from './MobileNav';
 import PropTypes from 'prop-types';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext} from 'react';
 import Sidebar, {PAGE_SIDEBAR_MARGIN, SidebarNav} from './Sidebar';
 import getShareImage from '@jlengstorf/get-share-image';
 import useLocalStorage from 'react-use/lib/useLocalStorage';
@@ -131,12 +131,6 @@ PageContent.propTypes = {
 export default function PageLayout({pageContext, children, location}) {
   const [sidebarHidden, setSidebarHidden] = useLocalStorage('sidebar');
 
-  const [now, setNow] = useState(Date.now());
-
-  useEffect(() => {
-    setNow(Date.now());
-  }, []);
-
   const {
     basePath,
     fileName,
@@ -177,7 +171,7 @@ export default function PageLayout({pageContext, children, location}) {
           />
         </Tooltip>
       </Fade>
-      <Sidebar key={now} configs={configs} isHidden={sidebarHidden}>
+      <Sidebar configs={configs} isHidden={sidebarHidden}>
         <SidebarNav
           versions={versions}
           currentVersion={currentVersion}
@@ -189,7 +183,6 @@ export default function PageLayout({pageContext, children, location}) {
         />
       </Sidebar>
       <Box
-        key={now}
         marginLeft={{
           base: 0,
           md: sidebarHidden ? 0 : PAGE_SIDEBAR_MARGIN
