@@ -194,7 +194,7 @@ Your GraphQL server can report metrics for field executions, requesting operatio
 
 ### Prerequisites
 
-> ⚠️ Before continuing, make sure you've configured your Apollo Gateway or individual GraphQL server to [push metrics to Apollo Studio](./usage-reporting/) .
+> ⚠️ Before continuing, make sure you've configured your Apollo Gateway or individual GraphQL server to [push metrics to GraphOS](./sending-operation-metrics/).
 
 To report each type of field usage metric to Apollo, make sure your graph meets the prerequisites for that metric:
 
@@ -214,7 +214,7 @@ If you have a [federated graph](https://apollographql.com/docs/federation), your
 
 ### Reporting with a supergraph
 
-If you have a self-hosted supergraph, you only need to configure your [router](/federation/building-supergraphs/router/) to [send metrics to GraphOS](./usage-reporting/). Subgraphs should _not_ send any metrics to GraphOS directly. Instead, they can include trace data in their responses to the router. The router then includes that data in its own reports to GraphOS.
+If you have a self-hosted supergraph, you only need to configure your [router](/federation/building-supergraphs/router/) to [send metrics to GraphOS](./sending-operation-metrics/). Subgraphs should _not_ send any metrics to GraphOS directly. Instead, they can include trace data in their responses to the router. The router then includes that data in its own reports to GraphOS.
 
 ### Performance considerations
 

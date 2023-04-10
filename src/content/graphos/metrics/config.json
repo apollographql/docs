@@ -16,13 +16,13 @@
     "Operation metrics": "/",
     "Field usage": "/field-usage",
     "Segmenting by client": "/client-awareness",
+    "Sending metrics to GraphOS": "/sending-operation-metrics",
     "Datadog forwarding": [
       "/datadog-integration",
       [
         "enterprise"
       ]
     ],
-    "Sending metrics to GraphOS": "/sending-operation-metrics",
     "Operation signatures": "/operation-signatures",
     "Notifications": {
       "Setup": "/notifications/notification-setup",

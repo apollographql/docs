@@ -87,7 +87,7 @@ The GraphOS platform provides an ever-growing collection of tools and services t
   - Whenever you update a subgraph schema, GraphOS composes a new _supergraph_ schema for your router. If composition succeeds, your router automatically begins using its new schema.
   - You can view the results of each [launch](/graphos/delivery/launches/) that takes place whenever you update a subgraph schema, helping you resolve any issues that might occur.
 - **An interface for every use case.**
-  - [Apollo Studio](https://studio.apollographql.com) is the primary web interface for GraphOS. Among other capabilities, you use Studio to create your organization and its supergraphs, view [schemas](/graphos/graphs/studio-features/#the-schema-page) and [metrics](/graphos/metrics/usage-reporting), and test out operations in [the Explorer](/graphos/explorer/explorer/).
+  - [Apollo Studio](https://studio.apollographql.com) is the primary web interface for GraphOS. Among other capabilities, you use Studio to create your organization and its supergraphs, view [schemas](/graphos/graphs/studio-features/#the-schema-page) and [metrics](/graphos/metrics/), and test out operations in [the Explorer](/graphos/explorer/).
   - [The Rover CLI](/rover/getting-started/) is the primary _command-line_ interface for GraphOS. Among other capabilities, you use Rover to publish subgraph schemas to the registry, run schema checks from CI, and test out your supergraph within your development environment.
   - If you want to automate your own workflows outside of Studio or Rover, you can use the official [GraphOS Platform API](/graphos/platform-api) to do so. We'll expose more GraphOS capabilities through the Platform API over time.
 
@@ -165,7 +165,7 @@ For enterprise organizations that need to run their router in their own infrastr
     - This is a high-performance binary written in Rust that adds [minimal latency to request processing](https://www.apollographql.com/blog/announcement/backend/apollo-router-our-graphql-federation-runtime-in-rust/), even with extremely high traffic.
     - Because the Apollo Router is a precompiled binary, you don't need to write any boilerplate code around it to deploy it to your backend. All it needs is a configuration file for any behavior you want to customize.
     - Cloud supergraph routers use the Apollo Router under the hood.
-- [Apollo Server](/federation/building-supergraphs/router#nodejs-gateway-setup) with `@apollo/gateway`
+- [Apollo Server](/apollo-server/using-federation/apollo-gateway-setup) with `@apollo/gateway`
     - This is Apollo's open-source Node.js GraphQL server library, which you can configure to act as a supergraph gateway.
 
 If you get started with one of these libraries and later decide to switch to the other, you can do so without making any changes to the rest of your supergraph.

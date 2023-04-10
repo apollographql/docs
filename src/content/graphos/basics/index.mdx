@@ -59,7 +59,7 @@ These features (along with many others) are available to organizations on the **
   - Whenever you update a subgraph schema, GraphOS composes a new _supergraph_ schema for your router. If composition succeeds, your router automatically begins using its new schema.
   - You can view the results of each [launch](./delivery/launches/) that takes place whenever you update a subgraph schema, helping you resolve any issues that might occur.
 - **An interface for every use case.**
-  - [Apollo Studio](https://studio.apollographql.com) is the primary web interface for GraphOS. Among other capabilities, you use Studio to create your organization and its supergraphs, view [schemas](./graphs/studio-features/#the-schema-page) and [metrics](./metrics/usage-reporting), and test out operations in [the Explorer](./explorer/explorer/).
+  - [Apollo Studio](https://studio.apollographql.com) is the primary web interface for GraphOS. Among other capabilities, you use Studio to create your organization and its supergraphs, view [schemas](./graphs/studio-features/#the-schema-page) and [metrics](./metrics/), and test out operations in [the Explorer](./explorer/).
   - [The Rover CLI](/rover/getting-started/) is the primary _command-line_ interface for GraphOS. Among other capabilities, you use Rover to publish subgraph schemas to the registry, run schema checks from CI, and test out your supergraph within your development environment.
   - If you want to automate your own workflows outside of Studio or Rover, you can use the official [GraphOS Platform API](./platform-api) to do so. We'll expose more GraphOS capabilities through the Platform API over time.
 
@@ -76,7 +76,7 @@ These additional features are available to organizations on an **Enterprise** pl
 - **Enhanced user management.**
   - Assign fine-grained [user roles](./org/members/) to organization members, and optionally override those roles on a graph-by-graph basis.
   - Set up single sign-on (SSO) with your identity provider.
-  - Export [audit logs](./audit-log/) of all material events that occurred within your organization over a time period.
+  - Export [audit logs](./org/audit-log/) of all material events that occurred within your organization over a time period.
 
 In addition to the features above, an Enterprise plan provides access to our Graph Champions community and a dedicated support channel for your team to talk with Apollo supergraph experts. We'll work with you to customize a query volume limit and support package that's right for you.
 

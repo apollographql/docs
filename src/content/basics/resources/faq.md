@@ -177,7 +177,7 @@ Many apps and sites are powered almost completely by an API such as a GraphQL sc
 
 [Apollo Studio](https://studio.apollographql.com) is a great tool to track many of these things. It allows close inspection of fields to make it easy to see both total response times as well as how long each field took to execute.
 
-Apollo Studio also has some integrations to make monitoring easier. The [Slack integration](/graphos/notifications/notification-setup/) delivers daily reports to give teams a quick overview of the health of their schema. The enterprise [Datadog integration](/graphos/metrics/datadog-integration/) works with existing Datadog accounts to help teams track schema performance.
+Apollo Studio also has some integrations to make monitoring easier. The [Slack integration](/graphos/metrics/notifications/notification-setup/) delivers daily reports to give teams a quick overview of the health of their schema. The enterprise [Datadog integration](/graphos/metrics/datadog-integration/) works with existing Datadog accounts to help teams track schema performance.
 
 ## 4. Moving a product to GraphQL
 

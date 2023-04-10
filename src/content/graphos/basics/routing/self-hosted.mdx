@@ -24,7 +24,7 @@ flowchart LR;
   class clients secondary;
 ```
 
-A supergraph with this structure is called a [self-hosted supergraph](../graphs/overview/#self-hosted-supergraphs). Here are some reasons why an enterprise organization might need to use self-hosted routing instead of [cloud routing](./cloud/) (where Apollo hosts your router for you):
+A supergraph with this structure is called a [self-hosted supergraph](../graphs/#self-hosted-supergraphs). Here are some reasons why an enterprise organization might need to use self-hosted routing instead of [cloud routing](./cloud/) (where Apollo hosts your router for you):
 
 - **Compliance.** All of your supergraph's components must be hosted in a particular region to adhere to compliance requirements.
 - **Performance.** You need to minimize latency between your router and subgraphs by enabling them to communicate _without_ traversing the public internet (e.g., by hosting all components in a VPC).

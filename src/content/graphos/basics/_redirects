@@ -7,7 +7,7 @@
 /validating-client-operations/ /docs/graphos/delivery/validating-client-operations/
 /federated-graphs/ /docs/graphos/graphs/federated-graphs/
 /local-development/ /docs/graphos/graphs/local-development/
-/org/graphs/ /docs/graphos/graphs/overview/
+/org/graphs/ /docs/graphos/graphs/
 /studio-graph-features/ /docs/graphos/graphs/studio-features/
 /build-status-notification/ /docs/graphos/graphs/build-status-notification/
 /daily-reports/ /docs/graphos/notifications/daily-reports/
@@ -20,7 +20,7 @@
 /cloud-routing/overview/ /docs/graphos/routing/cloud/
 /cloud-routing/configuration/ /docs/graphos/routing/cloud-configuration/
 
-/schema/registry/ /docs/graphos/org/graphs/
+/schema/registry/ /docs/graphos/graphs/
 /schema/schema-reporting /docs/graphos/schema/cli-registration/
 
 /dev-graphs/ /docs/graphos/
@@ -29,7 +29,7 @@
 /setup-analytics/ /docs/graphos/metrics/usage-reporting/
 /datadog-integration/ /docs/graphos/metrics/datadog-integration/
 /client-awareness/ /docs/graphos/metrics/client-awareness/
-/explorer/ /docs/graphos/explorer/explorer/
+/explorer/explorer/ /docs/graphos/explorer/
 /embed-explorer/ /docs/graphos/explorer/embed-explorer/
 /graph-access-permissions/ /docs/graphos/studio-graph-features/#managing-access-permissions
 

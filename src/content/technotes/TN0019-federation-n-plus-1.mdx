@@ -116,7 +116,7 @@ QueryPlan {
 
 ## Writing efficient entity resolvers
 
-In most subgraph implementations (including [`@apollo/subgraph`](/federation/api/apollo-subgraph)), we don't write the `Query._entities` resolver directly. Instead, we use the [reference resolver API](/federation/entities#2-define-a-reference-resolver) for resolving an individual entity reference:
+In most subgraph implementations (including [`@apollo/subgraph`](/apollo-server/using-federation/api/apollo-subgraph/)), we don't write the `Query._entities` resolver directly. Instead, we use the [reference resolver API](/federation/entities#2-define-a-reference-resolver) for resolving an individual entity reference:
 
 ```js
 const resolvers = {

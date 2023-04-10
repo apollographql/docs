@@ -8,7 +8,7 @@ We recommend that you complete this checklist before your supergraph begins hand
 
 ## In Apollo Studio
 
-- Ensure that you've created multiple [variants](/graphos/graphs/overview#variants) to represent the different environments where your supergraph runs (production, staging, and so on).
+- Ensure that you've created multiple [variants](/graphos/graphs/#variants) to represent the different environments where your supergraph runs (production, staging, and so on).
   - Optionally, [protect your production variant](/graphos/graphs/studio-features#protected-variants-enterprise-only) to avoid accidental changes while working in Apollo Studio.
 - Ensure that your [clients identify themselves](/graphos/metrics/client-awareness/) by name and version.
   - If you're using an Apollo Client library, you can add a client name and version to the constructor.
@@ -41,7 +41,7 @@ We recommend that you complete this checklist before your supergraph begins hand
 
 ### Apollo Gateway APQ example
 
-This example uses both the [`buildService`](/federation/api/apollo-gateway/#buildservice) option and the [`RemoteGraphQLDataSource`](/federation/api/apollo-gateway/#apq) class to enable APQ to each subgraph.
+This example uses both the [`buildService`](/apollo-server/using-federation/api/apollo-gateway/#buildservice) option and the [`RemoteGraphQLDataSource`](/apollo-server/using-federation/api/apollo-gateway/#apq) class to enable APQ to each subgraph.
 
 ```js
 import {ApolloServer} from '@apollo/server';

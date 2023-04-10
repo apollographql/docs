@@ -135,7 +135,7 @@ Your [GraphQL schema](/apollo-server/schema/schema/) defines which types and fie
 
 Depending on your schema and your resolver definitions, your server might inadvertently support GraphQL operations that execute very slowly, or even max out your server's resources.
 
-Consequently, it's important to design your schema such that it supports the operations your clients need, _without_ supporting unnecessary operations that affect performance. It's also helpful to set up [trace reporting](/graphos/metrics/usage-reporting#resolver-level-traces) for your GraphQL server, enabling you to identify and improve slow operations.
+Consequently, it's important to design your schema such that it supports the operations your clients need, _without_ supporting unnecessary operations that affect performance. It's also helpful to set up [trace reporting](/graphos/metrics/#resolver-level-traces) for your GraphQL server, enabling you to identify and improve slow operations.
 
 [Learn about query-driven schema design](/apollo-server/schema/schema/#query-driven-schema-design)
 

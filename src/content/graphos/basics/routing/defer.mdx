@@ -14,7 +14,7 @@ sequenceDiagram
   Router->>Client: Returns data for<br/> deferred fields
 ```
 
-Both [cloud supergraphs](../graphs/overview/#cloud-supergraphs) and [self-hosted supergraphs](../graphs/overview/#self-hosted-supergraphs) support deferring fields with the router. Additionally, this feature is compatible with all [supported subgraph libraries](/federation/building-supergraphs/supported-subgraphs), because the logic resides entirely within the router!
+Both [cloud supergraphs](../graphs/#cloud-supergraphs) and [self-hosted supergraphs](../graphs/#self-hosted-supergraphs) support deferring fields with the router. Additionally, this feature is compatible with all [supported subgraph libraries](/federation/building-supergraphs/supported-subgraphs), because the logic resides entirely within the router!
 
 ## How do I defer fields in a query?
 
@@ -147,8 +147,8 @@ To use `@defer` successfully, your supergraph and its clients must meet the requ
 - Clients must support receiving deferred query responses as multipart HTTP responses.
   - This functionality is currently supported in Apollo Client for [Web](/react/data/defer) and [Kotlin (experimental)](/kotlin/fetching/defer).
 - Your supergraph must be one of:
-  - A [cloud supergraph](../graphs/overview#cloud-supergraphs)
-  - A [self-hosted supergraph](../graphs/overview/#self-hosted-supergraphs) running the [Apollo Router](/router/)
+  - A [cloud supergraph](../graphs/#cloud-supergraphs)
+  - A [self-hosted supergraph](../graphs/#self-hosted-supergraphs) running the [Apollo Router](/router/)
 
 ### Entity-specific requirements
 

@@ -38,7 +38,7 @@ An exported audit log is a CSV file in which each row represents a material chan
 | **Details**        | A JSON object containing details of the action that occurred. The fields of this object vary depending on the action.                                                                         |
 | **Actor_ID**       | The Studio ID of the actor that performed the action.                                                                                                                                         |
 | **Actor_Type**     | The type of actor that performed the action. This is most commonly `USER` (an authenticated user) or `GRAPH` (a tool such as the Rover CLI using a graph API key).                            |
-| **Effective_Role** | The [organizational role](./org/members/#organization-wide-member-roles) of the actor that performed the action, indicating its corresponding [permissions](./org/members/#role-permissions). |
+| **Effective_Role** | The [organizational role](./members/#organization-wide-member-roles) of the actor that performed the action, indicating its corresponding [permissions](./members/#role-permissions). |
 | **Actor_Email**    | The actor's email address, if the actor is a `USER`.                                                                                                                                          |
 | **Actor_Name**     | The actor's name, if the actor is a `USER`.                                                                                                                                                   |
 | **Graph_ID**       | The ID of the Studio graph that the action pertains to, if any.                                                                                                                               |
@@ -49,12 +49,12 @@ An audit log's **Resource_Type** column indicates what type of resource each act
 
 | Resource type        | Description                                         |
 | -------------------- | --------------------------------------------------- |
-| `ACCOUNT`            | A Studio [organization](./org/organizations/).      |
+| `ACCOUNT`            | A Studio [organization](./).      |
 | `USER`               | A Studio user.                                      |
 | `GRAPH`              | A Studio [graph]./graphs/overview/).                    |
-| `GRAPH_VARIANT`      | A graph [variant](./graphs/overview/#variants). |
-| `GRAPH_API_KEY`      | A graph [API key](./api-keys/).                     |
-| `USER_API_KEY`       | A user [API key](./api-keys/).                      |
+| `GRAPH_VARIANT`      | A graph [variant](../graphs/#variants). |
+| `GRAPH_API_KEY`      | A graph [API key](../api-keys/).                     |
+| `USER_API_KEY`       | A user [API key](../api-keys/).                      |
 | `ZENDESK_TICKET`     | An Apollo support ticket.                           |
 | `AUDIT_JOB`          | The generation of an audit log export.              |
 | `EMAIL_SETTINGS`     | A user's marketing email settings.                  |
@@ -93,16 +93,16 @@ These actions are applied to a variety of [resource types](#resource-types), inc
 | --------------------- | ----------------------------------------------------------------------------------------- |
 | `JOIN_ACCOUNT`        | Adds a user to an organization.                                                           |
 | `LEAVE_ACCOUNT`       | Removes a user from an organization.                                                      |
-| `CHANGE_ROLE`         | Changes a user's [organizational role](./org/members/#organization-wide-member-roles).    |
-| `OVERRIDE_GRAPH_ROLE` | [Overrides a user's role](./org/members/#graph-specific-member-roles) for a single graph. |
+| `CHANGE_ROLE`         | Changes a user's [organizational role](./members/#organization-wide-member-roles).    |
+| `OVERRIDE_GRAPH_ROLE` | [Overrides a user's role](./members/#graph-specific-member-roles) for a single graph. |
 
 ### Studio features
 
 | Action type                       | Description                                                                               |
 | --------------------------------- | ----------------------------------------------------------------------------------------- |
-| `IGNORE_OPERATION_IN_CHECKS`      | Ignores a particular GraphQL operation when running [schema checks](./delivery/schema-checks/).    |
-| `MARK_CHANGES_SAFE_FOR_OPERATION` | Marks a particular set of changes as safe when running [schema checks](./delivery/schema-checks/). |
-| `TOGGLE_DATADOG`                  | Enables or disables [Datadog metrics forwarding](./metrics/datadog-integration/).         |
+| `IGNORE_OPERATION_IN_CHECKS`      | Ignores a particular GraphQL operation when running [schema checks](../delivery/schema-checks/).    |
+| `MARK_CHANGES_SAFE_FOR_OPERATION` | Marks a particular set of changes as safe when running [schema checks](../delivery/schema-checks/). |
+| `TOGGLE_DATADOG`                  | Enables or disables [Datadog metrics forwarding](../metrics/datadog-integration/).         |
 
 ### GraphOS plan
 
