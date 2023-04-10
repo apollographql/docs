@@ -31,12 +31,12 @@ const plugins = [
   '@chakra-ui/gatsby-plugin',
   'gatsby-plugin-combine-redirects', // local plugin
   'gatsby-plugin-loadable-components-ssr',
-  {
-    resolve: 'gatsby-plugin-check-links', // local plugin
-    options: {
-      ignore: ['/react/api/core/ApolloClient', '/react/v2/api/apollo-client']
-    }
-  },
+  // {
+  //   resolve: 'gatsby-plugin-check-links', // local plugin
+  //   options: {
+  //     ignore: ['/react/api/core/ApolloClient', '/react/v2/api/apollo-client']
+  //   }
+  // },
   {
     resolve: 'gatsby-plugin-manifest',
     options: {
@@ -154,16 +154,6 @@ const plugins = [
       include: /\.mdx?$/i,
       ignore: /README/i
     }
-  },
-  {
-    resolve: 'gatsby-source-apiserver',
-    options: {
-      typePrefix: 'Odyssey',
-      name: 'Course',
-      method: 'GET',
-      url: 'https://www.apollographql.com/tutorials/courses-api/courses.json',
-      entityLevel: 'odyssey-courses'
-    }
   }
 ];
 
@@ -193,22 +183,6 @@ if (process.env.CONTEXT === 'production') {
   });
 }
 
-const isLocalMode = process.env.DOCS_MODE === 'local';
-
-plugins.push(
-  ...Object.entries(remoteSources).map(([name, {remote, branch}]) => ({
-    resolve: '@theowenyoung/gatsby-source-git',
-    options: {
-      remote,
-      name,
-      branch,
-      rootDir: 'docs/source',
-      patterns:
-        isLocalMode || process.env.DOCS_LOCAL ? 'config.json' : undefined
-    }
-  }))
-);
-
 if (process.env.DOCS_LOCAL) {
   plugins.push(
     'gatsby-plugin-local-docs', // local plugin
@@ -233,15 +207,19 @@ if (process.env.DOCS_LOCAL) {
     }))
   );
 
-  plugins.push({
-    resolve: 'gatsby-source-filesystem',
-    options: {
-      name: 'graphos/img',
-      path: 'src/content/graphos/img'
-    }
-  });
-
-  if (isLocalMode) {
+  if (process.env.DOCS_MODE !== 'local') {
+    plugins.push(
+      ...Object.entries(remoteSources).map(([name, {remote, branch}]) => ({
+        resolve: '@theowenyoung/gatsby-source-git',
+        options: {
+          remote,
+          name,
+          branch,
+          rootDir: 'docs/source'
+        }
+      }))
+    );
+  } else {
     plugins.push('gatsby-plugin-local-docs');
   }
 }
