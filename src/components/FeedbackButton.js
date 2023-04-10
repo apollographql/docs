@@ -1,11 +1,15 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {Button} from '@chakra-ui/react';
+import {Button, useBreakpointValue} from '@chakra-ui/react';
 import {FiStar} from 'react-icons/fi';
 import {useUser} from '../utils';
 
 export const FeedbackButton = ({title}) => {
   const {user} = useUser();
+  const text = useBreakpointValue({
+    base: 'Rate',
+    lg: 'Rate article'
+  });
   return (
     <Button
       onClick={() => {
@@ -21,7 +25,7 @@ export const FeedbackButton = ({title}) => {
       size="lg"
       leftIcon={<FiStar />}
     >
-      Rate article
+      {text}
     </Button>
   );
 };

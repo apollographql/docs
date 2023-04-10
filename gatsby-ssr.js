@@ -1,9 +1,18 @@
+import PageLayout from './src/components/PageLayout';
 import React from 'react';
 import {
   DOCS_PAGE_WIDTH_VAR,
   PAGE_JUMBO_WIDTH,
   PAGE_NORMAL_WIDTH
 } from './src/components/PageWidthContext';
+
+export const wrapPageElement = ({element, props}) => {
+  return 'configs' in props.pageContext ? (
+    <PageLayout {...props}>{element}</PageLayout>
+  ) : (
+    element
+  );
+};
 
 export const onRenderBody = ({setHeadComponents}) =>
   setHeadComponents([
