@@ -9,6 +9,7 @@ export const YouTube = ({youTubeId}) => (
       url={`https://www.youtube.com/watch?v=${youTubeId}`}
       height="100%"
       width="100%"
+      controls="1"
     />
   </AspectRatio>
 );
