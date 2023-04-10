@@ -1,5 +1,11 @@
 import PropTypes from 'prop-types';
-import React, {useCallback, useContext, useEffect, useRef} from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState
+} from 'react';
 import SidebarNav from './SidebarNav';
 import {Box, chakra} from '@chakra-ui/react';
 import {
@@ -10,7 +16,7 @@ import {
 import {DocsetContext} from './SidebarCategory';
 import {PathContext} from '../../utils';
 import {TOTAL_HEADER_HEIGHT} from '../Header';
-import {useKey, useLocalStorage} from 'react-use';
+import {useKey} from 'react-use';
 
 export const PAGE_SIDEBAR_MARGIN = SIDEBAR_WIDTH + COLLAPSED_SIDEBAR_WIDTH;
 
@@ -20,17 +26,17 @@ export function Sidebar({children, configs, isHidden}) {
   const sidebarNavRef = useRef();
 
   const pathContext = useContext(PathContext);
-  const [activeDocset, setActiveDocset] = useLocalStorage('docs:active', null);
-  const [sidebarOpen, setSidebarOpen] = useLocalStorage('docs:sidebar', false);
+  const [activeDocset, setActiveDocset] = useState(null);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const dismissSidebar = useCallback(() => {
     if (sidebarOpen) {
       setActiveDocset(null);
       setSidebarOpen(false);
     }
-  }, [sidebarOpen, setActiveDocset, setSidebarOpen]);
+  }, [sidebarOpen]);
 
-  useKey('Escape', dismissSidebar);
+  useKey('Escape', dismissSidebar, undefined, [dismissSidebar]);
 
   useEffect(() => {
     // scroll the active nav group into view if one exists
@@ -113,7 +119,7 @@ export function Sidebar({children, configs, isHidden}) {
           bg="bg"
           transform={
             sidebarOpen
-              ? 'none'
+              ? 'translateX(0)'
               : `translateX(-${SIDEBAR_WIDTH - COLLAPSED_SIDEBAR_WIDTH}px)`
           }
           shadow={sidebarOpen ? 'xl' : 'none'}

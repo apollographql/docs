@@ -328,6 +328,7 @@ export default function Page({file, pageContext}) {
             scrollMarginTop: SCROLL_MARGIN_TOP
           }
         }}
+        title={title}
         subtitle={
           <>
             {description && (
