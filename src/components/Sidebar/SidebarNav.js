@@ -148,7 +148,9 @@ const SidebarNav = forwardRef(
               right="2"
               isRound
               icon={isAllExpanded ? <BsChevronContract /> : <BsChevronExpand />}
-              onClick={() => {
+              onClick={event => {
+                event.stopPropagation();
+
                 const expanded = !isAllExpanded;
                 setLocalNavState(
                   navGroups.reduce(
