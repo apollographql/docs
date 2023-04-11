@@ -105,7 +105,7 @@ export const SidebarCategoryLink = ({icon, docset, ...props}) => {
         if (clickToSelect) {
           event.preventDefault();
           setActiveDocset(docset);
-        } else if (event.nativeEvent.pointerType !== 'mouse') {
+        } else if (event.detail === 0) {
           event.preventDefault();
           onKeyboardSelect();
         }
