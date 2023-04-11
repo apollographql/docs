@@ -112,7 +112,8 @@ const plugins = [
   {
     resolve: 'gatsby-plugin-google-gtag',
     options: {
-      trackingIds: ['UA-74643563-13', 'G-0BGG5V2W2K']
+      // todo: remove ua property in the nearish future
+      trackingIds: ['UA-74643563-13', 'G-0BGG5V2W2K', 'G-3WEVC01XLB']
     }
   },
   {
