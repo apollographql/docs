@@ -5,7 +5,8 @@
       "docset:graphos",
       "docset:graphos/delivery",
       "docset:graphos/metrics",
-      "docset:graphos/org"
+      "docset:graphos/org",
+      "docset:graphos/explorer"
     ],
     [
       "docset:rover",
