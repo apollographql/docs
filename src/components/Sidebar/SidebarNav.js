@@ -150,16 +150,6 @@ const SidebarNav = forwardRef(
           </NavContext.Provider>
         </Box>
         <HStack spacing="1.5" pos="fixed" bottom="1.5" right="1.5">
-          {hideSidebar && (
-            <Tooltip label="Hide sidebar">
-              <div>
-                <SidebarButton
-                  onClick={hideSidebar}
-                  icon={<FiChevronsLeft />}
-                />
-              </div>
-            </Tooltip>
-          )}
           {navGroups.length > 0 && (
             <Tooltip
               label={`${isAllExpanded ? 'Collapse' : 'Expand'} all categories`}
@@ -187,6 +177,16 @@ const SidebarNav = forwardRef(
                       event_label: expanded ? 'expand' : 'collapse'
                     });
                   }}
+                />
+              </div>
+            </Tooltip>
+          )}
+          {hideSidebar && (
+            <Tooltip label="Hide sidebar">
+              <div>
+                <SidebarButton
+                  onClick={hideSidebar}
+                  icon={<FiChevronsLeft />}
                 />
               </div>
             </Tooltip>
