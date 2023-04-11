@@ -1,0 +1,17 @@
+---
+title: Keeping schemas up-to-date in client apps
+id: TN0038
+tags: [federation, best-practices, client]
+---
+
+Client apps need to keep their schemas up-to-date whenever changes are made to the supergraph. In order to facilitate this Apollo recommends setting up the following:
+
+- [Schema change notifications](/graphos/metrics/notifications/notification-setup) and ensure messages are sent to the appropriate channels
+- [Apollo Swift](/ios/code-generation/codegen-cli#fetch-schema) and [Apollo Kotlin](/kotlin/advanced/plugin-configuration#downloading-a-schema) build tasks to fetch the latest API schema
+- [`rover graph fetch`](/rover/commands/graphs#graph-fetch) to fetch API schema for any other applications
+
+Apollo also recommends setting up your client applications' build pipeline with the following tasks:
+
+1. Fetch the latest production schema using any of the methods described above, prior to merging any changes to your client code
+1. Run codegen against this schema
+1. The codegen task will validate that any operations used by the client application are compatible with this schema.
