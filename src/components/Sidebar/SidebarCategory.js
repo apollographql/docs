@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, {createContext, useContext, useRef} from 'react';
 import {Box, Flex, Stack, chakra} from '@chakra-ui/react';
+import {FiExternalLink} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
 import {PathContext} from '../../utils';
 
@@ -57,8 +58,9 @@ export const SidebarCategoryLink = ({icon, docset, ...props}) => {
 
   const docsetLink =
     config.link ?? (docset.startsWith('/') ? docset : `/${docset}`);
+  const isExternal = !docsetLink.startsWith('/');
 
-  const linkProps = !docsetLink.startsWith('/')
+  const linkProps = isExternal
     ? {
         as: 'a',
         href: docsetLink,
@@ -141,6 +143,7 @@ export const SidebarCategoryLink = ({icon, docset, ...props}) => {
       >
         {config.docset}
       </chakra.span>
+      {isExternal && <Box ml="2" as={FiExternalLink} />}
     </Box>
   );
 };
