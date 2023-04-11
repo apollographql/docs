@@ -131,6 +131,8 @@ PageContent.propTypes = {
 export default function PageLayout({pageContext, children, location}) {
   const [sidebarHidden, setSidebarHidden] = useLocalStorage('sidebar');
 
+  const hideSidebar = () => setSidebarHidden(true);
+
   const {
     basePath,
     fileName,
@@ -171,12 +173,17 @@ export default function PageLayout({pageContext, children, location}) {
           />
         </Tooltip>
       </Fade>
-      <Sidebar configs={configs} isHidden={sidebarHidden}>
+      <Sidebar
+        configs={configs}
+        isHidden={sidebarHidden}
+        hideSidebar={hideSidebar}
+      >
         <SidebarNav
           versions={versions}
           currentVersion={currentVersion}
           docset={docset}
           navItems={navItems}
+          hideSidebar={hideSidebar}
           onVersionChange={version => {
             navigate(`/${version.slug}`);
           }}

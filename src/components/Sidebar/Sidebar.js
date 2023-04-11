@@ -20,7 +20,7 @@ import {useKey} from 'react-use';
 
 export const PAGE_SIDEBAR_MARGIN = SIDEBAR_WIDTH + COLLAPSED_SIDEBAR_WIDTH;
 
-export function Sidebar({children, configs, isHidden}) {
+export function Sidebar({children, configs, isHidden, hideSidebar}) {
   const outerSidebarRef = useRef();
   const sidebarRef = useRef();
   const sidebarNavRef = useRef();
@@ -141,6 +141,7 @@ export function Sidebar({children, configs, isHidden}) {
                 versions={configs[activeDocset].versions}
                 docset={configs[activeDocset].docset}
                 navItems={configs[activeDocset].navItems}
+                hideSidebar={hideSidebar}
                 onVersionChange={version => {
                   setActiveDocset(version.slug);
                 }}
@@ -158,5 +159,6 @@ export function Sidebar({children, configs, isHidden}) {
 Sidebar.propTypes = {
   children: PropTypes.node.isRequired,
   isHidden: PropTypes.bool,
+  hideSidebar: PropTypes.func,
   configs: PropTypes.object.isRequired
 };

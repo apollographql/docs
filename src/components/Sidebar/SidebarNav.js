@@ -6,6 +6,7 @@ import {
   Box,
   Button,
   Flex,
+  HStack,
   IconButton,
   Menu,
   MenuButton,
@@ -16,12 +17,24 @@ import {
   chakra
 } from '@chakra-ui/react';
 import {BsChevronContract, BsChevronExpand} from 'react-icons/bs';
-import {FiChevronDown, FiChevronLeft} from 'react-icons/fi';
+import {FiChevronDown, FiChevronLeft, FiChevronsLeft} from 'react-icons/fi';
 import {flattenNavItems} from '../../utils';
+
+const SidebarButton = props => (
+  <IconButton size="xs" fontSize="md" isRound {...props} />
+);
 
 const SidebarNav = forwardRef(
   (
-    {docset, navItems, versions, currentVersion, onVersionChange, onGoBack},
+    {
+      docset,
+      navItems,
+      versions,
+      currentVersion,
+      onVersionChange,
+      onGoBack,
+      hideSidebar
+    },
     ref
   ) => {
     const navRef = useRef();
@@ -136,39 +149,49 @@ const SidebarNav = forwardRef(
             </chakra.nav>
           </NavContext.Provider>
         </Box>
-        {navGroups.length > 0 && (
-          <Tooltip
-            label={`${isAllExpanded ? 'Collapse' : 'Expand'} all categories`}
-          >
-            <IconButton
-              size="xs"
-              fontSize="md"
-              pos="fixed"
-              bottom="2"
-              right="2"
-              isRound
-              icon={isAllExpanded ? <BsChevronContract /> : <BsChevronExpand />}
-              onClick={event => {
-                event.stopPropagation();
+        <HStack spacing="1.5" pos="fixed" bottom="1.5" right="1.5">
+          {hideSidebar && (
+            <Tooltip label="Hide sidebar">
+              <div>
+                <SidebarButton
+                  onClick={hideSidebar}
+                  icon={<FiChevronsLeft />}
+                />
+              </div>
+            </Tooltip>
+          )}
+          {navGroups.length > 0 && (
+            <Tooltip
+              label={`${isAllExpanded ? 'Collapse' : 'Expand'} all categories`}
+            >
+              <div>
+                <SidebarButton
+                  icon={
+                    isAllExpanded ? <BsChevronContract /> : <BsChevronExpand />
+                  }
+                  onClick={event => {
+                    event.stopPropagation();
 
-                const expanded = !isAllExpanded;
-                setLocalNavState(
-                  navGroups.reduce(
-                    (acc, group) => ({
-                      ...acc,
-                      [group.id]: expanded
-                    }),
-                    {}
-                  )
-                );
-                window.gtag?.('event', 'Toggle all', {
-                  event_category: GA_EVENT_CATEGORY_SIDEBAR,
-                  event_label: expanded ? 'expand' : 'collapse'
-                });
-              }}
-            />
-          </Tooltip>
-        )}
+                    const expanded = !isAllExpanded;
+                    setLocalNavState(
+                      navGroups.reduce(
+                        (acc, group) => ({
+                          ...acc,
+                          [group.id]: expanded
+                        }),
+                        {}
+                      )
+                    );
+                    window.gtag?.('event', 'Toggle all', {
+                      event_category: GA_EVENT_CATEGORY_SIDEBAR,
+                      event_label: expanded ? 'expand' : 'collapse'
+                    });
+                  }}
+                />
+              </div>
+            </Tooltip>
+          )}
+        </HStack>
       </>
     );
   }
@@ -180,7 +203,8 @@ SidebarNav.propTypes = {
   versions: PropTypes.array,
   currentVersion: PropTypes.string,
   onVersionChange: PropTypes.func,
-  onGoBack: PropTypes.func
+  onGoBack: PropTypes.func,
+  hideSidebar: PropTypes.func
 };
 
 SidebarNav.displayName = 'SidebarNav';
