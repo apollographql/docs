@@ -41,7 +41,7 @@ query {
 #### Extracted variable
 
 ```graphql title="query.graphql"
-query($id: ID!) {
+query ($id: ID!) {
   user(id: $id) {
     name
   }
@@ -92,7 +92,7 @@ There are two display modes for query plans. You can switch between **Show plan 
 
 ## Subscription support
 
-> Note that supergraphs do _not_ currently support subscription operations. You can only execute subscriptions in the Explorer with a [monograph](../graphs/overview/#monographs).
+> Note that supergraphs do _not_ currently support subscription operations. You can only execute subscriptions in the Explorer with a [monograph](../graphs/#monographs).
 
 The Explorer supports the following libraries/protocols for sending subscription operations over WebSocket:
 
@@ -155,7 +155,7 @@ If you are looking at your data [in the table layout](#table-layout-for-response
 If you're using Apollo Server, you can see traces from your responses inlined in the Explorer by adding the `ApolloServerPluginInlineTrace` plugin to your server's configuration:
 
 ```ts
-import { ApolloServerPluginInlineTrace } from '@apollo/server/plugin/inlineTrace';
+import {ApolloServerPluginInlineTrace} from '@apollo/server/plugin/inlineTrace';
 
 const server = new ApolloServer({
   typeDefs,
@@ -192,7 +192,7 @@ You can specify default headers that are applied to _every_ Explorer request exe
 
 ### Field latency hints
 
-As an alternative to [response hints](#response-hints), the Explorer can show you hints for the latency of the fields in your query. This option is available only if you've configured your graph to [report field usage and tracing data to Studio](../metrics/usage-reporting/).
+As an alternative to [response hints](#response-hints), the Explorer can show you hints for the latency of the fields in your query. This option is available only if you've configured your graph to [report field usage and tracing data to Studio](../metrics/).
 
 The Explorer shows you the 95th-percentile (default) response times for the fields in your query to help you get a sense of how "expensive" your query is and what the bottlenecks in response time will be.
 You can change which percentile you want to see hints from at any time in the Explorer settings.

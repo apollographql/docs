@@ -18,15 +18,22 @@ import {
   Stack,
   useDisclosure
 } from '@chakra-ui/react';
-import {FaNodeJs} from 'react-icons/fa';
+import {
+  BsFileEarmarkCheck,
+  BsLayoutTextWindowReverse,
+  BsListOl
+} from 'react-icons/bs';
 import {ReactComponent as Federation} from '../../assets/icons/federation.svg';
-import {FiChevronDown, FiFileText, FiGrid} from 'react-icons/fi';
+import {FiChevronDown, FiGrid} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
 import {GoTerminal} from 'react-icons/go';
-import {IoRocketSharp} from 'react-icons/io5';
+import {IoDocumentTextOutline, IoRocketSharp} from 'react-icons/io5';
 import {ReactComponent as Router} from '../../assets/icons/router.svg';
+import {ReactComponent as Satellite} from '../../assets/icons/satellite.svg';
 import {ReactComponent as Schema} from '../../assets/icons/schema.svg';
 import {SiKotlin, SiReact, SiSwift} from 'react-icons/si';
+import {SlChart} from 'react-icons/sl';
+import {VscOrganization} from 'react-icons/vsc';
 
 const CustomIcon = ({icon}) => <Box fill="current" boxSize="1em" as={icon} />;
 
@@ -39,13 +46,18 @@ export const DOCSET_ICONS = {
   'apollo-client': <SiReact />,
   'apollo-ios': <SiSwift />,
   'apollo-kotlin': <SiKotlin />,
-  'apollo-server': <FaNodeJs />,
+  'apollo-server': <CustomIcon icon={Satellite} />,
   federation: <CustomIcon icon={Federation} />,
   graphos: <CustomIcon icon={Schema} />,
   rover: <GoTerminal />,
   router: <CustomIcon icon={Router} />,
   odyssey: <IoRocketSharp />,
-  technotes: <FiFileText />
+  technotes: <IoDocumentTextOutline />,
+  metrics: <SlChart />,
+  org: <VscOrganization />,
+  delivery: <BsFileEarmarkCheck />,
+  explorer: <BsLayoutTextWindowReverse />,
+  principled: <BsListOl />
 };
 
 export function DocsetMenu({docset, versions = [], currentVersion, ...props}) {

@@ -1,0 +1,48 @@
+---
+title: Organizations in GraphOS
+---
+
+All data in GraphOS (graphs, schemas, metrics, etc.) is associated with a particular **organization**. Every organization has one or more [members](./members/) who manage it and can access its associated data.
+
+> Enterprise organizations have access to fine-grained access controls via additional [member roles](./members/#organization-wide-member-roles).
+
+## Creating an organization
+
+You create your first organization as part of the [account creation process](../quickstart/cloud/), unless you've been invited to an existing organization by another Apollo user.
+
+You can create additional organizations by clicking **Create a new organization** at the bottom of your organization dropdown in [Apollo Studio](https://studio.apollographql.com):
+
+<img
+  src="../img/organization-list.jpg"
+  class="screenshot"
+  alt="Studio organization list"
+  width="300"
+/>
+
+A single organization can include any number of [graphs](../graphs/), so a single company rarely needs more than one or two organizations.
+
+## Viewing your organizations
+
+Click the organization dropdown at the top of the page in [Apollo Studio](https://studio.apollographql.com) to view the list of all organizations you belong to:
+
+<img
+  src="../img/organization-list.jpg"
+  class="screenshot"
+  alt="Studio organization list"
+  width="300"
+/>
+
+- Click on an organization to view its associated graphs and metrics.
+- Each organization has a **Graphs** list, a **Members** management page, and a **Settings** page.
+
+## Deleting an organization
+
+> ⚠️ **This action can't be undone!**
+
+You can delete an organization at any time. Doing so removes all traces of the organization from GraphOS.
+
+Deleting your organization does all of the following:
+
+- Removes all user memberships from the organization
+- Permanently deletes all graphs from the organization, along with their associated data. These graph IDs cannot be reused later.
+- Immediately terminates any plan subscription associated with the organization. We can't issue refunds for this, unfortunately.

@@ -59,7 +59,8 @@ export function Header({children, algoliaFilters}) {
   return (
     <Box pos="sticky" top="0" zIndex="2">
       <Eyebrow>
-        Join us for GraphQL Summit, October 10-12 in San Diego. Early bird tickets now available!
+        Join us for GraphQL Summit, October 10-12 in San Diego. Early bird
+        tickets now available!
       </Eyebrow>
       <Flex
         align="center"
@@ -77,7 +78,7 @@ export function Header({children, algoliaFilters}) {
             as={GatsbyLink}
             to="/"
             align="center"
-            d={{base: 'none', md: 'flex'}}
+            display={{base: 'none', md: 'flex'}}
           >
             <Box
               as={ApolloLogo}
@@ -107,51 +108,48 @@ export function Header({children, algoliaFilters}) {
           {children}
           <Box fill="current" as={ApolloMark} h="8" />
         </HStack>
-        {showExpandButton && (
-          <Tooltip
-            label={
-              pageWidth === 'jumbo'
-                ? 'Collapse to default width'
-                : 'Expand to extended width'
-            }
-          >
-            <IconButton
-              ml="auto"
-              mr="2"
-              fontSize="xl"
-              variant="ghost"
-              onClick={togglePageWidth}
-              icon={
-                pageWidth === 'jumbo' ? (
-                  <TbViewportNarrow />
-                ) : (
-                  <TbViewportWide />
-                )
-              }
-            />
-          </Tooltip>
-        )}
-        <Tooltip
-          label={
-            colorMode === 'dark'
-              ? 'Switch to light mode'
-              : 'Switch to dark mode'
-          }
-        >
-          <IconButton
-            ml={showExpandButton ? undefined : 'auto'}
-            mr="2"
-            fontSize="xl"
-            variant="ghost"
-            onClick={toggleColorMode}
-            icon={colorMode === 'dark' ? <FiSun /> : <FiMoon />}
-          />
-        </Tooltip>
-
         {process.env.ALGOLIA_SEARCH_KEY && (
           <Search algoliaFilters={algoliaFilters} />
         )}
-        <StudioButton />
+        <HStack>
+          {showExpandButton && (
+            <Tooltip
+              label={
+                pageWidth === 'jumbo'
+                  ? 'Collapse to default width'
+                  : 'Expand to extended width'
+              }
+            >
+              <IconButton
+                fontSize="xl"
+                variant="ghost"
+                onClick={togglePageWidth}
+                icon={
+                  pageWidth === 'jumbo' ? (
+                    <TbViewportNarrow />
+                  ) : (
+                    <TbViewportWide />
+                  )
+                }
+              />
+            </Tooltip>
+          )}
+          <Tooltip
+            label={
+              colorMode === 'dark'
+                ? 'Switch to light mode'
+                : 'Switch to dark mode'
+            }
+          >
+            <IconButton
+              fontSize="xl"
+              variant="ghost"
+              onClick={toggleColorMode}
+              icon={colorMode === 'dark' ? <FiSun /> : <FiMoon />}
+            />
+          </Tooltip>
+          <StudioButton />
+        </HStack>
       </Flex>
     </Box>
   );

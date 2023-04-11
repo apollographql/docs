@@ -1,41 +1,17 @@
 {
-  "title": "Docs Home",
+  "title": "Home",
   "sidebar": {
     "Home": "/",
     "What is GraphOS?": "/intro/platform",
-    "Why adopt GraphQL?": "/intro/benefits",
-    "Tutorials": {
-      "Lift-off series & certification": "https://www.apollographql.com/tutorials/lift-off-part1/",
-      "Full-stack quickstart": "https://www.apollographql.com/tutorials/fullstack-quickstart/introduction"
-    },
-    "Documentation Sets": {
-      "Build Your Supergraph": {
-        "GraphOS": "/graphos/",
-        "Apollo Federation": "/federation/"
-      },
-      "Technical Reference": {
-        "Apollo Server": "/apollo-server/",
-        "Apollo Router": "/router/",
-        "Rover CLI": "/rover/",
-        "Tech Notes": "/technotes/"
-      },
-      "Apollo Client": {
-        "React": "/react/",
-        "iOS": "/ios/",
-        "Kotlin": "/kotlin/"
-      }
-    },
-    "Development Tools": {
-      "Apollo extension for VS Code": "/devtools/editor-plugins",
-      "Configuring Apollo projects": "/devtools/apollo-config",
-      "The Apollo CLI (partially deprecated)": "/devtools/cli"
-    },
-    "Resources": {
-      "Principled GraphQL": "https://principledgraphql.com",
+    "About GraphQL": {
+      "Why adopt GraphQL?": "/intro/benefits",
       "Glossary": "/resources/graphql-glossary",
-      "GraphQL FAQ": "/resources/faq",
-      "Elastic License v2 FAQ": "/resources/elastic-license-v2-faq",
-      "Product launch stages": "/resources/product-launch-stages"
+      "FAQ": "/resources/faq",
+      "Principled GraphQL": "https://principledgraphql.com"
+    },
+    "Release Policies": {
+      "Product launch stages": "/resources/product-launch-stages",
+      "Elastic License v2 FAQ": "/resources/elastic-license-v2-faq"
     }
   }
 }

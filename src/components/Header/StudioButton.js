@@ -7,7 +7,7 @@ export default function StudioButton() {
   const {user} = useUser();
   return (
     <Button
-      ml="2"
+      flexShrink={0}
       colorScheme="indigo"
       variant="ghost"
       rightIcon={<FiArrowRight />}
@@ -17,7 +17,7 @@ export default function StudioButton() {
       rel="noopener noreferrer"
       d={{base: 'none', lg: 'flex'}}
     >
-      {user ? 'Launch' : 'Try'} Apollo Studio
+      {user ? 'Launch Studio' : 'Try GraphOS'}
     </Button>
   );
 }

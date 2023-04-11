@@ -121,7 +121,7 @@ export default function Autocomplete({onClose, optionalFilters}) {
           roundedBottom={autocompleteState.isOpen ? 'none' : undefined}
           {...autocomplete.getInputProps({
             type: null,
-            placeholder: 'What do you want to learn about GraphQL?'
+            placeholder: 'Search Apollo'
           })}
         />
         <InputLeftElement>

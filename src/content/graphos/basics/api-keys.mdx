@@ -1,0 +1,33 @@
+---
+title: API keys
+description: In GraphOS
+---
+
+import ObtainGraphApiKey from '../../shared/obtain-graph-api-key.mdx';
+import ObtainPersonalApiKey from '../../shared/obtain-personal-api-key.mdx';
+
+Every application that sends data to Apollo GraphOS must use an **API key** to do so. Apollo Studio enables you to create and manage two types of API keys: **graph API keys** and **personal API keys**. Every system that _isn't_ running as part of your local development setup should always use a graph API key.
+
+## Graph API keys
+
+A graph API key provides access to interacting with a **single graph** in GraphOS.
+
+Create a unique graph API key for each non-development system that communicates with GraphOS. Doing so enables you to revoke access to a single system without affecting others.
+
+<ObtainGraphApiKey />
+
+### Setting permissions
+
+Unless you have an Enterprise plan, every graph API key provides **full access** to its associated graph.
+
+If you have an Enterprise plan, you can [assign a role](./org/members/#graph-api-key-roles) to each graph API key you create. If you do, the API key's permissions are limited to that role's permissions.
+
+You can't change a graph API key's role after it's created. Instead, create a new key with the desired role.
+
+## Personal API keys
+
+A personal API key provides partial access to **every graph in every organization you belong to**. Specifically, it has the same permissions that your user account has in each of those organizations.
+
+Personal API keys are useful for local development tools (like the [Rover CLI](/rover/) and the Apollo [VS Code extension](/devtools/editor-plugins/)) to load schemas and other data from Studio.
+
+<ObtainPersonalApiKey />

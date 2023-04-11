@@ -1,121 +1,212 @@
 import NavItems, {GA_EVENT_CATEGORY_SIDEBAR, NavContext} from './NavItems';
 import PropTypes from 'prop-types';
-import React, {useMemo} from 'react';
+import React, {forwardRef, useImperativeHandle, useMemo, useRef} from 'react';
 import useLocalStorage from 'react-use/lib/useLocalStorage';
 import {
   Box,
   Button,
   Flex,
+  HStack,
   IconButton,
+  Menu,
+  MenuButton,
+  MenuItemOption,
+  MenuList,
+  MenuOptionGroup,
   Tooltip,
-  chakra,
-  useColorModeValue
+  chakra
 } from '@chakra-ui/react';
 import {BsChevronContract, BsChevronExpand} from 'react-icons/bs';
-import {FiChevronsLeft} from 'react-icons/fi';
+import {FiChevronDown, FiChevronLeft, FiChevronsLeft} from 'react-icons/fi';
 import {flattenNavItems} from '../../utils';
 
-export function SidebarNav({navItems, onHide, darkBg = 'gray.800', children}) {
-  const bg = useColorModeValue('white', darkBg);
+const SidebarButton = props => (
+  <IconButton size="xs" fontSize="md" isRound {...props} />
+);
 
-  const navGroups = useMemo(
-    () => flattenNavItems(navItems).filter(item => item.children),
-    [navItems]
-  );
+const SidebarNav = forwardRef(
+  (
+    {
+      docset,
+      navItems,
+      versions,
+      currentVersion,
+      onVersionChange,
+      onGoBack,
+      hideSidebar
+    },
+    ref
+  ) => {
+    const navRef = useRef();
 
-  // set all nav items to open by default
-  const initialNavState = useMemo(
-    () =>
-      navGroups.reduce(
-        (acc, group) => ({
-          ...acc,
-          [group.id]: true
-        }),
-        {}
-      ),
-    [navGroups]
-  );
+    useImperativeHandle(ref, () => ({
+      focusFirstLink: () => {
+        navRef.current.querySelector('a')?.focus();
+      }
+    }));
 
-  // save nav state in storage
-  const [localNavState, setLocalNavState] = useLocalStorage('nav');
+    const navGroups = useMemo(
+      () => flattenNavItems(navItems).filter(item => item.children),
+      [navItems]
+    );
 
-  // combine initial and local nav states
-  const nav = useMemo(
-    () => ({
-      ...initialNavState,
-      ...localNavState
-    }),
-    [localNavState, initialNavState]
-  );
+    // set all nav items to open by default
+    const initialNavState = useMemo(
+      () =>
+        navGroups.reduce(
+          (acc, group) => ({
+            ...acc,
+            [group.id]: true
+          }),
+          {}
+        ),
+      [navGroups]
+    );
 
-  // compute expand/collapse all state from nav state
-  const isAllExpanded = useMemo(
-    () =>
-      // get an array of the state of all nav items that also exist in the list of
-      // valid nav group ids (above)
-      navGroups.every(group => nav[group.id]),
-    [navGroups, nav]
-  );
+    // save nav state in storage
+    const [localNavState, setLocalNavState] = useLocalStorage('nav');
 
-  return (
-    <>
-      <Box p="2" pl="0" pos="sticky" top="0" bg={bg} zIndex="1">
-        {children}
-        <Flex>
-          <Button
-            mr="auto"
-            size="sm"
-            variant="ghost"
-            roundedRight="full"
-            roundedLeft="none"
-            isDisabled={!navGroups.length}
-            leftIcon={
-              isAllExpanded ? <BsChevronContract /> : <BsChevronExpand />
-            }
-            onClick={() => {
-              const expanded = !isAllExpanded;
-              setLocalNavState(
-                navGroups.reduce(
-                  (acc, group) => ({
-                    ...acc,
-                    [group.id]: expanded
-                  }),
-                  {}
-                )
-              );
-              window.gtag?.('event', 'Toggle all', {
-                event_category: GA_EVENT_CATEGORY_SIDEBAR,
-                event_label: expanded ? 'expand' : 'collapse'
-              });
+    // combine initial and local nav states
+    const nav = useMemo(
+      () => ({
+        ...initialNavState,
+        ...localNavState
+      }),
+      [localNavState, initialNavState]
+    );
+
+    // compute expand/collapse all state from nav state
+    const isAllExpanded = useMemo(
+      () =>
+        // get an array of the state of all nav items that also exist in the list of
+        // valid nav group ids (above)
+        navGroups.every(group => nav[group.id]),
+      [navGroups, nav]
+    );
+
+    return (
+      <>
+        <Box h="full" overflow="auto" overscrollBehavior="none">
+          <Flex align="center" p="4" pos="sticky" top="0" zIndex="1" bg="bg">
+            {onGoBack && (
+              <IconButton
+                ml="-2.5"
+                mr="1"
+                variant="ghost"
+                size="sm"
+                fontSize="xl"
+                icon={<FiChevronLeft />}
+                onClick={onGoBack}
+              />
+            )}
+            <chakra.h2
+              mr="auto"
+              fontSize="xl"
+              fontWeight="semibold"
+              lineHeight={1.6}
+            >
+              {docset}
+            </chakra.h2>
+            {versions?.length > 1 && (
+              <Menu>
+                <MenuButton
+                  alignSelf="flex-start"
+                  size="sm"
+                  ml="2"
+                  variant="outline"
+                  rightIcon={<FiChevronDown />}
+                  as={Button}
+                >
+                  {currentVersion}
+                </MenuButton>
+                <MenuList>
+                  <MenuOptionGroup value={currentVersion}>
+                    {versions.map((version, index) => (
+                      <MenuItemOption
+                        key={index}
+                        value={version.label}
+                        onClick={event => {
+                          event.stopPropagation();
+                          onVersionChange?.(version);
+                        }}
+                      >
+                        {version.label}
+                      </MenuItemOption>
+                    ))}
+                  </MenuOptionGroup>
+                </MenuList>
+              </Menu>
+            )}
+          </Flex>
+          <NavContext.Provider
+            value={{
+              nav,
+              setNav: setLocalNavState
             }}
           >
-            {isAllExpanded ? 'Collapse' : 'Expand'} all
-          </Button>
-          {onHide && (
-            <Tooltip label="Hide sidebar">
-              <IconButton
-                size="sm"
-                variant="ghost"
-                fontSize="md"
-                onClick={onHide}
-                icon={<FiChevronsLeft />}
-              />
+            <chakra.nav px="4" pb="3" ref={navRef}>
+              <NavItems items={navItems} />
+            </chakra.nav>
+          </NavContext.Provider>
+        </Box>
+        <HStack spacing="1.5" pos="fixed" bottom="1.5" right="1.5">
+          {navGroups.length > 0 && (
+            <Tooltip
+              label={`${isAllExpanded ? 'Collapse' : 'Expand'} all categories`}
+            >
+              <div>
+                <SidebarButton
+                  icon={
+                    isAllExpanded ? <BsChevronContract /> : <BsChevronExpand />
+                  }
+                  onClick={event => {
+                    event.stopPropagation();
+
+                    const expanded = !isAllExpanded;
+                    setLocalNavState(
+                      navGroups.reduce(
+                        (acc, group) => ({
+                          ...acc,
+                          [group.id]: expanded
+                        }),
+                        {}
+                      )
+                    );
+                    window.gtag?.('event', 'Toggle all', {
+                      event_category: GA_EVENT_CATEGORY_SIDEBAR,
+                      event_label: expanded ? 'expand' : 'collapse'
+                    });
+                  }}
+                />
+              </div>
             </Tooltip>
           )}
-        </Flex>
-      </Box>
-      <NavContext.Provider value={{nav, setNav: setLocalNavState}}>
-        <chakra.nav pt="1" pr="2" pb="4">
-          <NavItems items={navItems} />
-        </chakra.nav>
-      </NavContext.Provider>
-    </>
-  );
-}
+          {hideSidebar && (
+            <Tooltip label="Hide sidebar">
+              <div>
+                <SidebarButton
+                  onClick={hideSidebar}
+                  icon={<FiChevronsLeft />}
+                />
+              </div>
+            </Tooltip>
+          )}
+        </HStack>
+      </>
+    );
+  }
+);
 
 SidebarNav.propTypes = {
-  children: PropTypes.node,
+  docset: PropTypes.string.isRequired,
   navItems: PropTypes.array.isRequired,
-  onHide: PropTypes.func,
-  darkBg: PropTypes.string
+  versions: PropTypes.array,
+  currentVersion: PropTypes.string,
+  onVersionChange: PropTypes.func,
+  onGoBack: PropTypes.func,
+  hideSidebar: PropTypes.func
 };
+
+SidebarNav.displayName = 'SidebarNav';
+
+export default SidebarNav;

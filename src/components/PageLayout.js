@@ -1,20 +1,9 @@
-import DocsetMenu from './DocsetMenu';
 import Footer from './Footer';
 import Header, {TOTAL_HEADER_HEIGHT} from './Header';
 import MobileNav from './MobileNav';
 import PropTypes from 'prop-types';
-import React, {
-  Fragment,
-  useCallback,
-  useContext,
-  useEffect,
-  useState
-} from 'react';
-import Sidebar, {
-  SIDEBAR_WIDTH_BASE,
-  SIDEBAR_WIDTH_XL,
-  SidebarNav
-} from './Sidebar';
+import React, {useContext} from 'react';
+import Sidebar, {PAGE_SIDEBAR_MARGIN, SidebarNav} from './Sidebar';
 import getShareImage from '@jlengstorf/get-share-image';
 import useLocalStorage from 'react-use/lib/useLocalStorage';
 import {
@@ -24,40 +13,20 @@ import {
   Flex,
   Heading,
   IconButton,
-  Tooltip,
-  useToken
+  Tooltip
 } from '@chakra-ui/react';
 import {DOCS_PAGE_WIDTH_VAR, usePageWidthContext} from './PageWidthContext';
 import {FiChevronsRight} from 'react-icons/fi';
 import {GatsbySeo} from 'gatsby-plugin-next-seo';
 import {PathContext} from '../utils';
-import {graphql, useStaticQuery} from 'gatsby';
+import {dirname} from 'path';
+import {graphql, navigate, useStaticQuery} from 'gatsby';
 
-export function usePageLayoutProps(props) {
-  const paddingTop = useToken('space', 10);
-  const paddingBottom = useToken('space', 12);
-  return {
-    ...props,
-    paddingTop,
-    paddingBottom
-  };
-}
+export const PAGE_PADDING_TOP = 40;
+export const PAGE_PADDING_BOTTOM = 48;
 
-export default function Page({
-  pageContext,
-  title,
-  description,
-  children,
-  banner,
-  subtitle,
-  pagination,
-  aside,
-  paddingTop,
-  paddingBottom,
-  contentProps
-}) {
+export function PageSeo({docset, title, description}) {
   const {uri} = useContext(PathContext);
-  const [sidebarHidden, setSidebarHidden] = useLocalStorage('sidebar');
 
   const {
     site: {
@@ -75,67 +44,118 @@ export default function Page({
     `
   );
 
-  const {pageRefCallback} = usePageWidthContext();
-
-  const {docset, versions, currentVersion, navItems, algoliaFilters} =
-    pageContext;
   const titleFont = encodeURIComponent('Source Sans Pro');
 
-  const renderSwitcher = useCallback(
-    props => (
-      <DocsetMenu
-        docset={docset}
-        versions={versions}
-        currentVersion={currentVersion}
-        {...props}
-      />
-    ),
-    [docset, versions, currentVersion]
+  return (
+    <GatsbySeo
+      title={title}
+      description={description}
+      canonical={siteUrl + uri}
+      openGraph={{
+        title,
+        description,
+        images: [
+          {
+            url: getShareImage({
+              title,
+              tagline: docset,
+              titleFont,
+              titleFontSize: 80,
+              titleExtraConfig: '_bold',
+              taglineFont: titleFont,
+              textColor: 'FFFFFF',
+              textLeftOffset: 80,
+              textAreaWidth: 1120,
+              cloudName: 'apollographql',
+              imagePublicID: 'apollo-docs-template2_dohzxt'
+            })
+          }
+        ]
+      }}
+    />
   );
+}
 
-  const [now, setNow] = useState(Date.now());
+PageSeo.propTypes = {
+  title: PropTypes.string.isRequired,
+  docset: PropTypes.string.isRequired,
+  description: PropTypes.string
+};
 
-  useEffect(() => {
-    setNow(Date.now());
-  }, []);
+export function PageContent({
+  title,
+  subtitle,
+  children,
+  pagination,
+  aside,
+  ...props
+}) {
+  const {pageRefCallback} = usePageWidthContext();
+  return (
+    <Flex
+      ref={pageRefCallback}
+      maxW={`var(${DOCS_PAGE_WIDTH_VAR})`}
+      mx="auto"
+      align="flex-start"
+      px={{base: 6, md: 10}}
+      as="main"
+      css={{
+        paddingTop: PAGE_PADDING_TOP,
+        paddingBottom: PAGE_PADDING_BOTTOM
+      }}
+    >
+      <Box flexGrow="1" w="0">
+        <Heading as="h1" size="2xl">
+          {title}
+        </Heading>
+        {subtitle}
+        <Divider my="8" />
+        <Box fontSize={{md: 'lg'}} lineHeight={{md: 1.7}} {...props}>
+          {children}
+        </Box>
+        {pagination}
+      </Box>
+      {aside}
+    </Flex>
+  );
+}
+
+PageContent.propTypes = {
+  children: PropTypes.node.isRequired,
+  title: PropTypes.string.isRequired,
+  subtitle: PropTypes.node,
+  pagination: PropTypes.element,
+  aside: PropTypes.element
+};
+
+export default function PageLayout({pageContext, children, location}) {
+  const [sidebarHidden, setSidebarHidden] = useLocalStorage('sidebar');
+
+  const hideSidebar = () => setSidebarHidden(true);
+
+  const {
+    basePath,
+    fileName,
+    docset,
+    versions,
+    currentVersion,
+    navItems,
+    algoliaFilters,
+    configs
+  } = pageContext;
+
+  const {pathname} = location;
 
   return (
-    <>
-      <GatsbySeo
-        title={title}
-        description={description}
-        canonical={siteUrl + uri}
-        openGraph={{
-          title,
-          description,
-          images: [
-            {
-              url: getShareImage({
-                title,
-                tagline: docset,
-                titleFont,
-                titleFontSize: 80,
-                titleExtraConfig: '_bold',
-                taglineFont: titleFont,
-                textColor: 'FFFFFF',
-                textLeftOffset: 80,
-                textAreaWidth: 1120,
-                cloudName: 'apollographql',
-                imagePublicID: 'apollo-docs-template2_dohzxt'
-              })
-            }
-          ]
-        }}
-      />
+    <PathContext.Provider
+      value={{
+        uri: pathname,
+        basePath,
+        path: fileName === 'index' ? pathname : dirname(pathname)
+      }}
+    >
       <Header algoliaFilters={algoliaFilters}>
-        <MobileNav>
-          <SidebarNav navItems={navItems} darkBg="gray.700">
-            <Box px="3" pt="1" pb="3">
-              {renderSwitcher({size: 'sm'})}
-            </Box>
-          </SidebarNav>
-        </MobileNav>
-        {renderSwitcher({d: {base: 'none', md: 'flex'}})}
+        <MobileNav configs={configs} defaultDocset={docset} />
       </Header>
       <Fade in={sidebarHidden} unmountOnExit delay={0.25}>
         <Tooltip placement="right" label="Show sidebar">
@@ -153,61 +173,39 @@ export default function Page({
           />
         </Tooltip>
       </Fade>
-      <Sidebar isHidden={sidebarHidden}>
-        <SidebarNav navItems={navItems} onHide={() => setSidebarHidden(true)} />
+      <Sidebar
+        configs={configs}
+        isHidden={sidebarHidden}
+        hideSidebar={hideSidebar}
+      >
+        <SidebarNav
+          versions={versions}
+          currentVersion={currentVersion}
+          docset={docset}
+          navItems={navItems}
+          hideSidebar={hideSidebar}
+          onVersionChange={version => {
+            navigate(`/${version.slug}`);
+          }}
+        />
       </Sidebar>
       <Box
         marginLeft={{
           base: 0,
-          md: sidebarHidden ? 0 : SIDEBAR_WIDTH_BASE,
-          xl: sidebarHidden ? 0 : SIDEBAR_WIDTH_XL
+          md: sidebarHidden ? 0 : PAGE_SIDEBAR_MARGIN
         }}
         transitionProperty="margin-left"
         transitionDuration="normal"
       >
-        {banner}
-        <Flex
-          key={now}
-          ref={pageRefCallback}
-          maxW={`var(${DOCS_PAGE_WIDTH_VAR})`}
-          mx="auto"
-          align="flex-start"
-          px={{base: 6, md: 10}}
-          as="main"
-          sx={{
-            paddingTop,
-            paddingBottom
-          }}
-        >
-          <Box flexGrow="1" w="0">
-            <Heading as="h1" size="2xl">
-              {title}
-            </Heading>
-            {subtitle}
-            <Divider my="8" />
-            <Box fontSize={{md: 'lg'}} lineHeight={{md: 1.7}} {...contentProps}>
-              {children}
-            </Box>
-            {pagination}
-          </Box>
-          {aside}
-        </Flex>
+        {children}
         <Footer />
       </Box>
-    </>
+    </PathContext.Provider>
   );
 }
 
-Page.propTypes = {
+PageLayout.propTypes = {
   children: PropTypes.node.isRequired,
-  title: PropTypes.string.isRequired,
   pageContext: PropTypes.object.isRequired,
-  paddingTop: PropTypes.string.isRequired,
-  paddingBottom: PropTypes.string.isRequired,
-  banner: PropTypes.element,
-  pagination: PropTypes.element,
-  aside: PropTypes.element,
-  subtitle: PropTypes.node,
-  description: PropTypes.string,
-  contentProps: PropTypes.object
+  location: PropTypes.object.isRequired
 };
