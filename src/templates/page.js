@@ -58,7 +58,6 @@ export const pageQuery = graphql`
       }
       childMarkdownRemark {
         html
-        htmlAst
         headings {
           depth
           value
