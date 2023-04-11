@@ -9,9 +9,9 @@
 /local-development/ /docs/graphos/graphs/local-development/
 /org/graphs/ /docs/graphos/graphs/
 /studio-graph-features/ /docs/graphos/graphs/studio-features/
-/build-status-notification/ /docs/graphos/graphs/build-status-notification/
-/daily-reports/ /docs/graphos/notifications/daily-reports/
-/notification-setup/ /docs/graphos/notifications/notification-setup/
+/build-status-notification/ /docs/graphos/metrics/notifications/build-status-notification/
+/daily-reports/ /docs/graphos/metrics/notifications/daily-reports/
+/notification-setup/ /docs/graphos/metrics/notifications/notification-setup/
 /performance-alerts/ /docs/graphos/notifications/performance-alerts/
 /schema-change-integration/ /docs/graphos/notifications/schema-change-integration/
 /getting-started/ /docs/graphos/quickstart/cloud/
@@ -42,7 +42,7 @@
 /managed-federation/advanced-topics/ /docs/federation/managed-federation/advanced-topics/
 
 # Slack content folded into Notifications article
-/slack-integration/ /docs/graphos/notification-setup/#slack
+/slack-integration/ /docs/graphos/metrics/notifications/notification-setup/#slack
 
 # Migrate schema validation to schema checks
 /schema-validation/ /docs/graphos/schema-checks/
@@ -66,12 +66,8 @@
 /sso/* /docs/graphos/org/sso/:splat
 
 /schema/cli-registration /docs/graphos/delivery
-/api-keys /docs/graphos/api-keys
 /audit-log /docs/graphos/org/audit-log
-/data-privacy /docs/graphos/data-privacy
-/sub-processors /docs/graphos/sub-processors
-
-/delivery /docs/graphos/delivery/cli-registration
 /metrics/usage-reporting/ /docs/graphos/metrics
+/graphs/overview/ /docs/graphos/graphs
 /org/organizations/ /docs/graphos/org
 /odyssey https://www.apollographql.com/tutorials/
