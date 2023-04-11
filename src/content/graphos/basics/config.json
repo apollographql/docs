@@ -53,6 +53,10 @@
       "Studio UI": "https://studio.apollographql.com",
       "Rover CLI": "https://apollographql.com/docs/rover/",
       "Platform API": "/platform-api"
+    },
+    "Platform data processing": {
+      "Data privacy / GDPR": "/data-privacy",
+      "Sub-processors": "/sub-processors"
     }
   }
 }
