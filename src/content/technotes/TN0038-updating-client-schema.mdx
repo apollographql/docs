@@ -16,3 +16,5 @@ Apollo also recommends setting up your client applications' local and CI build p
 1. Fetch the latest production schema using any of the methods described above, prior to merging any changes to your client code
 2. Run codegen against this schema
 3. The codegen task will validate that any operations used by the client application are compatible with this schema.
+
+To ensure that your client operations are valid against the most recent schema, we recommend re-running code generation in your continuous integration system before merging client changes.
