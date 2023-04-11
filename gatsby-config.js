@@ -195,6 +195,7 @@ if (process.env.CONTEXT === 'production') {
 }
 
 const isLocalMode = process.env.DOCS_MODE === 'local';
+const isSingleDocset = isLocalMode || process.env.DOCS_LOCAL;
 
 plugins.push(
   ...Object.entries(remoteSources).map(([name, {remote, branch}]) => ({
@@ -204,47 +205,37 @@ plugins.push(
       name,
       branch,
       rootDir: 'docs/source',
-      patterns:
-        isLocalMode || process.env.DOCS_LOCAL ? 'config.json' : undefined
+      patterns: isSingleDocset ? 'config.json' : undefined
     }
   }))
 );
 
+const localSources = yaml.load(fs.readFileSync('sources/local.yml', 'utf8'));
+
 if (process.env.DOCS_LOCAL) {
-  plugins.push(
-    'gatsby-plugin-local-docs', // local plugin
-    {
-      resolve: 'gatsby-source-filesystem',
-      options: {
-        name: '/',
-        path: 'local/source'
-      }
-    }
-  );
-} else {
-  const localSources = yaml.load(fs.readFileSync('sources/local.yml', 'utf8'));
+  localSources['/'] = 'local/source';
+}
 
-  plugins.push(
-    ...Object.entries(localSources).map(([name, path]) => ({
-      resolve: 'gatsby-source-filesystem',
-      options: {
-        name,
-        path
-      }
-    }))
-  );
-
-  plugins.push({
+plugins.push(
+  ...Object.entries(localSources).map(([name, path]) => ({
     resolve: 'gatsby-source-filesystem',
     options: {
-      name: 'graphos/img',
-      path: 'src/content/graphos/img'
+      name,
+      path
     }
-  });
+  }))
+);
 
-  if (isLocalMode) {
-    plugins.push('gatsby-plugin-local-docs');
+plugins.push({
+  resolve: 'gatsby-source-filesystem',
+  options: {
+    name: 'graphos/img',
+    path: 'src/content/graphos/img'
   }
+});
+
+if (isSingleDocset) {
+  plugins.push('gatsby-plugin-local-docs');
 }
 
 module.exports = {
