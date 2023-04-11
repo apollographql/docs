@@ -67,7 +67,7 @@
     "gatsby-source-apiserver": "^2.1.8",
     "gatsby-source-filesystem": "^4.4.0",
     "gatsby-transformer-json": "^4.4.0",
-    "gatsby-transformer-remark": "^5.4.0",
+    "gatsby-transformer-remark": "^5.25.1",
     "github-slugger": "^1.4.0",
     "graphql": "^15.8.0",
     "graphql-ws": "^5.8.2",
