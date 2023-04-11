@@ -1,5 +1,6 @@
 {
   "title": "Odyssey Tutorials",
+  "link": "https://www.apollographql.com/tutorials",
   "sidebar": {
     "Browse all tutorials": "https://www.apollographql.com/tutorials/browse",
     "Lift-off (GraphQL Essentials)": {

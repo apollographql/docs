@@ -166,8 +166,15 @@ exports.createPages = async ({actions, graphql}) => {
     // TODO: convert configs to YAML
     const {fields, gitRemote} = node;
     const content = JSON.parse(fields.content);
-    const {title, version, sidebar, algoliaFilters, internal, versionBanner} =
-      content;
+    const {
+      title,
+      link,
+      version,
+      sidebar,
+      algoliaFilters,
+      internal,
+      versionBanner
+    } = content;
 
     const versions = nodes
       .filter(
@@ -191,7 +198,8 @@ exports.createPages = async ({actions, graphql}) => {
         algoliaFilters,
         internal,
         versions,
-        versionBanner
+        versionBanner,
+        link
       }
     };
   }, {});

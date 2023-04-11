@@ -55,11 +55,24 @@ export const SidebarCategoryLink = ({icon, docset, ...props}) => {
     pathContext.basePath === docset ||
     config.versions?.some(version => pathContext.basePath === version.slug);
 
+  const docsetLink =
+    config.link ?? (docset.startsWith('/') ? docset : `/${docset}`);
+
+  const linkProps = !docsetLink.startsWith('/')
+    ? {
+        as: 'a',
+        href: docsetLink,
+        target: '_blank'
+      }
+    : {
+        as: GatsbyLink,
+        to: docsetLink
+      };
+
   return (
     <Box
       px="4"
-      as={GatsbyLink}
-      to={docset.startsWith('/') ? docset : `/${docset}`}
+      {...linkProps}
       display="flex"
       alignItems="center"
       onFocus={() => {
