@@ -85,71 +85,84 @@ const SidebarNav = forwardRef(
     );
 
     return (
-      <>
-        <Box h="full" overflow="auto" overscrollBehavior="none">
-          <Flex align="center" p="4" pos="sticky" top="0" zIndex="1" bg="bg">
-            {onGoBack && (
-              <IconButton
-                ml="-2.5"
-                mr="1"
-                variant="ghost"
-                size="sm"
-                fontSize="xl"
-                icon={<FiChevronLeft />}
-                onClick={onGoBack}
-              />
-            )}
-            <chakra.h2
-              mr="auto"
+      <Flex
+        direction="column"
+        h="full"
+        overflow="auto"
+        overscrollBehavior="none"
+      >
+        <Flex align="center" p="4" pos="sticky" top="0" zIndex="1" bg="bg">
+          {onGoBack && (
+            <IconButton
+              ml="-2.5"
+              mr="1"
+              variant="ghost"
+              size="sm"
               fontSize="xl"
-              fontWeight="semibold"
-              lineHeight={1.6}
-            >
-              {docset}
-            </chakra.h2>
-            {versions?.length > 1 && (
-              <Menu>
-                <MenuButton
-                  alignSelf="flex-start"
-                  size="sm"
-                  ml="2"
-                  variant="outline"
-                  rightIcon={<FiChevronDown />}
-                  as={Button}
-                >
-                  {currentVersion}
-                </MenuButton>
-                <MenuList>
-                  <MenuOptionGroup value={currentVersion}>
-                    {versions.map((version, index) => (
-                      <MenuItemOption
-                        key={index}
-                        value={version.label}
-                        onClick={event => {
-                          event.stopPropagation();
-                          onVersionChange?.(version);
-                        }}
-                      >
-                        {version.label}
-                      </MenuItemOption>
-                    ))}
-                  </MenuOptionGroup>
-                </MenuList>
-              </Menu>
-            )}
-          </Flex>
-          <NavContext.Provider
-            value={{
-              nav,
-              setNav: setLocalNavState
-            }}
+              icon={<FiChevronLeft />}
+              onClick={onGoBack}
+            />
+          )}
+          <chakra.h2
+            mr="auto"
+            fontSize="xl"
+            fontWeight="semibold"
+            lineHeight={1.6}
           >
-            <chakra.nav px="4" pb="3" ref={navRef}>
-              <NavItems items={navItems} />
-            </chakra.nav>
-          </NavContext.Provider>
-        </Box>
-        <HStack spacing="1.5" pos="fixed" bottom="1.5" right="1.5">
+            {docset}
+          </chakra.h2>
+          {versions?.length > 1 && (
+            <Menu>
+              <MenuButton
+                alignSelf="flex-start"
+                size="sm"
+                ml="2"
+                variant="outline"
+                rightIcon={<FiChevronDown />}
+                as={Button}
+              >
+                {currentVersion}
+              </MenuButton>
+              <MenuList>
+                <MenuOptionGroup value={currentVersion}>
+                  {versions.map((version, index) => (
+                    <MenuItemOption
+                      key={index}
+                      value={version.label}
+                      onClick={event => {
+                        event.stopPropagation();
+                        onVersionChange?.(version);
+                      }}
+                    >
+                      {version.label}
+                    </MenuItemOption>
+                  ))}
+                </MenuOptionGroup>
+              </MenuList>
+            </Menu>
+          )}
+        </Flex>
+        <NavContext.Provider
+          value={{
+            nav,
+            setNav: setLocalNavState
+          }}
+        >
+          <chakra.nav px="4" pb="3" ref={navRef}>
+            <NavItems items={navItems} />
+          </chakra.nav>
+        </NavContext.Provider>
+        <HStack mt="auto" p="1" pt={0} spacing="1" pos="sticky" bottom="0">
+          {hideSidebar && (
+            <Tooltip label="Hide sidebar">
+              <div>
+                <SidebarButton
+                  onClick={hideSidebar}
+                  icon={<FiChevronsLeft />}
+                />
+              </div>
+            </Tooltip>
+          )}
           {navGroups.length > 0 && (
             <Tooltip
               label={`${isAllExpanded ? 'Collapse' : 'Expand'} all categories`}
@@ -181,18 +194,8 @@ const SidebarNav = forwardRef(
               </div>
             </Tooltip>
           )}
-          {hideSidebar && (
-            <Tooltip label="Hide sidebar">
-              <div>
-                <SidebarButton
-                  onClick={hideSidebar}
-                  icon={<FiChevronsLeft />}
-                />
-              </div>
-            </Tooltip>
-          )}
         </HStack>
-      </>
+      </Flex>
     );
   }
 );
