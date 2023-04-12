@@ -1,5 +1,5 @@
 import Footer from './Footer';
-import Header, {TOTAL_HEADER_HEIGHT} from './Header';
+import Header from './Header';
 import MobileNav from './MobileNav';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
@@ -18,6 +18,7 @@ import {
 import {DOCS_PAGE_WIDTH_VAR, usePageWidthContext} from './PageWidthContext';
 import {FiChevronsRight} from 'react-icons/fi';
 import {GatsbySeo} from 'gatsby-plugin-next-seo';
+import {PAGE_FOOTER_HEIGHT} from './Page';
 import {PathContext} from '../utils';
 import {dirname} from 'path';
 import {graphql, navigate, useStaticQuery} from 'gatsby';
@@ -157,22 +158,6 @@ export default function PageLayout({pageContext, children, location}) {
       <Header algoliaFilters={algoliaFilters}>
         <MobileNav configs={configs} defaultDocset={docset} />
       </Header>
-      <Fade in={sidebarHidden} unmountOnExit delay={0.25}>
-        <Tooltip placement="right" label="Show sidebar">
-          <IconButton
-            d={{base: 'none', md: 'flex'}}
-            pos="fixed"
-            mt="2"
-            left="2"
-            size="sm"
-            variant="outline"
-            fontSize="md"
-            icon={<FiChevronsRight />}
-            css={{top: TOTAL_HEADER_HEIGHT}}
-            onClick={() => setSidebarHidden(false)}
-          />
-        </Tooltip>
-      </Fade>
       <Sidebar
         configs={configs}
         isHidden={sidebarHidden}
@@ -200,6 +185,22 @@ export default function PageLayout({pageContext, children, location}) {
         {children}
         <Footer />
       </Box>
+      <Fade in={sidebarHidden} unmountOnExit delay={0.25}>
+        <Tooltip placement="right" label="Show sidebar">
+          <IconButton
+            d={{base: 'none', md: 'flex'}}
+            pos="fixed"
+            mb="2"
+            css={{bottom: PAGE_FOOTER_HEIGHT}}
+            left="2"
+            size="sm"
+            variant="outline"
+            fontSize="md"
+            icon={<FiChevronsRight />}
+            onClick={() => setSidebarHidden(false)}
+          />
+        </Tooltip>
+      </Fade>
     </PathContext.Provider>
   );
 }

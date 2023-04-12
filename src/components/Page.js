@@ -84,7 +84,7 @@ Prism.languages.rhai = Prism.languages.javascript;
 const LIST_SPACING = 4;
 const HEADINGS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
 
-const PAGE_FOOTER_HEIGHT = 56;
+export const PAGE_FOOTER_HEIGHT = 56;
 const SCROLL_MARGIN_TOP = PAGE_PADDING_TOP + TOTAL_HEADER_HEIGHT;
 
 const NESTED_LIST_STYLES = {
@@ -241,7 +241,7 @@ export default function Page({file, pageContext}) {
         {editText}
       </Button>
     );
-  }, [gitRemote, basePath, relativePath]);
+  }, [gitRemote, basePath, relativePath, editText]);
 
   return (
     <>
