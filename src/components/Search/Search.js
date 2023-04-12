@@ -40,6 +40,8 @@ export function Search({algoliaFilters}) {
         onClick={onOpen}
       />
       <IconButton
+        ml="auto"
+        mr="2"
         d={{base: 'flex', sm: 'none'}}
         fontSize="xl"
         icon={<FiSearch />}

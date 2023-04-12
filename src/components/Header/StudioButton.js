@@ -12,6 +12,7 @@ export default function StudioButton() {
       variant="ghost"
       rightIcon={<FiArrowRight />}
       as="a"
+      ml="2"
       href="https://studio.apollographql.com?referrer=docs"
       target="_blank"
       rel="noopener noreferrer"
