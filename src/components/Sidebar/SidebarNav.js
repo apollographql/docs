@@ -2,8 +2,8 @@ import NavItems, {GA_EVENT_CATEGORY_SIDEBAR, NavContext} from './NavItems';
 import PropTypes from 'prop-types';
 import React, {forwardRef, useImperativeHandle, useMemo, useRef} from 'react';
 import useLocalStorage from 'react-use/lib/useLocalStorage';
+import {BsChevronContract, BsChevronExpand} from 'react-icons/bs';
 import {
-  Box,
   Button,
   Flex,
   HStack,
@@ -16,7 +16,6 @@ import {
   Tooltip,
   chakra
 } from '@chakra-ui/react';
-import {BsChevronContract, BsChevronExpand} from 'react-icons/bs';
 import {FiChevronDown, FiChevronLeft, FiChevronsLeft} from 'react-icons/fi';
 import {flattenNavItems} from '../../utils';
 
