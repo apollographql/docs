@@ -1,0 +1,8 @@
+
+[[ rules ]]
+    id = "generic-api-key"
+    [ rules.allowlist ]
+        commits = [
+            "5b47e0b5dc953d0b51b31594117cd76522b67a96",
+            
+        ]
