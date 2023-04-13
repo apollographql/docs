@@ -18,13 +18,13 @@ import {
 import {DOCS_PAGE_WIDTH_VAR, usePageWidthContext} from './PageWidthContext';
 import {FiChevronsRight} from 'react-icons/fi';
 import {GatsbySeo} from 'gatsby-plugin-next-seo';
-import {PAGE_FOOTER_HEIGHT} from './Page';
 import {PathContext} from '../utils';
 import {dirname} from 'path';
 import {graphql, navigate, useStaticQuery} from 'gatsby';
 
 export const PAGE_PADDING_TOP = 40;
 export const PAGE_PADDING_BOTTOM = 48;
+export const PAGE_FOOTER_HEIGHT = 56;
 
 export function PageSeo({docset, title, description}) {
   const {uri} = useContext(PathContext);

@@ -48,6 +48,7 @@ import {Global} from '@emotion/react';
 import {MDXProvider} from '@mdx-js/react';
 import {MDXRenderer} from 'gatsby-plugin-mdx';
 import {
+  PAGE_FOOTER_HEIGHT,
   PAGE_PADDING_BOTTOM,
   PAGE_PADDING_TOP,
   PageContent,
@@ -84,7 +85,6 @@ Prism.languages.rhai = Prism.languages.javascript;
 const LIST_SPACING = 4;
 const HEADINGS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
 
-export const PAGE_FOOTER_HEIGHT = 56;
 const SCROLL_MARGIN_TOP = PAGE_PADDING_TOP + TOTAL_HEADER_HEIGHT;
 
 const NESTED_LIST_STYLES = {
