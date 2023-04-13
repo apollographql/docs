@@ -29,6 +29,10 @@ export function Sidebar({children, configs, isHidden, hideSidebar}) {
   const [activeDocset, setActiveDocset] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  useEffect(() => {
+    setSidebarOpen(false);
+  }, [pathContext.uri]);
+
   const dismissSidebar = useCallback(() => {
     if (sidebarOpen) {
       setActiveDocset(null);
