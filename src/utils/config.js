@@ -43,6 +43,8 @@ const configToSlug = config =>
     ? config.relativeDirectory.split('/').slice(4).join('/')
     : config.sourceInstanceName;
 
+const getParentDocset = slug => slug.split('/').shift();
+
 export const useConfigs = () => {
   const data = useStaticQuery(graphql`
     query GetSidebarConfigs {
@@ -72,17 +74,24 @@ export const useConfigs = () => {
     } = content;
 
     const slug = configToSlug(config);
+    const parent = getParentDocset(slug);
 
-    const versions = nodes
-      .filter(node => configToSlug(node) === slug)
-      .map(node => {
+    const versions = [];
+
+    for (const node of nodes) {
+      const nodeSlug = configToSlug(node);
+      if (getParentDocset(nodeSlug) === parent) {
         const {version} = JSON.parse(node.fields.content);
-        return {
-          label: version,
-          slug: node.sourceInstanceName
-        };
-      })
-      .sort((a, b) => b.label.localeCompare(a.label));
+        if (version) {
+          versions.push({
+            label: version,
+            slug: nodeSlug
+          });
+        }
+      }
+    }
+
+    versions.sort((a, b) => b.label.localeCompare(a.label));
 
     return {
       ...acc,

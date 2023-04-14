@@ -197,31 +197,31 @@ if (process.env.CONTEXT === 'production') {
 const isLocalMode = process.env.DOCS_MODE === 'local';
 const isSingleDocset = isLocalMode || process.env.DOCS_LOCAL;
 
-plugins.push(
-  ...Object.entries(remoteSources).map(([name, {remote, branch}]) => {
-    if (isSingleDocset) {
-      const url = new URL(remote);
-      return {
-        resolve: 'gatsby-source-remote-file',
-        options: {
-          url: `https://raw.githubusercontent.com${url.pathname}/${branch}/docs/source/config.json`,
-          name: `${name}/config`
-        }
-      };
+Object.entries(remoteSources).forEach(([name, {remote, branch}]) => {
+  // source the config file for each docset
+  const url = new URL(remote);
+  plugins.push({
+    resolve: 'gatsby-source-remote-file',
+    options: {
+      url: `https://raw.githubusercontent.com${url.pathname}/${branch}/docs/source/config.json`,
+      name: `${name}/config`
     }
+  });
 
-    return {
+  if (!isSingleDocset) {
+    // source the content for each docset, excluding the config file
+    plugins.push({
       resolve: '@theowenyoung/gatsby-source-git',
       options: {
         remote,
         name,
         branch,
         rootDir: 'docs/source',
-        patterns: isSingleDocset ? 'config.json' : undefined
+        patterns: '**/!(config.json)'
       }
-    };
-  })
-);
+    });
+  }
+});
 
 const localSources = yaml.load(fs.readFileSync('sources/local.yml', 'utf8'));
 
