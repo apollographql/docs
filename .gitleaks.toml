@@ -3,6 +3,7 @@
     id = "generic-api-key"
     [ rules.allowlist ]
         commits = [
+	    # Allowlist some example authentication tokens
             "5b47e0b5dc953d0b51b31594117cd76522b67a96",
             
         ]
