@@ -16,14 +16,17 @@ import {
 import {DocsetContext} from './SidebarCategory';
 import {PathContext} from '../../utils';
 import {TOTAL_HEADER_HEIGHT} from '../Header';
+import {useConfigs} from '../../utils/config';
 import {useKey} from 'react-use';
 
 export const PAGE_SIDEBAR_MARGIN = SIDEBAR_WIDTH + COLLAPSED_SIDEBAR_WIDTH;
 
-export function Sidebar({children, configs, isHidden, hideSidebar}) {
+export function Sidebar({children, isHidden, hideSidebar}) {
   const outerSidebarRef = useRef();
   const sidebarRef = useRef();
   const sidebarNavRef = useRef();
+
+  const configs = useConfigs();
 
   const pathContext = useContext(PathContext);
   const [activeDocset, setActiveDocset] = useState(null);
@@ -163,6 +166,5 @@ export function Sidebar({children, configs, isHidden, hideSidebar}) {
 Sidebar.propTypes = {
   children: PropTypes.node.isRequired,
   isHidden: PropTypes.bool,
-  hideSidebar: PropTypes.func,
-  configs: PropTypes.object.isRequired
+  hideSidebar: PropTypes.func
 };

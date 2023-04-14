@@ -155,16 +155,6 @@ const plugins = [
       include: /\.mdx?$/i,
       ignore: /README/i
     }
-  },
-  {
-    resolve: 'gatsby-source-apiserver',
-    options: {
-      typePrefix: 'Odyssey',
-      name: 'Course',
-      method: 'GET',
-      url: 'https://www.apollographql.com/tutorials/courses-api/courses.json',
-      entityLevel: 'odyssey-courses'
-    }
   }
 ];
 
@@ -197,18 +187,37 @@ if (process.env.CONTEXT === 'production') {
 const isLocalMode = process.env.DOCS_MODE === 'local';
 const isSingleDocset = isLocalMode || process.env.DOCS_LOCAL;
 
-plugins.push(
-  ...Object.entries(remoteSources).map(([name, {remote, branch}]) => ({
-    resolve: '@theowenyoung/gatsby-source-git',
+for (const name in remoteSources) {
+  const {remote, branch} = remoteSources[name];
+
+  // source the config file for each docset
+  const {pathname, username, password} = new URL(remote);
+  plugins.push({
+    resolve: 'gatsby-source-remote-file',
     options: {
-      remote,
-      name,
-      branch,
-      rootDir: 'docs/source',
-      patterns: isSingleDocset ? 'config.json' : undefined
+      url: `https://raw.githubusercontent.com${pathname}/${branch}/docs/source/config.json`,
+      name: `${name}/config`,
+      auth: {
+        htaccess_user: username,
+        htaccess_pass: password
+      }
     }
-  }))
-);
+  });
+
+  if (!isSingleDocset) {
+    // source the content for each docset, excluding the config file
+    plugins.push({
+      resolve: '@theowenyoung/gatsby-source-git',
+      options: {
+        remote,
+        name,
+        branch,
+        rootDir: 'docs/source',
+        patterns: '**/!(config.json)'
+      }
+    });
+  }
+}
 
 const localSources = yaml.load(fs.readFileSync('sources/local.yml', 'utf8'));
 

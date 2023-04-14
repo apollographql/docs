@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 import {
   Box,
@@ -12,8 +11,10 @@ import {
 import {DocsetContext, LeftSidebarNav, SidebarNav} from './Sidebar';
 import {FiMenu} from 'react-icons/fi';
 import {PathContext} from '../utils';
+import {useConfigs} from '../utils/config';
 
-function MobileNavContent({configs}) {
+function MobileNavContent() {
+  const configs = useConfigs();
   const {basePath, ...pathContext} = useContext(PathContext);
   const [activeDocset, setActiveDocset] = useState(basePath);
   return (
@@ -57,11 +58,7 @@ function MobileNavContent({configs}) {
   );
 }
 
-MobileNavContent.propTypes = {
-  configs: PropTypes.object.isRequired
-};
-
-export default function MobileNav({configs}) {
+export default function MobileNav() {
   const {isOpen, onOpen, onClose} = useDisclosure();
 
   return (
@@ -77,13 +74,9 @@ export default function MobileNav({configs}) {
       <Drawer placement="left" isOpen={isOpen} onClose={onClose}>
         <DrawerOverlay />
         <DrawerContent>
-          <MobileNavContent configs={configs} />
+          <MobileNavContent />
         </DrawerContent>
       </Drawer>
     </>
   );
 }
-
-MobileNav.propTypes = {
-  configs: PropTypes.object.isRequired
-};

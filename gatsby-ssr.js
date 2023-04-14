@@ -6,13 +6,9 @@ import {
   PAGE_NORMAL_WIDTH
 } from './src/components/PageWidthContext';
 
-export const wrapPageElement = ({element, props}) => {
-  return 'configs' in props.pageContext ? (
-    <PageLayout {...props}>{element}</PageLayout>
-  ) : (
-    element
-  );
-};
+export const wrapPageElement = ({element, props}) => (
+  <PageLayout {...props}>{element}</PageLayout>
+);
 
 export const onRenderBody = ({setHeadComponents}) =>
   setHeadComponents([
