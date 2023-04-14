@@ -187,17 +187,19 @@ if (process.env.CONTEXT === 'production') {
 const isLocalMode = process.env.DOCS_MODE === 'local';
 const isSingleDocset = isLocalMode || process.env.DOCS_LOCAL;
 
-Object.entries(remoteSources).forEach(([name, {remote, branch}]) => {
+for (const name in remoteSources) {
+  const {remote, branch} = remoteSources[name];
+
   // source the config file for each docset
-  const url = new URL(remote);
+  const {pathname, username, password} = new URL(remote);
   plugins.push({
     resolve: 'gatsby-source-remote-file',
     options: {
-      url: `https://raw.githubusercontent.com${url.pathname}/${branch}/docs/source/config.json`,
+      url: `https://raw.githubusercontent.com${pathname}/${branch}/docs/source/config.json`,
       name: `${name}/config`,
       auth: {
-        htaccess_user: url.username,
-        htaccess_pass: url.password
+        htaccess_user: username,
+        htaccess_pass: password
       }
     }
   });
@@ -215,7 +217,7 @@ Object.entries(remoteSources).forEach(([name, {remote, branch}]) => {
       }
     });
   }
-});
+}
 
 const localSources = yaml.load(fs.readFileSync('sources/local.yml', 'utf8'));
 
