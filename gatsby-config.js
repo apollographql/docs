@@ -155,16 +155,6 @@ const plugins = [
       include: /\.mdx?$/i,
       ignore: /README/i
     }
-  },
-  {
-    resolve: 'gatsby-source-apiserver',
-    options: {
-      typePrefix: 'Odyssey',
-      name: 'Course',
-      method: 'GET',
-      url: 'https://www.apollographql.com/tutorials/courses-api/courses.json',
-      entityLevel: 'odyssey-courses'
-    }
   }
 ];
 

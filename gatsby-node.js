@@ -77,10 +77,6 @@ exports.createPages = async ({actions, graphql}) => {
       pages: allFile(filter: {extension: {in: ["md", "mdx"]}}) {
         nodes {
           id
-          gitRemote {
-            full_name
-          }
-          name
           sourceInstanceName
           children {
             ... on Mdx {
@@ -101,17 +97,10 @@ exports.createPages = async ({actions, graphql}) => {
           name: fieldValue
         }
       }
-      allOdysseyCourse(filter: {id: {ne: "dummy"}}) {
-        nodes {
-          id
-          title
-          url
-        }
-      }
     }
   `);
 
-  data.pages.nodes.forEach(({id, sourceInstanceName, children, name}) => {
+  data.pages.nodes.forEach(({id, sourceInstanceName, children}) => {
     const [{fields}] = children;
 
     actions.createPage({
@@ -119,7 +108,6 @@ exports.createPages = async ({actions, graphql}) => {
       component: require.resolve('./src/templates/page'),
       context: {
         id,
-        fileName: name,
         basePath: sourceInstanceName
       }
     });

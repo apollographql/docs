@@ -10,41 +10,35 @@ import {FiChevronsRight} from 'react-icons/fi';
 import {PathContext} from '../../utils';
 import {dirname} from 'path';
 import {navigate} from 'gatsby';
-import {useConfigs} from '../../utils/config';
+import {useConfig} from '../../utils/config';
 
 export const PAGE_PADDING_TOP = 40;
 export const PAGE_PADDING_BOTTOM = 48;
 export const PAGE_FOOTER_HEIGHT = 56;
 
-export function PageLayout({pageContext, children, location}) {
+export function PageLayout({pageContext, children, location, data}) {
   const [sidebarHidden, setSidebarHidden] = useLocalStorage('sidebar');
 
   const hideSidebar = () => setSidebarHidden(true);
 
   const {pathname} = location;
-  const {basePath = '/', fileName} = pageContext;
-
-  const configs = useConfigs();
+  const {basePath = '/'} = pageContext;
 
   const {docset, versions, currentVersion, navItems, algoliaFilters} =
-    configs[basePath];
+    useConfig(basePath);
 
   return (
     <PathContext.Provider
       value={{
         uri: pathname,
         basePath,
-        path: fileName === 'index' ? pathname : dirname(pathname)
+        path: data?.file?.name === 'index' ? pathname : dirname(pathname)
       }}
     >
       <Header algoliaFilters={algoliaFilters}>
-        <MobileNav configs={configs} defaultDocset={docset} />
+        <MobileNav />
       </Header>
-      <Sidebar
-        configs={configs}
-        isHidden={sidebarHidden}
-        hideSidebar={hideSidebar}
-      >
+      <Sidebar isHidden={sidebarHidden} hideSidebar={hideSidebar}>
         <SidebarNav
           versions={versions}
           currentVersion={currentVersion}
@@ -89,6 +83,7 @@ export function PageLayout({pageContext, children, location}) {
 
 PageLayout.propTypes = {
   children: PropTypes.node.isRequired,
+  data: PropTypes.object.isRequired,
   pageContext: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired
 };
