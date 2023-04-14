@@ -59,6 +59,7 @@ import {YouTube} from './YouTube';
 import {join} from 'path';
 import {kebabCase} from 'lodash';
 import {rehype} from 'rehype';
+import {useConfig} from '../utils/config';
 import {useFieldTableStyles} from '../utils';
 import {useMermaidStyles} from '../utils/mermaid';
 
@@ -186,7 +187,7 @@ const {processSync} = rehype()
     }
   });
 
-export default function Page({file, pageContext}) {
+export default function Page({file}) {
   const [language, setLanguage] = useLocalStorage('language');
 
   const mermaidStyles = useMermaidStyles();
@@ -197,8 +198,9 @@ export default function Page({file, pageContext}) {
 
   const {frontmatter, headings} = childMdx || childMarkdownRemark;
   const {title, description, toc, tags, headingDepth} = frontmatter;
+
   const {docset, versions, currentVersion, navItems, versionBanner} =
-    pageContext;
+    useConfig(basePath);
 
   const defaultVersion = useMemo(
     () => versions.find(version => !version.slug.includes('/')),
@@ -439,6 +441,5 @@ export default function Page({file, pageContext}) {
 }
 
 Page.propTypes = {
-  file: PropTypes.object.isRequired,
-  pageContext: PropTypes.object.isRequired
+  file: PropTypes.object.isRequired
 };

@@ -198,16 +198,29 @@ const isLocalMode = process.env.DOCS_MODE === 'local';
 const isSingleDocset = isLocalMode || process.env.DOCS_LOCAL;
 
 plugins.push(
-  ...Object.entries(remoteSources).map(([name, {remote, branch}]) => ({
-    resolve: '@theowenyoung/gatsby-source-git',
-    options: {
-      remote,
-      name,
-      branch,
-      rootDir: 'docs/source',
-      patterns: isSingleDocset ? 'config.json' : undefined
+  ...Object.entries(remoteSources).map(([name, {remote, branch}]) => {
+    if (isSingleDocset) {
+      const url = new URL(remote);
+      return {
+        resolve: 'gatsby-source-remote-file',
+        options: {
+          url: `https://raw.githubusercontent.com${url.pathname}/${branch}/docs/source/config.json`,
+          name: `${name}/config`
+        }
+      };
     }
-  }))
+
+    return {
+      resolve: '@theowenyoung/gatsby-source-git',
+      options: {
+        remote,
+        name,
+        branch,
+        rootDir: 'docs/source',
+        patterns: isSingleDocset ? 'config.json' : undefined
+      }
+    };
+  })
 );
 
 const localSources = yaml.load(fs.readFileSync('sources/local.yml', 'utf8'));

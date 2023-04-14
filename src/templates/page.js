@@ -5,18 +5,16 @@ import React from 'react';
 import {GatsbySeo} from 'gatsby-plugin-next-seo';
 import {PageWidthProvider} from '../components/PageWidthContext';
 import {graphql} from 'gatsby';
+import {useConfig} from '../utils/config';
 
-export default function PageTemplate({data, location, pageContext}) {
+export default function PageTemplate({data, location}) {
+  const config = useConfig(data.file.basePath);
   const page = (
     <PageWidthProvider>
-      <Page
-        file={data.file}
-        uri={location.pathname}
-        pageContext={pageContext}
-      />
+      <Page file={data.file} uri={location.pathname} />
     </PageWidthProvider>
   );
-  return pageContext.internal ? (
+  return config.internal ? (
     <>
       <GatsbySeo noindex />
       <AuthCheck>{page}</AuthCheck>
@@ -28,8 +26,7 @@ export default function PageTemplate({data, location, pageContext}) {
 
 PageTemplate.propTypes = {
   data: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
-  pageContext: PropTypes.object.isRequired
+  location: PropTypes.object.isRequired
 };
 
 export const pageQuery = graphql`

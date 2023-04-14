@@ -3,7 +3,6 @@ const {
   createRemoteFileNode
 } = require('gatsby-source-filesystem');
 const {join} = require('path');
-const {v5} = require('uuid');
 const {kebabCase} = require('lodash');
 
 exports.sourceNodes = ({
@@ -72,45 +71,6 @@ exports.onCreateNode = async ({node, getNode, loadNodeContent, actions}) => {
   }
 };
 
-const getNavItems = items =>
-  // turn a sidebar configuration object to an array of nav items
-
-  {
-    const navItems = [];
-    const entries = Object.entries(items);
-
-    for (const [title, path] of entries) {
-      if (Array.isArray(path) && Array.isArray(path[1])) {
-        navItems.push({
-          title,
-          path: path[0],
-          tags: path[1]
-        });
-        continue;
-      }
-
-      if (typeof path === 'object') {
-        navItems.push({
-          title,
-          // generate an id for each group, for use with the sidebar nav state
-          id: v5(JSON.stringify(path), v5.DNS),
-          // recurse over its children and turn them into nav items
-          children: getNavItems(path)
-        });
-        continue;
-      }
-
-      if (typeof path === 'string') {
-        navItems.push({
-          title,
-          path
-        });
-      }
-    }
-
-    return navItems;
-  };
-
 exports.createPages = async ({actions, graphql}) => {
   const {data} = await graphql(`
     {
@@ -136,17 +96,6 @@ exports.createPages = async ({actions, graphql}) => {
           }
         }
       }
-      configs: allFile(filter: {base: {eq: "config.json"}}) {
-        nodes {
-          fields {
-            content
-          }
-          gitRemote {
-            full_name
-          }
-          sourceInstanceName
-        }
-      }
       tags: allMdx {
         group(field: frontmatter___tags) {
           name: fieldValue
@@ -162,48 +111,6 @@ exports.createPages = async ({actions, graphql}) => {
     }
   `);
 
-  const configs = data.configs.nodes.reduce((acc, node, _, nodes) => {
-    // TODO: convert configs to YAML
-    const {fields, gitRemote} = node;
-    const content = JSON.parse(fields.content);
-    const {
-      title,
-      link,
-      version,
-      sidebar,
-      algoliaFilters,
-      internal,
-      versionBanner
-    } = content;
-
-    const versions = nodes
-      .filter(
-        node => gitRemote && node.gitRemote?.full_name === gitRemote.full_name
-      )
-      .map(node => {
-        const {version} = JSON.parse(node.fields.content);
-        return {
-          label: version,
-          slug: node.sourceInstanceName
-        };
-      })
-      .sort((a, b) => b.label.localeCompare(a.label));
-
-    return {
-      ...acc,
-      [node.sourceInstanceName]: {
-        docset: title,
-        currentVersion: version,
-        navItems: getNavItems(sidebar),
-        algoliaFilters,
-        internal,
-        versions,
-        versionBanner,
-        link
-      }
-    };
-  }, {});
-
   data.pages.nodes.forEach(({id, sourceInstanceName, children, name}) => {
     const [{fields}] = children;
 
@@ -213,9 +120,7 @@ exports.createPages = async ({actions, graphql}) => {
       context: {
         id,
         fileName: name,
-        basePath: sourceInstanceName,
-        configs,
-        ...configs[sourceInstanceName]
+        basePath: sourceInstanceName
       }
     });
   });
@@ -226,9 +131,7 @@ exports.createPages = async ({actions, graphql}) => {
       component: require.resolve('./src/templates/tag'),
       context: {
         tag: tag.name,
-        configs,
-        basePath: 'technotes',
-        ...configs.technotes
+        basePath: 'technotes'
       }
     });
   });

@@ -66,6 +66,7 @@
     "gatsby-remark-mermaid": "^2.1.0",
     "gatsby-source-apiserver": "^2.1.8",
     "gatsby-source-filesystem": "^4.4.0",
+    "gatsby-source-remote-file": "^0.5.2",
     "gatsby-transformer-json": "^4.4.0",
     "gatsby-transformer-remark": "^5.4.0",
     "github-slugger": "^1.4.0",
