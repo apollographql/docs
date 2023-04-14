@@ -204,7 +204,11 @@ Object.entries(remoteSources).forEach(([name, {remote, branch}]) => {
     resolve: 'gatsby-source-remote-file',
     options: {
       url: `https://raw.githubusercontent.com${url.pathname}/${branch}/docs/source/config.json`,
-      name: `${name}/config`
+      name: `${name}/config`,
+      auth: {
+        htaccess_user: url.username,
+        htaccess_pass: url.password
+      }
     }
   });
 
