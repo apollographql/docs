@@ -9,7 +9,7 @@ Client apps need to keep their schemas up-to-date whenever changes are made to t
 - [Schema change notifications](/graphos/metrics/notifications/notification-setup) and ensure messages are sent to the appropriate channels
 - Configure [Apollo Swift](/ios/code-generation/codegen-cli#fetch-schema) and [Apollo Kotlin](/kotlin/advanced/plugin-configuration#downloading-a-schema) build tasks to fetch the latest API schema
 - [`rover graph fetch`](/rover/commands/graphs#graph-fetch) to fetch the API schema for any other applications.
-- Configure codgeneration tools for [Swift](/ios/code-generation/codegen-cli), [Kotlin](/kotlin/advanced/response-based-codegen) and [other platforms](https://github.com/dotansimha/graphql-code-generator)
+- Configure code generation tools for [Swift](/ios/code-generation/codegen-cli), [Kotlin](/kotlin/advanced/response-based-codegen) and [other platforms](https://github.com/dotansimha/graphql-code-generator)
 
 To ensure that your client operations are valid against the most recent schema, we recommend re-running code generation in your continuous integration system before merging client changes. The specific steps required are as follows:
 
