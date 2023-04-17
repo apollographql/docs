@@ -41,6 +41,7 @@ import {
   MultiCodeBlock,
   MultiCodeBlockContext
 } from '@apollo/chakra-helpers';
+import {FaDiscord} from 'react-icons/fa';
 import {FeedbackButton} from './FeedbackButton';
 import {FiGithub, FiMessageCircle} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
@@ -210,9 +211,9 @@ export default function Page({file, pageContext}) {
     lg: 'Edit on GitHub'
   });
 
-  const discussText = useBreakpointValue({
-    base: 'Discuss',
-    lg: 'Discuss in Forums'
+  const discordText = useBreakpointValue({
+    base: 'Discord',
+    lg: 'Discuss on Discord'
   });
 
   const editOnGitHub = useMemo(() => {
@@ -423,16 +424,16 @@ export default function Page({file, pageContext}) {
         }}
       >
         <FeedbackButton title={title} />
-        {editOnGitHub}
         <Button
           as="a"
-          href="https://community.apollographql.com/"
+          href="https://discord.gg/yFZJH2QYrK"
           variant="link"
           size="lg"
-          leftIcon={<FiMessageCircle />}
+          leftIcon={<FaDiscord />}
         >
-          {discussText}
+          {discordText}
         </Button>
+        {editOnGitHub}
       </HStack>
     </>
   );
