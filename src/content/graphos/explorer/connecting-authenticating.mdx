@@ -343,6 +343,27 @@ The prompt supports Markdown rendering of the `msg` parameter.
 <tr>
 <td>
 
+
+<tr>
+<td>
+
+##### `explorer.oauth2Request`
+
+`(authUrl: string, queryParams?: Record<string, string>) => Promise<Record<string, string> | null>`
+
+</td>
+<td>
+
+Function that prompts the user to authenticate using your OAuth 2.0 provider specified by `authUrl` and returns the OAuth 2.0 query params in a promise. If the user cancels the prompt, the promise resolves to `null`.
+
+For OAuth 2.0 Authentication to work on Studio, your OAuth 2.0 provider must recognize https://studio.apollographql.com/explorer-oauth2 as a valid redirect url. You can do this in your OAuth 2.0 provider settings when you set up a new client or application.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
 ##### `explorer.request.body`
 
 `{ query: string; variables: { [key in string]?: JSONValue } | null; operationName: string | undefined; }`
