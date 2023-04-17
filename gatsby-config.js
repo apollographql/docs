@@ -200,7 +200,9 @@ for (const name in remoteSources) {
       auth: {
         htaccess_user: username,
         htaccess_pass: password
-      }
+      },
+      // so that deploy previews for other docsets don't fail
+      errorHandling: 'warn'
     }
   });
 
