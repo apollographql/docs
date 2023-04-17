@@ -11,8 +11,10 @@ tags: [server, router, auth]
 When using the Apollo Router as the entry point to your federated supergraph, you have a few options for authenticating incoming client requests:
 
 - [Delegate authentication to your subgraphs.](#authenticate-in-subgraphs)
-- [Add an ingress filter](#add-an-ingress-filter) to your supergraph.
-- [Create a custom router plugin](#create-a-custom-plugin).
+- [Use the JWT Authentication plugin](#use-the-jwt-authentication-plugin) to your supergraph.
+- [Use a coprocessor](#use-a-coprocessor).
+
+In fact, you can [combine all three strategies](#combining-authentication-strategies) to create a more robust authentication system!
 
 ## Authenticate in subgraphs
 
@@ -31,7 +33,7 @@ To pass `Authentication` headers from client requests to your subgraphs, add the
 headers:
   all:
     request:
-     - propagate:
+      - propagate:
           named: authorization
 ```
 
@@ -45,55 +47,105 @@ headers:
 - Each subgraph that contributes to resolving a request needs to authenticate that request.
 - If subgraphs are written in different languages, maintaining consistent authentication code for each is complex.
 
-## Add an ingress filter
+## Use the JWT Authentication plugin
 
-Many ingresses and generic API gateways provide authentication features.
+As of Apollo Router v1.13, you can use the [JWT Authentication plugin](/router/configuration/authn-jwt) to validate JWT-based authentication tokens in your supergraph.
 
-[Envoy](https://www.envoyproxy.io/) is a powerful proxy with [built-in support for authenticating and authorizing requests with an external service](https://www.envoyproxy.io/docs/envoy/v1.22.0/intro/arch_overview/security/ext_authz_filter). See this [demo project](https://github.com/apollosolutions/router-ext-authz) for an example that uses [Open Policy Agent](https://www.openpolicyagent.org/) as the Policy Decision Point.
+> ⚠️ This is an [Enterprise feature](/router/enterprise-features) of the Apollo Router. It requires an organization with a [GraphOS Enterprise plan](https://www.apollographql.com/pricing/).
 
 ```mermaid
 sequenceDiagram
-  Client->>Envoy: Request with token
-  Envoy->>OPA: Request with token
-  OPA->>Key server: Get keys
-  Key server->>OPA: Public keys
-  note over OPA: Verify token
-  note over OPA: Add claims as headers
-  OPA->>Envoy: 200 OK + new headers
-  Envoy->>Router: Request + new headers
-  Router->>Subgraph: Request + new headers
+  Client->>Router: Request with JWT
+  Router->>JWKS Endpoint: Fetch key set
+  JWKS Endpoint->>Router: Public keys
+  note over Router: Validate JWT
+  note over Router: Extract claims in Rhai
+  Router->>Subgraph: Request with extracted claims in headers
+  note over Subgraph: Check claims on headers
 ```
 
-**Pros**
+```yaml
+authentication:
+  jwt:
+    jwks:
+      - url: https://dev-zzp5enui.us.auth0.com/.well-known/jwks.json
+```
 
-- Requires minimal changes to your router configuration.
-- Enforces authentication at a single point, reducing complexity relative to authenticating in each subgraph.
-- The authorization service can execute arbitrary logic. For example, it can extract claims from a JSON Web Token (JWT), converting them to headers that are forwarded to subgraphs.
-- Envoy (as well as Open Policy Agent) typically run as sidecars within the same pod as the router, so requests between services are very fast.
+Pros:
 
-**Cons**
+- The router prevents unauthenticated requests from reaching your subgraphs.
+- The router can extract claims from the JWT and pass them to your subgraphs as headers, reducing logic needed in your subgraphs.
 
-- Does not support both authenticated and unauthenticated APIs (for example, a `login` mutation).
-- Requires Envoy and a control plane for configuring the `ext_authz` filter.
+Cons:
 
-## Create a custom plugin
+- It supports only JWT-based authentication with keys from a JWKS endpoint.
 
-The Apollo Router can authenticate requests in a custom plugin. For a demonstration of JWT authentication, see [this example in the router repository](https://github.com/apollographql/router/tree/main/examples/jwt-auth).
+## Use a coprocessor
+
+If you have a custom authentication strategy, you can use a [coprocessor](/router/customizations/coprocessor) to implement it.
+
+> ⚠️ This is an [Enterprise feature](/router/enterprise-features) of the Apollo Router. It requires an organization with a [GraphOS Enterprise plan](https://www.apollographql.com/pricing/).
 
 ```mermaid
 sequenceDiagram
   Client->>Router: Request with token
-  note over Router: Verify token with HMAC
-  note over Router: Add headers to context
-  Router->>Subgraph: Request with headers from context
+  Router->>Coprocessor: Request with headers and context
+  note over Coprocessor: Validate request
+  alt Request is invalid
+    Coprocessor->>Router: Respond { control: { break: 401 } }
+  else Request is valid
+    Coprocessor->>Router: Respond { control: "continue" }
+    note over Coprocessor: Can also add new headers
+  end
+  Router->>Subgraph: Request with new headers
+  note over Subgraph: Check claims on headers
 ```
 
-**Pros**
+```yaml
+coprocessor:
+  url: http://127.0.0.1:8081
+  router:
+    request:
+      headers: true
+```
 
-- Enforces authentication at a single point, reducing complexity relative to authenticating in each subgraph.
-- Doesn't require additional services, sidecars, or control planes.
-- The plugin can execute arbitrary logic. For example, it can extract claims from a JWT, attaching them to the request context so they can be forwarded to subgraphs.
+This example coprocessor is written in Node.js and uses Express:
 
-**Cons**
+```js
+const app = express();
+app.use(bodyParser.json());
+app.post('/', async (req, res) => {
+  const {headers} = req.body;
+  const token = headers.authorization;
+  const isValid = await validateToken(token);
+  if (!isValid) {
+    res.json({
+      ...req.body,
+      control: {break: 401}
+    });
+  } else {
+    res.json({
+      ...req.body,
+      control: 'continue',
+      headers: {'x-claims': extractClaims(token)}
+    });
+  }
+});
+```
 
-- Requires extensive customization of the router in Rust.
+Pros:
+
+- You can implement any authentication strategy in any language or framework, as long as the coprocessor provides an HTTP endpoint.
+- You can use the coprocessor to add headers to requests, which can be used by your subgraphs for additional authorization.
+
+Cons:
+
+- The initial lift of implementing a coprocessor is non-trivial, but once it's in place you can leverage it for any number of router customizations.
+
+## Combining authentication strategies
+
+You can combine the strategies to handle a number of authentication requirements and practice "defense-in-depth":
+
+1. Use a coprocessor to identify traffic using a legacy authentication strategy and convert legacy session tokens to JWTs.
+2. Use the JWT Authentication plugin to validate JWT-based authentication tokens.
+3. Forward JWTs to subgraphs for additional authorization.
