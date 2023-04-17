@@ -1,3 +1,5 @@
+import AuthCheck from './AuthCheck';
+import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 import {
   Box,
@@ -13,10 +15,12 @@ import {FiMenu} from 'react-icons/fi';
 import {PathContext} from '../utils';
 import {useConfigs} from '../utils/config';
 
-function MobileNavContent() {
+function MobileNavContent({defaultActiveDocset}) {
   const configs = useConfigs();
   const {basePath, ...pathContext} = useContext(PathContext);
-  const [activeDocset, setActiveDocset] = useState(basePath);
+  const [activeDocset, setActiveDocset] = useState(
+    defaultActiveDocset || basePath
+  );
   return (
     <>
       {!activeDocset && <DrawerCloseButton zIndex="1" top="3" color="white" />}
@@ -58,9 +62,13 @@ function MobileNavContent() {
   );
 }
 
-export default function MobileNav() {
-  const {isOpen, onOpen, onClose} = useDisclosure();
+MobileNavContent.propTypes = {
+  defaultActiveDocset: PropTypes.string
+};
 
+export default function MobileNav({isInternal}) {
+  const {isOpen, onOpen, onClose} = useDisclosure();
+  const pathContext = useContext(PathContext);
   return (
     <>
       <IconButton
@@ -74,9 +82,30 @@ export default function MobileNav() {
       <Drawer placement="left" isOpen={isOpen} onClose={onClose}>
         <DrawerOverlay />
         <DrawerContent>
-          <MobileNavContent />
+          {isInternal ? (
+            <AuthCheck
+              fallback={
+                <PathContext.Provider
+                  value={{
+                    ...pathContext,
+                    basePath: '/'
+                  }}
+                >
+                  <MobileNavContent />
+                </PathContext.Provider>
+              }
+            >
+              <MobileNavContent />
+            </AuthCheck>
+          ) : (
+            <MobileNavContent />
+          )}
         </DrawerContent>
       </Drawer>
     </>
   );
 }
+
+MobileNav.propTypes = {
+  isInternal: PropTypes.bool
+};

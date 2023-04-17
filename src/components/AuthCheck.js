@@ -25,7 +25,11 @@ const GET_MEMBERSHIPS = gql`
 
 const APOLLO_ORGS = ['gh.apollographql', 'apollo-private', 'apollo'];
 
-export default function AuthCheck({children}) {
+export default function AuthCheck({
+  children,
+  // TODO: more granular message like "access denied" or "please log in"
+  fallback = <NotFound />
+}) {
   const {data, loading, error} = useQuery(GET_MEMBERSHIPS);
 
   if (loading) {
@@ -49,13 +53,13 @@ export default function AuthCheck({children}) {
   );
 
   if (!hasAccess) {
-    // TODO: more granular message like "access denied" or "please log in"
-    return <NotFound />;
+    return fallback;
   }
 
   return children;
 }
 
 AuthCheck.propTypes = {
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
+  fallback: PropTypes.node
 };

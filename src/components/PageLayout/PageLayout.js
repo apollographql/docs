@@ -1,9 +1,14 @@
+import AuthCheck from '../AuthCheck';
 import Footer from '../Footer';
 import Header from '../Header';
 import MobileNav from '../MobileNav';
 import PropTypes from 'prop-types';
 import React from 'react';
-import Sidebar, {PAGE_SIDEBAR_MARGIN, SidebarNav} from '../Sidebar';
+import Sidebar, {
+  DefaultSidebarNav,
+  PAGE_SIDEBAR_MARGIN,
+  SidebarNav
+} from '../Sidebar';
 import useLocalStorage from 'react-use/lib/useLocalStorage';
 import {Box, Fade, IconButton, Tooltip} from '@chakra-ui/react';
 import {FiChevronsRight} from 'react-icons/fi';
@@ -24,8 +29,21 @@ export function PageLayout({pageContext, children, location, data}) {
   const {pathname} = location;
   const {basePath = '/'} = pageContext;
 
-  const {docset, versions, currentVersion, navItems, algoliaFilters} =
+  const {docset, versions, currentVersion, navItems, algoliaFilters, internal} =
     useConfig(basePath);
+
+  const sidebarNav = (
+    <SidebarNav
+      versions={versions}
+      currentVersion={currentVersion}
+      docset={docset}
+      navItems={navItems}
+      hideSidebar={hideSidebar}
+      onVersionChange={version => {
+        navigate(`/${version.slug}`);
+      }}
+    />
+  );
 
   return (
     <PathContext.Provider
@@ -36,19 +54,16 @@ export function PageLayout({pageContext, children, location, data}) {
       }}
     >
       <Header algoliaFilters={algoliaFilters}>
-        <MobileNav />
+        <MobileNav isInternal={internal} />
       </Header>
       <Sidebar isHidden={sidebarHidden} hideSidebar={hideSidebar}>
-        <SidebarNav
-          versions={versions}
-          currentVersion={currentVersion}
-          docset={docset}
-          navItems={navItems}
-          hideSidebar={hideSidebar}
-          onVersionChange={version => {
-            navigate(`/${version.slug}`);
-          }}
-        />
+        {internal ? (
+          <AuthCheck fallback={<DefaultSidebarNav hideSidebar={hideSidebar} />}>
+            {sidebarNav}
+          </AuthCheck>
+        ) : (
+          sidebarNav
+        )}
       </Sidebar>
       <Box
         marginLeft={{
