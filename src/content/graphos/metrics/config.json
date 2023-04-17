@@ -1,0 +1,46 @@
+{
+  "title": "Metrics & Reporting",
+  "algoliaFilters": [
+    [
+      "docset:graphos",
+      "docset:graphos/delivery",
+      "docset:graphos/metrics",
+      "docset:graphos/org",
+      "docset:graphos/explorer"
+    ],
+    [
+      "docset:rover",
+      "docset:federation"
+    ]
+  ],
+  "sidebar": {
+    "Operation metrics": "/",
+    "Field usage": "/field-usage",
+    "Segmenting by client": "/client-awareness",
+    "Sending metrics to GraphOS": "/sending-operation-metrics",
+    "Datadog forwarding": [
+      "/datadog-integration",
+      [
+        "enterprise"
+      ]
+    ],
+    "Operation signatures": "/operation-signatures",
+    "Notifications": {
+      "Setup": "/notifications/notification-setup",
+      "Daily reports": "/notifications/daily-reports",
+      "Schema changes": "/notifications/schema-change-integration",
+      "Performance alerts": [
+        "/notifications/performance-alerts",
+        [
+          "experimental"
+        ]
+      ],
+      "Build status": [
+        "/notifications/build-status-notification",
+        [
+          "enterprise"
+        ]
+      ]
+    }
+  }
+}

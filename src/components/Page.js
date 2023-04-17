@@ -5,7 +5,6 @@ import ExpansionPanel, {
   ExpansionPanelListItem
 } from './ExpansionPanel';
 import InlineCode from './InlineCode';
-import PageLayout, {usePageLayoutProps} from './PageLayout';
 import Pagination from './Pagination';
 import Prism from 'prismjs';
 import PropTypes from 'prop-types';
@@ -24,7 +23,6 @@ import {
   Heading,
   ListItem,
   OrderedList,
-  Stack,
   Table,
   Tag,
   Tbody,
@@ -34,7 +32,8 @@ import {
   Thead,
   Tr,
   UnorderedList,
-  chakra
+  chakra,
+  useBreakpointValue
 } from '@chakra-ui/react';
 import {
   EmbeddableExplorer,
@@ -42,17 +41,26 @@ import {
   MultiCodeBlock,
   MultiCodeBlockContext
 } from '@apollo/chakra-helpers';
-import {FaDiscourse, FaGithub} from 'react-icons/fa';
+import {FeedbackButton} from './FeedbackButton';
+import {FiGithub, FiMessageCircle} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
 import {Global} from '@emotion/react';
 import {MDXProvider} from '@mdx-js/react';
 import {MDXRenderer} from 'gatsby-plugin-mdx';
-import {PathContext, useFieldTableStyles} from '../utils';
+import {
+  PAGE_FOOTER_HEIGHT,
+  PAGE_PADDING_BOTTOM,
+  PAGE_PADDING_TOP,
+  PageContent,
+  PageSeo
+} from './PageLayout';
 import {TOTAL_HEADER_HEIGHT} from './Header';
 import {YouTube} from './YouTube';
-import {dirname, join} from 'path';
+import {join} from 'path';
 import {kebabCase} from 'lodash';
 import {rehype} from 'rehype';
+import {useConfig} from '../utils/config';
+import {useFieldTableStyles} from '../utils';
 import {useMermaidStyles} from '../utils/mermaid';
 
 // these must be imported after MarkdownCodeBlock
@@ -71,13 +79,14 @@ import 'prismjs/components/prism-swift';
 import 'prismjs/components/prism-tsx';
 import 'prismjs/components/prism-typescript';
 import 'prismjs/components/prism-yaml';
-import {FeedbackButton} from './FeedbackButton';
 
 // use JS syntax highlighting for rhai codeblocks
 Prism.languages.rhai = Prism.languages.javascript;
 
 const LIST_SPACING = 4;
 const HEADINGS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
+
+const SCROLL_MARGIN_TOP = PAGE_PADDING_TOP + TOTAL_HEADER_HEIGHT;
 
 const NESTED_LIST_STYLES = {
   [['ul', 'ol']]: {
@@ -178,40 +187,35 @@ const {processSync} = rehype()
     }
   });
 
-export default function Page({file, pageContext, uri}) {
+export default function Page({file}) {
   const [language, setLanguage] = useLocalStorage('language');
 
   const mermaidStyles = useMermaidStyles();
   const fieldTableStyles = useFieldTableStyles();
 
-  const {
-    name,
-    childMdx,
-    childMarkdownRemark,
-    basePath,
-    gitRemote,
-    relativePath
-  } = file;
+  const {childMdx, childMarkdownRemark, basePath, gitRemote, relativePath} =
+    file;
 
   const {frontmatter, headings} = childMdx || childMarkdownRemark;
   const {title, description, toc, tags, headingDepth} = frontmatter;
-  const {versions, currentVersion, navItems, versionBanner} = pageContext;
 
-  const pageProps = usePageLayoutProps({
-    pageContext,
-    title,
-    description
-  });
-
-  const scrollMarginTop = useMemo(
-    () => `calc(${pageProps.paddingTop} + ${TOTAL_HEADER_HEIGHT}px)`,
-    [pageProps.paddingTop]
-  );
+  const {docset, versions, currentVersion, navItems, versionBanner} =
+    useConfig(basePath);
 
   const defaultVersion = useMemo(
     () => versions.find(version => !version.slug.includes('/')),
     [versions]
   );
+
+  const editText = useBreakpointValue({
+    base: 'Edit',
+    lg: 'Edit on GitHub'
+  });
+
+  const discussText = useBreakpointValue({
+    base: 'Discuss',
+    lg: 'Discuss in Forums'
+  });
 
   const editOnGitHub = useMemo(() => {
     const repo = `https://github.com/${
@@ -234,12 +238,13 @@ export default function Page({file, pageContext, uri}) {
         href={`${repo}/${join(...repoPath)}`}
         variant="link"
         size="lg"
-        leftIcon={<FaGithub />}
+        leftIcon={<FiGithub />}
       >
-        Edit on GitHub
+        {editText}
       </Button>
     );
-  }, [gitRemote, basePath, relativePath]);
+  }, [gitRemote, basePath, relativePath, editText]);
+
   return (
     <>
       <Global
@@ -250,190 +255,191 @@ export default function Page({file, pageContext, uri}) {
           }
         }}
       />
-      <PathContext.Provider
-        value={{
-          uri,
-          basePath,
-          path: name === 'index' ? uri : dirname(uri)
-        }}
-      >
-        <PageLayout
-          {...pageProps}
-          banner={
-            versionBanner ? (
-              <VersionBanner
-                versionLabels={[]}
-                to={versionBanner.link.to}
-                message={versionBanner.message}
-              >
-                {versionBanner.link.content}
-              </VersionBanner>
-            ) : defaultVersion && defaultVersion.slug !== basePath ? (
-              <VersionBanner
-                versionLabels={[defaultVersion.label, currentVersion]}
-                to={'/' + defaultVersion.slug}
-              >
-                Switch to the latest stable version.
-              </VersionBanner>
-            ) : null
-          }
-          subtitle={
-            <>
-              {description && (
-                <chakra.h2
-                  fontSize={{base: 'xl', md: '2xl'}}
-                  lineHeight="normal"
-                  mt={{base: 2, md: 3}}
-                  fontWeight="normal"
-                >
-                  {description}
-                </chakra.h2>
-              )}
-              {tags?.length && (
-                <HStack mt={{base: 2, md: 3}}>
-                  {tags.map((tag, index) => (
-                    <Tag
-                      key={index}
-                      as={GatsbyLink}
-                      to={`/technotes/tags/${kebabCase(tag)}`}
-                      size="lg"
-                    >
-                      {tag}
-                    </Tag>
-                  ))}
-                </HStack>
-              )}
-            </>
-          }
-          pagination={<Pagination navItems={navItems} />}
-          aside={
-            toc !== false && (
-              // hide the table of contents on the home page
-              <chakra.aside
-                d={{base: 'none', lg: 'flex'}}
-                flexDirection="column"
-                ml={{base: 10, xl: 16}}
-                w={250}
-                flexShrink="0"
-                pos="sticky"
-                top={scrollMarginTop}
-                maxH={`calc(100vh - ${scrollMarginTop} - ${pageProps.paddingBottom})`}
-              >
-                <Heading size="md" mb="3">
-                  {title}
-                </Heading>
-                <TableOfContents
-                  headings={headings}
-                  // jc: passing undefined here as headingDepth returns null if it doesn't exist in the frontmatter
-                  // and we need undefined in order to make use of default props
-                  headingDepth={headingDepth ?? undefined}
-                />
-                <Stack align="flex-start" spacing="3" mt="8">
-                  <FeedbackButton title={title} />
-                  {editOnGitHub}
-                  <Button
-                    as="a"
-                    href="https://community.apollographql.com/"
-                    variant="link"
-                    size="lg"
-                    leftIcon={<FaDiscourse />}
-                  >
-                    Discuss in forums
-                  </Button>
-                </Stack>
-              </chakra.aside>
-            )
-          }
-          contentProps={{
-            css: {
-              [HEADINGS]: {
-                scrollMarginTop
-              }
+      <PageSeo title={title} description={description} docset={docset} />
+      {versionBanner ? (
+        <VersionBanner
+          versionLabels={[]}
+          to={versionBanner.link.to}
+          message={versionBanner.message}
+        >
+          {versionBanner.link.content}
+        </VersionBanner>
+      ) : defaultVersion && defaultVersion.slug !== basePath ? (
+        <VersionBanner
+          versionLabels={[defaultVersion.label, currentVersion]}
+          to={'/' + defaultVersion.slug}
+        >
+          Switch to the latest stable version.
+        </VersionBanner>
+      ) : null}
+      <PageContent
+        sx={{
+          [HEADINGS]: {
+            a: {
+              color: 'inherit'
             },
-            sx: {
+            code: {
+              bg: 'none',
+              p: 0,
+              color: 'secondary',
+              whiteSpace: 'normal'
+            }
+          },
+          '>': {
+            ':not(:last-child)': {
+              mb: 6
+            },
+            ':not(style:first-child) +': {
               [HEADINGS]: {
-                a: {
-                  color: 'inherit'
-                },
-                code: {
-                  bg: 'none',
-                  p: 0,
-                  color: 'secondary',
-                  whiteSpace: 'normal'
-                }
-              },
+                mt: 10,
+                mb: 4
+              }
+            }
+          },
+          'img.screenshot': {
+            shadow: 'md',
+            rounded: 'md'
+          },
+          table: {
+            td: {
               '>': {
                 ':not(:last-child)': {
-                  mb: 6
+                  mb: 3
+                }
+              },
+              [['ul', 'ol']]: {
+                [['ul', 'ol']]: {
+                  mt: 1
                 },
-                ':not(style:first-child) +': {
-                  [HEADINGS]: {
-                    mt: 10,
-                    mb: 4
-                  }
-                }
-              },
-              'img.screenshot': {
-                shadow: 'md',
-                rounded: 'md'
-              },
-              table: {
-                td: {
-                  '>': {
-                    ':not(:last-child)': {
-                      mb: 3
-                    }
-                  },
-                  [['ul', 'ol']]: {
-                    [['ul', 'ol']]: {
-                      mt: 1
-                    },
-                    'li:not(:first-child)': {
-                      mt: 1
-                    }
-                  }
-                }
-              },
-              '.field-table': fieldTableStyles,
-              '.sticky-table': {
-                shadow: 'inner',
-                table: {
-                  [['td', 'th']]: {
-                    ':first-of-type': {
-                      position: 'sticky',
-                      left: 0,
-                      bg: 'bg',
-                      borderRightWidth: 1
-                    }
-                  },
-                  'tr:last-child': {
-                    td: {
-                      borderBottom: 'none'
-                    }
-                  }
+                'li:not(:first-child)': {
+                  mt: 1
                 }
               }
             }
-          }}
-        >
-          <MultiCodeBlockContext.Provider value={{language, setLanguage}}>
-            {childMdx ? (
-              <MDXProvider components={mdxComponents}>
-                <MDXRenderer>{childMdx.body}</MDXRenderer>
-              </MDXProvider>
-            ) : (
-              processSync(childMarkdownRemark.html).result
+          },
+          '.field-table': fieldTableStyles,
+          '.sticky-table': {
+            shadow: 'inner',
+            table: {
+              [['td', 'th']]: {
+                ':first-of-type': {
+                  position: 'sticky',
+                  left: 0,
+                  bg: 'bg',
+                  borderRightWidth: 1
+                }
+              },
+              'tr:last-child': {
+                td: {
+                  borderBottom: 'none'
+                }
+              }
+            }
+          }
+        }}
+        css={{
+          [HEADINGS]: {
+            scrollMarginTop: SCROLL_MARGIN_TOP
+          }
+        }}
+        title={title}
+        subtitle={
+          <>
+            {description && (
+              <chakra.h2
+                fontSize={{base: 'xl', md: '2xl'}}
+                lineHeight="normal"
+                mt={{base: 2, md: 3}}
+                fontWeight="normal"
+              >
+                {description}
+              </chakra.h2>
             )}
-          </MultiCodeBlockContext.Provider>
-          <Box d={{lg: 'none'}}>{editOnGitHub}</Box>
-        </PageLayout>
-      </PathContext.Provider>
+            {tags?.length && (
+              <HStack mt={{base: 2, md: 3}}>
+                {tags.map((tag, index) => (
+                  <Tag
+                    key={index}
+                    as={GatsbyLink}
+                    to={`/technotes/tags/${kebabCase(tag)}`}
+                    size="lg"
+                  >
+                    {tag}
+                  </Tag>
+                ))}
+              </HStack>
+            )}
+          </>
+        }
+        pagination={<Pagination navItems={navItems} />}
+        aside={
+          toc !== false && headings.length ? (
+            // hide the table of contents on the home page
+            <chakra.aside
+              d={{base: 'none', xl: 'flex'}}
+              flexDirection="column"
+              ml={{base: 10, xl: 16}}
+              w={250}
+              flexShrink="0"
+              pos="sticky"
+              css={{top: SCROLL_MARGIN_TOP}}
+              maxH={`calc(100vh - ${SCROLL_MARGIN_TOP}px - ${PAGE_PADDING_BOTTOM}px - ${PAGE_FOOTER_HEIGHT}px)`}
+            >
+              <Heading size="md" mb="3">
+                {title}
+              </Heading>
+              <TableOfContents
+                headings={headings}
+                // jc: passing undefined here as headingDepth returns null if it doesn't exist in the frontmatter
+                // and we need undefined in order to make use of default props
+                headingDepth={headingDepth ?? undefined}
+              />
+            </chakra.aside>
+          ) : null
+        }
+      >
+        <MultiCodeBlockContext.Provider value={{language, setLanguage}}>
+          {childMdx ? (
+            <MDXProvider components={mdxComponents}>
+              <MDXRenderer>{childMdx.body}</MDXRenderer>
+            </MDXProvider>
+          ) : (
+            processSync(childMarkdownRemark.html).result
+          )}
+        </MultiCodeBlockContext.Provider>
+      </PageContent>
+      <HStack
+        justify="flex-end"
+        px={{
+          base: 6,
+          md: 10,
+          xl: 12
+        }}
+        borderTopWidth={1}
+        bg="bg"
+        spacing="6"
+        pos="sticky"
+        bottom="0"
+        css={{
+          height: PAGE_FOOTER_HEIGHT
+        }}
+      >
+        <FeedbackButton title={title} />
+        {editOnGitHub}
+        <Button
+          as="a"
+          href="https://community.apollographql.com/"
+          variant="link"
+          size="lg"
+          leftIcon={<FiMessageCircle />}
+        >
+          {discussText}
+        </Button>
+      </HStack>
     </>
   );
 }
 
 Page.propTypes = {
-  file: PropTypes.object.isRequired,
-  uri: PropTypes.string.isRequired,
-  pageContext: PropTypes.object.isRequired
+  file: PropTypes.object.isRequired
 };

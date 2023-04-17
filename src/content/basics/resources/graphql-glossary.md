@@ -279,7 +279,7 @@ The normalized representation of a particular GraphQL operation (query, mutation
 
 Other normalization algorithms replace in-line variables(literals) with empty, null, or zero values, sort fragments, remove whitespace, or remove aliases.
 
-The following example shows the [default signature algorithm for GraphOS metrics reporting](/graphos/performance/#operation-signatures). 
+The following example shows the [default signature algorithm for GraphOS metrics reporting](/graphos/metrics/operation-signatures/).
 
 Here's an operation definition _before_ normalization:
 

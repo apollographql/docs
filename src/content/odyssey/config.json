@@ -1,0 +1,22 @@
+{
+  "title": "Odyssey Tutorials",
+  "link": "https://www.apollographql.com/tutorials",
+  "sidebar": {
+    "Browse all tutorials": "https://www.apollographql.com/tutorials/browse",
+    "Lift-off (GraphQL Essentials)": {
+      "Part 1: Basics": "https://www.apollographql.com/tutorials/lift-off-part1",
+      "Part 2: Resolvers": "https://www.apollographql.com/tutorials/lift-off-part2",
+      "Part 3: Arguments": "https://www.apollographql.com/tutorials/lift-off-part3",
+      "Part 4: Mutations": "https://www.apollographql.com/tutorials/lift-off-part4"
+    },
+    "GraphOS": {
+      "Getting started": "https://www.apollographql.com/tutorials/getting-started-with-graphos",
+      "Shipping your supergraph": "https://www.apollographql.com/tutorials/graphos-shipping-supergraph"
+    },
+    "Voyage (Adopting Federation)": {
+      "Part 1: Federation from Day One": "https://www.apollographql.com/tutorials/voyage-part1",
+      "Part 2: Federating the Monolith": "https://www.apollographql.com/tutorials/voyage-part2",
+      "Part 3: Federation in Production": "https://www.apollographql.com/tutorials/voyage-part3"
+    }
+  }
+}

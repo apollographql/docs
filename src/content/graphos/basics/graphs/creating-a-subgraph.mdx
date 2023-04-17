@@ -1,0 +1,58 @@
+---
+title: Creating a new subgraph
+description: For your supergraph
+---
+
+This article helps you get started building a new subgraph that you can then add to your GraphOS supergraph.
+
+- If you're building a new GraphQL API from scratch, we recommend [starting from a template](#starting-from-a-template)!
+- If you already have a GraphQL API to use as a subgraph, see [Starting with an existing API](#starting-with-an-existing-api).
+
+## Starting from a template
+
+The fastest way to create a new subgraph is to start with one of the templates provided by the [Rover CLI](/rover/commands/template). The `rover template` command generates the skeleton of a new subgraph for you, so you can immediately begin defining your schema and implementing your resolvers.
+
+> If your installed version of Rover doesn't include the `template` command (or if you don't have Rover installed at all), [install the latest version.](/rover/getting-started/)
+
+Templates are currently available for the following libraries and languages:
+
+| Language   | Name                                                                                   | ID                                   | Template Repository                                                                                        |
+| ---------- | -------------------------------------------------------------------------------------- | ------------------------------------ | ---------------------------------------------------------------------------------------------------------- |
+| Go         | [Go (gqlgen)](https://gqlgen.com/getting-started/)                                     | `subgraph-go-gqlgen`                 | [View repository](https://github.com/apollographql/subgraph-template-go-gqlgen-boilerplate)                |
+| Java       | [Spring GraphQL](https://spring.io/projects/spring-graphql)                            | `subgraph-java-spring-graphql`       | [View repository](https://github.com/apollographql/subgraph-template-java-spring-graphql-boilerplate)      |
+| JavaScript | [Apollo Server (JS)](https://www.apollographql.com/docs/apollo-server/)                | `subgraph-javascript-apollo-server`  | [View repository](https://github.com/apollographql/subgraph-template-javascript-apollo-server-boilerplate) |
+| Kotlin     | [GraphQL Kotlin](https://opensource.expediagroup.com/graphql-kotlin/docs/)             | `subgraph-graphql-kotlin`            | [View repository](https://github.com/apollographql/subgraph-template-graphql-kotlin-boilerplate)           |
+| Python     | [Strawberry with FastAPI](https://strawberry.rocks)                                    | `subgraph-python-strawberry-fastapi` | [View repository](https://github.com/strawberry-graphql/subgraph-template-strawberry-fastapi)              |
+| Python     | [Ariadne with FastAPI](https://ariadnegraphql.org)                                     | `subgraph-python-ariadne-fastapi`    | [View repository](https://github.com/patrick91/subgraph-template-ariadne-fastapi)                          |
+| Rust       | [async-graphql with Axum](https://async-graphql.github.io/async-graphql/en/index.html) | `subgraph-rust-async-graphql`        | [View repository](https://github.com/apollographql/subgraph-template-rust-async-graphql)                   |
+| TypeScript | [Apollo Server (TS)](https://www.apollographql.com/docs/apollo-server/)                | `subgraph-typescript-apollo-server`  | [View repository](https://github.com/apollographql/subgraph-template-typescript-apollo-server-boilerplate) |
+
+You start by running `rover template use`, providing it the ID of your chosen template. For example, the following command creates a new directory called `my-subgraph` that contains the boilerplate code for a subgraph written in TypeScript using the Apollo Server library:
+
+```bash
+rover template use subgraph-typescript-apollo-server my-subgraph
+```
+
+After generating the boilerplate code, you can start filling in your business logic. The generated code includes example resolvers for `Query` and `Mutation`, along with some [entity types](/federation/entities/) to use as your starting point. All templates also come with example GitHub Actions workflows to help with [publishing your schema in CI/CD](../delivery/#publishing-with-continuous-delivery).
+
+When you're ready to add your new subgraph to your supergraph, [see below](#adding-to-your-supergraph).
+
+## Starting with an existing API
+
+If you have an existing GraphQL API that you want to use as a subgraph, confirm whether it uses a [subgraph-compatible library](/federation/building-supergraphs/supported-subgraphs).
+
+- **If it does,** consult the library's documentation to determine how to enable its support for Apollo Federation (federation is an [architecture](/federation/) that underlies every supergraph).
+- **If it doesn't,** [open an issue to let us know](https://github.com/apollographql/apollo-federation-subgraph-compatibility/issues/new/choose) and we'll work with the library's maintainers to add support.
+
+## Adding to your supergraph
+
+When you're ready to add a new subgraph to your existing GraphOS supergraph, do the following:
+
+1. Enable federation support in your subgraph library.
+   - If you [built from a template](#starting-from-a-template), federation support is already enabled. Otherwise, consult the documentation for your chosen library.
+2. [Check your schema](/federation/managed-federation/federated-schema-checks) against your existing supergraph and handle any conflicts.
+3. Set up your CI/CD pipeline to perform checks and also [publish your subgraph schema](../delivery/).
+
+After you publish your subgraph's schema for the first time, GraphOS recognizes it as part of your supergraph, and you can start querying for data from _all_ of your subgraphs!
+
+> ⚠️ Make sure you [secure your subgraph](./securing-a-subgraph) so that only GraphOS can query it.

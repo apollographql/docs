@@ -1,0 +1,30 @@
+{
+  "title": "Schema Delivery",
+  "algoliaFilters": [
+    [
+      "docset:graphos",
+      "docset:graphos/delivery",
+      "docset:graphos/metrics",
+      "docset:graphos/org",
+      "docset:graphos/explorer"
+    ],
+    [
+      "docset:rover",
+      "docset:federation"
+    ]
+  ],
+  "sidebar": {
+    "Publishing schemas": "/",
+    "Schema checks": "/schema-checks",
+    "Configuring schema checks": "/check-configurations",
+    "Launches": "/launches",
+    "Contracts": [
+      "/contracts",
+      [
+        "enterprise"
+      ]
+    ],
+    "Validating client operations": "/validating-client-operations",
+    "Connecting to GitHub": "/github-integration"
+  }
+}

@@ -24,13 +24,16 @@ const DOCSET_TITLES = {
   'apollo-ios': 'iOS',
   'apollo-kotlin': 'Kotlin',
   'apollo-server': 'Server',
-  graphos: 'GraphOS'
+  'graphos(/[a-z-]+)?': 'GraphOS'
 };
 
 function getDocsetTitle(docset) {
-  if (docset in DOCSET_TITLES) {
-    return DOCSET_TITLES[docset];
+  for (const pattern in DOCSET_TITLES) {
+    if (new RegExp(`^${pattern}$`).test(docset)) {
+      return DOCSET_TITLES[pattern];
+    }
   }
+
   return upperFirst(docset);
 }
 

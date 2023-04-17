@@ -1,7 +1,7 @@
 exports.createSchemaCustomization = ({actions: {createTypes}}) => {
   // add schema types that aren't automatically inferred when running against
   // a local docset from a different directory
-  const typeDefs = `
+  const typeDefs = /* GraphQL */ `
     type File implements Node {
       gitRemote: GitRemote
     }

@@ -1,0 +1,63 @@
+{
+  "title": "Graph Essentials",
+  "algoliaFilters": [
+    [
+      "docset:graphos",
+      "docset:graphos/delivery",
+      "docset:graphos/metrics",
+      "docset:graphos/org",
+      "docset:graphos/explorer"
+    ],
+    [
+      "docset:rover",
+      "docset:federation"
+    ]
+  ],
+  "sidebar": {
+    "Intro to GraphOS": "/",
+    "Graphs and variants": "/graphs",
+    "API keys": "/api-keys",
+    "Quickstart": {
+      "1. Create your supergraph": "/quickstart/cloud",
+      "2. Next steps": "/quickstart/next-steps"
+    },
+    "Building Subgraphs": {
+      "Creating a new subgraph": "/graphs/creating-a-subgraph",
+      "Local development": "/graphs/local-development",
+      "Securing subgraphs": "/graphs/securing-a-subgraph"
+    },
+    "Graph Administration": {
+      "Updating your graph": "/graphs/updating",
+      "Managing graphs in Studio": "/graphs/studio-features",
+      "Supergraph-specific Studio features": "/graphs/federated-graphs"
+    },
+    "Routing": {
+      "Cloud routing overview": "/routing/cloud",
+      "Configuring cloud routing": "/routing/cloud-configuration",
+      "Self-hosted routing": [
+        "/routing/self-hosted",
+        [
+          "enterprise"
+        ]
+      ],
+      "Self-hosted setup": [
+        "/quickstart/self-hosted",
+        [
+          "enterprise"
+        ]
+      ]
+    },
+    "Operation Performance": {
+      "Using @defer": "/routing/defer"
+    },
+    "GraphOS Interfaces": {
+      "Studio UI": "https://studio.apollographql.com",
+      "Rover CLI": "https://apollographql.com/docs/rover/",
+      "Platform API": "/platform-api"
+    },
+    "Platform data processing": {
+      "Data privacy / GDPR": "/data-privacy",
+      "Sub-processors": "/sub-processors"
+    }
+  }
+}

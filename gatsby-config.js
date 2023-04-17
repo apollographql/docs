@@ -112,7 +112,8 @@ const plugins = [
   {
     resolve: 'gatsby-plugin-google-gtag',
     options: {
-      trackingIds: ['UA-74643563-13', 'G-0BGG5V2W2K']
+      // todo: remove ua property in the nearish future
+      trackingIds: ['UA-74643563-13', 'G-0BGG5V2W2K', 'G-3WEVC01XLB']
     }
   },
   {
@@ -183,45 +184,67 @@ if (process.env.CONTEXT === 'production') {
   });
 }
 
-if (process.env.DOCS_LOCAL) {
-  plugins.push(
-    'gatsby-plugin-local-docs', // local plugin
-    {
-      resolve: 'gatsby-source-filesystem',
-      options: {
-        name: '/',
-        path: 'local/source'
+const isLocalMode = process.env.DOCS_MODE === 'local';
+const isSingleDocset = isLocalMode || process.env.DOCS_LOCAL;
+
+for (const name in remoteSources) {
+  const {remote, branch} = remoteSources[name];
+
+  // source the config file for each docset
+  const {pathname, username, password} = new URL(remote);
+  plugins.push({
+    resolve: 'gatsby-source-remote-file',
+    options: {
+      url: `https://raw.githubusercontent.com${pathname}/${branch}/docs/source/config.json`,
+      name: `${name}/config`,
+      auth: {
+        htaccess_user: username,
+        htaccess_pass: password
       }
     }
-  );
-} else {
-  const localSources = yaml.load(fs.readFileSync('sources/local.yml', 'utf8'));
+  });
 
-  plugins.push(
-    ...Object.entries(localSources).map(([name, path]) => ({
-      resolve: 'gatsby-source-filesystem',
+  if (!isSingleDocset) {
+    // source the content for each docset, excluding the config file
+    plugins.push({
+      resolve: '@theowenyoung/gatsby-source-git',
       options: {
+        remote,
         name,
-        path
+        branch,
+        rootDir: 'docs/source',
+        patterns: '**/!(config.json)'
       }
-    }))
-  );
-
-  if (process.env.DOCS_MODE !== 'local') {
-    plugins.push(
-      ...Object.entries(remoteSources).map(([name, {remote, branch}]) => ({
-        resolve: '@theowenyoung/gatsby-source-git',
-        options: {
-          remote,
-          name,
-          branch,
-          rootDir: 'docs/source'
-        }
-      }))
-    );
-  } else {
-    plugins.push('gatsby-plugin-local-docs');
+    });
   }
+}
+
+const localSources = yaml.load(fs.readFileSync('sources/local.yml', 'utf8'));
+
+if (process.env.DOCS_LOCAL) {
+  localSources['/'] = 'local/source';
+}
+
+plugins.push(
+  ...Object.entries(localSources).map(([name, path]) => ({
+    resolve: 'gatsby-source-filesystem',
+    options: {
+      name,
+      path
+    }
+  }))
+);
+
+plugins.push({
+  resolve: 'gatsby-source-filesystem',
+  options: {
+    name: 'graphos/img',
+    path: 'src/content/graphos/img'
+  }
+});
+
+if (isSingleDocset) {
+  plugins.push('gatsby-plugin-local-docs');
 }
 
 module.exports = {

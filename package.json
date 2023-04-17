@@ -46,7 +46,7 @@
     "algoliasearch": "^4.12.1",
     "apollo-algolia-transform": "^1.0.38",
     "framer-motion": "^4.1.17",
-    "gatsby": "^4.24.4",
+    "gatsby": "4.24.8",
     "gatsby-plugin-algolia": "^0.24.0",
     "gatsby-plugin-apollo": "^4.0.2",
     "gatsby-plugin-env-variables": "^2.2.0",
@@ -65,6 +65,7 @@
     "gatsby-remark-copy-linked-files": "^5.4.0",
     "gatsby-remark-mermaid": "^2.1.0",
     "gatsby-source-filesystem": "^4.4.0",
+    "gatsby-source-remote-file": "^0.5.2",
     "gatsby-transformer-json": "^4.4.0",
     "gatsby-transformer-remark": "^5.4.0",
     "github-slugger": "^1.4.0",
@@ -74,6 +75,7 @@
     "interweave": "^12.9.0",
     "js-yaml": "^4.1.0",
     "lodash": "^4.17.21",
+    "lucide-react": "^0.127.0",
     "mdast-util-from-markdown": "^0.8.5",
     "path-browserify": "^1.0.1",
     "polished": "^4.1.4",
@@ -106,7 +108,7 @@
     "eslint": "^7.32.0",
     "eslint-plugin-mdx": "^1.11.1",
     "jest": "^27.4.5",
-    "netlify-cli": "^9.13.3"
+    "netlify-cli": "^13.1.1"
   },
   "volta": {
     "node": "16.15.1"

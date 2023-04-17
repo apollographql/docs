@@ -2,15 +2,18 @@
 title: Launches
 ---
 
-In GraphOS, a **launch** represents the complete process of making a set of updates to a supergraph, usually initiated by changes to one of its subgraphs.
+In GraphOS, a **launch** represents the complete process of applying a set of updates to a supergraph. Launches are _usually_ triggered by making changes to one of your published subgraph schemas.
 
-These updates might include:
+<img class="screenshot" src="../img/launch-completed.jpg" width="500" />
+
+Updates that trigger a launch include:
 
 - Adding, removing, or modifying types and fields in a subgraph schema
 - Adding or removing entire subgraphs
 - Migrating types or fields between subgraphs
+- Modifying your [cloud router's configuration](../routing/cloud-configuration/)
 
-In some cases, a launch might consist entirely of changes that don't affect your supergraph's public API (such as migrating fields between subgraphs).
+A launch might consist entirely of changes that don't affect your supergraph's public API (such as migrating fields between subgraphs).
 
 ## Launch status
 
@@ -18,28 +21,27 @@ Your supergraph's Launches page in Apollo Studio enables you to observe and moni
 
 <img class="screenshot" src="../img/launches-page.jpg" width="500" />
 
-The green **PUBLISHED** badge indicates which launch corresponds to your graph's current published schema.
+The green **PUBLISHED** badge indicates which launch corresponds to your supergraph's current published schema.
 
 Selecting a launch provides a breakdown of its individual steps and any errors or warnings that occurred during it:
 
-<img class="screenshot" src="../img/launch-details.jpg" width="500" />
+<img class="screenshot" src="../img/launch-completed.jpg" width="500" />
 
-From this detail view, you can view the timestamp and other details for each step in the launch process, including any [schema checks](./schema-checks) that failed. You can also view the launch's associated supergraph schema (or any build errors if composition failed).
+From this detail view, you can view the timestamp and other details for each step in the launch process. You can also view the launch's associated supergraph schema (or any build errors if composition failed).
 
 ## What's in a launch?
 
-A launch encapsulates the following steps for a supergraph:
+**A GraphOS launch proceeds through the following steps:**
 
 ```mermaid
 graph TB;
-  subgraph "The steps of a launch"
-  subgraphPublished(You publish a subgraph <br/>schema update to Apollo) --> composition(Apollo performs supergraph schema<br/>composition with latest subgraph schemas);
-  composition --"If composition succeeds..."-->checks(Apollo runs schema checks if enabled);
-  checks-->uplink(Updated supergraph schema is<br/>made available via Apollo Uplink);
-  uplink-->studio(Studio updates UI and sends<br/>build status webhook notifications<br/>to reflect new published schema);
+  subgraphPublished(You publish a subgraph <br/>schema update to GraphOS) --> composition(GraphOS performs supergraph schema<br/>composition with latest subgraph schemas);
+  composition --"<b>If composition succeeds...</b>"-->uplink(Updated supergraph schema is<br/>made available via Apollo Uplink);
+  uplink-->studio(GraphOS updates Studio UI and sends<br/>build status webhook notifications<br/>to reflect new published schema);
   uplink --> gateways(Your router begins using<br/>the new published schema);
   studio --> complete(Launch complete);
   gateways-->complete;
-  composition --"If composition fails,<br/>the launch fails"--> complete;
-  end
+  composition --"<b>If composition fails,</b><br/>the launch fails"--> complete;
+  class complete tertiary;
+  class subgraphPublished secondary;
 ```

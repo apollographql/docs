@@ -75,7 +75,7 @@ async function transformer({data}) {
       }
 
       // omit older version docs (anything with a slash in the path) from results
-      if (/\w\//.test(sourceInstanceName)) {
+      if (gitRemote && /\w\//.test(sourceInstanceName)) {
         return [];
       }
 

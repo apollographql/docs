@@ -1,0 +1,73 @@
+# Reorganize file structure in GraphOS docset
+/check-configurations/ /docs/graphos/delivery/check-configurations/
+/contracts/ /docs/graphos/delivery/contracts/
+/github-integration/ /docs/graphos/delivery/github-integration/
+/launches/ /docs/graphos/delivery/launches/
+/schema-checks/ /docs/graphos/delivery/schema-checks/
+/validating-client-operations/ /docs/graphos/delivery/validating-client-operations/
+/federated-graphs/ /docs/graphos/graphs/federated-graphs/
+/local-development/ /docs/graphos/graphs/local-development/
+/org/graphs/ /docs/graphos/graphs/
+/studio-graph-features/ /docs/graphos/graphs/studio-features/
+/build-status-notification/ /docs/graphos/metrics/notifications/build-status-notification/
+/daily-reports/ /docs/graphos/metrics/notifications/daily-reports/
+/notification-setup/ /docs/graphos/metrics/notifications/notification-setup/
+/performance-alerts/ /docs/graphos/notifications/performance-alerts/
+/schema-change-integration/ /docs/graphos/notifications/schema-change-integration/
+/getting-started/ /docs/graphos/quickstart/cloud/
+/next-steps/ /docs/graphos/quickstart/next-steps/
+/self-hosted/ /docs/graphos/quickstart/self-hosted/
+/cloud-routing/overview/ /docs/graphos/routing/cloud/
+/cloud-routing/configuration/ /docs/graphos/routing/cloud-configuration/
+
+/schema/registry/ /docs/graphos/graphs/
+/schema/schema-reporting /docs/graphos/schema/cli-registration/
+
+/dev-graphs/ /docs/graphos/
+/operation-registry/ /docs/graphos/
+/performance/ /docs/graphos/metrics/operation-signatures/
+/setup-analytics/ /docs/graphos/metrics/usage-reporting/
+/datadog-integration/ /docs/graphos/metrics/datadog-integration/
+/client-awareness/ /docs/graphos/metrics/client-awareness/
+/explorer/explorer/ /docs/graphos/explorer/
+/embed-explorer/ /docs/graphos/explorer/embed-explorer/
+/graph-access-permissions/ /docs/graphos/studio-graph-features/#managing-access-permissions
+
+# Move managed federation docs into Federation docset
+/managed-federation/overview/ /docs/federation/managed-federation/overview/
+/managed-federation/monitoring/ /docs/federation/managed-federation/monitoring/#metrics-and-observability
+/managed-federation/deployment/ /docs/federation/managed-federation/deployment/#the-servicepush-lifecycle
+/managed-federation/federated-schema-checks/ /docs/federation/managed-federation/federated-schema-checks/
+/managed-federation/setup/ /docs/federation/managed-federation/setup/
+/managed-federation/advanced-topics/ /docs/federation/managed-federation/advanced-topics/
+
+# Slack content folded into Notifications article
+/slack-integration/ /docs/graphos/metrics/notifications/notification-setup/#slack
+
+# Migrate schema validation to schema checks
+/schema-validation/ /docs/graphos/schema-checks/
+
+/graph-manager-data-privacy/ /docs/graphos/data-privacy/
+/schema-registry/ /docs/graphos/schema/registry/
+/accounts-organizations/ /docs/graphos/org/account/
+
+/federation/ /docs/federation/managed-federation/overview/
+
+/integrations/ /docs/graphos/github-integration/
+
+/editor-plugins/ /docs/devtools/editor-plugins/
+
+/graph-manager-overview /docs/graphos
+/tracing /docs/graphos/performance
+/errors /docs/graphos/performance
+/vscode /docs/graphos/editor-plugins
+
+/notifications/* /docs/graphos/metrics/notifications/:splat
+/sso/* /docs/graphos/org/sso/:splat
+
+/schema/cli-registration /docs/graphos/delivery
+/audit-log /docs/graphos/org/audit-log
+/metrics/usage-reporting/ /docs/graphos/metrics
+/graphs/overview/ /docs/graphos/graphs
+/org/organizations/ /docs/graphos/org
+/odyssey https://www.apollographql.com/tutorials/

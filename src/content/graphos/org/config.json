@@ -1,0 +1,48 @@
+{
+  "title": "Org Management",
+  "algoliaFilters": [
+    [
+      "docset:graphos",
+      "docset:graphos/delivery",
+      "docset:graphos/metrics",
+      "docset:graphos/org",
+      "docset:graphos/explorer"
+    ],
+    [
+      "docset:rover",
+      "docset:federation"
+    ]
+  ],
+  "sidebar": {
+    "GraphOS organizations": "/",
+    "Members, roles, and permissions": "/members",
+    "Plans and billing": "/plans",
+    "User account": "/account",
+    "Audit log": [
+      "/audit-log",
+      [
+        "enterprise"
+      ]
+    ],
+    "Single Sign-On (SSO)": {
+      "Okta": [
+        "/sso/okta-integration-guide",
+        [
+          "enterprise"
+        ]
+      ],
+      "Azure AD": [
+        "/sso/azure-ad-integration-guide",
+        [
+          "enterprise"
+        ]
+      ],
+      "SAML": [
+        "/sso/saml-integration-guide",
+        [
+          "enterprise"
+        ]
+      ]
+    }
+  }
+}

@@ -1,24 +1,19 @@
 import PropTypes from 'prop-types';
 import React, {createContext, useContext} from 'react';
 import {
+  Box,
   Button,
   Collapse,
   Flex,
+  HStack,
   Stack,
   Tooltip,
-  chakra,
-  useColorModeValue
+  chakra
 } from '@chakra-ui/react';
 import {FiChevronDown, FiChevronRight, FiExternalLink} from 'react-icons/fi';
-import {IoFlaskOutline, IoPartlySunnyOutline} from 'react-icons/io5';
 import {Link as GatsbyLink} from 'gatsby';
-import {
-  PathContext,
-  getFullPath,
-  isPathActive,
-  isUrl,
-  useTagColors
-} from '../../utils';
+import {IoFlaskOutline, IoPartlySunnyOutline} from 'react-icons/io5';
+import {PathContext, getFullPath, isPathActive, isUrl} from '../../utils';
 import {TbComponents} from 'react-icons/tb';
 
 export const GA_EVENT_CATEGORY_SIDEBAR = 'Sidebar';
@@ -71,30 +66,33 @@ Tags.propTypes = {
 };
 
 function NavButton({isActive, depth, children, tags, ...props}) {
-  const [activeBg, activeTextColor] = useTagColors();
-  const activeHoverBg = useColorModeValue('indigo.100', 'indigo.300');
-
-  const buttonProps = isActive && {
-    bg: activeBg,
-    color: activeTextColor,
-    _hover: {
-      bg: activeHoverBg
-    }
-  };
-
   return (
     <Button
       h="auto"
-      py={depth ? 1.5 : 2.5} // give top level nav items larger padding
+      py="1"
+      px={3}
+      lineHeight="base"
       whiteSpace="normal"
       variant="ghost"
-      roundedLeft="none"
-      roundedRight="full"
       fontWeight="normal"
-      {...buttonProps}
+      textAlign="left"
+      justifyContent="flex-start"
+      data-depth={depth}
+      sx={
+        isActive && {
+          bg: 'purple.500',
+          color: 'white',
+          _hover: {
+            bg: 'purple.600'
+          },
+          _active: {
+            bg: 'purple.700'
+          }
+        }
+      }
       {...props}
     >
-      <Flex as="span" align="center" pl={depth * 2}>
+      <Flex as="span" align="center">
         {children} {tags && <Tags tags={tags} />}
       </Flex>
     </Button>
@@ -118,13 +116,14 @@ function NavGroup({group, depth}) {
   );
 
   return (
-    <div>
-      <NavButton
-        mb="1"
+    <Box pl={depth * 2}>
+      <HStack
+        as="button"
+        py="1.5"
         fontWeight="strong"
-        isActive={isActive}
+        textAlign="left"
+        css={{scrollMarginTop: 56}}
         data-group={!depth && isActive}
-        rightIcon={isOpen ? <FiChevronDown /> : <FiChevronRight />}
         onClick={() => {
           const open = !isOpen;
           setNav({
@@ -137,10 +136,13 @@ function NavGroup({group, depth}) {
             value: Number(open)
           });
         }}
-        depth={depth}
       >
-        {group.title}
-      </NavButton>
+        <span>{group.title}</span>
+        <Box
+          as={isOpen ? FiChevronDown : FiChevronRight}
+          pointerEvents="none"
+        />
+      </HStack>
       <Collapse unmountOnExit in={isOpen}>
         <NavItems
           uri={uri}
@@ -149,7 +151,7 @@ function NavGroup({group, depth}) {
           depth={depth + 1}
         />
       </Collapse>
-    </div>
+    </Box>
   );
 }
 
@@ -161,20 +163,25 @@ NavGroup.propTypes = {
 export default function NavItems({items, depth = 0}) {
   const {basePath, uri} = useContext(PathContext);
   return (
-    <Stack spacing="1" align="flex-start" pb={depth && 3}>
+    <Stack
+      spacing={depth ? 1.5 : 2}
+      py={
+        // add some extra padding to sidebar groups
+        depth ? 1 : 0
+      }
+    >
       {items.map((item, index) => {
         if (item.children) {
           return <NavGroup key={index} group={item} depth={depth} />;
         }
 
         if (isUrl(item.path)) {
-          const buttonProps = !item.path.startsWith(
-            'https://www.apollographql.com'
-          ) && {
-            target: '_blank',
-            rel: 'noreferrer noopener',
-            rightIcon: <FiExternalLink />
-          };
+          const buttonProps =
+            !/^https:\/\/www.apollographql.com\/docs(\/|$)/.test(item.path) && {
+              target: '_blank',
+              rel: 'noreferrer noopener',
+              rightIcon: <FiExternalLink />
+            };
           return (
             <NavButton
               key={index}
@@ -199,6 +206,10 @@ export default function NavItems({items, depth = 0}) {
             as={GatsbyLink}
             to={path}
             tags={item.tags}
+            onClick={() => {
+              window.sidebarScroll =
+                document.getElementById('sidebar').scrollTop;
+            }}
           >
             {item.title}
           </NavButton>
