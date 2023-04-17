@@ -1,3 +1,4 @@
+import DiscordButton from './DiscordButton';
 import PropTypes from 'prop-types';
 import React from 'react';
 import Search from '../Search';
@@ -150,6 +151,7 @@ export function Header({children, algoliaFilters}) {
             icon={colorMode === 'dark' ? <FiSun /> : <FiMoon />}
           />
         </Tooltip>
+        <DiscordButton />
         <StudioButton />
       </Flex>
     </Box>
