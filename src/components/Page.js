@@ -433,7 +433,7 @@ export default function Page({file}) {
         </Button>
         <Button
           as="a"
-          href="https://discord.gg/graphos"
+          href="https://discord.gg/yFZJH2QYrK"
           variant="link"
           size="lg"
           leftIcon={<SiDiscord />}
