@@ -79,6 +79,7 @@ import 'prismjs/components/prism-swift';
 import 'prismjs/components/prism-tsx';
 import 'prismjs/components/prism-typescript';
 import 'prismjs/components/prism-yaml';
+import {SiDiscord} from 'react-icons/si';
 
 // use JS syntax highlighting for rhai codeblocks
 Prism.languages.rhai = Prism.languages.javascript;
@@ -210,11 +211,6 @@ export default function Page({file}) {
   const editText = useBreakpointValue({
     base: 'Edit',
     lg: 'Edit on GitHub'
-  });
-
-  const discussText = useBreakpointValue({
-    base: 'Discuss',
-    lg: 'Discuss in Forums'
   });
 
   const editOnGitHub = useMemo(() => {
@@ -433,7 +429,16 @@ export default function Page({file}) {
           size="lg"
           leftIcon={<FiMessageCircle />}
         >
-          {discussText}
+          Forums
+        </Button>
+        <Button
+          as="a"
+          href="https://discord.gg/graphos"
+          variant="link"
+          size="lg"
+          leftIcon={<SiDiscord />}
+        >
+          Discord
         </Button>
       </HStack>
     </>
