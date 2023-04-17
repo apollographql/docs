@@ -38,5 +38,6 @@
 /TN0034 /docs/technotes/TN0034-react-context
 /TN0035 /docs/technotes/TN0035-load-testing-graphql
 /TN0036 /docs/technotes/TN0036-owner-pattern
-/TN0037 /docs/technotes/TN0036-api-gateways
+/TN0037 /docs/technotes/TN0037-api-gateways
 /TN0038 /docs/technotes/TN0038-updating-client-schema
+/TN0039 /docs/technotes/TN0039-debugging-subgraph-requests
