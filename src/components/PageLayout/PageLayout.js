@@ -12,6 +12,7 @@ import Sidebar, {
 import useLocalStorage from 'react-use/lib/useLocalStorage';
 import {Box, Fade, IconButton, Tooltip} from '@chakra-ui/react';
 import {FiChevronsRight} from 'react-icons/fi';
+import {PageWidthProvider} from '../PageWidthContext';
 import {PathContext} from '../../utils';
 import {dirname} from 'path';
 import {navigate} from 'gatsby';
@@ -46,53 +47,57 @@ export function PageLayout({pageContext, children, location, data}) {
   );
 
   return (
-    <PathContext.Provider
-      value={{
-        uri: pathname,
-        basePath,
-        path: data?.file?.name === 'index' ? pathname : dirname(pathname)
-      }}
-    >
-      <Header algoliaFilters={algoliaFilters}>
-        <MobileNav isInternal={internal} />
-      </Header>
-      <Sidebar isHidden={sidebarHidden} hideSidebar={hideSidebar}>
-        {internal ? (
-          <AuthCheck fallback={<DefaultSidebarNav hideSidebar={hideSidebar} />}>
-            {sidebarNav}
-          </AuthCheck>
-        ) : (
-          sidebarNav
-        )}
-      </Sidebar>
-      <Box
-        marginLeft={{
-          base: 0,
-          md: sidebarHidden ? 0 : PAGE_SIDEBAR_MARGIN
+    <PageWidthProvider>
+      <PathContext.Provider
+        value={{
+          uri: pathname,
+          basePath,
+          path: data?.file?.name === 'index' ? pathname : dirname(pathname)
         }}
-        transitionProperty="margin-left"
-        transitionDuration="normal"
       >
-        {children}
-        <Footer />
-      </Box>
-      <Fade in={sidebarHidden} unmountOnExit delay={0.25}>
-        <Tooltip placement="right" label="Show sidebar">
-          <IconButton
-            d={{base: 'none', md: 'flex'}}
-            pos="fixed"
-            mb="2"
-            css={{bottom: PAGE_FOOTER_HEIGHT}}
-            left="2"
-            size="sm"
-            variant="outline"
-            fontSize="md"
-            icon={<FiChevronsRight />}
-            onClick={() => setSidebarHidden(false)}
-          />
-        </Tooltip>
-      </Fade>
-    </PathContext.Provider>
+        <Header algoliaFilters={algoliaFilters}>
+          <MobileNav isInternal={internal} />
+        </Header>
+        <Sidebar isHidden={sidebarHidden} hideSidebar={hideSidebar}>
+          {internal ? (
+            <AuthCheck
+              fallback={<DefaultSidebarNav hideSidebar={hideSidebar} />}
+            >
+              {sidebarNav}
+            </AuthCheck>
+          ) : (
+            sidebarNav
+          )}
+        </Sidebar>
+        <Box
+          marginLeft={{
+            base: 0,
+            md: sidebarHidden ? 0 : PAGE_SIDEBAR_MARGIN
+          }}
+          transitionProperty="margin-left"
+          transitionDuration="normal"
+        >
+          {children}
+          <Footer />
+        </Box>
+        <Fade in={sidebarHidden} unmountOnExit delay={0.25}>
+          <Tooltip placement="right" label="Show sidebar">
+            <IconButton
+              d={{base: 'none', md: 'flex'}}
+              pos="fixed"
+              mb="2"
+              css={{bottom: PAGE_FOOTER_HEIGHT}}
+              left="2"
+              size="sm"
+              variant="outline"
+              fontSize="md"
+              icon={<FiChevronsRight />}
+              onClick={() => setSidebarHidden(false)}
+            />
+          </Tooltip>
+        </Fade>
+      </PathContext.Provider>
+    </PageWidthProvider>
   );
 }
 
