@@ -56,14 +56,16 @@ query ($id: ID!) {
 
 ## File upload
 
-The Explorer supports file upload for servers that support the [graphql multipart request spec](https://github.com/jaydenseric/graphql-multipart-request-spec). To run an operation that requires files as input, use the **Add files** button on the **Variables** tab under the operation editor in Explorer. From here, you can set the name of the variable, and select the files you want to upload. Note that if your operation supports multiple files as a variable, you will need to switch on the toggle for that variable.
+The Explorer supports file upload for servers that support the [GraphQL multipart request spec](https://github.com/jaydenseric/graphql-multipart-request-spec). To run an operation that requires files as input, click **+ Add files** in the Explorer's **Variables** tab:
 
 <img
   className="screenshot"
   src="../img/explorer-file-upload.jpg"
   alt="File upload in the Explorer"
-  width="300"
+  width="500"
 />
+
+You can then set the name of the variable and select the files you want to upload. Note that if your operation supports providing _multiple_ files via a single variable, you need to select the toggle for that variable to enable the multi-file protocol.
 
 ## Local development
 
