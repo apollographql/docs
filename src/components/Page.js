@@ -436,6 +436,7 @@ export default function Page({file}) {
           href="https://discord.gg/yFZJH2QYrK"
           variant="link"
           size="lg"
+          onClick={() => window.gtag?.('event', 'discord_join_docs')}
           leftIcon={<SiDiscord />}
         >
           Discord
