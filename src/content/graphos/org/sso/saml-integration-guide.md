@@ -22,9 +22,9 @@ This guide walks through configuring a generic SAML-based identity provider (IdP
 
 2. If possible, upload the appropriate Apollo SAML metadata for your organization:
     * If your organization **does not** already use the Entity ID `PingConnect`: [apollo_studio_pingconnect_metadata.xml](apollo_studio_pingconnect_metadata.xml)
+        * If Authn requests need to be signed use: [apollo_studio_pingconnect_signed_metadata.xml](apollo_studio_pingconnect_signed_metadata.xml)
     * If your organization **does** already use `PingConnect`: [apollo_studio_guid_metadata.xml](apollo_studio_guid_metadata.xml)
-    
-    > ⚠️ If your organization requires Authn requests to be signed, please inform your Apollo contact. They will provide a different metadata file.
+        * If Authn requests need to be signed use: [apollo_studio_guid_signed_metadata.xml](apollo_studio_guid_signed_metadata.xml)     
 
 3. Set your **Single Sign on URL** _or_ **ACS URL** to the following: 
 

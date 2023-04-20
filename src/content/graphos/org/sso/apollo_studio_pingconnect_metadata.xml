@@ -1,5 +1,5 @@
 <md:EntityDescriptor entityID="PingConnect" cacheDuration="PT1440M" ID="G_QyN8w_8N8A71STjaNU3VRjbQm" xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata">
-    <md:SPSSODescriptor AuthnRequestsSigned="true" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+    <md:SPSSODescriptor AuthnRequestsSigned="false" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
         <md:KeyDescriptor use="signing">
             <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
                 <ds:X509Data>
