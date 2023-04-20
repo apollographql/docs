@@ -6,11 +6,11 @@ tags: [federation]
 
 Apollo Federation is a powerful system for orchestrating queries across a distributed system. For example, you can use Federation to:
 
-- Query data from multiple systems in parallel.
-- Sequence calls to multiple systems when there are dependencies between them via [`@key` and `@requires` directives](/federation/entities-advanced).
-- Orchestrate any combination of parallel and sequential calls to multiple systems.
-- Batch calls to a single system to [solve the infamous N+1 problem](/technotes/TN0019-federation-n-plus-1/).
-- Split a single call into multiple calls with different priorities [using `@defer`](/router/executing-operations/defer-support/).
+- Query data from multiple systems in parallel
+- Sequence calls to multiple systems when there are dependencies between them via [`@key` and `@requires` directives](/federation/entities-advanced)
+- Orchestrate any combination of parallel and sequential calls to multiple systems
+- Batch calls to a single system to [solve the infamous N+1 problem](/technotes/TN0019-federation-n-plus-1/)
+- Split a single call into multiple calls with different priorities [using `@defer`](/router/executing-operations/defer-support/)
 
 Federation applies these same orchestration capabilities to mutation fields (and their selection sets), but managing state changes across distributed systems typically involves additional requirements. Federation does _not_ provide common functionality for these requirements, such as compensating transactions or data propagation between sibling fields.
 
