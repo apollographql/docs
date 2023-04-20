@@ -85,6 +85,7 @@ One potential strategy is to create one or more subgraphs specifically for orche
 
 It's tempting to have the orchestrating subgraph resolvers call back to the Apollo Router to execute domain-specific mutations. This approach is feasible, but it requires careful attention to a number of details:
 
+- All calls should go through the Apollo Router, not directly to subgraphs, because it's responsible for tracking GraphQL usage (and [subgraphs should never accept traffic directly](/technotes/TN0021-graph-security/#only-allow-the-router-to-query-subgraphs-directly).)
 - The calls to domain-specific mutations no longer originate in client applications, so you must propagate client identity and other request metadata.
 - GraphOS will view these calls as separate operations.
 - If using cloud-native telemetry, you must ensure that the Apollo Router receives the trace context to correlate spans.
