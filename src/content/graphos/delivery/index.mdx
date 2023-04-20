@@ -3,14 +3,12 @@ title: Publishing schemas to GraphOS
 description: Using the Rover CLI
 ---
 
-import RegisterCli from '../../shared/register-cli.mdx';
-
-Whenever you make changes to a graph's schema, you should **publish** those changes to Apollo GraphOS using the Rover CLI. Doing so ensures that Apollo always has an up-to-date understanding of your graph.
+Whenever you make changes to a graph's schema, you should **publish** those changes to Apollo GraphOS using **the Rover CLI**. Doing so ensures that Apollo always has an up-to-date understanding of your graph.
 
 > ⚠️ **If you haven't installed Rover yet:**
 >
-> 1. [Install the Rover CLI](https://www.apollographql.com/docs/rover/getting-started/").
-> 2. [Authenticate Rover](https://www.apollographql.com/docs/rover/configuring/) with Apollo Studio.
+> 1. [Install the Rover CLI](/rover/getting-started/).
+> 2. [Authenticate Rover](/rover/configuring/#authenticating-with-graphos) with GraphOS.
 
 ## Subgraph schemas
 
@@ -34,11 +32,11 @@ graph LR;
 
 **To publish a subgraph schema to Apollo:**
 
-1. Identify the name of the subgraph you're publishing to. You can view the names of your existing subgraphs from your variant's **Subgraphs** page in Studio.
+1. Identify the name of the subgraph you're publishing to. You can view the names of your existing subgraphs from your variant's **Subgraphs** page in Apollo Studio.
 
 2. **If you're publishing a subgraph for the first time,** _also_ obtain the **routing URL** for that subgraph. This is the URL that your router will use to communicate with the subgraph.
 
-   - If Studio already knows your subgraph's routing URL, you don't need to provide this value unless you're changing it.
+   - If GraphOS already knows your subgraph's routing URL, you don't need to provide this value unless you're changing it.
 
 3. Run the `rover subgraph publish` command and provide it your subgraph's schema in one of the ways shown:
 
@@ -112,7 +110,7 @@ jobs:
 
       # highlight-start
       # When running on the 'main' branch, push the latest version
-      # of the schema to Apollo Studio.
+      # of the schema to GraphOS.
       - run: |
           if [ "${CIRCLE_BRANCH}" == "main" ]; then
             rover subgraph publish my-graph@my-variant \
@@ -127,4 +125,24 @@ jobs:
 
 > ⚠️ These instructions apply only to [monographs](../graphs/#monographs), which are **not recommended**.
 
-<RegisterCli />
+1. If you haven't yet:
+
+   - [Install the Rover CLI](/rover/getting-started/)
+   - [Authenticate Rover](/rover/configuring/#authenticating-with-graphos) with GraphOS.
+
+2. Decide how you'll provide your server's schema to Rover. You can either:
+
+   - Use a `.gql` or `.graphql` file saved on your local machine, or
+   - Perform an introspection query on your running server to fetch the schema
+
+3. Run the `rover graph publish` command, providing your schema in one of the ways shown:
+
+   ```bash
+   # Provide a local .graphql file path
+   rover graph publish my-graph@my-variant --schema ./schema.graphql
+
+   # Provide an introspection result via stdin
+   rover graph introspect http://localhost:4000 | rover graph publish my-graph@my-variant --schema -
+   ```
+
+   As shown, the first positional argument you provide `rover graph publish` is a [graph ref](/rover/conventions/#graph-refs), a string that specifies a particular variant of a particular graph in GraphOS.
