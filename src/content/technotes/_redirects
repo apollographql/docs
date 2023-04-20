@@ -41,3 +41,4 @@
 /TN0037 /docs/technotes/TN0037-api-gateways
 /TN0038 /docs/technotes/TN0038-updating-client-schema
 /TN0039 /docs/technotes/TN0039-debugging-subgraph-requests
+/TN0040 /docs/technotes/TN0040-federation-is-not-a-saga-orchestrator
