@@ -39,5 +39,11 @@ export const onRenderBody = ({setHeadComponents}) =>
           root.style.setProperty('${DOCS_PAGE_WIDTH_VAR}', pageWidthPx);
         `
       }}
-    />
+    />,
+    <script
+      key="qualified-js"
+      id="qualified-js"
+      async
+      src="https://js.qualified.com/qualified.js?token=mdpGqx2V2oJXA51Q"
+      />
   ]);
