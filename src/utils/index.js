@@ -1,7 +1,7 @@
 import {createContext} from 'react';
-import {gql} from '@apollo/client';
+import {gql, useQuery} from '@apollo/client';
 import {join, relative} from 'path';
-import {useColorModeValue, useQuery} from '@chakra-ui/react';
+import {useColorModeValue} from '@chakra-ui/react';
 import {withPrefix} from 'gatsby';
 
 export const NavContext = createContext();
