@@ -18,11 +18,8 @@ import {
   Stack,
   useDisclosure
 } from '@chakra-ui/react';
-import {
-  BsFileEarmarkCheck,
-  BsLayoutTextWindowReverse,
-  BsListOl
-} from 'react-icons/bs';
+import {BsFileEarmarkCheck, BsListOl} from 'react-icons/bs';
+import {ReactComponent as Explorer} from '../../assets/icons/explorer.svg';
 import {ReactComponent as Federation} from '../../assets/icons/federation.svg';
 import {FiChevronDown, FiGrid} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
@@ -56,7 +53,7 @@ export const DOCSET_ICONS = {
   metrics: <SlChart />,
   org: <VscOrganization />,
   delivery: <BsFileEarmarkCheck />,
-  explorer: <BsLayoutTextWindowReverse />,
+  explorer: <CustomIcon icon={Explorer} />,
   principled: <BsListOl />
 };
 
