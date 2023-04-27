@@ -1,13 +1,13 @@
-const {algoliaSettings} = require('apollo-algolia-transform');
-const {
+import {algoliaSettings} from 'apollo-algolia-transform';
+import {
   remarkTypescript,
   highlightPreservation,
   isWrapped
-} = require('remark-typescript');
-const {query, transformer} = require('./algolia');
-const yaml = require('js-yaml');
-const fs = require('fs');
-const remoteSources = require('./sources/remote');
+} from 'remark-typescript';
+import {query, transformer} from './algolia';
+import yaml from 'js-yaml';
+import fs from 'fs';
+import remoteSources from './sources/remote';
 
 const gatsbyRemarkPlugins = [
   '@fec/remark-a11y-emoji/gatsby',
