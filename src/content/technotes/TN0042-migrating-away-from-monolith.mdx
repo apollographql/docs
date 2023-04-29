@@ -6,12 +6,12 @@ tags: [federation, transformation, organization]
  ---
 
 ## Introduction
-Most organizations will have a Monolith which they will want to move away from using Federation, the task almost always seems implausibly difficult to understand and thus tackle.
-At Apollo we have seen many different patterns of migrating away from a monolith, in this technote we will discuss the pattern which has the greatest possible level of success, and one which iteratively provides progressive feedback into the business investing in this change.
+The majority of organizations possess a Monolith they wish to transition away from, in favor of adopting  Federation. This endeavor often appears exceedingly complex and challenging to comprehend, let alone undertake. At Apollo, we have observed numerous patterns of migration from monolithic structures. In this technote, we will explore the most successful pattern, one that offers iterative and progressive feedback, enabling businesses to confidently invest in this transformative change.
 
 ## The digital transformation
-The pattern in question is the strangulation pattern, which essentially entails logically splitting the monolith up into parts and migrating the sections in question away bit by bit. This way you are achieving your goal of moving away from the monolith whilst critically showing incremental progress to the business, mentioned previously.
-The first thing to note - often the hardest - is how do you split the monolith up? Most, if not all companies choose to split up by domain. In this example we will start with a typical e-commerce application and some of its associated domains.
+The pattern under consideration is the strangulation pattern. It involves logically dissecting the Monolith into segments and migrating the relevant portions incrementally. By adopting this approach, you can achieve your objective of transitioning away from the monolithic system while simultaneously demonstrating gradual progress to the business, as mentioned earlier.
+The initial and frequently most challenging question to address is: how should the Monolith be divided? The majority of companies, if not all, opt to separate their systems based on distinct domains. To illustrate this process, we will examine a typical e-commerce application and explore some of its associated domains.
+
 
 - Product
 - Inventory
@@ -47,7 +47,7 @@ The basic approach is to decouple the existing clients from the monolith and ont
     width="550"
 />
 
-The API Gateway here will now allow us to fetch (previously monolith) a data response from the new Federation architecture. Record lessons here and apply them going forward to the next subgraph.
+The API Gateway here will now allow us to fetch a (previously monolith) data response from the new Federation architecture, via configuring existing routes. Record lessons here and apply them going forward to the next subgraph.
 Note: some client work *may* be required here to bind use queries you have newly created or improved. Normally
 
 <img
