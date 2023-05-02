@@ -8,9 +8,6 @@ type EmbeddableExplorerProps = {
   graphRef?: string;
   endpointUrl?: string;
   document?: string;
-  height?: number;
-  showHeadersAndEnvVars?: boolean;
-  docsPanelState?: 'open' | 'closed';
 };
 
 export const EmbeddableExplorer = ({
@@ -29,15 +26,12 @@ export const EmbeddableExplorer = ({
         }
       }
     }
-  `,
-  height = 450,
-  showHeadersAndEnvVars = true,
-  docsPanelState = 'open'
+  `
 }: EmbeddableExplorerProps): JSX.Element => {
   const {colorMode} = useColorMode();
   return (
     <Box
-      h={height}
+      h={450}
       rounded="md"
       sx={{
         '.embed': {
@@ -56,9 +50,7 @@ export const EmbeddableExplorer = ({
         initialState={{
           document,
           displayOptions: {
-            theme: colorMode,
-            showHeadersAndEnvVars,
-            docsPanelState
+            theme: colorMode
           }
         }}
       />
@@ -69,8 +61,5 @@ export const EmbeddableExplorer = ({
 EmbeddableExplorer.propTypes = {
   graphRef: PropTypes.string,
   endpointUrl: PropTypes.string,
-  document: PropTypes.string,
-  height: PropTypes.number,
-  showHeadersAndEnvVars: PropTypes.bool,
-  docsPanelState: PropTypes.oneOf(['open', 'closed'])
+  document: PropTypes.string
 };
