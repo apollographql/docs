@@ -1,5 +1,11 @@
 # @apollo/chakra-helpers
 
+## 1.7.0
+
+### Minor Changes
+
+- [#448](https://github.com/apollographql/docs/pull/448) [`cee15d0`](https://github.com/apollographql/docs/commit/cee15d02af4adcf0076ef3bb8ea7ea10e7f3e8fd) Thanks [@jchesterman](https://github.com/jchesterman)! - Adding new props to EmbeddableExplorer component
+
 ## 1.6.0
 
 ### Minor Changes
