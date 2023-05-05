@@ -22,10 +22,15 @@ export const flattenNavItems = items =>
     item.children ? [item, ...flattenNavItems(item.children)] : item
   );
 
-export function useTagColors() {
-  const bg = useColorModeValue('indigo.50', 'indigo.400');
-  const textColor = useColorModeValue('indigo.500', 'inherit');
-  return [bg, textColor];
+export function useTagColorProps() {
+  return {
+    bg: 'indigo.50',
+    color: 'indigo.500',
+    _dark: {
+      bg: 'indigo.400',
+      color: 'inherit'
+    }
+  };
 }
 
 export function useFieldTableStyles() {

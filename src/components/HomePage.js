@@ -42,7 +42,10 @@ export function Odyssey() {
         <Button
           as="a"
           href="https://www.apollographql.com/tutorials"
-          colorScheme="indigo"
+          bg="indigo.500"
+          _dark={{
+            bg: 'indigo.200'
+          }}
           rightIcon={<FiArrowRight />}
         >
           Explore Tutorials

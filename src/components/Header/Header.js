@@ -18,7 +18,7 @@ import {FiMoon, FiSun} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
 import {TbViewportNarrow, TbViewportWide} from 'react-icons/tb';
 import {usePageWidthContext} from '../PageWidthContext';
-import {useTagColors} from '../../utils';
+import {useTagColorProps} from '../../utils';
 
 const EYEBROW_HEIGHT = 0; // 32;
 const HEADER_HEIGHT = 60;
@@ -55,7 +55,7 @@ Eyebrow.propTypes = {
 
 export function Header({children, algoliaFilters}) {
   const {toggleColorMode, colorMode} = useColorMode();
-  const [tagBg, tagTextColor] = useTagColors();
+  const tagColorProps = useTagColorProps();
   const {pageWidth, togglePageWidth, showExpandButton} = usePageWidthContext();
 
   return (
@@ -99,9 +99,8 @@ export function Header({children, algoliaFilters}) {
               fontWeight="semibold"
               textTransform="uppercase"
               letterSpacing="widest"
-              bg={tagBg}
-              color={tagTextColor}
               rounded="sm"
+              {...tagColorProps}
             >
               Docs
             </Box>
