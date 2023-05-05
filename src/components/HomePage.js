@@ -43,8 +43,10 @@ export function Odyssey() {
           as="a"
           href="https://www.apollographql.com/tutorials"
           bg="indigo.500"
+          color="white"
           _dark={{
-            bg: 'indigo.200'
+            bg: 'indigo.200',
+            color: 'gray.800'
           }}
           rightIcon={<FiArrowRight />}
         >
