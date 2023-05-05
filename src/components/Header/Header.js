@@ -148,8 +148,11 @@ export function Header({children, algoliaFilters}) {
             variant="ghost"
             onClick={toggleColorMode}
             icon={colorMode === 'dark' ? <FiSun /> : <FiMoon />}
+            opacity={typeof window !== 'undefined' ? 1 : 0}
+            transition="opacity 0.2s"
           />
         </Tooltip>
+
         <StudioButton />
       </Flex>
     </Box>
