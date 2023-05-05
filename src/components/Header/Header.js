@@ -27,11 +27,13 @@ export const TOTAL_HEADER_HEIGHT =
   EYEBROW_HEIGHT + HEADER_HEIGHT + HEADER_BORDER_WIDTH;
 
 function Eyebrow({children}) {
-  const bg = useColorModeValue('indigo.50', 'indigo.800');
   const bgHover = useColorModeValue('indigo.100', 'indigo.700');
   return (
     <Center
-      bg={bg}
+      bg="indigo.50"
+      _dark={{
+        bg: 'indigo.800'
+      }}
       _hover={{bg: bgHover}}
       css={{height: EYEBROW_HEIGHT}}
       fontSize="sm"

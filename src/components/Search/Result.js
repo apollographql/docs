@@ -2,14 +2,7 @@ import Highlight from './Highlight';
 import PropTypes from 'prop-types';
 import React from 'react';
 import ResultIcon from './ResultIcon';
-import {
-  Box,
-  Flex,
-  chakra,
-  useColorMode,
-  useColorModeValue,
-  useTheme
-} from '@chakra-ui/react';
+import {Box, Flex, chakra, useColorMode, useTheme} from '@chakra-ui/react';
 
 export default function Result({item, ...props}) {
   const theme = useTheme();
@@ -22,7 +15,6 @@ export default function Result({item, ...props}) {
     colorScheme: 'indigo'
   });
 
-  const highlightColor = useColorModeValue('gray.500', 'gray.400');
   const {text, title, description} = item._highlightResult;
   const {'aria-selected': isSelected} = props;
 
@@ -36,11 +28,26 @@ export default function Result({item, ...props}) {
           <Box fontSize="lg">
             <Highlight value={title.value} />
           </Box>
-          <Box fontSize="sm" color={highlightColor} isTruncated>
+          <Box
+            fontSize="sm"
+            color="gray.500"
+            _dark={{
+              color: 'gray.400'
+            }}
+            isTruncated
+          >
             <Highlight value={(text || description).value} />
           </Box>
         </Box>
-        <Box ml="2" my="auto" d={!isSelected && 'none'} color={highlightColor}>
+        <Box
+          ml="2"
+          my="auto"
+          d={!isSelected && 'none'}
+          color="gray.500"
+          _dark={{
+            color: 'gray.400'
+          }}
+        >
           ⏎
         </Box>
       </Flex>

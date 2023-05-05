@@ -25,13 +25,14 @@ export const COLLAPSED_SIDEBAR_WIDTH = 93;
 export function LeftSidebarNav(props) {
   const {sidebarOpen, dismissSidebar} = useContext(DocsetContext);
 
-  const bgColor = useColorModeValue('gray.800', 'gray.900');
-
   return (
     <Box
       color="white"
       fontWeight="semibold"
-      bgColor={bgColor}
+      bgColor="gray.800"
+      _dark={{
+        bgColor: 'gray.900'
+      }}
       flexShrink="0"
       overflow="auto"
       overscrollBehavior="none"

@@ -53,7 +53,6 @@ export default function Preview({preview}) {
     ? [...ancestors, {url, title: sectionTitle}]
     : ancestors;
 
-  const breadcrumbBg = useColorModeValue('gray.100', 'gray.800');
   const searchByAlgolia = useColorModeValue(
     searchByAlgoliaLight,
     searchByAlgoliaDark
@@ -88,7 +87,10 @@ export default function Preview({preview}) {
           px="2"
           rounded="sm"
           fontSize="sm"
-          bg={breadcrumbBg}
+          bg="gray.100"
+          _dark={{
+            bg: 'gray.800'
+          }}
           spacing="1"
           whiteSpace="nowrap"
           maxW="full"
