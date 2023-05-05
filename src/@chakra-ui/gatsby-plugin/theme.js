@@ -6,7 +6,6 @@ import {
   fonts
 } from '@apollo/chakra-helpers';
 import {extendTheme} from '@chakra-ui/react';
-import {mode} from '@chakra-ui/theme-tools';
 
 const {grey, silver, indigo, teal, blilet, midnight, yellow, orange} = colors;
 
@@ -15,7 +14,7 @@ const theme = extendTheme({
     initialColorMode: 'system'
   },
   styles: {
-    global: props => ({
+    global: {
       strong: {
         fontWeight: 'strong'
       },
@@ -24,9 +23,9 @@ const theme = extendTheme({
         color: 'text'
       },
       '*': {
-        borderColor: mode('gray.200', 'whiteAlpha.300')(props)
+        borderColor: 'border'
       }
-    })
+    }
   },
   semanticTokens: {
     fontWeights: {
@@ -43,6 +42,10 @@ const theme = extendTheme({
       text: {
         default: 'gray.800',
         _dark: 'whiteAlpha.900'
+      },
+      border: {
+        default: 'gray.200',
+        _dark: 'whiteAlpha.300'
       },
       primary: {
         default: 'indigo.500',

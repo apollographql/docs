@@ -20,7 +20,16 @@ import {FiChevronDown, FiChevronLeft, FiChevronsLeft} from 'react-icons/fi';
 import {flattenNavItems} from '../../utils';
 
 const SidebarButton = props => (
-  <IconButton size="xs" fontSize="md" isRound {...props} />
+  <IconButton
+    size="xs"
+    fontSize="md"
+    isRound
+    bg="gray.100"
+    _dark={{
+      bg: 'whiteAlpha.200'
+    }}
+    {...props}
+  />
 );
 
 const SidebarNav = forwardRef(
