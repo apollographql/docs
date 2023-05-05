@@ -24,7 +24,7 @@ const theme = extendTheme({
         color: 'text'
       },
       '*': {
-        borderColor: mode('whiteAlpha.300', 'gray.200')(props)
+        borderColor: mode('gray.200', 'whiteAlpha.300')(props)
       }
     })
   },
