@@ -44,7 +44,7 @@ Apollo Server defines its agent for performing these tasks in [the usage reporti
 
 ### Reporting format
 
-Apollo Studio's reporting endpoint accepts batches of traces and statistics that are encoded in **protocol buffer** format. Each trace corresponds to the execution of a single GraphQL operation, including a breakdown of the timing and error information for each field that's resolved as part of the operation.
+The GraphOS reporting endpoint accepts batches of traces and statistics that are encoded in **protocol buffer** format. Each trace corresponds to the execution of a single GraphQL operation, including a breakdown of the timing and error information for each field that's resolved as part of the operation.
 
 The schema for this protocol buffer is defined as the `Report` message in the [the protobuf schema](https://usage-reporting.api.apollographql.com/proto/reports.proto).
 
