@@ -7,6 +7,7 @@ graphos/metrics: src/content/graphos/metrics
 graphos/delivery: src/content/graphos/delivery
 graphos/org: src/content/graphos/org
 graphos/explorer: src/content/graphos/explorer
+graphos/enterprise: src/content/graphos/enterprise
 technotes: src/content/technotes
 community: src/content/community
 odyssey: src/content/odyssey
