@@ -107,6 +107,10 @@ export function LeftSidebarNav(props) {
           <SidebarCategoryLink docset="rover" icon={DOCSET_ICONS.rover} />
           <SidebarCategoryLink docset="router" icon={DOCSET_ICONS.router} />
           <SidebarCategoryLink
+            docset="graphos/enterprise"
+            icon={DOCSET_ICONS.enterprise}
+          />
+          <SidebarCategoryLink
             docset="technotes"
             icon={DOCSET_ICONS.technotes}
           />

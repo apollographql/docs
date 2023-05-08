@@ -30,6 +30,7 @@ import {ReactComponent as Satellite} from '../../assets/icons/satellite.svg';
 import {ReactComponent as Schema} from '../../assets/icons/schema.svg';
 import {SiKotlin, SiReact, SiSwift} from 'react-icons/si';
 import {SlChart} from 'react-icons/sl';
+import {TbComponents} from 'react-icons/tb';
 import {VscOrganization} from 'react-icons/vsc';
 
 const CustomIcon = ({icon}) => <Box fill="current" boxSize="1em" as={icon} />;
@@ -54,6 +55,7 @@ export const DOCSET_ICONS = {
   org: <VscOrganization />,
   delivery: <BsFileEarmarkCheck />,
   explorer: <CustomIcon icon={Explorer} />,
+  enterprise: <TbComponents />,
   principled: <BsListOl />
 };
 
