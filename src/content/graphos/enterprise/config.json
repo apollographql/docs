@@ -37,7 +37,7 @@
           "enterprise"
         ]
       ],
-      "Features": {
+      "Router Features": {
         "Distributed caching": [
           "https://apollographql.com/docs/router/configuration/distributed-caching",
           [
