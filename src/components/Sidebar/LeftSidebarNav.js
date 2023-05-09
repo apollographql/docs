@@ -6,8 +6,7 @@ import {
   DarkMode,
   Stack,
   StackDivider,
-  chakra,
-  useColorModeValue
+  chakra
 } from '@chakra-ui/react';
 import {DOCSET_ICONS} from '../DocsetMenu';
 import {

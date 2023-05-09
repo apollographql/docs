@@ -9,7 +9,9 @@ import {
   Center,
   Flex,
   HStack,
+  Icon,
   IconButton,
+  Text,
   Tooltip,
   useColorMode,
   useColorModeValue
@@ -54,7 +56,7 @@ Eyebrow.propTypes = {
 };
 
 export function Header({children, algoliaFilters}) {
-  const {toggleColorMode, colorMode} = useColorMode();
+  const {toggleColorMode} = useColorMode();
   const tagColorProps = useTagColorProps();
   const {pageWidth, togglePageWidth, showExpandButton} = usePageWidthContext();
 
@@ -138,21 +140,42 @@ export function Header({children, algoliaFilters}) {
         )}
         <Tooltip
           label={
-            colorMode === 'dark'
-              ? 'Switch to light mode'
-              : 'Switch to dark mode'
+            <Text>
+              <Text as="span" display="none" _dark={{display: 'inline'}}>
+                Switch to light mode
+              </Text>
+              <Text as="span" display="inline" _dark={{display: 'none'}}>
+                Switch to dark mode
+              </Text>
+            </Text>
           }
         >
-          <IconButton
-            fontSize="xl"
-            variant="ghost"
-            onClick={toggleColorMode}
-            icon={colorMode === 'dark' ? <FiSun /> : <FiMoon />}
-            opacity={typeof window !== 'undefined' ? 1 : 0}
-            transition="opacity 0.2s"
-          />
+          <Box>
+            <IconButton
+              fontSize="xl"
+              variant="ghost"
+              onClick={toggleColorMode}
+              icon={
+                <>
+                  <Icon
+                    as={FiSun}
+                    display="none"
+                    _dark={{
+                      display: 'block'
+                    }}
+                  />
+                  <Icon
+                    as={FiMoon}
+                    display="block"
+                    _dark={{
+                      display: 'none'
+                    }}
+                  />
+                </>
+              }
+            />
+          </Box>
         </Tooltip>
-
         <StudioButton />
       </Flex>
     </Box>
