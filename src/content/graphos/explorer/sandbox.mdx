@@ -350,6 +350,33 @@ These are the fields you can include in the `initialState` option you pass to `n
 <tr>
 <td>
 
+##### `sharedHeaders`
+
+`boolean`
+
+</td>
+<td>
+
+A URI-encoded, serialized object containing initial HTTP shared header values to populate in the Sandbox on load.
+Shared headers are sent with every introspection request, while regular headers are only sent with operations triggered by the user from Explorer.
+
+Example:
+
+```jsx
+initialState: {
+  sharedHeaders: {
+    authorization: "Bearer abc123";
+  }
+}
+```
+
+
+</td>
+</tr>
+
+<tr>
+<td>
+
 ##### `includeCookies`
 
 `boolean`
