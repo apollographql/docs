@@ -6,10 +6,12 @@
       "docset:graphos/delivery",
       "docset:graphos/metrics",
       "docset:graphos/org",
-      "docset:graphos/explorer"
+      "docset:graphos/explorer",
+      "docset:graphos/enterprise"
     ],
     [
       "docset:rover",
+      "docset:router",
       "docset:federation"
     ]
   ],
