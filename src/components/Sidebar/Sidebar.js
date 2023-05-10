@@ -81,6 +81,12 @@ export function Sidebar({
     };
   }, [dismissSidebar]);
 
+  const openSidebar = () => {
+    if (!isLocked) {
+      setSidebarOpen(true);
+    }
+  };
+
   return (
     <chakra.aside
       ref={outerSidebarRef}
@@ -111,22 +117,16 @@ export function Sidebar({
           activeDocset,
           setActiveDocset,
           sidebarOpen,
-          setSidebarOpen,
+          openSidebar,
           dismissSidebar,
           onKeyboardSelect: () => {
             setSidebarOpen(false);
             sidebarNavRef.current?.focusFirstLink();
-          }
+          },
+          isLocked
         }}
       >
-        <LeftSidebarNav
-          w={SIDEBAR_WIDTH}
-          onMouseOver={() => {
-            if (!isLocked) {
-              setSidebarOpen(true);
-            }
-          }}
-        />
+        <LeftSidebarNav w={SIDEBAR_WIDTH} onMouseOver={openSidebar} />
         <Box
           ref={sidebarRef}
           id="sidebar"

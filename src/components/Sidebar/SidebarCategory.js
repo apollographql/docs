@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, {createContext, useContext, useRef} from 'react';
 import {Box, Flex, Stack, Tooltip, chakra} from '@chakra-ui/react';
+import {COLLAPSED_SIDEBAR_WIDTH} from './LeftSidebarNav';
 import {FiExternalLink} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
 import {PathContext} from '../../utils';
@@ -42,9 +43,10 @@ export const SidebarCategoryLink = ({icon, docset, ...props}) => {
     activeDocset,
     setActiveDocset,
     sidebarOpen,
-    setSidebarOpen,
+    openSidebar,
     onKeyboardSelect,
-    clickToSelect
+    clickToSelect,
+    isLocked
   } = useContext(DocsetContext);
 
   const timeoutRef = useRef();
@@ -78,7 +80,7 @@ export const SidebarCategoryLink = ({icon, docset, ...props}) => {
       display="flex"
       alignItems="center"
       onFocus={() => {
-        setSidebarOpen?.(true);
+        openSidebar?.();
         if (!clickToSelect) {
           setActiveDocset(docset);
         }
@@ -132,9 +134,22 @@ export const SidebarCategoryLink = ({icon, docset, ...props}) => {
       tabIndex="0"
       {...props}
     >
-      <Tooltip label={config.docset} placement="right">
-        <Box fontSize="2xl">{icon}</Box>
+      <Tooltip
+        isDisabled={!isLocked}
+        label={config.docset}
+        placement="right"
+        offset={[0, -16]}
+      >
+        <Box
+          pos="absolute"
+          top="0"
+          left="0"
+          h="full"
+          w={COLLAPSED_SIDEBAR_WIDTH - 16}
+          zIndex={1}
+        />
       </Tooltip>
+      <Box fontSize="2xl">{icon}</Box>
       <chakra.span
         py="2"
         ml="3"
