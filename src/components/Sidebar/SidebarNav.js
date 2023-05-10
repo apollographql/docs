@@ -160,16 +160,6 @@ const SidebarNav = forwardRef(
           </chakra.nav>
         </NavContext.Provider>
         <Stack spacing="1" pos="absolute" bottom="1" right="1">
-          {hideSidebar && (
-            <Tooltip placement="right" label="Hide sidebar">
-              <div>
-                <SidebarButton
-                  onClick={hideSidebar}
-                  icon={<FiChevronsLeft />}
-                />
-              </div>
-            </Tooltip>
-          )}
           {navGroups.length > 0 && (
             <Tooltip
               placement="right"
@@ -202,6 +192,16 @@ const SidebarNav = forwardRef(
               </div>
             </Tooltip>
           )}
+          {hideSidebar && (
+            <Tooltip placement="right" label="Hide navigation">
+              <div>
+                <SidebarButton
+                  onClick={hideSidebar}
+                  icon={<FiChevronsLeft />}
+                />
+              </div>
+            </Tooltip>
+          )}
           {onLockToggle && (
             <Tooltip
               placement="right"
@@ -209,7 +209,7 @@ const SidebarNav = forwardRef(
             >
               <div>
                 <SidebarButton
-                  icon={isLocked ? <FiUnlock /> : <FiLock />}
+                  icon={isLocked ? <FiLock /> : <FiUnlock />}
                   onClick={onLockToggle}
                 />
               </div>
