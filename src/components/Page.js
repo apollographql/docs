@@ -208,11 +208,6 @@ export default function Page({file}) {
     [versions]
   );
 
-  const editText = useBreakpointValue({
-    base: 'Edit',
-    lg: 'Edit on GitHub'
-  });
-
   const editOnGitHub = useMemo(() => {
     const repo = `https://github.com/${
       gitRemote?.full_name ?? 'apollographql/docs'
@@ -233,13 +228,21 @@ export default function Page({file}) {
         as="a"
         href={`${repo}/${join(...repoPath)}`}
         variant="link"
+        _dark={{
+          color: 'gray.200'
+        }}
         size="lg"
         leftIcon={<FiGithub />}
       >
-        {editText}
+        <Text as="span" display={{base: 'none', lg: 'inline'}}>
+          Edit on GitHub
+        </Text>
+        <Text as="span" display={{base: 'inline', lg: 'none'}}>
+          Edit
+        </Text>
       </Button>
     );
-  }, [gitRemote, basePath, relativePath, editText]);
+  }, [gitRemote, basePath, relativePath]);
 
   return (
     <>
@@ -427,6 +430,9 @@ export default function Page({file}) {
           href="https://community.apollographql.com/"
           variant="link"
           size="lg"
+          _dark={{
+            color: 'gray.200'
+          }}
           leftIcon={<FiMessageCircle />}
         >
           Forums
@@ -436,6 +442,9 @@ export default function Page({file}) {
           href="https://discord.gg/yFZJH2QYrK"
           variant="link"
           size="lg"
+          _dark={{
+            color: 'gray.200'
+          }}
           onClick={() => window.gtag?.('event', 'discord_join_docs')}
           leftIcon={<SiDiscord />}
         >
