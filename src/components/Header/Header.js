@@ -20,7 +20,6 @@ import {FiMoon, FiSun} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
 import {TbViewportNarrow, TbViewportWide} from 'react-icons/tb';
 import {usePageWidthContext} from '../PageWidthContext';
-import {useTagColorProps} from '../../utils';
 
 const EYEBROW_HEIGHT = 0; // 32;
 const HEADER_HEIGHT = 60;
@@ -57,7 +56,6 @@ Eyebrow.propTypes = {
 
 export function Header({children, algoliaFilters}) {
   const {toggleColorMode} = useColorMode();
-  const tagColorProps = useTagColorProps();
   const {pageWidth, togglePageWidth, showExpandButton} = usePageWidthContext();
 
   return (
@@ -102,7 +100,12 @@ export function Header({children, algoliaFilters}) {
               textTransform="uppercase"
               letterSpacing="widest"
               rounded="sm"
-              {...tagColorProps}
+              bg="indigo.50"
+              color="indigo.500"
+              _dark={{
+                bg: 'indigo.400',
+                color: 'inherit'
+              }}
             >
               Docs
             </Box>
@@ -150,39 +153,32 @@ export function Header({children, algoliaFilters}) {
             </Text>
           }
         >
-          <Box>
-            <IconButton
-              fontSize="xl"
-              variant="ghost"
-              onClick={toggleColorMode}
-              icon={
-                <>
-                  <Icon
-                    as={FiSun}
-                    display="none"
-                    _dark={{
-                      display: 'block'
-                    }}
-                  />
-                  <Icon
-                    as={FiMoon}
-                    display="block"
-                    _dark={{
-                      display: 'none'
-                    }}
-                  />
-                </>
-              }
-            />
-          </Box>
+          <IconButton
+            fontSize="xl"
+            variant="ghost"
+            onClick={toggleColorMode}
+            icon={
+              <>
+                <Icon
+                  as={FiSun}
+                  display="none"
+                  _dark={{
+                    display: 'block'
+                  }}
+                />
+                <Icon
+                  as={FiMoon}
+                  display="block"
+                  _dark={{
+                    display: 'none'
+                  }}
+                />
+              </>
+            }
+          />
         </Tooltip>
         <StudioButton />
       </Flex>
     </Box>
   );
 }
-
-Header.propTypes = {
-  children: PropTypes.node,
-  algoliaFilters: PropTypes.array
-};
