@@ -17,28 +17,28 @@
   "sidebar": {
     "Overview": "/",
     "Self-Hosted Routing": {
-      "Overview": "https://www.apollographql.com/docs/graphos/routing/self-hosted",
-      "Setup": "https://www.apollographql.com/docs/graphos/quickstart/self-hosted",
+      "Overview": "https://apollographql.com/docs/graphos/routing/self-hosted",
+      "Setup": "https://apollographql.com/docs/graphos/quickstart/self-hosted",
       "Apollo Router Features": {
-        "Overview": "https://www.apollographql.com/docs/router/enterprise-features",
-        "Distributed caching": "https://www.apollographql.com/docs/router/configuration/distributed-caching",
-        "JWT Authentication": "https://www.apollographql.com/docs/router/configuration/authn-jwt",
-        "Operation limits": "https://www.apollographql.com/docs/router/configuration/operation-limits",
-        "External coprocessing": "https://www.apollographql.com/docs/router/customizations/coprocessor"
+        "Overview": "https://apollographql.com/docs/router/enterprise-features",
+        "Distributed caching": "https://apollographql.com/docs/router/configuration/distributed-caching",
+        "JWT Authentication": "https://apollographql.com/docs/router/configuration/authn-jwt",
+        "Operation limits": "https://apollographql.com/docs/router/configuration/operation-limits",
+        "External coprocessing": "https://apollographql.com/docs/router/customizations/coprocessor"
       }
     },
     "Schema Delivery": {
-      "Contracts": "https://www.apollographql.com/docs/graphos/delivery/contracts"
+      "Contracts": "https://apollographql.com/docs/graphos/delivery/contracts"
     },
     "Org Management & SSO": {
-      "Audit log": "https://www.apollographql.com/docs/graphos/org/audit-log",
-      "Okta SSO": "https://www.apollographql.com/docs/graphos/org/sso/okta-integration-guide",
-      "Azure AD SSO": "https://www.apollographql.com/docs/graphos/org/sso/azure-ad-integration-guide",
-      "SAML SSO": "https://www.apollographql.com/docs/graphos/org/sso/saml-integration-guide"
+      "Audit log": "https://apollographql.com/docs/graphos/org/audit-log",
+      "Okta SSO": "https://apollographql.com/docs/graphos/org/sso/okta-integration-guide",
+      "Azure AD SSO": "https://apollographql.com/docs/graphos/org/sso/azure-ad-integration-guide",
+      "SAML SSO": "https://apollographql.com/docs/graphos/org/sso/saml-integration-guide"
     },
     "Metrics & Reporting": {
-      "Datadog forwarding": "https://www.apollographql.com/docs/graphos/metrics/datadog-integration",
-      "Build status notifications": "https://www.apollographql.com/docs/graphos/metrics/notifications/build-status-notification"
+      "Datadog forwarding": "https://apollographql.com/docs/graphos/metrics/datadog-integration",
+      "Build status notifications": "https://apollographql.com/docs/graphos/metrics/notifications/build-status-notification"
     }
   }
 }
