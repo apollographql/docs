@@ -38,33 +38,6 @@ const headComponents = [
           root.style.setProperty('${DOCS_PAGE_WIDTH_VAR}', pageWidthPx);
         `
     }}
-  />,
-  <script
-    key="color-mode"
-    dangerouslySetInnerHTML={{
-      __html: `
-          const initialColorMode = localStorage.getItem('chakra-ui-color-mode') ?? 'light';
-
-          let mutationCount = 0;
-
-          const mutationObserver = new MutationObserver((mutations) => {
-            for (const mutation of mutations) {
-              if (mutation.type === 'attributes') {
-                if (mutation.attributeName === 'data-theme' && mutation.target === document.documentElement) {
-                  mutationObserver.disconnect();
-                  mutation.target.setAttribute('data-theme', initialColorMode);
-                  mutationCount++;
-                  if (mutationCount >= 2) {
-                    mutationObserver.observe(mutation.target, {attributes: true});
-                  }
-                }
-              }
-            }
-          });
-
-          mutationObserver.observe(document.documentElement, {attributes: true});
-        `
-    }}
   />
 ];
 
