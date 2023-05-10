@@ -228,7 +228,6 @@ export default function Page({file}) {
         as="a"
         href={`${repo}/${join(...repoPath)}`}
         variant="link"
-        color="gray.500"
         _dark={{
           color: 'gray.200'
         }}
@@ -431,7 +430,6 @@ export default function Page({file}) {
           href="https://community.apollographql.com/"
           variant="link"
           size="lg"
-          color="gray.500"
           _dark={{
             color: 'gray.200'
           }}
@@ -444,7 +442,6 @@ export default function Page({file}) {
           href="https://discord.gg/yFZJH2QYrK"
           variant="link"
           size="lg"
-          color="gray.500"
           _dark={{
             color: 'gray.200'
           }}

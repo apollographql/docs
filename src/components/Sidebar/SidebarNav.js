@@ -24,7 +24,6 @@ const SidebarButton = props => (
     size="xs"
     fontSize="md"
     isRound
-    bg="gray.100"
     _dark={{
       bg: 'whiteAlpha.200'
     }}

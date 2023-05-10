@@ -18,7 +18,6 @@ export const FeedbackButton = ({title}) => {
         });
       }}
       variant="link"
-      color="gray.500"
       _dark={{
         color: 'gray.200'
       }}
