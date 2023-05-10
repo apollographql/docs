@@ -16,94 +16,29 @@
   ],
   "sidebar": {
     "Overview": "/",
-    "Schema Delivery": {
-      "Contracts": [
-        "https://apollographql.com/docs/graphos/delivery/contracts",
-        [
-          "enterprise"
-        ]
-      ]
-    },
     "Self-Hosted Routing": {
-      "Overview": [
-        "https://apollographql.com/docs/graphos/routing/self-hosted",
-        [
-          "enterprise"
-        ]
-      ],
-      "Setup": [
-        "https://apollographql.com/docs/graphos/quickstart/self-hosted",
-        [
-          "enterprise"
-        ]
-      ],
-      "Router Features": {
-        "Distributed caching": [
-          "https://apollographql.com/docs/router/configuration/distributed-caching",
-          [
-            "enterprise"
-          ]
-        ],
-        "JWT Authentication": [
-          "https://apollographql.com/docs/router/configuration/authn-jwt",
-          [
-            "enterprise"
-          ]
-        ],
-        "Operation limits": [
-          "https://apollographql.com/docs/router/configuration/operation-limits",
-          [
-            "enterprise",
-            "preview"
-          ]
-        ],
-        "External coprocessing": [
-          "https://apollographql.com/docs/router/customizations/coprocessor",
-          [
-            "enterprise"
-          ]
-        ]
+      "Overview": "https://www.apollographql.com/docs/graphos/routing/self-hosted",
+      "Setup": "https://www.apollographql.com/docs/graphos/quickstart/self-hosted",
+      "Apollo Router Features": {
+        "Overview": "https://www.apollographql.com/docs/router/enterprise-features",
+        "Distributed caching": "https://www.apollographql.com/docs/router/configuration/distributed-caching",
+        "JWT Authentication": "https://www.apollographql.com/docs/router/configuration/authn-jwt",
+        "Operation limits": "https://www.apollographql.com/docs/router/configuration/operation-limits",
+        "External coprocessing": "https://www.apollographql.com/docs/router/customizations/coprocessor"
       }
     },
+    "Schema Delivery": {
+      "Contracts": "https://www.apollographql.com/docs/graphos/delivery/contracts"
+    },
     "Org Management & SSO": {
-      "Audit log": [
-        "https://apollographql.com/docs/org/audit-log",
-        [
-          "enterprise"
-        ]
-      ],
-      "Okta SSO": [
-        "https://apollographql.com/docs/org/sso/okta-integration-guide",
-        [
-          "enterprise"
-        ]
-      ],
-      "Azure AD SSO": [
-        "https://apollographql.com/docs/org/sso/azure-ad-integration-guide",
-        [
-          "enterprise"
-        ]
-      ],
-      "SAML SSO": [
-        "https://apollographql.com/docs/org/sso/saml-integration-guide",
-        [
-          "enterprise"
-        ]
-      ]
+      "Audit log": "https://www.apollographql.com/docs/graphos/org/audit-log",
+      "Okta SSO": "https://www.apollographql.com/docs/graphos/org/sso/okta-integration-guide",
+      "Azure AD SSO": "https://www.apollographql.com/docs/graphos/org/sso/azure-ad-integration-guide",
+      "SAML SSO": "https://www.apollographql.com/docs/graphos/org/sso/saml-integration-guide"
     },
     "Metrics & Reporting": {
-      "Datadog forwarding": [
-        "https://apollographql.com/docs/graphos/metrics/datadog-integration",
-        [
-          "enterprise"
-        ]
-      ],
-      "Build status notifications": [
-        "https://apollographql.com/docs/graphos/metrics/notifications/build-status-notification",
-        [
-          "enterprise"
-        ]
-      ]
+      "Datadog forwarding": "https://www.apollographql.com/docs/graphos/metrics/datadog-integration",
+      "Build status notifications": "https://www.apollographql.com/docs/graphos/metrics/notifications/build-status-notification"
     }
   }
 }

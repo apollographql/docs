@@ -1,5 +1,96 @@
 ---
 title: GraphOS Enterprise features
+description: Overview
 ---
 
-asdf
+With an Apollo GraphOS Enterprise plan, you gain access to powerful routing, delivery, and governance features for your supergraph. This article summarizes the most notable of these features and provides links to the full documentation for each.
+
+See the left navigation for a list of all Enterprise-specific articles from across the GraphOS documentation.
+
+> To compare GraphOS feature support across all plan types, see our [pricing page](https://www.apollographql.com/pricing/).
+
+## Self-hosted routing
+
+With GraphOS Enterprise, you can deploy your supergraph's [Apollo Router](/router/) instances into your own infrastructure, instead of using a GraphOS-provisioned cloud router:
+
+```mermaid
+flowchart LR;
+  clients(Clients);
+  subgraph "Your infrastructure";
+  router(["<b>Apollo<br/>Router</b>"]);
+  subgraphA[Locations<br/>subgraph];
+  subgraphB[Reviews<br/>subgraph];
+  router --- subgraphA & subgraphB;
+  end;
+  clients -.- router;
+  class clients secondary;
+```
+
+These router instances connect to GraphOS to fetch their managed configuration and report fine-grained operation metrics.
+
+This architecture helps you satisfy sophisticated requirements around data compliance and performance, and it also enables you to further customize your router's behavior with Enterprise-specific functionality (described [below](#apollo-router-features)).
+
+> [Learn more about self-hosted routing.](../routing/self-hosted/)
+
+### Apollo Router features
+
+[The Apollo Router](/router/) supports a collection of features specific to GraphOS Enterprise organizations. These include:
+
+- Authentication of inbound requests via [JSON Web Token (JWT)](/router/configuration/authn-jwt/)
+- Redis-backed [distributed caching of query plans and persisted queries](/router/configuration/distributed-caching/)
+- Custom request handling in any language via [external coprocessing](/router/customizations/coprocessor/)
+- Mitigation of potentially malicious requests via [operation limits](/router/configuration/operation-limits)
+
+> [Learn more about Enterprise features in the Apollo Router.](/router/enterprise-features/)
+
+## Schema filtering with contracts
+
+GraphOS [**Contracts**](../delivery/contracts/) enable you to filter your supergraph schema's types and fields according to different inclusion and exclusion rules you define:
+
+```mermaid
+graph LR;
+  subgraph "Source variant";
+  api("Supergraph<br/>schema<br/>▉");
+  end
+  subgraph "Contract variant B"
+  contractB("Contract schema B<br/>▟")
+  end
+  subgraph "Contract variant A"
+  contractA("Contract schema A<br/>▛");
+  end
+  api -."Filter schema<br/>according to contract A".->contractA
+  api -."Filter schema<br/>according to contract B".->contractB
+```
+
+You can then deploy a [self-hosted router](#self-hosted-routing) instance that uses one of your **contract schemas**. Client apps that connect to this **contract router** can query _only_ the fields that are included in the contract schema:
+
+```mermaid
+graph LR;
+  adminapp(Admin app);
+  userapp(User app);
+  subgraph "Your infrastructure";
+    standardgateway(["Standard router<br/>▉"]);
+    contractgateway(["Contract router<br/>▟"]);
+    subgraphs[["(All subgraphs)"]];
+  end;
+  userapp -.- contractgateway;
+  adminapp -.- standardgateway;
+  standardgateway & contractgateway --- subgraphs;
+  class adminapp,userapp secondary;
+```
+
+Contracts are especially useful if you want to expose a subset of your supergraph as a public API.
+
+> [Learn more about GraphOS contracts.](../delivery/contracts/)
+
+## Organization management
+
+You can integrate GraphOS with your organization's identity provider (IdP) to enable single sign-on (SSO) for [GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content).
+
+SSO configuration is available for all of the following:
+
+- [Okta](../org/sso/okta-integration-guide/)
+- [Azure AD](../org/sso/azure-ad-integration-guide/)
+- [Generic SAML](../org/sso/saml-integration-guide/)
+
+Additionally, Enterprise organizations can export an [audit log](../org/audit-log/) of material actions taken by organization members.
