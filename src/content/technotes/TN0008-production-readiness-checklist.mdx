@@ -22,7 +22,7 @@ We recommend that you complete this checklist before your supergraph begins hand
   - You can continue to view and fetch your GraphQL schemas from Apollo Studio.
 - Ensure that you've correctly configured [managed federation](/federation/managed-federation/setup/).
 - Ensure that you've integrated [`rover subgraph check`](/rover/commands/subgraphs#subgraph-check) and [`rover subgraph publish`](/rover/commands/subgraphs#subgraph-publish) into your CI/CD pipeline.
-- If your [subgraph servers are listed as compatible with `ftv1`](/federation/building-supergraphs/supported-subgraphs/), ensure that you've enabled [federated traces](/federation/metrics/), and that you can view operation metrics as expected in Apollo Studio.
+- If your subgraph servers are listed as [compatible with `FEDERATED TRACING`](/federation/building-supergraphs/supported-subgraphs/), ensure that you've enabled [federated traces](/federation/metrics/), and that you can view operation metrics as expected in Apollo Studio.
   - Enable [fractional trace sampling via `fieldLevelInstrumentation`](/graphos/metrics/field-usage/#fractional-sampling) to reduce performance hits due to tracing.
 - Consider adding caching layers.
   - Apollo Server and the Apollo Router both support [automatic persisted queries (APQ)](/apollo-server/performance/apq/) out of the box.
