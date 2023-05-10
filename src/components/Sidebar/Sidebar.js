@@ -42,12 +42,16 @@ export function Sidebar({
     setSidebarOpen(false);
   }, [pathContext.uri]);
 
-  const dismissSidebar = useCallback(() => {
-    if (sidebarOpen) {
-      setActiveDocset(null);
-      setSidebarOpen(false);
+  const openSidebar = useCallback(() => {
+    if (!isLocked) {
+      setSidebarOpen(true);
     }
-  }, [sidebarOpen]);
+  }, [isLocked]);
+
+  const dismissSidebar = useCallback(() => {
+    setActiveDocset(null);
+    setSidebarOpen(false);
+  }, []);
 
   useKey('Escape', dismissSidebar, undefined, [dismissSidebar]);
 
@@ -80,12 +84,6 @@ export function Sidebar({
       window.removeEventListener('scroll', dismissSidebar);
     };
   }, [dismissSidebar]);
-
-  const openSidebar = () => {
-    if (!isLocked) {
-      setSidebarOpen(true);
-    }
-  };
 
   return (
     <chakra.aside
