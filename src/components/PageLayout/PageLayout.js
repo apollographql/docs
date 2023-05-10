@@ -24,6 +24,15 @@ export const PAGE_FOOTER_HEIGHT = 56;
 
 export function PageLayout({pageContext, children, location, data}) {
   const [sidebarHidden, setSidebarHidden] = useLocalStorage('sidebar');
+  const [sidebarLocked, setSidebarLocked] = useLocalStorage(
+    'sidebar:locked',
+    false
+  );
+
+  const lockProps = {
+    isLocked: sidebarLocked,
+    onLockToggle: () => setSidebarLocked(!sidebarLocked)
+  };
 
   const hideSidebar = () => setSidebarHidden(true);
 
@@ -43,6 +52,7 @@ export function PageLayout({pageContext, children, location, data}) {
       onVersionChange={version => {
         navigate(`/${version.slug}`);
       }}
+      {...lockProps}
     />
   );
 
@@ -58,10 +68,16 @@ export function PageLayout({pageContext, children, location, data}) {
         <Header algoliaFilters={algoliaFilters}>
           <MobileNav isInternal={internal} />
         </Header>
-        <Sidebar isHidden={sidebarHidden} hideSidebar={hideSidebar}>
+        <Sidebar
+          isHidden={sidebarHidden}
+          hideSidebar={hideSidebar}
+          {...lockProps}
+        >
           {internal ? (
             <AuthCheck
-              fallback={<DefaultSidebarNav hideSidebar={hideSidebar} />}
+              fallback={
+                <DefaultSidebarNav hideSidebar={hideSidebar} {...lockProps} />
+              }
             >
               {sidebarNav}
             </AuthCheck>

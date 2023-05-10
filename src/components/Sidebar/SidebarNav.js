@@ -6,29 +6,27 @@ import {BsChevronContract, BsChevronExpand} from 'react-icons/bs';
 import {
   Button,
   Flex,
-  HStack,
   IconButton,
   Menu,
   MenuButton,
   MenuItemOption,
   MenuList,
   MenuOptionGroup,
+  Stack,
   Tooltip,
   chakra
 } from '@chakra-ui/react';
-import {FiChevronDown, FiChevronLeft, FiChevronsLeft} from 'react-icons/fi';
+import {
+  FiChevronDown,
+  FiChevronLeft,
+  FiChevronsLeft,
+  FiLock,
+  FiUnlock
+} from 'react-icons/fi';
 import {flattenNavItems} from '../../utils';
 
 const SidebarButton = props => (
-  <IconButton
-    size="xs"
-    fontSize="md"
-    isRound
-    _dark={{
-      bg: 'whiteAlpha.200'
-    }}
-    {...props}
-  />
+  <IconButton size="xs" fontSize="md" variant="outline" {...props} />
 );
 
 const SidebarNav = forwardRef(
@@ -40,7 +38,9 @@ const SidebarNav = forwardRef(
       currentVersion,
       onVersionChange,
       onGoBack,
-      hideSidebar
+      hideSidebar,
+      isLocked,
+      onLockToggle
     },
     ref
   ) => {
@@ -159,9 +159,9 @@ const SidebarNav = forwardRef(
             <NavItems items={navItems} />
           </chakra.nav>
         </NavContext.Provider>
-        <HStack mt="auto" p="1" pt={0} spacing="1" pos="sticky" bottom="0">
+        <Stack spacing="1" pos="absolute" bottom="1" right="1">
           {hideSidebar && (
-            <Tooltip label="Hide sidebar">
+            <Tooltip placement="right" label="Hide sidebar">
               <div>
                 <SidebarButton
                   onClick={hideSidebar}
@@ -172,6 +172,7 @@ const SidebarNav = forwardRef(
           )}
           {navGroups.length > 0 && (
             <Tooltip
+              placement="right"
               label={`${isAllExpanded ? 'Collapse' : 'Expand'} all categories`}
             >
               <div>
@@ -201,7 +202,20 @@ const SidebarNav = forwardRef(
               </div>
             </Tooltip>
           )}
-        </HStack>
+          {onLockToggle && (
+            <Tooltip
+              placement="right"
+              label={`${isLocked ? 'Unlock' : 'Lock'} sidebar`}
+            >
+              <div>
+                <SidebarButton
+                  icon={isLocked ? <FiUnlock /> : <FiLock />}
+                  onClick={onLockToggle}
+                />
+              </div>
+            </Tooltip>
+          )}
+        </Stack>
       </Flex>
     );
   }
@@ -214,7 +228,9 @@ SidebarNav.propTypes = {
   currentVersion: PropTypes.string,
   onVersionChange: PropTypes.func,
   onGoBack: PropTypes.func,
-  hideSidebar: PropTypes.func
+  hideSidebar: PropTypes.func,
+  isLocked: PropTypes.bool,
+  onLockToggle: PropTypes.func
 };
 
 SidebarNav.displayName = 'SidebarNav';

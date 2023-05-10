@@ -21,7 +21,13 @@ import {useKey} from 'react-use';
 
 export const PAGE_SIDEBAR_MARGIN = SIDEBAR_WIDTH + COLLAPSED_SIDEBAR_WIDTH;
 
-export function Sidebar({children, isHidden, hideSidebar}) {
+export function Sidebar({
+  children,
+  isHidden,
+  hideSidebar,
+  isLocked,
+  onLockToggle
+}) {
   const outerSidebarRef = useRef();
   const sidebarRef = useRef();
   const sidebarNavRef = useRef();
@@ -115,7 +121,11 @@ export function Sidebar({children, isHidden, hideSidebar}) {
       >
         <LeftSidebarNav
           w={SIDEBAR_WIDTH}
-          onMouseOver={() => setSidebarOpen(true)}
+          onMouseOver={() => {
+            if (!isLocked) {
+              setSidebarOpen(true);
+            }
+          }}
         />
         <Box
           ref={sidebarRef}
@@ -152,6 +162,8 @@ export function Sidebar({children, isHidden, hideSidebar}) {
                 onVersionChange={version => {
                   setActiveDocset(version.slug);
                 }}
+                isLocked={isLocked}
+                onLockToggle={onLockToggle}
               />
             </PathContext.Provider>
           ) : (
@@ -166,5 +178,7 @@ export function Sidebar({children, isHidden, hideSidebar}) {
 Sidebar.propTypes = {
   children: PropTypes.node.isRequired,
   isHidden: PropTypes.bool,
-  hideSidebar: PropTypes.func
+  hideSidebar: PropTypes.func,
+  isLocked: PropTypes.boolean,
+  onLockToggle: PropTypes.func
 };

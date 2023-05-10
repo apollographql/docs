@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, {createContext, useContext, useRef} from 'react';
-import {Box, Flex, Stack, chakra} from '@chakra-ui/react';
+import {Box, Flex, Stack, Tooltip, chakra} from '@chakra-ui/react';
 import {FiExternalLink} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
 import {PathContext} from '../../utils';
@@ -132,7 +132,9 @@ export const SidebarCategoryLink = ({icon, docset, ...props}) => {
       tabIndex="0"
       {...props}
     >
-      <Box fontSize="2xl">{icon}</Box>
+      <Tooltip label={config.docset} placement="right">
+        <Box fontSize="2xl">{icon}</Box>
+      </Tooltip>
       <chakra.span
         py="2"
         ml="3"
