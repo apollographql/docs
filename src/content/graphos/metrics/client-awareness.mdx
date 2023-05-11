@@ -1,11 +1,15 @@
 ---
 title: Segmenting metrics by client
-description: Understand how each of your clients is using your graph
+description: Understand how different clients use your graph
 ---
 
-Apollo Studio enables you to view operation metrics for each of your application's different clients (such as `web` and `iOS`) and client _versions_ (such as `1.0` and `1.1`), helping you understand how each one interacts with your supergraph.
+In GraphOS Studio, you can view GraphQL operation metrics broken down by the different clients that _execute_ those operations (such as your web, iOS, and Android apps). This feature (called **client awareness**) becomes more and more useful as you create additional clients that consume your supergraph.
 
-You view these segmented metrics from your supergraph variant's **Clients** page:
+> To enable client awareness, your clients must identify themselves in their requests to your router. [Learn how.](#setup)
+
+[GraphOS Enterprise](https://www.apollographql.com/pricing) organizations can segment operation metrics even further, by individual client _versions_ (`1.0`, `1.1`, etc.). This helps you track adoption of new versions and identify _older_ versions you can safely deprecate or discontinue.
+
+You view client-segmented metrics from a variant's **Clients** page in Studio:
 
 <img
   src="../img/client-awareness/overview.jpg"
@@ -14,7 +18,7 @@ You view these segmented metrics from your supergraph variant's **Clients** page
   width="400"
 />
 
-This feature (called **client awareness**) is especially useful as your number of clients grows, and as you consider when to deprecate or discontinue support for older client versions. [See other common use cases.](#common-use-cases)
+> If a particular client doesn't identify itself in its requests, its metrics are included in an **Unidentified clients** category.
 
 ## Setup
 
@@ -22,6 +26,7 @@ Your supergraph's router checks for the presence of the following HTTP headers i
 
 - `apollographql-client-name`
 - `apollographql-client-version`
+    - Segmenting metrics by client version in Studio requires a [GraphOS Enterprise plan](https://www.apollographql.com/pricing). You can safely include this header in requests regardless of your plan type.
 
 If one or both of these headers are present, your router automatically extracts their values and includes them in the metrics data that it sends to GraphOS.
 
@@ -46,7 +51,7 @@ const client = new ApolloClient({
 
 ### Diagnose client-specific issues
 
-By filtering your graph's metrics by client and client version, you can identify when a high failure rate for an operation is tied to a particular version. This helps you isolate the underlying cause of the failure and push an update for the affected client.
+By filtering your graph's metrics by client (and client _version_ with Enterprise), you can identify when a high failure rate for an operation is tied to a particular client. This helps you isolate the underlying cause and push an update for the affected client.
 
 ### Deprecate, change, and remove fields safely
 
@@ -61,11 +66,3 @@ Modifying or removing an existing field in your schema is often a **breaking cha
 ### Backend cutover
 
 Changes to your schema often accompany changes to your backend, such as the addition of a new resolver, or even an entirely new data source. When you deploy a new version of your client that executes operations against these new resources, it's important to monitor operations to detect issues. Viewing metrics specific to the new client version helps you identify and resolve these issues quickly.
-
-The following shows a cutover from one back-end service to another:
-
-<img
-  src="../img/client-awareness/cutover.png"
-  class="screenshot"
-  alt="Cutting over a backend"
-/>
