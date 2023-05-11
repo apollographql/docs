@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React, {createContext, useContext, useRef} from 'react';
 import {Box, Flex, Stack, Tooltip, chakra} from '@chakra-ui/react';
-import {COLLAPSED_SIDEBAR_WIDTH} from './LeftSidebarNav';
 import {FiExternalLink} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
 import {PathContext} from '../../utils';
@@ -74,94 +73,86 @@ export const SidebarCategoryLink = ({icon, docset, ...props}) => {
       };
 
   return (
-    <Box
-      px="4"
-      {...linkProps}
-      display="flex"
-      alignItems="center"
-      onFocus={() => {
-        openSidebar?.();
-        if (!clickToSelect) {
-          setActiveDocset(docset);
-        }
-      }}
-      onMouseEnter={() => {
-        if (!clickToSelect) {
-          timeoutRef.current = setTimeout(() => {
-            setActiveDocset(docset);
-          }, 100);
-        }
-      }}
-      onMouseLeave={() => {
-        if (!clickToSelect) {
-          clearTimeout(timeoutRef.current);
-        }
-      }}
-      onMouseMove={event => {
-        if (!clickToSelect && event.movementY === 0) {
-          clearTimeout(timeoutRef.current);
-          setActiveDocset(docset);
-        }
-      }}
-      onClick={event => {
-        if (clickToSelect) {
-          event.preventDefault();
-          setActiveDocset(docset);
-        } else if (event.detail === 0) {
-          event.preventDefault();
-          onKeyboardSelect();
-        }
-      }}
-      position="relative"
-      _after={{
-        content: isActivePath && '""',
-        width: '4',
-        bg: 'purple.500',
-        position: 'absolute',
-        left: '100%',
-        top: 0,
-        bottom: 0
-      }}
-      borderRadius="md"
-      borderRightRadius={isActivePath ? 0 : undefined}
-      bg={
-        isActivePath
-          ? 'purple.500'
-          : isActiveMenu
-          ? 'whiteAlpha.300'
-          : 'inherit'
-      }
-      tabIndex="0"
-      {...props}
-    >
-      <Tooltip
-        isDisabled={!isLocked}
-        label={config.docset}
-        placement="right"
-        offset={[0, -16]}
-      >
-        <Box
-          pos="absolute"
-          top="0"
-          left="0"
-          h="full"
-          w={COLLAPSED_SIDEBAR_WIDTH - 16}
-          zIndex={1}
-        />
-      </Tooltip>
-      <Box fontSize="2xl">{icon}</Box>
-      <chakra.span
+    <Tooltip isDisabled={!isLocked} label={config.docset} placement="right">
+      <Box
+        px="4"
         py="2"
-        ml="3"
-        opacity={sidebarOpen ? '100' : '0'}
-        transitionProperty="opacity"
-        transitionDuration="normal"
-        transitionTimingFunction="ease-in-out"
+        {...linkProps}
+        display="flex"
+        alignItems="center"
+        whiteSpace="nowrap"
+        onFocus={() => {
+          openSidebar?.();
+          if (!clickToSelect) {
+            setActiveDocset(docset);
+          }
+        }}
+        onMouseEnter={() => {
+          if (!clickToSelect) {
+            timeoutRef.current = setTimeout(() => {
+              setActiveDocset(docset);
+            }, 100);
+          }
+        }}
+        onMouseLeave={() => {
+          if (!clickToSelect) {
+            clearTimeout(timeoutRef.current);
+          }
+        }}
+        onMouseMove={event => {
+          if (!clickToSelect && event.movementY === 0) {
+            clearTimeout(timeoutRef.current);
+            setActiveDocset(docset);
+          }
+        }}
+        onClick={event => {
+          if (clickToSelect) {
+            event.preventDefault();
+            setActiveDocset(docset);
+          } else if (event.detail === 0) {
+            event.preventDefault();
+            onKeyboardSelect();
+          }
+        }}
+        position="relative"
+        _after={{
+          content: isActivePath && '""',
+          width: '4',
+          bg: 'purple.500',
+          position: 'absolute',
+          left: '100%',
+          top: 0,
+          bottom: 0
+        }}
+        borderRadius="md"
+        borderRightRadius={isActivePath ? 0 : undefined}
+        bg={
+          isActivePath
+            ? 'purple.500'
+            : isActiveMenu
+            ? 'whiteAlpha.300'
+            : 'inherit'
+        }
+        tabIndex="0"
+        {...props}
       >
-        {config.docset}
-      </chakra.span>
-      {isExternal && <Box ml="2" as={FiExternalLink} />}
-    </Box>
+        <Box fontSize="2xl">{icon}</Box>
+        {!isLocked && (
+          <>
+            <chakra.span
+              ml="3"
+              opacity={sidebarOpen ? '100' : '0'}
+              transitionProperty="opacity"
+              transitionDuration="normal"
+              transitionTimingFunction="ease-in-out"
+            >
+              {config.docset}
+            </chakra.span>
+            {isExternal && <Box ml="2" as={FiExternalLink} />}
+          </>
+        )}
+      </Box>
+    </Tooltip>
   );
 };
 

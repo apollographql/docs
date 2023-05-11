@@ -39,8 +39,9 @@ export function Sidebar({
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
+    // close the sidebar when the page URL or sidebar lock status changes
     setSidebarOpen(false);
-  }, [pathContext.uri]);
+  }, [pathContext.uri, isLocked]);
 
   const openSidebar = useCallback(() => {
     if (!isLocked) {
@@ -124,7 +125,10 @@ export function Sidebar({
           isLocked
         }}
       >
-        <LeftSidebarNav w={SIDEBAR_WIDTH} onMouseOver={openSidebar} />
+        <LeftSidebarNav
+          w={isLocked ? COLLAPSED_SIDEBAR_WIDTH : SIDEBAR_WIDTH}
+          onMouseOver={openSidebar}
+        />
         <Box
           ref={sidebarRef}
           id="sidebar"
@@ -132,6 +136,7 @@ export function Sidebar({
           flexShrink="0"
           borderRightWidth={1}
           bg="bg"
+          ml={isLocked && SIDEBAR_WIDTH - COLLAPSED_SIDEBAR_WIDTH}
           transform={
             sidebarOpen
               ? 'translateX(0)'

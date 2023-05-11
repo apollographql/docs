@@ -97,7 +97,7 @@ export function PageLayout({pageContext, children, location, data}) {
           <Footer />
         </Box>
         <Fade in={sidebarHidden} unmountOnExit delay={0.25}>
-          <Tooltip placement="right" label="Show sidebar">
+          <Tooltip placement="right" label="Show navigation">
             <IconButton
               d={{base: 'none', md: 'flex'}}
               pos="fixed"
