@@ -3,7 +3,7 @@ import Footer from '../Footer';
 import Header from '../Header';
 import MobileNav from '../MobileNav';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Sidebar, {
   DefaultSidebarNav,
   PAGE_SIDEBAR_MARGIN,
@@ -56,8 +56,14 @@ export function PageLayout({pageContext, children, location, data}) {
     />
   );
 
+  const [now, setNow] = useState(Date.now());
+
+  useEffect(() => {
+    setNow(Date.now());
+  }, []);
+
   return (
-    <PageWidthProvider>
+    <PageWidthProvider key={now}>
       <PathContext.Provider
         value={{
           uri: pathname,
