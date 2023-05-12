@@ -2,7 +2,7 @@
 title: Setting up Apollo SSO with Azure AD
 ---
 
-> ⚠️ Single sign-on (SSO) is available only for [Enterprise plans](https://www.apollographql.com/pricing/).
+> ⚠️ **Single sign-on (SSO) is available only for [Enterprise plans](https://www.apollographql.com/pricing/).** Unlike most Enterprise features, this feature is _not_ available as part of an [Enterprise trial](../plans/#enterprise-trials).
 
 This guide walks through configuring Azure Active Directory (Azure AD) as your Apollo organization's identity provider (IdP) for single sign-on (SSO).
 

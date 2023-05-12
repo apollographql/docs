@@ -3,6 +3,10 @@ title: Audit log of material GraphOS events
 description: Download a log of all material events that have occured in your organization
 ---
 
+> **This feature is available only with an [Enterprise plan](https://www.apollographql.com/pricing/).**
+>
+> If your organization _doesn't_ currently have an Enterprise plan, you can test out this functionality by signing up for a free [Enterprise trial](./plans/#enterprise-trials).
+
 Organizations with a GraphOS [Enterprise plan](http://apollographql.com/pricing) can export and download an audit log of all material events that have occurred in the organization over a given timeframe.
 
 The interface for requesting an export of auditable events is available under the **Audit** tab of your organization's homepage in Apollo Studio:

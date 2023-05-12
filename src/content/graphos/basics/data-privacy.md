@@ -17,7 +17,7 @@ The [Apollo Router](/router/), [Apollo Server](/apollo-server/), the [Rover CLI]
 
 The Rover CLI also collects anonymous usage data by default. [You can disable this.](/rover/privacy/)
 
-If you have a [cloud supergraph](./graphs/overview/#cloud-supergraphs), its router is hosted and managed _by_ GraphOS, and it automatically enables metrics reporting. [Learn about data collection for cloud supergraphs.](#what-data-is-collected-by-a-cloud-supergraph)
+If you have a [cloud supergraph](./graphs/#cloud-supergraphs), its router is hosted and managed _by_ GraphOS, and it automatically enables metrics reporting. [Learn about data collection for cloud supergraphs.](#what-data-is-collected-by-a-cloud-supergraph)
 
 Apollo Client libraries do **not** send data to GraphOS.
 
@@ -63,7 +63,7 @@ You can configure both the Apollo Router and Apollo Server to report certain dat
 
 These types of data are covered in the subsections below.
 
-In addition, you can configure a standalone instance of Apollo Server to [report its schema to GraphOS](./schema/schema-reporting).
+In addition, you can configure a standalone instance of Apollo Server to [report its schema to GraphOS](/apollo-server/api/plugin/schema-reporting).
 
 > _All_ data sent to GraphOS from both the Apollo Router and Apollo Server is transmitted using HTTPS on port 443, and HTTP traffic on port 80 is disabled.
 
@@ -117,7 +117,7 @@ If you're using the Apollo Router, your subgraphs can include operation trace da
 
 > To check which subgraph libraries support federated traces, consult the `FEDERATED TRACING` entry in [this table](/federation/building-supergraphs/supported-subgraphs).
 
-You can configure the Apollo Router to include this trace data in its reports to GraphOS ([learn how](/router/configuration/apollo-telemetry#enabling-field-level-instrumentation)). By doing so, you can visualize the performance of your operations in Apollo Studio, [broken down by resolver](./metrics/usage-reporting#resolver-level-traces).
+You can configure the Apollo Router to include this trace data in its reports to GraphOS ([learn how](/router/configuration/apollo-telemetry#enabling-field-level-instrumentation)). By doing so, you can visualize the performance of your operations in GraphOS Studio, [broken down by resolver](./metrics/#resolver-level-traces).
 
 If you're using a standalone instance of Apollo Server, you can also configure it to [report operation traces to GraphOS](/apollo-server/api/plugin/inline-trace).
 
@@ -202,7 +202,7 @@ Each GraphOS-managed router is an instance of the [Apollo Router](/router/) runn
 
 ## What data does GraphOS log about operations executed in the Explorer?
 
-**Only front-end usage metrics for improving the product.** The [Apollo Studio Explorer](./explorer/explorer/) enables you to build and execute operations against your graph. These operations are sent directly from your browser and **do not** pass through Apollo systems.
+**Only front-end usage metrics for improving the product.** The [GraphOS Studio Explorer](./explorer/) enables you to build and execute operations against your graph. These operations are sent directly from your browser and **do not** pass through Apollo systems.
 
 ## GDPR
 

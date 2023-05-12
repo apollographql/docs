@@ -2,7 +2,7 @@
 title: Setting up Apollo SSO with a SAML-based IdP
 ---
 
-> ⚠️ Single sign-on (SSO) is available only for [Enterprise plans](https://www.apollographql.com/pricing/).
+> ⚠️ **Single sign-on (SSO) is available only for [Enterprise plans](https://www.apollographql.com/pricing/).** Unlike most Enterprise features, this feature is _not_ available as part of an [Enterprise trial](../plans/#enterprise-trials).
 
 This guide walks through configuring a generic SAML-based identity provider (IdP) for use with Apollo single sign-on (SSO). These steps require administrative access to your IdP.
 
