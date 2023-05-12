@@ -11,6 +11,8 @@ description: Host your enterprise router in your own infrastructure
 
 This tutorial helps you get you up and running with GraphOS and a self-hosted supergraph. You can complete this tutorial even if your organization _doesn't_ currently have an Enterprise plan, enabling you to test out this functionality.
 
+> **Important:** This tutorial uses **Docker** for containerization of your supergraph's router.
+
 ## Supergraph concepts
 
 Before we get started, let's quickly cover what a self-hosted supergraph _is_.
@@ -44,7 +46,7 @@ We'll cover these concepts in more detail as we proceed through the steps below.
 
 This quickstart uses the following Apollo tools:
 
-* **Apollo Studio.** This is the primary web interface for GraphOS. Studio helps you monitor, manage, and collaborate on your supergraph.
+* **GraphOS Studio.** This is the primary web interface for GraphOS. Studio helps you monitor, manage, and collaborate on your supergraph.
 * **The Rover CLI.** This is the primary _command-line_ interface for GraphOS. Rover helps you interact with your graphs and their schemas.
 
 Let's set these up first.
@@ -55,15 +57,13 @@ To manage our supergraph with GraphOS, we need an Apollo account. Let's create o
 
 Complete the first step of <a href="./cloud/#1-create-your-apollo-account" target="_blank">Get started with GraphOS</a> (**Create your Apollo account**), then return here.
 
-#### Create a graph in Apollo Studio
+#### Create a graph in GraphOS Studio
 
-After you create your Apollo account, create your first graph in Apollo Studio by following the instructions for your organization's [plan type](../org/plans/):
-
-> If you just created your organization as part of creating your account, it's on a **Serverless** plan type.
+After you create your Apollo account, create your first graph in GraphOS Studio by following the instructions for your organization's [plan type](../org/plans/):
 
 <ExpansionPanel title="Serverless plans">
 
-1. Go to your organization's **Graphs** tab in [Apollo Studio](https://studio.apollographql.com/?referrer=docs-content).
+1. Go to your organization's **Graphs** tab in [GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content).
 
     - **If you see this dialog...**
 
@@ -117,7 +117,7 @@ Your graph has been created, and it appears in the **Classic Graphs** section of
 
 <ExpansionPanel title="Enterprise and legacy plans">
 
-1. Go to your organization's **Graphs** tab in [Apollo Studio](https://studio.apollographql.com/?referrer=docs-content).
+1. Go to your organization's **Graphs** tab in [GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content).
 
 2. Click **New Graph** in the top right. Studio displays the following dialog:
 
@@ -171,34 +171,27 @@ We'll use Rover to publish our subgraph schemas to GraphOS. To do that, we first
 
 Complete the first two steps of <a href="/rover/configuring/" target="_blank">Configuring Rover</a> (**Obtain an API key** and **Provide the API key to Rover**), then return here.
 
-## 2. Create a router project directory
-
-With a self-hosted supergraph, you're responsible for deploying and managing your supergraph's **router**. The router provides the public endpoint that clients use to query your supergraph:
-
-```mermaid
-flowchart LR;
-  clients(Clients);
-  subgraph "Your infrastructure";
-  router(["Router"]);
-  subgraphA[Locations<br/>subgraph];
-  subgraphB[Reviews<br/>subgraph];
-  router --- subgraphA & subgraphB;
-  end;
-  clients -.- router;
-  class clients secondary;
-```
+## 2. Clone the router project template
 
 For this quickstart, we'll use some Apollo-hosted example services as our subgraphs, and we'll set up **the Apollo Router** in front of them. The Apollo Router is a high-performance, precompiled Rust executable that acts as the router for a supergraph.
 
-Start by using the [GitHub template](https://github.com/apollographql/router-template) to create a new Router project. This comes with all the basics you need to run Router in a Docker container. Click "Use this template" to create a new repository in your GitHub account, then clone that repository to your local machine.
+First, let's create a project directory for your router:
 
-To run the Router locally, you'll need a way to build and run containers, some popular options are:
+1. Open [this GitHub template](https://github.com/apollographql/router-template). It provides out-of-the box configuration for deploying and running the Apollo Router via a Dockerfile.
+2. On the template page, click **Use this template > Create a new repository** to copy the template into a new repository in your GitHub account.
+3. Clone your new repository to your local machine.
+
+## 3. Start the router with Docker
+
+To run the Apollo Router locally, you need a way to build and run Docker containers. Here are some popular options:
 
 - [Docker Desktop](https://www.docker.com/products/personal/)
 - [Rancher](https://rancherdesktop.io)
 - [Podman](https://podman.io)
 
-For the rest of this tutorial, we'll be using the `docker` command, but commands for the alternatives should look very similar. Let's try starting the router:
+> The rest of this tutorial uses the `docker` command. Alternative commands usually look very similar.
+
+Try building and running your router container:
 
 ```bash
 docker build -t router .
@@ -220,7 +213,7 @@ Apollo Router v1.18.0 // (c) Apollo Graph, Inc. // Licensed as ELv2 (https://go.
 
       $ ./router --supergraph <file_path>
 
-  * Fetch a registered schema from Apollo Studio by setting
+  * Fetch a registered schema from GraphOS by setting
     these environment variables:
 
       $ APOLLO_KEY="..." APOLLO_GRAPH_REF="..." ./router
@@ -249,7 +242,7 @@ That's because we aren't currently providing a **supergraph schema** to the rout
 <blockquote>
 
 
-This quickstart uses two Apollo-hosted subgraphs (named Locations and Reviews) from an imaginary space tourism application called FlyBy. Here are their URLs and schemas for reference:
+This quickstart uses two Apollo-hosted subgraphs (named **Locations** and **Reviews**) from an imaginary space tourism application called FlyBy. Here are their URLs and schemas for reference:
 
 <ExpansionPanel title="Locations">
 
@@ -339,7 +332,7 @@ type SubmitReviewResponse {
 
 </ExpansionPanel>
 
-When using your own subgraphs, you will use Rover to publish their schemas from their repos, typically in your CI pipeline. If you have your own existing subgraphs that you want to use instead of these examples, feel free! Provide their names and URLs wherever you see the example subgraphs used in the steps below.
+If you have your own existing subgraphs that you want to use instead of these examples, feel free! Provide their names and URLs wherever you see the example subgraphs used in the steps below.
 
 </blockquote>
 
@@ -350,13 +343,11 @@ To compose a supergraph schema for our router, GraphOS needs the following infor
 
 Fortunately, we have all of this information! Let's send it to GraphOS.
 
-> 💡 **In most supergraphs,** each subgraph schema lives in the codebase for its associated subgraph. Because we're using remotely-hosted example subgraphs in this quickstart, we're saving these subgraph schemas in our router project for convenience.
-
 ## 4. Publish your subgraph schemas
 
-With Rover already configured, we can use the Rover CLI's `subgraph publish` command to publish our subgraph schemas to GraphOS.
+Because we've already configured the Rover CLI, we can now use its `subgraph publish` command to publish our subgraph schemas to GraphOS.
 
-In [Apollo Studio](https://studio.apollographql.com/?referrer=docs-content), click the graph you created back in the first step. Because we haven't published a schema to it yet, the following dialog appears:
+In [GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content), click the graph you created back in the first step. Because we haven't published any schemas to it yet, the following dialog appears:
 
 <img
   src="../../img/register-schema-dialog.jpg"
@@ -365,80 +356,84 @@ In [Apollo Studio](https://studio.apollographql.com/?referrer=docs-content), cli
   width="600"
 />
 
-We're going to use a similar command to the "Introspection" option, but we don't need the `APOLLO_KEY` variable because we configured Rover earlier. If you set up a `--profile` with Rover, be sure to use it here! The first subgraph can be published like this:
+To publish our subgraph schema, we'll first use Rover to **introspect** the running subgraph, then pass the obtained schema to `subgraph publish`.
 
-```bash
-rover subgraph introspect https://flyby-locations-sub.herokuapp.com/ | \
-rover subgraph publish --name locations \
---routing-url https://flyby-locations-sub.herokuapp.com/ \
---schema - <GRAPH_REF>
-```
+1. Copy the following multi-line command into your text editor so you can modify it:
 
-<blockquote>
+    ```bash
+    rover subgraph introspect https://flyby-locations-sub.herokuapp.com/ | \
+    rover subgraph publish --name locations \
+    --routing-url https://flyby-locations-sub.herokuapp.com/ \
+    --schema - <GRAPH_REF>
+    ```
 
-Note that you need to replace `<GRAPH_REF>` above with the appropriate value for _your_ graph. In our screenshot above, this is `MyGraph-1ncyus@current` but **your value will be different**.
+2. In your editor, replace `<GRAPH_REF>` with the appropriate value for _your_ graph. In the screenshot above, this value is `MyGraph-1ncyus@current`, but **your value will be different**.
 
-<ExpansionPanel title="What's a graph ref?">
+    <ExpansionPanel title="What's a graph ref?">
 
-A **graph ref** uniquely identifies a particular **variant** of a particular graph in GraphOS. Every graph ref is a string with the following format:
+    A **graph ref** uniquely identifies a particular **variant** of a particular graph in GraphOS. Every graph ref is a string with the following format:
 
-`graph-id@variant-name`
+    `graph-id@variant-name`
 
-- The value before the `@` is your graph's unique ID in GraphOS.
-- The value after the `@` is the name of the graph variant you're interacting with.
+    - The value before the `@` is your graph's unique ID in GraphOS.
+    - The value after the `@` is the name of the graph variant you're interacting with.
 
-Each **variant** of a graph represents a different _environment_ where that graph runs (such as staging and production). For this quickstart, you can keep the default suggested variant name or change it to anything else you like (e.g., `quickstart`). Just make sure to provide the _same_ graph ref to every command in this quickstart!
+    Each **variant** of a graph represents a different _environment_ where that graph runs (such as staging and production). For this quickstart, you can keep the default suggested variant name or change it to anything else you like (e.g., `quickstart`). Just make sure to provide the _same_ graph ref to every command in this quickstart!
 
-_After_ you've published a schema to a particular variant, that variant's graph ref is always available at the top of its README page:
+    _After_ you've published a schema to a particular variant, that variant's graph ref is always available at the top of its README page:
 
-<img class="screenshot" alt="Graph ref in Studio" src="../../img/studio-graph-ref.jpg" width="300"/>
+    <img class="screenshot" alt="Graph ref in Studio" src="../../img/studio-graph-ref.jpg" width="300"/>
 
-</ExpansionPanel>
+    </ExpansionPanel>
 
-</blockquote>
+3. Paste the modified command into your terminal and run it.
 
-Paste the command into your terminal, replace `<GRAPH_REF>` with your value, and run it. If the command is successful, you'll see output like the following:
+    - **If the command is successful,** you'll see output like the following:
 
-```
-A new subgraph called 'locations' was created in 'docs-example-graph@main'
-The supergraph schema for 'docs-example-graph@main' was updated, composed from the updated 'locations' subgraph
-```
+      ```
+      A new subgraph called 'locations' was created in 'docs-example-graph@main'
+      The supergraph schema for 'docs-example-graph@main' was updated, composed from the updated 'locations' subgraph
+      ```
 
-Nice! If you open your graph's details in Studio now, you'll see types and fields from our `locations` subgraph listed on the Schema page:
+    - **If the command fails,** make sure you've [authenticated Rover with GraphOS](#authenticate-rover-with-graphos). All Rover commands that interact with GraphOS require a valid API key.
 
-<img class="screenshot" alt="Locations subgraph schema in Studio" src="../../img/qs-studio-schema.jpg" width="300"/>
+    If you open your graph's details in Studio now, you'll see types and fields from the Locations subgraph listed on the Schema page:
 
-Next, let's do the same thing for our `reviews` subgraph, **again substituting your graph ref**:
+    <img class="screenshot" alt="Locations subgraph schema in Studio" src="../../img/qs-studio-schema.jpg" width="300"/>
 
-```bash
-rover subgraph introspect https://flyby-reviews-sub.herokuapp.com/ | \
-rover subgraph publish --name reviews \
---routing-url https://flyby-reviews-sub.herokuapp.com/ \
---schema - <GRAPH_REF>
-```
+4. Do the same thing for the Reviews subgraph, **again substituting your graph ref**:
 
-> You only need to provide a subgraph's `--routing-url` the _first_ time you publish that subgraph's schema to a particular variant (unless you need to change that URL later).
+    ```bash
+    rover subgraph introspect https://flyby-reviews-sub.herokuapp.com/ | \
+    rover subgraph publish --name reviews \
+    --routing-url https://flyby-reviews-sub.herokuapp.com/ \
+    --schema - <GRAPH_REF>
+    ```
 
-If you refresh the Schema page in Studio, you'll now see types and fields from our `reviews` service as well.
+    > You only need to provide a subgraph's `--routing-url` the _first_ time you publish that subgraph's schema to a particular variant (unless you need to change that URL later).
+
+    If you refresh the Schema page in Studio, you'll now see types and fields from the Reviews subgraph as well.
 
 Every time we publish a subgraph schema, GraphOS automatically composes _all_ of our subgraph schemas into a **supergraph schema**! However, our router isn't yet _fetching_ that schema from Apollo. We'll tackle that next.
 
 ## 5. Connect the router to GraphOS
 
-It's time to enable our router to fetch its supergraph schema from GraphOS. To do that, we'll need a **graph API key** that we set as the value of an environment variable. We recommend that you create a separate API key for each system that communicates with GraphOS. This reduces the impact whenever you need to _replace_ an API key that might be compromised.
+It's time to enable our router to fetch its supergraph schema from GraphOS. To do that, we need a **graph API key** that we set as the value of an environment variable.
+
+> We recommend that you create a separate API key for each system that communicates with GraphOS. This reduces the impact whenever you need to _replace_ an API key that might be compromised.
 
 1. Obtain a graph API key for your Studio graph by <a href="../api-keys/#graph-api-keys" target="_blank">following these steps</a>. If you have an Enterprise plan, set the API key's role to **Contributor**.
 
     > Make sure to copy and paste the API key's value somewhere so you can reference it (for security, API keys are not visible in Studio after creation).
 
-2. Create a file called `.env` in your Router project and paste in the following (replacing `<API_KEY>` with your graph API key and `<GRAPH_REF>` with your graph ref):
+2. Create a file called `.env` in your Router project and paste in the following (replace `<API_KEY>` with your graph API key and `<GRAPH_REF>` with your graph ref):
 
     ```
     APOLLO_KEY=<API_KEY>
     APOLLO_GRAPH_REF=<GRAPH_REF>
     ```
 
-> ⚠️ **API keys are secret credentials.** Never share them outside your organization or commit them to version control. Delete and replace API keys that you believe are compromised. The provided template has `.env` added to `.gitignore`, if you are not using the template, make sure to add `.env` to your `.gitignore` file.
+> ⚠️ **API keys are secret credentials.** Never share them outside your organization or commit them to version control. Delete and replace API keys that you believe are compromised. Make sure always to add `.env` files to your `.gitignore` file (the router template project already does this).
 
 3. Paste this command into your terminal and run it:
 
@@ -451,7 +446,7 @@ It's time to enable our router to fetch its supergraph schema from GraphOS. To d
     <ExpansionPanel title="Click to expand">
 
     ```
-    INFO Apollo Router v1.3.0 // (c) Apollo Graph, Inc. // Licensed as ELv2 (https://go.apollo.dev/elv2)
+    INFO Apollo Router v1.18.0 // (c) Apollo Graph, Inc. // Licensed as ELv2 (https://go.apollo.dev/elv2)
     INFO Anonymous usage data is gathered to inform Apollo product development.  See https://go.apollo.dev/o/privacy for more info.
     INFO Running with *development* mode settings which facilitate development experience (e.g., introspection enabled)
     INFO Apollo Studio usage reporting is enabled. See https://go.apollo.dev/o/data for details
@@ -475,7 +470,7 @@ While we're here, execute some test queries against the supergraph! We'll look a
 
 Because our router is connected to GraphOS, it automatically collects and reports metrics on incoming operations. You can then visualize those metrics in Studio.
 
-Return to [Apollo Studio](https://studio.apollographql.com?referrer=docs-content) and go to your supergraph variant's Operations page, which looks like this:
+Return to [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content) and go to your supergraph variant's Operations page, which looks like this:
 
 <img
   src="../../img/operations-quickstart.jpg"
@@ -492,7 +487,7 @@ Now that our router is running successfully in our development environment, we c
 The exact details for deploying the router depend on which platform you use, but these high-level steps hold true for most platforms:
 
 1. Build the Docker image in CI and push it to a container registry (some providers let you skip this step).
-2. Deploy the image to your preferred platform (there are [additional resources for Kubernetes deployments](/docs/router/containerization/kubernetes))
+2. Deploy the image to your preferred platform (there are [additional resources for Kubernetes deployments](/router/containerization/kubernetes)).
 3. Set the `APOLLO_KEY` and `APOLLO_GRAPH_REF` environment variables in the router's deployment environment, as we did locally in [this step](#5-connect-the-router-to-graphos).
     - Keep in mind that `APOLLO_KEY` is a secret, so use an appropriate mechanism for storing it in your deployment environment.
 
