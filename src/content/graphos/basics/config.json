@@ -19,9 +19,15 @@
     "Intro to GraphOS": "/",
     "Graphs and variants": "/graphs",
     "API keys": "/api-keys",
-    "Quickstart": {
-      "1. Create your supergraph": "/quickstart/cloud",
-      "2. Next steps": "/quickstart/next-steps"
+    "Get Started": {
+      "Cloud setup": "/quickstart/cloud",
+      "Self-hosted setup": [
+        "/quickstart/self-hosted",
+        [
+          "enterprise"
+        ]
+      ],
+      "Next steps": "/quickstart/next-steps"
     },
     "Building Subgraphs": {
       "Creating a new subgraph": "/graphs/creating-a-subgraph",
@@ -38,12 +44,6 @@
       "Configuring cloud routing": "/routing/cloud-configuration",
       "Self-hosted routing": [
         "/routing/self-hosted",
-        [
-          "enterprise"
-        ]
-      ],
-      "Self-hosted setup": [
-        "/quickstart/self-hosted",
         [
           "enterprise"
         ]
