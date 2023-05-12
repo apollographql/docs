@@ -179,17 +179,18 @@ First, let's create a project directory for your router:
 
 1. Open [this GitHub template](https://github.com/apollographql/router-template). It provides out-of-the box configuration for deploying and running the Apollo Router via a Dockerfile.
 2. On the template page, click **Use this template > Create a new repository** to copy the template into a new repository in your GitHub account.
+    - If you don't use GitHub, you can instead clone the template directly via the **Code** menu.
 3. Clone your new repository to your local machine.
 
 ## 3. Start the router with Docker
 
-To run the Apollo Router locally, you need a way to build and run Docker containers. Here are some popular options:
+To run the Apollo Router locally, you need a way to build and run containers. Here are some popular options:
 
 - [Docker Desktop](https://www.docker.com/products/personal/)
 - [Rancher](https://rancherdesktop.io)
 - [Podman](https://podman.io)
 
-> The rest of this tutorial uses the `docker` command. Alternative commands usually look very similar.
+> This tutorial uses the `docker` command. Alternative commands usually look similar.
 
 Try building and running your router container:
 
@@ -242,13 +243,13 @@ That's because we aren't currently providing a **supergraph schema** to the rout
 <blockquote>
 
 
-This quickstart uses two Apollo-hosted subgraphs (named **Locations** and **Reviews**) from an imaginary space tourism application called FlyBy. Here are their URLs and schemas for reference:
+This quickstart uses two Apollo-hosted subgraphs (named `locations` and `reviews`) from an imaginary space tourism application called FlyBy. Here are their URLs and schemas for reference:
 
-<ExpansionPanel title="Locations">
+<ExpansionPanel title="locations">
 
 URL: `https://flyby-locations-sub.herokuapp.com/`
 
-```graphql title="Locations"
+```graphql title="locations"
 extend schema
   @link(url: "https://specs.apollo.dev/federation/v2.0",
         import: ["@key"])
@@ -273,11 +274,11 @@ type Location @key(fields: "id"){
 
 </ExpansionPanel>
 
-<ExpansionPanel title="Reviews">
+<ExpansionPanel title="reviews">
 
 URL: `https://flyby-reviews-sub.herokuapp.com/`
 
-```graphql title="Reviews"
+```graphql title="reviews"
 extend schema
   @link(url: "https://specs.apollo.dev/federation/v2.0",
         import: ["@key"])
@@ -358,7 +359,7 @@ In [GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content), cl
 
 To publish our subgraph schema, we'll first use Rover to **introspect** the running subgraph, then pass the obtained schema to `subgraph publish`.
 
-1. Copy the following multi-line command into your text editor so you can modify it:
+1. Copy the following multi-line command into your terminal, **but don't run it**—you need to modify it first.
 
     ```bash
     rover subgraph introspect https://flyby-locations-sub.herokuapp.com/ | \
@@ -367,7 +368,7 @@ To publish our subgraph schema, we'll first use Rover to **introspect** the runn
     --schema - <GRAPH_REF>
     ```
 
-2. In your editor, replace `<GRAPH_REF>` with the appropriate value for _your_ graph. In the screenshot above, this value is `MyGraph-1ncyus@current`, but **your value will be different**.
+2. In your terminal, replace the final value `<GRAPH_REF>` with the appropriate value for _your_ graph. In the screenshot above, this value is `MyGraph-1ncyus@current`, but **your value will be different**.
 
     <ExpansionPanel title="What's a graph ref?">
 
@@ -386,7 +387,7 @@ To publish our subgraph schema, we'll first use Rover to **introspect** the runn
 
     </ExpansionPanel>
 
-3. Paste the modified command into your terminal and run it.
+3. Run the modified command.
 
     - **If the command is successful,** you'll see output like the following:
 
@@ -397,11 +398,11 @@ To publish our subgraph schema, we'll first use Rover to **introspect** the runn
 
     - **If the command fails,** make sure you've [authenticated Rover with GraphOS](#authenticate-rover-with-graphos). All Rover commands that interact with GraphOS require a valid API key.
 
-    If you open your graph's details in Studio now, you'll see types and fields from the Locations subgraph listed on the Schema page:
+    If you open your graph's details in Studio now, you'll see types and fields from the `locations` subgraph listed on the Schema page:
 
-    <img class="screenshot" alt="Locations subgraph schema in Studio" src="../../img/qs-studio-schema.jpg" width="300"/>
+    <img class="screenshot" alt="locations subgraph schema in Studio" src="../../img/qs-studio-schema.jpg" width="300"/>
 
-4. Do the same thing for the Reviews subgraph, **again substituting your graph ref**:
+4. Do the same thing for the `reviews` subgraph, **again substituting your graph ref**:
 
     ```bash
     rover subgraph introspect https://flyby-reviews-sub.herokuapp.com/ | \
@@ -412,7 +413,7 @@ To publish our subgraph schema, we'll first use Rover to **introspect** the runn
 
     > You only need to provide a subgraph's `--routing-url` the _first_ time you publish that subgraph's schema to a particular variant (unless you need to change that URL later).
 
-    If you refresh the Schema page in Studio, you'll now see types and fields from the Reviews subgraph as well.
+    If you refresh the Schema page in Studio, you'll now see types and fields from the `reviews` subgraph as well.
 
 Every time we publish a subgraph schema, GraphOS automatically composes _all_ of our subgraph schemas into a **supergraph schema**! However, our router isn't yet _fetching_ that schema from Apollo. We'll tackle that next.
 
