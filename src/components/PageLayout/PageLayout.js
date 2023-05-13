@@ -3,7 +3,7 @@ import Footer from '../Footer';
 import Header from '../Header';
 import MobileNav from '../MobileNav';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Sidebar, {
   DefaultSidebarNav,
   PAGE_SIDEBAR_MARGIN,
@@ -24,6 +24,15 @@ export const PAGE_FOOTER_HEIGHT = 56;
 
 export function PageLayout({pageContext, children, location, data}) {
   const [sidebarHidden, setSidebarHidden] = useLocalStorage('sidebar');
+  const [sidebarLocked, setSidebarLocked] = useLocalStorage(
+    'sidebar:locked',
+    false
+  );
+
+  const lockProps = {
+    isLocked: sidebarLocked,
+    onLockToggle: () => setSidebarLocked(!sidebarLocked)
+  };
 
   const hideSidebar = () => setSidebarHidden(true);
 
@@ -43,11 +52,18 @@ export function PageLayout({pageContext, children, location, data}) {
       onVersionChange={version => {
         navigate(`/${version.slug}`);
       }}
+      {...lockProps}
     />
   );
 
+  const [now, setNow] = useState(Date.now());
+
+  useEffect(() => {
+    setNow(Date.now());
+  }, []);
+
   return (
-    <PageWidthProvider>
+    <PageWidthProvider key={now}>
       <PathContext.Provider
         value={{
           uri: pathname,
@@ -58,10 +74,16 @@ export function PageLayout({pageContext, children, location, data}) {
         <Header algoliaFilters={algoliaFilters}>
           <MobileNav isInternal={internal} />
         </Header>
-        <Sidebar isHidden={sidebarHidden} hideSidebar={hideSidebar}>
+        <Sidebar
+          isHidden={sidebarHidden}
+          hideSidebar={hideSidebar}
+          {...lockProps}
+        >
           {internal ? (
             <AuthCheck
-              fallback={<DefaultSidebarNav hideSidebar={hideSidebar} />}
+              fallback={
+                <DefaultSidebarNav hideSidebar={hideSidebar} {...lockProps} />
+              }
             >
               {sidebarNav}
             </AuthCheck>
@@ -81,7 +103,7 @@ export function PageLayout({pageContext, children, location, data}) {
           <Footer />
         </Box>
         <Fade in={sidebarHidden} unmountOnExit delay={0.25}>
-          <Tooltip placement="right" label="Show sidebar">
+          <Tooltip placement="right" label="Show navigation">
             <IconButton
               d={{base: 'none', md: 'flex'}}
               pos="fixed"
