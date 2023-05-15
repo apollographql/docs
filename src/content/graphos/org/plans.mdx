@@ -2,13 +2,20 @@
 title: Managing your Apollo plan
 ---
 
-Every Apollo organization has an associated [plan](https://apollographql.com/pricing) that determines which GraphOS features the organization has access to, along with how it's billed.
+Every Apollo organization has an associated plan that determines which GraphOS features the organization has access to, along with how it's billed.
 
-> Every newly created organization starts on the **Serverless (Free)** plan, which is free.
+<blockquote>
 
-You can check your organization's current plan in Apollo Studio. From your organization's page, go to the **Settings** tab and scroll down to the **Plan and Billing** section:
+**Every newly created organization starts on one of the following:**
 
-<img class="screenshot" alt="The Plan and Billing section in Apollo Studio" src="../img/plan-and-billing.jpg" />
+- The [**Serverless (Free)**](#current-plans) plan
+- A free [Enterprise trial](#enterprise-trials) (which enables you to test out most GraphOS Enterprise features)
+
+</blockquote>
+
+You can check your organization's current plan in GraphOS Studio. From your organization's page, go to the **Settings** tab and scroll down to the **Plan and Billing** section:
+
+<img class="screenshot" alt="The Plan and Billing section in GraphOS Studio" src="../img/plan-and-billing.jpg" />
 
 ## Current plans
 
@@ -20,11 +27,49 @@ Apollo offers the following plans to new organizations:
 |------|-------------|
 | **Serverless (Free)** | Provides access to serverless [cloud supergraphs](../graphs/#cloud-supergraphs), along with many other GraphOS features. Sets a fixed limit on monthly serverless operations. This plan is free. |
 | **Serverless** | Removes the operation limit included in the **Serverless (Free)** plan, and is billed based on usage _above_ that limit. Also expands metrics data retention. |
-| **Enterprise** | These plans feature advanced security and schema delivery features, access control, audit logs, and more. They include negotiable usage rates. They do _not_ currently support cloud supergraphs. |
+| **Enterprise** | These plans feature self-hosted routing, advanced security and schema delivery features, access control, and more. They include negotiable usage rates. They do _not_ currently support cloud supergraphs. You can try out most Enterprise features for free with an [Enterprise trial](#enterprise-trials). |
 
-> The Enterprise plan gives you access to all GraphOS enterprise features, our Graph Champions community, and a dedicated support channel for your team to talk with Apollo supergraph experts. We will work with you to customize a query volume limit and support package that's right for you.
+> An Enterprise plan provides access to all GraphOS Enterprise features, our Graph Champions community, and a dedicated support channel for your team to talk with Apollo supergraph experts. We'll work with you to customize a query volume limit and support package that's right for you.
 >
-> If you're interested in an Enterprise plan, please [get in touch with us!](https://www.apollographql.com/contact-sales/)
+> If you're interested in an Enterprise plan, please [get in touch!](https://www.apollographql.com/contact-sales/)
+
+### Enterprise trials
+
+You can sign up for a GraphOS Enterprise trial to freely test out _most_ [GraphOS Enterprise features](../#enterprise-features) (including [creating a self-hosted supergraph](../quickstart/self-hosted/)) for the duration of the trial period.
+
+> The Enterprise trial period is **28 days**.
+
+<p>
+  <ButtonLink
+    size="lg"
+    colorScheme="indigo"
+    href="https://studio.apollographql.com/signup?type=enterprise-trial"
+  >
+    Start an Enterprise trial
+  </ButtonLink>
+</p>
+
+With an Enterprise trial, you create a _new_ GraphOS organization that behaves identically to a full Enterprise organization, _except_ the following features are unavailable:
+
+- Single sign-on (SSO)
+
+You can identify your trial organization in [GraphOS Studio](https://studio.apollographql.com) by the `ENTERPRISE TRIAL` label next to its name in the upper left:
+
+<img class="screenshot" alt="Label applied to Enterprise orgs in Studio" src="../img/trial-org-label.jpg" width="500" />
+
+Studio also displays how many days remain in your trial in the upper right:
+
+<img class="screenshot" alt="Enterprise trial duration indicator in Studio" src="../img/trial-org-timeleft.jpg" width="500" />
+
+In the final few days of your trial period, Studio displays an additional notification banner.
+
+At the end of the trial, you can contact Apollo to upgrade your organization to a full Enterprise organization. **If you don't, the organization becomes _locked_** ([see details](#ending-a-trial)).
+
+#### Ending a trial
+
+When your Enterprise trial period ends, your trial organization becomes _locked_ unless you contact Apollo to upgrade to a full Enterprise organization (you can upgrade any time before _or_ after the trial period ends).
+
+You can't access a locked organization from GraphOS Studio, and GraphOS stops serving supergraph schemas and [Enterprise entitlements](/router/enterprise-features#the-enterprise-entitlement) to your [self-hosted routers](../routing/self-hosted/).
 
 ## Legacy plans
 
@@ -36,7 +81,7 @@ If you have a non-Enterprise Apollo organization that was created before **4 Oct
 
 | Plan | Description |
 |------|-------------|
-| **Free** | Our legacy free plan, not to be confused with the current **Serverless (Free)** plan. Provides basic GraphOS features, with _very_ limited data retention and maximum query volume. |
+| **Free** | Our legacy free plan, different from the current **Serverless (Free)** plan. Provides basic GraphOS features, with _very_ limited data retention and maximum query volume. |
 | **Team** | Our legacy plan for small and medium teams, which is billed based on the number of team members (i.e., seat-based). Raises the retention and query volume limits from the **Free** plan, but does not _remove_ them. |
 
 ### Upgrading to a current plan

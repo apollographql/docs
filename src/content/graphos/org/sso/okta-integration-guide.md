@@ -2,7 +2,7 @@
 title: Setting up Apollo SSO with Okta
 ---
 
-> ⚠️ Single sign-on (SSO) is available only for [Enterprise plans](https://www.apollographql.com/pricing/).
+> ⚠️ **Single sign-on (SSO) is available only for [Enterprise plans](https://www.apollographql.com/pricing/).** Unlike most Enterprise features, this feature is _not_ available as part of an [Enterprise trial](../plans/#enterprise-trials).
 
 This guide walks through configuring Okta as your Apollo organization's identity provider (IdP) for single sign-on (SSO). These steps require an Okta account with administrator privileges.
 
