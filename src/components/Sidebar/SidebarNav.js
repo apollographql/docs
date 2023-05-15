@@ -2,7 +2,7 @@ import NavItems, {GA_EVENT_CATEGORY_SIDEBAR, NavContext} from './NavItems';
 import PropTypes from 'prop-types';
 import React, {forwardRef, useImperativeHandle, useMemo, useRef} from 'react';
 import useLocalStorage from 'react-use/lib/useLocalStorage';
-import {BsChevronContract, BsChevronExpand} from 'react-icons/bs';
+import {BiCollapseVertical, BiExpandVertical} from 'react-icons/bi';
 import {
   Button,
   Flex,
@@ -174,8 +174,8 @@ const SidebarNav = forwardRef(
             height: PAGE_FOOTER_HEIGHT
           }}
         >
-          <chakra.span fontWeight="semibold">Navigation tools</chakra.span>
-          <HStack ml="auto">
+          <chakra.span fontWeight="semibold">Navigation controls</chakra.span>
+          <HStack spacing="1" ml="auto">
             {navGroups.length > 0 && (
               <Tooltip
                 label={`${
@@ -186,9 +186,9 @@ const SidebarNav = forwardRef(
                   <SidebarButton
                     icon={
                       isAllExpanded ? (
-                        <BsChevronContract />
+                        <BiCollapseVertical />
                       ) : (
-                        <BsChevronExpand />
+                        <BiExpandVertical />
                       )
                     }
                     onClick={event => {
