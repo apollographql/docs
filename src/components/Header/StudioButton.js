@@ -23,7 +23,9 @@ export default function StudioButton() {
       rel="noopener noreferrer"
       d={{base: 'none', lg: 'flex'}}
       onClick={() => {
-        window.gtag?.('event', 'studio_button_click');
+        window.gtag?.('event', 'studio_button_click', {
+          value: user ? 1 : 0
+        });
       }}
     >
       Launch GraphOS Studio
