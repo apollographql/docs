@@ -32,8 +32,7 @@ import {
   Thead,
   Tr,
   UnorderedList,
-  chakra,
-  useBreakpointValue
+  chakra
 } from '@chakra-ui/react';
 import {
   EmbeddableExplorer,
