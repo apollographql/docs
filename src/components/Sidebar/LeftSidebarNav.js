@@ -33,7 +33,8 @@ export function LeftSidebarNav(props) {
         bgColor: 'gray.900'
       }}
       flexShrink="0"
-      overflow="auto"
+      overflowY="auto"
+      overflowX="hidden"
       overscrollBehavior="none"
       {...props}
     >

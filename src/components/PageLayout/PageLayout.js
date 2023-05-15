@@ -107,12 +107,12 @@ export function PageLayout({pageContext, children, location, data}) {
             <IconButton
               d={{base: 'none', md: 'flex'}}
               pos="fixed"
-              mb="2"
-              css={{bottom: PAGE_FOOTER_HEIGHT}}
-              left="2"
+              css={{bottom: PAGE_FOOTER_HEIGHT / 2}}
+              transform="translateY(50%)"
+              left="3"
               size="sm"
               variant="outline"
-              fontSize="md"
+              fontSize="lg"
               icon={<FiChevronsRight />}
               onClick={() => setSidebarHidden(false)}
             />

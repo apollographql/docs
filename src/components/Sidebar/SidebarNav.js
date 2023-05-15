@@ -2,17 +2,17 @@ import NavItems, {GA_EVENT_CATEGORY_SIDEBAR, NavContext} from './NavItems';
 import PropTypes from 'prop-types';
 import React, {forwardRef, useImperativeHandle, useMemo, useRef} from 'react';
 import useLocalStorage from 'react-use/lib/useLocalStorage';
-import {BsChevronContract, BsChevronExpand} from 'react-icons/bs';
+import {BiCollapseVertical, BiExpandVertical} from 'react-icons/bi';
 import {
   Button,
   Flex,
+  HStack,
   IconButton,
   Menu,
   MenuButton,
   MenuItemOption,
   MenuList,
   MenuOptionGroup,
-  Stack,
   Tooltip,
   chakra
 } from '@chakra-ui/react';
@@ -23,10 +23,11 @@ import {
   FiLock,
   FiUnlock
 } from 'react-icons/fi';
+import {PAGE_FOOTER_HEIGHT} from '../PageLayout';
 import {flattenNavItems} from '../../utils';
 
 const SidebarButton = props => (
-  <IconButton size="xs" fontSize="md" variant="outline" {...props} />
+  <IconButton size="sm" fontSize="lg" variant="ghost" {...props} />
 );
 
 const SidebarNav = forwardRef(
@@ -159,63 +160,81 @@ const SidebarNav = forwardRef(
             <NavItems items={navItems} />
           </chakra.nav>
         </NavContext.Provider>
-        <Stack spacing="1" pos="absolute" bottom="1" right="1">
-          {navGroups.length > 0 && (
-            <Tooltip
-              placement="right"
-              label={`${isAllExpanded ? 'Collapse' : 'Expand'} all categories`}
-            >
-              <div>
-                <SidebarButton
-                  icon={
-                    isAllExpanded ? <BsChevronContract /> : <BsChevronExpand />
-                  }
-                  onClick={event => {
-                    event.stopPropagation();
-
-                    const expanded = !isAllExpanded;
-                    setLocalNavState(
-                      navGroups.reduce(
-                        (acc, group) => ({
-                          ...acc,
-                          [group.id]: expanded
-                        }),
-                        {}
+        <Flex
+          align="center"
+          mt="auto"
+          flexShrink={0}
+          pos="sticky"
+          bottom="0"
+          pl="4"
+          pr="2"
+          bg="bg"
+          borderTopWidth={1}
+          css={{
+            height: PAGE_FOOTER_HEIGHT
+          }}
+        >
+          <chakra.span fontWeight="semibold">Navigation controls</chakra.span>
+          <HStack spacing="1" ml="auto">
+            {navGroups.length > 0 && (
+              <Tooltip
+                label={`${
+                  isAllExpanded ? 'Collapse' : 'Expand'
+                } all categories`}
+              >
+                <div>
+                  <SidebarButton
+                    icon={
+                      isAllExpanded ? (
+                        <BiCollapseVertical />
+                      ) : (
+                        <BiExpandVertical />
                       )
-                    );
-                    window.gtag?.('event', 'Toggle all', {
-                      event_category: GA_EVENT_CATEGORY_SIDEBAR,
-                      event_label: expanded ? 'expand' : 'collapse'
-                    });
-                  }}
-                />
-              </div>
-            </Tooltip>
-          )}
-          {hideSidebar && (
-            <Tooltip placement="right" label="Hide navigation">
-              <div>
-                <SidebarButton
-                  onClick={hideSidebar}
-                  icon={<FiChevronsLeft />}
-                />
-              </div>
-            </Tooltip>
-          )}
-          {onLockToggle && (
-            <Tooltip
-              placement="right"
-              label={`${isLocked ? 'Unlock' : 'Lock'} sidebar`}
-            >
-              <div>
-                <SidebarButton
-                  icon={isLocked ? <FiLock /> : <FiUnlock />}
-                  onClick={onLockToggle}
-                />
-              </div>
-            </Tooltip>
-          )}
-        </Stack>
+                    }
+                    onClick={event => {
+                      event.stopPropagation();
+
+                      const expanded = !isAllExpanded;
+                      setLocalNavState(
+                        navGroups.reduce(
+                          (acc, group) => ({
+                            ...acc,
+                            [group.id]: expanded
+                          }),
+                          {}
+                        )
+                      );
+                      window.gtag?.('event', 'Toggle all', {
+                        event_category: GA_EVENT_CATEGORY_SIDEBAR,
+                        event_label: expanded ? 'expand' : 'collapse'
+                      });
+                    }}
+                  />
+                </div>
+              </Tooltip>
+            )}
+            {hideSidebar && (
+              <Tooltip label="Hide navigation">
+                <div>
+                  <SidebarButton
+                    onClick={hideSidebar}
+                    icon={<FiChevronsLeft />}
+                  />
+                </div>
+              </Tooltip>
+            )}
+            {onLockToggle && (
+              <Tooltip label={`${isLocked ? 'Unlock' : 'Lock'} sidebar`}>
+                <div>
+                  <SidebarButton
+                    icon={isLocked ? <FiLock /> : <FiUnlock />}
+                    onClick={onLockToggle}
+                  />
+                </div>
+              </Tooltip>
+            )}
+          </HStack>
+        </Flex>
       </Flex>
     );
   }
