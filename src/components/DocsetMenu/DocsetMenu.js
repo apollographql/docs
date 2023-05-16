@@ -18,7 +18,7 @@ import {
   Stack,
   useDisclosure
 } from '@chakra-ui/react';
-import {BsFileEarmarkCheck, BsListOl} from 'react-icons/bs';
+import {BsListOl} from 'react-icons/bs';
 import {ReactComponent as Explorer} from '../../assets/icons/explorer.svg';
 import {ReactComponent as Federation} from '../../assets/icons/federation.svg';
 import {FiChevronDown, FiGrid} from 'react-icons/fi';
@@ -26,11 +26,12 @@ import {Link as GatsbyLink} from 'gatsby';
 import {GoTerminal} from 'react-icons/go';
 import {IoDocumentTextOutline, IoRocketSharp} from 'react-icons/io5';
 import {ReactComponent as Router} from '../../assets/icons/router.svg';
+import {RxComponent1} from 'react-icons/rx';
 import {ReactComponent as Satellite} from '../../assets/icons/satellite.svg';
 import {ReactComponent as Schema} from '../../assets/icons/schema.svg';
 import {SiKotlin, SiReact, SiSwift} from 'react-icons/si';
 import {SlChart} from 'react-icons/sl';
-import {TbComponents, TbRoute} from 'react-icons/tb';
+import {TbRoute} from 'react-icons/tb';
 import {VscOrganization} from 'react-icons/vsc';
 
 const CustomIcon = ({icon}) => <Box fill="current" boxSize="1em" as={icon} />;
@@ -55,7 +56,7 @@ export const DOCSET_ICONS = {
   org: <VscOrganization />,
   delivery: <TbRoute />,
   explorer: <CustomIcon icon={Explorer} />,
-  enterprise: <TbComponents />,
+  enterprise: <RxComponent1 />,
   principled: <BsListOl />
 };
 
