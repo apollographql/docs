@@ -296,7 +296,10 @@ export default function Page({file}) {
           },
           'img.screenshot': {
             shadow: 'md',
-            rounded: 'md'
+            rounded: 'md',
+            _dark: {
+              shadow: 'dark-lg'
+            }
           },
           table: {
             td: {

@@ -143,6 +143,9 @@ export function Sidebar({
               : `translateX(-${SIDEBAR_WIDTH - COLLAPSED_SIDEBAR_WIDTH}px)`
           }
           shadow={sidebarOpen ? 'xl' : 'none'}
+          _dark={{
+            shadow: sidebarOpen ? 'dark-lg' : 'none'
+          }}
           transitionProperty="transform"
           transitionDuration="normal"
           transitionTimingFunction="ease-in-out"
