@@ -49,7 +49,15 @@ type User {
 
 #### `RESTY_FIELD_NAMES`
 
-Field names of the `Query` and `Mutation` types should never include HTTP verbs (`get`, `post`, and so on).
+A field's name should never start with any of the following verbs:
+
+- `get`
+- `list`
+- `post`
+- `put`
+- `patch`
+
+> Most fields should not start with _any_ verb, with the exception of `Mutation` fields. For `Mutation` fields, use a verb that more specifically describes the action being performed (such as `create`, `delete`, or `edit`).
 
 <p style="margin-bottom: 0">❌</p>
 
@@ -308,7 +316,7 @@ enum AmenityType {
 ```graphql
 enum AmenityType {
   # highlight-start
-  PUBLIC_PARK # SCREAMING_SNAKE_CASE
+  PUBLIC_PARK # SCREAMING_SNAKE_CASE 😱
   # highlight-end
 }
 ```
@@ -429,10 +437,6 @@ type Query {
 }
 ```
 
-
-
-
-
 ## Directives
 
 #### `DIRECTIVE_NAMES_SHOULD_BE_CAMEL_CASE`
@@ -507,28 +511,14 @@ type Product {
 
 The `@tag` directive should always use a GraphOS-registered value for its `name` argument.
 
+## Other
 
+#### `UNKNOWN`
 
-**Rule name:**
-`UNKNOWN`
+The linter returned an unknown error.
 
-**Description:**
-Unknown error returned by linter.
+<hr/>
 
-**Example:**
+#### `UNRECOGNIZED`
 
-```graphql
-
-```
-
-**Rule name:**
-`UNRECOGNIZED`
-
-**Description:**
-Unrecognized error returned by linter.
-
-**Example:**
-
-```graphql
-
-```
+The linter returned an unrecognized error.
