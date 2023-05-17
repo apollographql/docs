@@ -1,5 +1,5 @@
 {
-  "title": "Schema Delivery",
+  "title": "Schema Pipeline",
   "algoliaFilters": [
     [
       "docset:graphos",
@@ -17,16 +17,20 @@
   ],
   "sidebar": {
     "Publishing schemas": "/",
-    "Schema checks": "/schema-checks",
-    "Configuring schema checks": "/check-configurations",
-    "Launches": "/launches",
-    "Contracts": [
-      "/contracts",
-      [
-        "enterprise"
+    "Validation": {
+      "Schema checks": "/schema-checks",
+      "Configuring schema checks": "/check-configurations",
+      "Connecting to GitHub": "/github-integration",
+      "Validating client operations": "/validating-client-operations"
+    },
+    "Delivery": {
+      "Launches": "/launches",
+      "Contracts": [
+        "/contracts",
+        [
+          "enterprise"
+        ]
       ]
-    ],
-    "Validating client operations": "/validating-client-operations",
-    "Connecting to GitHub": "/github-integration"
+    }
   }
 }
