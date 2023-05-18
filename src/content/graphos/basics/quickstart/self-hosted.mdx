@@ -3,6 +3,8 @@ title: Setting up a self-hosted supergraph
 description: Host your enterprise router in your own infrastructure
 ---
 
+import ObtainGraphApiKey from '../../../shared/obtain-graph-api-key.mdx';
+
 > **Self-hosted supergraphs are an Enterprise feature** for organizations with advanced performance or compliance requirements.
 >
 > If your organization might benefit from [Enterprise features](../enterprise/), please [get in touch with us!](https://www.apollographql.com/contact-sales/)
@@ -357,7 +359,7 @@ In [GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content), cl
 
 To publish our subgraph schema, we'll first use Rover to **introspect** the running subgraph, then pass the obtained schema to `subgraph publish`.
 
-1. Copy the following multi-line command into your terminal, **but don't run it**—you need to modify it first.
+1. Paste the following multi-line command into your terminal, **but don't run it**—you need to modify it first.
 
     ```bash
     rover subgraph introspect https://flyby-locations-sub.herokuapp.com/ | \
@@ -421,7 +423,14 @@ It's time to enable our router to fetch its supergraph schema from GraphOS. To d
 
 > We recommend that you create a separate API key for each system that communicates with GraphOS. This reduces the impact whenever you need to _replace_ an API key that might be compromised.
 
-1. Obtain a graph API key for your Studio graph by <a href="../api-keys/#graph-api-keys" target="_blank">following these steps</a>. If you have an Enterprise plan, set the API key's role to **Contributor**.
+1. Obtain a graph API key for your Studio graph by following these steps:
+
+    <ObtainGraphApiKey />
+
+    **If you have an Enterprise plan,** set the API key's role according to the following:
+
+    - If your router will use a [protected variant](../graphs/studio-features/#protected-variants-enterprise-only), choose **Graph Admin**.
+    - Otherwise, choose **Contributor**.
 
     > Make sure to copy and paste the API key's value somewhere so you can reference it (for security, API keys are not visible in Studio after creation).
 
@@ -432,7 +441,7 @@ It's time to enable our router to fetch its supergraph schema from GraphOS. To d
     APOLLO_GRAPH_REF=<GRAPH_REF>
     ```
 
-> ⚠️ **API keys are secret credentials.** Never share them outside your organization or commit them to version control. Delete and replace API keys that you believe are compromised. Make sure always to add `.env` files to your `.gitignore` file (the router template project already does this).
+    > ⚠️ **API keys are secret credentials.** Never share them outside your organization or commit them to version control. Delete and replace API keys that you believe are compromised. Make sure always to add `.env` files to your `.gitignore` file (the router template project already does this).
 
 3. Paste this command into your terminal and run it:
 
