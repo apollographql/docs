@@ -248,6 +248,22 @@ If you would like an icon with a tooltip for any use case across the sidebar nav
 
 We currently support tags for `enterprise`, `preview` & `experimental`.
 
+### Default sidebar category state
+
+By default, all sidebar categories are shown as open on initial page load. You can affect the default open/closed state of any sidebar category by placing your category config within a tuple, similar to the technique above. The first element is the category configuration object, and the second element is a boolean. If the second element is `true`, that category will be collapsed by default.
+
+```json
+{
+  "Release Policies": [
+    {
+      "Product launch stages": "/resources/product-launch-stages",
+      "Elastic License v2 FAQ": "/resources/elastic-license-v2-faq"
+    },
+    true
+  ]
+}
+```
+
 ### Redirect rules
 
 Redirects can continue to be written in the `_redirects` file in the `docs/source` directory of each docset. These redirects can be written in the [Netlify redirects syntax](https://docs.netlify.com/routing/redirects/#syntax-for-the-redirects-file), but come with one catch. The `from` path must be relative to the root of the particular docset that the redirect pertains to, but the `to` path must be relative to the root of the `apollographql.com` domain. That means that the path you want to redirect the user to must include the `/docs` path prefix to redirect to a page in the docs.

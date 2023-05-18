@@ -64,7 +64,7 @@ const SidebarNav = forwardRef(
         navGroups.reduce(
           (acc, group) => ({
             ...acc,
-            [group.id]: true
+            [group.id]: !group.isDefaultCollapsed
           }),
           {}
         ),
