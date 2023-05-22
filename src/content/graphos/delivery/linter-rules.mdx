@@ -3,7 +3,7 @@ title: GraphOS schema linter rules
 description: Reference
 ---
 
-This reference describes the rules that you can enforce with [GraphOS schema linting](./schema-linter/), along with the code that GraphOS returns for each rule violation.
+This reference lists the rules that you can enforce with [GraphOS schema linting](./schema-linter/), along with the code that GraphOS returns for each rule violation.
 
 Rules are categorized by the part(s) of your schema that they correspond to.
 
@@ -304,7 +304,7 @@ Enum values should always use `SCREAMING_SNAKE_CASE`.
 <p style="margin-bottom: 0">❌</p>
 
 ```graphql
-enum AmenityType {
+enum Amenity {
   # highlight-start
   public_park # snake_case
   # highlight-end
@@ -314,7 +314,7 @@ enum AmenityType {
 <p style="margin-bottom: 0">✅</p>
 
 ```graphql
-enum AmenityType {
+enum Amenity {
   # highlight-start
   PUBLIC_PARK # SCREAMING_SNAKE_CASE 😱
   # highlight-end
@@ -330,7 +330,7 @@ An enum type's name should never use the prefix `Enum`.
 <p style="margin-bottom: 0">❌</p>
 
 ```graphql
-enum EnumResidenceType { # highlight-line
+enum EnumResidence { # highlight-line
   HOUSE
   APARTMENT
   CONDO
@@ -340,7 +340,7 @@ enum EnumResidenceType { # highlight-line
 <p style="margin-bottom: 0">✅</p>
 
 ```graphql
-enum ResidenceType { # highlight-line
+enum Residence { # highlight-line
   HOUSE
   APARTMENT
   CONDO
@@ -356,7 +356,7 @@ An enum type's name should never use the suffix `Enum`.
 <p style="margin-bottom: 0">❌</p>
 
 ```graphql
-enum ResidenceTypeEnum { # highlight-line
+enum ResidenceEnum { # highlight-line
   HOUSE
   APARTMENT
   CONDO
@@ -366,7 +366,7 @@ enum ResidenceTypeEnum { # highlight-line
 <p style="margin-bottom: 0">✅</p>
 
 ```graphql
-enum ResidenceType { # highlight-line
+enum Residence { # highlight-line
   HOUSE
   APARTMENT
   CONDO
@@ -500,7 +500,7 @@ type Product {
 
 ```graphql
 type Product {
-  title: String @deprecated(reason: "Use name instead") #highlight-line
+  title: String @deprecated(reason: "Use Product.name instead") #highlight-line
   name: String!
 }
 ```
@@ -509,10 +509,4 @@ type Product {
 
 #### `TAG_DIRECTIVE_USES_UNKNOWN_NAME`
 
-The `@tag` directive should always use a GraphOS-registered value for its `name` argument.
-
-## Other
-
-#### `UNRECOGNIZED`
-
-The linter returned an unrecognized linter violation code.
+The `@tag` directive should always use a registered value for its `name` argument.
