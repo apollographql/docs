@@ -52,6 +52,7 @@ const headComponents = [
 //   );
 // }
 
-export const onRenderBody = ({setHeadComponents}) => {
+export const onRenderBody = ({setHeadComponents, setHtmlAttributes}) => {
   setHeadComponents(headComponents);
+  setHtmlAttributes({lang: 'en'});
 };

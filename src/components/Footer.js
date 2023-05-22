@@ -26,7 +26,12 @@ export default function Footer() {
       <div>
         <Flex mb="2">
           <a href="https://www.apollographql.com">
-            <Box as={ApolloLogo} fill="current" h="8" />
+            <Box
+              as={ApolloLogo}
+              aria-label="apollo-logo"
+              fill="current"
+              h="8"
+            />
           </a>
         </Flex>
         <Text>&copy; Apollo Graph Inc.</Text>

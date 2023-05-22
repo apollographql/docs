@@ -184,6 +184,9 @@ const SidebarNav = forwardRef(
               >
                 <div>
                   <SidebarButton
+                    aria-label={`${
+                      isAllExpanded ? 'Collapse' : 'Expand'
+                    } all categories`}
                     icon={
                       isAllExpanded ? (
                         <BiCollapseVertical />
@@ -217,6 +220,7 @@ const SidebarNav = forwardRef(
               <Tooltip label="Hide navigation">
                 <div>
                   <SidebarButton
+                    aria-label="Hide navigation"
                     onClick={hideSidebar}
                     icon={<FiChevronsLeft />}
                   />
@@ -227,6 +231,7 @@ const SidebarNav = forwardRef(
               <Tooltip label={`${isLocked ? 'Unlock' : 'Lock'} sidebar`}>
                 <div>
                   <SidebarButton
+                    aria-label={`${isLocked ? 'Unlock' : 'Lock'} sidebar`}
                     icon={isLocked ? <FiLock /> : <FiUnlock />}
                     onClick={onLockToggle}
                   />

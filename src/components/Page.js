@@ -224,6 +224,7 @@ export default function Page({file}) {
 
     return (
       <Button
+        aria-label="Edit on GitHub"
         as="a"
         href={`${repo}/${join(...repoPath)}`}
         variant="link"
@@ -428,6 +429,7 @@ export default function Page({file}) {
         <FeedbackButton title={title} />
         {editOnGitHub}
         <Button
+          aria-label="Ask a question on our forums"
           as="a"
           href="https://community.apollographql.com/"
           variant="link"
@@ -440,6 +442,7 @@ export default function Page({file}) {
           Forums
         </Button>
         <Button
+          aria-label="Join our Discord server"
           as="a"
           href="https://discord.gg/yFZJH2QYrK"
           variant="link"
