@@ -8,6 +8,7 @@ export const FeedbackButton = ({title}) => {
   const {user} = useUser();
   return (
     <Button
+      aria-label="rate this article"
       onClick={() => {
         window.freddyWidget?.show({
           custom_fields: {

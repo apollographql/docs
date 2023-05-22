@@ -128,6 +128,7 @@ export function Header({children, algoliaFilters}) {
             }
           >
             <IconButton
+              aria-label="Toggle page width"
               fontSize="xl"
               variant="ghost"
               onClick={togglePageWidth}
@@ -154,6 +155,7 @@ export function Header({children, algoliaFilters}) {
           }
         >
           <IconButton
+            aria-label="Toggle color mode"
             fontSize="xl"
             variant="ghost"
             onClick={toggleColorMode}
