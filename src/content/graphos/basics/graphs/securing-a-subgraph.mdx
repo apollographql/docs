@@ -35,13 +35,13 @@ headers:
     products:
       request:
         - insert:
-          name: 'Router-Authorization'
-          value: '${env.PRODUCTS_SUBGRAPH_SECRET}'
+            name: 'Router-Authorization'
+            value: '${env.PRODUCTS_SUBGRAPH_SECRET}'
     users:
       request:
         - insert:
-          name: 'Router-Authorization'
-          value: '${env.USERS_SUBGRAPH_SECRET}'
+            name: 'Router-Authorization'
+            value: '${env.USERS_SUBGRAPH_SECRET}'
 ```
 
 ## 3. Configure the subgraph to require the secret
