@@ -49,6 +49,7 @@
     "gatsby": "4.24.8",
     "gatsby-plugin-algolia": "^0.24.0",
     "gatsby-plugin-apollo": "^4.0.2",
+    "gatsby-plugin-apollo-onetrust": "git+https://github.com/apollographql/gatsby-plugin-apollo-onetrust.git#main",
     "gatsby-plugin-env-variables": "^2.2.0",
     "gatsby-plugin-google-gtag": "^4.3.0",
     "gatsby-plugin-google-tagmanager": "^4.3.0",
