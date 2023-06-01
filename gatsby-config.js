@@ -9,6 +9,8 @@ const yaml = require('js-yaml');
 const fs = require('fs');
 const remoteSources = require('./sources/remote');
 
+const isProduction = process.env.CONTEXT === 'production';
+
 const gatsbyRemarkPlugins = [
   '@fec/remark-a11y-emoji/gatsby',
   'gatsby-remark-mermaid',
@@ -154,6 +156,15 @@ const plugins = [
     options: {
       include: /\.mdx?$/i,
       ignore: /README/i
+    }
+  },
+  {
+    resolve: 'gatsby-plugin-apollo-onetrust',
+    options: {
+      autoBlockSrc: process.env.OT_AUTOBLOCK_SRC,
+      otSDKStubSrc: process.env.OT_SDKSTUB_SRC,
+      dataDomainScript: process.env.OT_DATA_DOMAIN_SCRIPT,
+      skip: !isProduction
     }
   }
 ];
