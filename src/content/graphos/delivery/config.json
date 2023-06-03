@@ -20,8 +20,18 @@
     "Validation": {
       "Schema checks": "/schema-checks",
       "Configuring schema checks": "/check-configurations",
-      "Schema linting": "/schema-linter",
-      "Linter rules": "/linter-rules",
+      "Schema linting": [
+        "/schema-linter",
+        [
+          "preview"
+        ]
+      ],
+      "Linter rules": [
+        "/linter-rules",
+        [
+          "preview"
+        ]
+      ],
       "Connecting to GitHub": "/github-integration",
       "Validating client operations": "/validating-client-operations"
     },
