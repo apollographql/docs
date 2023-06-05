@@ -115,7 +115,14 @@ export default function TypeScriptApiBox({name}) {
     return dataByKey;
   }, [content]);
 
-  const rawData = dataByKey[name];
+  let rawData;
+  const nameParts = name.split('.');
+
+  nameParts.forEach(part => {
+    rawData = rawData
+      ? rawData.children.find(child => child.name === part)
+      : dataByKey[part];
+  });
 
   if (!rawData) {
     // TODO: account for things that past versions may reference, but have
