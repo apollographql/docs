@@ -19,6 +19,22 @@ The schema linter raises this violation if it attempts to read a malformed Graph
 
 A GraphQL schema should never include definitions of GraphQL _operations_ (such as queries and mutations).
 
+<p style="margin-bottom: 0">❌</p>
+
+```graphql title="schema.graphql"
+type Query {
+  users: [User!]!
+}
+
+#highlight-start
+query GetUsers { # Don't define operations in a schema document
+  users {
+    id
+  }
+}
+#highlight-end
+```
+
 ## All fields
 
 #### `FIELD_NAMES_SHOULD_BE_CAMEL_CASE`
@@ -27,7 +43,7 @@ Field names should always use `camelCase`.
 
 <p style="margin-bottom: 0">❌</p>
 
-```graphql
+```graphql title="schema.graphql"
 type User {
   # highlight-start
   FirstName: String! # PascalCase
@@ -37,7 +53,7 @@ type User {
 
 <p style="margin-bottom: 0">✅</p>
 
-```graphql
+```graphql title="schema.graphql"
 type User {
   # highlight-start
   firstName: String # camelCase
@@ -61,7 +77,7 @@ A field's name should never start with any of the following verbs:
 
 <p style="margin-bottom: 0">❌</p>
 
-```graphql
+```graphql title="schema.graphql"
 type Query {
   getUsers: [User!]! # highlight-line
 }
@@ -69,7 +85,7 @@ type Query {
 
 <p style="margin-bottom: 0">✅</p>
 
-```graphql
+```graphql title="schema.graphql"
 type Query {
   users: [User!]! # highlight-line
 }
@@ -91,7 +107,7 @@ All type names should use `PascalCase`.
 
 <p style="margin-bottom: 0">❌</p>
 
-```graphql
+```graphql title="schema.graphql"
 # highlight-start
 type streamingService { # camelCase
 # highlight-end
@@ -101,7 +117,7 @@ type streamingService { # camelCase
 
 <p style="margin-bottom: 0">✅</p>
 
-```graphql
+```graphql title="schema.graphql"
 # highlight-start
 type StreamingService { # PascalCase
 # highlight-end
@@ -117,7 +133,7 @@ Type names should never use the prefix `Type`.
 
 <p style="margin-bottom: 0">❌</p>
 
-```graphql
+```graphql title="schema.graphql"
 interface TypeBook { # highlight-line
   title: String!
 }
@@ -125,7 +141,7 @@ interface TypeBook { # highlight-line
 
 <p style="margin-bottom: 0">✅</p>
 
-```graphql
+```graphql title="schema.graphql"
 interface Book { # highlight-line
   title: String!
 }
@@ -139,7 +155,7 @@ Type names should never use the suffix `Type`.
 
 <p style="margin-bottom: 0">❌</p>
 
-```graphql
+```graphql title="schema.graphql"
 interface BookType { # highlight-line
   title: String!
 }
@@ -147,7 +163,7 @@ interface BookType { # highlight-line
 
 <p style="margin-bottom: 0">✅</p>
 
-```graphql
+```graphql title="schema.graphql"
 interface Book { # highlight-line
   title: String!
 }
@@ -161,7 +177,7 @@ An object type's name should never use the prefix `Object`.
 
 <p style="margin-bottom: 0">❌</p>
 
-```graphql
+```graphql title="schema.graphql"
 type ObjectBook { # highlight-line
   title: String!
 }
@@ -169,7 +185,7 @@ type ObjectBook { # highlight-line
 
 <p style="margin-bottom: 0">✅</p>
 
-```graphql
+```graphql title="schema.graphql"
 type Book { # highlight-line
   title: String!
 }
@@ -183,7 +199,7 @@ An object type's name should never use the suffix `Object`.
 
 <p style="margin-bottom: 0">❌</p>
 
-```graphql
+```graphql title="schema.graphql"
 type BookObject { # highlight-line
   title: String!
 }
@@ -191,7 +207,7 @@ type BookObject { # highlight-line
 
 <p style="margin-bottom: 0">✅</p>
 
-```graphql
+```graphql title="schema.graphql"
 type Book { # highlight-line
   title: String!
 }
@@ -205,7 +221,7 @@ An interface type's name should never use the prefix `Interface`.
 
 <p style="margin-bottom: 0">❌</p>
 
-```graphql
+```graphql title="schema.graphql"
 interface InterfaceBook { # highlight-line
   title: String
   author: String
@@ -214,7 +230,7 @@ interface InterfaceBook { # highlight-line
 
 <p style="margin-bottom: 0">✅</p>
 
-```graphql
+```graphql title="schema.graphql"
 interface Book { # highlight-line
   title: String
   author: String
@@ -229,7 +245,7 @@ An interface type's name should never use the suffix `Interface`.
 
 <p style="margin-bottom: 0">❌</p>
 
-```graphql
+```graphql title="schema.graphql"
 interface BookInterface { # highlight-line
   title: String
   author: String
@@ -238,7 +254,7 @@ interface BookInterface { # highlight-line
 
 <p style="margin-bottom: 0">✅</p>
 
-```graphql
+```graphql title="schema.graphql"
 interface Book { # highlight-line
   title: String
   author: String
@@ -253,7 +269,7 @@ A GraphQL argument's name should always use `camelCase`.
 
 <p style="margin-bottom: 0">❌</p>
 
-```graphql
+```graphql title="schema.graphql"
 type Mutation {
   #highlight-start
   createBlogPost(BlogPostContent: BlogPostContent!): Post # PascalCase
@@ -263,7 +279,7 @@ type Mutation {
 
 <p style="margin-bottom: 0">✅</p>
 
-```graphql
+```graphql title="schema.graphql"
 type Mutation {
   #highlight-start
   createBlogPost(blogPostContent: BlogPostContent!): Post # camelCase
@@ -279,7 +295,7 @@ An input type's name should always use the suffix `Input`.
 
 <p style="margin-bottom: 0">❌</p>
 
-```graphql
+```graphql title="schema.graphql"
 input BlogPostDetails { #highlight-line
   title: String!
   content: String!
@@ -288,7 +304,7 @@ input BlogPostDetails { #highlight-line
 
 <p style="margin-bottom: 0">✅</p>
 
-```graphql
+```graphql title="schema.graphql"
 input BlogPostDetailsInput { #highlight-line
   title: String!
   content: String!
@@ -303,7 +319,7 @@ Enum values should always use `SCREAMING_SNAKE_CASE`.
 
 <p style="margin-bottom: 0">❌</p>
 
-```graphql
+```graphql title="schema.graphql"
 enum Amenity {
   # highlight-start
   public_park # snake_case
@@ -313,7 +329,7 @@ enum Amenity {
 
 <p style="margin-bottom: 0">✅</p>
 
-```graphql
+```graphql title="schema.graphql"
 enum Amenity {
   # highlight-start
   PUBLIC_PARK # SCREAMING_SNAKE_CASE 😱
@@ -329,7 +345,7 @@ An enum type's name should never use the prefix `Enum`.
 
 <p style="margin-bottom: 0">❌</p>
 
-```graphql
+```graphql title="schema.graphql"
 enum EnumResidence { # highlight-line
   HOUSE
   APARTMENT
@@ -339,7 +355,7 @@ enum EnumResidence { # highlight-line
 
 <p style="margin-bottom: 0">✅</p>
 
-```graphql
+```graphql title="schema.graphql"
 enum Residence { # highlight-line
   HOUSE
   APARTMENT
@@ -355,7 +371,7 @@ An enum type's name should never use the suffix `Enum`.
 
 <p style="margin-bottom: 0">❌</p>
 
-```graphql
+```graphql title="schema.graphql"
 enum ResidenceEnum { # highlight-line
   HOUSE
   APARTMENT
@@ -365,7 +381,7 @@ enum ResidenceEnum { # highlight-line
 
 <p style="margin-bottom: 0">✅</p>
 
-```graphql
+```graphql title="schema.graphql"
 enum Residence { # highlight-line
   HOUSE
   APARTMENT
@@ -381,7 +397,7 @@ If an enum type is used as an input argument, its name _should_ use the suffix `
 
 <p style="margin-bottom: 0">❌</p>
 
-```graphql
+```graphql title="schema.graphql"
 enum Role { # highlight-line
   EDITOR
   VIEWER
@@ -394,7 +410,7 @@ type Query {
 
 <p style="margin-bottom: 0">✅</p>
 
-```graphql
+```graphql title="schema.graphql"
 enum RoleInput { # highlight-line
   EDITOR
   VIEWER
@@ -413,7 +429,7 @@ If an enum is used as the return type of a _non_-input field, its name _should n
 
 <p style="margin-bottom: 0">❌</p>
 
-```graphql
+```graphql title="schema.graphql"
 enum RoleInput { # highlight-line
   EDITOR
   VIEWER
@@ -426,7 +442,7 @@ type Query {
 
 <p style="margin-bottom: 0">✅</p>
 
-```graphql
+```graphql title="schema.graphql"
 enum Role { # highlight-line
   EDITOR
   VIEWER
@@ -445,13 +461,13 @@ Directive names should always use `camelCase`.
 
 <p style="margin-bottom: 0">❌</p>
 
-```graphql
+```graphql title="schema.graphql"
 directive @SpecialField on FIELD_DEFINITION # PascalCase
 ```
 
 <p style="margin-bottom: 0">✅</p>
 
-```graphql
+```graphql title="schema.graphql"
 directive @specialField on FIELD_DEFINITION # camelCase
 ```
 
@@ -464,7 +480,7 @@ A subgraph schema should always provide owner contact details via the `@contact`
 
 <p style="margin-bottom: 0">✅</p>
 
-```graphql
+```graphql title="schema.graphql"
 directive @contact(
   "Contact title of the subgraph owner"
   name: String!
@@ -489,7 +505,7 @@ The `@deprecated` directive should always include a `reason` argument.
 
 <p style="margin-bottom: 0">❌</p>
 
-```graphql
+```graphql title="schema.graphql"
 type Product {
   title: String @deprecated #highlight-line
   name: String!
@@ -498,7 +514,7 @@ type Product {
 
 <p style="margin-bottom: 0">✅</p>
 
-```graphql
+```graphql title="schema.graphql"
 type Product {
   title: String @deprecated(reason: "Use Product.name instead") #highlight-line
   name: String!
