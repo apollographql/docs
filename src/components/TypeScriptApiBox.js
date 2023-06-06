@@ -326,22 +326,22 @@ export default function TypeScriptApiBox({name}) {
     };
   }
 
+  const mapOverGroups = data => {
+    return data.groups.map(group => ({
+      name: group.title,
+      members: group.children.map(id => {
+        const child = data.children.find(child => child.id === id);
+        return {
+          ...child,
+          type: _type(child)
+        };
+      })
+    }));
+  };
+
   function templateArgs(rawData) {
     const parameters = _parameters(rawData, dataByKey);
     const split = partition(parameters, 'isOptions');
-
-    const mapOverGroups = data => {
-      return data.groups.map(group => ({
-        name: group.title,
-        members: group.children.map(id => {
-          const child = data.children.find(child => child.id === id);
-          return {
-            ...child,
-            type: _type(child)
-          };
-        })
-      }));
-    };
 
     // this initial map accounts for properties
     const groups = rawData.groups ? mapOverGroups(rawData) : [];
