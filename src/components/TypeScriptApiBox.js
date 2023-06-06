@@ -330,7 +330,22 @@ export default function TypeScriptApiBox({name}) {
     const parameters = _parameters(rawData, dataByKey);
     const split = partition(parameters, 'isOptions');
 
-    const groups = [];
+    const groups = rawData.groups
+      ? rawData.groups.map(group =>
+          // this initial map accounts for properties
+          ({
+            name: group.title,
+            members: group.children.map(id => {
+              const child = rawData.children.find(child => child.id === id);
+              return {
+                ...child,
+                type: _type(child)
+              };
+            })
+          })
+        )
+      : [];
+
     if (split[1].length > 0) {
       groups.push({
         name: 'Arguments',
