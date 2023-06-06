@@ -330,21 +330,21 @@ export default function TypeScriptApiBox({name}) {
     const parameters = _parameters(rawData, dataByKey);
     const split = partition(parameters, 'isOptions');
 
-    const groups = rawData.groups
-      ? rawData.groups.map(group =>
-          // this initial map accounts for properties
-          ({
-            name: group.title,
-            members: group.children.map(id => {
-              const child = rawData.children.find(child => child.id === id);
-              return {
-                ...child,
-                type: _type(child)
-              };
-            })
-          })
-        )
-      : [];
+    const mapOverGroups = data => {
+      return data.groups.map(group => ({
+        name: group.title,
+        members: group.children.map(id => {
+          const child = data.children.find(child => child.id === id);
+          return {
+            ...child,
+            type: _type(child)
+          };
+        })
+      }));
+    };
+
+    // this initial map accounts for properties
+    const groups = rawData.groups ? mapOverGroups(rawData) : [];
 
     if (split[1].length > 0) {
       groups.push({
@@ -352,6 +352,7 @@ export default function TypeScriptApiBox({name}) {
         members: split[1]
       });
     }
+
     if (split[0].length > 0) {
       groups.push({
         name: 'Options',
@@ -378,6 +379,10 @@ export default function TypeScriptApiBox({name}) {
       } else {
         type = _type(rawData);
       }
+    }
+
+    if (rawData.type?.type === 'reflection') {
+      groups.push(...mapOverGroups(rawData.type.declaration));
     }
 
     return {
