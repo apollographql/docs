@@ -20,7 +20,7 @@ import {extend, partition} from 'lodash';
 import {graphql, useStaticQuery} from 'gatsby';
 
 function _allText(data) {
-  return [data.shortText, data.text].filter(Boolean).join('\n\n');
+  return data.summary.map(part => part.text).join('');
 }
 
 function _summary(rawData) {
