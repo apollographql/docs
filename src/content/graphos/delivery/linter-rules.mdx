@@ -134,7 +134,7 @@ Type names should never use the prefix `Type`.
 <p style="margin-bottom: 0">❌</p>
 
 ```graphql title="schema.graphql"
-interface TypeBook { # highlight-line
+type TypeBook { # highlight-line
   title: String!
 }
 ```
@@ -142,7 +142,7 @@ interface TypeBook { # highlight-line
 <p style="margin-bottom: 0">✅</p>
 
 ```graphql title="schema.graphql"
-interface Book { # highlight-line
+type Book { # highlight-line
   title: String!
 }
 ```
@@ -156,7 +156,7 @@ Type names should never use the suffix `Type`.
 <p style="margin-bottom: 0">❌</p>
 
 ```graphql title="schema.graphql"
-interface BookType { # highlight-line
+type BookType { # highlight-line
   title: String!
 }
 ```
@@ -164,7 +164,7 @@ interface BookType { # highlight-line
 <p style="margin-bottom: 0">✅</p>
 
 ```graphql title="schema.graphql"
-interface Book { # highlight-line
+type Book { # highlight-line
   title: String!
 }
 ```
