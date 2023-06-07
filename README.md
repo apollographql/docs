@@ -95,7 +95,6 @@ npm start -- ../apollo-client
 For your convenience, this repo also comes with special `start` NPM scripts for each docset, assuming you have this repo checked out in the same directory as the other OSS repos.
 
 - `npm run start:client`
-- `npm run start:customer-success`
 - `npm run start:server`
 - `npm run start:ios`
 - `npm run start:kotlin`
@@ -131,7 +130,6 @@ The docs content is written and maintained in the following places. Many of them
 - [Apollo Federation](https://github.com/apollographql/federation)
 - [Rover CLI](https://github.com/apollographql/rover)
 - [Apollo Router](https://github.com/apollographql/router)
-- [Customer Success (internal)](https://github.com/apollographql/customer-success)
 
 ## Docset configuration
 
