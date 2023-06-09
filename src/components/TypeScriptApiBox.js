@@ -65,7 +65,7 @@ function mdToReact(text) {
       components={{
         p: Text,
         a: PrimaryLink,
-        code: InlineCode
+        code: ({children}) => <InlineCode>{children}</InlineCode>
       }}
     >
       {sanitized}

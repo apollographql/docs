@@ -185,6 +185,6 @@ Sidebar.propTypes = {
   children: PropTypes.node.isRequired,
   isHidden: PropTypes.bool,
   hideSidebar: PropTypes.func,
-  isLocked: PropTypes.boolean,
+  isLocked: PropTypes.bool,
   onLockToggle: PropTypes.func
 };
