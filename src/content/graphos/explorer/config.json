@@ -16,6 +16,7 @@
     ]
   ],
   "sidebar": {
+    "Launch Sandbox": "https://studio.apollographql.com/sandbox/explorer?referrer=docs-nav",
     "Overview": "/",
     "Sandbox (no account required)": "/sandbox",
     "Connecting and authenticating": "/connecting-authenticating",
