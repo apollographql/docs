@@ -5,7 +5,6 @@
     "start": "./dev.sh",
     "start:local": "DOCS_MODE=local npm start",
     "start:client": "npm start -- ../apollo-client",
-    "start:customer-success": "npm start -- ../customer-success",
     "start:platform-users": "npm start -- ../platform-users-docs",
     "start:server": "npm start -- ../apollo-server",
     "start:ios": "npm start -- ../apollo-ios",
