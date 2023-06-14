@@ -3,8 +3,6 @@ title: Schema linting
 description: With GraphOS
 ---
 
-> ⚠️ Schema linting is currently in **private preview**.
-
 GraphOS provides **schema linting** to help you enforce formatting conventions and other GraphQL best practices with every proposed change to your graph's schema.
 
 <img
@@ -23,10 +21,8 @@ GraphOS provides **schema linting** to help you enforce formatting conventions a
 
 The GraphOS schema linter uses a [predefined collection of rules](./linter-rules/) to identify issues with proposed schema changes.
 
-- You can configure how each variant of your graph treats violations of each linter rule.
-    - ⚠️ **Variant-level configuration is not yet available!**
-- You can also define **graph-wide linter defaults** for any variants you _don't_ configure individually.
-    - Only these are available during the private preview period.
+- **Currently,** you can define **graph-wide linter defaults** that apply to all variants of a particular graph.
+- **In a future release,** you'll also be able to configure how _individual_ variants of your graph treat violations of each linter rule.
 
 **Navigate to your linter's configuration:**
 
@@ -43,9 +39,7 @@ The GraphOS schema linter uses a [predefined collection of rules](./linter-rules
 
 4. **To configure graph-wide linter defaults** for _all_ of your variants, click the **This Graph** tab.
 
-    **To configure just the current variant,** remain on the **This Variant** tab.
-
-      - ⚠️ **Variant-level configuration is not yet available!** All variants use graph-wide linter defaults.
+    - **In a future release,** you'll be able to configure variant-specific behavior from the **This Variant** tab.
 
 This page organizes linter options into the following categories:
 
