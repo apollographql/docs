@@ -5,7 +5,7 @@ description: Make sure all proposed changes to your schema are safe
 
 Certain changes to your graph's schema (such as removing a field or type) might break one of your application's clients. GraphOS provides **schema checks** to help you identify breaking changes before you make them, and to help you identify when a _potentially_ dangerous change is in fact safe.
 
-You can review the results of schema checks inside Apollo Studio from your graph's Checks page, helping you make informed decisions about evolving your graph:
+You can review the results of schema checks inside GraphOS Studio from your graph's Checks page, helping you make informed decisions about evolving your graph:
 
 <img
   className="screenshot"
@@ -14,7 +14,7 @@ You can review the results of schema checks inside Apollo Studio from your graph
   width="300"
 />
 
-Schema checks are **free** as part of [all Apollo plans](https://www.apollographql.com/plans/).
+With the exception of [contract checks](#types-of-checks), schema checks are **free** as part of [all Apollo plans](https://www.apollographql.com/plans/).
 
 ## Types of checks
 
@@ -24,9 +24,18 @@ GraphOS can perform the following types of schema checks:
 
 - [**Operation checks.**](#operation-checks) Compare your proposed schema changes against historical operations to verify whether the changes will break any of your graph's active clients.
 
-- **[Contract checks](../delivery/contracts/)** (enterprise only). When running schema checks on a source variant, also check whether your proposed schema changes will break any downstream contract variants.
+- [**Linter checks.**](./schema-linter/) Analyze your proposed schema changes for violations of formatting rules and other GraphQL best practices.
 
-> **Most of this article covers composition and operation checks.** For details on contract checks, [see this article](./contracts/).
+- **[Contract checks](./contracts/)** (enterprise only). When running schema checks on a source variant, also check whether your proposed schema changes will break any downstream contract variants.
+
+<blockquote>
+
+**Most of this article covers composition and operation checks.**
+
+- For details on contract checks, see [Contracts](./contracts/).
+- For details on linter checks, see [Schema linting](./schema-linter/).
+
+</blockquote>
 
 ## Prerequisites
 
@@ -34,12 +43,12 @@ To enable schema checks for your supergraph, do the following if you haven't yet
 
 1. Make sure you've published all of your subgraph schemas to GraphOS, and that those schemas are up to date.
     - [Learn how to publish schemas.](./)
-2. Make sure your supergraph is sending operation metrics to GraphOS. GraphOS uses historical metrics to determine whether a potentially dangerous schema change is safe.
+2. For operation checks, make sure your supergraph is sending operation metrics to GraphOS. GraphOS uses historical metrics to determine whether a potentially dangerous schema change is safe.
 
     ⚠️ **If GraphOS has no operation metrics to compare against, all potentially dangerous schema changes result in a failed check!**
 
    - If you have a [cloud supergraph](../graphs/#cloud-supergraphs), your router reports metrics automatically.
-    - [Setup for other graphs](../metrics/sending-operation-metrics/)
+    - [See setup for other graph types.](../metrics/sending-operation-metrics/)
 3. [Install the Rover CLI](/rover/getting-started/) in your development environment and [authenticate it with GraphOS](/rover/configuring/#authenticating-with-graphos).
 
 ## Running your first check
@@ -56,7 +65,7 @@ rover subgraph check docs-example-graph@main --name products --schema ./schema.g
 
 It requires the following:
 
-- Your registered graph's **graph ref**, which a string with the format `graph-id@variant-name` (for example, `docs-example-graph@main`). This is available from your supergraph's README page in Apollo Studio.
+- Your registered graph's **graph ref**, which a string with the format `graph-id@variant-name` (for example, `docs-example-graph@main`). This is available from your supergraph's README page in GraphOS Studio.
 
 - The locally modified version of your schema. In the command above, the schema is provided via a `.graphql` file.
 
@@ -106,19 +115,19 @@ The output also includes a Studio URL that provides full details on the changes 
 <img
   className="screenshot"
   src="../img/schema-checks/service-check-page.png"
-  alt="Service check page in Apollo Studio"
+  alt="Service check page in GraphOS Studio"
 />
 
 > If you've [integrated schema checks with your GitHub PRs](#integrating-with-github), the "Details" link in your GitHub check takes you to this same details page.
 
 ### Rerunning checks
 
-You can rerun checks from Apollo Studio:
+You can rerun checks from GraphOS Studio:
 
 <img
   className="screenshot"
   src="../img/schema-checks/rerun-check.png"
-  alt="Rerun check in Apollo Studio"
+  alt="Rerun check in GraphOS Studio"
 />
 
 When you do, the new run uses the current [check configuration options](./check-configurations/), regardless of the configuration at the time of the _original_ run. Similarly, the new run's time window is based on the current time, _not_ the time when the original check ran.
@@ -133,7 +142,7 @@ When you run `rover subgraph check`, GraphOS performs a **composition check** _b
 
 > If a composition check fails, Studio does _not_ then perform additional checks for the provided schema.
 
-From your graph's Checks page in Apollo Studio, you can click on a particular composition check to view its result. If composition succeeded, you can view the composed supergraph schema. Regardless of success, you can view the proposed subgraph schema.
+From your graph's Checks page in GraphOS Studio, you can click on a particular composition check to view its result. If composition succeeded, you can view the composed supergraph schema. Regardless of success, you can view the proposed subgraph schema.
 
 ## Operation checks
 
@@ -143,12 +152,12 @@ If a [composition check](#composition-checks) succeeds, GraphOS then validates s
 
 Occasionally, schema checks might flag a change that you know is safe. For example, you might change an input type's field from nullable to non-nullable (usually a breaking change) when you're certain that your clients _never_ provide a null value for the field.
 
-In cases like this, you can **override** a flagged change in Apollo Studio from the associated check's details page:
+In cases like this, you can **override** a flagged change in GraphOS Studio from the associated check's details page:
 
 <img
   className="screenshot"
   src="../img/schema-checks/mark-operation.png"
-  alt="Service check page in Apollo Studio"
+  alt="Service check page in GraphOS Studio"
   width="500"
 />
 
@@ -158,6 +167,10 @@ You override flagged changes on an operation-by-operation basis. For each operat
     - If a future check detects approved changes along with _new_ unsafe changes to the operation, the new unsafe changes _will_ be flagged.
 - **Ignore the operation.** In this case, schema checks will completely ignore the operation when checking _all_ changes in any future execution.
     - This option is useful when you know an operation originates _only_ from clients or client versions that you don't actively support.
+
+## Linter checks
+
+For more info on linter checks, see [Schema linting](./schema-linter/).
 
 ## Contract checks (enterprise only)
 
@@ -212,7 +225,7 @@ jobs:
 
 ### Integrating with GitHub
 
-If you're using GitHub, you can install the [Apollo Studio GitHub app](https://github.com/marketplace/apollo-studio#pricing-and-setup). This app enables Apollo Studio to send a webhook back to your GitHub project on each call to `rover subgraph check`, providing built-in pass/fail status checks on your pull requests:
+If you're using GitHub, you can install the [Apollo Studio GitHub app](https://github.com/marketplace/apollo-studio#pricing-and-setup). This app enables GraphOS to send a webhook back to your GitHub project on each call to `rover subgraph check`, providing built-in pass/fail status checks on your pull requests:
 
 <img
   className="screenshot"
