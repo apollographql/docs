@@ -1,0 +1,123 @@
+---
+title: Preregistering operations with GraphOS
+description: Send less data and reject potentially malicious requests
+---
+
+> **This feature is available only with a [GraphOS Enterprise plan](/graphos/enterprise/).**
+>
+> If your organization _doesn't_ currently have an Enterprise plan, you can test out this functionality by signing up for a free [Enterprise trial](/graphos/org/plans/#enterprise-trials).
+
+The Persisted Queries GraphOS feature allows you to register sets of operations for your supergraph. Each operation defines the exact shape of a GraphQL operation that your supergraph expects application clients to execute against it. In its simplest form, Persisted Queries (PQs) can be used like Automatic Persisted Queries (APQs): they allow clients to send short IDs instead of full freeform GraphQL in requests. The only difference is that PQs are pre-registered by trusted clients when they are built and made known to your  Router fleet before the query is executed, while APQs are dynamically registered into Routers by arbitrary client operations at runtime. 
+
+Registering these persisted operations also enables operational security features like flagging or even rejecting unregistered operations.
+
+Operation safety features that can be enabled with Persisted Queries:
+
+- **Operation safelisting.** Your router can allow only GraphQL operations that match a registered shape (whether sent by registered ID or as freeform GraphQL), while rejecting unregistered operations.
+
+- **Safelisting with strict ID checking** (**full lockdown**). Your router can allow only requests that specify a GraphQL operation by its persisted query ID, while rejecting all requests that provide a freeform query string (or an invalid ID).
+
+## Setup
+
+### 1. Create a persisted queries list (PQL)
+
+To use Persisted Queries, you first need to create at least one Persisted Queries List (PQL) in Studio. Each PQL is associated with a single supergraph in GraphOS.
+
+You can open the PQL page for a particular graph by clicking its PQL icon from your organization’s Graphs page:
+
+[ SCREENSHOT ]
+
+[ SCREENSHOT ]
+
+From the PQL page, click **New List** in the top-right corner to create a new PQL.
+
+Every PQL starts out empty. Next, let's register some operations to it.
+
+### 2. Apply the PQL to individual variants
+
+Any time after you create a PQL (even before you register any operations), you can apply it to one or more variants of your supergraph. You do so from your supergraph's PQL page in Studio:
+
+[ SCREENSHOT ]
+
+Under the **Actions** column, click the **•••** menu for the PQL you want to apply.
+
+After you apply a PQL to a variant, GraphOS validates it against the variant's operation history and flags any unregistered operations. It then uploads the PQL to Uplink, the GraphOS service that delivers configuration to your supergraph's router at runtime.
+
+As a best practice, you should apply PQLs to your staging AND production environments. Staging can be configured to simply log out any usage that isn’t a persisted query hit.
+
+### 3. Generate a persisted queries manifest (PQM) file
+
+When you register operations to a PQL, you provide them in a JSON file format that’s called a Persisted Queries Manifest (PQM). This manifest associates a unique identifier with each raw GraphQL operation.
+
+The file format described below is used by our initial preview release. We expect that other information will be added to it later, such as information about what client this file represents.
+
+An example PQM file looks like this:
+
+```json
+{  
+  "format": "apollo-persisted-queries-manifest",
+  "version": 1,
+  "operations": [  
+    {
+      "id": "dc67510fb4289672bea757e862d6b00e83db5d3cbbcfb15260601b6f29bb2b8f",
+      "body": "query UniversalQuery { __typename }",
+      "name": "UniversalQuery",
+      "type": "query" 
+    },
+    {
+      "id": "f11e4dcb28788af2e41689bb366472084aa1aa1e1ba633c3d605279cff08ed59",
+      "body": "query FragmentedQuery { post { ...PostFragment } }  fragment PostFragment on Post { id title }",
+      "name": "FragmentedQuery",
+      "type": "query" 
+    },
+    {
+      "id": "04649073787db6f24b495d49e5e87526734335a002edbd6e06e7315e302af5ac",
+      "body": "mutation SetNameMutation($name: String!) { setName($name) }",
+      "name": "SetNameMutation",
+      "type": "mutation" 
+    }
+  ]
+}
+```
+
+You define all of the operations to register under the `operations` key, which maps persisted query IDs to operation details. The above example associates the operation: `query Universal { __typename }` to the key: `dc67510fb4289672bea757e862d6b00e83db5d3cbbcfb15260601b6f29bb2b8f`. In practice, this identifier can be any string, but it must be a unique key in your list.
+
+When generating operation identifiers, we encourage you to use a value that's derived directly from the query's details, such as the query document
+s cryptographic hash. Apollo tools that extract operations use the base16 representation of the document's SHA256 hash, which is the same format used in APQs.
+
+In almost all cases, you should not modify the operation body of a registered operation. If you make changes to an existing registered operation, you should register a new operation with a new corresponding identifier. This ensures that multiple versions of a client application can work at once, providing different operation IDs to run different "versions" of the operation.
+
+GraphOS does allow modifying the body of a registered persisted query (this requires user confirmation). This functionality is not intended for modeling the evolution of a GraphQL operation over time. Instead, this supports advanced use cases like forcing legacy client versions to execute slightly different operations without needing to modify client code.
+
+`name` should be the name of the registered operation. It does not need to be unique; typically a Persisted Queries List will contain multiple operations with the same name from different versions of your client. It is used to help find operations when browsing them and does not affect Router behavior.
+
+`type` should be `"query"`, `"mutation"`, or `"subscription"`.
+
+#### Generating a PQM file
+
+All Apollo Client libraries support generating PQM files at application build time. Each client library has its own documentation on how to generate PQM files, we will share dedicated docs for the following libraries:
+
+- Apollo Client Web
+- Apollo Client Kotlin
+- Apollo Client iOS
+- Relay
+
+Although each library defines its own flow for generating PQM files, the output from each is the same: a file that maps graph operations to some identifier that can then be uploaded to GraphOS. This will be part of build tooling for associated clients, and customers who are relying on bespoke clients will be responsible for extraction of those runtime operation bodies to conform to the above standards.
+
+To help support your clients, we'd love to work with you to help make this process as easy as possible!
+
+#### Keeping build and runtime operation signatures consistent
+
+Operations that are executed against your graph at runtime must precisely match the shapes of the operations in your Persisted Queries List. By default, even whitespace must match. Apollo Client libraries can all potentially modify the operations they define in app. This means that the operations they define will be potentially different from the operations that are executed at runtime.
+
+For example, the client libraries typically add a `__typename`  field to every object type in the operation in order to understand more information about the operation's result. It's important that these changes are reflected in the registered operations as well. Otherwise, two kinds of issues may occur:
+
+- If a client's operation is registered without the added __typename and the client sends the operation's ID in its request, the server will return results that do not include the `__typename` fields that the client was expecting. This will break the client features that need to know the type information.
+
+- If a client's operation is registered without the added `__typename` and the client sends the operation as a raw GraphQL document, then if the Router is configured to reject raw GraphQL that does not match a registered operation, the operation may be surprisingly rejected. (We expect the "matching" rules to be configurable here, so that this particular "unexpected extra `__typename`" case could be made to work, but this may not cover all possible client-side transformations.)
+
+Apollo's clients use the same logic to transform operations at runtime and at build time, so that this is not a concern.
+
+### 4. Register Persisted Queries Manifests (PQMs) to a Persisted Queries List (PQL)
+
+TODO
