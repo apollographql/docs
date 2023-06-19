@@ -1,5 +1,5 @@
 ---
-title: Preregistering operations with GraphOS
+title: Trusted operations with GraphOS
 description: Send less data and reject potentially malicious requests
 ---
 
@@ -7,7 +7,16 @@ description: Send less data and reject potentially malicious requests
 >
 > If your organization _doesn't_ currently have an Enterprise plan, you can test out this functionality by signing up for a free [Enterprise trial](/graphos/org/plans/#enterprise-trials).
 
-The Persisted Queries GraphOS feature allows you to register sets of operations for your supergraph. Each operation defines the exact shape of a GraphQL operation that your supergraph expects application clients to execute against it. In its simplest form, Persisted Queries (PQs) can be used like Automatic Persisted Queries (APQs): they allow clients to send short IDs instead of full freeform GraphQL in requests. The only difference is that PQs are pre-registered by trusted clients when they are built and made known to your  Router fleet before the query is executed, while APQs are dynamically registered into Routers by arbitrary client operations at runtime. 
+With [GraphOS Enterprise](../enterprise/), you can register a **trusted operation list** for your supergraph's router. This list combines _all_ of the known GraphQL operations that _all_ of your app clients execute against your router.
+
+A trusted operation list (or **TOL**) can protect your supergraph _and_ speed up your clients:
+
+- You can configure your router to _reject_ incoming operations that aren't in its TOL.
+- Client apps can execute an operation by providing its TOL-specified ID _instead of_ providing the full operation string.
+    - For very large operation strings, this can dramatically improve latency and bandwidth usage.
+    - You can even _require_ that operations be provided via TOL-specified ID, rejecting query strings even if they match a trusted oepration.
+
+Each operation defines the exact shape of a GraphQL operation that your supergraph expects application clients to execute against it. In its simplest form, Persisted Queries (PQs) can be used like Automatic Persisted Queries (APQs): they allow clients to send short IDs instead of full freeform GraphQL in requests. The only difference is that PQs are pre-registered by trusted clients when they are built and made known to your  Router fleet before the query is executed, while APQs are dynamically registered into Routers by arbitrary client operations at runtime. 
 
 Registering these persisted operations also enables operational security features like flagging or even rejecting unregistered operations.
 
@@ -16,6 +25,9 @@ Operation safety features that can be enabled with Persisted Queries:
 - **Operation safelisting.** Your router can allow only GraphQL operations that match a registered shape (whether sent by registered ID or as freeform GraphQL), while rejecting unregistered operations.
 
 - **Safelisting with strict ID checking** (**full lockdown**). Your router can allow only requests that specify a GraphQL operation by its persisted query ID, while rejecting all requests that provide a freeform query string (or an invalid ID).
+
+- **Unregistered operation monitoring.** Your router can allow all GraphQL operations, while flagging unregistered operations with additional logging/telemetry/metadata.
+    - TODO PLANNED
 
 ## Setup
 
@@ -120,4 +132,127 @@ Apollo's clients use the same logic to transform operations at runtime and at bu
 
 ### 4. Register Persisted Queries Manifests (PQMs) to a Persisted Queries List (PQL)
 
-TODO
+You use the Rover CLI to register one or more GraphQL operations to an existing PQL:
+
+Apollo Clients are able to produce a Persisted Queries Manifest. Here is an example that includes the universal query as the only operation.
+
+```json title="persisted-queries.json"
+{  
+  "format": "apollo-persisted-queries",
+  "version": 1,
+  "operations": [  
+    {
+      "id": "dc67510fb4289672bea757e862d6b00e83db5d3cbbcfb15260601b6f29bb2b8f",
+      "body": "query UniversalQuery { __typename }",
+      "name": "UniversalQuery",
+      "type": "query" 
+    },
+  ]
+}
+```
+
+```sh
+rover persisted-queries publish my-graph@my-variant --manifest ./persisted-queries.json
+```
+
+- The `my-graph@my-variant` argument looks up the **PQL** linked to the variant (in step 2) and publishes operations to it.
+- The `--manifest` option is the path to a **Persisted Queries Manifest** (**PQM**) file you create. This file contains a JSON object that describes the details of all the operations to register. [See details.](#3-generate-a-persisted-queries-manifest-pqm-file)
+
+**The above command does the following:**
+
+1. It registers all operations in the PQM file (`--manifest persisted-queries.json`) to the PQL linked to the graph.
+    - If any operation in the PQM has the same ID as an operation already in the PQL, the existing PQL entry is replaced with the new operation. If using Apollo Client libraries, any change in the document would result in a new Persisted Query ID and a new entry in the PQL. Operation entries can only be replaced when manually setting your own identifiers.
+2. It updates any additional supergraph variants that the PQL is already applied to.
+
+### 5. Enable persisted queries (PQs) in the router
+
+After your PQLs are registered and applied to a variant, you can configure the behavior of router instances associated with that variant.
+
+While Persisted Queries is still in private preview, you’ll need to download a custom router image that has these features built in. This will only be required until this functionality is released in the stock router binary. [private preview binary](https://storage.googleapis.com/mdg-repo/router-persisted-queries-private-beta.20230602%2B6cfe51c6-x86_64.tar.gz)
+
+After your PQLs are registered and applied to a variant, you can configure the behavior of router instances associated with that variant.
+
+Make sure your router instances connect to GraphOS by setting [these environment variables](/router/configuration/overview/#environment-variables). Otherwise, they can’t fetch your variant’s PQL from Uplink.
+
+Described below are different router configurations for several use cases:
+
+#### Persisted queries only
+
+Simply enabling Persisted Queries will allow the operations in the variant’s linked PQ List to be queried by their associated persisted query IDs. These IDs can be provided via the standard [APQ format or the new Persisted Queries format](#6-make-requests).
+
+```yaml title="router.yaml"
+persisted_queries:
+  enabled: true
+```
+
+#### Non-persisted query monitoring
+
+TODO COMING SOON
+
+Your router can allow all GraphQL operations, while flagging unregistered operations with additional logging/telemetry/metadata.
+
+```yaml
+persisted_queries:
+  enabled: true
+  safelist:
+    enabled: false
+    log_unpersisted: true
+```
+
+#### Operation safelisting
+
+Your router can allow _only_ GraphQL operations that match a registered shape, while rejecting unregistered operations.
+
+```yaml title="router.yaml"
+persisted_queries:
+  enabled: true
+  safelist:
+    enabled: true
+    freeform_graphql: 
+      enabled: true
+```
+
+#### Safelisting with opaque IDs (full lockdown)
+
+Configure your router to allow _only_ requests that specify a GraphQL operation by its **persisted query ID**, while rejecting requests that provide a freeform query string (or an _invalid_ ID).
+
+```yaml title="router.yaml"
+persisted_queries:
+  enabled: true
+  safelist:
+    enabled: true
+    freeform_graphql:
+      enabled: false
+```
+
+### 6. Make requests
+
+If you’ve followed the above steps (create a PQ List, link it to a variant, publish operations to it, enable known operations in your router), you can start sending known operations to your router.
+
+Start the router:
+
+```bash
+APOLLO_KEY="..." APOLLO_GRAPH_REF="..." ./router --config ./router.yaml
+
+2023-05-11T15:32:30.684460Z  INFO Apollo Router v1.18.1 // (c) Apollo Graph, Inc. // Licensed as ELv2 (https://go.apollo.dev/elv2)
+2023-05-11T15:32:30.684480Z  INFO Anonymous usage data is gathered to inform Apollo product development.  See https://go.apollo.dev/o/privacy for details.
+2023-05-11T15:32:31.507085Z  INFO Health check endpoint exposed at http://127.0.0.1:8088/health
+2023-05-11T15:32:31.507823Z  INFO GraphQL endpoint exposed at http://127.0.0.1:4000/ 🚀
+```
+
+Make an APQ-style POST request:
+
+Earlier we registered the universal query with an ID of `dc67510fb4289672bea757e862d6b00e83db5d3cbbcfb15260601b6f29bb2b8f`, we can make a request like so to execute it:
+
+```bash
+curl http://localhost:4000 -X POST --json \
+'{"extensions":{"persistedQuery":{"version":1,"sha256Hash":"dc67510fb4289672bea757e862d6b00e83db5d3cbbcfb15260601b6f29bb2b8f"}}}'
+```
+
+## Managing PQLs
+
+### Removing an operation from a PQL
+
+You might occasionally need to remove an operation from a PQL. Organization members with the **Graph Admin** role can remove individual operations from a PQL in GraphOS Studio:
+
+[ SCREENSHOT ]

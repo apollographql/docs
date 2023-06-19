@@ -56,6 +56,13 @@
         [
           "preview"
         ]
+      ],
+      "Persisted queries": [
+        "/routing/persisted-queries",
+        [
+          "enterprise",
+          "preview"
+        ]
       ]
     },
     "GraphOS Interfaces": {
