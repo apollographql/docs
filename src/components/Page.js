@@ -78,6 +78,7 @@ import 'prismjs/components/prism-swift';
 import 'prismjs/components/prism-tsx';
 import 'prismjs/components/prism-typescript';
 import 'prismjs/components/prism-yaml';
+import {HighlightKeyTerms} from '@apollo/pedia';
 import {SiDiscord} from 'react-icons/si';
 
 // use JS syntax highlighting for rhai codeblocks
@@ -130,7 +131,7 @@ const components = {
       {...props}
     />
   ),
-  p: Text,
+  p: HighlightKeyTerms,
   a: RelativeLink,
   pre: MarkdownCodeBlock,
   table: props => (
