@@ -5,22 +5,26 @@ description: The GraphQL developer platform
 
 import {Link} from 'gatsby';
 
-**Apollo GraphOS** is the cloud platform for building, growing, and collaborating on your organization's **supergraph**, an organization-wide data layer powered by GraphQL.
+**Apollo GraphOS** is the platform for building, managing, and scaling a **supergraph**: a network of your microservices and their data sources—all composed into a unified GraphQL API.
 
 ```mermaid
 flowchart LR;
   clients("GraphQL<br/>Clients");
   subgraph "<b>Apollo GraphOS</b>";
   registry(["Schema<br/>Registry"]);
-  router(["Supergraph<br/>Router"]);
+  router(["Graph<br/>Router"]);
   studio(["Studio UI"]);
   end;
   subgraph "Your infrastructure";
   products["GraphQL API<br/>A"];
   reviews["GraphQL API<br/>B"];
-  router --- products & reviews
+  router -->|Sub-query| products & reviews
+  dbA[( )];
+  dbB[( )];
+  products --- dbA;
+  reviews --- dbB;
   end;
-  clients -.- router;
+  clients -.->|Query| router;
   class clients secondary;
 ```
 

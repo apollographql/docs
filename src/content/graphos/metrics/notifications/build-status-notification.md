@@ -4,13 +4,13 @@ title: Build status notifications (preview)
 
 > Build status notifications require an [Enterprise plan](https://www.apollographql.com/pricing/). They are currently in preview.
 
-You can [configure Apollo Studio](./notification-setup) to notify your team via webhook whenever Apollo attempts to build a new supergraph schema for your [federated graph](/federation/). The notification indicates whether the build succeeded and provides a temporary URL to the new supergraph schema if so.
+You can [configure GraphOS](./notification-setup) to notify your team via webhook whenever GraphOS attempts to build a new supergraph schema for your [federated graph](/federation/). The notification indicates whether the build succeeded and provides a temporary URL to the new supergraph schema if so.
 
 You can configure separate change notifications for each [variant](../../graphs/#variants) of your graph.
 
 ## Setup
 
-See [Setting up Studio Notifications](./notification-setup).
+See [Setting up GraphOS Notifications](./notification-setup).
 
 ## Webhook format
 

@@ -1,11 +1,11 @@
 ---
-title: Measuring field usage in Apollo Studio
+title: Measuring field usage with GraphOS Studio
 description: Understand which fields your clients use
 ---
 
-> For details on setting up field metrics reporting to Apollo Studio, see [Reporting field usage](#reporting-field-usage).
+> For details on setting up field metrics reporting to GraphOS Studio, see [Reporting field usage](#reporting-field-usage).
 
-In Apollo Studio, your graph's **Fields** page can display a table of basic usage metrics for each field in your schema:
+In [GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content), your graph's **Fields** page can display a table of basic usage metrics for each field in your schema:
 
 <img
   src="../img/fields-page.jpg"
@@ -24,14 +24,14 @@ You can click the name of any field in the table to open its **Field Insights** 
 
 ## Field executions vs. requesting operations
 
-The table on the Fields page displays some combination of the following metrics for each field, depending on which data your graph reports to Studio:
+The table on the Fields page displays some combination of the following metrics for each field, depending on which data you report to GraphOS:
 
 | Metric                 | Description                                                                                                                          |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
 | Field executions       | How many times your servers have executed the resolver for the field over a given time period.                                       |
 | Requested by operations | How many operations sent by clients over a given time period have included the field, according to metrics provided by your servers. |
 
-For each of these columns to appear on the Fields page, your GraphQL servers must [report the associated metrics to Apollo Studio](#reporting-field-usage). If some but not _all_ of your GraphQL servers report this data, the Fields page presents an incomplete picture of your graph's field usage.
+For each of these columns to appear on the Fields page, your GraphQL servers must [report the associated metrics to GraphOS](#reporting-field-usage). If some but not _all_ of your GraphQL servers report this data, the Fields page presents an incomplete picture of your graph's field usage.
 
 Let's look at these two metrics for fields of an example type:
 
@@ -62,8 +62,7 @@ If `Query.books` returns a list of ten `Book` objects, then `Book.title` is reso
 
 Let's say a client executes the following query one time:
 
-```
-graphql
+```graphql
 query GetTwoBooks {
   firstBook: book(id: "123") {
     title
@@ -194,15 +193,15 @@ Your GraphQL server can report metrics for field executions, requesting operatio
 
 ### Prerequisites
 
-> ⚠️ Before continuing, make sure you've configured your Apollo Gateway or individual GraphQL server to [push metrics to GraphOS](./sending-operation-metrics/).
+> ⚠️ Before continuing, make sure you've configured your router or individual GraphQL server to [push metrics to GraphOS](./sending-operation-metrics/).
 
-To report each type of field usage metric to Apollo, make sure your graph meets the prerequisites for that metric:
+To report each type of field usage metric to GraphOS, make sure your graph meets the prerequisites for that metric:
 
 #### Requesting operations
 
 To report metrics for requesting operations, your GraphQL server must run Apollo Server 3.6 or later.
 
-If you have a [federated graph](https://apollographql.com/docs/federation), your _gateway_ must run Apollo Server 3.6 or later, but there are no requirements for your subgraphs.
+If you have a [federated graph](/federation), your _gateway_ must run Apollo Server 3.6 or later, but there are no requirements for your subgraphs.
 
 #### Field executions
 

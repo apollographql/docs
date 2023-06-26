@@ -4,7 +4,7 @@ title: Performance alerts from Apollo Studio
 
 > Performance alerts require a [paid plan](https://www.apollographql.com/pricing/). They are currently experimental.
 
-Apollo Studio can notify your team's Slack workspace or Pagerduty instance whenever a particular metric (such as error rate) for a particular GraphQL operation exceeds a defined threshold. This is useful for detecting anomalies, especially following a release.
+GraphOS can notify your team's Slack workspace or Pagerduty instance whenever a particular metric (such as error rate) for a particular GraphQL operation exceeds a defined threshold. This is useful for detecting anomalies, especially following a release.
 
 <img src="../../img/integrations/slack-notification.png" width="500" class="screenshot" alt="Performance alert" />
 
@@ -22,7 +22,7 @@ Each performance alert you define can apply to either **a specific operation** o
 
 ## Setup
 
-1. Go to your graph's Settings page in [Apollo Studio](https://studio.apollographql.com/).
+1. Go to your graph's Settings page in [GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content).
 2. Select the **Reporting** tab.
 3. Find the Performance Alerts card and click **Add a new alert**.
 

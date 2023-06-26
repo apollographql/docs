@@ -3,7 +3,7 @@ title: Apollo Sandbox
 description: Use Studio tools without an Apollo account
 ---
 
-**Apollo Sandbox** is a special mode of Apollo Studio that helps with local development. Sandbox loads a running GraphQL server's schema via introspection, instead of fetching published schemas from the Apollo registry.
+**Apollo Sandbox** is a special mode of GraphOS Studio that helps with local development. Sandbox loads a running GraphQL server's schema via introspection, instead of fetching published schemas from the Apollo registry.
 
 Sandbox provides access to the following Apollo Studio features:
 
@@ -49,7 +49,7 @@ You can also change the default endpoint by providing a [URL parameter](#url-par
 
 ## Schema diffs
 
-If you log in to Apollo Studio from Sandbox, you can diff your Sandbox schema against any subgraph or monolith graph you have access to in the Apollo registry.
+If you log in to GraphOS Studio from Sandbox, you can diff your Sandbox schema against any subgraph or monolith graph you have access to in the GraphOS schema registry.
 
 From [Sandbox](https://studio.apollographql.com/sandbox/), open the **Schema Diff** page from the left navigation panel. Then use the dropdown menus to select any accessible organization, graph, and variant to compare against:
 
@@ -65,7 +65,7 @@ In addition to viewing the diff on this page, you can click **Run a Check** in t
 
 ## Schema checks
 
-If you log in to Apollo Studio from Sandbox, you can run [schema checks](../delivery/schema-checks/) between your Sandbox schema and any graph you have access to in the Apollo registry.
+If you log in to GraphOS Studio from Sandbox, you can run [schema checks](../delivery/schema-checks/) between your Sandbox schema and any graph you have access to in the Apollo registry.
 
 > Organization members with the [**Consumer** role](../org/members/#organization-wide-member-roles) cannot run schema checks.
 
@@ -115,9 +115,9 @@ You can use Sandbox _without_ an internet connection if you're querying a graph 
 
 ### Reconnecting
 
-Sandbox automatically reconnects whenever your internet connection is restored. When it does, it might display a notification that your Apollo Studio application version is stale by at least 24 hours. You can click the notification to update _all_ of your browser's open Apollo Studio tabs to the latest version.
+Sandbox automatically reconnects whenever your internet connection is restored. When it does, it might display a notification that your GraphOS Studio application version is stale by at least 24 hours. You can click the notification to update _all_ of your browser's open Studio tabs to the latest version.
 
-> This notification indicates only that the Apollo Studio _UI_ is out of date. Your Studio _data_ is always kept up to date.
+> This notification indicates only that the GraphOS Studio _UI_ is out of date. Your Studio _data_ is always kept up to date.
 
 ## Operation collections in Sandbox
 
@@ -138,7 +138,7 @@ The following URL parameters are supported:
 
 For example, the following URL sets all supported parameters:
 
-```
+```text title="Example URL"
 https://studio.apollographql.com/sandbox/explorer?endpoint=http://localhost:4200&document=query hello($name: String!) { hello(name: $name)}&variables={"name": "Sandbox User"}&headers={"Cache-Control": "no-cache"}
 ```
 
@@ -181,7 +181,7 @@ You can embed Sandbox on your own website. This can be useful for interacting wi
      width="600"
    />
 
-3. Within the dialog, use the tabs to select the code snippet for your use case:
+3. In the dialog, use the tabs to select the code snippet for your use case:
 
     * Use **React** for React apps where you can `npm install` the `@apollo/sandbox` package.
     * Use **JavaScript** for non-React JavaScript apps where you can `npm install` the `@apollo/sandbox` package.

@@ -1,21 +1,21 @@
 ---
-title: Setting up Apollo Studio notifications
+title: Setting up GraphOS notifications
 ---
 
-Apollo Studio can notify your team about changes to your graph and its performance. These notifications help you stay up to date and address issues as they arise.
+GraphOS can notify your team about changes to your graph and its performance. These notifications help you stay up to date and address issues as they arise.
 
-> If you don't have an Apollo Studio organization yet, [get started](../../quickstart/cloud/).
+> If you don't have a GraphOS organization yet, [get started](../../quickstart/cloud/).
 
 ## Supported notifications and channels
 
-Studio can send your team the following notification types:
+GraphOS can send your team the following notification types:
 
 - [Daily reports](./daily-reports) of your graph's request rate, error rate, and latency
 - [Schema change notifications](./schema-change-integration) whenever your graph's schema is updated
 - [Performance alerts](./performance-alerts) whenever a metric such as error percentage or request latency exceeds a particular threshold (this experimental feature requires a [paid plan](https://www.apollographql.com/pricing/))
 - [Build status notifications](./build-status-notification) whenever Apollo attempts to compose a supergraph schema for your federated graph (this preview feature is [enterprise only](https://www.apollographql.com/pricing/))
 
-Currently, Studio can send each of these notification types to the channel(s) indicated:
+Currently, GraphOS can send each of these notification types to the channel(s) indicated:
 
 | Notification Type                            | Slack | Pagerduty | Custom Webhook |
 | :------------------------------------------- | :---: | :-------: | :------------: |
@@ -28,7 +28,7 @@ Currently, Studio can send each of these notification types to the channel(s) in
 
 > For performance alerts, see [Performance alerts setup](./performance-alerts/#setup).
 
-1. Go to your graph's Settings page in [Apollo Studio](https://studio.apollographql.com/).
+1. Go to your graph's Settings page in [GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content).
 2. Select the **Reporting** tab.
 3. Click **Add notification** in the upper right:
    <img src="../../img/add-new-alert.jpg" class="screenshot" width="500" alt="Add new alert button" />
