@@ -1,4 +1,5 @@
 # Reorganize file structure in GraphOS docset
+/routing/defer/ /docs/graphos/operations/defer/
 /check-configurations/ /docs/graphos/delivery/check-configurations/
 /contracts/ /docs/graphos/delivery/contracts/
 /github-integration/ /docs/graphos/delivery/github-integration/
