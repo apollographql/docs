@@ -65,6 +65,13 @@ Publishing a new subgraph schema or editing your router's configuration triggers
 
 > A router deployment might fail due to a platform incident or schema composition issues. To resolve this, try republishing your subgraph schema.
 
+## Automatic deletion of unused routers
+
+**Apollo automatically deletes variants of Serverless cloud supergraphs that receive zero operations for 60 consecutive days.** This deletes the router, along with all of the variant's historical metrics.
+
+- Apollo will notify you via email whenever a Serverless variant is approaching this 60-day limit.
+- To prevent deletion, execute at least one GraphQL operation on the variant's router before the 60-day limit.
+
 ## Cloud routing FAQ
 
 #### What happens if my cloud router goes down?
