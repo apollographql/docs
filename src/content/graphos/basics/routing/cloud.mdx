@@ -65,6 +65,12 @@ Publishing a new subgraph schema or editing your router's configuration triggers
 
 > A router deployment might fail due to a platform incident or schema composition issues. To resolve this, try republishing your subgraph schema.
 
+## Unused cloud routers
+
+Apollo automatically deletes cloud routers that have not processed any requests in the last 60 days. This policy only applies to cloud routers on the Serverless plan. You will receive an email when your cloud router is queued for deletion.
+
+Deleting a cloud router removes all related resources and data for the specific variant (graphref) which has gone unused for 60 days. Simply send a request to your cloud router before the day it is scheduled for deletion.
+
 ## Cloud routing FAQ
 
 #### What happens if my cloud router goes down?
