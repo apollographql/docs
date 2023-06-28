@@ -5,7 +5,7 @@ description: Real-time data delivery from across your services
 
 <blockquote>
 
-**GraphQL subscription support for cloud supergraphs is currently in [preview](/resources/product-launch-stages#preview).**
+**GraphQL subscription support for cloud supergraphs is currently in [preview](/resources/product-launch-stages#preview).** It does not currently support all popular WebSocket subprotocols. [See prerequisites.](#prerequisites)
 
 You can also use subscriptions with an Enterprise self-hosed supergraph. See the [Apollo Router documentation](/router/executing-operation/subscription-support/).
 
@@ -22,7 +22,7 @@ subscription OnStockPricesChanged {
 }
 ```
 
-With subscription support enabled, you can add `Subscription` fields to the schema of any subgraph that supports common WebSocket protocols for subscription communication:
+With subscription support enabled, you can add `Subscription` fields to the schema of any subgraph that supports the [`subscriptions-transport-ws` library](https://github.com/apollographql/subscriptions-transport-ws)'s subscription protocol:
 
 ```graphql title="stocks.graphql"
 type Subscription {
@@ -97,7 +97,7 @@ flowchart LR;
 
 1. [Update your supergraph's build pipeline](../graphs/updating#2-update-your-build-pipeline) to use Apollo Federation 2.4 or later.
     - Previous versions of Apollo Federation don't support subscription operations.
-2. Modify your subgraph schemas to use Apollo Federation 2.4 or later:
+2. If your subgraph schemas specify an Apollo Federation version, modify them to use Apollo Federation 2.4 or later:
     ```graphql title="stocks.graphql"
     extend schema
     @link(url: "https://specs.apollo.dev/federation/v2.4", #highlight-line
@@ -110,48 +110,15 @@ flowchart LR;
 
     - You can _skip_ modifying subgraph schemas that don't define any `Subscription` fields.
 
-After you complete these prerequisites, you can safely [configure your router](#router-setup) for subscriptions.
+3. In each subgraph with subscriptions, make sure the subgraph hosts its subscriptions WebSocket endpoint at the path `/ws`.
 
-## Cloud router setup
+    - If your WebSocket endpoint is currently hosted at another path, you can add `/ws` as an _additional_ path instead of removing the existing path. This is helpful if legacy clients will temporarily continue executing operations on your subgraph directly.
 
-> ⚠️ **Make sure you've completed all [prerequisites](#prerequisites)!**
+4. In each subgraph with subscriptions, make sure the subgraph uses the WebSocket protocol defined by the [`subscriptions-transport-ws` library](https://github.com/apollographql/subscriptions-transport-ws).
 
-In your cloud router's [configuration](../routing/cloud-configuration/#router-configuration-yaml), you specify how the router communicates with each of your subgraphs when executing GraphQL subscriptions.
+5. Deploy your updated subgraphs.
 
-GraphOS cloud routers support two popular [WebSocket protocols](#websocket-setup) for subscriptions. **Your router must use whichever protocol is expected by each subgraph!**
-
-Here's an example router configuration snippet that sets up subgraph subscriptions over WebSocket:
-
-```yaml title="Router configuration YAML"
-subscription:
-  mode:
-    passthrough:
-      all: # The router uses these subscription settings UNLESS overridden per-subgraph
-        path: /subscriptions # The URL path to use for subgraph subscription endpoints (Default: /ws)
-      subgraphs: # Overrides subscription settings for individual subgraphs
-        reviews: # Overrides settings for the 'reviews' subgraph
-          path: /ws # Overrides '/subscriptions' defined above
-          protocol: graphql_transport_ws # The WebSocket-based subprotocol to use for subscription communication (Default: graphql_ws)
-```
-
-This example enables subscriptions in **passthrough mode**, which uses long-lived WebSocket connections.
-
-### Supported protocols
-
-The router supports the following WebSocket subprotocols, specified via the `protocol` option:
-
-- `graphql_ws`
-  - Legacy subprotocol used by the [`subscriptions-transport-ws` library](https://github.com/apollographql/subscriptions-transport-ws), which is **unmaintained**
-  - For backward compatibility, this is the default value.
-- `graphql_transport_ws`
-  - Used by the [graphql-ws](https://github.com/enisdenjo/graphql-ws) library
-  - This subprotocol is recommended for GraphQL server libraries implementing WebSocket-based subscriptions.
-
-> ⚠️ **Your router must use whichever subprotocol is expected by each of your subgraphs!**
-
-By default, the router uses `graphql_ws` for all subgraphs. You can change this global default and/or override it for individual subgraphs by setting the `protocol` key as shown above.
-
-Your router creates a separate WebSocket connection for each client subscription, _unless_ it can perform [subscription deduplication](#subscription-deduplication).
+After you complete these prerequisites, you begin [executing subscriptions](#example-execution) on your cloud router.
 
 ## Example execution
 
@@ -186,7 +153,11 @@ type Review {
 
 </CodeColumns>
 
-Now, let's say a client executes the following subscription against our router ([over HTTP!](#how-it-works)):
+A client can execute the following subscription against our router:
+
+> ⚠️ **Remember, clients execute subscriptions against your router [over HTTP!](#how-it-works)**
+>
+> Apollo Client for [Web](/react/data/subscriptions#http), [Kotlin](/kotlin/essentials/subscriptions#configuring-http-subscriptions), and [iOS](/ios/fetching/subscriptions#http) all support HTTP-based subscriptions.
 
 ```graphql
 subscription OnProductPriceChanged {
