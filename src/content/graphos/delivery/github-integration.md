@@ -10,6 +10,8 @@ To enhance the convenience and helpfulness of [schema checks](./schema-checks/),
 
 Go to [https://github.com/marketplace/apollo-studio#pricing-and-setup](https://github.com/marketplace/apollo-studio#pricing-and-setup) and click **Install it for free** to add the app to the GitHub profile or organization that you want to set up checks for.
 
+> This app is only available on github.com, not on self-hosted GitHub instances.
+
 ## Run a check on each commit
 
 Next, make sure your CI configuration includes a step to execute schema checks. You do this by adding the `rover subgraph check` command directly as a step in your CI.
