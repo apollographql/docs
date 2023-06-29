@@ -50,7 +50,13 @@
       ]
     },
     "Operation Performance": {
-      "Using @defer": "/routing/defer"
+      "Using @defer": "/operations/defer",
+      "GraphQL subscriptions": [
+        "/operations/subscriptions",
+        [
+          "preview"
+        ]
+      ]
     },
     "GraphOS Interfaces": {
       "Studio UI": "https://studio.apollographql.com",
