@@ -1,22 +1,56 @@
 ---
-title: Trusted operations with GraphOS
-description: Send less data and reject potentially malicious requests
+title: Persisted queries with GraphOS
+description: Minimize latency and reject potentially malicious requests
 ---
 
-> **This feature is available only with a [GraphOS Enterprise plan](/graphos/enterprise/).**
+> **This feature is available only with a [GraphOS Enterprise plan](/graphos/enterprise/).** It is currently in [preview](/resources/product-launch-stages#preview).
 >
 > If your organization _doesn't_ currently have an Enterprise plan, you can test out this functionality by signing up for a free [Enterprise trial](/graphos/org/plans/#enterprise-trials).
 
-With [GraphOS Enterprise](../enterprise/), you can register a **trusted operation list** for your supergraph's router. This list combines _all_ of the known GraphQL operations that _all_ of your app clients execute against your router.
+With [GraphOS Enterprise](../enterprise/), you can register a **persisted query list** for your supergraph's router. This list combines _all_ of the known GraphQL operations that _all_ of your app clients execute against your router:
 
-A trusted operation list (or **TOL**) can protect your supergraph _and_ speed up your clients:
+```mermaid
+graph LR;
 
-- You can configure your router to _reject_ incoming operations that aren't in its TOL.
-- Client apps can execute an operation by providing its TOL-specified ID _instead of_ providing the full operation string.
-    - For very large operation strings, this can dramatically improve latency and bandwidth usage.
-    - You can even _require_ that operations be provided via TOL-specified ID, rejecting query strings even if they match a trusted oepration.
+  webClient("Web<br/>Client");
+  androidClient("Android<br/>Client");
+  iosClient("iOS<br/>Client");
 
-Each operation defines the exact shape of a GraphQL operation that your supergraph expects application clients to execute against it. In its simplest form, Persisted Queries (PQs) can be used like Automatic Persisted Queries (APQs): they allow clients to send short IDs instead of full freeform GraphQL in requests. The only difference is that PQs are pre-registered by trusted clients when they are built and made known to your  Router fleet before the query is executed, while APQs are dynamically registered into Routers by arbitrary client operations at runtime. 
+
+  subgraph "GraphOS"
+  pql[[Persisted<br/>Query List]];
+  end
+  
+  subgraph "Your backend"
+  router(["Router"]);
+  end
+
+  webClient & androidClient & iosClient --->|Registers<br/>operations|pql
+  router -.->|Fetches PQL|pql
+```
+
+A persisted query list (or **PQL**) can protect your supergraph while also speeding up your clients:
+
+- You can configure your router to _reject_ incoming operations that aren't in its PQL.
+- Client apps can execute an operation by providing its PQL-specified ID _instead of_ providing the full operation string.
+    - For very large operation strings, this can dramatically reduce latency and bandwidth usage.
+    - You can even _require_ that operations be provided via PQL-specified ID, rejecting query strings even if they match a registered operation.
+
+<ExpansionPanel title="How does this feature differ from Automatic Persisted Queries (APQ)?">
+
+The Apollo Router also supports a feature called [automatic persisted queries](/router/configuration/in-memory-caching#caching-automatic-persisted-queries-apq), or APQ. With this feature, clients can execute a GraphQL operation by sending the _hash_ of its operation string, instead of sending the full string.
+
+**Compared to GraphOS persisted queries, APQ has the following limitations:**
+
+- APQ can't provide operation safelisting capabilities, because the router builds its operation cache over time with whichever operations it receives.
+    - With GraphOS persisted queries, trusted operations are pre-registered with GraphOS. Your router fetches its PQL on startup, enabling it to approve or reject operations based on their presence in the cache.
+
+- With APQ, your router must receive a full operation string from a client at least once in order to cache it.
+    - With GraphOS persisted queries, your router fetches its full PQL from GraphOS on startup, which means clients can _always_ execute operations by their PQL-specified ID.
+
+</ExpansionPanel>
+
+Each operation defines the exact shape of a GraphQL operation that your supergraph expects application clients to execute against it. 
 
 Registering these persisted operations also enables operational security features like flagging or even rejecting unregistered operations.
 
@@ -33,9 +67,9 @@ Operation safety features that can be enabled with Persisted Queries:
 
 ### 1. Create a persisted queries list (PQL)
 
-To use Persisted Queries, you first need to create at least one Persisted Queries List (PQL) in Studio. Each PQL is associated with a single supergraph in GraphOS.
+To use persisted queries, you first need to create at least one **persisted query list** (**PQL**) in GraphOS Studio. Each PQL is associated with a single supergraph in GraphOS.
 
-You can open the PQL page for a particular graph by clicking its PQL icon from your organization’s Graphs page:
+Open the PQL page for a particular graph by clicking its PQL icon from your organization’s Graphs page:
 
 [ SCREENSHOT ]
 
@@ -43,19 +77,19 @@ You can open the PQL page for a particular graph by clicking its PQL icon from y
 
 From the PQL page, click **New List** in the top-right corner to create a new PQL.
 
-Every PQL starts out empty. Next, let's register some operations to it.
+Every PQL starts out empty. We'll register some operations to it in a later step.
 
 ### 2. Apply the PQL to individual variants
 
-Any time after you create a PQL (even before you register any operations), you can apply it to one or more variants of your supergraph. You do so from your supergraph's PQL page in Studio:
+Any time after you create a PQL, you can apply it to one or more variants of your supergraph. You do so from your supergraph's PQL page in Studio:
 
 [ SCREENSHOT ]
 
 Under the **Actions** column, click the **•••** menu for the PQL you want to apply.
 
-After you apply a PQL to a variant, GraphOS validates it against the variant's operation history and flags any unregistered operations. It then uploads the PQL to Uplink, the GraphOS service that delivers configuration to your supergraph's router at runtime.
+After you apply a PQL to a variant, GraphOS validates it against the variant's operation history and flags any unregistered operations. It then uploads the PQL to Uplink, the GraphOS service that delivers configuration to your router at runtime.
 
-As a best practice, you should apply PQLs to your staging AND production environments. Staging can be configured to simply log out any usage that isn’t a persisted query hit.
+> As a best practice, you should apply PQLs to your staging _and_ production environments. Staging can be configured to simply log out any usage that isn’t a persisted query hit.
 
 ### 3. Generate a persisted queries manifest (PQM) file
 
