@@ -218,7 +218,29 @@ export default function Page({file}) {
     if (gitRemote) {
       repoPath.push('docs', 'source');
     } else {
-      repoPath.push('src', 'content', basePath === '/' ? 'basics' : basePath);
+      repoPath.push('src', 'content');
+
+      if (basePath === '/') {
+        repoPath.push('basics');
+      } else {
+        repoPath.push(basePath);
+
+        const graphOSBasicsContent = [
+          'graphs',
+          'operations',
+          'quickstart',
+          'routing'
+        ];
+
+        // Check to see if the current page is within the GraphOS Basics section
+        if (
+          basePath === 'graphos' &&
+          graphOSBasicsContent.some(content => relativePath.startsWith(content))
+        ) {
+          // The additional `basics` segment added to the repo path as it is not in the url
+          repoPath.push('basics');
+        }
+      }
     }
 
     repoPath.push(relativePath);
