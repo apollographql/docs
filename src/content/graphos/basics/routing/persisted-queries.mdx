@@ -1,20 +1,23 @@
 ---
 title: Persisted queries with GraphOS
-description: Minimize latency and reject potentially malicious requests
+description: Safelist known operations and minimize request latency
 ---
 
-> **This feature is available only with a [GraphOS Enterprise plan](/graphos/enterprise/).** It is currently in [preview](/resources/product-launch-stages#preview).
->
-> If your organization _doesn't_ currently have an Enterprise plan, you can test out this functionality by signing up for a free [Enterprise trial](/graphos/org/plans/#enterprise-trials).
+<blockquote>
 
-With [GraphOS Enterprise](../enterprise/), you can register a **persisted query list** for your supergraph's router. This list combines _all_ of the known GraphQL operations that _all_ of your app clients execute against your router:
+**This feature is available only with a [GraphOS Enterprise plan](/graphos/enterprise/).** It is currently in [preview](/resources/product-launch-stages#preview).
+
+If your organization _doesn't_ currently have an Enterprise plan, you can test out this functionality by signing up for a free [Enterprise trial](/graphos/org/plans/#enterprise-trials).
+
+</blockquote>
+
+With [GraphOS Enterprise](../enterprise/), you can register a **persisted query list** (or **PQL**) for your supergraph's self-hosted router. This list contains _all_ of the known GraphQL operations that _all_ of your app clients execute against your router:
 
 ```mermaid
 graph LR;
 
   webClient("Web<br/>Client");
   androidClient("Android<br/>Client");
-  iosClient("iOS<br/>Client");
 
 
   subgraph "GraphOS"
@@ -22,33 +25,36 @@ graph LR;
   end
   
   subgraph "Your backend"
-  router(["Router"]);
+  router(["Apollo<br/>Router"]);
   end
 
-  webClient & androidClient & iosClient --->|Registers<br/>operations|pql
+  webClient & androidClient --->|Registers<br/>operations|pql
   router -.->|Fetches PQL|pql
 ```
 
-A persisted query list (or **PQL**) can protect your supergraph while also speeding up your clients:
+Using a PQL, your router can **protect your supergraph** and **speed up your clients**:
 
-- You can configure your router to _reject_ incoming operations that aren't in its PQL.
-- Client apps can execute an operation by providing its PQL-specified ID _instead of_ providing the full operation string.
+- You can configure your router to _reject_ any incoming operations that aren't in its PQL.
+    - In this case, the router uses its PQL for **safelisting**.
+- Client apps can execute operations by providing their PQL-specified IDs, _instead of_ providing full operation strings.
     - For very large operation strings, this can dramatically reduce latency and bandwidth usage.
-    - You can even _require_ that operations be provided via PQL-specified ID, rejecting query strings even if they match a registered operation.
+    - Your router can even _require_ that clients provide operations this way, rejecting full query strings even if they're present in the PQL.
 
-<ExpansionPanel title="How does this feature differ from Automatic Persisted Queries (APQ)?">
+## Differences from APQ
 
-The Apollo Router also supports a feature called [automatic persisted queries](/router/configuration/in-memory-caching#caching-automatic-persisted-queries-apq), or APQ. With this feature, clients can execute a GraphQL operation by sending the _hash_ of its operation string, instead of sending the full string.
+The Apollo Router also supports a feature called [automatic persisted queries](/router/configuration/in-memory-caching#caching-automatic-persisted-queries-apq), or APQ. With APQ, clients can execute a GraphQL operation by sending the _hash_ of its operation string, instead of sending the full string.
 
 **Compared to GraphOS persisted queries, APQ has the following limitations:**
 
-- APQ can't provide operation safelisting capabilities, because the router builds its operation cache over time with whichever operations it receives.
-    - With GraphOS persisted queries, trusted operations are pre-registered with GraphOS. Your router fetches its PQL on startup, enabling it to approve or reject operations based on their presence in the cache.
+- APQ doesn't provide operation safelisting capabilities, because the router populates its operation cache over time with _any_ operations it receives.
+    - **With GraphOS persisted queries,** trusted operations are pre-registered with GraphOS. Your router fetches its PQL on startup, enabling it to approve or reject operations based on their presence in the PQL.
 
 - With APQ, your router must receive a full operation string from a client at least once in order to cache it.
-    - With GraphOS persisted queries, your router fetches its full PQL from GraphOS on startup, which means clients can _always_ execute operations by their PQL-specified ID.
+    - **With GraphOS persisted queries,** your router fetches its full PQL from GraphOS on startup, which means clients can _always_ execute operations by their PQL-specified ID.
 
-</ExpansionPanel>
+If you _only_ want to improve request latency and bandwidth usage, APQ probably addresses your use case. If you _also_ want to secure your supergraph with operation safelisting, you should use GraphOS persisted queries.
+
+## Next thing
 
 Each operation defines the exact shape of a GraphQL operation that your supergraph expects application clients to execute against it. 
 
@@ -65,9 +71,9 @@ Operation safety features that can be enabled with Persisted Queries:
 
 ## Setup
 
-### 1. Create a persisted queries list (PQL)
+### 1. Create a persisted query list (PQL)
 
-To use persisted queries, you first need to create at least one **persisted query list** (**PQL**) in GraphOS Studio. Each PQL is associated with a single supergraph in GraphOS.
+To use persisted queries, you first create at least one **persisted query list** (**PQL**) in GraphOS Studio. Each PQL is associated with a single supergraph in GraphOS, and you can apply a single PQL to multiple _variants_ of a supergraph.
 
 Open the PQL page for a particular graph by clicking its PQL icon from your organization’s Graphs page:
 
@@ -81,25 +87,46 @@ Every PQL starts out empty. We'll register some operations to it in a later step
 
 ### 2. Apply the PQL to individual variants
 
-Any time after you create a PQL, you can apply it to one or more variants of your supergraph. You do so from your supergraph's PQL page in Studio:
+Any time after you create a PQL, you can apply it to one or more variants of your supergraph. It's safe to apply an empty or incomplete PQL, because your router doesn't _use_ its PQL until you configure it to do so (covered in a later step).
+
+Apply PQLs from your supergraph's PQL page in Studio:
 
 [ SCREENSHOT ]
 
 Under the **Actions** column, click the **•••** menu for the PQL you want to apply.
 
-After you apply a PQL to a variant, GraphOS validates it against the variant's operation history and flags any unregistered operations. It then uploads the PQL to Uplink, the GraphOS service that delivers configuration to your router at runtime.
 
-> As a best practice, you should apply PQLs to your staging _and_ production environments. Staging can be configured to simply log out any usage that isn’t a persisted query hit.
 
-### 3. Generate a persisted queries manifest (PQM) file
+After you apply a PQL to a variant, GraphOS validates it against the variant's reported operation history and flags any recent operations that aren't represented in the PQL.
 
-When you register operations to a PQL, you provide them in a JSON file format that’s called a Persisted Queries Manifest (PQM). This manifest associates a unique identifier with each raw GraphQL operation.
+GraphOS then uploads the PQL to Uplink, the service that delivers configuration to your router at runtime.
 
-The file format described below is used by our initial preview release. We expect that other information will be added to it later, such as information about what client this file represents.
+> As a best practice, you should apply PQLs to your staging _and_ production environments. To help with debugging in staging, you can configure your staging router to _log_ unrecognized operations instead of _rejecting_ them.
 
-An example PQM file looks like this:
+### 3. Register operations to the PQL
 
-```json
+Any time after you create a PQL, you can start registering GraphQL operations to it. **A PQL should contain _all_ of the GraphQL operations that _all_ of your trusted clients execute on your associated router.**
+
+You register operations to a PQL using the [Rover CLI](/rover/):
+
+```bash title="Example command"
+rover persisted-queries publish my-graph@my-variant \
+  --manifest ./persisted-query-manifest.json # Manifest covered below
+```
+
+You can incorporate this registration into your CI/CD pipeline, enabling you to automatically register new operations whenever a new client app version is released.
+
+#### Generating a manifest file
+
+As shown in the example above, you provide `rover persisted-queries publish` a JSON **manifest** that contains details for all of the operations you want to register.
+
+All Apollo Client libraries (Web, Kotlin, and iOS) provide a mechanism for generating this manifest from your application source.
+
+> You can also generate your own manifests if you use other client libraries. See [Manifest format](#manifest-format).
+
+Here's an example manifest file that includes three operations:
+
+```json title="persisted-query-manifest.json"
 {  
   "format": "apollo-persisted-queries-manifest",
   "version": 1,
@@ -128,10 +155,7 @@ An example PQM file looks like this:
 
 You define all of the operations to register under the `operations` key, which maps persisted query IDs to operation details. The above example associates the operation: `query Universal { __typename }` to the key: `dc67510fb4289672bea757e862d6b00e83db5d3cbbcfb15260601b6f29bb2b8f`. In practice, this identifier can be any string, but it must be a unique key in your list.
 
-When generating operation identifiers, we encourage you to use a value that's derived directly from the query's details, such as the query document
-s cryptographic hash. Apollo tools that extract operations use the base16 representation of the document's SHA256 hash, which is the same format used in APQs.
 
-In almost all cases, you should not modify the operation body of a registered operation. If you make changes to an existing registered operation, you should register a new operation with a new corresponding identifier. This ensures that multiple versions of a client application can work at once, providing different operation IDs to run different "versions" of the operation.
 
 GraphOS does allow modifying the body of a registered persisted query (this requires user confirmation). This functionality is not intended for modeling the evolution of a GraphQL operation over time. Instead, this supports advanced use cases like forcing legacy client versions to execute slightly different operations without needing to modify client code.
 
@@ -163,8 +187,6 @@ For example, the client libraries typically add a `__typename`  field to every o
 - If a client's operation is registered without the added `__typename` and the client sends the operation as a raw GraphQL document, then if the Router is configured to reject raw GraphQL that does not match a registered operation, the operation may be surprisingly rejected. (We expect the "matching" rules to be configurable here, so that this particular "unexpected extra `__typename`" case could be made to work, but this may not cover all possible client-side transformations.)
 
 Apollo's clients use the same logic to transform operations at runtime and at build time, so that this is not a concern.
-
-### 4. Register Persisted Queries Manifests (PQMs) to a Persisted Queries List (PQL)
 
 You use the Rover CLI to register one or more GraphQL operations to an existing PQL:
 
@@ -198,7 +220,7 @@ rover persisted-queries publish my-graph@my-variant --manifest ./persisted-queri
     - If any operation in the PQM has the same ID as an operation already in the PQL, the existing PQL entry is replaced with the new operation. If using Apollo Client libraries, any change in the document would result in a new Persisted Query ID and a new entry in the PQL. Operation entries can only be replaced when manually setting your own identifiers.
 2. It updates any additional supergraph variants that the PQL is already applied to.
 
-### 5. Enable persisted queries (PQs) in the router
+### 4. Configure your router
 
 After your PQLs are registered and applied to a variant, you can configure the behavior of router instances associated with that variant.
 
@@ -259,7 +281,7 @@ persisted_queries:
       enabled: false
 ```
 
-### 6. Make requests
+### 5. Make requests
 
 If you’ve followed the above steps (create a PQ List, link it to a variant, publish operations to it, enable known operations in your router), you can start sending known operations to your router.
 
@@ -282,6 +304,32 @@ Earlier we registered the universal query with an ID of `dc67510fb4289672bea757e
 curl http://localhost:4000 -X POST --json \
 '{"extensions":{"persistedQuery":{"version":1,"sha256Hash":"dc67510fb4289672bea757e862d6b00e83db5d3cbbcfb15260601b6f29bb2b8f"}}}'
 ```
+
+## Manifest format
+
+The file format described below is used by our initial preview release. We expect that other information will be added to it later, such as information about what client this file represents.
+
+```json title="persisted-queries.json"
+{  
+  "format": "apollo-persisted-queries",
+  "version": 1,
+  "operations": [  
+    {
+      "id": "dc67510fb4289672bea757e862d6b00e83db5d3cbbcfb15260601b6f29bb2b8f",
+      "body": "query UniversalQuery { __typename }",
+      "name": "UniversalQuery",
+      "type": "query" 
+    },
+  ]
+}
+```
+
+### Generating IDs
+
+When generating operation identifiers, we encourage you to use a value that's derived directly from the query's details, such as the query document
+s cryptographic hash. Apollo tools that extract operations use the base16 representation of the document's SHA256 hash, which is the same format used in APQs.
+
+In almost all cases, you should not modify the operation body of a registered operation. If you make changes to an existing registered operation, you should register a new operation with a new corresponding identifier. This ensures that multiple versions of a client application can work at once, providing different operation IDs to run different "versions" of the operation.
 
 ## Managing PQLs
 
