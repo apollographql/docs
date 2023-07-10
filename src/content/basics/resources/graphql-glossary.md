@@ -7,7 +7,7 @@ As you explore the GraphQL ecosystem, you might encounter some unfamiliar terms 
 
 ## Alias
 
-An alternative name provided for a query field to avoid conflicts during data fetching. Use an alias if a query fetches multiple instances of the same field, as shown:
+A mechanism for including multiple instances of a single field in a GraphQL operation. This enables you to provide different argument values to each instance.
 
 ```graphql
 query AdminsAndManagers {
@@ -28,7 +28,7 @@ The query above uses `admins` and `managers` as aliases for the `users` field.
 
 ## Argument
 
-A key-value pair associated with a particular [schema](#schema) field, enabling you to pass data to customize that field's return value. Argument values can be passed as literal values (as shown below for clarity) or via [variables](#variable) (recommended).
+A key-value pair associated with a particular [schema](#schema) field, enabling operations to pass data to that field's [resolver](#resolver). Argument values can be hardcoded as literal values (shown below for clarity) or provided via GraphQL [variables](#variable) (recommended).
 
 ```graphql
 query GetHuman {
@@ -44,9 +44,13 @@ The query above provides two arguments:
 - The `id` argument for the `human` field (indicating which `Human` object to return)
 - The `unit` argument for the `height` field (indicating which unit of measurement to use for the return value)
 
-## Automatic Persisted Queries (APQ)
+## Automatic persisted queries (APQ)
 
-A technique for improving GraphQL network performance with zero build-time configuration by reducing request size over the wire. A smaller signature reduces bandwidth use and speeds up client loading times. [See the Apollo Server docs.](/apollo-server/performance/apq/).
+A technique for improving GraphQL network performance by enabling clients to execute operations by passing an identifier, instead of by passing the entire operation string.
+
+For very large operation strings, APQ meaningfully reduces bandwidth use and speeds up client loading times.
+
+[Learn more about APQ.](/apollo-server/performance/apq/)
 
 ## Data source
 
@@ -54,33 +58,43 @@ A pattern for fetching data from a particular service, with built-in support for
 
 ## Deferred query
 
-> This is an experimental feature. It is not included in any stable releases of Apollo Client or Apollo Server.
-
-A query that has certain fields tagged with the `@defer` directive, so that fields that take a long time to resolve do not need to slow down the entire query.
+A query that has certain fields tagged with the `@defer` directive, indicating that the GraphQL server can return all _other_ fields before the deferred fields are ready. The server can then return the deferred fields in subsequent payloads.
 
 ```graphql
 query NewsFeed {
   newsFeed {
     stories {
       text
-      comments @defer {
-        text
+      # highlight-start
+      ... @defer {
+        comments {
+          text
+        }
       }
+      #highlight-end
     }
   }
 }
 ```
 
+By deferring slow-to-resolve fields, a client can receive _other_ data as quickly as possible.
+
+[Learn how to use `@defer` with Apollo GraphOS.](/graphos/operations/defer)
+
 ## Directive
 
-A declaration prefixed with an `@` character that encapsulates programming logic for query execution on the client or server. GraphQL includes some built-in directives (such as `@skip` and `@include`), and you can define [custom directives](/apollo-server/v3/schema/creating-directives/). Directives can be used for features such as authentication, incremental data loading, etc.
+A declaration prefixed with `@` that you apply to various locations in a GraphQL schema or operation:
 
 ```graphql
-type User @auth {
-  name: String!
-  banned: Boolean @auth
+type User {
+  username: String! @lowerCase
 }
 ```
+
+A directive usually has some associated logic that modifies the behavior of the associated location. For example, the `@lowerCase` directive above might define logic to always convert the `username` field to lower case before returning it.
+
+GraphQL includes some built-in directives (such as `@deprecated`), and you can also define [custom directives](https://www.apollographql.com/docs/apollo-server/v3/schema/creating-directives/).
+
 
 ## Docstring
 
@@ -338,7 +352,9 @@ function ExchangeRates() {
 
 ## Resolver
 
-A function that populates data for a particular field in a GraphQL schema. Resolvers provide the instructions for turning a GraphQL operation into data. It can retrieve data from or write data to anywhere, including a SQL, No-SQL, or graph database, a micro-service, and a REST API. Resolvers can also return strings, ints, null, and other primitives.
+A function that populates data for a particular field in a GraphQL schema. A resolver can define any custom logic to populate its data, but it usually involves fetching from a data source (such as a database, REST API, or other microservice).
+
+[Learn about resolvers in Apollo Server.](/apollo-server/data/resolvers/)
 
 ```js
 const resolvers = {
@@ -361,7 +377,8 @@ A GraphQL [schema](/apollo-server/schema/schema/) is at the center of any GraphQ
 
 ## Schema Definition Language (SDL)
 
-The syntax for writing GraphQL Schemas. It is otherwise known as Interface Definition Language. It is the lingua franca shared by all for building GraphQL APIs regardless of the programming language chosen.
+The syntax for writing GraphQL schemas. All GraphQL APIs can use SDL to represent their schema, regardless of which _programming_ language the API is implemented in.
+
 
 ```graphql
 type Author {
@@ -415,11 +432,13 @@ subscription onCommentAdded($repoFullName: String!){
 
 ## Scalar type
 
-A type that qualifies the data a GraphQL field resolves. GraphQL ships with some scalar types out of the box; **Int**, **Float**, **String**, **Boolean** and **ID**. You can also define [custom scalars](/apollo-server/schema/custom-scalars/).
+A "base" type in GraphQL that resolves to a single value. GraphQL includes the following scalar types by default: `Int`, `Float`, `String`, `Boolean`, and `ID`.
+
+You can also define [custom scalars](/apollo-server/schema/custom-scalars/). [Learn more about the default scalar types](https://graphql.com/learn/types/#introducing-scalar-types).
 
 ## Type system
 
-A collection of types which characterizes the set of data that can be validated, queried, and executed on a GraphQL API.
+A collection of types that characterizes the set of data that can be validated, queried, and executed on a GraphQL API.
 
 ## Variable
 
