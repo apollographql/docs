@@ -35,6 +35,31 @@ query GetUsers { # Don't define operations in a schema document
 #highlight-end
 ```
 
+#### `ALL_ELEMENTS_REQUIRE_DESCRIPTION`
+
+Each element in the schema must include a description.
+
+<p style="margin-bottom: 0">❌</p>
+
+```graphql title="schema.graphql"
+type User {
+     username: String!
+     password: String!
+}
+```
+
+<p style="margin-bottom: 0">✅</p>
+
+```graphql title="schema.graphql"
+# A type that describes the user
+type User {
+     # The user's username, should be typed in the login field.
+     username: String!
+     # The user's password.
+     password: String!
+}
+```
+
 ## All fields
 
 #### `FIELD_NAMES_SHOULD_BE_CAMEL_CASE`
