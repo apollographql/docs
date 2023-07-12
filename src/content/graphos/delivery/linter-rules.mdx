@@ -191,6 +191,32 @@ type Book { # highlight-line
 }
 ```
 
+#### `DEFINED_TYPES_ARE_USED`
+
+All defined types are used at least once in the schema.
+
+Types that are defined but then not used are most likely due to a mistake such as incomplete refactoring. Unused types take up space and can confuse readers.
+
+<p style="margin-bottom: 0">❌</p>
+
+```graphql title="schema.graphql"
+type someUnusedType { # Also fails the TYPE_SUFFIX rule!
+  name: String!
+}
+```
+
+<p style="margin-bottom: 0">✅</p>
+
+```graphql title="schema.graphql"
+type Book { 
+  title: String!
+}
+
+type Query {
+  books: [Book!]!
+}
+```
+
 ## Objects
 
 #### `OBJECT_PREFIX`
