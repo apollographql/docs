@@ -229,7 +229,12 @@ export default function Page({file}) {
           'graphs',
           'operations',
           'quickstart',
-          'routing'
+          'routing',
+          'api-keys',
+          'data-privacy',
+          'platform-api',
+          'sub-processors',
+          'index'
         ];
 
         // Check to see if the current page is within the GraphOS Basics section
