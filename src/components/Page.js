@@ -233,7 +233,8 @@ export default function Page({file}) {
           'api-keys',
           'data-privacy',
           'platform-api',
-          'sub-processors'
+          'sub-processors',
+          'index'
         ];
 
         // Check to see if the current page is within the GraphOS Basics section
