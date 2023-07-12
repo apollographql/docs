@@ -113,6 +113,33 @@ type Query {
 }
 ```
 
+#### `FIELDS-HAVE-DESCRIPTIONS-QUERY-MUTATION`
+
+All query and mutation fields have descriptions.
+
+
+<p style="margin-bottom: 0">❌</p>
+
+```graphql title="schema.graphql"
+type Mutation {
+  createBlogPost(blogPostContent: BlogPostContent!): Post
+}
+```
+
+<p style="margin-bottom: 0">✅</p>
+
+```graphql title="schema.graphql"
+type Mutation {
+  # Create a new blog post
+  createBlogPost(
+    # The content of the blog post to be created
+    blogPostContent: BlogPostContent!
+  ): Post
+}
+```
+
+
+
 ## All types
 
 These rules apply to _all_ types that appear in a GraphQL schema, including:
