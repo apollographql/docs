@@ -44,19 +44,16 @@ Each element in the schema must include a description.
 ```graphql title="schema.graphql"
 type User {
      username: String!
-     password: String!
 }
 ```
 
 <p style="margin-bottom: 0">✅</p>
 
 ```graphql title="schema.graphql"
-# A type that describes the user
+# Represents a user
 type User {
-     # The user's username, should be typed in the login field.
+     # The username of the user
      username: String!
-     # The user's password.
-     password: String!
 }
 ```
 
