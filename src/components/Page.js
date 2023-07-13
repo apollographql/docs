@@ -119,7 +119,7 @@ const components = {
   ol: props => (
     <OrderedList spacing={LIST_SPACING} sx={NESTED_LIST_STYLES} {...props} />
   ),
-  li: props => (
+  li: ({children, ...props}) => (
     <ListItem
       sx={{
         '>': {
@@ -129,9 +129,17 @@ const components = {
         }
       }}
       {...props}
-    />
+    >
+      <HighlightKeyTerms>{children}</HighlightKeyTerms>
+    </ListItem>
   ),
-  p: HighlightKeyTerms,
+  p: ({children}) => {
+    return (
+      <Text>
+        <HighlightKeyTerms>{children}</HighlightKeyTerms>
+      </Text>
+    );
+  },
   a: RelativeLink,
   pre: MarkdownCodeBlock,
   table: props => (
