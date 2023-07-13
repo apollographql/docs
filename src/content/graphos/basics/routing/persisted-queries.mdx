@@ -11,7 +11,7 @@ If your organization _doesn't_ currently have an Enterprise plan, you can test o
 
 </blockquote>
 
-With [GraphOS Enterprise](../enterprise/), you can maintain a **persisted query list** (or **PQL**) for your supergraph's self-hosted router. This list contains all of the known GraphQL operations that all of your app clients execute against your router:
+With [GraphOS Enterprise](../enterprise/), you can maintain a **persisted query list** (or **PQL**) for your supergraph's self-hosted router. This list should contain all of the known GraphQL operations that all of your app clients execute against your router:
 
 ```mermaid
 graph LR;
@@ -29,7 +29,7 @@ graph LR;
   end
 
   webClient & androidClient --->|Publishes<br/>operations|pql
-  router -.->|Fetches PQL|pql
+  router -.->|Fetches PQL<br/>at runtime|pql
 ```
 
 Your router can use its PQL to **protect your supergraph** and **speed up your clients**:
@@ -41,12 +41,12 @@ Your router can use its PQL to **protect your supergraph** and **speed up your c
 
 ## Differences from APQ
 
-The Apollo Router also supports a feature called [automatic persisted queries](/router/configuration/in-memory-caching#caching-automatic-persisted-queries-apq), or APQ. With APQ, clients can execute a GraphQL operation by sending the _hash_ of its operation string, instead of sending the full string.
+The Apollo Router also supports a related feature called [automatic persisted queries](/router/configuration/in-memory-caching#caching-automatic-persisted-queries-apq), or APQ. With APQ, clients can execute a GraphQL operation by sending the _hash_ of its operation string, instead of sending the full string.
 
 **Compared to GraphOS persisted queries, APQ has the following limitations:**
 
 - APQ doesn't provide safelisting capabilities, because the router populates its APQ cache over time with _any_ operations it receives.
-    - **With GraphOS persisted queries,** clients pre-publish their operations with GraphOS. Your router fetches its PQL on startup, enabling it to approve or reject operations based on their presence in the PQL.
+    - **With GraphOS persisted queries,** clients pre-publish their operations to GraphOS. Your router fetches its PQL on startup, enabling it to reject operations that aren't present in the PQL.
 
 - With APQ, your router must receive any given operation string from a client at least once, in order to cache it.
     - **With GraphOS persisted queries,** your router fetches its full PQL from GraphOS on startup, which means clients can _always_ execute operations by their PQL-specified ID.
@@ -55,9 +55,17 @@ If you _only_ want to improve request latency and bandwidth usage, APQ probably 
 
 ## Setup
 
+### 0. Prerequisites
+
+Before you get started with GraphOS persisted queries, do all of the following:
+
+1. Update your Apollo Router instances to version `1.24.0` or later. [Download the latest version.](../quickstart/)
+    - Previous versions of the Apollo Router don't support configuration for GraphOS persisted queries.
+2. Make sure your router instances are [connected to your GraphOS Enterprise organization](/router/enterprise-features/#enabling-enterprise-features).
+
 ### 1. Create a persisted query list (PQL)
 
-To use persisted queries, you first create at least one **persisted query list** (**PQL**) in GraphOS Studio. Each PQL is associated with a single graph in GraphOS, and you can link a single PQL to multiple variants of a graph.
+To use persisted queries, you first create a **persisted query list** (**PQL**) in GraphOS Studio. Each PQL is associated with a single graph in GraphOS. You can link a single PQL to any number of different variants of that graph.
 
 1. From your organization's Graphs page in [GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content), open the PQL page for a particular graph by clicking its PQL button:
 
@@ -85,11 +93,11 @@ To use persisted queries, you first create at least one **persisted query list**
 
     - At this point, your empty PQL has been created. The remaining dialog steps help with additional setup.
 
-4. The second dialog step (**Link**) enables you to link your new PQL to one existing variant of your supergraph.
+4. The second dialog step (**Link**) enables you to link your new PQL to one existing variant of your graph.
 
     - You can optionally **Skip** this step and link variants later (covered in the next step).
     
-5. The third dialog step (**Publish**) displays your PQL's unique ID, along with an example Rover CLI command for publishing operations to the PQL.
+5. The third dialog step (**Publish**) displays your new PQL's unique ID, along with an example Rover CLI command for publishing operations to the PQL.
 
     - For now, we'll leave the PQL empty. We'll publish some operations to it in a later step.
 
@@ -106,7 +114,7 @@ To use persisted queries, you first create at least one **persisted query list**
 
 ### 2. Link the PQL to individual variants
 
-After you create a PQL, you can link it to one or more variants of your supergraph. It's safe to link an empty or incomplete PQL, because your router doesn't _use_ its PQL for anything until you configure it to do so (covered later).
+After you create a PQL, you can link it to one or more variants of your graph. It's safe to link an empty or incomplete PQL, because your router doesn't _use_ its PQL for anything until you configure it to do so (covered later).
 
 1. From the table on your graph's PQL page, open the **•••** menu under the **Actions** column for the PQL you want to link:
 
@@ -140,26 +148,28 @@ After you link a PQL to a variant:
 
 ### 3. Publish operations to the PQL
 
-After you create a PQL, you can start publishing GraphQL operations to it. **A PQL should contain _all_ of the GraphQL operations that _all_ of your trusted clients execute on your associated router.**
+After you create a PQL, you can start publishing GraphQL operations to it.
 
-You publish operations to a PQL using the [Rover CLI](/rover/):
+> A PQL should contain _all_ of the GraphQL operations that _all active versions_ of your clients execute on your associated router. If you enable safelisting _without_ ensuring this first, some of your clients will break!
+
+You publish operations to a PQL by providing a JSON **manifest** to the [Rover CLI](/rover/):
 
 ```bash title="Example command"
 rover persisted-queries publish my-graph@my-variant \
   --manifest ./persisted-query-manifest.json # Manifest covered below
 ```
 
-You can incorporate this process into your CI/CD pipeline, enabling you to automatically publish new operations whenever a new client app version is released.
+You can incorporate the publishing process into your CI/CD pipeline, enabling you to automatically publish new operations whenever a new client app version is released.
 
 #### Generating a manifest file
 
 As shown in the example above, you provide `rover persisted-queries publish` a JSON **manifest** that contains details for all of the operations you want to publish.
 
-All Apollo Client libraries (Web, Kotlin, and iOS) provide a mechanism for generating this manifest from your application source.
+During this preview period, Apollo Client for Web provides a mechanism for generating a manifest file from your application source. Similar mechanisms for other client libraries are in development.
 
-> You can also generate your own manifests if you use other client libraries. See [Manifest format](#manifest-format).
+> You can also build your _own_ mechanism for generating operation manifests. See the expected [manifest format](#manifest-format).
 
-Here's an example manifest file that includes three operations:
+This example manifest file includes three operations:
 
 ```json title="persisted-query-manifest.json"
 {  
@@ -188,15 +198,9 @@ Here's an example manifest file that includes three operations:
 }
 ```
 
-You define all of the operations to publish under the `operations` key, which maps persisted query IDs to operation details. The above example associates the operation: `query Universal { __typename }` to the key: `dc67510fb4289672bea757e862d6b00e83db5d3cbbcfb15260601b6f29bb2b8f`. In practice, this identifier can be any string, but it must be a unique key in your list.
-
 
 
 GraphOS does allow modifying the body of a published persisted query (this requires user confirmation). This functionality is not intended for modeling the evolution of a GraphQL operation over time. Instead, this supports advanced use cases like forcing legacy client versions to execute slightly different operations without needing to modify client code.
-
-`name` should be the name of the published operation. It does not need to be unique; typically a Persisted Queries List will contain multiple operations with the same name from different versions of your client. It is used to help find operations when browsing them and does not affect Router behavior.
-
-`type` should be `"query"`, `"mutation"`, or `"subscription"`.
 
 #### Generating a PQM file
 
@@ -340,11 +344,32 @@ curl http://localhost:4000 -X POST --json \
 '{"extensions":{"persistedQuery":{"version":1,"sha256Hash":"dc67510fb4289672bea757e862d6b00e83db5d3cbbcfb15260601b6f29bb2b8f"}}}'
 ```
 
+## Generating manifests
+
+When you [publish operations](#3-publish-operations-to-the-pql) to a persisted query list (PQL), you provide those operations to the Rover CLI in a JSON **manifest** file.
+
+Currently, Apollo Client Web and Apollo iOS each provide a mechanism for generating these manifest files directly from your application source.
+
+> If your client uses another GraphQL client library, you can create your own mechanism for generating manifests. See [Manifest format](#manifest-format).
+
+### Apollo Client Web
+
+### Apollo iOS
+
+
 ## Manifest format
 
-The file format described below is used by our initial preview release. We expect that other information will be added to it later, such as information about what client this file represents.
+<blockquote>
 
-```json title="persisted-queries.json"
+⚠️ **This manifest format is subject to change during the preview period.**
+
+You only need to read this section if you're building your own tooling to [generate persisted query manifests](#generating-manifests).
+
+</blockquote>
+
+This is a file with the following minimal structure:
+
+```json title="persisted-queries-manifest.json"
 {  
   "format": "apollo-persisted-queries",
   "version": 1,
@@ -354,10 +379,162 @@ The file format described below is used by our initial preview release. We expec
       "body": "query UniversalQuery { __typename }",
       "name": "UniversalQuery",
       "type": "query" 
-    },
+    }
   ]
 }
 ```
+
+Manifest properties are documented below.
+
+### Top-level properties
+
+<table class="field-table">
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+
+<tbody>
+<tr>
+<td>
+
+###### `format`
+
+</td>
+<td>
+
+This value is currently always `apollo-persisted-queries`.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+###### `version`
+
+</td>
+<td>
+
+This value is currently always `1`.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+###### `operations`
+
+</td>
+<td>
+
+An array of objects describing the individual GraphQL operations to publish.
+
+For details, see [Per-operation properties](#per-operation-properties).
+
+</td>
+</tr>
+
+</tbody>
+</table>
+
+### Per-operation properties
+
+Each entry in a [manifest's](#manifest-format) `operations` array is a JSON object that describes a single GraphQL operation to publish:
+
+```json
+{
+  "id": "dc67510fb4289672bea757e862d6b00e83db5d3cbbcfb15260601b6f29bb2b8f",
+  "body": "query UniversalQuery { __typename }",
+  "name": "UniversalQuery",
+  "type": "query" 
+}
+```
+
+Each operation object has the following properties:
+
+<table class="field-table">
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+
+<tbody>
+<tr>
+<td>
+
+###### `id`
+
+</td>
+<td>
+
+The unique ID to use for the operation in your PQL.
+
+**This value must be unique among operations in the PQL.** If you publish an operation with the same `id` as an existing operation, the new operation _overwrites_ the existing PQL entry.
+
+**To ensure uniqueness,** tooling should generate this value based on the operation `body`. For details, see [Generating IDs](#generating-ids).
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+###### `body`
+
+</td>
+<td>
+
+The complete query document for the operation. Includes the definition of the operation itself, along with any required fragment definitions.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+###### `name`
+
+</td>
+<td>
+
+The operation's name. Must match the name specified in `body`.
+
+This value does _not_ need to be unique among operations in the PQL. Often, different clients execute slightly different operations with the same name, and those operations each require a separate entry in the PQL.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+###### `type`
+
+</td>
+<td>
+
+The type of GraphQL operation. Always one of the following values:
+
+- `query`
+- `mutation`
+- `subscription`
+
+</td>
+</tr>
+
+</tbody>
+</table>
+
+You define all of the operations to publish under the `operations` key, which maps persisted query IDs to operation details. The above example associates the operation: `query Universal { __typename }` to the key: `dc67510fb4289672bea757e862d6b00e83db5d3cbbcfb15260601b6f29bb2b8f`. In practice, this identifier can be any string, but it must be a unique key in your list.
+
+`name` should be the name of the published operation. It does not need to be unique; typically a Persisted Queries List will contain multiple operations with the same name from different versions of your client. It is used to help find operations when browsing them and does not affect Router behavior.
+
+`type` should be `"query"`, `"mutation"`, or `"subscription"`.
 
 ### Generating IDs
 
