@@ -5,7 +5,7 @@ description: Reference
 
 This reference lists the rules that you can enforce with [GraphOS schema linting](./schema-linter/), along with the code that GraphOS returns for each rule violation.
 
-Rules are categorized by the part(s) of your schema that they correspond to.
+Rules are categorized by the part(s) of your schema that they correspond to. You can also create [custom rules](#custom-rules) to forbid or require prefixes or suffixes you define on specific schema elements.
 
 ## Schema
 
@@ -598,3 +598,38 @@ type Product {
 #### `TAG_DIRECTIVE_USES_UNKNOWN_NAME`
 
 The `@tag` directive should always use an approved value for its `name` argument. You specify approved values in [GraphOS Studio](./schema-linter/#configuring-the-linter).
+
+## Custom rules
+
+You can create custom rules to forbid or require certain terms as prefixes or suffixes in a specific schema element. You can include multiple strings to forbid or require, but each rule can either only forbid or require the terms and can only apply to one schema element.
+
+### Custom rule configuration
+
+To create a new rule, click the **+** button above your list of Linter Rules.
+
+<img
+  className="screenshot"
+  src="../img/schema-rules/create-new-rule.jpg"
+  alt="To-do: How to create a new rule"
+  width="300"
+/>
+
+In the modal that opens, select the following:
+- Whether you want to **Forbid** or **Require** certain terms
+- Which **Schema element** you want to apply the rule to
+- Whether the terms should be considered **Prefixes** or **Suffixes**
+- The **Strings** the rule should check for; the allowed characters are `[A-Z]`, `[a-z]`, `[0-9]`, and `[_]` and rules are case-sensitive
+
+<img
+  className="screenshot"
+  src="../img/schema-rules/new-rule-modal.jpg"
+  alt="To-do: New rule modal"
+  width="300"
+/>
+
+Apollo dynamically generates the rule name based on your selections. For example, if you create a rule forbidding certain prefixes for Interfaces, the rule name would be `FORBID_USER_DEFINED_INTERFACE_PREFIX`.
+
+You can add as many rules as you like by clicking **Add another rule**. Once you've finished, don't forget to click **Create**.
+
+Your custom rules appear in the list of rules with the **Custom** tag. Once created, you can edit them by clicking the pencil icon on the right of the rule's name.
+As with other linter rules, you can [configure their severity](./schema-linter/#setting-severity-levels), including setting their severity to **Ignore**, if you want to disable them. To delete a rule, click the pencil icon and then click the trash can icon next to it in the custom rule modal.
