@@ -3,17 +3,19 @@ title: GraphOS schema linter rules
 description: Reference
 ---
 
-This reference lists the rules that you can enforce with [GraphOS schema linting](./schema-linter/), along with the code that GraphOS returns for each rule violation.
+This reference lists the built-in rules that you can enforce with [GraphOS schema linting](./schema-linter/). You can also create [custom rules](#custom-rules) to forbid or require prefixes or suffixes you define on specific schema elements.
 
-Rules are categorized by the part(s) of your schema that they correspond to. You can also create [custom rules](#custom-rules) to forbid or require prefixes or suffixes you define on specific schema elements.
+Rules are categorized by the part(s) of your schema that they correspond to.
 
 ## Schema
+
+These rules apply to the entire schema.
 
 #### `DOES_NOT_PARSE`
 
 The schema linter raises this violation if it attempts to read a malformed GraphQL schema. Check your schema for any syntax errors.
 
-<hr/>
+<hr />
 
 #### `QUERY_DOCUMENT_DECLARATION`
 
@@ -27,7 +29,8 @@ type Query {
 }
 
 #highlight-start
-query GetUsers { # Don't define operations in a schema document
+query GetUsers {
+  # Don't define operations in a schema document
   users {
     id
   }
@@ -43,7 +46,7 @@ Each element in the schema must include a description.
 
 ```graphql title="schema.graphql"
 type User {
-     username: String!
+  username: String!
 }
 ```
 
@@ -52,12 +55,14 @@ type User {
 ```graphql title="schema.graphql"
 # Represents a user
 type User {
-     # The username of the user
-     username: String!
+  # The username of the user
+  username: String!
 }
 ```
 
-## All fields
+## Fields
+
+These rules apply to _all_ fields, except for [`FIELDS_HAVE_DESCRIPTIONS_QUERY_MUTATION`](#fields_have_descriptions_query_mutation) which only applies to fields in queries and mutations.
 
 #### `FIELD_NAMES_SHOULD_BE_CAMEL_CASE`
 
@@ -83,7 +88,7 @@ type User {
 }
 ```
 
-<hr/>
+<hr />
 
 #### `RESTY_FIELD_NAMES`
 
@@ -113,7 +118,7 @@ type Query {
 }
 ```
 
-#### `FIELDS-HAVE-DESCRIPTIONS-QUERY-MUTATION`
+#### `FIELDS_HAVE_DESCRIPTIONS_QUERY_MUTATION`
 
 All query and mutation fields have descriptions.
 
@@ -137,7 +142,7 @@ type Mutation {
 }
 ```
 
-## All types
+## Types
 
 These rules apply to _all_ types that appear in a GraphQL schema, including:
 
@@ -156,7 +161,7 @@ All type names should use `PascalCase`.
 ```graphql title="schema.graphql"
 # highlight-start
 type streamingService { # camelCase
-# highlight-end
+  # highlight-end
   id: ID!
 }
 ```
@@ -166,12 +171,12 @@ type streamingService { # camelCase
 ```graphql title="schema.graphql"
 # highlight-start
 type StreamingService { # PascalCase
-# highlight-end
+  # highlight-end
   id: ID!
 }
 ```
 
-<hr/>
+<hr />
 
 #### `TYPE_PREFIX`
 
@@ -193,7 +198,7 @@ type Book { # highlight-line
 }
 ```
 
-<hr/>
+<hr />
 
 #### `TYPE_SUFFIX`
 
@@ -232,7 +237,7 @@ type someUnusedType { # Also fails the TYPE_SUFFIX rule!
 <p style="margin-bottom: 0">✅</p>
 
 ```graphql title="schema.graphql"
-type Book { 
+type Book {
   title: String!
 }
 
@@ -263,7 +268,7 @@ type Book { # highlight-line
 }
 ```
 
-<hr/>
+<hr />
 
 #### `OBJECT_SUFFIX`
 
@@ -309,7 +314,7 @@ interface Book { # highlight-line
 }
 ```
 
-<hr/>
+<hr />
 
 #### `INTERFACE_SUFFIX`
 
@@ -359,7 +364,7 @@ type Mutation {
 }
 ```
 
-<hr/>
+<hr />
 
 #### `INPUT_TYPE_SUFFIX`
 
@@ -409,7 +414,7 @@ enum Amenity {
 }
 ```
 
-<hr/>
+<hr />
 
 #### `ENUM_PREFIX`
 
@@ -435,7 +440,7 @@ enum Residence { # highlight-line
 }
 ```
 
-<hr/>
+<hr />
 
 #### `ENUM_SUFFIX`
 
@@ -461,7 +466,7 @@ enum Residence { # highlight-line
 }
 ```
 
-<hr/>
+<hr />
 
 #### `ENUM_USED_AS_INPUT_WITHOUT_SUFFIX`
 
@@ -493,7 +498,7 @@ type Query {
 }
 ```
 
-<hr/>
+<hr />
 
 #### `ENUM_USED_AS_OUTPUT_DESPITE_SUFFIX`
 
@@ -543,12 +548,11 @@ directive @SpecialField on FIELD_DEFINITION # PascalCase
 directive @specialField on FIELD_DEFINITION # camelCase
 ```
 
-<hr/>
+<hr />
 
 #### `CONTACT_DIRECTIVE_MISSING`
 
 A subgraph schema should always provide owner contact details via the `@contact` directive. [Learn more.](../graphs/federated-graphs#contact-info-for-subgraphs)
-
 
 <p style="margin-bottom: 0">✅</p>
 
@@ -562,14 +566,15 @@ directive @contact(
   description: String
 ) on SCHEMA
 
-extend schema @contact(
-  name: "Products Team",
-  url: "https://myteam.slack.com/archives/teams-chat-room-url",
-  description: "Send urgent issues to [#oncall](https://yourteam.slack.com/archives/oncall)."
-)
+extend schema
+  @contact(
+    name: "Products Team"
+    url: "https://myteam.slack.com/archives/teams-chat-room-url"
+    description: "Send urgent issues to [#oncall](https://yourteam.slack.com/archives/oncall)."
+  )
 ```
 
-<hr/>
+<hr />
 
 #### `DEPRECATED_DIRECTIVE_MISSING_REASON`
 
@@ -593,7 +598,7 @@ type Product {
 }
 ```
 
-<hr/>
+<hr />
 
 #### `TAG_DIRECTIVE_USES_UNKNOWN_NAME`
 
@@ -601,11 +606,21 @@ The `@tag` directive should always use an approved value for its `name` argument
 
 ## Custom rules
 
-You can create custom rules to forbid or require certain terms as prefixes or suffixes in a specific schema element. You can include multiple strings to forbid or require, but each rule can either only forbid or require the terms and can only apply to one schema element.
+You can create custom rules to forbid or require certain terms as prefixes or suffixes in a specific schema element. You can create rules for the following elements:
+
+- Fields
+- Types
+- Objects
+- Interfaces
+- Inputs
+- Enums
+- Unions
+
+A rule can include multiple strings to forbid or require, but each rule can _either_ only forbid _or_ require the terms and can only apply to one schema element.
 
 ### Custom rule configuration
 
-To create a new rule, click the **+** button above your list of Linter Rules.
+To create a new rule, click the **+** button above your list of linter rules.
 
 <img
   className="screenshot"
@@ -615,10 +630,15 @@ To create a new rule, click the **+** button above your list of Linter Rules.
 />
 
 In the modal that opens, select the following:
-- Whether you want to **Forbid** or **Require** certain terms
+
 - Which **Schema element** you want to apply the rule to
+- Whether you want to **Forbid** or **Require** certain terms
 - Whether the terms should be considered **Prefixes** or **Suffixes**
-- The **Strings** the rule should check for; the allowed characters are `[A-Z]`, `[a-z]`, `[0-9]`, and `[_]` and rules are case-sensitive
+- The **Strings** the rule should check for; the allowed characters are `[A-Z]`, `[a-z]`, `[0-9]`, and `[_]`
+
+> **Note:** Rules are case-sensitive.
+
+Apollo dynamically generates the rule name based on your selections. For example, if you create a rule forbidding certain prefixes for Interfaces, the rule name would be `INTERFACE_FORBID_USER_DEFINED_PREFIX`.
 
 <img
   className="screenshot"
@@ -627,9 +647,8 @@ In the modal that opens, select the following:
   width="300"
 />
 
-Apollo dynamically generates the rule name based on your selections. For example, if you create a rule forbidding certain prefixes for Interfaces, the rule name would be `FORBID_USER_DEFINED_INTERFACE_PREFIX`.
-
 You can add as many rules as you like by clicking **Add another rule**. Once you've finished, don't forget to click **Create**.
 
 Your custom rules appear in the list of rules with the **Custom** tag. Once created, you can edit them by clicking the pencil icon on the right of the rule's name.
+
 As with other linter rules, you can [configure their severity](./schema-linter/#setting-severity-levels), including setting their severity to **Ignore**, if you want to disable them. To delete a rule, click the pencil icon and then click the trash can icon next to it in the custom rule modal.
