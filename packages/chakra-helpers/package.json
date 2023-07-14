@@ -32,6 +32,7 @@
   },
   "dependencies": {
     "@apollo/explorer": "^0.5.2",
+    "@apollo/sandbox": "^2.5.0",
     "@ctrl/tinycolor": "^3.4.1",
     "fenceparser": "^1.1.1",
     "outdent": "^0.8.0",
