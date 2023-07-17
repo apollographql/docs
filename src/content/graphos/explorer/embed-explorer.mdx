@@ -324,7 +324,9 @@ These are the fields you can include in the `initialState` option you pass to `n
 
 A URI-encoded operation to populate in the embedded Explorer's editor on load.
 
-If you omit this option, the Explorer initially loads an example query based on your schema. To tell the embedded Explorer the specific operation you'd like it to use in the editor, see [Setting a default operation](#setting-a-default-operation) above. 
+If you omit this option, the Explorer initially loads an example query based on your schema.
+
+If you use one of the sharing methods described in [Setting a default operation](#setting-a-default-operation), the generated code snippet automatically sets this option with the details of the operation you used.
 
 If [`persistExplorerState`](#persistexplorerstate) is `true` _and_ you provide this option, the Explorer loads any of the user's tabs from `localStorage`, and it _also_ opens a _new_ tab with this operation.
 
