@@ -613,52 +613,12 @@ type Product {
 
 The `@tag` directive should always use an approved value for its `name` argument. You specify approved values in [GraphOS Studio](./schema-linter/#configuring-the-linter).
 
-## Custom rules
+### Custom rules
 
-You can create custom linter rules to forbid or require certain strings as the prefix or suffix for different schema elements. You can create rules for the following elements:
+You can create custom prefix and suffix rules beyond the built-in ones. These rules have the following naming convention: `{ELEMENT_NAME}_{FORBID|REQUIRE}_USER_DEFINED_{PREFIX|SUFFIX}`, for example, `INTERFACE_FORBID_USER_DEFINED_PREFIX`.
 
-- Fields
-- Types
-- Objects
-- Interfaces
-- Inputs
-- Enums
-- Unions
+This rule would include a list of strings to forbid as prefixes in interface names.
 
-A single rule can specify multiple strings to forbid _or_ require (not both) for a particular schema element. If you create a "require" rule and specify multiple strings, each schema element can use _any one_ of the specified strings.
+A single rule can specify multiple strings to forbid _or_ require (not both) for a particular schema element. If you create a "require" rule and specify multiple strings, each schema element can use _any one_ of the specified strings. Rules forbidding strings forbid all of the strings.
 
-### Creating a custom rule
-
-To create a new rule, click the **+** button above your list of linter rules.
-
-<img
-  className="screenshot"
-  src="../img/schema-rules/create-new-rule.jpg"
-  alt="To-do: How to create a new rule"
-  width="300"
-/>
-
-In the modal that opens, select the following:
-
-- Which **Schema element** you want to apply the rule to
-- Whether you want to **Forbid** or **Require** certain strings
-- Whether the strings are **Prefixes** or **Suffixes**
-- The list of **Strings** to check for. Allowed characters are `[A-Z]`, `[a-z]`, `[0-9]`, and `[_]`
-  - Note that strings are case-sensitive.
-
-GraphOS dynamically generates the rule name based on your selections. For example, if you create a rule forbidding certain prefixes for interfaces, the resulting rule name is `INTERFACE_FORBID_USER_DEFINED_PREFIX`.
-
-<img
-  className="screenshot"
-  src="../img/schema-rules/new-rule-modal.jpg"
-  alt="To-do: New rule modal"
-  width="300"
-/>
-
-You can add as many rules as you want by clicking **Add another rule**. When you're done, click **Create**.
-
-Your custom rules appear with a **CUSTOM** tag in the rule list. You can edit a custom rule by clicking the pencil icon to the right of its name:
-
-[screenshot]
-
-As with built-in linter rules, you can set a custom rule's [severity level](./schema-linter/#setting-severity-levels). To delete a rule, click the pencil icon and then click the trash can icon next to it in the custom rule modal.
+Refer to the schema linter page for [custom rule configuration instructions](./schema-linter#creating-custom-rules).
