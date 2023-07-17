@@ -53,9 +53,9 @@ type User {
 <p style="margin-bottom: 0">✅</p>
 
 ```graphql title="schema.graphql"
-# Represents a user
+"Represents a user"
 type User {
-  # The username of the user
+  "The user's username"
   username: String!
 }
 ```
@@ -134,9 +134,9 @@ type Mutation {
 
 ```graphql title="schema.graphql"
 type Mutation {
-  # Create a new blog post
+  "Create a new blog post"
   createBlogPost(
-    # The content of the blog post to be created
+    "The content of the blog post to be created"
     blogPostContent: BlogPostContent!
   ): Post
 }
@@ -233,8 +233,13 @@ type SomeUnusedType { # Also fails the TYPE_SUFFIX rule!
   name: String!
 }
 
+type AnActuallyUsedType {
+  name: String!
+}
+
 type Query {
   hello: String!
+  title: AnActuallyUsedType
 }
 ```
 
@@ -639,7 +644,7 @@ In the modal that opens, select the following:
 - Whether you want to **Forbid** or **Require** certain strings
 - Whether the strings are **Prefixes** or **Suffixes**
 - The list of **Strings** to check for. Allowed characters are `[A-Z]`, `[a-z]`, `[0-9]`, and `[_]`
-    - Note that strings are case-sensitive.
+  - Note that strings are case-sensitive.
 
 GraphOS dynamically generates the rule name based on your selections. For example, if you create a rule forbidding certain prefixes for interfaces, the resulting rule name is `INTERFACE_FORBID_USER_DEFINED_PREFIX`.
 
