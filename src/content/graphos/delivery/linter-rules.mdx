@@ -62,7 +62,7 @@ type User {
 
 ## Fields
 
-These rules apply to _all_ fields, except for [`FIELDS_HAVE_DESCRIPTIONS_QUERY_MUTATION`](#fields_have_descriptions_query_mutation) which only applies to fields in queries and mutations.
+These rules apply to the fields in your schema. Certain rules apply only to fields of particular types.
 
 #### `FIELD_NAMES_SHOULD_BE_CAMEL_CASE`
 
@@ -120,7 +120,7 @@ type Query {
 
 #### `FIELDS_HAVE_DESCRIPTIONS_QUERY_MUTATION`
 
-All query and mutation fields have descriptions.
+All fields of the `Query` and `Mutation` types should have descriptions.
 
 <p style="margin-bottom: 0">❌</p>
 
@@ -222,15 +222,19 @@ type Book { # highlight-line
 
 #### `DEFINED_TYPES_ARE_USED`
 
-All defined types are used at least once in the schema.
+Every type defined in a schema should be used at least once.
 
-Types that are defined but then not used are most likely due to a mistake such as incomplete refactoring. Unused types take up space and can confuse readers.
+Unused types commonly appear after you refactor other parts of your schema. You should remove unused types to prevent confusion.
 
 <p style="margin-bottom: 0">❌</p>
 
 ```graphql title="schema.graphql"
-type someUnusedType { # Also fails the TYPE_SUFFIX rule!
+type SomeUnusedType { # Also fails the TYPE_SUFFIX rule!
   name: String!
+}
+
+type Query {
+  hello: String!
 }
 ```
 
@@ -606,7 +610,7 @@ The `@tag` directive should always use an approved value for its `name` argument
 
 ## Custom rules
 
-You can create custom rules to forbid or require certain terms as prefixes or suffixes in a specific schema element. You can create rules for the following elements:
+You can create custom linter rules to forbid or require certain strings as the prefix or suffix for different schema elements. You can create rules for the following elements:
 
 - Fields
 - Types
@@ -616,9 +620,9 @@ You can create custom rules to forbid or require certain terms as prefixes or su
 - Enums
 - Unions
 
-A rule can include multiple strings to forbid or require, but each rule can _either_ only forbid _or_ require the terms and can only apply to one schema element.
+A single rule can specify multiple strings to forbid _or_ require (not both) for a particular schema element. If you create a "require" rule and specify multiple strings, each schema element can use _any one_ of the specified strings.
 
-### Custom rule configuration
+### Creating a custom rule
 
 To create a new rule, click the **+** button above your list of linter rules.
 
@@ -632,13 +636,12 @@ To create a new rule, click the **+** button above your list of linter rules.
 In the modal that opens, select the following:
 
 - Which **Schema element** you want to apply the rule to
-- Whether you want to **Forbid** or **Require** certain terms
-- Whether the terms should be considered **Prefixes** or **Suffixes**
-- The **Strings** the rule should check for; the allowed characters are `[A-Z]`, `[a-z]`, `[0-9]`, and `[_]`
+- Whether you want to **Forbid** or **Require** certain strings
+- Whether the strings are **Prefixes** or **Suffixes**
+- The list of **Strings** to check for. Allowed characters are `[A-Z]`, `[a-z]`, `[0-9]`, and `[_]`
+    - Note that strings are case-sensitive.
 
-> **Note:** Rules are case-sensitive.
-
-Apollo dynamically generates the rule name based on your selections. For example, if you create a rule forbidding certain prefixes for interfaces, the rule name would be `INTERFACE_FORBID_USER_DEFINED_PREFIX`.
+GraphOS dynamically generates the rule name based on your selections. For example, if you create a rule forbidding certain prefixes for interfaces, the resulting rule name is `INTERFACE_FORBID_USER_DEFINED_PREFIX`.
 
 <img
   className="screenshot"
@@ -647,8 +650,10 @@ Apollo dynamically generates the rule name based on your selections. For example
   width="300"
 />
 
-You can add as many rules as you like by clicking **Add another rule**. Once you've finished, don't forget to click **Create**.
+You can add as many rules as you want by clicking **Add another rule**. When you're done, click **Create**.
 
-Your custom rules appear in the list of rules with the **Custom** tag. Once created, you can edit them by clicking the pencil icon on the right of the rule's name.
+Your custom rules appear with a **CUSTOM** tag in the rule list. You can edit a custom rule by clicking the pencil icon to the right of its name:
 
-As with other linter rules, you can [configure their severity](./schema-linter/#setting-severity-levels), including setting their severity to **Ignore**, if you want to disable them. To delete a rule, click the pencil icon and then click the trash can icon next to it in the custom rule modal.
+[screenshot]
+
+As with built-in linter rules, you can set a custom rule's [severity level](./schema-linter/#setting-severity-levels). To delete a rule, click the pencil icon and then click the trash can icon next to it in the custom rule modal.
