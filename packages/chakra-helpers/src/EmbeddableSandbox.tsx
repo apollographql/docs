@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import {ApolloSandbox} from '@apollo/sandbox/react';
 import {Box, useColorMode} from '@chakra-ui/react';
@@ -41,10 +40,4 @@ export const EmbeddableSandbox = ({
       />
     </Box>
   );
-};
-
-EmbeddableSandbox.propTypes = {
-  initialEndpoint: PropTypes.string,
-  document: PropTypes.string,
-  height: PropTypes.number
 };

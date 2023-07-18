@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import {ApolloExplorerReact} from '@apollo/explorer';
 import {Box, useColorMode} from '@chakra-ui/react';
@@ -64,13 +63,4 @@ export const EmbeddableExplorer = ({
       />
     </Box>
   );
-};
-
-EmbeddableExplorer.propTypes = {
-  graphRef: PropTypes.string,
-  endpointUrl: PropTypes.string,
-  document: PropTypes.string,
-  height: PropTypes.number,
-  showHeadersAndEnvVars: PropTypes.bool,
-  docsPanelState: PropTypes.oneOf(['open', 'closed'])
 };
