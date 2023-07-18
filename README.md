@@ -1,6 +1,6 @@
 # Apollo Docs
 
-This repo contains the code responsible for building the Apollo Docs site. It also houses the content for the Apollo Basics and GraphOS **docsets**. We also export shared utilities and components from the [`@apollo/chakra-helpers`](./packages/chakra-helpers) package in the `packages` directory.
+This repo contains the code responsible for building the Apollo Docs site. It also houses the content for the Apollo Basics and GraphOS **docsets**.
 
 > We use the word **docset** to describe an individual docs website. For example, "I just updated the Android docset".
 
