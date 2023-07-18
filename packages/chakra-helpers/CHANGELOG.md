@@ -1,5 +1,11 @@
 # @apollo/chakra-helpers
 
+## 1.7.1
+
+### Patch Changes
+
+- [`740b4c3`](https://github.com/apollographql/docs/commit/740b4c3095cf6adfc6cb7b53da3af4fb4dc7a996) Thanks [@trevorblades](https://github.com/trevorblades)! - add embeddablesandbox component
+
 ## 1.7.0
 
 ### Minor Changes
