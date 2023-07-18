@@ -14,20 +14,15 @@
     "start:router": "npm start -- ../router",
     "build": "gatsby build",
     "serve": "gatsby serve",
-    "prebuild": "npm run prepare --workspaces",
-    "test": "jest",
-    "changeset-publish": "changeset publish"
+    "test": "jest"
   },
-  "workspaces": [
-    "./packages/*"
-  ],
   "dependencies": {
     "@algolia/autocomplete-core": "^1.5.2",
     "@algolia/autocomplete-plugin-algolia-insights": "^1.5.2",
     "@algolia/autocomplete-preset-algolia": "^1.5.2",
-    "@apollo/chakra-helpers": "file:packages/chakra-helpers",
+    "@apollo/chakra-helpers": "^1.7.1",
     "@apollo/client": "^3.5.10",
-    "@apollo/pedia": "^1.1.0",
+    "@apollo/pedia": "^1.1.1",
     "@apollo/space-kit": "8.11.0",
     "@chakra-ui/gatsby-plugin": "^2.0.3",
     "@chakra-ui/react": "^1.8.3",
@@ -102,8 +97,6 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@changesets/changelog-github": "^0.4.3",
-    "@changesets/cli": "^2.21.1",
     "@trevorblades/eslint-config": "^7.2.7",
     "cpx": "^1.5.0",
     "eslint": "^7.32.0",
