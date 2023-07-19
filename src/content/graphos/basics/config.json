@@ -49,7 +49,7 @@
         ]
       ]
     },
-    "Operation Performance": {
+    "Client Operations": {
       "Using @defer": "/operations/defer",
       "GraphQL subscriptions": [
         "/operations/subscriptions",

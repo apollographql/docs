@@ -16,9 +16,10 @@ With [GraphOS Enterprise](../enterprise/), you can maintain a **persisted query 
 ```mermaid
 graph LR;
 
-  webClient("Web<br/>Client");
-  androidClient("Android<br/>Client");
-
+  subgraph "CI/CD"
+  webClient("Web client<br/>build");
+  androidClient("Android client<br/>build");
+  end
 
   subgraph "GraphOS"
   pql[[Persisted<br/>Query List]];
@@ -28,7 +29,7 @@ graph LR;
   router(["Apollo<br/>Router"]);
   end
 
-  webClient & androidClient --->|Publishes<br/>operations|pql
+  webClient & androidClient -->|Publishes<br/>operations|pql
   router -.->|Fetches PQL<br/>at runtime|pql
 ```
 
@@ -39,12 +40,12 @@ Your router can use its PQL to **protect your supergraph** and **speed up your c
 - If you enable **operation safelisting**, your router _rejects_ any incoming operations that aren't in its PQL.
     - This helps block requests from unauthorized clients.
 - Client apps can execute an operation by providing its PQL-specified ID, _instead of_ providing its full operation string.
-    - For very large operation strings, this can dramatically reduce latency and bandwidth usage.
+    - For very large operation strings, this can significantly reduce latency and bandwidth usage.
     - Your router can even _require_ that clients provide operations this way and _reject_ full query strings (even query strings that are present in the PQL).
 
 ## Differences from APQ
 
-The Apollo Router also supports a related feature called [automatic persisted queries](/router/configuration/in-memory-caching#caching-automatic-persisted-queries-apq), or APQ. With APQ, clients can execute a GraphQL operation by sending the _hash_ of its operation string, instead of sending the full string.
+The Apollo Router also supports a related feature called [automatic persisted queries](/router/configuration/in-memory-caching#caching-automatic-persisted-queries-apq), or APQ. With APQ, clients can execute a GraphQL operation by sending the hash of its operation string, instead of sending the full string.
 
 **Compared to GraphOS persisted queries, APQ has the following limitations:**
 
@@ -65,7 +66,7 @@ Before you get started with GraphOS persisted queries, do all of the following:
 1. Update your Apollo Router instances to version `1.25.0` or later. [Download the latest version.](../quickstart/)
     - Previous versions of the Apollo Router don't support configuration for GraphOS persisted queries.
 2. Make sure your router instances are [connected to your GraphOS Enterprise organization](/router/enterprise-features/#enabling-enterprise-features).
-3. Update your version of the Rover CLI to `0.15.0` or later. [Download the latest version.](/rover/getting-started/)
+3. Update your version of the Rover CLI to `0.17.2` or later [Download the latest version.](/rover/getting-started/)
     - Previous versions of Rover don't support publishing operations to a PQL.
 
 
@@ -183,7 +184,7 @@ After you create a PQL, you can start publishing operations to it. To do _that_,
 
 </ExpansionPanel>
 
-You can perform manifest generation in your CI/CD pipeline, enabling you to incorporate new operations automatically whenever you release a new client app version.
+You should perform manifest generation in your CI/CD pipeline. This enables you to incorporate new operations automatically whenever you release a new client app version.
 
 #### Generation methods
 
@@ -194,18 +195,6 @@ Apollo Client for Web and iOS each provide a mechanism for generating a manifest
 Similar mechanisms for other client libraries are in development.
 
 > You can also build your _own_ mechanism for generating operation manifests. See the expected [manifest format](#manifest-format).
-
-#### Keeping build and runtime operation signatures consistent
-
-Operations that are executed against your graph at runtime must precisely match the shapes of the operations in your Persisted Queries List. By default, even whitespace must match. Apollo Client libraries can all potentially modify the operations they define in app. This means that the operations they define will be potentially different from the operations that are executed at runtime.
-
-For example, the client libraries typically add a `__typename`  field to every object type in the operation in order to understand more information about the operation's result. It's important that these changes are reflected in the published operations as well. Otherwise, two kinds of issues may occur:
-
-- If a client's operation is published without the added __typename and the client sends the operation's ID in its request, the server will return results that do not include the `__typename` fields that the client was expecting. This will break the client features that need to know the type information.
-
-- If a client's operation is published without the added `__typename` and the client sends the operation as a raw GraphQL document, then if the Router is configured to reject raw GraphQL that does not match a published operation, the operation may be surprisingly rejected. (We expect the "matching" rules to be configurable here, so that this particular "unexpected extra `__typename`" case could be made to work, but this may not cover all possible client-side transformations.)
-
-Apollo's clients use the same logic to transform operations at runtime and at build time, so that this is not a concern.
 
 ### 4. Publish operations to the PQL
 
@@ -222,7 +211,7 @@ rover persisted-queries publish my-graph@my-variant \
 
 <blockquote>
 
-As with [generating manifests](#3-generate-operation-manifests), you can execute this command in your CI/CD pipeline to publish new operations as part of your app release process.
+As with [generating manifests](#3-generate-operation-manifests), you should execute this command in your CI/CD pipeline to publish new operations as part of your app release process.
 
 [See the full reference for `rover persisted-queries publish`.]()
 
@@ -270,7 +259,7 @@ curl http://localhost:4000 -X POST --json \
 
 If your router's PQL includes an operation with an ID that matches the value of the provided `sha256Hash` property, it executes the corresponding operation and returns its result.
 
-### 6. Update client apps
+### 7. Update client apps
 
 After your router is running with persisted queries enabled, you can start updating your client apps to execute operations by their PQL-specified ID, instead of by sending full query strings.
 
@@ -300,25 +289,32 @@ Here are links to documentation for APQ mechanisms in Apollo Client libraries:
 - [Apollo iOS](/ios/fetching/apqs/)
 - [Apollo Kotlin](/kotlin/advanced/persisted-queries/)
 
-## Router modes
+## Router security levels
 
-Router instances with a persisted query list (PQL) can use that PQL in one of a few different modes, which you set in your router's [YAML config file](/router/configuration/overview/#yaml-config-file).
+Your router instances with a persisted query list (PQL) can use it to enable one of a few different security levels, which you set up in your router's [YAML config file](/router/configuration/overview/#yaml-config-file).
 
-These modes include:
+> When you first adopt persisted queries, you should always start with the _least_ restrictive security level ([performance-only](#performance-only-no-safelisting)). You can then enable increasingly restrictive levels after you make all necessary changes to your clients.
 
-- [Performance-only](#performance-only-no-safelisting): The router supports clients executing an operation by providing its PQL-specified ID.
-    - All other modes also provide this core capability.
-    - In this mode, the router performs no operation safelisting.
+The Apollo Router supports the following security levels, in increasing order of restrictiveness:
+
+- [Performance-only](#performance-only-no-safelisting): Clients can optionally execute an operation on your router by providing the operation's PQL-specified ID.
+    - All other levels also provide this core capability.
+    - This level provides no operation safelisting.
 - [Safelisting with query strings allowed](#safelisting-query-strings-allowed): The router _rejects_ any incoming operations that aren't present in its PQL.
+    - Before moving to this security level, make sure _all_ of your client operations are present in your PQL.
 - [Safelisting with IDs only](#safelisting-ids-only): The router rejects any incoming operations that aren't present in its PQL, _and_ clients _must_ execute an operation by providing its PQL-specified ID.
-    - In this mode, the router rejects all requests that provide a full GraphQL operation string, _even if that operation is present in the PQL._
+    - Before moving to this security level, make sure _all_ of your clients execute operations by providing their PQL-specified ID.
+
+See below for details on each level.
 
 ### Performance-only (no safelisting)
+
+> **Always start with this security level.** You can enable increasingly restrictive levels after you make all necessary changes to your clients.
 
 To use persisted queries _only_ to reduce network bandwidth and latency (_not_ for safelisting), add the following minimal configuration:
 
 ```yaml title="router.yaml"
-persisted_queries:
+preview_persisted_queries:
   enabled: true
 apq:
   enabled: false # APQ must be disabled 
@@ -333,7 +329,7 @@ This enables your clients to execute operations by providing their PQL-specified
 With the following configuration, your router allows _only_ GraphQL operations that are present in its PQL, while rejecting all other operations:
 
 ```yaml title="router.yaml"
-persisted_queries:
+preview_persisted_queries:
   enabled: true
   safelist:
     enabled: true
@@ -352,7 +348,7 @@ To execute an operation, clients can provide either its full operation string _o
 With the following configuration, your router allows _only_ GraphQL operations that are present in its PQL, _and_ it requires clients to provide PQL-specified IDs instead of full query strings:
 
 ```yaml title="router.yaml"
-persisted_queries:
+preview_persisted_queries:
   enabled: true
   safelist:
     enabled: true
@@ -497,7 +493,9 @@ The unique ID to use for the operation in your PQL.
 </td>
 <td>
 
-The complete query document for the operation. Includes the definition of the operation itself, along with any required fragment definitions.
+The complete query document for the operation. Includes the definition of the operation itself, along with accompanying fragment definitions.
+
+**This string must match _exactly_ the query document that your client sends your router, including whitespace and field order.** For details, see [Ensuring consistent operation signatures](#ensuring-consistent-operation-signatures).
 
 </td>
 </tr>
@@ -543,20 +541,43 @@ When generating operation identifiers for a manifest, you should use a value tha
 
 By generating identifiers based on query documents this way, you ensure that different operations always have different IDs. This prevents you from unintentionally overwriting an existing entry in your PQL with an entirely different operation (which would break any clients that execute the original operation).
 
-## Managing PQLs
+### Ensuring consistent operation signatures
 
-### Removing an operation from a PQL
+Whenever a client sends an operation string to a router that has safelisting enabled, the router checks for that operation string's presence in its persisted query list. **The incoming string must match a PQL entry's operation string _exactly_, including whitespace and field order.**
 
-You might occasionally need to remove an operation from a PQL because the router should no longer allow it. Organization members with the **Graph Admin** role can remove individual operations via your graph's PQL page in GraphOS Studio.
+The following queries are functionally identical, but the router will _reject_ the client operation because it doesn't match the PQL entry exactly.
 
-<img
-    className="screenshot"
-    alt="The persisted query list button in the Studio graph list"
-    src="../../img/pql-button.jpg"
-  />
+<CodeColumns>
 
-### Modifying an existing operation
+```graphql title="PQL entry"
+query GetBooks {
+  books {
+    author
+    title
+  }
+}
+```
 
-GraphOS does allow modifying the body of a published persisted query (this requires user confirmation). This functionality is not intended for modeling the evolution of a GraphQL operation over time. Instead, this supports advanced use cases like forcing legacy client versions to execute slightly different operations without needing to modify client code.
+```graphql title="Client operation"
+query GetBooks {
+  books {
+    #highlight-start
+    title # Field order reversed!
+    author
+    #highlight-end
+  }
+}
+```
 
-> **In almost all cases,** you should publish a _new_ operation to your PQL instead of modifying an existing one.
+</CodeColumns>
+
+
+Apollo Client libraries can all potentially modify the operations they define in app. This means that the operations they define will be potentially different from the operations that are executed at runtime.
+
+For example, the client libraries typically add a `__typename`  field to every object type in the operation in order to understand more information about the operation's result. It's important that these changes are reflected in the published operations as well. Otherwise, two kinds of issues may occur:
+
+- If a client's operation is published without the added `__typename` and the client sends the operation's ID in its request, the server will return results that do not include the `__typename` fields that the client was expecting. This will break the client features that need to know the type information.
+
+- If a client's operation is published without the added `__typename` and the client sends the operation as a raw GraphQL document, then if the Router is configured to reject raw GraphQL that does not match a published operation, the operation may be surprisingly rejected. (We expect the "matching" rules to be configurable here, so that this particular "unexpected extra `__typename`" case could be made to work, but this may not cover all possible client-side transformations.)
+
+Apollo's clients use the same logic to transform operations at runtime and at build time, so that this is not a concern.
