@@ -52,7 +52,7 @@ The Apollo Router also supports a related feature called [automatic persisted qu
 - APQ doesn't provide safelisting capabilities, because the router populates its APQ cache over time with _any_ operations it receives.
     - **With GraphOS persisted queries,** clients pre-publish their operations to GraphOS. Your router fetches its PQL on startup, enabling it to reject operations that aren't present in the PQL.
 
-- With APQ, your router must receive any given operation string from a client at least once, in order to cache it.
+- With APQ, one of your router instances must receive any given operation string from a client at least once, in order to cache it.
     - **With GraphOS persisted queries,** your router fetches its full PQL from GraphOS on startup, which means clients can _always_ execute operations by their PQL-specified ID.
 
 If you _only_ want to improve request latency and bandwidth usage, APQ probably addresses your use case. If you _also_ want to secure your supergraph with operation safelisting, you should use GraphOS persisted queries.
@@ -66,7 +66,7 @@ Before you get started with GraphOS persisted queries, do all of the following:
 1. Update your Apollo Router instances to version `1.25.0` or later. [Download the latest version.](../quickstart/)
     - Previous versions of the Apollo Router don't support configuration for GraphOS persisted queries.
 2. Make sure your router instances are [connected to your GraphOS Enterprise organization](/router/enterprise-features/#enabling-enterprise-features).
-3. Update your version of the Rover CLI to `0.17.2` or later [Download the latest version.](/rover/getting-started/)
+3. Update your version of the Rover CLI to `0.17.2` or later. [Download the latest version.](/rover/getting-started/)
     - Previous versions of Rover don't support publishing operations to a PQL.
 
 
@@ -537,9 +537,11 @@ The type of GraphQL operation. Always one of the following values:
 
 ### Generating IDs
 
-When generating operation identifiers for a manifest, you should use a value that's derived directly from the query's details, such as the query document's cryptographic hash. Apollo tools that extract operations use the base16 representation of the document's SHA256 hash, which is the same format used for [APQ](#differences-from-apq).
+When generating operation IDs for a manifest, you should use a value that's unique to each operation, such as the query document's cryptographic hash. Apollo's [manifest generation tools](#3-generate-operation-manifests) use the base16 representation of the document's SHA256 hash, which is the same format used for [APQ](#differences-from-apq).
 
-By generating identifiers based on query documents this way, you ensure that different operations always have different IDs. This prevents you from unintentionally overwriting an existing entry in your PQL with an entirely different operation (which would break any clients that execute the original operation).
+By generating identifiers based on query documents this way, you ensure that different operations always have different IDs. This prevents unexpected collisions in your PQL.
+
+> **Never use an operation _names_ for PQL IDs.** Different clients (or even different versions of the _same_ client) might execute different operations with the same name, and _all_ of those distinct operations should be present in your PQL.
 
 ### Ensuring consistent operation signatures
 
