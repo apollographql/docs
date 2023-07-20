@@ -57,8 +57,8 @@
           "preview"
         ]
       ],
-      "Persisted queries": [
-        "/routing/persisted-queries",
+      "Safelisting with persisted queries": [
+        "/operations/persisted-queries",
         [
           "enterprise",
           "preview"
