@@ -1,6 +1,6 @@
 ---
-title: Persisted queries with GraphOS Enterprise
-description: Reject unrecognized operations and minimize request latency
+title: Operation safelisting with persisted queries
+description: Reject unrecognized operations while minimizing request latency
 ---
 
 <blockquote>
@@ -11,7 +11,7 @@ If your organization _doesn't_ currently have an Enterprise plan, you can test o
 
 </blockquote>
 
-With [GraphOS Enterprise](../enterprise/), you can maintain a **persisted query list** (or **PQL**) for your supergraph's self-hosted router. This list should contain _all_ of the known GraphQL operations that _all_ of your app clients execute against your router:
+With [GraphOS Enterprise](../enterprise/), you can enhance your graph's security by maintaining a **persisted query list** (or **PQL**) for your supergraph's self-hosted router. This list should contain _all_ of the trusted GraphQL operations that _all_ of your app clients execute against your router:
 
 ```mermaid
 graph LR;
@@ -37,7 +37,7 @@ graph LR;
 
 Your router can use its persisted query list (PQL) to **protect your supergraph** and **speed up your clients**:
 
-- If you enable **operation safelisting**, your router _rejects_ any incoming operations that aren't in its PQL.
+- When you enable **operation safelisting**, your router _rejects_ any incoming operations that aren't in its PQL.
     - This helps block requests from unauthorized clients.
     - Enabling safelisting requires coordination across _all_ of your app clients. For details, see [Adoption path](#adoption-path). 
 - Client apps can execute an operation by providing its PQL-specified ID, _instead of_ providing a full operation string.
@@ -60,7 +60,7 @@ If you _only_ want to improve request latency and bandwidth usage, APQ probably 
 
 ## Adoption path
 
-Setting up persisted queries with operation safelisting is a multi-step process that requires setting up tooling for _all_ of your client apps. Based on the availability of your client teams, it might take days or even weeks for you to get fully up and running with safelisting.
+Setting up operation safelisting with persisted queries is a multi-step process that requires setting up tooling for _all_ of your client apps. Based on the availability of your client teams, it might take days or even weeks for you to get fully up and running with safelisting.
 
 > If you enable operation safelisting _before_ all of your client apps are publishing their operations to your persisted query list,  your _unpublished_ operations will stop working!
 
@@ -275,8 +275,8 @@ As with [generating manifests](#3-generate-client-operation-manifests), you exec
 **The above command does the following:**
 
 1. It publishes all operations in the provided manifest file to whichever PQL is linked to the specified variant.
-    - If you publish an operation with the same `id` as an existing PQL entry, the existing entry is overwritten. Overwriting a PQL entry with new details can break your clients! For more information, see [Generating IDs](#generating-ids).
-    - It's always safe to publish an operation with the _exact same details_ as one that's already in the PQL.
+    - Publishing a manifest to a PQL is additive. Any _existing_ entries in the PQL remain.
+    - If you publish an operation with the same `id` but different details from an existing entry in the PQL, the new operation is _not_ added to the PQL.
 
 2. It updates any _other_ variants that the PQL is applied to, so routers associated with those variants can fetch their updated PQL.
 
