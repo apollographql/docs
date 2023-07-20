@@ -70,9 +70,11 @@ Before you get started with GraphOS persisted queries, do all of the following:
 
 #### Coordinate with client teams
 
-1. Communicate to all of your client development teams that adopting persisted queries will require adding tooling to their CI/CD pipeline.
+1. Identify all of the client apps that execute operations against your router, along with the GraphQL client libraries that those apps use.
+    - Before you enable safelisting in your router, your client apps must start publishing their operations to your PQL.
+2. Communicate to all of your client development teams that adopting persisted queries will require adding tooling to their CI/CD pipeline.
     - Specifically, each client team will need to perform the following steps of this adoption path: [Generate client operation manifests](#3-generate-client-operation-manifests) and [Publish manifests to the PQL](#4-publish-operations-to-the-pql)
-2. Identify which team members will assist with adding tooling to their respective CI/CD pipelines.
+3. Identify which team members will assist with adding tooling to their respective CI/CD pipelines.
 
 #### Update Apollo tooling
 
@@ -276,7 +278,7 @@ As with [generating manifests](#3-generate-client-operation-manifests), you exec
 
 1. It publishes all operations in the provided manifest file to whichever PQL is linked to the specified variant.
     - Publishing a manifest to a PQL is additive. Any _existing_ entries in the PQL remain.
-    - If you publish an operation with the same `id` but different details from an existing entry in the PQL, the new operation is _not_ added to the PQL.
+    - If you publish an operation with the same `id` but different details from an existing entry in the PQL, the entire publish command fails with an error.
 
 2. It updates any _other_ variants that the PQL is applied to, so routers associated with those variants can fetch their updated PQL.
 
