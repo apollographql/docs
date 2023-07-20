@@ -11,7 +11,7 @@ If your organization _doesn't_ currently have an Enterprise plan, you can test o
 
 </blockquote>
 
-With [GraphOS Enterprise](../enterprise/), you can maintain a **persisted query list** (or **PQL**) for your supergraph's self-hosted router. This list should contain all of the known GraphQL operations that all of your app clients execute against your router:
+With [GraphOS Enterprise](../enterprise/), you can maintain a **persisted query list** (or **PQL**) for your supergraph's self-hosted router. This list should contain _all_ of the known GraphQL operations that _all_ of your app clients execute against your router:
 
 ```mermaid
 graph LR;
@@ -33,13 +33,14 @@ graph LR;
   router -.->|Fetches PQL<br/>at runtime|pql
 ```
 
-## Benefits
+## Benefits of persisted queries
 
-Your router can use its PQL to **protect your supergraph** and **speed up your clients**:
+Your router can use its persisted query list (PQL) to **protect your supergraph** and **speed up your clients**:
 
 - If you enable **operation safelisting**, your router _rejects_ any incoming operations that aren't in its PQL.
     - This helps block requests from unauthorized clients.
-- Client apps can execute an operation by providing its PQL-specified ID, _instead of_ providing its full operation string.
+    - Enabling safelisting requires coordination across _all_ of your app clients. For details, see [Adoption path](#adoption-path). 
+- Client apps can execute an operation by providing its PQL-specified ID, _instead of_ providing a full operation string.
     - For very large operation strings, this can significantly reduce latency and bandwidth usage.
     - Your router can even _require_ that clients provide operations this way and _reject_ full query strings (even query strings that are present in the PQL).
 
@@ -52,23 +53,35 @@ The Apollo Router also supports a related feature called [automatic persisted qu
 - APQ doesn't provide safelisting capabilities, because the router populates its APQ cache over time with _any_ operations it receives.
     - **With GraphOS persisted queries,** clients pre-publish their operations to GraphOS. Your router fetches its PQL on startup, enabling it to reject operations that aren't present in the PQL.
 
-- With APQ, one of your router instances must receive any given operation string from a client at least once, in order to cache it.
+- With APQ, one of your router instances must receive any given operation string from a client at least once, in order to [cache it](/router/configuration/distributed-caching).
     - **With GraphOS persisted queries,** your router fetches its full PQL from GraphOS on startup, which means clients can _always_ execute operations by their PQL-specified ID.
 
 If you _only_ want to improve request latency and bandwidth usage, APQ probably addresses your use case. If you _also_ want to secure your supergraph with operation safelisting, you should use GraphOS persisted queries.
 
-## Setup
+## Adoption path
+
+Setting up persisted queries with operation safelisting is a multi-step process that requires setting up tooling for _all_ of your client apps. Based on the availability of your client teams, it might take days or even weeks for you to get fully up and running with safelisting.
+
+> If you enable operation safelisting _before_ all of your client apps are publishing their operations to your persisted query list,  your _unpublished_ operations will stop working!
 
 ### 0. Prerequisites
 
 Before you get started with GraphOS persisted queries, do all of the following:
 
+#### Coordinate with client teams
+
+1. Communicate to all of your client development teams that adopting persisted queries will require adding tooling to their CI/CD pipeline.
+    - Specifically, each client team will need to perform the following steps of this adoption path: [Generate client operation manifests](#3-generate-client-operation-manifests) and [Publish manifests to the PQL](#4-publish-operations-to-the-pql)
+2. Identify which team members will assist with adding tooling to their respective CI/CD pipelines.
+
+#### Update Apollo tooling
+
 1. Update your Apollo Router instances to version `1.25.0` or later. [Download the latest version.](../quickstart/)
     - Previous versions of the Apollo Router don't support configuration for GraphOS persisted queries.
 2. Make sure your router instances are [connected to your GraphOS Enterprise organization](/router/enterprise-features/#enabling-enterprise-features).
 3. Update your version of the Rover CLI to `0.17.2` or later. [Download the latest version.](/rover/getting-started/)
+    - Every client app's CI/CD pipeline uses Rover to publish operations to a PQL.
     - Previous versions of Rover don't support publishing operations to a PQL.
-
 
 ### 1. Create a persisted query list (PQL)
 
@@ -106,7 +119,7 @@ To use persisted queries, you first create a **persisted query list** (**PQL**) 
     
 5. The third dialog step (**Publish**) displays your new PQL's unique ID, along with an example Rover CLI command for publishing operations to the PQL.
 
-    - For now, we'll leave the PQL empty. We'll publish some operations to it in a later step.
+    - For now, we'll leave the PQL empty. We'll publish client operations to it in a later step.
 
 6. The fourth and final dialog step (**Configure**) displays configuration options you apply to your router to begin using your PQL. We'll cover these in a later step.
 
@@ -121,9 +134,9 @@ To use persisted queries, you first create a **persisted query list** (**PQL**) 
 
 ### 2. Link the PQL to variants
 
-After you create a PQL, you can link it to one or more variants of your graph. Router instances associated with a linked variant automatically fetch their PQL from GraphOS.
+After you create a PQL, you can link it to one or more variants of your graph. Each router instance associated with a linked variant automatically fetches its PQL from GraphOS.
 
-It's safe to link an empty or incomplete PQL to a variant, because your router doesn't _use_ its PQL for anything until you configure it to do so (covered in a later step).
+> It's safe to link an empty or incomplete PQL to a variant, because your router doesn't _use_ its PQL for anything until you configure it to do so (covered in a later step).
 
 1. From the table on your graph's PQL page, open the **•••** menu under the **Actions** column for the PQL you want to link:
 
@@ -155,9 +168,12 @@ After you link a PQL to a variant:
 
 > As a best practice, you should link PQLs to your staging _and_ production environments.
 
-### 3. Generate operation manifests
 
-After you create a PQL, you can start publishing operations to it. To do _that_, you need to generate JSON **manifests** of the operations to publish. You usually generate a separate manifest for each of your client apps.
+### 3. Generate client operation manifests
+
+> You perform this step for _each_ of your client apps. Coordinate this process with representatives from your client teams.
+
+After you create a PQL, you can start publishing operations to it. To do _that_, you need to generate JSON **manifests** of the operations to publish. You generate a separate manifest for each of your client apps.
 
 <ExpansionPanel title="See an example manifest file with two operations">
 
@@ -184,21 +200,58 @@ After you create a PQL, you can start publishing operations to it. To do _that_,
 
 </ExpansionPanel>
 
-You should perform manifest generation in your CI/CD pipeline. This enables you to incorporate new operations automatically whenever you release a new client app version.
+You perform manifest generation in your CI/CD pipeline. This enables you to incorporate new operations automatically whenever you release a new client app version.
 
 #### Generation methods
 
-Apollo Client for Web and iOS each provide a mechanism for generating a manifest file from your application source:
+Apollo Client for Web, Kotlin, and iOS each provide a mechanism for generating a manifest file from your app source.
 
-- [iOS docs](/ios/code-generation/codegen-configuration/#operation-manifest)
+> If your client app uses another GraphQL client library, you can build your _own_ mechanism for generating operation manifests. See the expected [manifest format](#manifest-format).
 
-Similar mechanisms for other client libraries are in development.
+See the instructions for your client library:
 
-> You can also build your _own_ mechanism for generating operation manifests. See the expected [manifest format](#manifest-format).
+##### Apollo Client Web
 
-### 4. Publish operations to the PQL
+1. In your app's project, install the `@apollo/generate-persisted-query-manifest` package as a dev dependency:
 
-After you [generate an operation manifest](#3-generate-operation-manifests), you publish it to your PQL with the [Rover CLI](/rover/):
+    ```bash
+    npm install --save-dev @apollo/generate-persisted-query-manifest
+    ```
+
+    This package includes a CLI command you can run to generate a manifest file from your application source.
+
+2. Generate your first manifest with the following command:
+
+    ```bash
+    npx generate-persisted-query-manifest
+    ```
+
+    - **If the command succeeds,** your manifest is written to `persisted-query-manifest.json`.
+    - **If the command fails** (or if your manifest doesn't include all of the operations you expect it to), you can configure the command's behavior using the options described in the [package README](https://www.npmjs.com/package/@apollo/generate-persisted-query-manifest).
+
+##### Apollo Kotlin
+
+To generate an operation manifest with Apollo Kotlin, you modify your project's [Gradle plugin configuration](/kotlin/advanced/plugin-configuration) to generate a manifest instead of standard Kotlin source for your operations:
+
+```kotlin
+apollo {
+  service("myapi") {
+    operationManifestFormat.set("persistedQueryManifest") //highlight-line
+  }
+}
+```
+
+##### Apollo iOS
+
+To generate an operation manifest with Apollo iOS, you use the same [code generation engine](/ios/code-generation/introduction) that you use to generate Swift code for each of your operations.
+
+Specifically, you modify the engine's file output configuration to include the output of an `operationManifest`. [See the full configuration reference.](/ios/code-generation/codegen-configuration#file-output)
+
+### 4. Publish manifests to the PQL
+
+> You perform this step for _each_ of your client apps. Coordinate this process with representatives from your client teams.
+
+After you [generate an operation manifest](#3-generate-client-operation-manifests), you publish it to your PQL with the [Rover CLI](/rover/):
 
 ```bash title="Example command"
 rover persisted-queries publish my-graph@my-variant \
@@ -211,9 +264,7 @@ rover persisted-queries publish my-graph@my-variant \
 
 <blockquote>
 
-As with [generating manifests](#3-generate-operation-manifests), you should execute this command in your CI/CD pipeline to publish new operations as part of your app release process.
-
-[See the full reference for `rover persisted-queries publish`.]()
+As with [generating manifests](#3-generate-client-operation-manifests), you execute this command in your CI/CD pipeline to publish new operations as part of your app release process.
 
 </blockquote>
 
@@ -227,13 +278,13 @@ As with [generating manifests](#3-generate-operation-manifests), you should exec
 
 ### 5. Configure your router
 
-After you [publish all operations](#4-publish-operations-to-the-pql) to your PQL, you can configure your router instances to fetch and _use_ your PQL.
+After you [publish all operations](#4-publish-manifests-to-the-pql) to your PQL, you can configure your router instances to fetch and _use_ your PQL.
 
 1. As mentioned in [Prerequisites](#0-prerequisites):
     - Make sure you're using version `1.25.0` or later of the Apollo Router.
     - Make sure your router instances are [connected to your GraphOS Enterprise organization](/router/enterprise-features/#enabling-enterprise-features), and that they're associated with a variant that your PQL is linked to.
 
-2. Set your desired persisted query behavior in your router's YAML config file. For supported options, see [Router modes](#router-modes).
+2. Set your desired persisted query behavior in your router's YAML config file. For supported options, see [Router security levels](#router-security-levels).
 
 3. Deploy your updated router instances to begin using your PQL.
 
@@ -358,7 +409,7 @@ apq:
   enabled: false # APQ must be disabled 
 ```
 
-If you want to use this mode, you should _first_ set up [safelisting with query strings allowed](#safelisting-query-strings-allowed). That's because this mode requires modifying _all_ of your clients to execute operations via PQL-specified ID instead of query string. While you're making those necessary changes, you can enforce the less strict safelisting mode in your router.
+If you want to use this security level, you should always _first_ set up [safelisting with query strings allowed](#safelisting-query-strings-allowed). That's because this level requires modifying _all_ of your clients to execute operations via PQL-specified ID instead of query string. While you're making those necessary changes, you can use the less restrictive safelisting level in your router.
 
 ## Manifest format
 
