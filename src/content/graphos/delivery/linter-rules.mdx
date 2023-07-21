@@ -62,7 +62,7 @@ type User {
 
 ## Fields
 
-These rules apply to the fields in your schema. Certain rules apply only to fields of particular types.
+These rules apply to the fields in your schema.
 
 #### `FIELD_NAMES_SHOULD_BE_CAMEL_CASE`
 
@@ -115,30 +115,6 @@ type Query {
 ```graphql title="schema.graphql"
 type Query {
   users: [User!]! # highlight-line
-}
-```
-
-#### `FIELDS_HAVE_DESCRIPTIONS_QUERY_MUTATION`
-
-All fields of the `Query` and `Mutation` types should have descriptions.
-
-<p style="margin-bottom: 0">❌</p>
-
-```graphql title="schema.graphql"
-type Mutation {
-  createBlogPost(blogPostContent: BlogPostContent!): Post
-}
-```
-
-<p style="margin-bottom: 0">✅</p>
-
-```graphql title="schema.graphql"
-type Mutation {
-  "Create a new blog post"
-  createBlogPost(
-    "The content of the blog post to be created"
-    blogPostContent: BlogPostContent!
-  ): Post
 }
 ```
 
