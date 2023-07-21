@@ -3,7 +3,7 @@ title: GraphOS schema linter rules
 description: Reference
 ---
 
-This reference lists the rules that you can enforce with [GraphOS schema linting](./schema-linter/), along with the code that GraphOS returns for each rule violation.
+This reference lists the default rules that you can enforce with [GraphOS schema linting](./schema-linter/), along with the code that GraphOS returns for each rule violation. You can also create [custom rules](#custom-rules) to forbid or require prefixes or suffixes you define on specific schema elements.
 
 Rules are categorized by the part(s) of your schema that they correspond to.
 
@@ -526,3 +526,20 @@ type Product {
 #### `TAG_DIRECTIVE_USES_UNKNOWN_NAME`
 
 The `@tag` directive should always use an approved value for its `name` argument. You specify approved values in [GraphOS Studio](./schema-linter/#configuring-the-linter).
+
+
+### Customized rules
+
+You can create two kind of custom rules:
+- Rules to require or forbid specific prefixes and suffixes.
+- Rules to 
+
+Refer to the schema linter page for [custom rule configuration instructions](./schema-linter#configure-custom-rules).
+
+#### Prefix/suffix rules
+
+These rules have the following naming convention: `{ELEMENT_NAME}_{FORBID|REQUIRE}_USER_DEFINED_{PREFIX|SUFFIX}`, for example, `INTERFACE_FORBID_USER_DEFINED_PREFIX`.
+
+This rule would include a list of strings to forbid as prefixes in interface names.
+
+A single rule can specify multiple strings to forbid _or_ require (not both) for a particular schema element. If you create a "require" rule and specify multiple strings, each schema element can use _any one_ of the specified strings. Rules forbidding strings forbid _all_ the strings you include.

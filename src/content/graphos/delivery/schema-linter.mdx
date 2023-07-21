@@ -71,6 +71,64 @@ Click a rule's severity to set it to any of the following:
 - **Warn.** Violations of this rule are flagged in checks reports, but they _don't_ cause the associated linter check to fail.
 - **Ignore.** Violations of this rule are ignored entirely.
 
+### Creating customized rules
+
+You can create customized linter rules to forbid or require certain strings as the prefix or suffix for different schema elements. You can create rules for the following elements:
+
+- Fields
+- Types
+- Objects
+- Interfaces
+- Inputs
+- Arguments
+- Enums
+- Unions
+
+A single rule can specify multiple strings to forbid _or_ require (not both) for a particular schema element. If you create a "require" rule and specify multiple strings, each schema element can use _any one_ of the specified strings. Rules forbidding strings forbid _all_ the strings you include.
+
+#### Configure custom rules
+
+To create a new rule, click the **+** button above your list of linter rules.
+
+<img
+  className="screenshot"
+  src="../img/schema-rules/create-new-rule.jpg"
+  alt="To-do: How to create a new rule"
+  width="300"
+/>
+
+In the modal that opens, select the following:
+
+- Which **Schema element** you want to apply the rule to
+- Whether you want to **Forbid** or **Require** certain strings
+- Whether the strings are **Prefixes** or **Suffixes**
+- The list of **Strings** to check for. Allowed characters are `[A-Z]`, `[a-z]`, `[0-9]`, and `[_]`
+  - Note that strings are case-sensitive.
+
+If any of the strings
+
+GraphOS dynamically generates the rule name based on your selections. For example, if you create a rule forbidding certain prefixes for interfaces, the resulting rule name is `INTERFACE_FORBID_USER_DEFINED_PREFIX`.
+
+<img
+  className="screenshot"
+  src="../img/schema-rules/new-rule-modal.jpg"
+  alt="To-do: New rule modal"
+  width="300"
+/>
+
+You can add as many rules as you want by clicking **Add another rule**. When you're done, click **Create**.
+
+Your custom rules appear with a **CUSTOM** tag in the rule list. You can edit a custom rule by clicking the pencil icon to the right of its name:
+
+<img
+  className="screenshot"
+  src="../img/schema-rules/edit-rule.jpg"
+  alt="To-do: Edit rule"
+  width="300"
+/>
+
+As with built-in linter rules, you can set a custom rule's [severity level](./schema-linter/#setting-severity-levels). To delete a rule, click the pencil icon and then click the trash can icon next to it in the custom rule modal.
+
 ## Running the linter
 
 Schema linting runs automatically as part of your graph's [schema checks](#linting-via-schema-checks). You can also perform [one-off linting](#one-off-linting) of local schema changes via the Rover CLI.
