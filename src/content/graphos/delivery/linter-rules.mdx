@@ -9,6 +9,8 @@ Rules are categorized by the part(s) of your schema that they correspond to.
 
 ## Schema
 
+These rules apply to the entire schema.
+
 #### `DOES_NOT_PARSE`
 
 The schema linter raises this violation if it attempts to read a malformed GraphQL schema. Check your schema for any syntax errors.
@@ -27,7 +29,8 @@ type Query {
 }
 
 #highlight-start
-query GetUsers { # Don't define operations in a schema document
+# Don't define operations in a schema document
+query GetUsers {
   users {
     id
   }
@@ -35,7 +38,31 @@ query GetUsers { # Don't define operations in a schema document
 #highlight-end
 ```
 
-## All fields
+#### `ALL_ELEMENTS_REQUIRE_DESCRIPTION`
+
+Each element in the schema must include a description.
+
+<p style="margin-bottom: 0">❌</p>
+
+```graphql title="schema.graphql"
+type User {
+  username: String!
+}
+```
+
+<p style="margin-bottom: 0">✅</p>
+
+```graphql title="schema.graphql"
+"Represents a user"
+type User {
+  "The user's username"
+  username: String!
+}
+```
+
+## Fields
+
+These rules apply to the fields in your schema.
 
 #### `FIELD_NAMES_SHOULD_BE_CAMEL_CASE`
 
@@ -91,7 +118,7 @@ type Query {
 }
 ```
 
-## All types
+## Types
 
 These rules apply to _all_ types that appear in a GraphQL schema, including:
 
