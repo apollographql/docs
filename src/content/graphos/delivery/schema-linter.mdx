@@ -73,7 +73,11 @@ Click a rule's severity to set it to any of the following:
 
 ### Creating customized rules
 
-You can create customized linter rules to forbid or require certain strings as the prefix or suffix for different schema elements. You can create rules for the following elements:
+You can create two kind of customized rules:
+- Rules to require or forbid specific prefixes and suffixes in element names
+- Rules to require descriptions on specific elements
+
+You can create these rules for the following elements:
 
 - Fields
 - Types
@@ -84,9 +88,7 @@ You can create customized linter rules to forbid or require certain strings as t
 - Enums
 - Unions
 
-A single rule can specify multiple strings to forbid _or_ require (not both) for a particular schema element. If you create a "require" rule and specify multiple strings, each schema element can use _any one_ of the specified strings. Rules forbidding strings forbid _all_ the strings you include.
-
-#### Configure custom rules
+#### Configure customized rules
 
 To create a new rule, click the **+** button above your list of linter rules.
 
@@ -104,8 +106,7 @@ In the modal that opens, select the following:
 - Whether the strings are **Prefixes** or **Suffixes**
 - The list of **Strings** to check for. Allowed characters are `[A-Z]`, `[a-z]`, `[0-9]`, and `[_]`
   - Note that strings are case-sensitive.
-
-If any of the strings
+  - If any of the strings you enter conflict with an existing rule, the modal won't allow you to create it. For example, if you create a rule to require a capitalized prefix (for example, ) for field names, it conficts with the [`FIELD_NAMES_SHOULD_BE_CAMEL_CASE`](./linter-rules/#field_names_should_be_camel_case) rule, and you won't be able to save it.
 
 GraphOS dynamically generates the rule name based on your selections. For example, if you create a rule forbidding certain prefixes for interfaces, the resulting rule name is `INTERFACE_FORBID_USER_DEFINED_PREFIX`.
 

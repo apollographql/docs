@@ -530,9 +530,9 @@ The `@tag` directive should always use an approved value for its `name` argument
 
 ### Customized rules
 
-You can create two kind of custom rules:
-- Rules to require or forbid specific prefixes and suffixes.
-- Rules to 
+You can create two kind of customized rules:
+- Rules to require or forbid specific prefixes and suffixes in element names
+- Rules to require descriptions on specific elements
 
 Refer to the schema linter page for [custom rule configuration instructions](./schema-linter#configure-custom-rules).
 
@@ -543,3 +543,20 @@ These rules have the following naming convention: `{ELEMENT_NAME}_{FORBID|REQUIR
 This rule would include a list of strings to forbid as prefixes in interface names.
 
 A single rule can specify multiple strings to forbid _or_ require (not both) for a particular schema element. If you create a "require" rule and specify multiple strings, each schema element can use _any one_ of the specified strings. Rules forbidding strings forbid _all_ the strings you include.
+
+#### Rules to require descriptions
+
+These rules have the following naming convention: `{ELEMENT_NAME}_REQUIRE_DESCRIPTION`
+
+You can require the following elements to have descriptions:
+- The entire schema
+- All fields
+- Only query and mutation fields
+- Types
+- Objects
+- Interfaces
+- Inputs
+- Arguments
+- Enums
+- Unions
+- Directive definitions
