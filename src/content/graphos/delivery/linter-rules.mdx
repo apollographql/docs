@@ -169,6 +169,41 @@ type Book { # highlight-line
 }
 ```
 
+#### `DEFINED_TYPES_ARE_USED`
+
+Every type defined in a schema should be used at least once.
+
+Unused types commonly appear after you refactor other parts of your schema. You should remove unused types to prevent confusion.
+
+<p style="margin-bottom: 0">❌</p>
+
+```graphql title="schema.graphql"
+type SomeUnusedType { # Also fails the TYPE_SUFFIX rule!
+  name: String!
+}
+
+type AnActuallyUsedType {
+  name: String!
+}
+
+type Query {
+  hello: String!
+  title: AnActuallyUsedType
+}
+```
+
+<p style="margin-bottom: 0">✅</p>
+
+```graphql title="schema.graphql"
+type Book {
+  title: String!
+}
+
+type Query {
+  books: [Book!]!
+}
+```
+
 ## Objects
 
 #### `OBJECT_PREFIX`
