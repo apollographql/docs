@@ -1,5 +1,5 @@
 ---
-title: Operation safelisting with persisted queries
+title: Operation safelisting with registered persisted queries
 description: Reject unrecognized operations while minimizing request latency
 ---
 
@@ -58,7 +58,90 @@ The Apollo Router also supports a related feature called [automatic persisted qu
 
 If you _only_ want to improve request latency and bandwidth usage, APQ probably addresses your use case. If you _also_ want to secure your supergraph with operation safelisting, you should use GraphOS persisted queries.
 
-## Adoption path
+## Router security levels
+
+Your router instances with a persisted query list (PQL) can use it to enable one of a few different security levels, which you set up in your router's [YAML config file](/router/configuration/overview/#yaml-config-file).
+
+> When you first adopt persisted queries, you should always start with the _least_ restrictive security level ([performance-only](#performance-only-no-safelisting)). You can then enable increasingly restrictive levels after you make all necessary changes to your clients.
+
+The Apollo Router supports the following security levels, in increasing order of restrictiveness:
+
+- [Performance-only](#performance-only-no-safelisting): Clients can optionally execute an operation on your router by providing the operation's PQL-specified ID.
+    - All other levels also provide this core capability.
+    - This level provides no operation safelisting.
+    - You can optionally turn on logging to see the unregistered queries reaching your graph.
+- [Safelisting with query strings allowed](#safelisting-query-strings-allowed): The router _rejects_ any incoming operations that aren't present in its PQL.
+    - Before moving to this security level, make sure _all_ of your client operations are present in your PQL.
+- [Safelisting with IDs only](#safelisting-ids-only): The router rejects any incoming operations that aren't present in its PQL, _and_ clients _must_ execute an operation by providing its PQL-specified ID.
+    - Before moving to this security level, make sure _all_ of your clients execute operations by providing their PQL-specified ID.
+
+See below for details on each level.
+
+### Performance-only (no safelisting)
+
+> **Always start with this security level.** You can enable increasingly restrictive levels after you make all necessary changes to your clients.
+
+To use persisted queries _only_ to reduce network bandwidth and latency (_not_ for safelisting), add the following minimal configuration:
+
+```yaml title="router.yaml"
+preview_persisted_queries:
+  enabled: true
+apq:
+  enabled: false # APQ must be disabled
+```
+
+This enables your clients to execute operations by providing their PQL-specified ID (instead of the full query string). Your router continues to accept full query strings as well, even for operations that _don't_ appear in its PQL.
+
+To turn on logging for unregistered queries, set enable the `log_unknown` property.
+
+```yaml title="router.yaml"
+preview_persisted_queries:
+  enabled: true
+  log_unknown: true
+apq:
+  enabled: false # APQ must be disabled
+```
+
+### Safelisting (query strings allowed)
+
+> ⚠️ **Before you apply this configuration,** first make sure your PQL contains _all_ of the GraphQL operations that _all active versions_ of your clients execute. If you enable safelisting _without_ ensuring this, your router will reject your unpublished client operations!
+
+With the following configuration, your router allows _only_ GraphQL operations that are present in its PQL, while rejecting all other operations:
+
+```yaml title="router.yaml"
+preview_persisted_queries:
+  enabled: true
+  safelist:
+    enabled: true
+    freeform_graphql: 
+      enabled: true # highlight-line
+apq:
+  enabled: false # APQ must be disabled 
+```
+
+To execute an operation, clients can provide either its full operation string _or_ its PQL-specified ID.
+
+### Safelisting (IDs only)
+
+> ⚠️ **Do not start with this configuration!** It requires _all_ of your clients to execute operations by providing their PQL-specified ID. If any clients still provide full operation strings, those clients will break.
+
+With the following configuration, your router allows _only_ GraphQL operations that are present in its PQL, _and_ it requires clients to provide PQL-specified IDs instead of full query strings:
+
+```yaml title="router.yaml"
+preview_persisted_queries:
+  enabled: true
+  safelist:
+    enabled: true
+    freeform_graphql:
+      enabled: false #highlight-line
+apq:
+  enabled: false # APQ must be disabled 
+```
+
+If you want to use this security level, you should always _first_ set up [safelisting with query strings allowed](#safelisting-query-strings-allowed). That's because this level requires modifying _all_ of your clients to execute operations via PQL-specified ID instead of query string. While you're making those necessary changes, you can use the less restrictive safelisting level in your router.
+
+
+## Incremental adoption path
 
 Setting up operation safelisting with persisted queries is a multi-step process that requires setting up tooling for _all_ of your client apps. Based on the availability of your client teams, it might take days or even weeks for you to get fully up and running with safelisting.
 
@@ -345,77 +428,6 @@ Here are links to documentation for APQ mechanisms in Apollo Client libraries:
 - [Apollo Client Web](/react/api/link/persisted-queries/)
 - [Apollo iOS](/ios/fetching/apqs/)
 - [Apollo Kotlin](/kotlin/advanced/persisted-queries/)
-
-## Router security levels
-
-Your router instances with a persisted query list (PQL) can use it to enable one of a few different security levels, which you set up in your router's [YAML config file](/router/configuration/overview/#yaml-config-file).
-
-> When you first adopt persisted queries, you should always start with the _least_ restrictive security level ([performance-only](#performance-only-no-safelisting)). You can then enable increasingly restrictive levels after you make all necessary changes to your clients.
-
-The Apollo Router supports the following security levels, in increasing order of restrictiveness:
-
-- [Performance-only](#performance-only-no-safelisting): Clients can optionally execute an operation on your router by providing the operation's PQL-specified ID.
-    - All other levels also provide this core capability.
-    - This level provides no operation safelisting.
-- [Safelisting with query strings allowed](#safelisting-query-strings-allowed): The router _rejects_ any incoming operations that aren't present in its PQL.
-    - Before moving to this security level, make sure _all_ of your client operations are present in your PQL.
-- [Safelisting with IDs only](#safelisting-ids-only): The router rejects any incoming operations that aren't present in its PQL, _and_ clients _must_ execute an operation by providing its PQL-specified ID.
-    - Before moving to this security level, make sure _all_ of your clients execute operations by providing their PQL-specified ID.
-
-See below for details on each level.
-
-### Performance-only (no safelisting)
-
-> **Always start with this security level.** You can enable increasingly restrictive levels after you make all necessary changes to your clients.
-
-To use persisted queries _only_ to reduce network bandwidth and latency (_not_ for safelisting), add the following minimal configuration:
-
-```yaml title="router.yaml"
-preview_persisted_queries:
-  enabled: true
-apq:
-  enabled: false # APQ must be disabled 
-```
-
-This enables your clients to execute operations by providing their PQL-specified ID (instead of the full query string). Your router continues to accept full query strings as well, even for operations that _don't_ appear in its PQL.
-
-### Safelisting (query strings allowed)
-
-> ⚠️ **Before you apply this configuration,** first make sure your PQL contains _all_ of the GraphQL operations that _all active versions_ of your clients execute. If you enable safelisting _without_ ensuring this, your router will reject your unpublished client operations!
-
-With the following configuration, your router allows _only_ GraphQL operations that are present in its PQL, while rejecting all other operations:
-
-```yaml title="router.yaml"
-preview_persisted_queries:
-  enabled: true
-  safelist:
-    enabled: true
-    freeform_graphql: 
-      enabled: true # highlight-line
-apq:
-  enabled: false # APQ must be disabled 
-```
-
-To execute an operation, clients can provide either its full operation string _or_ its PQL-specified ID.
-
-### Safelisting (IDs only)
-
-> ⚠️ **Do not start with this configuration!** It requires _all_ of your clients to execute operations by providing their PQL-specified ID. If any clients still provide full operation strings, those clients will break.
-
-With the following configuration, your router allows _only_ GraphQL operations that are present in its PQL, _and_ it requires clients to provide PQL-specified IDs instead of full query strings:
-
-```yaml title="router.yaml"
-preview_persisted_queries:
-  enabled: true
-  safelist:
-    enabled: true
-    freeform_graphql:
-      enabled: false #highlight-line
-apq:
-  enabled: false # APQ must be disabled 
-```
-
-If you want to use this security level, you should always _first_ set up [safelisting with query strings allowed](#safelisting-query-strings-allowed). That's because this level requires modifying _all_ of your clients to execute operations via PQL-specified ID instead of query string. While you're making those necessary changes, you can use the less restrictive safelisting level in your router.
 
 ## Manifest format
 
