@@ -102,6 +102,8 @@ apq:
   enabled: false # APQ must be disabled
 ```
 
+You can use logs to gauge how ready your client apps are for safelisting. Any logged operations will be rejected once you've turned on safelisting.
+
 ### Safelisting (query strings allowed)
 
 > ⚠️ **Before you apply this configuration,** first make sure your PQL contains _all_ of the GraphQL operations that _all active versions_ of your clients execute. If you enable safelisting _without_ ensuring this, your router will reject your unpublished client operations!
@@ -111,10 +113,10 @@ With the following configuration, your router allows _only_ GraphQL operations t
 ```yaml title="router.yaml"
 preview_persisted_queries:
   enabled: true
+  log_unknown: true
   safelist:
     enabled: true
-    freeform_graphql: 
-      enabled: true # highlight-line
+    require_id: false
 apq:
   enabled: false # APQ must be disabled 
 ```
@@ -130,10 +132,10 @@ With the following configuration, your router allows _only_ GraphQL operations t
 ```yaml title="router.yaml"
 preview_persisted_queries:
   enabled: true
+  log_unknown: true
   safelist:
     enabled: true
-    freeform_graphql:
-      enabled: false #highlight-line
+    require_id: true #highlight-line
 apq:
   enabled: false # APQ must be disabled 
 ```
