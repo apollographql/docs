@@ -49,6 +49,7 @@ export const pageQuery = graphql`
           toc
           tags
           headingDepth
+          minVersion
         }
       }
       childMarkdownRemark {
@@ -61,6 +62,7 @@ export const pageQuery = graphql`
           title
           description
           headingDepth
+          minVersion
         }
       }
     }

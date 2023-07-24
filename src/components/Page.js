@@ -44,6 +44,7 @@ import {FeedbackButton} from './FeedbackButton';
 import {FiGithub, FiMessageCircle} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
 import {Global} from '@emotion/react';
+import {HighlightKeyTerms} from '@apollo/pedia';
 import {MDXProvider} from '@mdx-js/react';
 import {MDXRenderer} from 'gatsby-plugin-mdx';
 import {
@@ -53,6 +54,7 @@ import {
   PageContent,
   PageSeo
 } from './PageLayout';
+import {SiDiscord} from 'react-icons/si';
 import {TOTAL_HEADER_HEIGHT} from './Header';
 import {YouTube} from './YouTube';
 import {join} from 'path';
@@ -78,8 +80,6 @@ import 'prismjs/components/prism-swift';
 import 'prismjs/components/prism-tsx';
 import 'prismjs/components/prism-typescript';
 import 'prismjs/components/prism-yaml';
-import {HighlightKeyTerms} from '@apollo/pedia';
-import {SiDiscord} from 'react-icons/si';
 
 // use JS syntax highlighting for rhai codeblocks
 Prism.languages.rhai = Prism.languages.javascript;
@@ -206,7 +206,7 @@ export default function Page({file}) {
     file;
 
   const {frontmatter, headings} = childMdx || childMarkdownRemark;
-  const {title, description, toc, tags, headingDepth} = frontmatter;
+  const {title, description, toc, tags, headingDepth, minVersion} = frontmatter;
 
   const {docset, versions, currentVersion, navItems, versionBanner} =
     useConfig(basePath);
@@ -380,6 +380,7 @@ export default function Page({file}) {
             scrollMarginTop: SCROLL_MARGIN_TOP
           }
         }}
+        minVersion={minVersion}
         title={title}
         subtitle={
           <>
