@@ -48,8 +48,6 @@ Your router can use its persisted query list (PQL) to **protect your supergraph*
     - For very large operation strings, this can significantly reduce latency and bandwidth usage.
     - Your router can _require_ that clients provide operations this way and _reject_ full query strings (even query strings that are present in the PQL).
 
-Safelisting is a key component of GraphOS' security features and complements others such as [JWT authentication](/router/configuration/authn-jwt/) and [operation limits](/router/configuration/operation-limits). Safelisting empowers you to reduce the surface of your supergraph by restricting the shape of incoming operations.
-
 ## Differences from automated persisted queries
 
 The Apollo Router also supports a related feature called [automatic persisted queries](/router/configuration/in-memory-caching#caching-automatic-persisted-queries-apq) (APQ). With APQ, clients can execute a GraphQL operation by sending the hash of its operation string, instead of sending the full string.
@@ -85,6 +83,12 @@ APQ has a few limitations compared to preregisted persisted queries.
 
 If you _only_ want to improve request latency and bandwidth usage, APQ probably addresses your use case. If you _also_ want to secure your supergraph with operation safelisting, you should preregister persisted queries in a PQL.
 
+## Safelisting as part of your security architecture
+
+Safelisting empowers you to reduce the surface of your supergraph by restricting the shape of incoming operations. It's one key component of GraphOS' security features and complements other security features such as [JWT authentication](/router/configuration/authn-jwt/) and [operation limits](/router/configuration/operation-limits).
+
+Since safelisting protects your graph by limiting its surface to _known and trusted_ operations, **it's best suited for supergraphs that primarily serve first-party apps**. If your graph is open to third-party developers, it's better to rely on other security features such as [CORS configuration](/router/configuration/cors/) and [CSRF prevention](/router/configuration/csrf).
+
 ## Router security levels
 
 Your router instances with a persisted query list (PQL) can use it to enable one of a few different security levels, which you set up in your router's [YAML config file](/router/configuration/overview/#yaml-config-file).
@@ -118,7 +122,7 @@ apq:
 
 This enables your clients to execute operations by providing their PQL-specified ID (instead of the full query string). Your router continues to accept full query strings as well, even for operations that _don't_ appear in its PQL.
 
-### Performance with logging
+### Audit
 
 Turning on logging is a crucial step for gauging how ready your client apps are for safelisting. The logs identify which operations you need to either add to your PQL or stop your client apps from making. 
 
