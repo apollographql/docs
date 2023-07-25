@@ -1,5 +1,5 @@
 ---
-title: Operation safelisting with registered persisted queries
+title: Safelisting with persisted queries
 description: Reject unrecognized operations while minimizing request latency
 ---
 
@@ -11,55 +11,42 @@ If your organization _doesn't_ currently have an Enterprise plan, you can test t
 
 </blockquote>
 
-With [GraphOS Enterprise](../enterprise/), you can enhance your graph's security by maintaining a **persisted query list** (**PQL**) for your supergraph's self-hosted router. This list should contain _all_ of the trusted GraphQL operations that your your app clients execute against your router:
+GraphQL APIs are broadly open by design. They let client applications send queries with arbitrary shapes and sizes. And while this allows for expedited client development and a highly performant API platform, it necessitates securing your supergraph against potentially malicious requests. 
+
+With [GraphOS Enterprise](../enterprise/), you can enhance your graph's security by maintaining a **persisted query list** (**PQL**) for your supergraph's self-hosted router. Your router checks incoming requests against the PQL, which acts as a safelist of trusted operations made by your first-party apps.
 
 ```mermaid
-graph LR;
-
-  subgraph "CI/CD"
-  webClient("Web client<br/>build");
-  androidClient("Android client<br/>build");
-  iosClient("iOS client<br/>build");
-  end
-
-  subgraph "GraphOS"
-  pql[[Persisted<br/>Query List]];
-  end
-
-  webClient & androidClient & iosClient -->|Publishes<br/>operations|pql
-```
-
-## Benefits of registered persisted queries
-
-Your router can use its persisted query list (PQL) to **protect your supergraph** and **speed up your clients operations**:
-
-- When you enable **operation safelisting**, your router _rejects_ any incoming operations that aren't registered in its PQL. Safelisting blocks unauthorized requests from unauthorized clients.
-- Client apps can execute an operation by providing its PQL-specified ID, _instead of_ providing a full operation string.
-    - For very large operation strings, this can significantly reduce latency and bandwidth usage.
-    - Your router can _require_ that clients provide operations this way and _reject_ full query strings (even query strings that are present in the PQL).
-
-```mermaid
-graph LR;
-  subgraph "Client"
+flowchart LR
+  subgraph Apps["First-party apps"]
+  direction LR
   webClient("Web client");
   androidClient("Android client");
   iosClient("iOS client");
   end
-  
-  subgraph "GraphOS"
-    direction TB
-    router(["Apollo<br/>Router"]);
-    pql[[Persisted<br/>Query List]];
-  end
 
-  subgraph "Your infrastructure"
-    api[GraphQL API];
-  end
+    subgraph Router["Apollo Router"]
+        direction TB
+        router(["Graph<br/>Router"]);
+        pql[[Persisted<br/>Query List]];
+        router <--> pql
+    end
 
-  webClient & androidClient & iosClient -->|Queries|router
-  router <-->|Verifies queries are registered|pql
-  router -->|Routes registered <br/>queries to your graphs|api
+  subgraph Supergraph
+  direction LR
+  api1(["GraphQL API"]);
+  api2(["GraphQL API"]);
+  api3(["GraphQL API"]);
+
+  end
+  Apps -->|Queries| Router -->|Trusted<br/> queries| Supergraph
 ```
+
+Your router can use its persisted query list (PQL) to **protect your supergraph** and **speed up your clients operations**:
+
+- When you enable **operation safelisting**, your router _rejects_ any incoming operations that aren't registered in its PQL.
+- Client apps can execute an operation by providing its PQL-specified ID, _instead of_ providing a full operation string.
+    - For very large operation strings, this can significantly reduce latency and bandwidth usage.
+    - Your router can _require_ that clients provide operations this way and _reject_ full query strings (even query strings that are present in the PQL).
 
 ## Differences from automated persisted queries
 
@@ -67,13 +54,34 @@ The Apollo Router also supports a related feature called [automatic persisted qu
 
 Compared to GraphOS registered persisted queries, APQ has a few limitations:
 
-|                   | Automated persisted queries | Registered persisted queries |
-| ----------------- | --------------------------- | ---------------------------- |
-| Performance       | ✅ Clients can send identifiers instead of full query strings reducing request sizes dramatically and latency.                         |✅ Clients can send identifiers instead of full query strings reducing request sizes dramatically and latency.     |
-| Ready on startup   | ❌ With APQ, one of your router instances must receive any given operation string from a client at least once, in order to [cache it](/router/configuration/distributed-caching).        |✅ Your router fetches its full PQL from GraphOS on startup, which means clients can _always_ execute operations by their PQL-specified ID.       |
-| Safelisting       | ❌ APQ doesn't provide safelisting capabilities because the router dynamically populates its APQ cache over time with _any_ operations it receives.        |✅ Clients pre-publish their operations to GraphOS. Your router fetches its PQL on startup, enabling it to reject operations that aren't present in the PQL.      |
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>Automated persisted queries </th>
+      <th>Preregistered persisted queries</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Performance</td>
+      <td>✅ Clients can send identifiers instead of full query strings reducing request sizes dramatically and latency.</td>
+      <td>✅ Clients can send identifiers instead of full query strings reducing request sizes dramatically and latency.</td>
+    </tr>
+    <tr>
+      <td>Ready on startup</td>
+      <td> Persisted queries are  one of your router instances must receive any given operation string from a client at least once, in order to <a href="/router/configuration/distributed-caching">cache it</a>.</td>
+      <td> Client contribute to the PQL at build time. Your router fetches its full PQL from GraphOS on startup, which means clients can <em>always</em> execute operations by their PQL-specified ID.</td>
+    </tr>
+    <tr>
+      <td>Safelisting</td>
+      <td>❌ APQ doesn't provide safelisting capabilities because the router dynamically populates its APQ cache over time with <em>any</em> operations it receives.</td>
+      <td>✅ Clients pre-publish their operations to GraphOS. Your router fetches its PQL on startup, enabling it to reject operations that aren't present in the PQL.</td>
+    </tr>
+  </tbody>
+</table>
 
-If you _only_ want to improve request latency and bandwidth usage, APQ probably addresses your use case. If you _also_ want to secure your supergraph with operation safelisting, you should use GraphOS registered persisted queries.
+If you _only_ want to improve request latency and bandwidth usage, APQ probably addresses your use case. If you _also_ want to secure your supergraph with operation safelisting, you should use registered persisted queries.
 
 ## Router security levels
 
@@ -168,9 +176,25 @@ There are three main steps for implementing persisted queries for safelisting:
   2. Configuring your router to use the PQL
   3. Updating your client apps to send ids for registered queries
 
- If you want to safelist operations, you will eventually need to implement tooling in all of your client apps. However, you can incrementally adopt registered persisted queries by starting with the [performance-only](#performance-only) mode.
+Your PQL list should eventually contain _all_ of the trusted GraphQL operations that your your app clients execute against your router.
 
- Continue reading for details on each implementation step, or skip to the [incremental adoption section](#incremental-adoption-path) for the recommended strategy for incremental adoption.
+```mermaid
+graph LR;
+
+  subgraph "CI/CD"
+  webClient("Web client<br/>build");
+  androidClient("Android client<br/>build");
+  iosClient("iOS client<br/>build");
+  end
+
+  subgraph "GraphOS"
+  pql[[Persisted<br/>Query List]];
+  end
+
+  webClient & androidClient & iosClient -->|Publishes<br/>operations|pql
+```
+
+However, you can incrementally adopt registered persisted queries by starting with the [performance-only](#performance-only) mode. Continue reading for details on each implementation step, or skip to the [incremental adoption section](#incremental-adoption-path) for the recommended strategy for incremental adoption.
 
 ### Prerequisites
 
