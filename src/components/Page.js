@@ -34,6 +34,7 @@ import {
   UnorderedList,
   chakra
 } from '@chakra-ui/react';
+import {CustomHeading} from './CustomHeading';
 import {
   EmbeddableExplorer,
   MarkdownCodeBlock,
@@ -47,6 +48,7 @@ import {Global} from '@emotion/react';
 import {HighlightKeyTerms} from '@apollo/pedia';
 import {MDXProvider} from '@mdx-js/react';
 import {MDXRenderer} from 'gatsby-plugin-mdx';
+import {MinVersion} from './MinVersion';
 import {
   PAGE_FOOTER_HEIGHT,
   PAGE_PADDING_BOTTOM,
@@ -98,12 +100,12 @@ const NESTED_LIST_STYLES = {
 };
 
 const components = {
-  h1: props => <Heading as="h1" size="2xl" {...props} />,
-  h2: props => <Heading as="h2" size="xl" {...props} />,
-  h3: props => <Heading as="h3" size="lg" {...props} />,
-  h4: props => <Heading as="h4" size="md" {...props} />,
-  h5: props => <Heading as="h5" size="sm" {...props} />,
-  h6: props => <Heading as="h6" size="xs" {...props} />,
+  h1: props => <CustomHeading as="h1" size="2xl" {...props} />,
+  h2: props => <CustomHeading as="h2" size="xl" {...props} />,
+  h3: props => <CustomHeading as="h3" size="lg" {...props} />,
+  h4: props => <CustomHeading as="h4" size="md" {...props} />,
+  h5: props => <CustomHeading as="h5" size="sm" {...props} />,
+  h6: props => <CustomHeading as="h6" size="xs" {...props} />,
   ul: props => (
     <UnorderedList
       spacing={LIST_SPACING}
@@ -181,7 +183,8 @@ const mdxComponents = {
   TypeScriptApiBox,
   TypescriptApiBox: TypeScriptApiBox,
   EmbeddableExplorer,
-  ButtonLink
+  ButtonLink,
+  MinVersion
 };
 
 const {processSync} = rehype()
