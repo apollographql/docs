@@ -48,11 +48,13 @@ Your router can use its persisted query list (PQL) to **protect your supergraph*
     - For very large operation strings, this can significantly reduce latency and bandwidth usage.
     - Your router can _require_ that clients provide operations this way and _reject_ full query strings (even query strings that are present in the PQL).
 
+Safelisting is a key component of GraphOS' security features and complements others such as [JWT authentication](/router/configuration/authn-jwt/) and [operation limits](/router/configuration/operation-limits). Safelisting empowers you to reduce the surface of your supergraph by restricting the shape of incoming operations.
+
 ## Differences from automated persisted queries
 
 The Apollo Router also supports a related feature called [automatic persisted queries](/router/configuration/in-memory-caching#caching-automatic-persisted-queries-apq) (APQ). With APQ, clients can execute a GraphQL operation by sending the hash of its operation string, instead of sending the full string.
 
-Compared to GraphOS registered persisted queries, APQ has a few limitations:
+APQ has a few limitations compared to preregisted persisted queries.
 
 <table>
   <thead>
@@ -64,14 +66,14 @@ Compared to GraphOS registered persisted queries, APQ has a few limitations:
   </thead>
   <tbody>
     <tr>
-      <td>Performance</td>
+      <td>Query performance</td>
       <td>✅ Clients can send identifiers instead of full query strings reducing request sizes dramatically and latency.</td>
       <td>✅ Clients can send identifiers instead of full query strings reducing request sizes dramatically and latency.</td>
     </tr>
     <tr>
-      <td>Ready on startup</td>
-      <td> Persisted queries are  one of your router instances must receive any given operation string from a client at least once, in order to <a href="/router/configuration/distributed-caching">cache it</a>.</td>
-      <td> Client contribute to the PQL at build time. Your router fetches its full PQL from GraphOS on startup, which means clients can <em>always</em> execute operations by their PQL-specified ID.</td>
+      <td>Build- vs. runtime registration</td>
+      <td> Queries are registered at <b>runtime</b>. One of your router instances must receive any given operation string from a client at least once, in order to <a href="/router/configuration/distributed-caching">cache it</a>.</td>
+      <td> Clients contribute to the PQL at <b>build-time</b>. Your router fetches its full PQL from GraphOS on startup, which means clients can <em>always</em> execute operations by their PQL-specified ID.</td>
     </tr>
     <tr>
       <td>Safelisting</td>
@@ -81,7 +83,7 @@ Compared to GraphOS registered persisted queries, APQ has a few limitations:
   </tbody>
 </table>
 
-If you _only_ want to improve request latency and bandwidth usage, APQ probably addresses your use case. If you _also_ want to secure your supergraph with operation safelisting, you should use registered persisted queries.
+If you _only_ want to improve request latency and bandwidth usage, APQ probably addresses your use case. If you _also_ want to secure your supergraph with operation safelisting, you should preregister persisted queries in a PQL.
 
 ## Router security levels
 
