@@ -27,6 +27,7 @@ The central piece of this repo, the docs infrastructure, is a [Gatsby](https://w
 - [Authoring](#authoring)
   - [Frontmatter](#frontmatter)
     - [Configuring the table of contents](#configuring-the-table-of-contents)
+    - [Showing a version indicator](#showing-a-version-indicator)
   - [Linking](#linking)
   - [Code blocks](#code-blocks)
   - [Using MDX](#using-mdx)
@@ -38,6 +39,7 @@ The central piece of this repo, the docs infrastructure, is a [Gatsby](https://w
       - [CodeColumns](#codecolumns)
       - [YouTube](#youtube)
       - [TypeScriptApiBox](#typescriptapibox)
+      - [MinVersion](#minversion)
 - [History](#history)
   - [Benefits](#benefits)
   - [Drawbacks](#drawbacks)
@@ -385,6 +387,17 @@ headingDepth: 4 # show headings up to h4
 ---
 ```
 
+#### Showing a version indicator
+
+Show a tag at the top of the article that indicates the version of the software that that article applies to by using the `minVersion` frontmatter.
+
+```md
+---
+title: Fancy new feature
+minVersion: 3.8.1
+---
+```
+
 ### Linking
 
 Links between docs articles should be written as relative paths. For example, if you wanted to link from the `schema/custom-scalars` article in the Apollo Server docs to the `getting-started` page at the root of the content directory, you would write:
@@ -535,6 +548,18 @@ This component is currently only used in the Apollo Client docset. It takes a pr
 ## The `ApolloClient` constructor
 
 <TypeScriptApiBox name="ApolloClient.constructor" />
+```
+
+##### MinVersion
+
+Use this component to add a tag beside page headings indicating the version of the software that they apply to. This is meant to be used with headings, and using it in ways other than the method shown below will result in nothing happening.
+
+```mdx
+<MinVersion version="3.8.0">
+
+### Dark mode
+
+</MinVersion>
 ```
 
 ## History
