@@ -13,7 +13,7 @@ If your organization _doesn't_ currently have an Enterprise plan, you can test t
 
 GraphQL APIs are broadly open by design. They let client applications send queries with arbitrary shapes and sizes. And while this allows for expedited client development and a highly performant API platform, it necessitates securing your supergraph against potentially malicious requests. 
 
-With [GraphOS Enterprise](../enterprise/), you can enhance your graph's security by maintaining a **persisted query list** (**PQL**) for your supergraph's self-hosted router. Your router checks incoming requests against the PQL, which acts as a safelist of trusted operations made by your first-party apps.
+With [GraphOS Enterprise](../enterprise/), you can enhance your graph's security by maintaining a **persisted query list** (**PQL**) for your supergraph's self-hosted router. The Apollo Router checks incoming requests against the PQL, a safelist of trusted operations made by your first-party apps.
 
 ```mermaid
 flowchart LR
@@ -41,24 +41,18 @@ flowchart LR
   Apps -->|Queries| Router -->|Trusted<br/> queries| Supergraph
 ```
 
-Your router can use its persisted query list (PQL) to **protect your supergraph** and **speed up your clients operations**:
+Your router can use its persisted query list (PQL) to both **protect your supergraph** and **speed up your clients' operations**:
 
-- When you enable **operation safelisting**, your router _rejects_ any incoming operations that aren't registered in its PQL.
-- Client apps can execute an operation by providing its PQL-specified ID, _instead of_ providing a full operation string.
-    - For very large operation strings, this can significantly reduce latency and bandwidth usage.
+- When you enable **operation safelisting**, your router _rejects_ any incoming operations not registered in its PQL.
+- Client apps can execute an operation by providing its PQL-specified ID _instead of_ an entire operation string.
+    - This can significantly reduce latency and bandwidth usage for very large operation strings.
     - Your router can _require_ that clients provide operations this way and _reject_ full query strings (even query strings that are present in the PQL).
-
-## Safelisting as part of your security architecture
-
-Safelisting empowers you to reduce the surface of your supergraph by restricting the shape of incoming operations. It's one key component of GraphOS' security features and complements other security features such as [JWT authentication](/router/configuration/authn-jwt/) and [operation limits](/router/configuration/operation-limits).
-
-Since safelisting protects your graph by limiting its surface to _known and trusted_ operations, **it's best suited for supergraphs that primarily serve first-party apps**. If your graph is open to third-party developers, it's better to rely on other security features such as [CORS configuration](/router/configuration/cors/) and [CSRF prevention](/router/configuration/csrf).
 
 ## Differences from automated persisted queries
 
-The Apollo Router also supports a related feature called [automatic persisted queries](/router/configuration/in-memory-caching#caching-automatic-persisted-queries-apq) (APQ). With APQ, clients can execute a GraphQL operation by sending the hash of its operation string, instead of sending the full string.
+The Apollo Router also supports a related feature called [automatic persisted queries](/router/configuration/in-memory-caching#caching-automatic-persisted-queries-apq) (APQ). With APQ, clients can execute a GraphQL operation by sending the hash of its operation string instead of the entire string.
 
-APQ has a few limitations compared to preregisted persisted queries.
+APQ has a few limitations compared to preregistered persisted queries.
 
 <table>
   <thead>
@@ -71,23 +65,29 @@ APQ has a few limitations compared to preregisted persisted queries.
   <tbody>
     <tr>
       <td>Query performance</td>
-      <td>✅ Clients can send identifiers instead of full query strings reducing request sizes dramatically and latency.</td>
-      <td>✅ Clients can send identifiers instead of full query strings reducing request sizes dramatically and latency.</td>
+      <td>✅ Clients can send identifiers instead of full query strings, reducing request sizes dramatically and latency.</td>
+      <td>✅ Clients can send identifiers instead of full query strings, reducing request sizes dramatically and latency.</td>
     </tr>
     <tr>
       <td>Build- vs. runtime registration</td>
-      <td> Queries are registered at <b>runtime</b>. One of your router instances must receive any given operation string from a client at least once, in order to <a href="/router/configuration/distributed-caching">cache it</a>.</td>
-      <td> Clients contribute to the PQL at <b>build-time</b>. Your router fetches its full PQL from GraphOS on startup, which means clients can <em>always</em> execute operations by their PQL-specified ID.</td>
+      <td> Queries are registered at <b>runtime</b>. One of your router instances must receive any given operation string from a client at least once to <a href="/router/configuration/distributed-caching">cache it</a>.</td>
+      <td> Clients contribute to the PQL at <b>build-time</b>. Your router fetches its full PQL from GraphOS on startup, meaning clients can always execute operations using their PQL-specified ID.</td>
     </tr>
     <tr>
       <td>Safelisting</td>
       <td>❌ APQ doesn't provide safelisting capabilities because the router dynamically populates its APQ cache over time with <em>any</em> operations it receives.</td>
-      <td>✅ Clients pre-publish their operations to GraphOS. Your router fetches its PQL on startup, enabling it to reject operations that aren't present in the PQL.</td>
+      <td>✅ Clients pre-publish their operations to GraphOS. Your router fetches its PQL on startup, enabling it to reject operations not present in the PQL.</td>
     </tr>
   </tbody>
 </table>
 
 If you _only_ want to improve request latency and bandwidth usage, APQ probably addresses your use case. If you _also_ want to secure your supergraph with operation safelisting, you should preregister persisted queries in a PQL.
+
+## Safelisting as part of your security architecture
+
+Safelisting empowers you to reduce the surface of your supergraph by restricting the shape of incoming operations. It's one key component of GraphOS' security features and complements other security features such as [JWT authentication](/router/configuration/authn-jwt/) and [operation limits](/router/configuration/operation-limits).
+
+Since safelisting protects your graph by limiting its surface to _known and trusted_ operations, **it's best suited for supergraphs that primarily serve first-party apps**. If your graph is open to third-party developers, it's better to rely on other security features such as [CORS configuration](/router/configuration/cors/) and [CSRF prevention](/router/configuration/csrf).
 
 ## Security levels
 
@@ -99,13 +99,13 @@ The Apollo Router supports the following security levels, in increasing order of
 - **Audit mode**: Executing operations by providing a PQL-specified ID is still optional, but the router also logs any unregistered operations.
     - The level serves as a dry run and helps you identify operations you may still need to register before turning on safelisting.
 - **Safelisting with query strings allowed**: The router _rejects_ any incoming operations that aren't present in its PQL.
-    - Before moving to this security level, make sure _all_ of your client operations are present in your PQL.
+    - Before moving to this security level, ensure _all_ of your client operations are present in your PQL.
 - **Safelisting with IDs only**: The router rejects any incoming operations that aren't present in its PQL, _and_ clients _must_ execute an operation by providing its PQL-specified ID.
-    - Before moving to this security level, make sure _all_ of your clients execute operations by providing their PQL-specified ID.
+    - Before moving to this security level, ensure _all_ of your clients execute operations by providing their PQL-specified ID.
 
-You can find details on how to configure these in the router in the [implementation section](#implementation).
+You can find details on configuring the router's security level in the [implementation section](#implementation).
 
-These varying levels of permissiveness allow you to incrementally adopt safelisting on an app-by-app basis. Specifically, you can use audit mode until you are confident that all of your apps' trusted operations have been registered in the PQL. This way, you don't have to worry about turning on safelisting and accidentally rejecting one app's trusted operations.
+These levels of permissiveness allow you to incrementally adopt safelisting on an app-by-app basis. Specifically, you can use audit mode until you're confident that all your apps' trusted operations have been registered in the PQL. That way, you don't have to worry about turning on safelisting and accidentally rejecting one app's trusted operations.
 
 Refer to the [incremental adoption section](#incremental-adoption-path) for a comprehensive guide.
 
