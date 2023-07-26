@@ -90,13 +90,13 @@ The Apollo Router supports the following security levels, in increasing order of
 |Level|Description|
 |--|--|
 |**Performance-only**| Clients can optionally execute an operation on your router by providing the operation's PQL-specified ID.|
-|**Auditing**| Executing operations by providing a PQL-specified ID is still optional, but the router also logs any unregistered operations.|
+|**Auditing**| Executing operations by providing a PQL-specified ID is still optional, but the router logs any unregistered operations.|
 |**Safelisting with query strings allowed**| The router _rejects_ any incoming operations that aren't present in its PQL.|
 |**Safelisting with IDs only**| The router rejects any incoming operations that aren't present in its PQL, _and_ clients _must_ execute an operation by providing its PQL-specified ID.|
 
 > _You can find more details, including configuration instructions, in the [implementation section](#2-router-configuration)._
 
-These levels of permissiveness allow you to incrementally adopt safelisting on an app-by-app basis. Specifically, you can use logging until you're confident that _all_ your apps' trusted operations have been registered in the PQL. That way, you don't have to worry about turning on safelisting and accidentally rejecting one app's trusted operations. Refer to the [incremental adoption section](#incremental-adoption-path) for an overview.
+These levels of permissiveness allow you to [incrementally adopt](#incremental-adoption-path) persisted queries on a client-by-client basis. Specifically, the router should use auditing security level until you're confident that _all_ your clients' trusted operations have been registered in the PQL. Refer to the [incremental adoption section](#incremental-adoption-path) for a step-by-step guide.
 
 ## Implementation steps
 
@@ -104,7 +104,7 @@ Persisted queries provide benefits to different teams:
 - Safelisting helps **platform teams** secure the graph and optimize its performance.
 - **Application developers** can use trusted operation IDs to write performant client code.
 
-Therefore, implementation also requires some collaboration among these parties. These are the main steps for implementing persisted queries for safelisting, along with the team that usually performs it.
+Implementation also requires collaboration among these parties. These are the main steps for implementing persisted queries for safelisting, along with the team that usually performs it:
 
 <table>
   <thead>
@@ -117,7 +117,7 @@ Therefore, implementation also requires some collaboration among these parties. 
   <tbody>
     <tr>
       <td> <a href="#0-prerequisites">0. Prerequisites</a> </td>
-      <td>Ensure tooling uses the correct version.</td>
+      <td>Ensure tooling uses the correct versions.</td>
       <td>Platform team</td>
     </tr>
     <tr>
@@ -138,9 +138,11 @@ Therefore, implementation also requires some collaboration among these parties. 
   </tbody>
 </table>
 
-If you have multiple clients and apps, you can approach these steps iteratively, completing each for one client at a time. While doing this, you should use the auditing—or "dry run"—[security level](#security-level). Once your PQL has registered all your clients' operations and you've ensured your client apps are only sending trusted operations, you can update your security level to safelisting mode.
+If you have multiple clients and apps, you can approach these steps iteratively, completing each for one client at a time. While doing this, you should use the auditing—or "dry run"—[security level](#security-level).
 
-Continue reading for details on each implementation step, or skip to the [incremental adoption section](#incremental-adoption-path) for the recommended strategy for incremental adoption. (This section assumes you have a high-level understanding of each implementation step.)
+Once your PQL has registered all your clients' operations and you've ensured your client apps are only sending trusted operations, you can update your security level to the safelisting security level.
+
+Continue on for each implementation step's details, or skip to the [incremental adoption section](#incremental-adoption-path) for the recommended for incremental adoption strategy. (This section assumes you have a high-level understanding of each implementation step.)
 
 ### 0. Prerequisites
 
@@ -540,7 +542,7 @@ Here are links to documentation for APQ mechanisms in Apollo Client libraries:
 
 ## Incremental adoption path
 
-Persisted queries' [tiered security levels](#security-levels) let you adopt an incremental approach rather than simultaneously requiring all clients to query via trusted operations IDs. You can follow these steps for incremental adoption:
+Persisted queries' [tiered security levels](#security-levels) let you adopt an incremental approach rather than simultaneously requiring all clients to send requests via trusted operations IDs. You can follow these steps for incremental adoption:
 
 1. Identify the first client you want to implement persisted queries with. It could be the client or team you're most comfortable with or the one most comfortable with GraphOS.
 2. Follow all [implementation steps](#implementation-steps) for your chosen client:
@@ -548,15 +550,15 @@ Persisted queries' [tiered security levels](#security-levels) let you adopt an i
     1. When [linking the PQL](#12-link-the-pql-to-variants) to a variant, start with a testing or staging  environment.
     1. Use the [client-specific tooling](#generation-methods) to generate an [operation manifest](#13-generate-client-operation-manifests) as part of your client's CI/CD pipeline.
     1. [Publish the manifest](#14-publish-manifests-to-the-pql) to the PQL.
-    1. When [configuring the router](#2-router-configuration), start with either [performance-only](#performance-only) or [auditing](#auditing-dry-run) mode.
+    1. When [configuring the router](#2-router-configuration), start with either [performance-only](#performance-only) or [auditing](#auditing-dry-run) security level.
     1. [Update your chosen client](#3-client-updates) to use only trusted operations, either by full query string or operation ID.
-    1. If you haven't already, [configure your router](#2-router-configuration) to use [auditing](#auditing-dry-run) mode. Use the router logs to confirm that your the client is only sending trusted operations.
+    1. If you haven't already, [configure your router](#2-router-configuration) to use the [auditing](#auditing-dry-run) security level. Use the router logs to confirm that your the client is only sending trusted operations.
     1. [Link the PQL](#12-link-the-pql-to-variants) to a production variant.
 3. Continue to monitor your router logs: once you consistently see that unregistered operations are being logged and registered ones aren't, you've completed most of the setup for this client! 🎉
 
 If safelisting is your goal, you'll need to [coordinate across client teams](#coordinate-with-client-teams) to complete these steps for each of your client apps. You may need to toggle between linking staging and production variants as you test each of your clients operations.
 
-Once your router's logs are clear of unexpected operations, you can configure your router to use [safelisting mode](#router-security-levels). Then, update your client apps to use IDs rather than full query strings.
+Once your router's logs are clear of unexpected operations, you can configure your router to use the [safelisting security level](#router-security-levels). Then, update your client apps to use operation IDs rather than full query strings.
 
 Once you've confirmed all client apps use IDs, you can move to the most restrictive [security level](#router-security-levels): safelisting with IDs only.
 This security level enforces the performance benefit of using operation IDs rather than full query strings. If you're content with the safelisting aspect of persisted queries with optional performance benefits, you don't need to enable it.
