@@ -423,7 +423,10 @@ apq:
   enabled: false # APQ must be disabled
 ```
 
-This enables your clients to execute operations by providing their PQL-specified ID (instead of the full query string). Your router also continues to accept full query strings, even for operations that _don't_ appear in its PQL.
+This enables your clients to execute operations by providing their PQL-specified ID instead of the full query string.
+Your router also continues to accept full query strings, even for operations that _don't_ appear in its PQL.
+
+The router works with both formats since the PQL-specified ID is the query string's [SHA-256](https://en.wikipedia.org/wiki/SHA-2), and the router can derive it from the query string if needed. 
 
 #### Auditing (dry run)
 
