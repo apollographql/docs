@@ -426,7 +426,7 @@ apq:
 This enables your clients to execute operations by providing their PQL-specified ID instead of the full query string.
 Your router also continues to accept full query strings, even for operations that _don't_ appear in its PQL.
 
-The router works with both formats since the PQL-specified ID is the query string's [SHA-256](https://en.wikipedia.org/wiki/SHA-2), and the router can derive it from the query string if needed. 
+The router works with both query formats since the PQL-specified ID is the query string's [SHA256 hash](https://en.wikipedia.org/wiki/SHA-2), and the router can derive it from the query string if needed. 
 
 #### Auditing (dry run)
 
@@ -775,7 +775,7 @@ The type of GraphQL operation. Always one of the following values:
 
 When generating operation IDs for a manifest, you should use a value that's unique to each operation, such as the query document's cryptographic hash. Apollo's [manifest generation tools](#13-generate-operation-manifests) use the base16 representation of the document's SHA256 hash, which is the same format used for [APQ](#differences-from-apq).
 
-By generating identifiers based on query documents this way, you ensure that different operations always have different IDs. This prevents unexpected collisions in your PQL.
+By generating identifiers based on query documents this way, you ensure that different operations always have different IDs. This prevents unexpected collisions in your PQL. It also allows the router to execute queries both by full query strings and PQL-specified IDs, since the router can derive the ID from the query string if needed. 
 
 > **Never use an operation _names_ for PQL IDs.** Different clients (or even different versions of the _same_ client) might execute different operations with the same name, and _all_ of those distinct operations should be present in your PQL.
 
