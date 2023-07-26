@@ -11,9 +11,9 @@ If your organization _doesn't_ currently have an Enterprise plan, you can test t
 
 </blockquote>
 
-GraphQL APIs are broadly open by design. They let client applications send queries with arbitrary shapes and sizes. And while this allows for expedited client development and a highly performant API platform, it necessitates securing your supergraph against potentially malicious requests. 
+GraphQL APIs are broadly open by design. They let client applications send queries with arbitrary shapes and sizes. And while this allows for expedited client development and a highly performant API platform, it necessitates securing your graph against potentially malicious requests. 
 
-With [GraphOS Enterprise](../enterprise/), you can enhance your graph's security by maintaining a **persisted query list** (**PQL**) for your supergraph's self-hosted router. The Apollo Router checks incoming requests against the PQL, a safelist of trusted operations made by your first-party apps.
+With [GraphOS Enterprise](../enterprise/), you can enhance your supergraph's security by maintaining a **persisted query list** (**PQL**) for your supergraph's self-hosted router. The Apollo Router checks incoming requests against the PQL, a safelist of trusted operations made by your first-party apps.
 
 ```mermaid
 flowchart LR
@@ -50,7 +50,7 @@ Your router can use its persisted query list (PQL) to both **protect your superg
 
 ## Differences from automated persisted queries
 
-The Apollo Router also supports a related feature called [automatic persisted queries](/router/configuration/in-memory-caching#caching-automatic-persisted-queries-apq) (APQ). With APQ, clients can execute a GraphQL operation by sending the hash of its operation string instead of the entire string.
+The Apollo Router supports a related feature called [automatic persisted queries](/router/configuration/in-memory-caching#caching-automatic-persisted-queries-apq) (APQ). With APQ, clients can execute a GraphQL operation by sending the hash of its operation string instead of the entire string.
 
 APQ has a few limitations compared to preregistered persisted queries.
 
@@ -81,7 +81,7 @@ APQ has a few limitations compared to preregistered persisted queries.
   </tbody>
 </table>
 
-If you _only_ want to improve request latency and bandwidth usage, APQ probably addresses your use case. If you _also_ want to secure your supergraph with operation safelisting, you should preregister persisted queries in a PQL.
+If you _only_ want to improve request latency and bandwidth usage, APQ addresses your use case. If you _also_ want to secure your supergraph with operation safelisting, you should preregister trusted operations in a PQL.
 
 ## Security levels
 
@@ -117,45 +117,66 @@ Implementation also requires collaboration among these parties. These are the ma
   <tbody>
     <tr>
       <td> <a href="#0-prerequisites">0. Prerequisites</a> </td>
-      <td>Ensure tooling uses the correct versions.</td>
+      <td>
+        <ul>
+          <li>Ensure tooling uses the correct versions.</li>
+          <li>Create an empty PQL that clients can register trusted operations to.</li>
+        </ul></td>
       <td>Platform team</td>
     </tr>
     <tr>
-      <td> <a href="#1-pql-creation-and-registration">1. PQL creation and registration</a> </td>
-      <td>Create and apply the PQL to graph variants and generate and register a persisted queries manifest (PQM). </td>
-      <td>Platform team and app devs</td>
+      <td> <a href="#1-preregister-trusted-operations">1. Preregister trusted operations</a> </td>
+      <td>
+        <ul>
+          <li>Generate and register a persisted queries manifest (PQM) from you client's CI/CD.</li>
+        </ul>
+      </td>
+      <td>App developers</td>
     </tr>
     <tr>
-      <td> <a href="#2-router-configuration">2. Router configuration</a> </td>
-      <td>Update your router's <a href="/router/configuration/overview/#yaml-config-file">YAML config file</a> to enable persisted queries at the appropriate <a href="#security-level">security level</a>.</td>
+      <td> <a href="#2-enable-safelisting">2. Enable safelisting</a> </td>
+      <td>
+        <ul>
+          <li>
+          Update your router's <a href="/router/configuration/overview/#yaml-config-file">YAML config file</a> to enable persisted queries at the appropriate <a href="#security-level">security level</a>.
+          </li>
+        </ul>      
+      </td>
       <td>Platform team</td>
     </tr>
     <tr>
-      <td><a href="#3-client-updates">3. Client app updates</a> </td>
-      <td>Update client apps to use operation IDs rather than full query strings.</td>
-      <td>App devs</td>
+      <td><a href="#3-client-updates">3. Client app updates (Optional) </a> </td>
+      <td>
+        <ul>
+          <li>
+              Update client apps to use operation IDs rather than full query strings.
+          </li>
+        </ul>
+            This step provides perfrmance benefits but <em>isn't necessary for safelisting.</em>
+      </td>
+      <td>App Developers</td>
     </tr>
   </tbody>
 </table>
 
 If you have multiple clients and apps, you can approach these steps iteratively, completing each for one client at a time. While doing this, you should use the auditing—or "dry run"—[security level](#security-level).
 
-Once your PQL has registered all your clients' operations and you've ensured your client apps are only sending trusted operations, you can update your security level to the safelisting security level.
+Once your PQL has registered all your clients' operations and you've ensured your client apps are only sending trusted operations, you can update your router configuration to the safelisting security level.
 
-Continue on for each implementation step's details, or skip to the [incremental adoption section](#incremental-adoption-path) for the recommended for incremental adoption strategy. (This section assumes you have a high-level understanding of each implementation step.)
+Continue on for each step's details, or skip to the [incremental adoption section](#incremental-adoption-path) for the recommended for incremental adoption strategy. (This section assumes you have a high-level understanding of each implementation step.)
 
 ### 0. Prerequisites
 
 Before you get started with GraphOS persisted queries, do all of the following:
 
-1. Update your Apollo Router instances to version `1.25.0` or later. [Download the latest version.](../quickstart/)
-    - Previous versions of the Apollo Router don't support configuration for GraphOS persisted queries.
-2. Make sure your router instances are [connected to your GraphOS Enterprise organization](/router/enterprise-features/#enabling-enterprise-features).
-3. Update your version of the Rover CLI to `0.17.2` or later. [Download the latest version.](/rover/getting-started/)
+1. Update your version of the Rover CLI to `0.17.2` or later. [Download the latest version.](/rover/getting-started/)
     - Every client app's CI/CD pipeline uses Rover to publish operations to a PQL.
     - Previous versions of Rover don't support publishing operations to a PQL.
+1. Update your Apollo Router instances to version `1.25.0` or later. [Download the latest version.](../quickstart/)
+    - Previous versions of the Apollo Router don't support configuration for GraphOS persisted queries.
+1. Make sure your router instances are [connected to your GraphOS Enterprise organization](/router/enterprise-features/#enabling-enterprise-features).
 
-### 1. PQL creation and registration
+### 1. Preregister trusted operations
 
 **Persisted query list** (**PQL**) creation and registration have a few steps. Since these steps involves GraphOS Studio, client tooling, and the Rover CLI, different parties may be involved.
 
@@ -432,7 +453,7 @@ This enables your clients to execute operations by providing their PQL-specified
 
 Turning on logging is crucial for gauging your client apps' readiness for safelisting. The logs identify which operations you need to either add to your PQL or stop your client apps from making. 
 
-To turn on logging for unregistered queries, enable the `log_unknown` property:
+To enable logging for unregistered queries, enable the `log_unknown` property:
 
 ```yaml title="router.yaml"
 preview_persisted_queries:
