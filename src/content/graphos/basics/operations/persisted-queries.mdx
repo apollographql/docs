@@ -48,7 +48,7 @@ Your router can use its persisted query list (PQL) to both **protect your superg
     - Querying by ID can significantly reduce latency and bandwidth usage for very large operation strings.
     - Your router can _require_ that clients provide operations by ID and _reject_ full operation strings (even operation strings present in the PQL).
 
-## Differences from automated persisted queries
+## Differences from automatic persisted queries
 
 The Apollo Router supports a related feature called [automatic persisted queries](/router/configuration/in-memory-caching#caching-automatic-persisted-queries-apq) (APQ). With APQ, clients can execute a GraphQL operation by sending the SHA256 hash of its operation string instead of the entire string.
 
@@ -58,7 +58,7 @@ APQ has a few limitations compared to preregistered persisted queries.
   <thead>
     <tr>
       <th></th>
-      <th>Automated persisted queries </th>
+      <th>automatic persisted queries </th>
       <th>Preregistered persisted queries</th>
     </tr>
   </thead>
@@ -144,7 +144,6 @@ If you have multiple clients and apps, you can approach these steps iteratively,
 Once your PQL has registered all your clients' operations and you've ensured your client apps are only sending trusted operations, you can update your router configuration to the safelisting security level.
 
 Continue on for each step's details, or skip to the [incremental adoption section](#incremental-adoption-path) for the recommended for incremental adoption strategy. (This section assumes you have a high-level understanding of each implementation step.)
-
 
 ### 1. Preregister trusted operations
 
@@ -275,7 +274,7 @@ As with [generating manifests](#11-generate-client-operation-manifests), execute
 
 ### 2. Enable safelisting
 
-After client teams [publish operations](#12-publish-manifests-to-the-pql) to your PQL, platform teams can configure router instances to fetch and _use_ the PQL.
+After client teams publish operations to a graph's PQL, you can configure router instances to fetch and use the PQL by following these steps:
 
 1. Ensure your router instances are ready to work with PQLs:
     - Make sure you're using version `1.25.0` or later of the Apollo Router.
@@ -285,7 +284,7 @@ After client teams [publish operations](#12-publish-manifests-to-the-pql) to you
 
 3. Deploy your updated router instances to begin using your PQL.
 
-#### Router security levels
+### Router security levels
 
 As you may recall, the Apollo Router supports the following [security levels](#security-levels), in increasing order of restrictiveness:
 
@@ -294,7 +293,7 @@ As you may recall, the Apollo Router supports the following [security levels](#s
     - This level provides no operation safelisting.
 - **Audit**: Executing operations by providing a PQL-specified ID is still optional, but the router also logs any unregistered operations.
     - The level serves as a dry run and helps you identify operations you may still need to register before turning on safelisting.
-- **Safelisting with query strings allowed**: The router _rejects_ any incoming operations that aren't present in its PQL.
+- **Safelisting with operation strings allowed**: The router _rejects_ any incoming operations that aren't present in its PQL.
     - Before moving to this security level, ensure _all_ your client operations are present in your PQL.
 - **Safelisting with IDs only**: The router rejects any incoming operations that aren't present in its PQL, _and_ clients _must_ execute an operation by providing its PQL-specified ID.
     - Before moving to this security level, ensure _all_ your clients execute operations by providing their PQL-specified ID.
@@ -315,7 +314,7 @@ apq:
 ```
 
 This enables your clients to execute operations by providing their PQL-specified ID instead of the full operation string.
-Your router also continues to accept full query strings, even for operations that _don't_ appear in its PQL.
+Your router also continues to accept full operation strings, even for operations that _don't_ appear in its PQL.
 
 The router works with both formats since the PQL-specified ID is the operation string's [SHA256 hash](https://en.wikipedia.org/wiki/SHA-2), and the router can derive it from the operation string if needed. 
 
@@ -333,9 +332,9 @@ apq:
   enabled: false # APQ must be disabled
 ```
 
-Unregistered operations appear in your [router's logs](/router/configuration/logging).
+Unregistered operations appear in your [router's logs](./logging).
 
-#### Safelisting (query strings allowed)
+#### Safelisting (operation strings allowed)
 
 > Before applying this configuration, ensure your PQL contains _all_ of the GraphQL operations that _all active versions_ of your clients execute. If you enable safelisting _without_ ensuring this, your router will reject any unpublished client operations.
 
@@ -358,7 +357,7 @@ To execute an operation, clients can provide its full operation string _or_ its 
 
 > **Do not start with this configuration:** It requires _all_ your clients execute operations by providing their PQL-specified ID. If any clients still provide full operation strings, those clients will break.
 
-With the following configuration, your router allows _only_ GraphQL operations that are present in its PQL, _and_ it requires clients to provide PQL-specified IDs instead of full query strings:
+With the following configuration, your router allows _only_ GraphQL operations that are present in its PQL, _and_ it requires clients to provide PQL-specified IDs instead of full operation strings:
 
 ```yaml title="router.yaml"
 preview_persisted_queries:
@@ -371,7 +370,7 @@ apq:
   enabled: false # APQ must be disabled 
 ```
 
-If you want to use this security level, you should always _first_ set up [safelisting with query strings allowed](#safelisting-query-strings-allowed). This level requires modifying _all_ of your clients to execute operations via PQL-specified ID instead of an operation string. While making those necessary changes, you can use the less restrictive safelisting level in your router.
+If you want to use this security level, you should always _first_ set up [safelisting with operation strings allowed](#safelisting-operation-strings-allowed). This level requires modifying _all_ of your clients to execute operations via PQL-specified ID instead of an operation string. While making those necessary changes, you can use the less restrictive safelisting level in your router.
 
 ## Incremental adoption path
 
