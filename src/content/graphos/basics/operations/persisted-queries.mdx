@@ -450,7 +450,7 @@ Ensure your Rover CLI version is `0.17.2` or later. Previous versions of Rover d
 
 </blockquote>
 
-After you [generate an operation manifest](#31-generate-peristed-queries-manifests), you publish it to your PQL with the [Rover CLI](/rover/):
+After you [generate an operation manifest](#31-generate-persisted-queries-manifests), you publish it to your PQL with the [Rover CLI](/rover/):
 
 ```bash title="Example command"
 rover persisted-queries publish my-graph@my-variant \
@@ -542,7 +542,7 @@ Persisted queries' [tiered security levels](#security-levels) let you adopt an i
 1. Identify the first client you want to implement persisted queries with. It could be the client or team you're most comfortable with or the one most comfortable with GraphOS.
 2. Follow all [implementation steps](#implementation-steps) for your chosen client:
     1. [Create and link a PQL](#1-pql-creation-and-linking) to a staging or development variant.
-    1. When [configuring the router](#2-enable-safelisting) begin with [audit mode](#audit-mode-dry-run).
+    1. When [configuring the router](#2-router-configuration) begin with [audit mode](#audit-mode-dry-run).
     1. Use the [client-specific tooling](#generation-methods) to generate an [operation manifest](#31-generate-persisted-queries-manifests) and [publish it to the PQL](#32-publish-manifests-to-the-pql) as part of your client's CI/CD pipeline.
     1. (Optional) Update your chosen client to use only trusted operations, either by full operation string or operation ID.
 
