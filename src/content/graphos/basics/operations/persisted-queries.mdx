@@ -90,11 +90,11 @@ The Apollo Router supports the following security levels or modes, in increasing
 |Security Level|Description|
 |--|--|
 |**Performance-only**| Clients can optionally execute an operation on your router by providing the operation's PQL-specified ID.|
-|**Audit**| Executing operations by providing a PQL-specified ID is still optional, but the router logs any unregistered operations.|
+|**Audit mode**| Executing operations by providing a PQL-specified ID is still optional, but the router logs any unregistered operations.|
 |**Safelisting with operation strings allowed**| The router _rejects_ any incoming operations that aren't present in its PQL.|
 |**Safelisting with IDs only**| The router rejects any incoming operations that aren't present in its PQL, _and_ clients _must_ execute an operation by providing its PQL-specified ID.|
 
-> _You can find more details, including configuration instructions, in the [implementation section](#2-enable-safelisting)._
+> _You can find more details, including configuration instructions, in the [implementation section](#2-router-configuration)._
 
 These levels of permissiveness allow you to [incrementally adopt](#incremental-adoption-path) persisted queries on a client-by-client basis. Specifically, the router should use audit mode until you're confident that _all_ your clients' trusted operations have been registered in the PQL. Refer to the [incremental adoption section](#incremental-adoption-path) for a step-by-step guide.
 
@@ -115,46 +115,249 @@ Implementation also requires collaboration among these parties. These are the ma
     </tr>
   </thead>
   <tbody>
+     <tr>
+      <td> <a href="#1-pql-creation-and-linking">1. PQL creation and linking</a> </td>
+      <td>Create and apply a PQL to graph variants. </td>
+      <td>Platform team</td>
+    </tr>
     <tr>
-      <td> <a href="#1-preregister-trusted-operations">1. Preregister trusted operations</a> </td>
+      <td> <a href="#2-router-configuration">2. Router configuration</a> </td>
       <td>
-        <ul>
-          <li>Generate and register a persisted queries manifest (PQM) from you client's CI/CD.</li>
-          <li>(Optional) Update client apps to use operation IDs rather than full query strings. </li>
-        </ul>
+        Update your router's <a href="/router/configuration/overview/#yaml-config-file">YAML config file</a> to enable persisted queries at the appropriate <a href="#security-level">security level</a>.   
+      </td>
+      <td>Platform team</td>
+    </tr>
+    <tr>
+      <td> <a href="#3-preregister-trusted-operations">3. Preregister trusted operations</a> </td>
+      <td>
+      Generate and publish a persisted queries manifest (PQM) to the PQL from you client's CI/CD pipeline.
       </td>
       <td>App developers</td>
     </tr>
     <tr>
-      <td> <a href="#2-enable-safelisting">2. Enable safelisting</a> </td>
+      <td><a href="#4-client-updates">4. Client updates (Optional) </a> </td>
       <td>
-        <ul>
-          <li>
-          Update your router's <a href="/router/configuration/overview/#yaml-config-file">YAML config file</a> to enable persisted queries at the appropriate <a href="#security-level">security level</a>.
-          </li>
-        </ul>      
+        Update clients to use operation IDs rather than full query strings.
+        <br/>
+        <br/>
+        <em>This step provides performance benefits but isn't necessary for safelisting.</em>
       </td>
-      <td>Platform team</td>
+      <td>App Developers</td>
     </tr>
   </tbody>
 </table>
 
-If you have multiple clients and apps, you can approach these steps iteratively, completing each for one client at a time. While doing this, you should use [audit](#security-levels)—or "dry run"—mode.
-
-Once your PQL has registered all your clients' operations and you've ensured your client apps are only sending trusted operations, you can update your router configuration to the safelisting security level.
-
 Continue on for each step's details, or skip to the [incremental adoption section](#incremental-adoption-path) for the recommended for incremental adoption strategy. (This section assumes you have a high-level understanding of each implementation step.)
 
-### 1. Preregister trusted operations
+### 1. PQL creation and linking
+
+To use persisted queries, you first need a **persisted query list** (**PQL**) in GraphOS Studio.
+Platform teams create an empty PQL in GraphOS Studio so that client teams can register trusted operations to it.
+
+Each PQL is associated with a single graph in GraphOS.
+You can link a PQL to any number of different variants of its graph.
+Although many variants may use the same PQL, each variant can only have one linked PQL at a time.
+
+#### 1.1 PQL creation
+
+1. From your organization's Graphs page in [GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content), open the PQL page for a graph by clicking its PQL button:
+
+  <img
+    className="screenshot"
+    alt="The persisted query list button in the Studio graph list"
+    src="../../img/pql-button.jpg"
+  />
+
+2. From the PQL page:
+
+    - If you haven't created any PQLs yet, click **Create a Persisted Query List**.
+    - If you already have at least one PQL, click **New List** in the upper right.
+
+  The following dialog appears:
+
+  <img
+    className="screenshot"
+    alt="The first step of the PQL creation dialog in GraphOS studio"
+    src="../../img/pql-dialog-create.jpg"
+    width="450"
+  />
+
+3. Provide a name and (optional) description for your PQL, then click **Create**.
+
+    - At this point, your empty PQL has been created. The remaining dialog steps help with additional setup.
+
+4. The second dialog step (**Link**) enables you to link your new PQL to one existing variant of your graph.
+
+    - You can optionally **Skip** this step and link variants later (covered in the next step).
+
+5. The third dialog step (**Publish**) displays your new PQL's unique ID and an example Rover CLI command for publishing operations to the PQL.
+
+    - For now, you can leave the PQL empty. Client teams can publish operations to it in a later step.
+    - Save this Rover CLI command so you can pass it on to your client teams when they publish operations.
+
+6. The fourth and final dialog step (**Configure**) displays configuration options you apply to your router to begin using your PQL. We'll cover these in a later step.
+
+7. Click **Finish** to close the dialog. Your newly created PQL appears in the table:
+
+    <img
+      className="screenshot"
+      alt="A newly created PQL in the table on the Studio PQL page"
+      src="../../img/pql-table.jpg"
+      width="450"
+    />
+
+#### 1.2 Link the PQL to variants
+
+After you create a PQL, you can link it to one or more variants of your graph. Each router instance associated with a linked variant automatically fetches its PQL from GraphOS.
+
+> It's safe to link an empty or incomplete PQL to a variant because your router doesn't _use_ its PQL for anything until you [configure it to do so](#2-router-configuration) (covered in a later step).
+
+1. From the table on your graph's PQL page, open the **•••** menu under the **Actions** column for the PQL you want to link:
+
+    <img
+      className="screenshot"
+      alt="The Actions menu for a PQL in Studio"
+      src="../../img/pql-table-actions.jpg"
+      width="250"
+    />
+
+2. Click **Link and Unlink Variants**. The following dialog appears:
+
+    <img
+      className="screenshot"
+      alt="Dialog for linking PQLs to variants in Studio"
+      src="../../img/pql-link-variants.jpg"
+      width="500"
+    />
+
+3. Use the dropdown menu to select any variants you want to link your PQL to.
+
+> As a best practice, you can begin by linking your PQLs to a staging environment before moving onto a production one.
+
+4. Click **Save**.
+
+After you link a PQL to a variant:
+
+1. GraphOS validates the PQL against the variant's reported operation history and flags any recent operations not represented in the PQL.
+
+2. GraphOS then uploads the PQL to Uplink, the service that delivers configuration to your router at runtime.
+
+### 2. Router configuration
+
+The Apollo Router is the key component that enforces safelisting. Recall that the router supports four [security levels](#security-levels). When first implementing persisted queries, it's best to start with [audit—or "dry run"—mode](#security-levels).
+
+Once your organization's PQL has registered all your clients' operations and you've ensured your client apps are only sending trusted operations, you can update your router configuration to the safelisting security level.
+
+You can configure router instances to fetch and use the PQL by following these steps:
+
+1. Ensure your router instances are ready to work with PQLs:
+    - Make sure you're using version `1.25.0` or later of the Apollo Router.
+    - Make sure your router instances are [connected to your GraphOS Enterprise organization](/router/enterprise-features/#enabling-enterprise-features) and that they're associated with a variant that your PQL is linked to.
+
+2. Set your desired security level in your router's YAML config file. For supported options, see [router security levels](#router-security-levels).
+
+3. Deploy your updated router instances to begin using your PQL.
+
+#### Router security levels
+
+As you may recall, the Apollo Router supports the following [security levels](#security-levels), in increasing order of restrictiveness:
+
+- **Performance-only**: Clients can optionally execute an operation on your router by providing the operation's PQL-specified ID.
+    - All other levels also provide this core capability.
+    - This level provides no operation safelisting.
+- **Audit mode**: Executing operations by providing a PQL-specified ID is still optional, but the router also logs any unregistered operations.
+    - The level serves as a dry run and helps you identify operations you may still need to register before turning on safelisting.
+- **Safelisting with operation strings allowed**: The router _rejects_ any incoming operations that aren't present in its PQL.
+    - Before moving to this security level, ensure _all_ your client operations are present in your PQL.
+- **Safelisting with IDs only**: The router rejects any incoming operations that aren't present in its PQL, _and_ clients _must_ execute an operation by providing its PQL-specified ID.
+    - Before moving to this security level, ensure _all_ your clients execute operations by providing their PQL-specified ID.
+
+See below for sample YAML configurations for each level.
+
+#### Performance-only
+
+To use persisted queries _only_ to reduce network bandwidth and latency (_not_ for safelisting), add the following minimal configuration:
+
+```yaml title="router.yaml"
+preview_persisted_queries:
+  enabled: true
+enabled: true # APQ can be enabled
+```
+
+> **Note:** You can use the performance-only security level with or without [automatic persisted queries](/router/configuration/in-memory-caching#caching-automatic-persisted-queries-apq) enabled.
+
+This enables your clients to execute operations by providing their PQL-specified ID instead of the full operation string.
+Your router also continues to accept full operation strings, even for operations that _don't_ appear in its PQL.
+
+The router works with both formats since the PQL-specified ID is the operation string's [SHA256 hash](https://en.wikipedia.org/wiki/SHA-2), and the router can derive it from the operation string if needed. 
+
+#### Audit mode (dry run)
+
+Turning on logging is crucial for gauging your client apps' readiness for safelisting. The logs identify which operations you need to either add to your PQL or stop your client apps from making. 
+
+To enable logging for unregistered queries, enable the `log_unknown` property:
+
+```yaml title="router.yaml"
+preview_persisted_queries:
+  enabled: true
+  log_unknown: true
+enabled: true # APQ can be enabled
+```
+> **Note:** You can use audit mode with or without [automatic persisted queries](/router/configuration/in-memory-caching#caching-automatic-persisted-queries-apq) enabled.
+
+Unregistered operations appear in your [router's logs](./logging).
+
+#### Safelisting (operation strings allowed)
+
+> ⚠️ Before applying this configuration, ensure your PQL contains _all_ of the GraphQL operations that _all active versions_ of your clients execute. If you enable safelisting _without_ ensuring this, your router will reject any unpublished client operations.
+
+With the following configuration, your router allows _only_ GraphQL operations that are present in its PQL while rejecting all other operations:
+
+```yaml title="router.yaml"
+preview_persisted_queries:
+  enabled: true
+  log_unknown: true
+  safelist:
+    enabled: true
+    require_id: false
+apq:
+  enabled: false # APQ must be disabled 
+```
+
+> **Note:** To enable safelisting, you _must_ disable [automatic persisted queries](/router/configuration/in-memory-caching#caching-automatic-persisted-queries-apq).
+
+To execute an operation, clients can provide its full operation string _or_ its PQL-specified ID.
+
+#### Safelisting (IDs only)
+
+> ⚠️ **Do not start with this configuration:** It requires _all_ your clients execute operations by providing their PQL-specified ID. If any clients still provide full operation strings, those clients will break.
+
+With the following configuration, your router allows _only_ GraphQL operations that are present in its PQL, _and_ it requires clients to provide PQL-specified IDs instead of full operation strings:
+
+```yaml title="router.yaml"
+preview_persisted_queries:
+  enabled: true
+  log_unknown: true
+  safelist:
+    enabled: true
+    require_id: true #highlight-line
+apq:
+  enabled: false # APQ must be disabled 
+```
+
+> **Note:** To enable safelisting, you _must_ disable [automatic persisted queries](/router/configuration/in-memory-caching#caching-automatic-persisted-queries-apq).
+
+If you want to use this security level, you should always _first_ set up [safelisting with operation strings allowed](#safelisting-operation-strings-allowed). This level requires modifying _all_ of your clients to execute operations via PQL-specified ID instead of an operation string. While making those necessary changes, you can use the less restrictive safelisting level in your router.
+
+### 3. Preregister trusted operations
 
 Preregistering trusted operations to a PQL has two steps:
-1. Generating persisted queries manifests (PQM)
-  - Use client-specific tooling to generate JSON manifests of trusted operations.
-1. Publish PQMs to the PQL using the Rover CLI tool
+1. Generating persisted queries manifests (PQM) using client-specific tooling
+2. Publishing PQMs to the PQL using the Rover CLI tool
 
-Building these steps into your CI/CD pipeline incorporates new operations automatically whenever you release a new client app version.
+Building both of these into your CI/CD pipeline incorporates new operations automatically whenever you release a new client app version.
 
-#### 1.1 Generate client operation manifests
+#### 3.1 Generate persisted queries manifests
 
 Once a PQL exists in GraphOS, client teams can start publishing operations to it. To do so, you need to generate JSON **manifests** of the trusted operations to publish. You generate a separate manifest for each of your client apps.
 
@@ -238,7 +441,7 @@ The manifest will be generated in `build/generated/manifest/apollo/myapi/persist
 
 To generate an operation manifest with Apollo iOS, you use the same [code generation engine](/ios/code-generation/introduction) that you use to generate Swift code for each of your operations. Specifically, you modify the engine's file output configuration to include the output of an `operationManifest`. [See the full Apollo iOS persisted queries guide for detailed instructions](/ios/fetching/persisted-queries/).
 
-#### 1.2 Publish manifests to the PQL
+#### 3.2 Publish manifests to the PQL
 
 <blockquote>
 
@@ -247,20 +450,20 @@ Ensure your Rover CLI version is `0.17.2` or later. Previous versions of Rover d
 
 </blockquote>
 
-After you [generate an operation manifest](#11-generate-client-operation-manifests), you publish it to your PQL with the [Rover CLI](/rover/):
+After you [generate an operation manifest](#31-generate-peristed-queries-manifests), you publish it to your PQL with the [Rover CLI](/rover/):
 
 ```bash title="Example command"
 rover persisted-queries publish my-graph@my-variant \
   --manifest ./persisted-query-manifest.json
 ```
 
-- Replace `my-graph@my-variant` with the **graph ref** of _any_ variant your PQL is [linked to](#03-link-the-pql-to-variants).
+- Replace `my-graph@my-variant` with the **graph ref** of _any_ variant your PQL is [linked to](#12-link-the-pql-to-variants). Your platform team can provide this for you.
     - Graph refs have the format `graph-id@variant-name`.
 - For the `--manifest` option, provide the path to the manifest you want to publish.
 
 <blockquote>
 
-As with [generating manifests](#11-generate-client-operation-manifests), execute this command in your CI/CD pipeline to publish new operations as part of your app release process.
+As with [generating manifests](#31-generate-persisted-queries-manifests), execute this command in your CI/CD pipeline to publish new operations as part of your app release process.
 
 </blockquote>
 
@@ -272,108 +475,65 @@ As with [generating manifests](#11-generate-client-operation-manifests), execute
 
 2. It updates any _other_ variants that the PQL is applied to so that routers associated with those variants can fetch their updated PQL.
 
-### 2. Enable safelisting
+### 4. Client updates
 
-After client teams publish operations to a graph's PQL, you can configure router instances to fetch and use the PQL by following these steps:
+With your [manifest published](#3-preregister-trusted-operations) and the [router configured](#2-router-configuration), you can update your clients to use trusted operations IDs. Organizations can do this one client at a time as client teams [publish client-specific PQMs](#32-publish-manifests-to-the-pql) to the PQL.
 
-1. Ensure your router instances are ready to work with PQLs:
-    - Make sure you're using version `1.25.0` or later of the Apollo Router.
-    - Make sure your router instances are [connected to your GraphOS Enterprise organization](/router/enterprise-features/#enabling-enterprise-features) and that they're associated with a variant that your PQL is linked to.
+> **Note:** This step provides performance benefits but isn't necessary for safelisting. You can continue to use full operation strings rather than operation IDs.
 
-2. Set your desired security level in your router's YAML config file. For supported options, see [router security levels](#router-security-levels).
+#### 4.1 Test operations
 
-3. Deploy your updated router instances to begin using your PQL.
+Before updating your client apps, it's best to send some test operations.
 
-#### Router security levels
+First, start your GraphOS-connected router:
 
-As you may recall, the Apollo Router supports the following [security levels](#security-levels), in increasing order of restrictiveness:
+```bash
+APOLLO_KEY="..." APOLLO_GRAPH_REF="..." ./router --config ./router.yaml
 
-- **Performance-only**: Clients can optionally execute an operation on your router by providing the operation's PQL-specified ID.
-    - All other levels also provide this core capability.
-    - This level provides no operation safelisting.
-- **Audit**: Executing operations by providing a PQL-specified ID is still optional, but the router also logs any unregistered operations.
-    - The level serves as a dry run and helps you identify operations you may still need to register before turning on safelisting.
-- **Safelisting with operation strings allowed**: The router _rejects_ any incoming operations that aren't present in its PQL.
-    - Before moving to this security level, ensure _all_ your client operations are present in your PQL.
-- **Safelisting with IDs only**: The router rejects any incoming operations that aren't present in its PQL, _and_ clients _must_ execute an operation by providing its PQL-specified ID.
-    - Before moving to this security level, ensure _all_ your clients execute operations by providing their PQL-specified ID.
-
-When you first adopt persisted queries, you should start with a less restrictive security level—either [performance-only](#performance-only) or [audit](#audit-dry-run). You can then enable increasingly restrictive levels after you update all your clients.
-
-See below for sample YAML configurations for each level.
-
-#### Performance-only
-
-To use persisted queries _only_ to reduce network bandwidth and latency (_not_ for safelisting), add the following minimal configuration:
-
-```yaml title="router.yaml"
-preview_persisted_queries:
-  enabled: true
+2023-05-11T15:32:30.684460Z  INFO Apollo Router v1.18.1 // (c) Apollo Graph, Inc. // Licensed as ELv2 (https://go.apollo.dev/elv2)
+2023-05-11T15:32:30.684480Z  INFO Anonymous usage data is gathered to inform Apollo product development.  See https://go.apollo.dev/o/privacy for details.
+2023-05-11T15:32:31.507085Z  INFO Health check endpoint exposed at http://127.0.0.1:8088/health
+2023-05-11T15:32:31.507823Z  INFO GraphQL endpoint exposed at http://127.0.0.1:4000/ 🚀
 ```
 
-> **Note:** You can use the performance-only security level with [automatic persisted queries](/router/configuration/in-memory-caching#caching-automatic-persisted-queries-apq) enabled.
+Next, make a POST request with `curl`, like so:
 
-This enables your clients to execute operations by providing their PQL-specified ID instead of the full operation string.
-Your router also continues to accept full operation strings, even for operations that _don't_ appear in its PQL.
-
-The router works with both formats since the PQL-specified ID is the operation string's [SHA256 hash](https://en.wikipedia.org/wiki/SHA-2), and the router can derive it from the operation string if needed. 
-
-#### Audit (dry run)
-
-Turning on logging is crucial for gauging your client apps' readiness for safelisting. The logs identify which operations you need to either add to your PQL or stop your client apps from making. 
-
-To enable logging for unregistered queries, enable the `log_unknown` property:
-
-```yaml title="router.yaml"
-preview_persisted_queries:
-  enabled: true
-  log_unknown: true
-```
-> **Note:** You can use audit mode with [automatic persisted queries](/router/configuration/in-memory-caching#caching-automatic-persisted-queries-apq) enabled.
-
-Unregistered operations appear in your [router's logs](./logging).
-
-#### Safelisting (operation strings allowed)
-
-> Before applying this configuration, ensure your PQL contains _all_ of the GraphQL operations that _all active versions_ of your clients execute. If you enable safelisting _without_ ensuring this, your router will reject any unpublished client operations.
-
-With the following configuration, your router allows _only_ GraphQL operations that are present in its PQL while rejecting all other operations:
-
-> **Note:** To enable safelisting, you _must_ disable [automatic persisted queries](/router/configuration/in-memory-caching#caching-automatic-persisted-queries-apq).
-
-```yaml title="router.yaml"
-preview_persisted_queries:
-  enabled: true
-  log_unknown: true
-  safelist:
-    enabled: true
-    require_id: false
-apq:
-  enabled: false # APQ must be disabled 
+```bash
+curl http://localhost:4000 -X POST --json \
+'{"extensions":{"persistedQuery":{"version":1,"sha256Hash":"dc67510fb4289672bea757e862d6b00e83db5d3cbbcfb15260601b6f29bb2b8f"}}}'
 ```
 
-To execute an operation, clients can provide its full operation string _or_ its PQL-specified ID.
+If your router's PQL includes an operation with an ID that matches the value of the provided `sha256Hash` property, it executes the corresponding operation and returns its result.
 
-#### Safelisting (IDs only)
+#### 4.2 Update client apps
 
-> **Do not start with this configuration:** It requires _all_ your clients execute operations by providing their PQL-specified ID. If any clients still provide full operation strings, those clients will break.
+Once you've tested requests using operation IDs, you can update your client apps to execute operations using their PQL-specified ID instead of sending full query strings.
 
-With the following configuration, your router allows _only_ GraphQL operations that are present in its PQL, _and_ it requires clients to provide PQL-specified IDs instead of full operation strings:
+To do this, clients can use the same protocol used for automatic persisted queries (APQ). 
 
-> **Note:** To enable safelisting, you _must_ disable [automatic persisted queries](/router/configuration/in-memory-caching#caching-automatic-persisted-queries-apq).
+Here's the JSON body of a request to execute an operation by its ID:
 
-```yaml title="router.yaml"
-preview_persisted_queries:
-  enabled: true
-  log_unknown: true
-  safelist:
-    enabled: true
-    require_id: true #highlight-line
-apq:
-  enabled: false # APQ must be disabled 
+```json
+{
+  "variables": null,
+  "extensions": {
+    "persistedQuery": {
+      "version": 1,
+      "sha256Hash": "PQL_ID_HERE"
+    }
+  }
+}
 ```
 
-If you want to use this security level, you should always _first_ set up [safelisting with operation strings allowed](#safelisting-operation-strings-allowed). This level requires modifying _all_ of your clients to execute operations via PQL-specified ID instead of an operation string. While making those necessary changes, you can use the less restrictive safelisting level in your router.
+> If you're executing an operation that includes GraphQL variables, specify them with the `variables` property.
+
+If your GraphQL client library provides a mechanism for executing operations via APQ, you can use that same mechanism with your router's PQL.
+
+Here are links to documentation for APQ mechanisms in Apollo Client libraries:
+
+- [Apollo Client Web](/react/api/link/persisted-queries/)
+- [Apollo iOS](/ios/fetching/apqs/)
+- [Apollo Kotlin](/kotlin/advanced/persisted-queries/)
 
 ## Incremental adoption path
 
@@ -381,23 +541,19 @@ Persisted queries' [tiered security levels](#security-levels) let you adopt an i
 
 1. Identify the first client you want to implement persisted queries with. It could be the client or team you're most comfortable with or the one most comfortable with GraphOS.
 2. Follow all [implementation steps](#implementation-steps) for your chosen client:
-    1. Use the [client-specific tooling](#generation-methods) to generate an [operation manifest](#11-generate-client-operation-manifests) and [publish it to the PQL](#12-publish-manifests-to-the-pql) as part of your client's CI/CD pipeline.
+    1. [Create and link a PQL](#1-pql-creation-and-linking) to a staging or development variant.
+    1. When [configuring the router](#2-enable-safelisting) begin with [audit mode](#audit-mode-dry-run).
+    1. Use the [client-specific tooling](#generation-methods) to generate an [operation manifest](#31-generate-persisted-queries-manifests) and [publish it to the PQL](#32-publish-manifests-to-the-pql) as part of your client's CI/CD pipeline.
     1. (Optional) Update your chosen client to use only trusted operations, either by full operation string or operation ID.
-    1. When [configuring the router](#2-enable-safelisting), start with either [performance-only](#performance-only) or [audit](#audit-dry-run) mode.
+
 3. Continue to monitor your router logs: once you consistently see that unregistered operations are being logged and registered ones aren't, you've completed most of the setup for this client! 🎉
 
 If safelisting is your goal, you'll need to [coordinate across client teams](#coordinate-with-client-teams) to complete these steps for each of your client apps.
 
-Once your router's logs are clear of unexpected operations, you can configure your router to use the [safelisting security level](#router-security-levels). Then, update your client apps to use operation IDs rather than full query strings.
+Once your router's logs are clear of unexpected operations, you can configure your router to use the [safelisting security level](#router-security-levels). Then, [update your client apps](#4-client-updates) to use operation IDs rather than full query strings.
 
-Once you've confirmed all client apps use IDs, you can move to the most restrictive [security level](#router-security-levels): safelisting with IDs only.
-This security level enforces the performance benefit of using operation IDs rather than full query strings. If you're content with the safelisting aspect of persisted queries with optional performance benefits, you don't need to enable it.
-
-### Local development
-
-To-do
-
-Also include information on how you can use the Explorer if your PQL is locked down.
+Once you've confirmed all client apps use IDs, you can move to the most restrictive security level: [safelisting with IDs only](#safelisting-ids-only).
+This security level _enforces_ the performance benefit of using operation IDs rather than full operation strings. If you're content with the safelisting aspect of persisted queries with only optional performance benefits, you don't need to enable it.
 
 ### Coordinate with client teams
 
@@ -406,7 +562,7 @@ Once you've followed the implementation steps for one client, you can coordinate
 1. Identify all the client apps that execute operations against your router, along with the GraphQL client libraries that those apps use.
     - Before you enable safelisting in your router, your client apps must start publishing their operations to your PQL.
 2. Communicate to your client development teams that adopting persisted queries will require adding tooling to their CI/CD pipeline.
-    - Specifically, each client team will need to perform the following steps of this adoption path: [Generate client operation manifests](#11-generate-client-operation-manifests) and [publish manifests to the PQL](#12-publish-operations-to-the-pql)
+    - Specifically, each client team will need to perform the following steps of this adoption path: [Generate client operation manifests](#31-generate-persisted-queries-manifests) and [publish manifests to the PQL](#32-publish-operations-to-the-pql)
 3. Identify which team members will assist with adding tooling to their respective CI/CD pipelines.
 
 ```mermaid
@@ -605,7 +761,7 @@ The type of GraphQL operation. Always one of the following values:
 
 ### Generating IDs
 
-When generating operation IDs for a manifest, you should use a value that's unique to each operation, such as the query document's cryptographic hash. Apollo's [manifest generation tools](#13-generate-operation-manifests) use the base16 representation of the document's SHA256 hash, which is the same format used for [APQ](#differences-from-apq).
+When generating operation IDs for a manifest, you should use a value that's unique to each operation, such as the query document's cryptographic hash. Apollo's [manifest generation tools](#13-generate-persisted-queries-manifests) use the base16 representation of the document's SHA256 hash, which is the same format used for [APQ](#differences-from-apq).
 
 By generating identifiers based on query documents this way, you ensure that different operations always have different IDs. This prevents unexpected collisions in your PQL. It also allows the router to execute queries both by full query strings and PQL-specified IDs, since the router can derive the ID from the operation string if needed. 
 
@@ -666,7 +822,7 @@ query GetBooks {
 
 </CodeColumns>
 
-> The [manifest generation tools](#13-generate-client-operation-manifests) for Apollo Client libraries all account for this default behavior.
+> The [manifest generation tools](#13-generate-persisted-queries-manifests) for Apollo Client libraries all account for this default behavior.
 
 If you're building your own manifest generation tool, make sure it accounts for any such operation changes in your chosen client library. Otherwise, the router will reject your app's operations due to a operation string mismatch.
 
