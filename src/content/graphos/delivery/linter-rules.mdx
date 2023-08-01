@@ -7,6 +7,8 @@ This reference lists the rules that you can enforce with [GraphOS schema linting
 
 Rules are categorized by the part(s) of your schema that they correspond to.
 
+## Static rules
+
 ### Schema
 
 #### `DOES_NOT_PARSE`
@@ -529,37 +531,53 @@ The `@tag` directive should always use an approved value for its `name` argument
 
 ## Composition rules
 
-When you successfully [compose](/federation/federated-types/composition) the schemas provided by your [subgraphs](/federation/building-supergraphs/subgraphs-overview/) into a supergraph schema, the composition process might output **hints** that provide additional information about the result.
+These rules flag potential improvements to a supergraph schema [composed](/federation/federated-types/composition) of [subgraph](/federation/building-supergraphs/subgraphs-overview/) schemas.
 
 ### Inconsistent elements
 
 #### `INCONSISTENT_ARGUMENT_PRESENCE`
 
-Indicates that an optional argument (of a field or directive definition) is not present in all subgraphs and will not be part of the supergraph.
+Indicates that an optional argument (of a field or directive definition) isn't present in all subgraphs and therefore won't be part of the supergraph.
 
 <hr/>
 
 #### `INCONSISTENT_BUT_COMPATIBLE_ARGUMENT_TYPE`
 
-Indicates that an argument type (of a field/input field/directive definition) does not have the exact same type in all subgraphs, but that the types are "compatible" (two types are compatible if one is a non-nullable version of the other, a list version, a subtype, or a combination of the former).
+Indicates that an argument type (of a field, input field, or directive definition) doesn't have the exact same type in all subgraphs, but that the types are compatible.
+
+Two types are compatible if one is:
+- a non-nullable version
+- a list version
+- a subtype
+- or a combination of any of these
+
+of the other.
 
 <hr/>
 
 #### `INCONSISTENT_BUT_COMPATIBLE_FIELD_TYPE`
 
-Indicates that a field does not have the exact same types in all subgraphs, but that the types are "compatible" (2 types are compatible if one is a non-nullable version of the other, a list version, a subtype, or a combination of the former).
+Indicates that a field doesn't have the exact same types in all subgraphs, but that the types are compatible.
+
+Two types are compatible if one is:
+- a non-nullable version
+- a list version
+- a subtype
+- or a combination of any of these
+
+of the other.
 
 <hr/>
 
 #### `INCONSISTENT_DEFAULT_VALUE_PRESENCE`
 
-Indicates that an argument definition (of a field/input field/directive definition) has a default value in only some of the subgraphs that define the argument.
+Indicates that an argument definition (of a field, input field, or directive definition) has a default value in only some of the subgraphs that define the argument.
 
 <hr/>
 
 #### `INCONSISTENT_DESCRIPTION`
 
-Indicates that an element has a description in more than one subgraph, and the descriptions are not equal.
+Indicates that an element has a description in more than one subgraph, and the descriptions aren't equal.
 
 <hr/>
 
@@ -571,19 +589,19 @@ Indicates that an object is declared as an entity (has a `@key`) in only some of
 
 #### `INCONSISTENT_ENUM_VALUE_FOR_INPUT_ENUM`
 
-Indicates that a value of an enum type definition (that is only used as an Input type) has not been merged into the supergraph because it is defined in only a subset of the subgraphs that declare the enum
+Indicates that a value of an enum type definition, that is only used as an input type, hasn't been merged into the supergraph because it's defined in only some of the subgraphs that declare the enum.
 
 <hr/>
 
 #### `INCONSISTENT_ENUM_VALUE_FOR_OUTPUT_ENUM`
 
-Indicates that a value of an enum type definition (that is only used as an Output type, or is unused) has been merged in the supergraph but is defined in only a subset of the subgraphs that declare the enum
+Indicates that a value of an enum type definition, that is only used as an output type or is unusedm, _has_ been merged in the supergraph but is defined in only some of the subgraphs that declare the enum.
 
 <hr/>
 
 #### `INCONSISTENT_EXECUTABLE_DIRECTIVE_LOCATIONS`
 
-Indicates that an executiable directive definition is declared with inconsistent locations across subgraphs (and will use the intersection of all locations in the supergraph).
+Indicates that an executable directive definition is declared with inconsistent locations across subgraphs. (The supergraph schema then uses the intersection of all locations in the supergraph.)
 
 <hr/>
 
@@ -595,19 +613,19 @@ Indicates that an executable directive definition is declared in only some of th
 
 #### `INCONSISTENT_EXECUTABLE_DIRECTIVE_REPEATABLE`
 
-Indicates that an executiable directive definition is declared with inconsistent locations across subgraphs (and will use the intersection of all locations in the supergraph).
+Indicates that an executable directive definition is marked repeatable in only some of the subgraphs and won't be repeatable in the supergraph.
 
 <hr/>
 
 #### `INCONSISTENT_INPUT_OBJECT_FIELD`
 
-Indicates that a field of an input object type definition is only defined in a subset of the subgraphs that declare the input object.
+Indicates that a field of an input object type definition is only defined in some of the subgraphs that declare the input object.
 
 <hr/>
 
 #### `INCONSISTENT_INTERFACE_VALUE_TYPE_FIELD`
 
-Indicates that a field of an interface "value type" (has no `@key` in any subgraph) is not defined in all the subgraphs that declare the type.
+Indicates that a field of an interface "value type" (has no `@key` in any subgraph) isn't defined in all the subgraphs that declare the type.
 
 <hr/>
 
@@ -619,49 +637,49 @@ A non-repeatable directive is applied to a schema element in different subgraphs
 
 #### `INCONSISTENT_OBJECT_VALUE_TYPE_FIELD`
 
-Indicates that a field of an object "value type" (has no `@key` in any subgraph) is not defined in all the subgraphs that declare the type.
+Indicates that a field of an object "value type" (has no `@key` in any subgraph) isn't defined in all the subgraphs that declare the type.
 
 <hr/>
 
 #### `INCONSISTENT_RUNTIME_TYPES_FOR_SHAREABLE_RETURN`
 
-Indicates that a @shareable field returns different sets of runtime types in the different subgraphs in which it is defined.
+Indicates that a @shareable field returns different sets of runtime types in the different subgraphs in which it's defined.
 
 <hr/>
 
 #### `INCONSISTENT_TYPE_SYSTEM_DIRECTIVE_LOCATIONS`
 
-Indicates that an executable directive definition is marked repeatable in only a subset of the subgraphs (and will not be repeatable in the supergraph).
+Indicates that an executable directive definition is marked repeatable in only some of the subgraphs and will not be repeatable in the supergraph.
 
 <hr/>
 
 #### `INCONSISTENT_TYPE_SYSTEM_DIRECTIVE_REPEATABLE`
 
-Indicates that a type system directive definition is marked repeatable in only a subset of the subgraphs that declare the directive (and will be repeatable in the supergraph).
+Indicates that a type system directive definition is marked repeatable in only some of the subgraphs that declare the directive and will be repeatable in the supergraph.
 
 <hr/>
 
 #### `INCONSISTENT_UNION_MEMBER`
 
-Indicates that a member of a union type definition is only defined in a subset of the subgraphs that declare the union.
+Indicates that a member of a union type definition is only defined in some of the subgraphs that declare the union.
 
 ### Overridden and unused elements
 
-#### `OVERRIDDEN_FIELD_CAN_BE_REMOVED`
+#### `OVERRIDE_DIRECTIVE_CAN_BE_REMOVED`
 
-Field has been overridden by another subgraph. Consider removing.
+Indicates a field with the @override directive no longer exists in a source subgraph, so the directive can be safely removed.
 
 <hr/>
 
-#### `OVERRIDE_DIRECTIVE_CAN_BE_REMOVED`
+#### `OVERRIDDEN_FIELD_CAN_BE_REMOVED`
 
-Field with @override directive no longer exists in source subgraph, the directive can be safely removed
+Indicates that a field has been overridden by another subgraph. You should consider removing the overriden field to avoid confusion.
 
 <hr/>
 
 #### `UNUSED_ENUM_TYPE`
 
-Indicates that an enum type is defined in some subgraphs but is unused (no field/argument references it). All the values from subgraphs defining that enum will be included in the supergraph.
+Indicates that an enum type is defined in some subgraphs but is unused (no field/argument references it). All values from subgraphs defining that enum will be included in the supergraph.
 
 ### Directives
 
@@ -671,24 +689,16 @@ Indicates that an issue was detected when composing custom directives.
 
 <hr/>
 
-#### `DIRECTIVE_COMPOSITION_WARN`
-
-Indicates that an issue was detected when composing custom directives.
-
-<hr/>
-
 #### `MERGED_NON_REPEATABLE_DIRECTIVE_ARGUMENTS`
 
-A non-repeatable directive has been applied to a schema element in different subgraphs with different arguments and the arguments values were merged using the directive configured strategies.
+Indicates a non-repeatable directive has been applied to a schema element in different subgraphs with different arguments and the arguments values were merged using the directive configured strategies.
 
 <hr/>
 
 #### `NO_EXECUTABLE_DIRECTIVE_INTERSECTION`
 
-Indicates that, for an executable directive definition, no location for it appears in all subgraphs.
+For an executable directive definition, indicates that no location appears for it in any subgraphs.
 
 #### `FROM_SUBGRAPH_DOES_NOT_EXIST`
 
-Source subgraph specified by @override directive does not exist
-
-
+Indicates the source subgraph specified by @override directive doesn't exist.
