@@ -280,10 +280,8 @@ To use persisted queries _only_ to reduce network bandwidth and latency (_not_ f
 
 ```yaml title="router.yaml"
 preview_persisted_queries:
-  enabled: true
-enabled: true # APQ can be enabled
+  enabled: true 
 ```
-
 > **Note:** You can use the performance-only security level with or without [automatic persisted queries](/router/configuration/in-memory-caching#caching-automatic-persisted-queries-apq) enabled.
 
 This enables your clients to execute operations by providing their PQL-specified ID instead of the full operation string.
@@ -301,7 +299,6 @@ To enable logging for unregistered queries, enable the `log_unknown` property:
 preview_persisted_queries:
   enabled: true
   log_unknown: true
-enabled: true # APQ can be enabled
 ```
 > **Note:** You can use audit mode with or without [automatic persisted queries](/router/configuration/in-memory-caching#caching-automatic-persisted-queries-apq) enabled.
 
