@@ -410,8 +410,6 @@ See the instructions for your client library:
     - **If the command succeeds,** your manifest is written to `persisted-query-manifest.json`.
     - **If the command fails** (or if your manifest doesn't include all of the operations you expect it to), you can configure the command's behavior using the options described in the [package README](https://www.npmjs.com/package/@apollo/generate-persisted-query-manifest).
 
-[See the full Apollo Client persisted queries guide for detailed instructions](/react/api/link/persisted-queries/).
-
 #### Apollo Kotlin
 
 > Manifest generation requires Apollo Kotlin `3.8.2` or later.
@@ -428,13 +426,11 @@ apollo {
 ```
 The manifest will be generated in `build/generated/manifest/apollo/myapi/persistedQueryManifest.json`
 
-[See the full Apollo Kotlin persisted queries guide for detailed instructions](/kotlin/advanced/persisted-queries/).
-
 #### Apollo iOS
 
 > Manifest generation requires Apollo iOS `1.3.1` or later.
 
-To generate an operation manifest with Apollo iOS, you use the same [code generation engine](/ios/code-generation/introduction) that you use to generate Swift code for each of your operations. Specifically, you modify the engine's file output configuration to include the output of an `operationManifest`. [See the full Apollo iOS persisted queries guide for detailed instructions](/ios/fetching/persisted-queries/).
+To generate an operation manifest with Apollo iOS, you use the same [code generation engine](/ios/code-generation/introduction) that you use to generate Swift code for each of your operations. Specifically, you modify the engine's file output configuration to include the output of an `operationManifest`.
 
 #### 3.2 Publish manifests to the PQL
 
