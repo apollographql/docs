@@ -432,6 +432,7 @@ The manifest will be generated in `build/generated/manifest/apollo/myapi/persist
 
 To generate an operation manifest with Apollo iOS, you use the same [code generation engine](/ios/code-generation/introduction) that you use to generate Swift code for each of your operations. Specifically, you modify the engine's file output configuration to include the output of an `operationManifest`.
 
+
 #### 3.2 Publish manifests to the PQL
 
 <blockquote>
@@ -466,15 +467,9 @@ As with [generating manifests](#31-generate-persisted-queries-manifests), execut
 
 2. It updates any _other_ variants that the PQL is applied to so that routers associated with those variants can fetch their updated PQL.
 
-### 4. Client updates
+#### Test operations
 
-With your [manifest published](#3-preregister-trusted-operations) and the [router configured](#2-router-configuration), you can update your clients to use trusted operations IDs. Organizations can do this one client at a time as client teams [publish client-specific PQMs](#32-publish-manifests-to-the-pql) to the PQL.
-
-> **Note:** This step provides performance benefits but isn't necessary for safelisting. You can continue to use full operation strings rather than operation IDs.
-
-#### 4.1 Test operations
-
-Before updating your client apps, it's best to send some test operations.
+To test that your manifests have been successfully published, you can send some test operations.
 
 First, start your GraphOS-connected router:
 
@@ -496,11 +491,13 @@ curl http://localhost:4000 -X POST --json \
 
 If your router's PQL includes an operation with an ID that matches the value of the provided `sha256Hash` property, it executes the corresponding operation and returns its result.
 
-#### 4.2 Update client apps
+### 4. Client updates
 
-Once you've tested requests using operation IDs, you can update your client apps to execute operations using their PQL-specified ID instead of sending full query strings.
+With your [manifest published](#3-preregister-trusted-operations) and the [router configured](#2-router-configuration), you can update your clients to use trusted operations IDs. Organizations can do this one client at a time as client teams [publish client-specific PQMs](#32-publish-manifests-to-the-pql) to the PQL.
 
-To do this, clients can use the same protocol used for automatic persisted queries (APQ). 
+> **Note:** This step provides performance benefits but isn't necessary for safelisting. You can continue to use full operation strings rather than operation IDs.
+
+To execute operations using their PQL-specified ID instead full operations strings, clients can use the same protocol used for automatic persisted queries (APQ). 
 
 Here's the JSON body of a request to execute an operation by its ID:
 
