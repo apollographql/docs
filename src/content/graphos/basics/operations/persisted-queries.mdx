@@ -50,7 +50,7 @@ Your router can use its persisted query list (PQL) to both **protect your superg
 
 ## Differences from automatic persisted queries
 
-The Apollo Router supports a related feature called [automatic persisted queries](/router/configuration/in-memory-caching#caching-automatic-persisted-queries-apq) (APQ). With APQ, clients can execute a GraphQL operation by sending the SHA256 hash of its operation string instead of the entire string.
+The Apollo Router also supports a related feature called [automatic persisted queries](/router/configuration/in-memory-caching#caching-automatic-persisted-queries-apq) (APQ). With APQ, clients can execute a GraphQL operation by sending the SHA256 hash of its operation string instead of the entire string.
 
 APQ has a few limitations compared to preregistered persisted queries.
 
@@ -365,7 +365,7 @@ Once a PQL exists in GraphOS, client teams can start publishing operations to it
 
 ```json title="persisted-queries.json"
 {  
-  "format": "apollo-persisted-queries",
+  "format": "apollo-persisted-query-manifest",
   "version": 1,
   "operations": [  
     {
@@ -598,7 +598,7 @@ A persisted query manifest has the following minimal structure:
 
 ```json title="persisted-queries-manifest.json"
 {  
-  "format": "apollo-persisted-queries",
+  "format": "apollo-persisted-query-manifest",
   "version": 1,
   "operations": [  
     {
@@ -632,7 +632,7 @@ Manifest properties are documented below.
 </td>
 <td>
 
-This value is currently always `apollo-persisted-queries`.
+This value is currently always `apollo-persisted-query-manifest`.
 
 </td>
 </tr>
@@ -702,7 +702,7 @@ Each operation object has the following properties:
 
 The unique ID to use for the operation in your PQL.
 
-**This value must be unique among operations in the PQL.** If you publish an operation with the same `id` as an existing operation, the new operation _overwrites_ the existing PQL entry.
+**This value must be unique among operations in the PQL.** It may match a previously-published operation with the same body. If you publish an operation with the same `id` as an existing operation but a different body, this is interpreted as an attempt to _overwrite_ the existing PQL entry with the new body, which will change the behavior of existing deployed clients. This will currently lead to an error when you publish the manifest.
 
 **To ensure uniqueness,** tooling should generate this value based on the operation `body`. For details, see [Generating IDs](#generating-ids).
 
