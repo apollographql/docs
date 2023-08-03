@@ -753,7 +753,7 @@ When generating operation IDs for a manifest, you should use a value that's uniq
 
 By generating identifiers based on query documents this way, you ensure that different operations always have different IDs. This prevents unexpected collisions in your PQL. It also allows the router to execute queries both by full query strings and PQL-specified IDs, since the router can derive the ID from the operation string if needed. 
 
-> **Never use an operation _names_ for PQL IDs.** Different clients (or even different versions of the _same_ client) might execute different operations with the same name, and _all_ of those distinct operations should be present in your PQL.
+> **Never use an operation's _name_ for its PQL ID.** Different clients (or even different versions of the _same_ client) might execute different operations with the same name, and _all_ of those distinct operations should be present in your PQL.
 
 ### Ensuring consistent operation signatures
 
