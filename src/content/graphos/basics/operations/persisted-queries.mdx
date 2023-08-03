@@ -287,8 +287,6 @@ preview_persisted_queries:
 This enables your clients to execute operations by providing their PQL-specified ID instead of the full operation string.
 Your router also continues to accept full operation strings, even for operations that _don't_ appear in its PQL.
 
-The router works with both formats since the PQL-specified ID is the operation string's [SHA256 hash](https://en.wikipedia.org/wiki/SHA-2), and the router can derive it from the operation string if needed. 
-
 #### Audit mode (dry run)
 
 Turning on logging is crucial for gauging your client apps' readiness for safelisting. The logs identify which operations you need to either add to your PQL or stop your client apps from making. 
