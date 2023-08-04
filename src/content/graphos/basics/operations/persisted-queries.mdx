@@ -762,7 +762,7 @@ By generating identifiers based on query documents this way, you ensure that dif
 
 Whenever a client sends an operation string to a router with safelisting enabled, the router checks for that operation string's presence in its persisted query list. **The incoming string must match a PQL entry's operation string _exactly_, including field order and whitespaces.**
 
-For example, most applications treat the following queries equivalently, but the router will _reject_ the client operation because it doesn't match the PQL entry exactly:
+For example, most applications treat the following queries equivalently, but the router would reject the client operation because it doesn't match the PQL entry exactly:
 
 <CodeColumns>
 
@@ -788,7 +788,7 @@ query GetBooks {
 
 </CodeColumns>
 
-Differences in whitespaces and comments also cause the router 
+Differences in whitespaces or comments between a registered operation and the operation a client sends also cause the router to reject client operations. 
 
 <CodeColumns>
 
@@ -809,9 +809,7 @@ query GetBooks {
   books {
     title
     publishDate
-    /* Both this comment and the
-    following difference in whitespace
-    would cause this operation to fail. */
+    # This comment would cause the operation to fail
     #highlight-start
     author { name }
     #highlight-end
