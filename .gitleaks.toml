@@ -20,7 +20,16 @@
         commits = [
             # Allowlist https://github.com/apollographql/docs/blob/5b47e0b5dc953d0b51b31594117cd76522b67a96/src/content/basics/tutorial/mutation-resolvers.md?plain=1#L141 
             # and https://github.com/apollographql/docs/blob/5b47e0b5dc953d0b51b31594117cd76522b67a96/src/content/basics/tutorial/mutation-resolvers.md?plain=1#L170
-	    # These are example authentication tokens
+	        # These are example authentication tokens
             "5b47e0b5dc953d0b51b31594117cd76522b67a96",
             
+            # Demo values that aren't sensitive
+            "8bd71a05c0f16b541b4391df31665e4f4a820580",
+            "e861e1df9fd73cd1ed4d63c2d757d31a98efe94b",
+            "c377759e4e0983f976d9eb8b4740c16a49c8b8d8",
+
+            # Nonsensitive token
+            "c9655ce77f4d331f0ea6b992a7059f7a3ae3a594",
+            "647978abf0fa8834b24773fafa27053331f67cbd",
+            "cbc87a4cb926e05875ea1e59fb1d85014e5f3a3f",
         ]
