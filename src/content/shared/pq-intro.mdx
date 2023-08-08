@@ -27,5 +27,5 @@ Your router can use its persisted query list (PQL) to both **protect your superg
 
 - When you enable **safelisting**, your router _rejects_ any incoming operations not registered in its PQL.
 - Client apps can execute an operation by providing its PQL-specified ID _instead of_ an entire operation string.
-    - Querying by ID can significantly reduce latency and bandwidth usage for very large operation strings.
-    - Your router can _require_ that clients provide operations by ID and _reject_ full operation strings (even operation strings present in the PQL).
+  - Querying by ID can significantly reduce latency and bandwidth usage for very large operation strings.
+  - Your router can _require_ that clients provide operations by ID and _reject_ full operation strings (even operation strings present in the PQL).
