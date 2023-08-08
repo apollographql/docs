@@ -1,3 +1,4 @@
+import * as sharedContent from '../content/shared';
 import Blockquote from './Blockquote';
 import CodeColumns from './CodeColumns';
 import ExpansionPanel, {
@@ -172,6 +173,7 @@ const components = {
 
 const mdxComponents = {
   ...components,
+  ...sharedContent,
   inlineCode: InlineCode,
   Button, // TODO: consider making pages import this from @chakra-ui/react
   ExpansionPanel,
