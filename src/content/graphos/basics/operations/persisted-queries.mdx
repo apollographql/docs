@@ -710,7 +710,7 @@ The unique ID to use for the operation in your PQL.
 
 The complete query document for the operation. Includes the definition of the operation itself, along with accompanying fragment definitions.
 
-**This string must match _exactly_ the query document that your client sends your router, including whitespace and field order.** For details, see [Ensuring consistent operation signatures](#ensuring-consistent-operation-signatures).
+This string will be the query document executed when a client sends the corresponding ID. If you are using "safelisting with operation strings allowed" or "audit mode", **this string must _exactly_ match the query document that your client sends your router, including whitespace and field order.** We intend to relax this requirement slightly before this feature reaches General Availability. For details, see [Ensuring consistent operation signatures](#ensuring-consistent-operation-signatures).
 
 </td>
 </tr>
@@ -762,7 +762,7 @@ By generating identifiers based on query documents this way, you ensure that dif
 
 Whenever a client sends an operation string to a router with safelisting enabled, the router checks for that operation string's presence in its persisted query list. **The incoming string must match a PQL entry's operation string _exactly_, including field order and whitespaces.**
 
-For example, most applications treat the following queries equivalently, but the router would reject the client operation because it doesn't match the PQL entry exactly:
+For example, most applications treat responses from the following queries equivalently, but the router would reject the client operation because it doesn't match the PQL entry exactly:
 
 <CodeColumns>
 
@@ -788,7 +788,7 @@ query GetBooks {
 
 </CodeColumns>
 
-Differences in whitespaces or comments between a registered operation and the operation a client sends also cause the router to reject client operations. 
+Differences in whitespace or comments between a registered operation and the operation a client sends also cause the router to reject client operations. 
 
 <CodeColumns>
 
@@ -819,6 +819,8 @@ query GetBooks {
 
 </CodeColumns>
 
+> Note: We intend to make the freeform GraphQL comparison performed by the safelist (and audit mode) less strict before this feature reaches General Availability. Specifically, we intend to consider operations that differ only in whitespace, comments, and other ignored tokens to be the same, and operations that only differ in the ordering of their top-level operation and fragment definitions to be the same. (Other ordering differences such as the order of fields or arguments will still be considered different.) This will make it easier for manifest generation tools, as client libraries often combine operation and fragment definitions found in different locations in the project source code in a nondeterministic order.
+
 To ensure that you generate manifest entries correctly, it's important to note that your app's client library may _modify_ the operation strings you define in your source before executing those corresponding operations. For example, by default, all Apollo Client libraries add the `__typename` field to every object in a query if that field isn't already present:
 
 <CodeColumns>
@@ -846,6 +848,6 @@ query GetBooks {
 
 > The [manifest generation tools](#13-generate-persisted-queries-manifests) for Apollo Client libraries all account for this default behavior.
 
-If you're building your own manifest generation tool, ensure it accounts for any such operation changes in your chosen client library. Otherwise, the router will reject your app's operations due to an operation string mismatch.
+If you're building your own manifest generation tool, ensure it accounts for any such operation changes in your chosen client library. Otherwise, the router will reject your app's operations due to an operation string mismatch if safelisting is enabled.
 
-Similarly, if your clients execute operations by providing their PQL-specified ID, they might execute an operation with a different shape than expected if you don't account for these operation changes.
+Similarly, if your clients execute operations by providing their PQL-specified ID, they might execute an operation without the augmentation added by your client library if you don't account for these operation changes.
