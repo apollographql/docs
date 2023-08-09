@@ -670,11 +670,11 @@ If you're building your own manifest generation tool, ensure it accounts for any
 
 Similarly, if your clients execute operations by providing their PQL-specified ID, they might execute an operation without the augmentation added by your client library if you don't account for these operation changes.
 
-#### Operation formatting considerations
+#### Operation formatting changes
 
 While in [preview](/resources/product-launch-stages#preview), if your client sends full operation strings for registered operations, the registered operation's [`body`](#body) string must _exactly_ match the operation string, **including whitespace and field order**. In [audit mode](#audit-mode-dry-run), the router executes operations regardless of whitespace or field order differences, but logs them as unregistered operations. In [safelisting with operation strings allowed](#safelisting-operation-strings-allowed), the router rejects these operations.
 
 This will change before the feature reaches [general availability](/resources/product-launch-stages/#general-availability): whitespace and other formatting differences won't disqualify operations as different from their preregistered versions.
-Specifically, operations that differ only in whitespace, comments, and other ignored tokens will be considered the same. Similarly, operations that only differ in the order of their top-level operation and fragment definitions will be considered to be the same. Other differences, such as the order of fields or arguments, will still cause operations to be considered as different.
+Specifically, the router will consider operations that differ only in whitespace, comments, and other ignored tokens to be the same. Similarly, it will consider operations that differ only in the order of their top-level operation and fragment definitions to be the same. Other differences, such as the order of fields or arguments, will still cause operations to be considered as different.
 
-These changes will make creating manifest generation tools more straightfoward. Client libraries often combine operation and fragment definitions in a nondeterministic order, which can cause complexities for manifest generation tools.
+These changes will make manifest generation more straightforward. Client libraries often combine operation and fragment definitions in a nondeterministic order, which can cause complexities for manifest generation tools.
