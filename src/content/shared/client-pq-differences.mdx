@@ -1,0 +1,8 @@
+The persisted queries feature requires operations to be preregistered in a **persisted query list** (**PQL**).
+This allows the PQL to act as a safelist of trusted operations made by your first-party apps. As such, persisted queries is a security feature as much as a performance one.
+
+With APQs, if the server can't find the operation ID the client provides, the server returns an error indicating that it needs the full operation string. If the Apollo iOS client receives this error, it automatically retries the operation with the full operation string.
+
+If you _only_ want to improve request latency and bandwidth usage, APQ addresses your use case. If you _also_ want to secure your supergraph with operation safelisting, you should preregister trusted operations in a PQL.
+
+For more details on differences between persisted queries and APQ, see the [GraphOS persisted queries documentation](/graphos/operations/persisted-queries#differences-from-automatic-persisted).

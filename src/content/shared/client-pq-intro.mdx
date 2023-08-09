@@ -1,0 +1,2 @@
+Apollo supports two separate but related features called **persisted queries** and **automatic persisted queries** (APQs).
+With both features, clients can execute a GraphQL operation by sending an operation's ID instead of the entire operation string. An operation's ID is the SHA256 hash of the full string. Querying by ID can significantly reduce latency and bandwidth usage for very large operation strings.
