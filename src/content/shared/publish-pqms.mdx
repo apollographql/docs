@@ -5,20 +5,20 @@ Ensure your Rover CLI version is `0.17.2` or later. Previous versions of Rover d
 
 </blockquote>
 
-After you [generate an operation manifest](/graphos/operations/persisted-queries#31-generate-persisted-queries-manifests), you publish it to your PQL with the [Rover CLI](/rover/):
+After you [generate an operation manifest](#31-generate-persisted-queries-manifests), you publish it to your PQL with the [Rover CLI](/rover/):
 
 ```bash title="Example command"
 rover persisted-queries publish my-graph@my-variant \
   --manifest ./persisted-query-manifest.json
 ```
 
-- Replace `my-graph@my-variant` with the **graph ref** of _any_ variant your PQL is [linked to](/graphos/operations/persisted-queries#12-link-the-pql-to-variants). Your platform team can provide this for you.
+- Replace `my-graph@my-variant` with the **graph ref** of _any_ variant your PQL is [linked to](#12-link-the-pql-to-variants). Your platform team can provide this for you.
     - Graph refs have the format `graph-id@variant-name`.
 - For the `--manifest` option, provide the path to the manifest you want to publish.
 
 <blockquote>
 
-As with [generating manifests](/graphos/operations/persisted-queries#31-generate-persisted-queries-manifests), execute this command in your CI/CD pipeline to publish new operations as part of your app release process.
+As with [generating manifests](#31-generate-persisted-queries-manifests), execute this command in your CI/CD pipeline to publish new operations as part of your app release process.
 
 </blockquote>
 
