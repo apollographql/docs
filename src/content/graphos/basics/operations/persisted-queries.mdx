@@ -399,7 +399,7 @@ Guide each client team to follow the implementation steps presented in the [incr
 
 ⚠️ **This manifest format is subject to change during the preview period.**
 
-You only need to read this section if you're building your own tooling to [generate persisted query manifests](#generating-manifests).
+You only need to read this section if you're building your own tooling to [generate persisted query manifests](#31-generate-persisted-queries-manifests).
 
 </blockquote>
 
@@ -479,7 +479,7 @@ For details, see [Per-operation properties](#per-operation-properties).
 
 ### Per-operation properties
 
-Each entry in a [manifest's](#manifest-format) `operations` array is a JSON object that describes a single GraphQL operation to publish:
+Each entry in a manifest's `operations` array is a JSON object that describes a single GraphQL operation to publish:
 
 ```json
 {
@@ -526,9 +526,7 @@ The unique ID to use for the operation in your PQL.
 </td>
 <td>
 
-The complete query document for the operation. Includes the definition of the operation itself, along with accompanying fragment definitions.
-
-This string will be the query document executed when a client sends the corresponding ID. If you are using "safelisting with operation strings allowed" or "audit mode", **this string must _exactly_ match the query document that your client sends your router, including whitespace and field order.** We intend to relax this requirement slightly before this feature reaches General Availability. For details, see [Ensuring consistent operation signatures](#ensuring-consistent-operation-signatures).
+The complete query document for the operation. Includes the definition of the operation itself, along with accompanying fragment definitions. The router executes this string as the query document when a client sends the corresponding ID or matching operation. For details, see [Ensuring consistent operation signatures](#ensuring-consistent-operation-signatures).
 
 </td>
 </tr>
@@ -568,9 +566,11 @@ The type of GraphQL operation. Always one of the following values:
 </tbody>
 </table>
 
+<br/>
+
 ### Generating IDs
 
-When generating operation IDs for a manifest, you should use a value that's unique to each operation, such as the query document's cryptographic hash. Apollo's [manifest generation tools](#13-generate-persisted-queries-manifests) use the base16 representation of the document's SHA256 hash, which is the same format used for [APQ](#differences-from-apq).
+When generating operation IDs for a manifest, you should use a value that's unique to each operation, such as the query document's cryptographic hash. Apollo's [manifest generation tools](#31-generate-persisted-queries-manifests) use the base16 representation of the document's SHA256 hash, which is the same format used for [APQ](#differences-from-apq).
 
 By generating identifiers based on query documents this way, you ensure that different operations always have different IDs. ID uniqueness prevents unexpected collisions in your PQL. It also allows the router to execute queries both by full query strings and PQL-specified IDs. 
 
@@ -637,7 +637,7 @@ query GetBooks {
 
 </CodeColumns>
 
-> Note: We intend to make the freeform GraphQL comparison performed by the safelist (and audit mode) less strict before this feature reaches General Availability. Specifically, we intend to consider operations that differ only in whitespace, comments, and other ignored tokens to be the same, and operations that only differ in the ordering of their top-level operation and fragment definitions to be the same. (Other ordering differences such as the order of fields or arguments will still be considered different.) This will make it easier for manifest generation tools, as client libraries often combine operation and fragment definitions found in different locations in the project source code in a nondeterministic order.
+> Whitespace and other formatting treatment will change before this feature reaches [general availability](/resources/product-launch-stages/#general-availability). See [operation formatting considerations](#operation-formatting-considerations) for details.
 
 To ensure that you generate manifest entries correctly, it's important to note that your app's client library may _modify_ the operation strings you define in your source before executing those corresponding operations. For example, by default, all Apollo Client libraries add the `__typename` field to every object in a query if that field isn't already present:
 
@@ -664,8 +664,17 @@ query GetBooks {
 
 </CodeColumns>
 
-> The [manifest generation tools](#13-generate-persisted-queries-manifests) for Apollo Client libraries all account for this default behavior.
+> The [manifest generation tools](#31-generate-persisted-queries-manifests) for Apollo Client libraries all account for this default behavior.
 
 If you're building your own manifest generation tool, ensure it accounts for any such operation changes in your chosen client library. Otherwise, the router will reject your app's operations due to an operation string mismatch if safelisting is enabled.
 
 Similarly, if your clients execute operations by providing their PQL-specified ID, they might execute an operation without the augmentation added by your client library if you don't account for these operation changes.
+
+#### Operation formatting considerations
+
+While in [preview](/resources/product-launch-stages#preview), if your client sends full operation strings for registered operations, the registered operation's [`body`](#body) string must _exactly_ match the operation string, **including whitespace and field order**. In [audit mode](#audit-mode-dry-run), the router executes operations regardless of whitespace or field order differences, but logs them as unregistered operations. In [safelisting with operation strings allowed](#safelisting-operation-strings-allowed), the router rejects these operations.
+
+This will change before the feature reaches [general availability](/resources/product-launch-stages/#general-availability): whitespace and other formatting differences won't disqualify operations as different from their preregistered versions.
+Specifically, operations that differ only in whitespace, comments, and other ignored tokens will be considered the same. Similarly, operations that only differ in the order of their top-level operation and fragment definitions will be considered to be the same. Other differences, such as the order of fields or arguments, will still cause operations to be considered as different.
+
+These changes will make creating manifest generation tools more straightfoward. Client libraries often combine operation and fragment definitions in a nondeterministic order, which can cause complexities for manifest generation tools.
