@@ -207,11 +207,9 @@ After you link a PQL to a variant:
 
 ### 2. Router configuration
 
-The Apollo Router is the key component that enforces safelisting. Recall that the router supports four [security levels](#security-levels). When first implementing persisted queries, it's best to start with [audit—or "dry run"—mode](#audit-mode-dry-run).
+The Apollo Router is the key component that enforces safelisting.
 
 <PQRouterConfiguration />
-
-Once your organization's PQL has registered all your clients' operations and you've ensured your client apps are only sending trusted operations, you can update your router configuration to the safelisting security level.
 
 #### Router security levels
 
@@ -570,7 +568,7 @@ The type of GraphQL operation. Always one of the following values:
 
 ### Generating IDs
 
-When generating operation IDs for a manifest, you should use a value that's unique to each operation, such as the query document's cryptographic hash. Apollo's [manifest generation tools](#31-generate-persisted-queries-manifests) use the base16 representation of the document's SHA256 hash, which is the same format used for [APQ](#differences-from-apq).
+When generating operation IDs for a manifest, you should use a value that's unique to each operation, such as the query document's cryptographic hash. Apollo's [manifest generation tools](#31-generate-persisted-queries-manifests) use the base16 representation of the document's SHA256 hash, which is the same format used for [APQ](#differences-from-automatic-persisted-queries).
 
 By generating identifiers based on query documents this way, you ensure that different operations always have different IDs. ID uniqueness prevents unexpected collisions in your PQL. It also allows the router to execute queries both by full query strings and PQL-specified IDs. 
 
