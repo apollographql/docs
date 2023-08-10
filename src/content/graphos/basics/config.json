@@ -31,13 +31,22 @@
     },
     "Building Subgraphs": {
       "Creating a new subgraph": "/graphs/creating-a-subgraph",
-      "Local development": "/graphs/local-development",
-      "Securing subgraphs": "/graphs/securing-a-subgraph"
+      "Local development": "/graphs/local-development"
     },
     "Graph Administration": {
       "Updating your graph": "/graphs/updating",
       "Managing graphs in Studio": "/graphs/studio-features",
       "Supergraph-specific Studio features": "/graphs/federated-graphs"
+    },
+    "Graph Security": {
+      "Securing subgraphs": "/graphs/securing-a-subgraph",
+      "Safelisting with persisted queries": [
+        "/operations/persisted-queries",
+        [
+          "enterprise",
+          "preview"
+        ]
+      ]
     },
     "Routing": {
       "Cloud routing overview": "/routing/cloud",
@@ -49,7 +58,7 @@
         ]
       ]
     },
-    "Operation Performance": {
+    "Client Operations": {
       "Using @defer": "/operations/defer",
       "GraphQL subscriptions": [
         "/operations/subscriptions",

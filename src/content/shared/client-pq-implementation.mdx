@@ -1,10 +1,10 @@
-Both persisted queries and APQs require you to configure code generation and how your client makes requests. If you intend to use persisted queries for safelisting, you also need to generate an operations manifest.
-
 We recommend you follow this order while implementing:
 
-1. **For persisted queries only**: Generate and publish operation manifests
-2. **For both persisted queries and APQs**: Configure generated operation models
-3. **For both persisted queries and APQs**: Enable persisted queries on `ApolloClient`
+| Implementation Step | Required for PQs? | Required for APQs? |
+| -----| ------------------ | ----------------- |
+| 1. Generate operation manifest| ✅ | -- |
+| 2. Publish operation manifest to a PQL |✅ | -- |
+| 3. Enable persisted queries on the client when it makes requests | ✅ | ✅ |
 
 The rest of this article details these steps.
 
