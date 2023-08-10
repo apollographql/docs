@@ -1,11 +1,9 @@
-Both persisted queries and APQs require you to configure your code generation models and how your client makes requests. Because the persisted queries feature requires preregistering trusted operations, it has the additional implementation step of publishing an operations manifest to a persisted queries list (PQL).
-
 We recommend you follow this order while implementing:
 
-| Implementation Step | Required for APQs? | Required for PQs? |
+| Implementation Step | Required for PQs? | Required for APQs? |
 | -----| ------------------ | ----------------- |
-| 1. Configure generated operation models | ✅ | ✅ |
-| 2. Generate and publish operation manifests to a PQL | -- | ✅ |
+| 1. Generate operation manifests| ✅ | -- |
+| 2. Publish operation manifests to a PQL |✅ | -- |
 | 3. Enable persisted queries on the client when it makes requests | ✅ | ✅ |
 
 The rest of this article details these steps.
