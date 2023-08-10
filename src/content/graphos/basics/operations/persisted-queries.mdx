@@ -1,6 +1,6 @@
 ---
 title: Safelisting with persisted queries
-description: Reject unrecognized operations while minimizing request latency
+description: Secure your graph while minimizing request latency
 ---
 
 <GraphOSEnterpriseRequired />
@@ -635,7 +635,7 @@ query GetBooks {
 
 </CodeColumns>
 
-> Whitespace and other formatting treatment will change before this feature reaches [general availability](/resources/product-launch-stages/#general-availability). See [operation formatting considerations](#operation-formatting-considerations) for details.
+> Whitespace and other formatting treatment will change before this feature reaches [general availability](/resources/product-launch-stages/#general-availability). See [operation formatting changes](#operation-formatting-changes) for details.
 
 To ensure that you generate manifest entries correctly, it's important to note that your app's client library may _modify_ the operation strings you define in your source before executing those corresponding operations. For example, by default, all Apollo Client libraries add the `__typename` field to every object in a query if that field isn't already present:
 
