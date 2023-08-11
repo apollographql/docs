@@ -8,12 +8,20 @@ const {query, transformer} = require('./algolia');
 const yaml = require('js-yaml');
 const fs = require('fs');
 const remoteSources = require('./sources/remote');
+const puppeteer = require('puppeteer');
 
 const isProduction = process.env.CONTEXT === 'production';
 
 const gatsbyRemarkPlugins = [
   '@fec/remark-a11y-emoji/gatsby',
-  'gatsby-remark-mermaid',
+  {
+    resolve: 'gatsby-remark-mermaid',
+    options: {
+      launchOptions: {
+        executablePath: puppeteer.executablePath()
+      }
+    }
+  },
   {
     resolve: 'gatsby-remark-copy-linked-files',
     options: {
