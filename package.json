@@ -12,7 +12,6 @@
     "start:federation": "npm start -- ../federation",
     "start:rover": "npm start -- ../rover",
     "start:router": "npm start -- ../router",
-    "prebuild": "npx -y playwright install",
     "build": "gatsby build",
     "serve": "gatsby serve",
     "test": "jest"
@@ -62,7 +61,7 @@
     "gatsby-plugin-webfonts": "^2.2.1",
     "gatsby-remark-autolink-headers": "^5.4.0",
     "gatsby-remark-copy-linked-files": "^5.4.0",
-    "gatsby-remark-mermaid": "^4.0.0",
+    "gatsby-remark-mermaid": "^3.0.1",
     "gatsby-source-filesystem": "^4.4.0",
     "gatsby-source-remote-file": "^0.5.2",
     "gatsby-transformer-json": "^4.4.0",
