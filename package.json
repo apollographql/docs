@@ -12,6 +12,7 @@
     "start:federation": "npm start -- ../federation",
     "start:rover": "npm start -- ../rover",
     "start:router": "npm start -- ../router",
+    "prebuild": "npx -y playwright install",
     "build": "gatsby build",
     "serve": "gatsby serve",
     "test": "jest"
