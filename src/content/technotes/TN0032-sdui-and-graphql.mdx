@@ -89,7 +89,7 @@ const TYPE_COMPONENTS = {
 const component = TYPE_COMPONENTS[data.featuredProducts.__typename];
 if (!component) { throw new Error('Unknown Type Returned!'); }
 
-renderComponet(component, data);
+renderComponent(component, data);
 ```
 
 This means that from the API response you can dynamically choose when to render different components or start displaying different components based on any of our API inputs, including headers or user information.
