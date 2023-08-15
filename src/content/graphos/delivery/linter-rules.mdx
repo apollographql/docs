@@ -529,7 +529,14 @@ type Product {
 
 The `@tag` directive should always use an approved value for its `name` argument. You specify approved values in [GraphOS Studio](./schema-linter/#configuring-the-linter).
 
+
+<MinVersion version="2.5">
+
 ## Composition rules
+
+</MinVersion>
+
+> Composition rules are only available for graphs on [federation version `2.5`](/federation/federation-versions) or later. You can update a graph's version from its **Settings** page in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content).
 
 These rules flag potential improvements to a supergraph schema [composed](/federation/federated-types/composition) of [subgraph](/federation/building-supergraphs/subgraphs-overview/) schemas.
 
