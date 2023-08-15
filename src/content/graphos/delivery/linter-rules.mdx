@@ -9,7 +9,7 @@ This reference lists the rules that you can enforce with [GraphOS schema linting
 
 These rules enforce naming conventions. Rules are categorized by the part(s) of your schema that they correspond to.
 
-### All fields
+### Fields
 
 #### `FIELD_NAMES_SHOULD_BE_CAMEL_CASE`
 
@@ -65,7 +65,7 @@ type Query {
 }
 ```
 
-### All types
+### Types
 
 These rules apply to _all_ types that appear in a GraphQL schema, including:
 
@@ -453,7 +453,7 @@ directive @specialField on FIELD_DEFINITION # camelCase
 
 </MinVersion>
 
-> Composition rules are only available for graphs on [federation version `2.5`](/federation/federation-versions) or later. You can update a graph's version from its **Settings** page in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content).
+> Composition rules are only available for graphs on [federation version `2.5`](/federation/federation-versions/#v25) or later. You can update a graph's version from its **Settings** page in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content).
 
 These rules flag potential improvements to a supergraph schema [composed](/federation/federated-types/composition) of [subgraph](/federation/building-supergraphs/subgraphs-overview/) schemas.
 
@@ -519,7 +519,7 @@ Indicates that a value of an enum type definition, that is only used as an input
 
 #### `INCONSISTENT_ENUM_VALUE_FOR_OUTPUT_ENUM`
 
-Indicates that a value of an enum type definition, that is only used as an output type or is unusedm, _has_ been merged in the supergraph but is defined in only some of the subgraphs that declare the enum.
+Indicates that a value of an enum type definition, that is only used as an output type or is unused, _has_ been merged in the supergraph but is defined in only some of the subgraphs that declare the enum.
 
 <hr/>
 
@@ -623,9 +623,11 @@ Indicates a non-repeatable directive has been applied to a schema element in dif
 
 For an executable directive definition, indicates that no location appears for it in any subgraphs.
 
+<hr/>
+
 #### `FROM_SUBGRAPH_DOES_NOT_EXIST`
 
-Indicates the source subgraph specified by @override directive doesn't exist.
+Indicates the source subgraph specified by `@override` directive doesn't exist.
 
 ## Other rules
 
@@ -633,9 +635,72 @@ These rules define conventions for the entire schema and directive usage outside
 
 ### Schema
 
+These rules apply to the entire schema.
+
 #### `DOES_NOT_PARSE`
 
 The schema linter raises this violation if it attempts to read a malformed GraphQL schema. Check your schema for any syntax errors.
+
+<hr/>
+
+#### `ALL_ELEMENTS_REQUIRE_DESCRIPTION`
+
+Each element in the schema must include a description.
+
+<p style="margin-bottom: 0">❌</p>
+
+```graphql title="schema.graphql"
+type User {
+  username: String!
+}
+```
+
+<p style="margin-bottom: 0">✅</p>
+
+```graphql title="schema.graphql"
+"Represents a user"
+type User {
+  "The user's username"
+  username: String!
+}
+```
+
+<hr/>
+
+#### `DEFINED_TYPES_ARE_USED`
+
+Every type defined in a schema should be used at least once.
+
+Unused types commonly appear after you refactor other parts of your schema. You should remove unused types to prevent confusion.
+
+<p style="margin-bottom: 0">❌</p>
+
+```graphql title="schema.graphql"
+type SomeUnusedType { # Also fails the TYPE_SUFFIX rule!
+  name: String!
+}
+
+type AnActuallyUsedType {
+  name: String!
+}
+
+type Query {
+  hello: String!
+  title: AnActuallyUsedType
+}
+```
+
+<p style="margin-bottom: 0">✅</p>
+
+```graphql title="schema.graphql"
+type Book {
+  title: String!
+}
+
+type Query {
+  books: [Book!]!
+}
+```
 
 <hr/>
 
