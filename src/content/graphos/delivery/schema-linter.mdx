@@ -77,7 +77,7 @@ You can create two kind of customized rules:
 - Rules to require or forbid specific prefixes and suffixes in element names
 - Rules to require descriptions on specific elements
 
-You can create these rules for the following elements:
+You can create customized rules for the following elements:
 
 - Fields
 - Types
@@ -95,8 +95,8 @@ To create a new rule, click the **+** button above your list of linter rules.
 <img
   className="screenshot"
   src="../img/schema-rules/create-new-rule.jpg"
-  alt="To-do: How to create a new rule"
-  width="300"
+  alt="Linter configuration page in GraphOS Studio"
+  width="700"
 />
 
 In the modal that opens, select the following:
@@ -105,16 +105,17 @@ In the modal that opens, select the following:
 - Whether you want to **Forbid** or **Require** certain strings
 - Whether the strings are **Prefixes** or **Suffixes**
 - The list of **Strings** to check for. Allowed characters are `[A-Z]`, `[a-z]`, `[0-9]`, and `[_]`
-  - Note that strings are case-sensitive.
-  - If any of the strings you enter conflict with an existing rule, the modal won't allow you to create it. For example, if you create a rule to require a capitalized prefix (for example, ) for field names, it conficts with the [`FIELD_NAMES_SHOULD_BE_CAMEL_CASE`](./linter-rules/#field_names_should_be_camel_case) rule, and you won't be able to save it.
+  - Strings are case-sensitive.
 
-GraphOS dynamically generates the rule name based on your selections. For example, if you create a rule forbidding certain prefixes for interfaces, the resulting rule name is `INTERFACE_FORBID_USER_DEFINED_PREFIX`.
+> ⚠️ If any of the strings you enter conflict with an existing rule, the modal won't allow you to create it. For example, if you create a rule to require a capitalized prefix (for example, ) for field names, it conficts with the [`FIELD_NAMES_SHOULD_BE_CAMEL_CASE`](./linter-rules/#field_names_should_be_camel_case) rule, and you won't be able to save it.
+
+GraphOS dynamically generates the rule name based on your selections. For example, if you create a rule forbidding certain prefixes for fields, the resulting rule name is `FIELD_FORBID_USER_DEFINED_PREFIX`.
 
 <img
   className="screenshot"
   src="../img/schema-rules/new-rule-modal.jpg"
-  alt="To-do: New rule modal"
-  width="300"
+  alt="Linter rule customization in GraphOS Studio"
+  width="700"
 />
 
 You can add as many rules as you want by clicking **Add another rule**. When you're done, click **Create**.
@@ -124,8 +125,8 @@ Your customized rules appear with a **CUSTOM** tag in the rule list. You can edi
 <img
   className="screenshot"
   src="../img/schema-rules/edit-rule.jpg"
-  alt="To-do: Edit rule"
-  width="300"
+  alt="Linter configuration page in GraphOS Studio"
+  width="700"
 />
 
 As with built-in linter rules, you can set a customized rule's [severity level](./schema-linter/#setting-severity-levels). To delete a rule, click the pencil icon and then click the trash can icon next to it in the customized rule modal.
