@@ -5,37 +5,9 @@ description: Reference
 
 This reference lists the rules that you can enforce with [GraphOS schema linting](./schema-linter/), along with the code that GraphOS returns for each rule violation.
 
-Rules are categorized by the part(s) of your schema that they correspond to.
+## Naming rules
 
-## Static rules
-
-### Schema
-
-#### `DOES_NOT_PARSE`
-
-The schema linter raises this violation if it attempts to read a malformed GraphQL schema. Check your schema for any syntax errors.
-
-<hr/>
-
-#### `QUERY_DOCUMENT_DECLARATION`
-
-A GraphQL schema should never include definitions of GraphQL _operations_ (such as queries and mutations).
-
-<p style="margin-bottom: 0">❌</p>
-
-```graphql title="schema.graphql"
-type Query {
-  users: [User!]!
-}
-
-#highlight-start
-query GetUsers { # Don't define operations in a schema document
-  users {
-    id
-  }
-}
-#highlight-end
-```
+These rules enforce naming conventions. Rules are categorized by the part(s) of your schema that they correspond to.
 
 ### All fields
 
@@ -475,61 +447,6 @@ directive @specialField on FIELD_DEFINITION # camelCase
 
 <hr/>
 
-#### `CONTACT_DIRECTIVE_MISSING`
-
-A subgraph schema should always provide owner contact details via the `@contact` directive. [Learn more.](../graphs/federated-graphs#contact-info-for-subgraphs)
-
-
-<p style="margin-bottom: 0">✅</p>
-
-```graphql title="schema.graphql"
-directive @contact(
-  "Contact title of the subgraph owner"
-  name: String!
-  "URL where the subgraph's owner can be reached"
-  url: String
-  "Other relevant notes can be included here; supports markdown links"
-  description: String
-) on SCHEMA
-
-extend schema @contact(
-  name: "Products Team",
-  url: "https://myteam.slack.com/archives/teams-chat-room-url",
-  description: "Send urgent issues to [#oncall](https://yourteam.slack.com/archives/oncall)."
-)
-```
-
-<hr/>
-
-#### `DEPRECATED_DIRECTIVE_MISSING_REASON`
-
-The `@deprecated` directive should always include a `reason` argument.
-
-<p style="margin-bottom: 0">❌</p>
-
-```graphql title="schema.graphql"
-type Product {
-  title: String @deprecated #highlight-line
-  name: String!
-}
-```
-
-<p style="margin-bottom: 0">✅</p>
-
-```graphql title="schema.graphql"
-type Product {
-  title: String @deprecated(reason: "Use Product.name instead") #highlight-line
-  name: String!
-}
-```
-
-<hr/>
-
-#### `TAG_DIRECTIVE_USES_UNKNOWN_NAME`
-
-The `@tag` directive should always use an approved value for its `name` argument. You specify approved values in [GraphOS Studio](./schema-linter/#configuring-the-linter).
-
-
 <MinVersion version="2.5">
 
 ## Composition rules
@@ -709,3 +626,90 @@ For an executable directive definition, indicates that no location appears for i
 #### `FROM_SUBGRAPH_DOES_NOT_EXIST`
 
 Indicates the source subgraph specified by @override directive doesn't exist.
+
+## Other rules
+
+These rules define conventions for the entire schema and directive usage outside of composition.
+
+### Schema
+
+#### `DOES_NOT_PARSE`
+
+The schema linter raises this violation if it attempts to read a malformed GraphQL schema. Check your schema for any syntax errors.
+
+<hr/>
+
+#### `QUERY_DOCUMENT_DECLARATION`
+
+A GraphQL schema should never include definitions of GraphQL _operations_ (such as queries and mutations).
+
+<p style="margin-bottom: 0">❌</p>
+
+```graphql title="schema.graphql"
+type Query {
+  users: [User!]!
+}
+
+#highlight-start
+query GetUsers { # Don't define operations in a schema document
+  users {
+    id
+  }
+}
+#highlight-end
+```
+
+### Directives
+
+#### `CONTACT_DIRECTIVE_MISSING`
+
+A subgraph schema should always provide owner contact details via the `@contact` directive. [Learn more.](../graphs/federated-graphs#contact-info-for-subgraphs)
+
+<p style="margin-bottom: 0">✅</p>
+
+```graphql title="schema.graphql"
+directive @contact(
+  "Contact title of the subgraph owner"
+  name: String!
+  "URL where the subgraph's owner can be reached"
+  url: String
+  "Other relevant notes can be included here; supports markdown links"
+  description: String
+) on SCHEMA
+
+extend schema @contact(
+  name: "Products Team",
+  url: "https://myteam.slack.com/archives/teams-chat-room-url",
+  description: "Send urgent issues to [#oncall](https://yourteam.slack.com/archives/oncall)."
+)
+```
+
+<hr/>
+
+#### `DEPRECATED_DIRECTIVE_MISSING_REASON`
+
+The `@deprecated` directive should always include a `reason` argument.
+
+<p style="margin-bottom: 0">❌</p>
+
+```graphql title="schema.graphql"
+type Product {
+  title: String @deprecated #highlight-line
+  name: String!
+}
+```
+
+<p style="margin-bottom: 0">✅</p>
+
+```graphql title="schema.graphql"
+type Product {
+  title: String @deprecated(reason: "Use Product.name instead") #highlight-line
+  name: String!
+}
+```
+
+<hr/>
+
+#### `TAG_DIRECTIVE_USES_UNKNOWN_NAME`
+
+The `@tag` directive should always use an approved value for its `name` argument. You specify approved values in [GraphOS Studio](./schema-linter/#configuring-the-linter).
