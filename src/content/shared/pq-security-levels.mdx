@@ -72,6 +72,9 @@ apq:
 > **Note:** To enable safelisting, you _must_ turn off [automatic persisted queries](/router/configuration/in-memory-caching#caching-automatic-persisted-queries-apq) (APQs). APQs let clients [register arbitrary operations at runtime](#differences-from-automatic-persisted-queries), while safelisting's intent is to restrict operations to those that have been explicitly preregistered.
 
 To execute an operation, clients can provide its PQL-specified ID _or_ full operation string.
+The router rejects unregistered operations and since `log_unknown` is true, those operations appear in your [router's logs](/router/logging).
+
+> You can set `log_unknown` to `false` while enabling safelisting, but we recommend keeping logging enabled to monitor the operations your router rejects.
 
 #### Safelisting (IDs only)
 
@@ -93,3 +96,8 @@ apq:
 > **Note:** To enable safelisting, you _must_ turn off [automatic persisted queries](/router/configuration/in-memory-caching#caching-automatic-persisted-queries-apq) (APQs). APQs let clients [register arbitrary operations at runtime](#differences-from-automatic-persisted-queries), while safelisting's intent is to restrict operations to those that have been explicitly preregistered.
 
 If you want to use this security level, you should always _first_ set up [safelisting with operation strings allowed](#safelisting-operation-strings-allowed). ID only safelisting mode requires modifying _all_ your clients to execute operations via PQL-specified ID instead of an operation string. While making those necessary changes, you can use the less restrictive safelisting level in your router.
+
+If you set `log_unknown` to true, the router [logs](/router/logging) all rejected operations. This includes operations that were rejected because they included the full operation string rather than the ID, whether or not the operation was preregistered.
+
+> You can set `log_unknown` to `false` while enabling safelisting, but we recommend keeping logging enabled to monitor the operations your router rejects.
+
