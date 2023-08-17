@@ -13,6 +13,7 @@ module.exports = {
         MinVersion: 'readonly',
         // shared content
         CalloutCard: 'readonly',
+        CreateSelfHostedSupergraph: 'readonly',
         ClientPQDifferences: 'readonly',
         ClientPQImplementation: 'readonly',
         ClientPQIntro: 'readonly',
