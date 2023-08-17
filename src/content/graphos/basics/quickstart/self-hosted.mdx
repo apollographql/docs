@@ -5,7 +5,7 @@ description: Host your enterprise router in your own infrastructure
 
 import ObtainGraphApiKey from '../../../shared/obtain-graph-api-key.mdx';
 
-> **Self-hosted supergraphs are an Enterprise feature** for organizations with advanced performance or compliance requirements.
+> **Self-hosted supergraphs are an [Enterprise feature](/graphos/enterprise/)** for organizations with advanced performance or compliance requirements.
 >
 > If your organization might benefit from [Enterprise features](../enterprise/), please [get in touch with us!](https://www.apollographql.com/contact-sales/)
 
@@ -61,35 +61,7 @@ Complete the first step of <a href="./cloud/#1-create-your-apollo-account" targe
 
 After you create your Apollo account, create your first graph in GraphOS Studio by follow these steps:
 
-<GraphOSEnterpriseRequired />
-
-1. Go to your organization's **Graphs** tab in [GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content).
-
-2. Click **New Graph** in the top right. Studio displays the following dialog:
-
-    <img
-      className="screenshot"
-      src="../../img/graph-creation.jpg"
-      width="350"
-      style="margin-bottom: 20px;"
-    />
-
-3. Specify an organization and title for your graph.
-
-4. Leave the **Graph Architecture** as **Supergraph (default)**.
-
-5. Click **Next**. A dialog like the following appears:
-
-    <img
-     src="../../img/register-schema-dialog.jpg"
-     class="screenshot"
-     alt="Schema registration options"
-     width="500"
-    />
-
-6. Leave the **Supergraph Pipeline Track** dropdown set to its default value.
-
-Your graph has been created.
+<CreateSelfHostedSupergraph />
 
 #### Install the Rover CLI
 
