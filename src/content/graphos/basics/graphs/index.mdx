@@ -185,68 +185,9 @@ flowchart LR;
 
 **To create a cloud supergraph,** see the [GraphOS quickstart](../quickstart/cloud/).
 
-**To create a _non_-cloud graph** (i.e., a self-hosted supergraph or a monograph), see the instructions for your organization's [plan type](../org/plans/):
+**To create a _non_-cloud graph** (a self-hosted supergraph or a monograph), follow these steps:
 
-<ExpansionPanel title="Serverless plans">
-
-1. Go to your organization's **Graphs** tab in [Apollo Studio](https://studio.apollographql.com/?referrer=docs-content).
-
-    - **If you see this dialog...**
-
-        <img
-          src="../../img/studio-welcome.jpg"
-          class="screenshot"
-          alt="Welcome message for new Studio orgs"
-          width="350"
-        />
-
-        ...then click **Coming from Apollo Odyssey, or want to connect a self-managed router?**
-
-    - **Otherwise,** find the following notice in the bottom-right corner of the page:
-
-        <img
-          src="../../img/classic-graph-flow.jpg"
-          class="screenshot"
-          alt="Link to classic graph flow"
-          width="300"
-        />
-
-        Click **Head over to our classic graph flow**.
-
-    In either case, Studio displays the following dialog for creating a graph:
-
-    <img
-      className="screenshot"
-      src="../../img/graph-creation.jpg"
-      width="350"
-      style="margin-bottom: 20px;"
-    />
-
-2. Specify an organization and title for your graph.
-
-3. Specify your **Graph Architecture**:
-
-    * To create a self-hosted supergraph, leave this as **Supergraph (default)**.
-    * To create a monograph, switch this to **Monolith**.
-
-4. Click **Next**. A dialog like the following appears (the details differ depending on which **Graph Architecture** you're using):
-
-    <img
-     src="../../img/register-schema-dialog.jpg"
-     class="screenshot"
-     alt="Schema registration options"
-     width="500"
-    />
-
-5. **If you're creating a self-hosted supergraph,** select the version of Apollo Federation you're using from the **Supergraph Pipeline Track** dropdown.
-
-Your graph has been created, and it appears in the **Classic Graphs** section of your **Graphs** tab.
-
-Next, you need to publish your graph's schema(s) to Apollo using the Rover CLI. For details, see [Publishing schemas to GraphOS](../delivery/).
-
-</ExpansionPanel>
-
-<ExpansionPanel title="Enterprise and legacy plans">
+<GraphOSEnterpriseRequired />
 
 1. Go to your organization's **Graphs** tab in [Apollo Studio](https://studio.apollographql.com/?referrer=docs-content).
 
@@ -280,9 +221,6 @@ Next, you need to publish your graph's schema(s) to Apollo using the Rover CLI. 
 Your graph has been created.
 
 Next, you need to publish your graph's schema(s) to Apollo using the Rover CLI. For details, see [Publishing schemas to GraphOS](../delivery/).
-
-</ExpansionPanel>
-
 
 ## Variants
 
