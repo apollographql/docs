@@ -83,6 +83,8 @@ Notably, **Billing Manager**s can't invite new members to the organization or up
 
 Each [graph API key](../api-keys/) also has a corresponding member role. This role can be any of **Graph Admin** (the default), **Contributor**, **Documenter**, **Observer**, or **Consumer**. A graph API key provides access only to its associated graph. It does not provide access to actions associated with organizations or users.
 
+There is an additional role called **Persisted Query Publisher** that is only available for graph API keys (not for organization members). This role is only available for API keys for graphs in Enterprise organizations. An API key with this role can run the `rover persisted-queries publish` command to publish to [persisted query lists](../operations/persisted-queries), but does not have any other read or write access to the graph. This role is appropriate for use in the deployment process by client development teams which need to be able to publish their operations to your graph's persisted query lists but should not be able to view your graph's schema, changelogs, or use other **Consumer**-level features.
+
 Otherwise, a graph API key is equivalent in privileges to a user with the same role for the graph. For example, you can use a **Consumer** key to fetch a graph's schema, and you can use a **Graph Admin** key to manage integrations.
 
 A few operations aren't listed in the table above because they are _only_ supported by graph API keys, not personal API keys for users in the graph's organization. These are primarily operations that are performed by your GraphQL server, such as usage reporting (traces and performance metrics).
