@@ -52,9 +52,9 @@ The Apollo Router supports the following security levels or modes, in increasing
 
 |Security Level|Description|
 |--|--|
-|**Performance-only**| Clients can optionally execute an operation on your router by providing the operation's PQL-specified ID.|
+|**Allow operation IDs**| Clients can optionally execute an operation on your router by providing the operation's PQL-specified ID.|
 |**Audit mode**| Executing operations by providing a PQL-specified ID is still optional, but the router logs any unregistered operations.|
-|**Safelisting with operation strings allowed**| The router _rejects_ any incoming operations that aren't present in its PQL.|
+|**Safelisting**| The router _rejects_ any incoming operations that aren't present in its PQL.|
 |**Safelisting with IDs only**| The router rejects any incoming operations that aren't present in its PQL, _and_ clients _must_ execute an operation by providing its PQL-specified ID.|
 
 > _You can find more details, including configuration instructions, in the [implementation section](#2-router-configuration)._
@@ -317,7 +317,7 @@ To generate an operation manifest with Apollo iOS, you use the same [code genera
 
 With your [manifest published](#3-preregister-trusted-operations) and the [router configured](#2-router-configuration), you can update your clients to use trusted operations IDs. Organizations can do this one client at a time as client teams [publish client-specific PQMs](#32-publish-manifests-to-the-pql) to the PQL.
 
-> **Note:** This step provides performance benefits but isn't necessary for safelisting. You can continue to use full operation strings rather than operation IDs in [safelisting mode](#safelisting-operation-strings-allowed).
+> **Note:** This step provides performance benefits but isn't necessary for safelisting. You can continue to use full operation strings rather than operation IDs in [safelisting mode](#safelisting).
 
 To execute operations using their PQL-specified ID instead of full operations strings, clients can use the same protocol used for automatic persisted queries (APQ). 
 
@@ -363,7 +363,7 @@ Persisted queries' [tiered security levels](#security-levels) let you adopt an i
 
 If safelisting is your goal, you'll need to [coordinate across client teams](#coordinate-with-client-teams) to complete these steps for each of your client apps.
 
-Once your router's logs are completely clear of unexpected operations, you can configure your router to use [safelisting mode](#safelisting-operation-strings-allowed). Then, to reap the performance benefits, [update your client apps](#4-client-updates) to use operation IDs rather than full query strings.
+Once your router's logs are completely clear of unexpected operations, you can configure your router to use [safelisting mode](#safelisting). Then, to reap the performance benefits, [update your client apps](#4-client-updates) to use operation IDs rather than full query strings.
 
 Once you've confirmed all client apps use IDs, you can move to the most restrictive security level: [safelisting with IDs only](#safelisting-ids-only).
 This security level _enforces_ the performance benefit of using operation IDs rather than full operation strings. If you're content with the safelisting aspect of persisted queries with only optional performance benefits, you don't need to enable it.
@@ -675,7 +675,7 @@ Similarly, if your clients execute operations by providing their PQL-specified I
 
 #### Operation formatting changes
 
-While in [preview](/resources/product-launch-stages#preview), if your client sends full operation strings for registered operations, the registered operation's [`body`](#body) string must _exactly_ match the operation string, **including whitespace and field order**. In [audit mode](#audit-mode-dry-run), the router executes operations regardless of whitespace or field order differences, but logs them as unregistered operations. In [safelisting with operation strings allowed](#safelisting-operation-strings-allowed), the router rejects these operations.
+While in [preview](/resources/product-launch-stages#preview), if your client sends full operation strings for registered operations, the registered operation's [`body`](#body) string must _exactly_ match the operation string, **including whitespace and field order**. In [audit mode](#audit-mode-dry-run), the router executes operations regardless of whitespace or field order differences, but logs them as unregistered operations. In [safelisting with operation strings allowed](#safelisting), the router rejects these operations.
 
 This will change before the feature reaches [general availability](/resources/product-launch-stages/#general-availability): whitespace and other formatting differences won't disqualify operations as different from their preregistered versions.
 Specifically, the router will consider operations that differ only in whitespace, comments, and other ignored tokens to be the same. Similarly, it will consider operations that differ only in the order of their top-level operation and fragment definitions to be the same. Other differences, such as the order of fields or arguments, will still cause operations to be considered as different.
