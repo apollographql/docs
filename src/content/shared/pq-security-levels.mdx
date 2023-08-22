@@ -1,11 +1,11 @@
 The Apollo Router supports the following security levels, in increasing order of restrictiveness:
 
-- **Performance-only**: Clients can optionally execute an operation on your router by providing the operation's PQL-specified ID.
+- **Allow operation IDs**: Clients can optionally execute an operation on your router by providing the operation's PQL-specified ID.
     - All other levels also provide this core capability.
-    - This level provides no operation safelisting.
+    - This level doesn't provide safelisting.
 - **Audit mode**: Executing operations by providing a PQL-specified ID is still optional, but the router also logs any unregistered operations.
     - The level serves as a dry run and helps you identify operations you may still need to register before turning on safelisting.
-- **Safelisting with operation strings allowed**: The router _rejects_ any incoming operations not present in its PQL.
+- **Safelisting (with operation strings allowed)**: The router _rejects_ any incoming operations not present in its PQL. Requests can use either ID or operation string.
     - Before moving to this security level, ensure _all_ your client operations are present in your PQL.
 - **Safelisting with IDs only**: The router rejects any incoming operations not present in its PQL, _and_ clients _must_ execute an operation by providing its PQL-specified ID.
     - Before moving to this security level, ensure _all_ your clients execute operations by providing their PQL-specified ID.
@@ -14,7 +14,7 @@ When you first adopt persisted queries, you should start with a less restrictive
 
 See below for sample YAML configurations for each level.
 
-#### Performance-only
+#### Allow operation IDs
 
 To use persisted queries _only_ to reduce network bandwidth and latency (_not_ for safelisting), add the following minimal configuration:
 
@@ -22,7 +22,7 @@ To use persisted queries _only_ to reduce network bandwidth and latency (_not_ f
 preview_persisted_queries:
   enabled: true 
 ```
-> **Note:** You can use the performance-only security level with or without [automatic persisted queries](/router/configuration/in-memory-caching#caching-automatic-persisted-queries-apq) enabled.
+> **Note:** You can use this security level with or without [automatic persisted queries](/router/configuration/in-memory-caching#caching-automatic-persisted-queries-apq) enabled.
 
 This mode lets clients execute operations by providing their PQL-specified ID instead of the full operation string.
 Your router also continues to accept full operation strings, even for operations that _don't_ appear in its PQL.
@@ -74,11 +74,11 @@ apq:
 To execute an operation, clients can provide its PQL-specified ID _or_ full operation string.
 The router rejects unregistered operations and since `log_unknown` is true, those operations appear in your [router's logs](/router/logging).
 
-> You can set `log_unknown` to `false` while enabling safelisting, but we recommend keeping logging enabled to monitor the operations your router rejects.
+> You can set `log_unknown` to `false` while enabling safelisting, but it's best to keep logging enabled to monitor the operations your router rejects.
 
-#### Safelisting (IDs only)
+#### Safelisting with IDs only
 
-> ⚠️ **Do not start with this configuration:** It requires _all_ your clients execute operations by providing their PQL-specified ID. If any clients still provide full operation strings, the router rejects those operations.
+> ⚠️ **Do not start with this configuration:** It requires _all_ your clients execute operations by providing their PQL-specified ID. If any clients still provide full operation strings, the router rejects those operations, even if they're included in the safelist.
 
 With the following configuration, your router allows _only_ GraphQL operations that are present in its PQL, _and_ it requires clients to provide PQL-specified IDs instead of full operation strings:
 
@@ -99,5 +99,4 @@ If you want to use this security level, you should always _first_ set up [safeli
 
 If you set `log_unknown` to true, the router [logs](/router/logging) all rejected operations. This includes operations that were rejected because they included the full operation string rather than the ID, whether or not the operation was preregistered.
 
-> You can set `log_unknown` to `false` while enabling safelisting, but we recommend keeping logging enabled to monitor the operations your router rejects.
-
+> You can set `log_unknown` to `false` while enabling safelisting, but it's best to keep logging enabled to monitor the operations your router rejects.
