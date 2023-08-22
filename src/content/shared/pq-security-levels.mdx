@@ -4,7 +4,7 @@ The Apollo Router supports the following security levels, in increasing order of
     - All other levels also provide this core capability.
     - This level doesn't provide safelisting.
 - **Audit mode**: Executing operations by providing a PQL-specified ID is still optional, but the router also logs any unregistered operations.
-    - The level serves as a dry run and helps you identify operations you may still need to register before turning on safelisting.
+    - The level serves as a dry run and helps you identify operations you may still need to preregister before turning on safelisting.
 - **Safelisting**: The router _rejects_ any incoming operations not present in its PQL. Requests can use either ID or operation string.
     - Before moving to this security level, ensure _all_ your client operations are present in your PQL.
 - **Safelisting with IDs only**: The router rejects any incoming operations not present in its PQL, _and_ clients _must_ execute an operation by providing its PQL-specified ID.
@@ -95,8 +95,8 @@ apq:
 
 > **Note:** To enable safelisting, you _must_ turn off [automatic persisted queries](/router/configuration/in-memory-caching#caching-automatic-persisted-queries-apq) (APQs). APQs let clients [register arbitrary operations at runtime](#differences-from-automatic-persisted-queries), while safelisting's intent is to restrict operations to those that have been explicitly preregistered.
 
-If you want to use this security level, you should always _first_ set up [safelisting with operation strings allowed](#safelisting). ID only safelisting mode requires modifying _all_ your clients to execute operations via PQL-specified ID instead of an operation string. While making those necessary changes, you can use the less restrictive safelisting level in your router.
+If you want to use this security level, you should always _first_ set up [safelisting with operation strings allowed](#safelisting). ID only safelisting mode requires modifying _all_ your clients to execute operations via PQL-specified ID instead of an operation string. While making those necessary changes, you can use the less restrictive [safelisting mode](#safelisting) in your router.
 
-If you set `log_unknown` to true, the router [logs](/router/logging) all rejected operations. This includes operations that were rejected because they included the full operation string rather than the ID, whether or not the operation was preregistered.
+With `log_unknown` set to true, the router [logs](/router/logging) _all_ rejected operations, including operations that were preregistered to your PQL but used the full operation string rather than PQL-specified ID.
 
 > You can set `log_unknown` to `false` while enabling safelisting, but it's best to keep logging enabled to monitor the operations your router rejects.

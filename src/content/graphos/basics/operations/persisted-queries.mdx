@@ -50,12 +50,33 @@ If you _only_ want to improve request latency and bandwidth usage, APQ addresses
 
 The Apollo Router supports the following security levels or modes, in increasing order of restrictiveness:
 
-|Security Level|Description|
-|--|--|
-|**Allow operation IDs**| Clients can optionally execute an operation on your router by providing the operation's PQL-specified ID.|
-|**Audit mode**| Executing operations by providing a PQL-specified ID is still optional, but the router logs any unregistered operations.|
-|**Safelisting**| The router _rejects_ any incoming operations that aren't present in its PQL.|
-|**Safelisting with IDs only**| The router rejects any incoming operations that aren't present in its PQL, _and_ clients _must_ execute an operation by providing its PQL-specified ID.|
+<table>
+  <thead>
+    <tr>
+      <th style={{minWidth: 215}}>Security Level</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Allow operation IDs</strong></td>
+      <td>Clients can optionally execute an operation on your router by providing the operation's PQL-specified ID.</td>
+    </tr>
+    <tr>
+      <td><strong>Audit mode</strong></td>
+      <td>Executing operations by providing a PQL-specified ID is still optional, but the router logs any unregistered operations.</td>
+    </tr>
+    <tr>
+      <td><strong>Safelisting</strong></td>
+      <td>The router <em>rejects</em> any incoming operations that aren't present in its PQL. Clients can use either PQL-specified ID or operation string to execute operations.</td>
+    </tr>
+    <tr>
+      <td><strong>Safelisting with IDs only</strong></td>
+      <td>The router rejects any incoming operations that aren't present in its PQL, <em>and</em> clients <em>must</em> execute an operation by providing its PQL-specified ID.</td>
+    </tr>
+  </tbody>
+</table>
+
 
 > _You can find more details, including configuration instructions, in the [implementation section](#2-router-configuration)._
 
