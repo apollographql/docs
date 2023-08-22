@@ -72,7 +72,7 @@ The Apollo Router supports the following security levels or modes, in increasing
     </tr>
     <tr>
       <td><strong>Safelisting with IDs only</strong></td>
-      <td>The router rejects any incoming operations that aren't present in its PQL, <em>and</em> clients <em>must</em> execute an operation by providing its PQL-specified ID.</td>
+      <td>Clients can _only_ execute operations by providing their PQL-specified IDs; the router rejects all freeform GraphQL requests.</td>
     </tr>
   </tbody>
 </table>
