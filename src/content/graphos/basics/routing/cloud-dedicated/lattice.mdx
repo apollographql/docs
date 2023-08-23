@@ -55,14 +55,34 @@ A Lattice **target group** is a collection of targets, or compute resources, tha
 - [US East (N. Virginia) — `us-east-1`](https://us-east-1.console.aws.amazon.com/vpc/home?region=us-east-1)
 - [Europe (Ireland) — `eu-west-1`](https://eu-west-1.console.aws.amazon.com/vpc/home?region=eu-west-1)
 2. In the menu on the left, scroll down and open **Target groups** in the **VPC Lattice** section.
+
+<img class="screenshot" alt="AWS VPC service page left menu" src="../../../img/cloud-dedicated/vpc-lattice-menu.jpg" />
+
 3. Click **Create target group** on the top right.
+
+<img class="screenshot" alt="AWS VPC service page" src="../../../img/cloud-dedicated/create-target-group.jpg" width="500" />
+
 4. In the **Basic configuration** section, set the properties that match your subgraph resources.
+
+<img class="screenshot" alt="AWS VPC service page" src="../../../img/cloud-dedicated/target-group-configuration.jpg" width="500" />
+
 5. (Optional) If you are using a target type with health checks, make sure you configure your health checks correctly or Lattice will not be able to send traffic to your subgraphs.
+
+<img class="screenshot" alt="AWS VPC service page" src="../../../img/cloud-dedicated/target-group-health-checks.jpg" />
+
 6. Register the targets based on your chosen target type.
+
+<img class="screenshot" alt="AWS VPC service page" src="../../../img/cloud-dedicated/register-targets.jpg" />
+
 7. Review your targets to make sure all information is correct.
+
+<img class="screenshot" alt="AWS VPC service page" src="../../../img/cloud-dedicated/review-targets.jpg" />
+
 8. Click **Create target group** in the bottom right corner of the page.
 
-Congratulations! You created your first AWS VPC Lattice target group. You can repeat this task for each different resource that you want to share with Apollo GraphOS Cloud.
+<img class="screenshot" alt="AWS VPC service page" src="../../../img/cloud-dedicated/create-target-group.jpg" />
+
+Congratulations! You created a AWS VPC Lattice target group. Repeat this process for each different resource that you want to share with Apollo GraphOS Cloud.
 
 ### Step 2. Create an AWS VPC Lattice service
 
