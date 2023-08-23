@@ -398,9 +398,9 @@ minVersion: 3.8.1
 ---
 ```
 
-#### Removing a page from search engines
+#### Prevent a page from being indexed by search engines
 
-You can add the [`noIndex`](https://developers.google.com/search/docs/crawling-indexing/block-indexing) tag to a page by using the `noIndex` frontmatter.
+You can add the [`noindex`](https://developers.google.com/search/docs/crawling-indexing/block-indexing) tag to a page by using the `noIndex` frontmatter.
 
 ```md
 ---
