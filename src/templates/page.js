@@ -50,6 +50,7 @@ export const pageQuery = graphql`
           tags
           headingDepth
           minVersion
+          noIndex
         }
       }
       childMarkdownRemark {
@@ -63,6 +64,7 @@ export const pageQuery = graphql`
           description
           headingDepth
           minVersion
+          noIndex
         }
       }
     }
