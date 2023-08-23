@@ -17,7 +17,6 @@ module.exports = {
         ClientPQImplementation: 'readonly',
         ClientPQIntro: 'readonly',
         Disclaimer: 'readonly',
-        FeatureInPreview: 'readonly',
         GraphOSEnterpriseRequired: 'readonly',
         ObtainGraphApiKey: 'readonly',
         ObtainPersonalApiKey: 'readonly',
