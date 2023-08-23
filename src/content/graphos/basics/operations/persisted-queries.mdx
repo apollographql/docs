@@ -44,28 +44,49 @@ APQ has a few limitations compared to preregistered persisted queries.
   </tbody>
 </table>
 
-If you _only_ want to improve request latency and bandwidth usage, APQ addresses your use case. If you _also_ want to secure your supergraph with operation safelisting, you should preregister trusted operations in a PQL.
+If you _only_ want to improve request latency and bandwidth usage, APQ addresses your use case. If you _also_ want to secure your supergraph with operation safelisting, you should preregister operations in a PQL.
 
 ## Security levels
 
 The Apollo Router supports the following security levels or modes, in increasing order of restrictiveness:
 
-|Security Level|Description|
-|--|--|
-|**Performance-only**| Clients can optionally execute an operation on your router by providing the operation's PQL-specified ID.|
-|**Audit mode**| Executing operations by providing a PQL-specified ID is still optional, but the router logs any unregistered operations.|
-|**Safelisting with operation strings allowed**| The router _rejects_ any incoming operations that aren't present in its PQL.|
-|**Safelisting with IDs only**| The router rejects any incoming operations that aren't present in its PQL, _and_ clients _must_ execute an operation by providing its PQL-specified ID.|
+<table>
+  <thead>
+    <tr>
+      <th style={{minWidth: 215}}>Security Level</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Allow operation IDs</strong></td>
+      <td>Clients can optionally execute an operation on your router by providing the operation's PQL-specified ID.</td>
+    </tr>
+    <tr>
+      <td><strong>Audit mode</strong></td>
+      <td>Executing operations by providing a PQL-specified ID is still optional, but the router logs any unregistered operations.</td>
+    </tr>
+    <tr>
+      <td><strong>Safelisting</strong></td>
+      <td>The router <em>rejects</em> any incoming operations that aren't present in its PQL. Clients can use either PQL-specified ID or operation string to execute operations.</td>
+    </tr>
+    <tr>
+      <td><strong>Safelisting with IDs only</strong></td>
+      <td>Clients can _only_ execute operations by providing their PQL-specified IDs; the router rejects all freeform GraphQL requests.</td>
+    </tr>
+  </tbody>
+</table>
+
 
 > _You can find more details, including configuration instructions, in the [implementation section](#2-router-configuration)._
 
-These levels of permissiveness allow you to [incrementally adopt](#incremental-adoption-path) persisted queries on a client-by-client basis. Specifically, the router should use audit mode until you're confident that _all_ your clients' trusted operations have been registered in the PQL. Refer to the [incremental adoption section](#incremental-adoption-path) for a step-by-step guide.
+These levels of permissiveness allow you to [incrementally adopt](#incremental-adoption-path) persisted queries on a client-by-client basis. Specifically, the router should use audit mode until you're confident that _all_ your clients' trusted operations have been preregistered in the PQL. Refer to the [incremental adoption section](#incremental-adoption-path) for a step-by-step guide.
 
 ## Implementation steps
 
 Persisted queries provide benefits to different teams:
 - Safelisting helps **platform teams** secure the graph and optimize its performance.
-- **Application developers** can use trusted operation IDs to write performant client code.
+- **Application developers** can use preregistered operation IDs to write performant client code.
 
 Implementation also requires collaboration among these parties. These are the main steps for implementing persisted queries for safelisting, along with the team that usually performs them:
 
@@ -91,7 +112,7 @@ Implementation also requires collaboration among these parties. These are the ma
       <td>Platform team</td>
     </tr>
     <tr>
-      <td> <a href="#3-preregister-trusted-operations">3. Preregister trusted operations</a> </td>
+      <td> <a href="#3-preregister-operations">3. Preregister operations</a> </td>
       <td>
       Generate and publish a persisted queries manifest (PQM) to the PQL from your client's CI/CD pipeline.
       </td>
@@ -115,7 +136,7 @@ Continue reading for each step's details, or skip to the [incremental adoption s
 ### 1. PQL creation and linking
 
 To use persisted queries, you first need a **persisted query list** (**PQL**) in GraphOS Studio.
-Platform teams create an empty PQL in GraphOS Studio so that client teams can register trusted operations to it.
+Platform teams create an empty PQL in GraphOS Studio so that client teams can preregister operations to it.
 
 Each PQL is associated or "linked" with a single graph in GraphOS. A graph, however, can have several PQLs. For example, one graph may need multiple PQLs if you want a separate PQL for each [contract variant](../delivery/contracts/). You can link a PQL to any variants of its graph. And although many variants may use the same PQL, each variant can only have one linked PQL at a time.
 
@@ -215,9 +236,9 @@ The Apollo Router is the key component that enforces safelisting.
 
 <PQSecurityLevels />
 
-### 3. Preregister trusted operations
+### 3. Preregister operations
 
-Preregistering trusted operations to a PQL has two steps:
+Preregistering operations to a PQL has two steps:
 1. Generating persisted queries manifests (PQM) using client-specific tooling
 2. Publishing PQMs to the PQL using the Rover CLI tool
 
@@ -225,7 +246,7 @@ Building both of these into your CI/CD pipeline incorporates new operations auto
 
 #### 3.1 Generate persisted queries manifests
 
-Once a PQL exists in GraphOS, client teams can start publishing operations to it. To do so, you must generate JSON **manifests** of the trusted operations to publish. You generate a separate manifest for each of your client apps.
+Once a PQL exists in GraphOS, client teams can start publishing operations to it. To do so, you must generate JSON **manifests** of the operations to publish. You generate a separate manifest for each of your client apps.
 
 <ExpansionPanel title="See an example manifest file with two operations">
 
@@ -315,9 +336,9 @@ To generate an operation manifest with Apollo iOS, you use the same [code genera
 
 ### 4. Client updates
 
-With your [manifest published](#3-preregister-trusted-operations) and the [router configured](#2-router-configuration), you can update your clients to use trusted operations IDs. Organizations can do this one client at a time as client teams [publish client-specific PQMs](#32-publish-manifests-to-the-pql) to the PQL.
+With your [manifest published](#3-preregister-operations) and the [router configured](#2-router-configuration), you can update your clients to use preregistered operations IDs. Organizations can do this one client at a time as client teams [publish client-specific PQMs](#32-publish-manifests-to-the-pql) to the PQL.
 
-> **Note:** This step provides performance benefits but isn't necessary for safelisting. You can continue to use full operation strings rather than operation IDs in [safelisting mode](#safelisting-operation-strings-allowed).
+> **Note:** This step provides performance benefits but isn't necessary for safelisting. You can continue to use full operation strings rather than operation IDs in [safelisting mode](#safelisting).
 
 To execute operations using their PQL-specified ID instead of full operations strings, clients can use the same protocol used for automatic persisted queries (APQ). 
 
@@ -343,29 +364,29 @@ Refer to their persisted query documentation for implementation details.
 - [Apollo iOS](/ios/fetching/persisted-queries/)
 - [Apollo Kotlin](/kotlin/advanced/persisted-queries/)
 
-The Apollo Client Web requires you to use an [additional package](https://www.npmjs.com/package/@apollo/persisted-query-lists) at runtime to send persisted queries. The Apollo Client Web requires this package because certain aspects of the operation sent at runtime may not match the registered operations without it. Mobile clients have a more deterministic approach to formatting operations and, thus, don't need it.
+The Apollo Client Web requires you to use an [additional package](https://www.npmjs.com/package/@apollo/persisted-query-lists) at runtime to send persisted queries. The Apollo Client Web requires this package because certain aspects of the operation sent at runtime may not match the preregistered operations without it. Mobile clients have a more deterministic approach to formatting operations and, thus, don't need it.
 
 Refer to the Apollo Client Web's [persisted query documentation](/react/api/link/persisted-queries/) for implementation details.
 
 ## Incremental adoption path
 
-Persisted queries' [tiered security levels](#security-levels) let you adopt an incremental approach rather than simultaneously requiring all clients to send requests via trusted operations IDs. You can follow these steps for incremental adoption:
+Persisted queries' [tiered security levels](#security-levels) let you adopt an incremental approach rather than simultaneously requiring all clients to send requests via preregistered operations IDs. You can follow these steps for incremental adoption:
 
 1. Identify the first client you want to implement persisted queries with. It could be the client or team you're most comfortable with or the one most comfortable with GraphOS.
 2. Follow all [implementation steps](#implementation-steps) for your chosen client:
     - [Create and link a PQL](#1-pql-creation-and-linking) to a staging or development variant.
     - When [configuring the router](#2-router-configuration), begin with [audit mode](#audit-mode-dry-run).
     - Use the [client-specific tooling](#generation-methods) to generate an [operation manifest](#31-generate-persisted-queries-manifests) and [publish it to the PQL](#32-publish-manifests-to-the-pql) as part of your client's CI/CD pipeline.
-    - (Optional) Update your chosen client to use only trusted operations, either by full operation string or operation ID.
+    - (Optional) Update your chosen client to use only preregistered operations, either by full operation string or operation ID.
         - Teams working with Apollo Client Web need to use an [additional package](https://www.npmjs.com/package/@apollo/persisted-query-lists) at runtime to send persisted queries.
 
-3. Continue to monitor your router logs: once you consistently see that unregistered operations are being logged and registered ones aren't, you've completed the setup for this client! 🎉
+3. Continue to monitor your router logs: once you consistently see that unregistered operations are being logged and preregistered ones aren't, you've completed the setup for this client! 🎉
 
 If safelisting is your goal, you'll need to [coordinate across client teams](#coordinate-with-client-teams) to complete these steps for each of your client apps.
 
-Once your router's logs are completely clear of unexpected operations, you can configure your router to use [safelisting mode](#safelisting-operation-strings-allowed). Then, to reap the performance benefits, [update your client apps](#4-client-updates) to use operation IDs rather than full query strings.
+Once your router's logs are completely clear of unexpected operations, you can configure your router to use [safelisting mode](#safelisting). Then, to reap the performance benefits, [update your client apps](#4-client-updates) to use operation IDs rather than full query strings.
 
-Once you've confirmed all client apps use IDs, you can move to the most restrictive security level: [safelisting with IDs only](#safelisting-ids-only).
+Once you've confirmed all client apps use IDs, you can move to the most restrictive security level: [safelisting with IDs only](#safelisting-with-ids-only).
 This security level _enforces_ the performance benefit of using operation IDs rather than full operation strings. If you're content with the safelisting aspect of persisted queries with only optional performance benefits, you don't need to enable it.
 
 ### Coordinate with client teams
@@ -609,7 +630,7 @@ query GetBooks {
 
 </CodeColumns>
 
-Differences in whitespace or comments between a registered operation and the operation a client sends also cause the router to reject client operations. 
+Differences in whitespace or comments between a preregistered operation and the operation a client sends also cause the router to reject client operations. 
 
 <CodeColumns>
 
@@ -675,7 +696,7 @@ Similarly, if your clients execute operations by providing their PQL-specified I
 
 #### Operation formatting changes
 
-While in [preview](/resources/product-launch-stages#preview), if your client sends full operation strings for registered operations, the registered operation's [`body`](#body) string must _exactly_ match the operation string, **including whitespace and field order**. In [audit mode](#audit-mode-dry-run), the router executes operations regardless of whitespace or field order differences, but logs them as unregistered operations. In [safelisting with operation strings allowed](#safelisting-operation-strings-allowed), the router rejects these operations.
+While in [preview](/resources/product-launch-stages#preview), if your client sends full operation strings for preregistered operations, the preregistered operation's [`body`](#body) string must _exactly_ match the operation string, **including whitespace and field order**. In [audit mode](#audit-mode-dry-run), the router executes operations regardless of whitespace or field order differences, but logs them as unregistered operations. In [safelisting with operation strings allowed](#safelisting), the router rejects these operations.
 
 This will change before the feature reaches [general availability](/resources/product-launch-stages/#general-availability): whitespace and other formatting differences won't disqualify operations as different from their preregistered versions.
 Specifically, the router will consider operations that differ only in whitespace, comments, and other ignored tokens to be the same. Similarly, it will consider operations that differ only in the order of their top-level operation and fragment definitions to be the same. Other differences, such as the order of fields or arguments, will still cause operations to be considered as different.
