@@ -1,43 +1,73 @@
 ---
-title: Cloud Dedicated
-description: Secure communication to subgraphs using AWS VPC Lattice
+title: Secure communication using AWS VPC Lattice
 noIndex: true
 ---
 
-To send traffic to your subgraphs running in an AWS VPC without exposing them to the internet, Apollo GraphOS Cloud leverages AWS VPC Lattice. With Lattice, you can define services and share them with the Apollo AWS organization. Apollo GraphOS Cloud can then send traffic directly to your subgraphs without using VPC peering.
+To send traffic to your subgraphs running in an AWS VPC without exposing them to the internet, Apollo GraphOS Cloud leverages [AWS VPC Lattice](https://aws.amazon.com/vpc/lattice/). With Lattice, you can define services and share them with the Apollo AWS organization. Apollo GraphOS Cloud can then send traffic directly to your subgraphs without using VPC peering.
 
-> ⚠️ **Note**: Using AWS VPC Lattice incurs costs outside of your Apollo GraphOS Cloud spend. Please refer to the Lattice pricing page to learn more.
+```mermaid
+flowchart LR;
+  clients(Clients);
+  subgraph "Apollo Cloud";
+    router(["GraphOS <br/> Dedicated"]);
+  end;
+  resourceshare["AWS RAM <br/> Resource <br/> Share"]
+  subgraph "AWS Virtual Private Cloud"
+    lattice[AWS VPC <br/> Lattice <br/> Service]
+    service1[Service 1];
+    service2[Service 2];
+    service3[Service 3];
+  end;
 
-Lattice can only be used for subgraphs in the same AWS region as your Cloud Router. If you have a use-case where you run subgraphs in different AWS regions, or you run your workloads in a region that is not supported by Apollo GraphOS Cloud, please let us know.
+  router --> resourceshare
+  resourceshare --> lattice
+  lattice --> service1 & service2 & service3;
+
+  clients -->|Requests| router;
+```
+
+<blockquote>
+
+⚠️ **Note**:
+- You can only use Lattice for subgraphs in the **same AWS region as your Cloud Router**. If you need to run subgraphs in different AWS regions, or you run your workloads in a region not yet supported by Apollo GraphOS Cloud, please [let us know](mailto:cloud@apollographql.com).
+- Using AWS VPC Lattice incurs costs outside of your Apollo GraphOS Cloud spend. Refer to the [Lattice pricing page](https://aws.amazon.com/vpc/lattice/pricing/) to learn more.
+
+</blockquote>
 
 ## Create and share an AWS VPC Lattice service
 
-To allow Apollo GraphOS Cloud to send traffic to your private subgraphs, you must create one or multiple AWS VPC Lattice service, share it with the Apollo AWS Organization, then provide the service routing information in your Apollo Organization configuration page.
+To allow Apollo GraphOS Cloud to send traffic to your private subgraphs, you must:
+1. Create one or more AWS VPC Lattice target groups
+2. Create one or more AWS VPC Lattice services.
+3. Share the service(s) with the Apollo AWS Organization.
+4. Provide the service(s) routing information in your Apollo Organization configuration page.
 
-> The AWS Console interface might differ slightly from the screenshots in the article. If you find any discrepancies, please let us know.
+> The AWS Console interface may differ slightly from the screenshots in this guide.
 
 ### Step 1. Create AWS VPC Lattice target groups
 
+A Lattice **target group** is a collection of targets, or compute resources, that run your application or service. Check out the [AWS documentation](https://docs.aws.amazon.com/vpc-lattice/latest/ug/target-groups.html) to learn more.
+
 1. In the AWS Console for your region of choice, go to the VPC service page:
-US East (N. Virginia) — us-east-1
-Europe (Ireland) — eu-west-1
-2. In the menu on the left, scroll down and click on Target groups in the VPC Lattice section.
-3. Click on Create target group in the top right.
-4. In the Basic configuration section, set the properties that match to your subgraph resources.
+- [US East (N. Virginia) — `us-east-1`](https://us-east-1.console.aws.amazon.com/vpc/home?region=us-east-1)
+- [Europe (Ireland) — `eu-west-1`](https://eu-west-1.console.aws.amazon.com/vpc/home?region=eu-west-1)
+2. In the menu on the left, scroll down and open **Target groups** in the **VPC Lattice** section.
+3. Click **Create target group** on the top right.
+4. In the **Basic configuration** section, set the properties that match your subgraph resources.
 5. (Optional) If you are using a target type with health checks, make sure you configure your health checks correctly or Lattice will not be able to send traffic to your subgraphs.
-6. Register the targets based on your chosen target type
-7. Review your targets to make sure all the information are correct
-8. Click on Create target group in the bottom right corner of the page
+6. Register the targets based on your chosen target type.
+7. Review your targets to make sure all information is correct.
+8. Click **Create target group** in the bottom right corner of the page.
 
 Congratulations! You created your first AWS VPC Lattice target group. You can repeat this task for each different resource that you want to share with Apollo GraphOS Cloud.
 
 ### Step 2. Create an AWS VPC Lattice service
 
-1. In the AWS Console for your region of choice, go to the VPC service page:
-US East (N. Virginia) — us-east-1
-Europe (Ireland) — eu-west-1
-2. In the menu on the left, scroll down and click on Services in the VPC Lattice section.
-3. Click on Create service in the top right.
+1. In the AWS Console for your region, go to the VPC service page:
+- [US East (N. Virginia) — `us-east-1`](https://us-east-1.console.aws.amazon.com/vpc/home?region=us-east-1)
+- [Europe (Ireland) — `eu-west-1`](https://eu-west-1.console.aws.amazon.com/vpc/home?region=eu-west-1)
+2. In the menu on the left, scroll down and open **Services** in the **VPC Lattice** section.
+3. Click **Create service** in the top right.
 4. In the Identifiers section, give the name, description, and tags of your choice for the service.
 5. In the Custom domain configuration section, make sure you leave the checkbox unselected.
 6. In the Service access section, select the AWS IAM authentication type, and paste the following auth policy. This will ensure that only the AWS Organization for Apollo GraphOS Cloud has the right to send traffic to your subgraphs.
@@ -136,27 +166,11 @@ Europe (Ireland) — eu-west-1
 
 Deleting the network association can take a few seconds. Once the network association is deleted, Apollo GraphOS Cloud cannot contact your subgraphs anymore.
 
-### Remove private subgraph associations in Apollo Studio
-
-To-do 
-
-### Troubleshooting
-
-To-do
-
-### Frequently asked questions
+## Frequently asked questions
 
 #### I've added a new service to my resource share, but it doesn't appear in my private subgraphs. How can I fix this?
 
 Apollo GraphOS Cloud does not automatically scan your resource shares for new Lattice services. If you add a service, you can manually trigger a scan by going to your Apollo Organization settings page and clicking on the Rescan subgraphs button.
-
-#### How can I see which Lattice services are associated with my Apollo Organization?
-
-This section is intentionally left blank for the moment.
-
-#### I see in the Apollo Studio that one of my Lattice services is misconfigured. How can I fix this?
-
-This section is intentionally left blank for the moment.
 
 #### I want to use AWS VPC Lattice within my own organization. Can I still use Lattice for private subgraphs?
 
