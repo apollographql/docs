@@ -398,6 +398,17 @@ minVersion: 3.8.1
 ---
 ```
 
+#### Prevent a page from being indexed by search engines
+
+You can add the [`noindex`](https://developers.google.com/search/docs/crawling-indexing/block-indexing) tag to a page by using the `noIndex` frontmatter.
+
+```md
+---
+title: Hidden preview feature
+noIndex: true
+---
+```
+
 ### Linking
 
 Links between docs articles should be written as relative paths. For example, if you wanted to link from the `schema/custom-scalars` article in the Apollo Server docs to the `getting-started` page at the root of the content directory, you would write:
