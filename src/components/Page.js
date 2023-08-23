@@ -57,6 +57,7 @@ import {
   PageContent,
   PageSeo
 } from './PageLayout';
+import {PreviewFeature} from './PreviewFeature';
 import {SiDiscord} from 'react-icons/si';
 import {TOTAL_HEADER_HEIGHT} from './Header';
 import {YouTube} from './YouTube';
@@ -186,7 +187,8 @@ const mdxComponents = {
   TypescriptApiBox: TypeScriptApiBox,
   EmbeddableExplorer,
   ButtonLink,
-  MinVersion
+  MinVersion,
+  PreviewFeature
 };
 
 const {processSync} = rehype()
