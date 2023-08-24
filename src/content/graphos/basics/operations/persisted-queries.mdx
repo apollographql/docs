@@ -34,7 +34,7 @@ APQ has a few limitations compared to preregistered persisted queries.
     <tr>
       <td>Build- vs. runtime registration</td>
       <td> Queries are registered at <b>runtime</b>. One of your router instances must receive any given operation string from a client at least once to <a href="/router/configuration/distributed-caching">cache it</a>.</td>
-      <td> Clients contribute to the PQL at <b>build-time</b>. Your router fetches its PQL from GraphOS on startup, meaning clients can always execute operations using their PQL-specified ID.</td>
+      <td> Clients contribute to the PQL at <b>build-time</b>. Your router fetches its PQL from GraphOS on startup and polls for updates, meaning clients can always execute operations using their PQL-specified ID.</td>
     </tr>
     <tr>
       <td>Safelisting</td>
