@@ -57,6 +57,7 @@ import {
   PageContent,
   PageSeo
 } from './PageLayout';
+import {PreviewFeature} from './PreviewFeature';
 import {SiDiscord} from 'react-icons/si';
 import {TOTAL_HEADER_HEIGHT} from './Header';
 import {YouTube} from './YouTube';
@@ -83,6 +84,7 @@ import 'prismjs/components/prism-swift';
 import 'prismjs/components/prism-tsx';
 import 'prismjs/components/prism-typescript';
 import 'prismjs/components/prism-yaml';
+import {GatsbySeo} from 'gatsby-plugin-next-seo';
 
 // use JS syntax highlighting for rhai codeblocks
 Prism.languages.rhai = Prism.languages.javascript;
@@ -186,7 +188,8 @@ const mdxComponents = {
   TypescriptApiBox: TypeScriptApiBox,
   EmbeddableExplorer,
   ButtonLink,
-  MinVersion
+  MinVersion,
+  PreviewFeature
 };
 
 const {processSync} = rehype()
@@ -211,7 +214,8 @@ export default function Page({file}) {
     file;
 
   const {frontmatter, headings} = childMdx || childMarkdownRemark;
-  const {title, description, toc, tags, headingDepth, minVersion} = frontmatter;
+  const {title, description, toc, tags, headingDepth, minVersion, noIndex} =
+    frontmatter;
 
   const {docset, versions, currentVersion, navItems, versionBanner} =
     useConfig(basePath);
@@ -295,6 +299,7 @@ export default function Page({file}) {
           }
         }}
       />
+      {noIndex && <GatsbySeo noindex />}
       <PageSeo title={title} description={description} docset={docset} />
       {versionBanner ? (
         <VersionBanner
