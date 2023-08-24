@@ -20,6 +20,7 @@ GraphOS provides **schema linting** to help you enforce formatting conventions a
 ## Configuring the linter
 
 The GraphOS schema linter uses a [predefined collection of rules](./linter-rules/) to identify issues with proposed schema changes.
+The predefined collection includes [schema composition](/federation/federated-types/composition) rules.
 
 - **Currently,** you can define **graph-wide linter defaults** that apply to all variants of a particular graph.
 - **In a future release,** you'll also be able to configure how _individual_ variants of your graph treat violations of each linter rule.
@@ -163,4 +164,4 @@ By default, one-off linting flags _all_ violations in your local schema.
 
 ## Linter rules
 
-See [this article](./linter-rules).
+See this [reference list of rules](./linter-rules).
