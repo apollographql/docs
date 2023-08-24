@@ -1,0 +1,15 @@
+#### `OVERRIDE_DIRECTIVE_CAN_BE_REMOVED`
+
+Indicates a field with the @override directive no longer exists in a source subgraph, so the directive can be safely removed.
+
+<hr/>
+
+#### `OVERRIDDEN_FIELD_CAN_BE_REMOVED`
+
+Indicates that a field has been overridden by another subgraph. You should consider removing the overriden field to avoid confusion.
+
+<hr/>
+
+#### `UNUSED_ENUM_TYPE`
+
+Indicates that an enum type is defined in some subgraphs but is unused (no field/argument references it). All values from subgraphs defining that enum will be included in the supergraph.
