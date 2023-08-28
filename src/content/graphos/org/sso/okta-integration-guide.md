@@ -5,7 +5,7 @@ title: Setting up Apollo SSO with Okta
 > ⚠️ **Single sign-on (SSO) is available only for [Enterprise plans](https://www.apollographql.com/pricing/).** Unlike most Enterprise features, this feature is _not_ available as part of an [Enterprise trial](../plans/#enterprise-trials).
 
 This guide walks through configuring Okta as your Apollo organization's identity provider (IdP) for single sign-on (SSO).
-You can [use Okta's official GraphOS Studio integration](#use-graphos-studio-integration) (recommended) or [create your custom SAML integration](#create-a-custom-integration).
+You can [use Okta's official GraphOS Studio integration](#use-graphos-studio-integration) (recommended) or [create a custom SAML integration](#create-a-custom-integration).
 Both methods require an Okta account with administrator privileges.
 
 Once you've set up your integration, you need to [assign users to it in Okta](#assign-users-in-okta) so they can access GraphOS via the **Sign in with SSO** button on the [GraphOS Studio login page](https://studio.apollographql.com/login).
@@ -34,7 +34,7 @@ You can use Okta's [Bookmark App integration](#3-add-graphos-studio-as-a-bookmar
 
     <img
         src="../../img/sso/okta-add-integration.jpg"
-        alt="To-do"
+        alt="To-do: Selecting GraphOS Studio integration in Okta"
         class="screenshot"
     />
 
@@ -54,7 +54,7 @@ You can use Okta's [Bookmark App integration](#3-add-graphos-studio-as-a-bookmar
         class="screenshot"
     />
 
-5. Copy the **Metadata URL** under **Metadata details**—you need to send it to Apollo to complete setup.
+5. Copy the **Metadata URL** under **Metadata details**—you'll send it to Apollo to complete setup.
 
 ### 2. Send SAML metadata to Apollo
 
@@ -77,7 +77,7 @@ Since the Okta integration only supports an SP-initiated flow, we strongly recom
 
 To do so, follow [Okta's instructions](https://help.okta.com/en/prod/Content/Topics/Apps/Apps_Bookmark_App.htm) the the following Bookmark Application configurations:
 - **Application label**: GraphOS Studio
-- **URL** Provided by Apollo Support 
+- **URL**: Provided by Apollo Support 
 
 ## Using a custom integration
 
