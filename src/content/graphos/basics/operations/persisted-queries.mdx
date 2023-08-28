@@ -611,7 +611,7 @@ When comparing an incoming freeform GraphQL document to the registered operation
 
 However, **all other details of the document must match**. For example, field order, argument order, `$variable` names, alias names, string and numeric literals, and the presence of `__typename` fields must match between the incoming freeform GraphQL document and the document in the persisted query list.
 
-> Note: Prior to Router v1.28.0, safelisting required the incoming document to match the document in the safelist *precisely*, including white space, comments, and top-level definition order.
+> Note: Prior to Router v1.28, safelisting required the incoming document to match the document in the safelist *precisely*, including white space, comments, and top-level definition order.
 
 For example, most applications treat responses from the following queries equivalently, but the router would reject the client operation because it doesn't match the PQL entry exactly. (The operations do semantically differ because GraphQL servers [return fields in the order requested](http://spec.graphql.org/draft/#sec-Serialized-Map-Ordering), even though most applications ignore the order of object fields in JSON.)
 
