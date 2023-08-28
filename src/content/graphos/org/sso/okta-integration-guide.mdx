@@ -81,9 +81,11 @@ To do so, follow [Okta's instructions](https://help.okta.com/en/prod/Content/Top
 
 ## Using a custom integration
 
-To-do: Cite any reasons why folks would want to create a custom integration, or remove this section.
+Before the official Okta integration, you needed to create a custom integration to configure SSO. Now that an integration exists, we don't recommend creating a custom one. You can refer to the instructions below in case you need them for a previously-created custom integration.
 
-### 1. Create an app integration
+<ExpansionPanel title="Click to see instructions">
+
+#### 1. Create an app integration
 
 1. From your Okta Administrator Dashboard, navigate to the **Applications** view.  
 2. Click **Create App Integration**. The following dialog appears:
@@ -97,7 +99,7 @@ To-do: Cite any reasons why folks would want to create a custom integration, or 
 3. Select **SAML 2.0** as your sign-in method.  
 4. Click **Next**. The **Create SAML Integration** dialog appears.
  
-### 2. Create a new SAML integration
+#### 2. Create a new SAML integration
 
 The **Create SAML Integration** dialog includes multiple steps:
 
@@ -157,7 +159,7 @@ The **Create SAML Integration** dialog includes multiple steps:
 
     Then click **Finish**.      
 
-### 3. Send SAML metadata to Apollo
+#### 3. Send SAML metadata to Apollo
 
 1. From your new SAML integration's details page, scroll down and click **View SAML setup instructions** on the right side:
 
@@ -176,6 +178,8 @@ The **Create SAML Integration** dialog includes multiple steps:
     /> 
 
 3. Send the text file to your Apollo contact. They will complete your SSO setup.
+
+</ExpansionPanel>
 
 ## Assign users in Okta
 
