@@ -44,6 +44,8 @@ async function transformer({data}) {
       page =>
         // pages must not be internal, AND
         !isInternal[page.parent.sourceInstanceName] &&
+        // pages must not be labeled "noIndex" in their frontmatter, AND
+        !page.frontmatter.noIndex &&
         // must also not match the pattern /ios/api/ or /ios/*/api/
         !/\/ios\/(.*\/)?api\/?/.test(page.fields.slug)
     )
@@ -120,6 +122,7 @@ const query = `
         frontmatter {
           title
           description
+          noIndex
         }
         fields {
           slug
@@ -135,6 +138,7 @@ const query = `
         frontmatter {
           title
           description
+          noIndex
         }
         fields {
           slug
