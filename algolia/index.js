@@ -112,7 +112,7 @@ const query = `
       }
     }
 
-    allMarkdownRemark {
+    allMarkdownRemark (filter: {frontmatter: {noIndex: {ne: true}}}) {
       nodes {
         ...NodeFragment
         htmlAst
@@ -127,7 +127,7 @@ const query = `
       }
     }
 
-    allMdx {
+    allMdx (filter: {frontmatter: {noIndex: {ne: true}}}) {
       nodes {
         ...NodeFragment
         mdxAST
