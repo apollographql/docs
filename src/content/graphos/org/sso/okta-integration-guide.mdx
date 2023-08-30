@@ -5,7 +5,7 @@ title: Setting up Apollo SSO with Okta
 > ⚠️ **Single sign-on (SSO) is available only for [Enterprise plans](https://www.apollographql.com/pricing/).** Unlike most Enterprise features, this feature is _not_ available as part of an [Enterprise trial](../plans/#enterprise-trials).
 
 This guide walks through configuring Okta as your Apollo organization's identity provider (IdP) for single sign-on (SSO).
-You can [use Okta's official GraphOS Studio integration](#use-graphos-studio-integration) (recommended) or [create a custom SAML integration](#create-a-custom-integration).
+You can [use Okta's official GraphOS Studio integration](#use-graphos-studio-integration) (recommended) or create a custom SAML integration.
 Both methods require an Okta account with administrator privileges.
 
 Once you've set up your integration, you need to [assign users to it in Okta](#assign-users-in-okta) so they can access GraphOS via the **Sign in with SSO** button on the [GraphOS Studio login page](https://studio.apollographql.com/login).
@@ -14,8 +14,8 @@ Once you've set up your integration, you need to [assign users to it in Okta](#a
 
 The Okta/GraphOS Studio SAML integration currently supports the following features:
 
+- [Just-In-Time (JIT) Provisioning](https://help.okta.com/en-us/content/topics/directory/ad-agent-add-update-jit.htm)
 - Service provider-initiated (SP-initiated) SSO
-- Just-In-Time (JIT) Provisioning
 
 An SP-initiated flow occurs when an end user signs in to an external application directly from that application's sign-in website. For example, https://studio.apollographql.com/login is the sign-in location for GraphOS Studio.
 You can use Okta's [Bookmark App integration](#3-add-graphos-studio-as-a-bookmark-application) to simulate an Identity Provider-initiated (IdP-initiated) flow to allow users to sign in from Okta.
