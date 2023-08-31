@@ -40,11 +40,11 @@ const theme = extendTheme({
         _dark: 'nebula.500'
       },
       text: {
-        default: 'gray.800',
-        _dark: 'whiteAlpha.900'
+        default: 'nebula.500',
+        _dark: 'regolith'
       },
       border: {
-        default: 'gray.200',
+        default: 'nebula.500',
         _dark: 'whiteAlpha.300'
       },
       primary: {

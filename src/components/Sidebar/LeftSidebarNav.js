@@ -26,7 +26,7 @@ export function LeftSidebarNav(props) {
 
   return (
     <Box
-      color="white"
+      color="regolith"
       fontWeight="semibold"
       bgColor="nebula.500"
       _dark={{
