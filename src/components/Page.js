@@ -57,6 +57,7 @@ import {
   PageContent,
   PageSeo
 } from './PageLayout';
+import {PreviewFeature} from './PreviewFeature';
 import {SiDiscord} from 'react-icons/si';
 import {TOTAL_HEADER_HEIGHT} from './Header';
 import {YouTube} from './YouTube';
@@ -186,7 +187,8 @@ const mdxComponents = {
   TypescriptApiBox: TypeScriptApiBox,
   EmbeddableExplorer,
   ButtonLink,
-  MinVersion
+  MinVersion,
+  PreviewFeature
 };
 
 const {processSync} = rehype()
@@ -211,7 +213,8 @@ export default function Page({file}) {
     file;
 
   const {frontmatter, headings} = childMdx || childMarkdownRemark;
-  const {title, description, toc, tags, headingDepth, minVersion} = frontmatter;
+  const {title, description, toc, tags, headingDepth, minVersion, noIndex} =
+    frontmatter;
 
   const {docset, versions, currentVersion, navItems, versionBanner} =
     useConfig(basePath);
@@ -295,7 +298,12 @@ export default function Page({file}) {
           }
         }}
       />
-      <PageSeo title={title} description={description} docset={docset} />
+      <PageSeo
+        noindex={noIndex === true}
+        title={title}
+        description={description}
+        docset={docset}
+      />
       {versionBanner ? (
         <VersionBanner
           versionLabels={[]}

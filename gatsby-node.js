@@ -130,11 +130,13 @@ exports.createSchemaCustomization = ({actions: {createTypes}}) => {
     type MdxFrontmatter {
       headingDepth: Int
       minVersion: String
+      noIndex: Boolean
     }
 
     type MarkdownRemarkFrontmatter {
       headingDepth: Int
       minVersion: String
+      noIndex: Boolean
     }
   `;
   createTypes(typeDefs);
