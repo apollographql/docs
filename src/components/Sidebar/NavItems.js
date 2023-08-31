@@ -78,15 +78,25 @@ function NavButton({isActive, depth, children, tags, ...props}) {
       textAlign="left"
       justifyContent="flex-start"
       data-depth={depth}
+      color="text"
       sx={
         isActive && {
-          bg: 'purple.500',
-          color: 'white',
+          bg: 'horizon.200',
+          color: 'nebula.500',
           _hover: {
-            bg: 'purple.600'
+            bg: 'horizon.100'
           },
           _active: {
-            bg: 'purple.700'
+            bg: 'horizon.50'
+          },
+          _dark: {
+            bg: 'horizon.400',
+            _hover: {
+              bg: 'horizon.300'
+            },
+            _active: {
+              bg: 'horizon.200'
+            }
           }
         }
       }

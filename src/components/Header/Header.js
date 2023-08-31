@@ -103,11 +103,10 @@ export function Header({children, algoliaFilters}) {
               textTransform="uppercase"
               letterSpacing="widest"
               rounded="sm"
-              bg="horizon.50"
-              color="horizon.500"
+              bg="horizon.200"
+              color="nebula.500"
               _dark={{
-                bg: 'horizon.500',
-                color: 'inherit'
+                bg: 'horizon.400'
               }}
             >
               Docs
