@@ -8,8 +8,6 @@ Indicates a non-repeatable directive has been applied to a schema element in dif
 
 <p style="margin-bottom: 0">❌</p>
 
-<CodeColumns>
-
 ```graphql title="Subgraph A"
 type Product {
   id: ID!
@@ -32,11 +30,7 @@ type Query {
 }
 ```
 
-</CodeColumns>
-
 <p style="margin-bottom: 0">✅</p>
-
-<CodeColumns>
 
 ```graphql title="Subgraph A"
 type Product {
@@ -59,8 +53,6 @@ type Query {
   products: [Product] @customDirective(orderBy: ["name", "price"]) #highlight-line
 }
 ```
-
-</CodeColumns>
 
 <hr/>
 
@@ -116,8 +108,6 @@ Indicates the source subgraph specified by `@override` directive doesn't exist.
 
 <p style="margin-bottom: 0">❌</p>
 
-<CodeColumns>
-
 ```graphql title="Subgraph A"
 type Product @key(fields: "id") {
   id: ID!
@@ -129,11 +119,7 @@ type Product @key(fields: "id") {
 # Subgraph B doesn't exist
 ```
 
-</CodeColumns>
-
 <p style="margin-bottom: 0">✅</p>
-
-<CodeColumns>
 
 ```graphql title="Subgraph A"
 type Product @key(fields: "id") {
@@ -148,5 +134,3 @@ type Product @key(fields: "id") {
   inStock: Boolean!
 }
 ```
-
-</CodeColumns>

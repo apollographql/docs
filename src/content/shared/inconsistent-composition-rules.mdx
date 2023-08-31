@@ -4,8 +4,6 @@ Indicates that an optional argument (of a field or directive definition) isn't p
 
 <p style="margin-bottom: 0">❌</p>
 
-<CodeColumns>
-
 ```graphql title="Subgraph A"
 type Product {
   id: ID!
@@ -22,11 +20,7 @@ type Product {
 }
 ```
 
-</CodeColumns>
-
 <p style="margin-bottom: 0">✅</p>
-
-<CodeColumns>
 
 ```graphql title="Subgraph A"
 type Product {
@@ -43,8 +37,6 @@ type Product {
   price(currency: Currency, taxIncluded: Boolean): Float #highlight-line
 }
 ```
-
-</CodeColumns>
 
 <hr/>
 
@@ -644,8 +636,6 @@ Indicates that a field of an interface "value type" (has no `@key` in any subgra
 
 <p style="margin-bottom: 0">❌</p>
 
-<CodeColumns>
-
 ```graphql title="Subgraph A"
 interface Product {
   id: ID!
@@ -677,11 +667,7 @@ type PhysicalProduct implements Product {
 
 ```
 
-</CodeColumns>
-
 <p style="margin-bottom: 0">✅</p>
-
-<CodeColumns>
 
 ```graphql title="Subgraph A"
 interface Product {
@@ -695,7 +681,6 @@ type DigitalProduct implements Product {
   name: String
   cost: Float
   size: Int 
-  cost: Float
 }
 ```
 
@@ -714,8 +699,6 @@ type PhysicalProduct implements Product {
 }
 ```
 
-</CodeColumns>
-
 <hr/>
 
 #### `INCONSISTENT_NON_REPEATABLE_DIRECTIVE_ARGUMENTS`
@@ -723,8 +706,6 @@ type PhysicalProduct implements Product {
 A non-repeatable directive is applied to a schema element in different subgraphs but with arguments that are different.
 
 <p style="margin-bottom: 0">❌</p>
-
-<CodeColumns>
 
 ```graphql title="Subgraph A"
 type Product {
@@ -748,11 +729,7 @@ type Query {
 }
 ```
 
-</CodeColumns>
-
 <p style="margin-bottom: 0">✅</p>
-
-<CodeColumns>
 
 ```graphql title="Subgraph A"
 type Product {
@@ -775,8 +752,6 @@ type Query {
   allProducts: [Product] @customDirective(orderBy: "name") #highlight-line
 }
 ```
-
-</CodeColumns>
 
 <hr/>
 
@@ -901,10 +876,6 @@ type Details {
 
 Indicates that an executable directive definition is marked repeatable in only some of the subgraphs and will _not_ be repeatable in the supergraph.
 
-<p style="margin-bottom: 0">❌</p>
-
-<CodeColumns>
-
 ```graphql title="Subgraph A"
 directive @customDirective on FIELD
 ```
@@ -913,11 +884,7 @@ directive @customDirective on FIELD
 directive @customDirective repeatable on FIELD
 ```
 
-</CodeColumns>
-
 <p style="margin-bottom: 0">✅</p>
-
-<CodeColumns>
 
 ```graphql title="Subgraph A"
 directive @customDirective repeatable on FIELD
@@ -926,8 +893,6 @@ directive @customDirective repeatable on FIELD
 ```graphql title="Subgraph B"
 directive @customDirective repeatable on FIELD
 ```
-
-</CodeColumns>
 
 <hr/>
 
@@ -937,8 +902,6 @@ Indicates that a type system directive definition is marked repeatable in only s
 
 <p style="margin-bottom: 0">❌</p>
 
-<CodeColumns>
-
 ```graphql title="Subgraph A"
 directive @customDirective on OBJECT
 ```
@@ -947,11 +910,7 @@ directive @customDirective on OBJECT
 directive @customDirective repeatable on OBJECT
 ```
 
-</CodeColumns>
-
 <p style="margin-bottom: 0">✅</p>
-
-<CodeColumns>
 
 ```graphql title="Subgraph A"
 directive @customDirective repeatable on OBJECT
@@ -960,8 +919,6 @@ directive @customDirective repeatable on OBJECT
 ```graphql title="Subgraph B"
 directive @customDirective repeatable on OBJECT
 ```
-
-</CodeColumns>
 
 <hr/>
 
@@ -971,8 +928,6 @@ Indicates that a member of a union type definition is only defined in some of th
 
 <p style="margin-bottom: 0">❌</p>
 
-<CodeColumns>
-
 ```graphql title="Subgraph A"
 type Product {
   id: ID!
@@ -995,13 +950,9 @@ type Product {
 
 union SearchResult = Product | Service #highlight-line
 ```
-
-</CodeColumns>
 
 <p style="margin-bottom: 0">✅</p>
 
-<CodeColumns>
-
 ```graphql title="Subgraph A"
 type Product {
   id: ID!
@@ -1029,7 +980,5 @@ type Service {
 
 union SearchResult = Product | Service #highlight-line
 ```
-
-</CodeColumns>
 
 <hr/>
