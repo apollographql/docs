@@ -2,11 +2,65 @@
 
 Indicates that an issue was detected when composing custom directives.
 
-<hr/>
-
 #### `MERGED_NON_REPEATABLE_DIRECTIVE_ARGUMENTS`
 
 Indicates a non-repeatable directive has been applied to a schema element in different subgraphs with different arguments and the arguments values were merged using the directive configured strategies.
+
+<p style="margin-bottom: 0">❌</p>
+
+<CodeColumns>
+
+```graphql title="Subgraph A"
+type Product {
+  id: ID!
+  name: String
+}
+
+type Query {
+  products: [Product] @customDirective(orderBy: ["name"]) #highlight-line
+}
+```
+
+```graphql title="Subgraph B"
+type Product {
+  id: ID!
+  name: String
+}
+
+type Query {
+  products: [Product] @customDirective(orderBy: ["price"]) #highlight-line
+}
+```
+
+</CodeColumns>
+
+<p style="margin-bottom: 0">✅</p>
+
+<CodeColumns>
+
+```graphql title="Subgraph A"
+type Product {
+  id: ID!
+  name: String
+}
+
+type Query {
+  products: [Product] @customDirective(orderBy: ["name", "price"]) #highlight-line
+}
+```
+
+```graphql title="Subgraph B"
+type Product {
+  id: ID!
+  name: String
+}
+
+type Query {
+  products: [Product] @customDirective(orderBy: ["name", "price"]) #highlight-line
+}
+```
+
+</CodeColumns>
 
 <hr/>
 
@@ -14,8 +68,85 @@ Indicates a non-repeatable directive has been applied to a schema element in dif
 
 For an executable directive definition, indicates that no location appears for it in any subgraphs.
 
+<p style="margin-bottom: 0">❌</p>
+
+```graphql title="Subgraph A"
+directive @customDirective(arg: String) on FRAGMENT_DEFINITION
+
+type Product {
+  id: ID!
+  name: String
+}
+```
+
+```graphql title="Subgraph B"
+directive @customDirective(arg: String) on FRAGMENT_DEFINITION
+
+# no fragments defined in this subgraph either
+
+type Review {
+  id: ID!
+  text: String
+}
+```
+
+<p style="margin-bottom: 0">✅</p>
+
+```graphql title="Subgraph A"
+directive @customDirective(arg: String) on FRAGMENT_DEFINITION
+
+type Product {
+  id: ID!
+  name: String
+}
+
+fragment ProductFragment on Product @customDirective(arg: "example") {
+  id
+  name
+  price
+  description
+}
+```
+
 <hr/>
 
 #### `FROM_SUBGRAPH_DOES_NOT_EXIST`
 
 Indicates the source subgraph specified by `@override` directive doesn't exist.
+
+<p style="margin-bottom: 0">❌</p>
+
+<CodeColumns>
+
+```graphql title="Subgraph A"
+type Product @key(fields: "id") {
+  id: ID!
+  inStock: Boolean! @override(from: "Subgraph B")
+}
+```
+
+```graphql title="Subgraph B"
+# Subgraph B doesn't exist
+```
+
+</CodeColumns>
+
+<p style="margin-bottom: 0">✅</p>
+
+<CodeColumns>
+
+```graphql title="Subgraph A"
+type Product @key(fields: "id") {
+  id: ID!
+  inStock: Boolean! @override(from: "Subgraph B")
+}
+```
+
+```graphql title="Subgraph B"
+type Product @key(fields: "id") {
+  id: ID!
+  inStock: Boolean!
+}
+```
+
+</CodeColumns>
