@@ -36,8 +36,8 @@ const theme = extendTheme({
     },
     colors: {
       bg: {
-        default: 'white',
-        _dark: 'gray.800'
+        default: 'regolith',
+        _dark: 'nebula.500'
       },
       text: {
         default: 'gray.800',
@@ -84,7 +84,35 @@ const theme = extendTheme({
     teal: createColorPalette(teal),
     blue: createColorPalette(blilet),
     yellow: createColorPalette(yellow),
-    orange: createColorPalette(orange)
+    orange: createColorPalette(orange),
+    regolith: '#FFEADB',
+    horizon: createColorPalette({
+      darkest: '#612000',
+      darker: '#943000',
+      dark: '#C74100',
+      base: '#FC5200',
+      light: '#FF722E',
+      lighter: '#FF9461',
+      lightest: '#FFB794'
+    }),
+    nebula: createColorPalette({
+      darkest: '#000',
+      darker: '#0B1418',
+      dark: '#15252D',
+      base: '#254250',
+      light: '#365E72',
+      lighter: '#467B95',
+      lightest: '#5C96B2'
+    }),
+    satellite: createColorPalette({
+      darkest: '#7C928F',
+      darker: '#98A9A7',
+      dark: '#B4C0BE',
+      base: '#CFD7D6',
+      light: '#ECEFEF',
+      lighter: '#F9FAFA',
+      lightest: '#FFF'
+    })
   }
 });
 

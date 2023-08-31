@@ -28,9 +28,9 @@ export function LeftSidebarNav(props) {
     <Box
       color="white"
       fontWeight="semibold"
-      bgColor="gray.800"
+      bgColor="nebula.500"
       _dark={{
-        bgColor: 'gray.900'
+        bgColor: 'nebula.700'
       }}
       flexShrink="0"
       overflowY="auto"

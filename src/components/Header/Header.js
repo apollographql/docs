@@ -13,8 +13,7 @@ import {
   IconButton,
   Text,
   Tooltip,
-  useColorMode,
-  useColorModeValue
+  useColorMode
 } from '@chakra-ui/react';
 import {FiMoon, FiSun} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
@@ -28,14 +27,18 @@ export const TOTAL_HEADER_HEIGHT =
   EYEBROW_HEIGHT + HEADER_HEIGHT + HEADER_BORDER_WIDTH;
 
 function Eyebrow({children}) {
-  const bgHover = useColorModeValue('indigo.100', 'indigo.700');
   return (
     <Center
-      bg="indigo.50"
-      _dark={{
-        bg: 'indigo.800'
+      bg="satellite.50"
+      _hover={{
+        bg: 'satellite.100'
       }}
-      _hover={{bg: bgHover}}
+      _dark={{
+        bg: 'satellite.800',
+        _hover: {
+          bg: 'satellite.700'
+        }
+      }}
       css={{height: EYEBROW_HEIGHT}}
       fontSize="sm"
       fontWeight="semibold"
@@ -100,10 +103,10 @@ export function Header({children, algoliaFilters}) {
               textTransform="uppercase"
               letterSpacing="widest"
               rounded="sm"
-              bg="indigo.50"
-              color="indigo.500"
+              bg="horizon.50"
+              color="horizon.500"
               _dark={{
-                bg: 'indigo.400',
+                bg: 'horizon.500',
                 color: 'inherit'
               }}
             >
@@ -184,3 +187,8 @@ export function Header({children, algoliaFilters}) {
     </Box>
   );
 }
+
+Header.propTypes = {
+  children: PropTypes.node,
+  algoliaFilters: PropTypes.array
+};
