@@ -58,47 +58,43 @@ type Query {
 
 #### `NO_EXECUTABLE_DIRECTIVE_INTERSECTION`
 
-For an executable directive definition, indicates that no location appears for it in any subgraphs.
+Indicates that an executable directive definition is declared with no shared locations across subgraphs.
 
 <p style="margin-bottom: 0">❌</p>
 
-```graphql title="Subgraph A"
-directive @customDirective(arg: String) on FRAGMENT_DEFINITION
+<CodeColumns>
 
-type Product {
-  id: ID!
-  name: String
-}
+```graphql title="Subgraph A"
+directive @log(
+  message: String!
+) on QUERY  #highlight-line
 ```
 
 ```graphql title="Subgraph B"
-directive @customDirective(arg: String) on FRAGMENT_DEFINITION
-
-# no fragments defined in this subgraph either
-
-type Review {
-  id: ID!
-  text: String
-}
+directive @log(
+  message: String!
+) on FIELD #highlight-line
 ```
+
+</CodeColumns>
 
 <p style="margin-bottom: 0">✅</p>
 
+<CodeColumns>
+
 ```graphql title="Subgraph A"
-directive @customDirective(arg: String) on FRAGMENT_DEFINITION
-
-type Product {
-  id: ID!
-  name: String
-}
-
-fragment ProductFragment on Product @customDirective(arg: "example") {
-  id
-  name
-  price
-  description
-}
+directive @log(
+  message: String!
+) on QUERY | FIELD
 ```
+
+```graphql title="Subgraph B"
+directive @log(
+  message: String!
+) on QUERY | FIELD
+```
+
+</CodeColumns>
 
 <hr/>
 
