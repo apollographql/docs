@@ -33,12 +33,12 @@ const plugins = [
   '@chakra-ui/gatsby-plugin',
   'gatsby-plugin-combine-redirects', // local plugin
   'gatsby-plugin-loadable-components-ssr',
-  // {
-  //   resolve: 'gatsby-plugin-check-links', // local plugin
-  //   options: {
-  //     ignore: ['/react/api/core/ApolloClient', '/react/v2/api/apollo-client']
-  //   }
-  // },
+  {
+    resolve: 'gatsby-plugin-check-links', // local plugin
+    options: {
+      ignore: ['/react/api/core/ApolloClient', '/react/v2/api/apollo-client']
+    }
+  },
   {
     resolve: 'gatsby-plugin-manifest',
     options: {
