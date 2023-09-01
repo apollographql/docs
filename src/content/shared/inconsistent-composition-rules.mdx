@@ -60,7 +60,16 @@ of the other.
 type Product {
   id: ID!
   name: String
-  price(currency: Currency): Float #highlight-line
+  price(currency: Currency!): Float #highlight-line
+}
+
+enum Currency {
+  USD
+  EUR
+  GBP
+  JPY
+  AUD
+  CAD
 }
 ```
 
@@ -68,7 +77,16 @@ type Product {
 type Product {
   id: ID!
   name: String
-  price(currency: String): Float #highlight-line
+  price(currency: Currency): Float #highlight-line
+}
+
+enum Currency {
+  USD
+  EUR
+  GBP
+  JPY
+  AUD
+  CAD
 }
 ```
 
@@ -82,7 +100,16 @@ type Product {
 type Product {
   id: ID!
   name: String
-  price(currency: Currency): Float #highlight-line
+  price(currency: Currency!): Float #highlight-line
+}
+
+enum Currency {
+  USD
+  EUR
+  GBP
+  JPY
+  AUD
+  CAD
 }
 ```
 
@@ -90,7 +117,16 @@ type Product {
 type Product {
   id: ID!
   name: String
-  price(currency: Currency): Float #highlight-line
+  price(currency: Currency!): Float #highlight-line
+}
+
+enum Currency {
+  USD
+  EUR
+  GBP
+  JPY
+  AUD
+  CAD
 }
 ```
 
@@ -120,13 +156,41 @@ type Product {
   name: String
   price: Money #highlight-line
 }
+
+type Money {
+  amount: Float!
+  currency: Currency!
+}
+
+enum Currency {
+  USD
+  EUR
+  GBP
+  JPY
+  AUD
+  CAD
+}
 ```
 
 ```graphql title="Subgraph B"
 type Product {
   id: ID!
   name: String
-  price: Float #highlight-line
+  price: Money! #highlight-line
+}
+
+type Money {
+  amount: Float!
+  currency: Currency!
+}
+
+enum Currency {
+  USD
+  EUR
+  GBP
+  JPY
+  AUD
+  CAD
 }
 ```
 
@@ -140,7 +204,21 @@ type Product {
 type Product {
   id: ID!
   name: String
-  price: Money #highlight-line
+  price: Money! #highlight-line
+}
+
+type Money {
+  amount: Float!
+  currency: Currency!
+}
+
+enum Currency {
+  USD
+  EUR
+  GBP
+  JPY
+  AUD
+  CAD
 }
 ```
 
@@ -148,7 +226,21 @@ type Product {
 type Product {
   id: ID!
   name: String
-  price: Money #highlight-line
+  price: Money! #highlight-line
+}
+
+type Money {
+  amount: Float!
+  currency: Currency!
+}
+
+enum Currency {
+  USD
+  EUR
+  GBP
+  JPY
+  AUD
+  CAD
 }
 ```
 
