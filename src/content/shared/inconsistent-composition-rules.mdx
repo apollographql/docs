@@ -549,7 +549,7 @@ Indicates that an executable directive definition is declared with inconsistent 
 ```graphql title="Subgraph A"
 directive @log(
   message: String!
-) on QUERY  #highlight-line
+) on QUERY | FIELD  #highlight-line
 ```
 
 ```graphql title="Subgraph B"
@@ -674,21 +674,21 @@ Indicates that a field of an input object type definition is only defined in som
 ```graphql title="Subgraph A"
 input ProductInput {
   name: String
+  price: Float #highlight-line
 }
 
 input OrderInput {
-  product: ProductInput #highlight-line
+  product: ProductInput
 }
 ```
 
 ```graphql title="Subgraph B"
 input ProductInput {
   name: String
-  price: Float #highlight-line
 }
 
 input OrderInput {
-  product: ProductInput #highlight-line
+  product: ProductInput
 }
 ```
 
@@ -701,20 +701,22 @@ input OrderInput {
 ```graphql title="Subgraph A"
 input ProductInput {
   name: String
+  price: Float
 }
 
 input OrderInput {
-  product: ProductInput #highlight-line
+  product: ProductInput
 }
 ```
 
 ```graphql title="Subgraph B"
 input ProductInput {
   name: String
+  price: Float
 }
 
 input OrderInput {
-  product: ProductInput #highlight-line
+  product: ProductInput
 }
 ```
 
@@ -965,25 +967,43 @@ type Details {
 
 #### `INCONSISTENT_TYPE_SYSTEM_DIRECTIVE_LOCATIONS`
 
-Indicates that an executable directive definition is marked repeatable in only some of the subgraphs and will _not_ be repeatable in the supergraph.
+Indicates that an executable directive definition is declared with inconsistent locations across subgraphs. (The supergraph schema then uses the intersection of all locations in the supergraph.)
+
+<p style="margin-bottom: 0">❌</p>
+
+<CodeColumns>
 
 ```graphql title="Subgraph A"
-directive @customDirective on FIELD
+directive @customDirective(
+  message: String!
+) on OBJECT | FIELD_DEFINITION  #highlight-line
 ```
 
 ```graphql title="Subgraph B"
-directive @customDirective repeatable on FIELD
+directive @customDirective(
+  message: String!
+) on FIELD_DEFINITION #highlight-line
 ```
+
+</CodeColumns>
 
 <p style="margin-bottom: 0">✅</p>
 
+<CodeColumns>
+
 ```graphql title="Subgraph A"
-directive @customDirective repeatable on FIELD
+directive @customDirective(
+  message: String!
+) on OBJECT | FIELD_DEFINITION
 ```
 
 ```graphql title="Subgraph B"
-directive @customDirective repeatable on FIELD
+directive @customDirective(
+  message: String!
+) on OBJECT | FIELD_DEFINITION
 ```
+
+</CodeColumns>
 
 <hr/>
 
