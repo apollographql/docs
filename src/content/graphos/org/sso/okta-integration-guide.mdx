@@ -54,24 +54,9 @@ You can use Okta's [Bookmark App integration](#3-add-graphos-studio-as-a-bookmar
         class="screenshot"
     />
 
-5. Copy the **Metadata URL** under **Metadata details**—you'll send it to Apollo to complete setup.
+5. Copy the **Metadata URL** under **Metadata details**. Send the URL to your Apollo contact. They will complete your SSO setup.
 
-### 2. Send SAML metadata to Apollo
-
-1. Sign in to [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content) and click **Contact Support** in the upper right corner of the screen.
-
-    <img
-        src="../../img/sso/contact-support.jpg"
-        alt="GraphOS Studio"
-        class="screenshot"
-        width="300"
-    />
-
-2. Create a support ticket: Select **Membership Management** as the issue and include the **metadata URL** you saved during integration configuration. Click **Submit**.
-
-Apollo will complete your SSO setup and notify you once it's ready.
-
-### 3. Add GraphOS Studio as a Bookmark App
+### 2. Add GraphOS Studio as a Bookmark App
 
 Since the Okta integration only supports an SP-initiated flow, we strongly recommend hiding the application in the Okta catalog for users and instead adding GraphOS Studio as a **[Bookmark App](https://help.okta.com/en/prod/Content/Topics/Apps/Apps_Bookmark_App.htm)**. Bookmark Apps allow your users to correctly launch the application from the Okta catalog.
 
