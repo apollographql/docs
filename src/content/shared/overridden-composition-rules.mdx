@@ -2,14 +2,130 @@
 
 Indicates a field with the @override directive no longer exists in a source subgraph, so the directive can be safely removed.
 
+<p style="margin-bottom: 0">❌</p>
+
+```graphql title="Subgraph A"
+type Product @key(fields: "id") {
+  id: ID!
+  inStock: Boolean! @override(from: "Subgraph B")
+}
+```
+
+```graphql title="Subgraph B"
+type Product @key(fields: "id") {
+  id: ID!
+  name: String!
+}
+```
+
+<p style="margin-bottom: 0">✅</p>
+
+```graphql title="Subgraph A"
+type Product @key(fields: "id") {
+  id: ID!
+  inStock: Boolean!
+}
+```
+
+```graphql title="Subgraph B"
+type Product @key(fields: "id") {
+  id: ID!
+  name: String!
+}
+```
+
 <hr/>
 
 #### `OVERRIDDEN_FIELD_CAN_BE_REMOVED`
 
 Indicates that a field has been overridden by another subgraph. You should consider removing the overriden field to avoid confusion.
 
+<p style="margin-bottom: 0">❌</p>
+
+```graphql title="Subgraph A"
+type Product @key(fields: "id") {
+  id: ID!
+  name: String!
+  inStock: Boolean! @override(from: "Subgraph B")
+}
+```
+
+```graphql title="Subgraph B"
+type Product @key(fields: "id") {
+  id: ID!
+  inStock: Boolean!
+}
+```
+
+<p style="margin-bottom: 0">✅</p>
+
+```graphql title="Subgraph A"
+type Product @key(fields: "id") {
+  id: ID!
+  name: String!
+}
+```
+
+```graphql title="Subgraph B"
+type Product @key(fields: "id") {
+  id: ID!
+  inStock: Boolean!
+}
+```
+
 <hr/>
 
 #### `UNUSED_ENUM_TYPE`
 
 Indicates that an enum type is defined in some subgraphs but is unused (no field/argument references it). All values from subgraphs defining that enum will be included in the supergraph.
+
+<p style="margin-bottom: 0">❌</p>
+
+<CodeColumns>
+
+```graphql title="Subgraph A"
+enum ProductStatus {
+  AVAILABLE
+  SOLD_OUT
+}
+
+type Product {
+  id: ID!
+  name: String
+}
+```
+
+```graphql title="Subgraph B"
+type Order {
+  id: ID!
+  product: Product
+  status: String
+}
+```
+
+</CodeColumns>
+
+<p style="margin-bottom: 0">✅</p>
+
+<CodeColumns>
+
+```graphql title="Subgraph A"
+
+type Product {
+  id: ID!
+  name: String
+  status: ProductStatus
+}
+```
+
+```graphql title="Subgraph B"
+
+type Order {
+  id: ID!
+  product: Product
+  status: ProductStatus
+}
+```
+</CodeColumns>
+
+<hr/>
