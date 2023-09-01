@@ -45,6 +45,7 @@ Indicates that a field has been overridden by another subgraph. You should consi
 ```graphql title="Subgraph A"
 type Product @key(fields: "id") {
   id: ID!
+  name: String!
   inStock: Boolean! @override(from: "Subgraph B")
 }
 ```
@@ -52,7 +53,6 @@ type Product @key(fields: "id") {
 ```graphql title="Subgraph B"
 type Product @key(fields: "id") {
   id: ID!
-  name: String!
   inStock: Boolean!
 }
 ```
@@ -62,14 +62,14 @@ type Product @key(fields: "id") {
 ```graphql title="Subgraph A"
 type Product @key(fields: "id") {
   id: ID!
-  inStock: Boolean!
+  name: String!
 }
 ```
 
 ```graphql title="Subgraph B"
 type Product @key(fields: "id") {
   id: ID!
-  name: String!
+  inStock: Boolean!
 }
 ```
 
