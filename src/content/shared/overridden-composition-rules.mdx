@@ -53,6 +53,7 @@ type Product @key(fields: "id") {
 type Product @key(fields: "id") {
   id: ID!
   name: String!
+  inStock: Boolean!
 }
 ```
 
@@ -61,6 +62,7 @@ type Product @key(fields: "id") {
 ```graphql title="Subgraph A"
 type Product @key(fields: "id") {
   id: ID!
+  inStock: Boolean!
 }
 ```
 
@@ -68,7 +70,6 @@ type Product @key(fields: "id") {
 type Product @key(fields: "id") {
   id: ID!
   name: String!
-  inStock: Boolean!
 }
 ```
 
@@ -109,10 +110,6 @@ type Order {
 <CodeColumns>
 
 ```graphql title="Subgraph A"
-enum ProductStatus {
-  AVAILABLE
-  SOLD_OUT
-}
 
 type Product {
   id: ID!
@@ -122,10 +119,6 @@ type Product {
 ```
 
 ```graphql title="Subgraph B"
-enum ProductStatus {
-  AVAILABLE
-  SOLD_OUT
-}
 
 type Order {
   id: ID!

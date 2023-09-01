@@ -775,7 +775,6 @@ type Product {
 type Product {
   id: ID!
   name: String
-  weight: Float #highlight-line
 }
 
 ```
@@ -948,7 +947,7 @@ type Product {
   name: String
 }
 
-union SearchResult = Product | Service #highlight-line
+union SearchResult = Product #highlight-line
 ```
 
 <p style="margin-bottom: 0">✅</p>
