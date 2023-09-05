@@ -198,12 +198,12 @@ We'll cover some of these pages in later steps, but feel free to click around an
 | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **README**     | Displays the variant's editable Markdown-formatted README, along with other important details about the variant (such as its graph ref and router URL). [Learn more](../graphs/studio-features/#the-readme-page)           |
 | **Schema**     | Documentation for all your supergraph's types and fields. Supports filtering definitions by name, subgraph, and other values. [Learn more](../graphs/studio-features/#the-schema-page)                                     |
-| **Explorer**   | A powerful IDE for building and executing operations against your supergraph. [Learn more](../explorer/)                                                                                                           |
+| **Explorer**   | A powerful IDE for building and executing operations against your supergraph. [Learn more](../explorer/)                                                                                                                   |
 | **Subgraphs**  | Displays the details for each separate GraphQL API that's part of your supergraph. (Each API is called a **subgraph**.) [Learn more](../routing/cloud/)                                                                    |
 | **Changelog**  | Displays a historical diff of additions, modifications, and deletions made to your supergraph's schema.                                                                                                                    |
 | **Fields**     | Displays field-level metrics for your supergraph, indicating how frequently each field is included in client operations. [Learn more](../metrics/field-usage)                                                              |
 | **Clients**    | Displays operation metrics for the variant, broken down by individual clients. This feature requires that clients identify themselves in their requests to your router. [Learn more](../metrics/client-awareness)          |
-| **Operations** | Displays an overview of usage metrics for the variant, including request and error rates. Supports filtering by date range. [Learn more](../metrics/)                                                       |
+| **Operations** | Displays an overview of usage metrics for the variant, including request and error rates. Supports filtering by date range. [Learn more](../metrics/)                                                                      |
 | **Checks**     | Displays the results of schema checks that have been run for the variant. [Learn more](../delivery/schema-checks)                                                                                                          |
 | **Launches**   | Displays the results of recent launches executed for your supergraph. A launch occurs whenever changes are made to one of your subgraph schemas, resulting in an update to your router. [Learn more](../delivery/launches) |
 | **Settings**   | Configuration options for the individual variant, along with high-level options for the entire supergraph.                                                                                                                 |
@@ -348,19 +348,21 @@ Because you've created a cloud supergraph, operations you run in the Explorer ar
 
 </blockquote>
 
-## 6. View operation metrics
+## 6. View operation and field metrics
 
-Here's a powerful benefit of a cloud supergraph: because clients execute operations against your GraphOS-managed router, the router automatically collects metrics on those operations! You can then visualize those metrics in Studio.
+Here's a powerful benefit of a cloud supergraph: because clients execute operations against your GraphOS-managed router, the router can collect metrics on those operations and their fields. You can then visualize those metrics in Studio.
 
-Go to your variant's **Operations** page, which looks like this:
+Go to your variant's **Insights** page, which looks like this:
 
 <img
-  src="../../img/operations-quickstart.jpg"
+  src="../../img/insights-quickstart.jpg"
   className="screenshot"
-  alt="The Operations page in Studio after executing an operation"
+  alt="The Insights page in Studio"
 />
 
-The operations you [executed in the Explorer](#4-query-your-supergraph) should already be represented on this page! After you update all of your clients to query your router, the **Operations** page becomes vital to monitoring your supergraph's performance.
+The operations you [executed in the Explorer](#4-query-your-supergraph) should already be represented on this page. After you update all of your clients to query your router, the **Insights** page becomes vital to monitoring your supergraph's performance.
+
+Learn more about the available metrics in the [metrics documentation](../metrics).
 
 ## 7. Connect clients to your router
 
