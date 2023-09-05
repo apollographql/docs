@@ -16,8 +16,9 @@
     ]
   ],
   "sidebar": {
-    "Operation metrics": "/",
-    "Field usage": "/field-usage",
+    "Overview": "/",
+    "Operation metrics": "/operations",
+    "Field metrics": "/field-usage",
     "Segmenting by client": "/client-awareness",
     "Sending metrics to GraphOS": "/sending-operation-metrics",
     "Datadog forwarding": [
