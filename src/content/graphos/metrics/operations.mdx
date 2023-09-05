@@ -1,27 +1,33 @@
 ---
 title: Operation metrics in GraphOS
-description: Understand your supergraph's performance
+description: Understand your operation performance
 ---
 
-Once you've configured your graph to [send operation metrics to GraphOS](./sending-operation-metrics/), you can view them in GraphOS Studio. In addition, you can configure your subgraphs to include [resolver-level traces](#resolver-level-traces) in their responses to your router, which are then also reported to GraphOS.
+Once you've configured your graph to send [operation metrics to GraphOS](./sending-operation-metrics/), you can view them in GraphOS Studio. In addition, you can configure your subgraphs to include [resolver-level traces](#resolver-level-traces) in their responses to your router, which are then also reported to GraphOS.
 
-## Viewing metrics
+## Operations overview
 
-You can visualize operation metrics in [GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content), from any variant's **Operations** page:
-
-<img
-  src="../img/studio-metrics.jpg"
-  className="screenshot"
-  alt="Apollo Studio metrics view"
-/>
-
-This page gives you a helpful overview of your supergraph's recent performance, including:
+The **Insights** page gives you a helpful overview of your supergraph's recent usage and performance, including:
 
 - The rate of requests sent to your router
 - Your supergraph's p95 service time
 - Your supergraph's error rate
 
-The page displays _overall_ values for these metrics, along with values broken down by operation name. You can click an operation name to view more detailed information for it.
+The overview displays _overall_ values for these metrics, along with values broken down by operation name. You can click an operation name to view more detailed information for it.
+
+- Filter by time period and client
+
+## Operations metrics
+
+- Detail left sidebar
+- Search
+- Filter Operations
+- Sort Operations
+
+### Usage information
+
+- Operation Signature
+- Query plan
 
 ## Resolver-level traces
 
@@ -45,3 +51,5 @@ To enable federated trace reporting in your subgraphs, consult the documentation
 > To confirm the support status for your library, check its **FEDERATED TRACING** entry in [Federation-compatible subgraph implementations](/federation/building-supergraphs/supported-subgraphs).
 
 If your subgraphs use [Apollo Server with the `@apollo/subgraph` library](/apollo-server/using-federation/apollo-subgraph-setup/), federated trace reporting is enabled by default. You can customize Apollo Server's trace reporting behavior with the [inline trace plugin](/apollo-server/api/plugin/inline-trace).
+
+## Errors
