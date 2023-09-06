@@ -128,3 +128,91 @@ We recommend implementing retries with backoff when you encounter `5xx` response
 The reference TypeScript implementation includes several features that you might want to include in your implementation. All of these features are implemented in the usage reporting plugin itself, and are documented [the plugin's API reference](/apollo-server/api/plugin/usage-reporting/).
 
 For example, you can restrict which information is sent to GraphOS, particularly to avoid reporting personal data. Because personal data most commonly appears in variables and headers, the TypeScript agent offers options to `sendVariablesValues` and `sendHeaders`.
+
+## Reporting field usage
+
+Your GraphQL server can report metrics for field executions, requesting operations, or both.
+
+### Prerequisites
+
+> ⚠️ Before continuing, make sure you've configured your router or individual GraphQL server to [push metrics to GraphOS](./sending-operation-metrics/).
+
+To report each type of field usage metric to GraphOS, make sure your graph meets the prerequisites for that metric:
+
+#### Requesting operations
+
+To report metrics for requesting operations, your GraphQL server must run Apollo Server 3.6 or later.
+
+If you have a [federated graph](/federation), your _gateway_ must run Apollo Server 3.6 or later, but there are no requirements for your subgraphs.
+
+#### Field executions
+
+To report metrics for field executions, your GraphQL server can run any recent version of Apollo Server 2.x or 3.x.
+
+If you have a [federated graph](https://apollographql.com/docs/federation), your subgraphs must support federated tracing. For compatible libraries, see the `FEDERATED TRACING` entry for libraries in [this table](/federation/building-supergraphs/supported-subgraphs/).
+
+> If _some_ of your subgraphs support federated tracing and others _don't_, only field executions in compatible subgraphs are reported to Apollo.
+
+### Reporting with a supergraph
+
+If you have a self-hosted supergraph, you only need to configure your [router](/federation/building-supergraphs/router/) to [send metrics to GraphOS](./sending-operation-metrics/). Subgraphs should _not_ send any metrics to GraphOS directly. Instead, they can include trace data in their responses to the router. The router then includes that data in its own reports to GraphOS.
+
+### Performance considerations
+
+Calculating field execution metrics can affect performance for large queries or high-traffic graphs. This is especially true for [federated graphs](https://apollographql.com/docs/federation), because a subgraph includes each operation's full trace data in its response to the gateway.
+
+#### Disabling field execution metrics
+
+In Apollo Server 3.6 and later, you can disable field-level instrumentation for some or all operations by providing the [`fieldLevelInstrumentation` option to `ApolloServerPluginUsageReporting`](https://apollographql.com/docs/apollo-server/api/plugin/usage-reporting/#fieldlevelinstrumentation).
+
+Disabling field-level instrumentation for a particular request has the following effects:
+
+- The request does not contribute to the "field executions" statistic on the Fields page in Studio.
+- The request does not contribute to field-level execution timing hints that can be displayed in the Explorer and in VS Code.
+- The request does not produce a trace that can be viewed in the Traces section of the Operations page in Studio.
+
+These requests _do_ still contribute to most features of Studio, such as schema checks, the Operations page, and the "requesting operations" statistic on the Fields page.
+
+To disable field-level instrumentation for _all_ requests, pass `() => false` as the `fieldLevelInstrumentation` option:
+
+```ts
+new ApolloServer({
+  plugins: [
+    ApolloServerPluginUsageReporting({
+      fieldLevelInstrumentation: () => false
+    })
+  ]
+  // ...
+});
+```
+
+If you do this, field execution statistics do not appear on the Fields page.
+
+#### Fractional sampling
+
+You can enable field-level instrumentation for a fixed fraction of all requests by passing a number between `0` and `1` as the `fieldLevelInstrumentation` option:
+
+```ts
+new ApolloServer({
+  plugins: [
+    ApolloServerPluginUsageReporting({
+      fieldLevelInstrumentation: 0.01
+    })
+  ]
+  // ...
+});
+```
+
+If you do so, Apollo Server randomly chooses to enable field-level instrumentation for each request according to the given probability.
+
+> ⚠️ Make sure to pass a _number_ (like `0.01`), _not_ a function that always _returns_ the same number (like `() => 0.01`), which has a [different effect](#custom-sampling).
+
+In this case, whenever field-level instrumentation _is_ enabled for a particular request, Apollo Server reports it to Studio with a weight based on the given probability. The "field executions" statistic on the Fields page (along with execution timing hints) is scaled by this weight.
+
+For example, if you pass `0.01`, your server enables field-level execution for approximately 1% of requests, and every observed field execution is counted as 100 field executions on the Fields page. (The actual observed execution count is available in a tooltip in the table.)
+
+#### Custom sampling
+
+You can decide whether to enable field-level instrumentation (and what the weight should be) on a per-operation basis by passing a function as the value of `fieldLevelInstrumentation`.
+
+For example, you might want to enable field-level instrumentation more often for rare operations and less often for common operations. For details, see the [usage reporting plugin docs](https://apollographql.com/docs/apollo-server/api/plugin/usage-reporting/#fieldlevelinstrumentation).
