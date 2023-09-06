@@ -19,7 +19,7 @@ jobs:
           node-version: 14
 
       - name: Trigger deploy
-        run: netlify-cli@15.8.1 deploy --trigger --prod
+        run: npx netlify-cli@15.8.1 deploy --trigger --prod
         env:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
