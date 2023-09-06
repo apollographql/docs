@@ -17,18 +17,22 @@
   ],
   "sidebar": {
     "Overview": "/",
-    "Operation metrics": "/operations",
-    "Field metrics": "/field-usage",
-    "Segmenting by client": "/client-awareness",
-    "Sending metrics to GraphOS": "/sending-operation-metrics",
-    "Datadog forwarding": [
-      "/datadog-integration",
-      [
-        "enterprise"
+    "Metrics collection": {
+      "Sending metrics to GraphOS": "/sending-operation-metrics",
+      "Operation signatures": "/operation-signatures",
+      "Datadog forwarding": [
+        "/datadog-integration",
+        [
+          "enterprise"
+        ]
       ]
-    ],
-    "Operation signatures": "/operation-signatures",
-    "Notifications": {
+    },
+    "Insights and analysis": {
+      "Operation metrics": "/operations",
+      "Field usage": "/field-usage",
+      "Segmenting by client": "/client-awareness"
+    },
+    "Notifications and alerts": {
       "Setup": "/notifications/notification-setup",
       "Daily reports": "/notifications/daily-reports",
       "Schema changes": "/notifications/schema-change-integration",

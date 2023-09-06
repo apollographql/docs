@@ -3,33 +3,110 @@ title: Operation metrics in GraphOS
 description: Understand your operation performance
 ---
 
-Once you've configured your graph to send [operation metrics to GraphOS](./sending-operation-metrics/), you can view them in GraphOS Studio. In addition, you can configure your subgraphs to include [resolver-level traces](#resolver-level-traces) in their responses to your router, which are then also reported to GraphOS.
+Once you've configured your graph to send [operation metrics to GraphOS](./sending-operation-metrics/), you can analyze them in [GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content) from any variant's **Insights** page:
+
+<img
+  src="../img/insights-quickstart.jpg"
+  className="screenshot"
+  alt="The Insights page in GraphOS Studio"
+/>
+
+This page combines operation and field metrics and is broken into two main sections:
+
+- The collapsible left sidebar, where you can [search, filter, and sort operations](#operation-metrics) and fields. Refer to [Field usage](./fields-usage) for more information on field metrics.
+- The main insights view, which displays an [**Operations Overview**](#operations-overview) and overall [request metrics](#request-metrics) by default. When you click an operation name from the left sidebar or the overview, this view refines to show [detailed information](#operation-details) about the individual operation. You can always return to the overall view by clicking **← Back to All Operations** in the upper right.
+
+<img
+  src="../img/operation-signature.jpg"
+  className="screenshot"
+  alt="The Insights page in GraphOS Studio"
+/>
 
 ## Operations overview
 
-The **Insights** page gives you a helpful overview of your supergraph's recent usage and performance, including:
+The **Operations Overview** is top and center on the **Insights** page because it summarizes your supergraph's recent usage and performance. It includes:
 
-- The rate of requests sent to your router
-- Your supergraph's p95 service time
-- Your supergraph's error rate
+- The **rate of requests** sent to your router and the operations with the highest request rates
+- Your supergraph's **p95 service time** and the operations with the slowest p95 service time
+- Your supergraph's **error percentage** and the operations with the highest error percentage
 
-The overview displays _overall_ values for these metrics, along with values broken down by operation name. You can click an operation name to view more detailed information for it.
+<img
+  src="../img/operations-overview.jpg"
+  className="screenshot"
+  alt="Operations overview in GraphOS Studio"
+/>
 
-- Filter by time period and client
+> The blue **M** icon (Ⓜ️) next to an operation name indicates its a mutation.
 
-## Operations metrics
+The overview displays overall values for _all_ operations, along with values broken down by operation name. You can click an operation name to view more [detailed information](#operation-details) for it. You can also filter the overview by timeframe and client in the top right corner.
 
-- Detail left sidebar
-- Search
-- Filter Operations
-- Sort Operations
+<img
+  src="../img/operations-overview-filters.jpg"
+  className="screenshot"
+  alt="Operations overview in GraphOS Studio"
+/>
 
-### Usage information
+More overall [request metrics](#request-metrics) are directly below the operations overview.
 
-- Operation Signature
-- Query plan
+## Operation metrics
 
-## Resolver-level traces
+By default, the left sidebar shows all operations, but you can use it to hone in on certain ones.
+Specifically, you can:
+
+- Search for a particular operation by its name or fields' names
+- Filter operations by their type (queries, mutations, subscriptions) or whether they are unregistered or unnamed
+
+<img
+  src="../img/operation-sidebar-search-filter.jpg"
+  className="screenshot"
+  alt="The Insights page in GraphOS Studio"
+  width="300"
+/>
+
+- Sort operations (descending or ascending) by:
+
+  - Total requests (count)
+  - Request rate in requests per minute (rpm)
+  - Total error (count)
+  - Error rate
+  - Error percentage (%)
+  - Cache hit percentage (%)
+  - p50 Cache TTL in seconds, minutes (s, min)
+  - p50, p90, p95, and p99 service time in milliseconds, seconds, or minutes (ms, s, min)
+  - Total duration in milliseconds, seconds, minutes, or hours (ms, s, min, hr)
+  - Signature size in bytes (B, KB)
+
+As with the operations overview, you can click an operation to dive into its details.
+
+<img
+  src="../img/operation-sidebar-sort.jpg"
+  className="screenshot"
+  alt="The Insights page in GraphOS Studio"
+  width="300"
+/>
+
+### Operation details
+
+When you click an operation name, you open detailed information for that operation. This information includes the following:
+
+- [**Operation signature**](./operation-signatures)—from this view, you can also:
+  - Save the operation to a collection by clicking the save button in the top right corner of the signature.
+  - Run the query in Explorer by clicking the play button in the top right corner of the signature.
+- [**Query plan**](/federation/query-plans/) as a chart or text—from this view, you can also open the query plan on a separate page to examine it more closely.
+
+To the right of the operation signature and query plan, you can view the operations **usage**, **error**, or **traces** by toggling the labels above the operation signature or query plan.
+
+<img
+  src="../img/operation-signature.jpg"
+  className="screenshot"
+  alt="The Insights page in GraphOS Studio"
+/>
+
+- Usage metrics include requests per client and other [request metrics](#request-metrics).
+- Error metrics show the error count over time.
+- Trace metrics display [resolver-level traces](#resolver-level-traces) for an individual operation.
+
+### Resolver-level traces
 
 If you [enable trace reporting](#enabling-traces) in your subgraphs, GraphOS Studio can also display resolver-level trace information about each operation:
 
@@ -40,9 +117,9 @@ If you [enable trace reporting](#enabling-traces) in your subgraphs, GraphOS Stu
   width="600"
 />
 
-Shown above, the **Traces** tab for an operation provides a breakdown of timing and error information for _each field_ that's resolved as part of that operation. This helps you identify opportunities to improve your supergraph's overall performance by optimizing whichever resolvers currently act as a bottleneck.
+As shown above, the **Traces** tab for an operation provides a breakdown of timing and error information for _each field_ that's resolved as part of that operation. This helps you identify opportunities to improve your supergraph's overall performance by optimizing whichever resolvers currently act as a bottleneck.
 
-### Enabling traces
+#### Enabling traces
 
 To enable federated trace reporting in your subgraphs, consult the documentation for the GraphQL server library your subgraph uses.
 
@@ -52,4 +129,44 @@ To enable federated trace reporting in your subgraphs, consult the documentation
 
 If your subgraphs use [Apollo Server with the `@apollo/subgraph` library](/apollo-server/using-federation/apollo-subgraph-setup/), federated trace reporting is enabled by default. You can customize Apollo Server's trace reporting behavior with the [inline trace plugin](/apollo-server/api/plugin/inline-trace).
 
-## Errors
+## Request metrics
+
+Directly below the [operations overview](#operations-overview), you can find the following request metric visualizations:
+
+- A time series chart showing the [**request rate**](#request-rate) in requests per minute (req/min)
+- A [**request latency**](#request-latency) graph, generally in milliseconds, seconds, and/or minutes (ms, s, min)
+- A [**request latency distribution**](#request-latency-distribution) histogram
+
+### Request rate
+
+<img
+  src="../img/insights-request-rate.jpg"
+  className="screenshot"
+  alt="The Insights page in GraphOS Studio"
+/>
+
+The request rate chart enables you to keep an eye on your supergraph's traffic over time. Abrupt spikes or drops in request rates can highlight potential performance bottlenecks or shifts in user behavior.
+
+Request rate metrics can also help with capacity planning. By tracking request rate trends, you can make informed decisions regarding infrastructure scaling. You can also rely on these graphs for anomaly detection, including identifying issues like DDoS attacks, application errors, or resource constraints.
+
+### Request latency
+
+<img
+  src="../img/insights-request-latency.jpg"
+  className="screenshot"
+  alt="The Insights page in GraphOS Studio"
+/>
+
+Request latency measures the time it takes for a GraphQL operation to be processed and return a response to the client. Slow operations can lead to sluggish applications and frustrated users.
+
+Request latency metrics provide crucial insights into the performance of various components of your services, such as resolvers, data sources, and third-party services. This data can help you identify areas where optimization is needed.
+
+### Request latency distribution
+
+<img
+  src="../img/insights-request-latency-distribution.jpg"
+  className="screenshot"
+  alt="The Insights page in GraphOS Studio"
+/>
+
+The request latency distribution graph illustrates the spread or distribution of your request latencies. This graph can help you identify central tendencies, variability, and patterns in your request latency.
