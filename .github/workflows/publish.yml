@@ -18,6 +18,9 @@ jobs:
         with:
           node-version: 14
 
+      - name: Make temp dir
+        run: mkdir -p /tmp/ntl
+
       - name: Trigger deploy
         working-directory: /tmp/ntl
         run: npx netlify-cli@16.3.1 deploy --trigger --prod
