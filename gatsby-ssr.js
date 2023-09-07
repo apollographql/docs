@@ -44,10 +44,26 @@ const headComponents = [
 if (process.env.CONTEXT === 'production') {
   headComponents.push(
     <script
+      key="qualified-script"
+      dangerouslySetInnerHTML={{
+        __html: `
+        (function(w,q){w['QualifiedObject']=q;w[q]=w[q]||function(){
+        (w[q].q=w[q].q||[]).push(arguments)};})(window,'qualified')
+      `
+      }}
+    />,
+    <script
       key="qualified-js"
       id="qualified-js"
       async
       src="https://js.qualified.com/qualified.js?token=mdpGqx2V2oJXA51Q"
+    />,
+    <script
+      key="qualified-spa"
+      dangerouslySetInnerHTML={{
+        __html: `
+    window.qualified('page');`
+      }}
     />
   );
 }
