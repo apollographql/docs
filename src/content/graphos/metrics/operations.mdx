@@ -14,39 +14,48 @@ Once you've configured your graph to send [operation metrics to GraphOS](./sendi
 This page combines operation and field metrics and is broken into two main sections:
 
 - The collapsible left sidebar, where you can [search, filter, and sort operations](#operation-metrics) and fields. Refer to [Field usage](./fields-usage) for more information on field metrics.
-- The main insights view, which displays an [**Operations Overview**](#operations-overview) and overall [request metrics](#request-metrics) by default. When you click an operation name from the left sidebar or the overview, this view refines to show [detailed information](#operation-details) about the individual operation. You can always return to the overall view by clicking **← Back to All Operations** in the upper right.
+- The main insights view, which displays an [**Operations Overview**](#operations-overview) and overall [request metrics](#request-metrics), like the [**Request Rate**](#request-rate).
 
-<img
-  src="../img/operation-signature.jpg"
-  className="screenshot"
-  alt="The Insights page in GraphOS Studio"
-/>
+  - When you click an operation name from the left sidebar or the overview, this view refines to show [detailed information](#operation-details) about the individual operation.
+  - You can always return to the overall view by clicking **← Back to All Operations** in the upper right.
+
+  <img
+    src="../img/operation-signature.jpg"
+    className="screenshot"
+    alt="The Insights page in GraphOS Studio"
+  />
 
 ## Operations overview
 
-The **Operations Overview** is top and center on the **Insights** page because it summarizes your supergraph's recent usage and performance. It includes:
+The **Operations Overview** is top and center on the **Insights** page because it summarizes your supergraph's recent usage and performance. It includes the median, range, and percentage change for:
 
-- The **rate of requests** sent to your router and the operations with the highest request rates
-- Your supergraph's **p95 service time** and the operations with the slowest p95 service time
-- Your supergraph's **error percentage** and the operations with the highest error percentage
+- The **rate of requests** sent to your router
+- Your supergraph's **p95 service time**
+- Your supergraph's **error percentage**
+
+Beneath each of those metrics, you can also see the individual operations with:
+
+- the highest request rates
+- the slowest p95 service time
+- the highest error percentage
 
 <img
   src="../img/operations-overview.jpg"
   className="screenshot"
-  alt="Operations overview in GraphOS Studio"
+  alt="Operations Overview in GraphOS Studio"
 />
 
 > The blue **M** icon (Ⓜ️) next to an operation name indicates its a mutation.
 
-The overview displays overall values for _all_ operations, along with values broken down by operation name. You can click an operation name to view more [detailed information](#operation-details) for it. You can also filter the overview by timeframe and client in the top right corner.
+You can click an operation name to view more [detailed information](#operation-details) for it. You can also filter the overview by timeframe and client in the top right corner.
 
 <img
   src="../img/operations-overview-filters.jpg"
   className="screenshot"
-  alt="Operations overview in GraphOS Studio"
+  alt="Operations Overview in GraphOS Studio"
 />
 
-More overall [request metrics](#request-metrics) are directly below the operations overview.
+More overall [request metrics](#request-metrics) are directly below the overview.
 
 ## Operation metrics
 
@@ -76,7 +85,7 @@ Specifically, you can:
   - Total duration in milliseconds, seconds, minutes, or hours (ms, s, min, hr)
   - Signature size in bytes (B, KB)
 
-As with the operations overview, you can click an operation to dive into its details.
+As with the **Operations Overview**, you can click an operation in the sidebar to dive into its details.
 
 <img
   src="../img/operation-sidebar-sort.jpg"
@@ -87,24 +96,20 @@ As with the operations overview, you can click an operation to dive into its det
 
 ### Operation details
 
-When you click an operation name, you open detailed information for that operation. This information includes the following:
+When you click an operation name, you open detailed information for that operation in the main insights view. This information includes the operation's:
 
 - [**Operation signature**](./operation-signatures)—from this view, you can also:
   - Save the operation to a collection by clicking the save button in the top right corner of the signature.
   - Run the query in Explorer by clicking the play button in the top right corner of the signature.
 - [**Query plan**](/federation/query-plans/) as a chart or text—from this view, you can also open the query plan on a separate page to examine it more closely.
 
-To the right of the operation signature and query plan, you can view the operations **usage**, **error**, or **traces** by toggling the labels above the operation signature or query plan.
+To the right of the operation signature and query plan, you can view the operations **usage** and **error** metrics or [**traces**](#resolver-level-traces) by toggling the labels above the operation signature or query plan.
 
 <img
   src="../img/operation-signature.jpg"
   className="screenshot"
   alt="The Insights page in GraphOS Studio"
 />
-
-- Usage metrics include requests per client and other [request metrics](#request-metrics).
-- Error metrics show the error count over time.
-- Trace metrics display [resolver-level traces](#resolver-level-traces) for an individual operation.
 
 ### Resolver-level traces
 
@@ -131,7 +136,7 @@ If your subgraphs use [Apollo Server with the `@apollo/subgraph` library](/apoll
 
 ## Request metrics
 
-Directly below the [operations overview](#operations-overview), you can find the following request metric visualizations:
+Directly below the [**Operations Overview**](#operations-overview), you can find the following request metric visualizations:
 
 - A time series chart showing the [**request rate**](#request-rate) in requests per minute (req/min)
 - A [**request latency**](#request-latency) graph, generally in milliseconds, seconds, and/or minutes (ms, s, min)
