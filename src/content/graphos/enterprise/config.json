@@ -25,6 +25,7 @@
         "GraphQL subscriptions": "https://www.apollographql.com/docs/router/executing-operations/subscription-support",
         "Distributed caching": "https://www.apollographql.com/docs/router/configuration/distributed-caching",
         "JWT Authentication": "https://www.apollographql.com/docs/router/configuration/authn-jwt",
+        "Authorization": "https://www.apollographql.com/docs/router/configuration/authorization",
         "Operation limits": "https://www.apollographql.com/docs/router/configuration/operation-limits",
         "External coprocessing": "https://www.apollographql.com/docs/router/customizations/coprocessor"
       }
