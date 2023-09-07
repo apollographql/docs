@@ -3,7 +3,28 @@ title: Field usage in GraphOS
 description: Understand which fields your clients use
 ---
 
-> For details on setting up field metrics reporting to GraphOS Studio, see [Reporting field usage](./sending-operation-metrics#reporting-field-usage).
+Once you've configured your graph to send [field metrics to GraphOS](./sending-operation-metrics/#reporting-field-usage), you can analyze them in [GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content) from any variant's **Insights** page:
+
+> **Note**: Reporting field metrics requires additional steps beyond sending operation metrics. For details on setting up field metrics reporting to GraphOS Studio, see [Reporting field usage](./sending-operation-metrics#reporting-field-usage).
+
+<img
+  src="../img/insights-fields.jpg"
+  className="screenshot"
+  alt="The Insights page in GraphOS Studio"
+/>
+
+This page combines operation and field metrics and is broken into two main sections:
+
+- The collapsible left sidebar, where you can search, filter, and sort operations fields and operations.
+- The main insights view, which displays overall operations metrics.
+
+This page focuses on field metrics accessible from the left sidebar. Refer to [Operation metrics in GraphOS](./operations) for more information on the metrics on this page.
+
+
+
+----
+
+
 
 In [GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content), your graph's **Fields** page can display a table of basic usage metrics for each field in your schema:
 
