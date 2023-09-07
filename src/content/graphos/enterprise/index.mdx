@@ -58,6 +58,7 @@ This architecture helps you satisfy sophisticated requirements around data compl
 
 - **Real-time updates** via [GraphQL subscriptions](/router/executing-operations/subscription-support/)
 - **Authentication of inbound requests** via [JSON Web Token (JWT)](/router/configuration/authn-jwt/)
+- [**Authorization** of specific fields and types](/router/configuration/authorization) through the [`@requiresScopes`](/router/configuration/authorization#requiresscopes) and [`@authenticated`](/router/configuration/authorization#authenticated) directives
 - Redis-backed [**distributed caching** of query plans and persisted queries](/router/configuration/distributed-caching/)
 - **Custom request handling** in any language via [external coprocessing](/router/customizations/coprocessor/)
 - **Mitigation of potentially malicious requests** via [operation limits](/router/configuration/operation-limits) and [safelisting](../operations/persisted-queries/)
