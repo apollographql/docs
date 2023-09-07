@@ -90,8 +90,7 @@ export function useMermaidStyles() {
       },
       [['.label text', 'span']]: {
         color: 'inherit',
-        fill: 'currentColor',
-        overflow: 'visible'
+        fill: 'currentColor'
       },
       [[
         '.edgePath .path',
