@@ -90,7 +90,8 @@ export function useMermaidStyles() {
       },
       [['.label text', 'span']]: {
         color: 'inherit',
-        fill: 'currentColor'
+        fill: 'currentColor',
+        overflow: 'visible'
       },
       [[
         '.edgePath .path',
@@ -111,6 +112,9 @@ export function useMermaidStyles() {
         tspan: {
           fill: 'currentColor'
         }
+      },
+      [['.label foreignObject', '.cluster-label foreignObject']]: {
+        overflow: 'visible'
       }
     };
     return important(styles);
