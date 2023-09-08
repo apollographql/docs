@@ -48,7 +48,8 @@ if (process.env.CONTEXT === 'production') {
       dangerouslySetInnerHTML={{
         __html: `
         (function(w,q){w['QualifiedObject']=q;w[q]=w[q]||function(){
-        (w[q].q=w[q].q||[]).push(arguments)};})(window,'qualified')
+        (w[q].q=w[q].q||[]).push(arguments)};})(window,'qualified');
+        window.qualified('page');
       `
       }}
     />,
@@ -57,13 +58,6 @@ if (process.env.CONTEXT === 'production') {
       id="qualified-js"
       async
       src="https://js.qualified.com/qualified.js?token=mdpGqx2V2oJXA51Q"
-    />,
-    <script
-      key="qualified-spa"
-      dangerouslySetInnerHTML={{
-        __html: `
-    window.qualified('page');`
-      }}
     />
   );
 }
