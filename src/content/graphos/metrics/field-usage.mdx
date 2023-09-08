@@ -5,7 +5,7 @@ description: Understand which fields your clients use
 
 Once you've configured your graph to send [field metrics to GraphOS](./sending-operation-metrics/#reporting-field-usage), you can analyze them in [GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content) from any variant's **Insights** page:
 
-> **Note**: Reporting field metrics requires additional steps beyond sending operation metrics. For details on setting up field metrics reporting to GraphOS Studio, see [Reporting field usage](./sending-operation-metrics#reporting-field-usage).
+> **Note**: Reporting field metrics requires additional steps beyond operation metrics. For details on setting up field metrics reporting to GraphOS Studio, see [Reporting field usage](./sending-operation-metrics#reporting-field-usage).
 
 <img
   src="../img/insights-fields.jpg"
@@ -15,27 +15,45 @@ Once you've configured your graph to send [field metrics to GraphOS](./sending-o
 
 This page combines operation and field metrics and is broken into two main sections:
 
-- The collapsible left sidebar, where you can search, filter, and sort operations fields and operations.
-- The main insights view, which displays overall operations metrics.
+- The collapsible left sidebar, where you can search, filter, and sort operations and fields.
+- The main insights view, which displays overall operations metrics by default, but displays individual field information and usage metrics when you select a field from the left sidebar.
 
-This page focuses on field metrics accessible from the left sidebar. Refer to [Operation metrics in GraphOS](./operations) for more information on the metrics on this page.
+This page focuses on field metrics accessible from the left sidebar. Refer to [Operation metrics in GraphOS](./operations) for more information on the other metrics on this page.
 
+## Field navigation
 
+By default, the left sidebar shows a paginated list of all fields, but you can use it to hone in on certain ones.
+Specifically, you can:
 
-----
-
-
-
-In [GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content), your graph's **Fields** page can display a table of basic usage metrics for each field in your schema:
+- Search for a particular field by its name or parent type
+- Filter fields by whether they are unused or deprecated
 
 <img
-  src="../img/fields-page.jpg"
-  class="screenshot"
-  alt="Fields page in Studio"
-  width="700"
+  src="../img/field-sidebar-search-filter.jpg"
+  className="screenshot"
+  alt="The Insights page in GraphOS Studio"
+  width="300"
 />
 
-You can click the name of any field in the table to open its **Field Insights** page. This page displays in-depth details about which clients and operations contribute to the field's usage, along with performance metrics:
+- Sort fields (descending or ascending):
+
+- Alphabetically
+- By total requests (count)
+- By request rate in rpm (rpm)
+- By executions (count)
+
+<img
+  src="../img/field-sidebar-sort.jpg"
+  className="screenshot"
+  alt="The Insights page in GraphOS Studio"
+  width="300"
+/>
+
+You can click a field in the sidebar to dive into its details.
+
+## Field details
+
+When you click a field name, you open detailed information for that field in the main insights view. The left side shows the field in the context of the schema, including any tags and description. YOu can also see when the field first and last received traffic.
 
 <img
   src="../img/field-insights.jpg"
@@ -43,29 +61,33 @@ You can click the name of any field in the table to open its **Field Insights** 
   alt="Field Insights page"
 />
 
-## Field executions vs. requesting operations
+The right side of the view displays in-depth details about which clients and operations contribute to the field's usage, along with performance metrics such as request rate, latency distribution, and error metrics.
 
-The table on the Fields page displays some combination of the following metrics for each field, depending on which data you report to GraphOS:
+Each row the **Clients & Operations** table shows a client that requested the field, the number of operations the client made that used the field, and the total number of requests the client made. Clicking a row in the **Clients & Operations** table shows more details about the operations and clients that requested and executed the field. 
 
-| Metric                 | Description                                                                                                                          |
-| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| Field executions       | How many times your servers have executed the resolver for the field over a given time period.                                       |
-| Requested by operations | How many operations sent by clients over a given time period have included the field, according to metrics provided by your servers. |
+### Field requests and executions
 
-For each of these columns to appear on the Fields page, your GraphQL servers must [report the associated metrics to GraphOS](./sending-operation-metrics#reporting-field-usage). If some but not _all_ of your GraphQL servers report this data, the Fields page presents an incomplete picture of your graph's field usage.
+The **Clients & Operations** table on the Insights page displays some combination of the following metrics for each field, depending on which data you report to GraphOS:
 
-Let's look at these two metrics for fields of an example type:
+| Metric                 | Description                                                                                                                |
+| ---------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| Requests     | How many operations sent by clients over a given time period have included the field, according to metrics provided by your servers. |
+| Executions   | How many times your servers have executed the resolver for the field over a given time period.                                       |
+
+For each of these columns to appear on the Insights page, your GraphQL servers must [report the associated metrics to GraphOS](./sending-operation-metrics#reporting-field-usage). If some but not _all_ of your GraphQL servers report this data, the Insights page presents an incomplete picture of your graph's field usage.
+
+Let's look at these two metrics for an example field:
 
 <img
-  src="../img/fields-page.jpg"
+  src="../img/field-requests-executions.jpg"
   class="screenshot"
-  alt="Fields page in Studio"
+  alt="Insights page in Studio"
   width="700"
 />
 
 As you can see, the daily **field executions** and **requesting operations** for a single field can differ significantly! There are many possible reasons for this, described below.
 
-### Objects in lists
+#### Objects in lists
 
 Let's say a client executes the following query one time:
 
@@ -79,7 +101,7 @@ query GetBooks {
 
 If `Query.books` returns a list of ten `Book` objects, then `Book.title` is resolved _ten times_. This query therefore contributes _ten_ **field executions** and just _one_ **requesting operation** to `Book.title`.
 
-### Multiple references to a field
+#### Multiple references to a field
 
 Let's say a client executes the following query one time:
 
@@ -98,7 +120,7 @@ This operation includes two references to the fields `Query.book` and `Book.titl
 
 Therefore, this query contributes two **field executions** and just _one_ **requesting operation** to each of `Query.book` and `Book.title`.
 
-### Fields that return interfaces
+#### Fields that return interfaces
 
 Let's say our GraphQL server's schema defines the following interface and object types:
 
@@ -131,7 +153,7 @@ If `Query.favoriteMedia` returns a `Book` object here, then `Book.title` is reso
 
 Therefore, this query contributes one **field execution** and zero **requesting operations** to `Book.title`. It also contributes one **requesting operation** to `Media.title`. Note that interface fields always have zero **field executions**.
 
-### Requested fields that aren't resolved
+#### Requested fields that aren't resolved
 
 Let's say a client executes the following query one time:
 
@@ -152,7 +174,7 @@ A requested field might not be resolved for any of these reasons:
 - The field is part of a fragment that doesn't apply to a particular object.
 - The resolver is skipped due to a `@skip` or `@include` directive.
 
-### `@key` and `@requires` fields in a federated graph
+#### `@key` and `@requires` fields in a federated graph
 
 > This case applies only to graphs that use [Apollo Federation](/federation).
 
