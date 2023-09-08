@@ -3,30 +3,23 @@ title: Metrics and insights in GraphOS
 description: Understand your supergraph's usage and performance
 ---
 
-Monitoring and optimizing your services for performance and efficiency is paramount.
-Once you've configured your graph to send [operation](./sending-operation-metrics/) and [field usage metrics](./sending-operation-metrics#reporting-field-usage) to GraphOS, you can view them in GraphOS Studio on the **Insights** page.
-By understanding and acting on these metrics, you can enhance the speed and reliability of your services.
-
-> **Note**: Do you have to report both to make use of the insights page?
-
-## Viewing metrics
-
-You can visualize and examine operation metrics in [GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content), from any variant's **Insights** page:
+GraphOS Studio offers a performant and intuitive **Insights** page to help you monitor and understand your supergraph's performance.
+Once you've configured your graph to send [operation](./sending-operation-metrics/) and [field usage metrics](./sending-operation-metrics#reporting-field-usage) to GraphOS, you can examine them from any variant's **Insights** page:
 
 <img
   src="../img/insights-quickstart.jpg"
   className="screenshot"
-  alt="Apollo Studio metrics view"
+  alt="The Insights page in GraphOS Studio"
 />
 
-The **Insights** page offers:
+The Insights page offers:
 
 - An operations overview
+- A left sidebar for searching, filtering, and sorting operations and fields
 - Detailed operations performance metrics
 - Field usage metrics
 - Error metrics
-- [Resolver-level traces](#resolver-level-traces), if you've configured them
+- [Resolver-level traces](/operations#resolver-level-traces), if you've configured them
 
-Check out the [Operations metrics](./operations) and [Field usage](./field-usage) pages to learn more.
-
-## Notifications and alerting
+Refer to the [Operations metrics](./operations) and [Field usage](./field-usage) pages to learn more about these metrics and how you can use them to optimize your graph's performance.
+Beyond actively monitoring the Insights page, you can also configure GraphOS to notify your team about changes to your graph and its performance. Check out [Setting up GraphOS notifications](./notifications/notification-setup) to learn more.
