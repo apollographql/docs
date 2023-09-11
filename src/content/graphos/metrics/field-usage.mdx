@@ -5,20 +5,22 @@ description: Understand which fields your clients use
 
 Once you've configured your graph to send [field metrics to GraphOS](./sending-operation-metrics/#reporting-field-usage), you can analyze them in [GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content) from any variant's **Insights** page:
 
-> **Note**: Reporting field metrics requires additional steps beyond operation metrics. For details on setting up field metrics reporting to GraphOS Studio, see [Reporting field usage](./sending-operation-metrics#reporting-field-usage).
-
 <img
   src="../img/insights-fields.jpg"
   className="screenshot"
   alt="The Insights page in GraphOS Studio"
 />
 
-This page combines operation and field metrics and is broken into two main sections:
 
-- The collapsible left sidebar, where you can search, filter, and sort operations and fields.
-- The main insights view, which displays overall operations metrics by default, but displays individual field information and usage metrics when you select a field from the left sidebar.
+> **Note**: Reporting field metrics requires additional steps beyond operation metrics. See [Reporting field usage](./sending-operation-metrics#reporting-field-usage) for details.
 
-This page focuses on field metrics accessible from the left sidebar. Refer to [Operation metrics in GraphOS](./operations) for more information on the other metrics on this page.
+
+This page combines operation and field metrics and has two main sections:
+
+- The collapsible left sidebar, where you can search, filter, and sort operations and fields
+- The main insights view, which displays overall operations metrics by default but displays individual field information and usage metrics when you select a field from the left sidebar
+
+This page focuses on field metrics accessible from the left sidebar. Refer to [Operation metrics in GraphOS](./operations) for more information on the other metrics on this page, including [resolver-level traces](/operations#resolver-level-traces).
 
 ## Field navigation
 
@@ -35,12 +37,13 @@ Specifically, you can:
   width="300"
 />
 
-- Sort fields (descending or ascending):
+- Sort fields (descending or ascending) by:
 
-- Alphabetically
-- By total requests (count)
-- By request rate in rpm (rpm)
-- By executions (count)
+  - Alphabetically
+  - By total requests (count)
+  - By request rate in rpm (rpm)
+  - By executions (count)
+
 
 <img
   src="../img/field-sidebar-sort.jpg"
@@ -49,11 +52,11 @@ Specifically, you can:
   width="300"
 />
 
-You can click a field in the sidebar to dive into its details.
+Click a field name in the sidebar to learn more about its usage.
 
 ## Field details
 
-When you click a field name, you open detailed information for that field in the main insights view. The left side shows the field in the context of the schema, including any tags and description. YOu can also see when the field first and last received traffic.
+When you click a field name, you open detailed information for that field in the main insights view. The left side shows the field in the context of the schema, including the field description and tags. You can also see when the field first and last received traffic.
 
 <img
   src="../img/field-insights.jpg"
@@ -61,18 +64,18 @@ When you click a field name, you open detailed information for that field in the
   alt="Field Insights page"
 />
 
-The right side of the view displays in-depth details about which clients and operations contribute to the field's usage, along with performance metrics such as request rate, latency distribution, and error metrics.
+The right side of the view displays which clients and operations contribute to the field's usage, along with performance metrics such as request rate, latency distribution, and error metrics.
 
-Each row the **Clients & Operations** table shows a client that requested the field, the number of operations the client made that used the field, and the total number of requests the client made. Clicking a row in the **Clients & Operations** table shows more details about the operations and clients that requested and executed the field. 
+Each row in the the **Clients & Operations** table shows a client that requested the field, the number of operations the client made that used the field, and the total number of requests the client made. Clicking a row in the table shows more details about the operations and clients that requested and executed the field. 
 
 ### Field requests and executions
 
-The **Clients & Operations** table on the Insights page displays some combination of the following metrics for each field, depending on which data you report to GraphOS:
+Each row in the **Clients & Operations** table displays some combination of the following metrics for each field, depending on which data you report to GraphOS:
 
 | Metric                 | Description                                                                                                                |
 | ---------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| Requests     | How many operations sent by clients over a given time period have included the field, according to metrics provided by your servers. |
-| Executions   | How many times your servers have executed the resolver for the field over a given time period.                                       |
+| Requests     | How many operations sent by clients over a given time period have included the field, according to metrics provided by your servers |
+| Executions   | How many times your servers have executed the resolver for the field over a given time period                                       |
 
 For each of these columns to appear on the Insights page, your GraphQL servers must [report the associated metrics to GraphOS](./sending-operation-metrics#reporting-field-usage). If some but not _all_ of your GraphQL servers report this data, the Insights page presents an incomplete picture of your graph's field usage.
 
@@ -85,7 +88,7 @@ Let's look at these two metrics for an example field:
   width="700"
 />
 
-As you can see, the daily **field executions** and **requesting operations** for a single field can differ significantly! There are many possible reasons for this, described below.
+As you can see, the **requests** and **executions** for a single field can differ significantly! There are many possible reasons for this, described below.
 
 #### Objects in lists
 
@@ -99,7 +102,7 @@ query GetBooks {
 }
 ```
 
-If `Query.books` returns a list of ten `Book` objects, then `Book.title` is resolved _ten times_. This query therefore contributes _ten_ **field executions** and just _one_ **requesting operation** to `Book.title`.
+If `Query.books` returns a list of ten `Book` objects, then `Book.title` is resolved _ten times_. This query therefore contributes just one request but _ten_ executions to the `Book.title` field.
 
 #### Multiple references to a field
 
@@ -118,7 +121,7 @@ query GetTwoBooks {
 
 This operation includes two references to the fields `Query.book` and `Book.title`. Therefore, the resolvers for these fields each execute twice (assuming `Query.book` doesn't return `null`). However, these multiple references are all part of a _single_ operation.
 
-Therefore, this query contributes two **field executions** and just _one_ **requesting operation** to each of `Query.book` and `Book.title`.
+Therefore, this query contributes just one request but two executions for each of the `Query.book` and `Book.title` fields.
 
 #### Fields that return interfaces
 
@@ -151,7 +154,7 @@ query GetFavoriteMedia {
 
 If `Query.favoriteMedia` returns a `Book` object here, then `Book.title` is resolved one time. _However_, the original query _does not reference_ `Book.title`. Instead, it references **`Media.title`**, because `Query.favoriteMedia` has a return type of `Media`.
 
-Therefore, this query contributes one **field execution** and zero **requesting operations** to `Book.title`. It also contributes one **requesting operation** to `Media.title`. Note that interface fields always have zero **field executions**.
+Therefore, this query contributes zero requests and one execution for `Book.title`. It also contributes one request for `Media.title`. Note that interface fields always have zero executions.
 
 #### Requested fields that aren't resolved
 
@@ -165,7 +168,7 @@ query GetLoggedInUser {
 }
 ```
 
-Now, let's say `Query.loggedInUser` returns `null` because no user is logged in. In this case, the resolver for `User.name` never executes, because its parent retuns `null`. Therefore, this query contributes _zero_ **field executions** and _one_ **requesting operation** to `User.name`.
+Now, let's say `Query.loggedInUser` returns `null` because no user is logged in. In this case, the resolver for `User.name` never executes, because its parent retuns `null`. Therefore, this query contributes one request and zero executions for `User.name`.
 
 A requested field might not be resolved for any of these reasons:
 
@@ -182,18 +185,14 @@ Let's say our federated graph includes these two subgraph schemas:
 
 <CodeColumns>
 
-```graphql
-# Products subgraph
-
+```graphql title="Products subgraph"
 type Product @key(fields: "id") {
   id: ID!
   name: String!
 }
 ```
 
-```graphql
-# Reviews subgraph
-
+```graphql title="Reviews subgraph"
 extend type Product @key(fields: "id") {
   id: ID! @external
 }
@@ -211,7 +210,7 @@ type Query {
 
 </CodeColumns>
 
-Now, let's say a client executes the following query against the gateway:
+Now, let's say a client executes the following query:
 
 ```graphql
 query GetAllReviews {
@@ -224,8 +223,8 @@ query GetAllReviews {
 }
 ```
 
-This query's execution starts in the Reviews subgraph, but it needs to obtain each `Product`'s `name` from the Products subgraph. As part of this process, the Products subgraph must [resolve references](/federation/entities/#2-define-a-reference-resolver) to `Product`s that are provided by the Reviews subgraph.
+This query's execution starts in the Reviews subgraph, but it needs to obtain each `Product`'s `name` from the Products subgraph. As part of this process, the Products subgraph must [resolve references](/federation/entities/#2-define-a-reference-resolver) to `Product`s provided by the Reviews subgraph.
 
 To help resolve these references, the Reviews subgraph _must_ return each `Product`'s `id` field, even though that field isn't included in the original query. This is because `id` is a `@key` field for `Product`.
 
-Therefore, this query contributes one **field execution** and zero **requesting operations** to `Product.id`. Similar logic applies to fields that use the [`@requires` directive](/federation/entities-advanced#contributing-computed-entity-fields).
+Therefore, this query contributes one zero requests and one execution for `Product.id`. Similar logic applies to fields that use the [`@requires` directive](/federation/entities-advanced#contributing-computed-entity-fields).

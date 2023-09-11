@@ -3,23 +3,24 @@ title: Metrics and insights in GraphOS
 description: Understand your supergraph's usage and performance
 ---
 
-GraphOS Studio offers a performant and intuitive **Insights** page to help you monitor and understand your supergraph's performance.
+GraphOS Studio offers a performant and intuitive UI to help you monitor and understand your supergraph's performance.
 Once you've configured your graph to send [operation](./sending-operation-metrics/) and [field usage metrics](./sending-operation-metrics#reporting-field-usage) to GraphOS, you can examine them from any variant's **Insights** page:
 
 <img
   src="../img/insights-quickstart.jpg"
   className="screenshot"
   alt="The Insights page in GraphOS Studio"
+  width="700"
 />
 
 The Insights page offers:
 
 - An operations overview
 - A left sidebar for searching, filtering, and sorting operations and fields
-- Detailed operations performance metrics
-- Field usage metrics
-- Error metrics
+- Individual and overall operations performance metrics, including request rate and latency
 - [Resolver-level traces](/operations#resolver-level-traces), if you've configured them
+- Field usage metrics
 
 Refer to the [Operations metrics](./operations) and [Field usage](./field-usage) pages to learn more about these metrics and how you can use them to optimize your graph's performance.
+
 Beyond actively monitoring the Insights page, you can also configure GraphOS to notify your team about changes to your graph and its performance. Check out [Setting up GraphOS notifications](./notifications/notification-setup) to learn more.
