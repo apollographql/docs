@@ -17,9 +17,8 @@
   ],
   "sidebar": {
     "Overview": "/",
-    "Metrics collection": {
+    "Metrics collection and forwarding": {
       "Sending metrics to GraphOS": "/sending-operation-metrics",
-      "Operation signatures": "/operation-signatures",
       "Datadog forwarding": [
         "/datadog-integration",
         [
@@ -30,7 +29,8 @@
     "Insights and analysis": {
       "Operation metrics": "/operations",
       "Field usage": "/field-usage",
-      "Segmenting by client": "/client-awareness"
+      "Segmenting by client": "/client-awareness",
+      "Operation signatures": "/operation-signatures"
     },
     "Notifications and alerts": {
       "Setup": "/notifications/notification-setup",
