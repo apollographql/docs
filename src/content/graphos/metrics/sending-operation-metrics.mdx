@@ -141,13 +141,13 @@ To report each type of field usage metric to GraphOS, make sure your graph meets
 
 #### Requests
 
-To report metrics for requests, your GraphQL server must run Apollo Server 3.6 or later.
+To report metrics for the operations requesting fields, your GraphQL server must run Apollo Server 3.6 or later.
 
 If you have a [federated graph](/federation), your _gateway_ must run Apollo Server 3.6 or later, but there are no requirements for your subgraphs.
 
-#### Field executions
+#### Executions
 
-To report metrics for (field) executions, your GraphQL server can run any recent version of Apollo Server 2.x or 3.x.
+To report metrics for field executions, your GraphQL server can run any recent version of Apollo Server 2.x or 3.x.
 
 If you have a [federated graph](https://apollographql.com/docs/federation), your subgraphs must support federated tracing. For compatible libraries, see the `FEDERATED TRACING` entry for libraries in [this table](/federation/building-supergraphs/supported-subgraphs/).
 
@@ -159,9 +159,9 @@ If you have a self-hosted supergraph, you only need to configure your [router](/
 
 ### Performance considerations
 
-Calculating field execution metrics can affect performance for large queries or high-traffic graphs. This is especially true for [federated graphs](https://apollographql.com/docs/federation), because a subgraph includes each operation's full trace data in its response to the gateway.
+Calculating execution metrics can affect performance for large queries or high-traffic graphs. This is especially true for [federated graphs](https://apollographql.com/docs/federation), because a subgraph includes each operation's full trace data in its response to the gateway.
 
-#### Disabling field execution metrics
+#### Disabling execution metrics
 
 In Apollo Server 3.6 and later, you can disable field-level instrumentation for some or all operations by providing the [`fieldLevelInstrumentation` option to `ApolloServerPluginUsageReporting`](https://apollographql.com/docs/apollo-server/api/plugin/usage-reporting/#fieldlevelinstrumentation).
 
@@ -186,7 +186,7 @@ new ApolloServer({
 });
 ```
 
-If you do this, field execution statistics do not appear on the Insights page.
+If you do this, execution statistics do not appear on the Insights page.
 
 #### Fractional sampling
 
@@ -209,7 +209,7 @@ If you do so, Apollo Server randomly chooses to enable field-level instrumentati
 
 In this case, whenever field-level instrumentation _is_ enabled for a particular request, Apollo Server reports it to Studio with a weight based on the given probability. The "executions" statistic on the Insights page (along with execution timing hints) is scaled by this weight.
 
-For example, if you pass `0.01`, your server enables field-level execution for approximately 1% of requests, and every observed field execution is counted as 100 executions on the Insights page. (The actual observed execution count is available in a tooltip in the table.)
+For example, if you pass `0.01`, your server enables field-level execution for approximately 1% of requests, and every observed execution is counted as 100 executions on the Insights page. (The actual observed execution count is available in a tooltip in the table.)
 
 #### Custom sampling
 
