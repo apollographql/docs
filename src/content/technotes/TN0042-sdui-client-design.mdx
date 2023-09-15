@@ -1,0 +1,29 @@
+---
+title: Server-Driven UI Client Design
+id: TN0042
+tags: [client, server-driven-ui]
+---
+
+## Client Implementations
+
+In SDUI, the goal of the client is to handle pixels, not data. We should simply take what is provided by the API and render it in the proper location.
+
+We usually start with simple things like text and images. As we move to more logic to the server, like component layout, clients can then have a collection of types mapped to which UI component they should use for their specific platform and render it with the correct data.
+
+```jsx
+const { data } = useQuery(FeaturedProductsCollection);
+
+// Maps GraphQL __typename to UI component
+const TYPE_COMPONENTS = {
+  ProductList: ListComponent,
+  ProductCarousel: CarouselComponent,
+  ProductError: ErrorComponent
+};
+
+const component = TYPE_COMPONENTS[data.featuredProducts.__typename];
+if (!component) { throw new Error('Unknown Type Returned!'); }
+
+renderComponent(component, data);
+```
+
+This means that from the API response you can dynamically choose when to render different components or start displaying different components based on any of our API inputs, including headers or user information.
