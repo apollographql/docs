@@ -4,7 +4,18 @@ description: Understand your supergraph's usage and performance
 ---
 
 GraphOS Studio offers a performant and intuitive UI to help you monitor and understand your supergraph's performance.
-Once you've configured your graph to send [operation](./sending-operation-metrics/) and [field usage metrics](./sending-operation-metrics#reporting-field-usage) to GraphOS, you can examine them from any variant's **Insights** page:
+
+## Metrics collection and forwarding
+
+To visualize operation metrics in GraphOS Studio, you first need to report them to GraphOS. If you have a [cloud supergraph](../quickstart/cloud), its router automatically reports operation metrics. If you have a [self-hosted supergraph](../quickstart/self-hosted), you need to [connect your router to GraphOS](./sending-operation-metrics) to report metrics.
+
+Apollo also offers a [Datadog integration](./datadog-integration) to forward your graph's performance metrics to your Datadog account.
+
+> Connecting a self-hosted router to GraphOS and Datadog forwarding are available only for [Enterprise plans](https://www.apollographql.com/pricing/).
+
+## Insights and analysis
+
+Once you've configured your graph to send operation and field metrics to GraphOS, you can examine them from any variant's **Insights** page:
 
 <img
   src="../img/insights-quickstart.jpg"
@@ -15,12 +26,16 @@ Once you've configured your graph to send [operation](./sending-operation-metric
 
 The Insights page offers:
 
+- A collapsible left sidebar that acts as a paginated index of your graph's operations and fields
+  - You can search, filter, and sort operations and fields to find specific ones
 - An operations overview
-- A left sidebar for searching, filtering, and sorting operations and fields
+  - You can adjust the overviews timeframe and filter it to specific clients
 - Individual and overall operations performance metrics, including request rate and latency
-- [Resolver-level traces](/operations#resolver-level-traces), if you've configured them
+- [Resolver-level traces](./operations#resolver-level-traces), if you've configured them
 - Field usage metrics
 
 Refer to the [Operations metrics](./operations) and [Field usage](./field-usage) pages to learn more about these metrics and how you can use them to optimize your graph's performance.
+
+## Notifications and alerts
 
 Beyond actively monitoring the Insights page, you can also configure GraphOS to notify your team about changes to your graph and its performance. Check out [Setting up GraphOS notifications](./notifications/notification-setup) to learn more.
