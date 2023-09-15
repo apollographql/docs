@@ -14,12 +14,12 @@ Once you've set up your integration, you need to [assign users to it in Okta](#a
 
 ### Supported features
 
-The [Okta GraphOS SAML](https://www.okta.com/integrations/graphos-studio/) integration currently supports the following features:
+The [Okta Apollo GraphOS SAML integration](https://www.okta.com/integrations/graphos-studio/) currently supports the following features:
 
 - [Just-In-Time (JIT) Provisioning](https://help.okta.com/en-us/content/topics/directory/ad-agent-add-update-jit.htm)
 - Service provider-initiated (SP-initiated) SSO
 
-An SP-initiated flow occurs when an end user signs in to an application directly from that application's sign-in page. For example, https://studio.apollographql.com/login is the sign-in location for GraphOS Studio. The integration supports users signing in from this page using SSO.
+An SP-initiated flow occurs when an end user signs in to an application directly from that application's sign-in page. For example, `https://studio.apollographql.com/login` is the sign-in location for GraphOS Studio. The integration supports users signing in from this page using SSO.
 
 You can use Okta's [Bookmark App integration](#add-apollo-graphos-as-a-bookmark-app) to simulate an Identity Provider-initiated (IdP-initiated) flow to allow users to sign in from Okta.
 
@@ -42,7 +42,7 @@ You can use Okta's [Bookmark App integration](#add-apollo-graphos-as-a-bookmark-
      class="screenshot"
    />
 
-4. The **Assignments** tab opens—you'll return to it later to [assign users](/#assign-users-in-okta) to the integration. For now, open the **Sign On** tab and copy the **Metadata URL** under **Metadata details**.
+4. The **Assignments** tab opens—you'll return to it later to [assign users](#assign-users-in-okta) to the integration. For now, open the **Sign On** tab and copy the **Metadata URL** under **Metadata details**.
 
 <img
   src="../../img/sso/okta-metadata-url.jpg"
@@ -54,7 +54,7 @@ You can use Okta's [Bookmark App integration](#add-apollo-graphos-as-a-bookmark-
 
 - **Metadata URL** you copied in the last step
 - **Email address** you use to log in to GraphOS Studio
-  - The member associated with this email address will need an [org admin role](../members/#organization-wide-member-roles). You can begin SSO setup without it, but you will need it to complete setup.
+  - The member associated with this email address will need an [org admin role](../members/#organization-wide-member-roles). You can begin SSO setup without it, but Apollo will update the role, if necessary, to complete setup.
 
 Your Apollo contact will let you know once SSO setup is complete.
 
@@ -86,7 +86,7 @@ The **Create SAML Integration** dialog includes multiple steps:
 
    - **App name**: `Apollo GraphOS`
    - **App logo**: [Apollo logo](../../img/sso/apollo-sk-logo.jpg) (optional)
-
+   
    <img
      src="../../img/sso/okta-create-saml-integration.jpg"
      alt="Okta create saml integration step"
@@ -192,4 +192,4 @@ Since both official and custom Okta integrations only supports an [SP-initiated 
 To do so, follow [Okta's instructions](https://help.okta.com/en/prod/Content/Topics/Apps/Apps_Bookmark_App.htm) with the following Bookmark Application configurations:
 
 - **Application label**: Apollo GraphOS Enterprise
-- **URL**: Provided by Apollo Support
+- **URL**: `https://studio.apollographql.com/login`
