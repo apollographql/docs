@@ -115,7 +115,7 @@ const secretToken = explorer.environment.get('token');
 
 ## Scripting
 
-Similar to tools like Postman, the Explorer can run custom scripts before executing each GraphQL operation. These JavaScript-based scripts often populate the values of [environment variables](#environment-variables) that are then injected into HTTP header values or GraphQL variables. This can be especially useful for managing authentication flows like OAuth, for example by refreshing an expired access token.
+Similar to tools like Postman, the Explorer can run custom scripts when executing each GraphQL operation. These JavaScript-based scripts often populate the values of [environment variables](#environment-variables) that are then injected into HTTP header values or GraphQL variables. This can be especially useful for managing authentication flows like OAuth, for example by refreshing an expired access token, or validating response data.
 
 ### Script types
 
@@ -123,7 +123,7 @@ You can define two different types of scripts:
 
 - [**Preflight scripts.**](#preflight-scripts) You can define a _single_ preflight script _per variant_ of a graph. This script runs before _every Explorer operation_ that's executed against the associated variant (unless a user individually [disables the script](#disabling-preflight-scripts)).
     - Preflight scripts are especially helpful for enabling organization-wide Explorer authentication against your graph.
-- [**Operation scripts.**](#operation-scripts) If you use [operation collections](./operation-collections/), you can define a separate script for each saved operation in a collection. This script runs before the corresponding operation is executed (as long as a user individually [enables the script](#enabling-operation-scripts)).
+- [**Operation scripts.**](#operation-scripts) If you use [operation collections](./operation-collections/), you can define a separate script for each saved operation in a collection. This script can then control everything that happens before, during, and after an operation is executed (as long as a user individually [enables the script](#enabling-operation-scripts)).
     - Operation scripts are especially helpful for debugging the behavior of individual operations when they're provided various values.
 
 > If an Explorer operation runs _both_ types of scripts, the preflight script runs _before_ the operation script.
