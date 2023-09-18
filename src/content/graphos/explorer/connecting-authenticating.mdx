@@ -391,3 +391,21 @@ This exposes the `crypto-js` package for use within your script. For available f
 </tr>
 </tbody>
 </table>
+
+### Examples
+
+#### Operation Scripts
+Here is a small example that runs the operation and sets and environment variable for use on future operations
+
+```js
+const response = await explorer.runOperation({
+ scope: 'shared',
+ graphRef: 'SpaceX-pxxbxen@current',
+ collectionName: 'Mission Control',
+ operationName: 'Ships',
+})
+
+const firstShipID = response.result.data.ships[0].id
+
+explorer.environment.set('shipID', firstShipID)
+```
