@@ -5,7 +5,6 @@ export {default as ClientPQIntro} from './client-pq-intro.mdx';
 export {default as CreateSelfHostedSupergraph} from './create-self-hosted-supergraph.mdx';
 export {default as DirectiveCompositionRules} from './directive-composition-rules.mdx';
 export {default as Disclaimer} from './disclaimer.mdx';
-export {default as FeatureInPreview} from './feature-in-preview.mdx';
 export {default as GraphOSEnterpriseRequired} from './graphos-enteprise-required.mdx';
 export {default as InconsistentCompositionRules} from './inconsistent-composition-rules.mdx';
 export {default as ObtainGraphApiKey} from './obtain-graph-api-key.mdx';
