@@ -115,7 +115,7 @@ const secretToken = explorer.environment.get('token');
 
 ## Scripting
 
-Similar to tools like Postman, the Explorer can run custom scripts when executing each GraphQL operation. These JavaScript-based scripts often populate the values of [environment variables](#environment-variables) that are then injected into HTTP header values or GraphQL variables. This can be especially useful for managing authentication flows like OAuth, for example by refreshing an expired access token, or validating response data.
+Similar to tools like Postman, the Explorer can run custom scripts when executing each GraphQL operation. These JavaScript-based scripts often populate the values of [environment variables](#environment-variables) that are then injected into HTTP header values or GraphQL variables. This can be especially useful for managing authentication flows like OAuth, for example by refreshing an expired access token, or validating response data. For an example, see [Operation Scripts](#operation-scripts).
 
 ### Script types
 
@@ -395,7 +395,7 @@ This exposes the `crypto-js` package for use within your script. For available f
 ### Examples
 
 #### Operation Scripts
-Here is a small example that runs the operation and sets and environment variable for use on future operations
+Here is a small example that runs an operation and sets an environment variable for use on future operations:
 
 ```js
 const response = await explorer.runOperation({
