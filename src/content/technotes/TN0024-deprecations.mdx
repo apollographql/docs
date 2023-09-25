@@ -44,6 +44,6 @@ After a service's schema has been updated with new `@deprecated` directives, it'
 
 At this point, a crucial question still remains: "When will it be safe to remove the deprecated field?" To answer this question with certainty that you won't cause any breaking changes to client applications, you must lean on your observability tooling.
 
-Specifically, the [**Clients & Operations** table](/graphos/metrics/field-usage#field-details) on the Insights page in [GraphOS Studio](/graphos/) can provide insight into what clients might still be using the deprecated fields so appropriate follow-ups can be actioned.
+Specifically, the [**Clients & Operations** table](/graphos/metrics/field-usage#field-details) on the Insights page in [GraphOS Studio](/graphos/) can provide insight into what clients might still be using the deprecated fields.
 
 In addition, [schema checks](/graphos/delivery/schema-checks) will check any changes pushed for registered schemas against a recent window of operation tracing data to ensure that a deprecated field rollover can be completed without causing any breaking changes to existing clients. It's common to [require that clients identify themselves](/technotes/TN0001-client-id-enforcement) so that you can reach out to them before making a breaking change.
