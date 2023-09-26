@@ -127,7 +127,7 @@ The docs content is written and maintained in the following places. Many of them
 
 - [Apollo Client (React)](https://github.com/apollographql/apollo-client)
 - [Apollo Server](https://github.com/apollographql/apollo-server)
-- [Apollo iOS](https://github.com/apollographql/apollo-ios)
+- [Apollo iOS](https://github.com/apollographql/apollo-ios-dev)
 - [Apollo Kotlin](https://github.com/apollographql/apollo-kotlin)
 - [Apollo Federation](https://github.com/apollographql/federation)
 - [Rover CLI](https://github.com/apollographql/rover)
