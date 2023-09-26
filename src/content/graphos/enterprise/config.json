@@ -31,12 +31,8 @@
             "preview"
           ]
         ],
-        "Safelisting with persisted queries": [
+        "Safelisting with persisted queries":
           "https://www.apollographql.com/docs/router/configuration/persisted-queries", 
-          [
-            "preview"
-          ]
-        ],
         "Operation limits": "https://www.apollographql.com/docs/router/configuration/operation-limits",
         "External coprocessing": "https://www.apollographql.com/docs/router/customizations/coprocessor"
       }
