@@ -63,7 +63,7 @@ export function PageLayout({pageContext, children, location, data}) {
   useEffect(() => {
     setNow(Date.now());
     utmGrabber();
-    signupTracer();
+    signupTracer('docs');
   }, []);
 
   return (
