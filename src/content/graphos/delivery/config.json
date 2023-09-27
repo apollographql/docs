@@ -1,5 +1,5 @@
 {
-  "title": "Schema Pipeline",
+  "title": "Schema Delivery Pipeline",
   "algoliaFilters": [
     [
       "docset:graphos",
@@ -16,23 +16,35 @@
     ]
   ],
   "sidebar": {
-    "Publishing schemas": "/",
-    "Validation": {
-      "Schema checks": "/schema-checks",
-      "Configuring schema checks": "/check-configurations",
-      "Schema linting": "/schema-linter",
-      "Linter rules": "/linter-rules",
-      "Connecting to GitHub": "/github-integration",
-      "Validating client operations": "/validating-client-operations"
-    },
-    "Delivery": {
-      "Launches": "/launches",
+    "Overview": "/",
+    "Governance": {
+      "Schema proposals": [
+        "/proposals",
+        [
+          "enterprise",
+          "preview"
+        ]      
+      ],
+      "Schema checks": {
+        "Overview": "/schema-checks",
+        "Configuring schema checks": "/check-configurations",
+        "Connecting to GitHub": "/github-integration"
+      },
+      "Schema linting": {
+        "Overview": "/schema-linter",
+        "Linter rules": "/linter-rules"
+      },
+      "Validating client operations": "/validating-client-operations",
       "Contracts": [
         "/contracts",
         [
           "enterprise"
         ]
       ]
+    },
+    "Delivery": {
+      "Publishing schemas": "/publication",
+      "Launches": "/launches"
     }
   }
 }
