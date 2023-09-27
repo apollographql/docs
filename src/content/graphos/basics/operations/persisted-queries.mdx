@@ -421,6 +421,41 @@ graph LR;
 
 Guide each client team to follow the implementation steps presented in the [incremental adoption path](#incremental-adoption-path).
 
+## Persisted query list management
+
+From the persisted query lists page, you can perform the following actions by clicking the **Actions** button on the right of any PQL:
+
+- Download the list as a JSON file
+- Update the PQL's name and description
+- Link and unlink variants
+- Delete the PQL entirely
+
+  <img
+    className="screenshot"
+    alt="Persisted query list actions in Studio"
+    src="../../img/pql-actions.jpg"
+  />
+
+The **Publish operations** action provides the [Rover CLI command to do so](/rover/commands/persisted-queries/).
+
+### Operation management
+
+Since every operation should [have a unique ID](#id), you can't update existing operations. (If you try to publish a different operation to an existing ID, Rover returns an error.) Instead, you can only add new operations and delete existing ones.
+
+#### Adding operations
+
+To add new operations to a PQL, you need to [publish an updated manifest using the Rover CLI](#32-publish-manifests-to-the-pql). If the manifest you're publishing doesn't include an operation from a previous version, this does _not_ delete the operation from the PQL. Each manifest publication only adds any new operations to the list.
+
+#### Deleting operations
+
+If you want to delete an operation, you can do so from Studio. From the persisted query lists page, click a persisted query list to open it. Then, click the **Actions** button next to a particular operation to delete it.
+
+  <img
+    className="screenshot"
+    alt="Persisted query list operation actions in Studio"
+    src="../../img/operation-actions.jpg"
+  />
+
 ## Manifest format
 
 <blockquote>
