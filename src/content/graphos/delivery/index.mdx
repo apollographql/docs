@@ -1,6 +1,33 @@
 ---
 title: Schema delivery pipeline
-description: Ensure streamlined, error-free schema development using the GraphOS suite of schema tools
+description: Ensure streamlined, error-free schema development using the GraphOS suite of schema development tools
 ---
 
-To-do: Give an overview of schema collaboration/governance tools.
+GraphOS provides a suite of schema development tools to foster colloboration and efficiently deploy changes to your supergraph schema. These tools fall into two main categories:
+
+- **Schema governance** tools let you manage, validate, and enforce consistency and standards within your supergraph schema to ensure its reliability and compatibility across different services and teams.
+- **Schema delivery** tools let you integrate schema publication seamlessly into your devops workflows.
+
+## Schema governance
+
+GraphOS provides the following schema governance tools:
+
+- [Schema proposals](./schema-proposals) enable streamlined collaboration on schema changes. One team member can propose schema changes that several team members review and approve.
+- [Schema checks](./schema-checks) help you identify breaking changes before you make them, and help you identify when a potentially dangerous change is in fact safe.
+- [Schema linting](./schema-linter) ensures a consistent, well-formed schema across all your teams. This, in turn, lowers maintenance overheads and improves developer productivity. Schema linting can run both as part of schema checks in GraphOS Studio as well as Rover.
+
+## Schema delivery
+
+Schema delivery refers to the process of making your supergraph schema available to clients. GraphOS requires you to [publish changes using the Rover CLI](./publication) to do so. Publication happens via a CLI command so you can integrate it into your continuous delivery pipeline.
+
+To incorporate other important aspects of your supergraph configuration, such as your router configuration or federation version, GraphOS uses the concept of [**launches**](./launches). Launches are triggered by schema updates and can be monitored from the **Launches** page in GraphOS Studio.
+
+<img className="screenshot" src="../img/launches-page.jpg" width="500" />
+
+### Contracts
+
+GraphOS **contracts** are an advanced, enterprise-only feature that let you deliver _different_ subsets of your supergraph to different consumers. Contracts rely on `@tags` across various subgraph schemas to denote which types and fields are accessible to different consumers. Check out the [contract documentation](./contracts) for more information.
+
+## Client operation validation
+
+In addition to the governance and delivery tools for schema developers, Apollo provides a CLI command for app developers to confirm that GraphQL operations in a client application are compatible with the published schema. Refer to the [Validating client operations page](./validating-client-operations) for more information.
