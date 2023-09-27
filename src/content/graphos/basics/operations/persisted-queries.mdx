@@ -440,7 +440,7 @@ The **Publish operations** action provides the [Rover CLI command to do so](/rov
 
 ### Operation management
 
-Since every operation should [have a unique ID](#id), you can't update existing operations. (If you try to publish a different operation to an existing ID, Rover returns an error.) Instead, you can only add new operations and delete existing ones.
+You can add new operations to a PQL by using the the [Rover CLI](/rover/commands/persisted-queries/) and you can delete operations from the PQL's page in GraphOS Studio. Since every operation should [have a unique ID](#id), you can't update existing operations. If you try to publish a revised operation [`body`](#body) for an existing operation ID, Rover returns an error.
 
 #### Adding operations
 
@@ -448,7 +448,7 @@ To add new operations to a PQL, you need to [publish an updated manifest using t
 
 #### Deleting operations
 
-If you want to delete an operation, you can do so from Studio. From the persisted query lists page, click a persisted query list to open it. Then, click the **Actions** button next to a particular operation to delete it.
+If you want to delete an operation, you must do so from Studio. From the persisted query lists page, click a persisted query list to open it. Then, click the **Actions** button next to a particular operation and select to **Delete**.
 
   <img
     className="screenshot"
@@ -456,7 +456,7 @@ If you want to delete an operation, you can do so from Studio. From the persiste
     src="../../img/operation-actions.jpg"
   />
 
-Deleting operations is a destructive action that cannot be undone. Depending on your router's [security level](#router-security-levels), deleting operations from a PQL can cause application errors. For example, if you've enabled [safelisting](#safelisting) (with or without requiring IDs), the router rejects any operations you've deleted from the PQL but that your clients are still performing.
+Deleting operations is a destructive action that cannot be undone. Depending on your router's [security level](#router-security-levels), deleting operations from a PQL can cause application errors. For example, if you've enabled [safelisting](#safelisting)—with or without requiring IDs—the router rejects any operations you've deleted from the PQL but that your clients are still performing.
 
 ## Manifest format
 
