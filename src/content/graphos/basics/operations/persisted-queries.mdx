@@ -456,6 +456,8 @@ If you want to delete an operation, you can do so from Studio. From the persiste
     src="../../img/operation-actions.jpg"
   />
 
+Deleting operations is a destructive action that cannot be undone. Depending on your router's [security level](#router-security-levels), deleting operations from a PQL can cause application errors. For example, if you've enabled [safelisting](#safelisting) (with or without requiring IDs), the router rejects any operations you've deleted from the PQL but that your clients are still performing.
+
 ## Manifest format
 
 <blockquote>
