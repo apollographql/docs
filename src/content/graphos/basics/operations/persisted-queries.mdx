@@ -448,7 +448,7 @@ To add new operations to a PQL, you need to [publish an updated manifest using t
 
 #### Deleting operations
 
-If you want to delete an operation, you must do so from Studio. From the persisted query lists page, click a persisted query list to open it. Then, click the **Actions** button next to a particular operation and select to **Delete**.
+If you want to delete an operation, you must do so from Studio. From the persisted query lists page, click a persisted query list to open it. Then, click the **Actions** button next to a particular operation and select **Delete**.
 
   <img
     className="screenshot"
@@ -456,7 +456,11 @@ If you want to delete an operation, you must do so from Studio. From the persist
     src="../../img/operation-actions.jpg"
   />
 
-Deleting operations is a destructive action that cannot be undone. Depending on your router's [security level](#router-security-levels), deleting operations from a PQL can cause application errors. For example, if you've enabled [safelisting](#safelisting)—with or without requiring IDs—the router rejects any operations you've deleted from the PQL but that your clients are still performing.
+You should only delete operations that are problematic and shouldn't be executed. Even for such operations, it's important to recognize that operation deletions can cause application errors for legitimate clients, depending on your router's [security level](#router-security-levels).
+
+For example, if you've enabled [safelisting](#safelisting), the router rejects any operations you deleted from the PQL, but that your clients still perform. This is true whether clients send full operation strings or operation IDs for the deleted operation.
+
+While deleting options cannot be directly undone via the Studio UI, you can always republish a deleted operation using [the Rover CLI](#32-publish-manifests-to-the-pql).
 
 ## Manifest format
 
