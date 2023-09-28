@@ -18,13 +18,6 @@
   "sidebar": {
     "Overview": "/",
     "Governance": {
-      "Schema proposals": [
-        "/schema-proposals",
-        [
-          "enterprise",
-          "preview"
-        ]      
-      ],
       "Schema checks": {
         "Overview": "/schema-checks",
         "Configuring schema checks": "/check-configurations",
