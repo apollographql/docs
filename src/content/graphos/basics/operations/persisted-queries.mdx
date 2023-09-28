@@ -423,9 +423,10 @@ Guide each client team to follow the implementation steps presented in the [incr
 
 ## Persisted query list management
 
-From the persisted query lists page, you can perform the following actions by clicking the **Actions** button on the right of any PQL:
+From the **Persisted Query Lists** page, you can perform the following actions by clicking the menu button under **Actions** on the right of any PQL:
 
 - Download the list as a JSON file
+- Publish operations
 - Update the PQL's name and description
 - Link and unlink variants
 - Delete the PQL entirely
@@ -440,7 +441,7 @@ The **Publish operations** action provides the [Rover CLI command to do so](/rov
 
 ### Operation management
 
-You can add new operations to a PQL by using the the [Rover CLI](/rover/commands/persisted-queries/) and you can delete operations from the PQL's page in GraphOS Studio. Since every operation should [have a unique ID](#id), you can't update existing operations. If you try to publish a revised operation [`body`](#body) for an existing operation ID, Rover returns an error.
+You can add new operations to a PQL by using the the [Rover CLI](/rover/commands/persisted-queries/) and you can delete operations from the PQL's page in GraphOS Studio. Since every operation should [have a unique ID](#id), you can't update existing operations: if you try to publish a revised operation [`body`](#body) for an existing operation ID, Rover returns an error.
 
 #### Adding operations
 
@@ -458,9 +459,9 @@ If you want to delete an operation, you must do so from Studio. From the persist
 
 You should only delete operations that are problematic and shouldn't be executed. Even for such operations, it's important to recognize that operation deletions can cause application errors for legitimate clients, depending on your router's [security level](#router-security-levels).
 
-For example, if you've enabled [safelisting](#safelisting), the router rejects any operations you deleted from the PQL, but that your clients still perform. This is true whether clients send full operation strings or operation IDs for the deleted operation.
+For example, if you enabled [safelisting](#safelisting), the router rejects any operations you deleted from the PQL but that your clients still perform. This is true whether clients send full operation strings or operation IDs for the deleted operation.
 
-While deleting options cannot be directly undone via the Studio UI, you can always republish a deleted operation using [the Rover CLI](#32-publish-manifests-to-the-pql).
+Although deleting options cannot be directly undone via the Studio UI, you can always republish a deleted operation using [the Rover CLI](#32-publish-manifests-to-the-pql).
 
 ## Manifest format
 
