@@ -421,6 +421,50 @@ graph LR;
 
 Guide each client team to follow the implementation steps presented in the [incremental adoption path](#incremental-adoption-path).
 
+## Persisted query list management
+
+From the **Persisted Query Lists** page, you can perform the following actions by clicking the **•••** menu under the **Actions** column on the right of any PQL:
+
+- Download the list as a JSON file
+- Publish operations
+- Update the PQL's name and description
+- Link and unlink variants
+- Delete the PQL entirely
+
+  <img
+    className="screenshot"
+    alt="Persisted query list actions in Studio"
+    src="../../img/pql-actions.jpg"
+  />
+
+The **Publish operations** action provides the [Rover CLI command to do so](/rover/commands/persisted-queries/).
+
+### Operation management
+
+You can add new operations to a PQL by using the [Rover CLI](/rover/commands/persisted-queries/), and you can delete operations from the PQL's page in GraphOS Studio. Since every operation should [have a unique ID](#id), you can't update existing operations—if you try to publish a revised operation [`body`](#body) for an existing operation ID, Rover returns an error.
+
+#### Adding operations
+
+To add new operations to a PQL, you need to [publish an updated manifest using the Rover CLI](#32-publish-manifests-to-the-pql). If the manifest you're publishing doesn't include an operation in the PQL, this does _not_ delete that operation from the PQL. Each manifest publication only adds any new operations to the PQL.
+
+#### Deleting operations
+
+If you want to delete an operation, you must do so from Studio. From the **Persisted Query Lists** page, click a persisted query list to open it. Then, click the **•••** menu under the **Actions** column next to a particular operation and select **Delete**.
+
+  <img
+    className="screenshot"
+    alt="Persisted query list operation actions in Studio"
+    src="../../img/operation-actions.jpg"
+  />
+
+You should only delete operations that are problematic and shouldn't be executed. Even for such operations, it's important to recognize that operation deletions can cause application errors for legitimate clients, depending on your router's [security level](#router-security-levels) and if the client is sending full operation strings or operation IDs.
+
+- Regardless of security level, if a client sends an _operation ID_ of a deleted operation, the router _rejects the operation_. 
+- If you enabled [safelisting](#safelisting), the router rejects _any_ operations you deleted from the PQL but that your clients still perform, whether clients send operation IDs or full operation strings for the deleted operation.
+- When the router [allows operation IDs](#allow-operation-ids) or is in [audit mode](#audit-mode-dry-run), if a client sends the full operation string of a deleted operation, the router executes it.
+
+Although you can't undo operation deletions directly via the Studio UI, you can always republish a deleted operation using [the Rover CLI](#32-publish-manifests-to-the-pql).
+
 ## Manifest format
 
 <blockquote>
