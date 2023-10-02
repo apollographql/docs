@@ -5,7 +5,7 @@ description: Secure your graph while minimizing request latency
 
 <GraphOSEnterpriseRequired />
 
-GraphQL APIs are broadly open by design. They let client applications send queries with arbitrary shapes and sizes. And while this allows for expedited client development and a highly performant API platform, it necessitates securing your graph against potentially malicious requests. 
+GraphQL APIs are broadly open by design. While allowing freeform requests expedites client development, it necessitates securing your graph against potentially malicious requests. 
 
 <PQIntro />
 
@@ -13,40 +13,40 @@ GraphQL APIs are broadly open by design. They let client applications send queri
 
 The Apollo Router also supports a related feature called [automatic persisted queries](/router/configuration/in-memory-caching#caching-automatic-persisted-queries-apq) (APQ). With APQ, clients can execute a GraphQL operation by sending the SHA256 hash of its operation string instead of the full string.
 
-APQ has a few limitations compared to preregistered persisted queries.
+APQ has a few limitations compared to registered persisted queries.
 
 <table>
   <thead>
     <tr>
       <th></th>
       <th>automatic persisted queries </th>
-      <th>Preregistered persisted queries</th>
+      <th>Registered persisted queries</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td>Query performance</td>
-      <td>✅ Clients can send identifiers instead of full query strings, reducing request sizes dramatically and latency.</td>
+      <td>✅ Clients can send identifiers instead of full operation strings, reducing request sizes dramatically and latency.</td>
       <td>✅ Same as APQ</td>
     </tr>
     <tr>
       <td>Build- vs. runtime registration</td>
-      <td> Queries are registered at <b>runtime</b>. One of your router instances must receive any given operation string from a client at least once to <a href="/router/configuration/distributed-caching">cache it</a>.</td>
+      <td> Operations are registered at <b>runtime</b>. One of your router instances must receive any given operation string from a client at least once to <a href="/router/configuration/distributed-caching">cache it</a>.</td>
       <td> Clients contribute to the PQL at <b>build-time</b>. Your router fetches its PQL from GraphOS on startup and polls for updates, meaning clients can always execute operations using their PQL-specified ID.</td>
     </tr>
     <tr>
       <td>Safelisting</td>
       <td>❌ APQ doesn't provide safelisting capabilities because the router dynamically populates its APQ cache over time with <em>any</em> operations it receives.</td>
-      <td>✅ Clients preregister their operations to GraphOS. Your router fetches its PQL on startup, enabling it to reject operations not present in the PQL.</td>
+      <td>✅ Clients <em>pre</em>register their operations to GraphOS. Your router fetches its PQL on startup, enabling it to reject operations not present in the PQL.</td>
     </tr>
   </tbody>
 </table>
 
-If you _only_ want to improve request latency and bandwidth usage, APQ addresses your use case. If you _also_ want to secure your supergraph with operation safelisting, you should preregister operations in a PQL.
+If you _only_ want to improve request latency and bandwidth usage, APQ addresses your use case. If you _also_ want to secure your supergraph with operation safelisting, you should register operations in a PQL.
 
 ## Security levels
 
-The Apollo Router supports the following security levels or modes, in increasing order of restrictiveness:
+The Apollo Router supports the following security levels, in increasing order of restrictiveness:
 
 <table>
   <thead>
@@ -66,11 +66,11 @@ The Apollo Router supports the following security levels or modes, in increasing
     </tr>
     <tr>
       <td><strong>Safelisting</strong></td>
-      <td>The router <em>rejects</em> any incoming operations that aren't present in its PQL. Clients can use either PQL-specified ID or operation string to execute operations.</td>
+      <td>The router rejects any incoming operations that aren't in its PQL. Clients can use either PQL-specified IDs or operation strings to execute operations.</td>
     </tr>
     <tr>
       <td><strong>Safelisting with IDs only</strong></td>
-      <td>Clients can _only_ execute operations by providing their PQL-specified IDs; the router rejects all freeform GraphQL requests.</td>
+      <td>Clients can <em>only</em> execute operations by providing their PQL-specified IDs; the router rejects all freeform GraphQL requests.</td>
     </tr>
   </tbody>
 </table>
@@ -78,13 +78,13 @@ The Apollo Router supports the following security levels or modes, in increasing
 
 > _You can find more details, including configuration instructions, in the [implementation section](#2-router-configuration)._
 
-These levels of permissiveness allow you to [incrementally adopt](#incremental-adoption-path) persisted queries on a client-by-client basis. Specifically, the router should use audit mode until you're confident that _all_ your clients' trusted operations have been preregistered in the PQL. Refer to the [incremental adoption section](#incremental-adoption-path) for a step-by-step guide.
+These levels allow you to [incrementally adopt](#incremental-adoption-path) persisted queries on a client-by-client basis. Specifically, the router should use audit mode until you're confident that _all_ your clients' trusted operations have been registered in the PQL. Refer to the [incremental adoption section](#incremental-adoption-path) for a step-by-step guide.
 
 ## Implementation steps
 
 Persisted queries provide benefits to different teams:
 - Safelisting helps **platform teams** secure the graph and optimize its performance.
-- **Application developers** can use preregistered operation IDs to write performant client code.
+- **Application developers** can use registered operation IDs to write performant client code.
 
 Implementation also requires collaboration among these parties. These are the main steps for implementing persisted queries for safelisting, along with the team that usually performs them:
 
@@ -110,7 +110,7 @@ Implementation also requires collaboration among these parties. These are the ma
       <td>Platform team</td>
     </tr>
     <tr>
-      <td> <a href="#3-preregister-operations">3. Preregister operations</a> </td>
+      <td> <a href="#3-operation-registration">3. Operation registration</a> </td>
       <td>
       Generate and publish a persisted queries manifest (PQM) to the PQL from your client's CI/CD pipeline.
       </td>
@@ -119,7 +119,7 @@ Implementation also requires collaboration among these parties. These are the ma
     <tr>
       <td><a href="#4-client-updates">4. Client updates (Optional) </a> </td>
       <td>
-        Update clients to use operation IDs rather than full query strings.
+        Update clients to use operation IDs rather than full operation strings.
         <br/>
         <br/>
         <em>This step provides performance benefits but isn't necessary for safelisting.</em>
@@ -134,7 +134,7 @@ Continue reading for each step's details, or skip to the [incremental adoption s
 ### 1. PQL creation and linking
 
 To use persisted queries, you first need a **persisted query list** (**PQL**) in GraphOS Studio.
-Platform teams create an empty PQL in GraphOS Studio so that client teams can preregister operations to it.
+Platform teams create an empty PQL in GraphOS Studio so that client teams can register operations to it.
 
 Each PQL is associated or "linked" with a single graph in GraphOS. A graph, however, can have several PQLs. For example, one graph may need multiple PQLs if you want a separate PQL for each [contract variant](../delivery/contracts/). You can link a PQL to any variants of its graph. And although many variants may use the same PQL, each variant can only have one linked PQL at a time.
 
@@ -234,15 +234,15 @@ The Apollo Router is the key component that enforces safelisting.
 
 <PQSecurityLevels />
 
-### 3. Preregister operations
+### 3. Operation registration
 
-Preregistering operations to a PQL has two steps:
-1. Generating persisted queries manifests (PQM) using client-specific tooling
+Registering operations to a PQL has two steps:
+1. Generating persisted query manifests (PQM) using client-specific tooling
 2. Publishing PQMs to the PQL using the Rover CLI tool
 
 Building both of these into your CI/CD pipeline incorporates new operations automatically whenever you release a new client app version.
 
-#### 3.1 Generate persisted queries manifests
+#### 3.1 Generate persisted query manifests
 
 Once a PQL exists in GraphOS, client teams can start publishing operations to it. To do so, you must generate JSON **manifests** of the operations to publish. You generate a separate manifest for each of your client apps.
 
@@ -338,7 +338,7 @@ The Rover CLI has a [built-in capability](/rover/commands/persisted-queries/#rel
 
 ### 4. Client updates
 
-With your [manifest published](#3-preregister-operations) and the [router configured](#2-router-configuration), you can update your clients to use preregistered operations IDs. Organizations can do this one client at a time as client teams [publish client-specific PQMs](#32-publish-manifests-to-the-pql) to the PQL.
+With your [manifest published](#3-operation-registration) and the [router configured](#2-router-configuration), you can update your clients to use registered operations IDs. Organizations can do this one client at a time as client teams [publish client-specific PQMs](#32-publish-manifests-to-the-pql) to the PQL.
 
 > **Note:** This step provides performance benefits but isn't necessary for safelisting. You can continue to use full operation strings rather than operation IDs in [safelisting mode](#safelisting).
 
@@ -372,21 +372,21 @@ Refer to the Apollo Client Web's [persisted query documentation](/react/api/link
 
 ## Incremental adoption path
 
-Persisted queries' [tiered security levels](#security-levels) let you adopt an incremental approach rather than simultaneously requiring all clients to send requests via preregistered operations IDs. You can follow these steps for incremental adoption:
+Persisted queries' [tiered security levels](#security-levels) let you adopt an incremental approach rather than simultaneously requiring all clients to send requests via registered operations IDs. You can follow these steps for incremental adoption:
 
 1. Identify the first client you want to implement persisted queries with. It could be the client or team you're most comfortable with or the one most comfortable with GraphOS.
 2. Follow all [implementation steps](#implementation-steps) for your chosen client:
     - [Create and link a PQL](#1-pql-creation-and-linking) to a staging or development variant.
     - When [configuring the router](#2-router-configuration), begin with [audit mode](#audit-mode-dry-run).
-    - Use the [client-specific tooling](#generation-methods) to generate an [operation manifest](#31-generate-persisted-queries-manifests) and [publish it to the PQL](#32-publish-manifests-to-the-pql) as part of your client's CI/CD pipeline.
-    - (Optional) Update your chosen client to use only preregistered operations, either by full operation string or operation ID.
+    - Use the [client-specific tooling](#generation-methods) to generate an [operation manifest](#31-generate-persisted-query-manifests) and [publish it to the PQL](#32-publish-manifests-to-the-pql) as part of your client's CI/CD pipeline.
+    - (Optional) Update your chosen client to use only registered operations, either by full operation string or operation ID.
         - Teams working with Apollo Client Web need to use an [additional package](https://www.npmjs.com/package/@apollo/persisted-query-lists) at runtime to send persisted queries.
 
-3. Continue to monitor your router logs: once you consistently see that unregistered operations are being logged and preregistered ones aren't, you've completed the setup for this client! 🎉
+3. Continue to monitor your router logs: once you consistently see that unregistered operations are being logged and registered ones aren't, you've completed the setup for this client! 🎉
 
 If safelisting is your goal, you'll need to [coordinate across client teams](#coordinate-with-client-teams) to complete these steps for each of your client apps.
 
-Once your router's logs are completely clear of unexpected operations, you can configure your router to use [safelisting mode](#safelisting). Then, to reap the performance benefits, [update your client apps](#4-client-updates) to use operation IDs rather than full query strings.
+Once your router's logs are completely clear of unexpected operations, you can configure your router to use [safelisting mode](#safelisting). Then, to reap the performance benefits, [update your client apps](#4-client-updates) to use operation IDs rather than full operation strings.
 
 Once you've confirmed all client apps use IDs, you can move to the most restrictive security level: [safelisting with IDs only](#safelisting-with-ids-only).
 This security level _enforces_ the performance benefit of using operation IDs rather than full operation strings. If you're content with the safelisting aspect of persisted queries with only optional performance benefits, you don't need to enable it.
@@ -398,7 +398,7 @@ Once you've followed the implementation steps for one client, you can coordinate
 1. Identify all the client apps that execute operations against your router, and the GraphQL client libraries that those apps use.
     - Before you enable safelisting in your router, your client apps must start publishing their operations to your PQL.
 2. Communicate to your client development teams that adopting persisted queries will require adding tooling to their CI/CD pipeline.
-    - Specifically, each client team will need to generate client operation [manifests](#31-generate-persisted-queries-manifests) and [publish manifests to the PQL](#32-publish-operations-to-the-pql).
+    - Specifically, each client team will need to generate client operation [manifests](#31-generate-persisted-query-manifests) and [publish manifests to the PQL](#32-publish-operations-to-the-pql).
 3. Identify which team members will assist with adding tooling to their respective CI/CD pipelines.
 
 ```mermaid
@@ -467,7 +467,7 @@ Although you can't undo operation deletions directly via the Studio UI, you can 
 
 <blockquote>
 
-You only need to read this section if you're building your own tooling to [generate persisted query manifests](#31-generate-persisted-queries-manifests).
+You only need to read this section if you're building your own tooling to [generate persisted query manifests](#31-generate-persisted-query-manifests).
 
 </blockquote>
 
@@ -638,9 +638,9 @@ The type of GraphQL operation. Always one of the following values:
 
 ### Generating IDs
 
-When generating operation IDs for a manifest, you should use a value that's unique to each operation, such as the query document's cryptographic hash. Apollo's [manifest generation tools](#31-generate-persisted-queries-manifests) use the base16 representation of the document's SHA256 hash, which is the same format used for [APQ](#differences-from-automatic-persisted-queries).
+When generating operation IDs for a manifest, you should use a value that's unique to each operation, such as the query document's cryptographic hash. Apollo's [manifest generation tools](#31-generate-persisted-query-manifests) use the base16 representation of the document's SHA256 hash, which is the same format used for [APQ](#differences-from-automatic-persisted-queries).
 
-By generating identifiers based on query documents this way, you ensure that different operations always have different IDs. ID uniqueness prevents unexpected collisions in your PQL. It also allows the router to execute queries both by full query strings and PQL-specified IDs. 
+By generating identifiers based on query documents this way, you ensure that different operations always have different IDs. ID uniqueness prevents unexpected collisions in your PQL. It also allows the router to execute operations both by full operation strings and PQL-specified IDs. 
 
 > **Never use an operation's _name_ for its PQL ID.** Different clients (or even different versions of the _same_ client) might execute different operations with the same name, and _all_ of those distinct operations should be present in your PQL.
 
@@ -683,7 +683,7 @@ query GetBooks {
 
 </CodeColumns>
 
-Ordering differences (other than the order of top-level definitions) between a preregistered operation and the operation a client sends can similarly cause the router to reject client operations, even if they have no semantic impact on the operation.
+Ordering differences (other than the order of top-level definitions) between a registered operation and the operation a client sends can similarly cause the router to reject client operations, even if they have no semantic impact on the operation.
 
 <CodeColumns>
 
@@ -734,7 +734,7 @@ query GetBooks {
 
 </CodeColumns>
 
-> The [manifest generation tools](#31-generate-persisted-queries-manifests) for Apollo Client libraries all account for this default behavior.
+> The [manifest generation tools](#31-generate-persisted-query-manifests) for Apollo Client libraries all account for this default behavior.
 
 If you're building your own manifest generation tool, ensure it accounts for any such operation changes in your chosen client library. Otherwise, the router will reject your app's operations due to an operation string mismatch if safelisting is enabled.
 

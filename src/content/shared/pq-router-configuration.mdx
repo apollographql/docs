@@ -1,11 +1,12 @@
 As soon as a graph has an associated PQL, you can configure router instances to fetch and use the PQL by following these steps:
 
 1. Ensure your router instances are ready to work with PQLs:
-    - Make sure you're using version `1.25.0` or later of the Apollo Router.
-    - Make sure your router instances are [connected to your GraphOS Enterprise organization](/graphos/enterprise-features/#enabling-enterprise-features) and that they're associated with a variant that your PQL is linked to.
+
+   - Make sure you're using version `1.25.0` or later of the Apollo Router.
+   - Make sure your router instances are [connected to your GraphOS Enterprise organization](/graphos/enterprise-features/#enabling-enterprise-features) and that they're associated with a variant that your PQL is linked to.
 
 2. Set your desired security level in your router's YAML config file. For supported options, see [router security levels](#router-security-levels). When first implementing persisted queries, it's best to start with [audit—or "dry run"—mode](#audit-mode-dry-run).
 
 3. Deploy your updated router instances to begin using your PQL.
 
-Once your organization's PQL has preregistered all your clients' operations and you've ensured your client apps are only sending preregistered operations, you can update your router configuration to the [safelisting security level](#safelisting).
+Once your organization's PQL has registered all your clients' operations and you've ensured your client apps are only sending registered operations, you can update your router configuration to the [safelisting security level](#safelisting).
