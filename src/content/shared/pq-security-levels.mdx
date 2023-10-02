@@ -14,6 +14,8 @@ When adopting persisted queries, you should start with a less restrictive securi
 
 See below for sample YAML configurations for each level. Refer to the [router configuration options](/router/configuration/persisted-queries#configuration-options) for option details.
 
+> From version `1.25.0` to `1.xx.0` the `persisted_queries` configuration option was called `preview_persisted_queries`. Upgrade your router to version `1.xx.0` or later to use the [generally available](/resources/product-launch-stages/#general-availability) version of the feature and the example configuration snippets below.
+
 #### Allow operation IDs
 
 To use persisted queries _only_ to reduce network bandwidth and latency (_not_ for safelisting), add the following minimal configuration:
