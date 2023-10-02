@@ -1,4 +1,6 @@
-With [GraphOS Enterprise](/graphos/enterprise/), you can enhance your supergraph's security by maintaining a **persisted query list** (**PQL**) for your supergraph's self-hosted router. The [Apollo Router](/router/) checks incoming requests against the PQL, an operation safelist made by your first-party apps.
+With [GraphOS Enterprise](/graphos/enterprise/), you can enhance your supergraph's security by maintaining a **persisted query list** (**PQL**) for your supergraph's self-hosted router. The [Apollo Router](/router/) checks incoming requests against the PQL which acts as an operation safelist made by your first-party apps.
+
+> You can include any kind of operation in your PQL, including queries, mutations, and subscriptions.
 
 ```mermaid
 flowchart LR
@@ -20,12 +22,12 @@ flowchart LR
   api2(["GraphQL API"]);
   api3(["GraphQL API"]);
   end
-  Apps -->|Queries| Router -->|Trusted<br/> queries| Supergraph
+  Apps -->|Requests| Router -->|Registered<br/> operations| Supergraph
 ```
 
 Your router can use its persisted query list (PQL) to both **protect your supergraph** and **speed up your clients' operations**:
 
 - When you enable **safelisting**, your router rejects any incoming operations not registered in its PQL.
-- Client apps can execute an operation by providing its PQL-specified ID _instead of_ an entire operation string.
-  - Querying by ID can significantly reduce latency and bandwidth usage for very large operation strings.
+- Client apps can execute an operation by providing its PQL-specified ID _instead of_ the entire operation string.
+  - Requesting by ID can significantly reduce latency and bandwidth usage for very large operation strings.
   - Your router can _require_ that clients provide operations by ID and _reject_ full operation strings—even operation strings present in the PQL.
