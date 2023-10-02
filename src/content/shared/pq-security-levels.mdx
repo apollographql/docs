@@ -1,14 +1,14 @@
 The Apollo Router supports the following security levels, in increasing order of restrictiveness:
 
 - **Allow operation IDs**: Clients can optionally execute an operation on your router by providing the operation's PQL-specified ID.
-    - All other levels also provide this core capability.
-    - This level doesn't provide safelisting.
+  - All other levels also provide this core capability.
+  - This level doesn't provide safelisting.
 - **Audit mode**: Executing operations by providing a PQL-specified ID is still optional, but the router also logs any unregistered operations.
-    - The level serves as a dry run and helps you identify operations you may still need to preregister before turning on safelisting.
+  - The level serves as a dry run and helps you identify operations you may still need to preregister before turning on safelisting.
 - **Safelisting**: The router _rejects_ any incoming operations not present in its PQL. Requests can use either ID or operation string.
-    - Before moving to this security level, ensure _all_ your client operations are present in your PQL.
+  - Before moving to this security level, ensure _all_ your client operations are present in your PQL.
 - **Safelisting with IDs only**: The router rejects any freeform GraphQL operations. Clients can _only_ execute operations by providing their PQL-specified IDs.
-    - Before moving to this security level, ensure _all_ your clients execute operations by providing their PQL-specified ID.
+  - Before moving to this security level, ensure _all_ your clients execute operations by providing their PQL-specified ID.
 
 When adopting persisted queries, you should start with a less restrictive security such as [audit mode](#audit-mode-dry-run). You can then enable increasingly restrictive levels after your teams have updated all clients.
 
@@ -19,9 +19,10 @@ See below for sample YAML configurations for each level. Refer to the [router co
 To use persisted queries _only_ to reduce network bandwidth and latency (_not_ for safelisting), add the following minimal configuration:
 
 ```yaml title="router.yaml"
-preview_persisted_queries:
+persisted_queries:
   enabled: true
 ```
+
 > **Note:** You can use this security level with or without [automatic persisted queries](/router/configuration/in-memory-caching#caching-automatic-persisted-queries-apq) enabled.
 
 This mode lets clients execute operations by providing their PQL-specified ID instead of the full operation string.
@@ -29,15 +30,16 @@ Your router also continues to accept full operation strings, even for operations
 
 #### Audit mode (dry run)
 
-Turning on logging is crucial for gauging your client apps' readiness for safelisting. The logs identify which operations you need to either add to your PQL or stop your client apps from making. 
+Turning on logging is crucial for gauging your client apps' readiness for safelisting. The logs identify which operations you need to either add to your PQL or stop your client apps from making.
 
 To enable logging for unregistered queries, enable the `log_unknown` property:
 
 ```yaml title="router.yaml"
-preview_persisted_queries:
+persisted_queries:
   enabled: true
   log_unknown: true
 ```
+
 > **Note:** You can use audit mode with or without [automatic persisted queries](/router/configuration/in-memory-caching#caching-automatic-persisted-queries-apq) enabled.
 
 Unregistered operations appear in your [router's logs](/router/logging).
@@ -59,14 +61,14 @@ You can use these router logs to audit operations sent to your router and ask cl
 With the following configuration, your router allows _only_ GraphQL operations that are present in its PQL while rejecting all other operations:
 
 ```yaml title="router.yaml"
-preview_persisted_queries:
+persisted_queries:
   enabled: true
   log_unknown: true
   safelist:
     enabled: true
     require_id: false
 apq:
-  enabled: false # APQ must be turned off 
+  enabled: false # APQ must be turned off
 ```
 
 > **Note:** To enable safelisting, you _must_ turn off [automatic persisted queries](/router/configuration/in-memory-caching#caching-automatic-persisted-queries-apq) (APQs). APQs let clients [register arbitrary operations at runtime](#differences-from-automatic-persisted-queries) while safelisting restricts operations to those that have been explicitly preregistered.
@@ -83,14 +85,14 @@ The router rejects unregistered operations, and if `log_unknown` is true, those 
 With the following configuration, your router rejects all operation strings and only accepts preregistered operation IDs:
 
 ```yaml title="router.yaml"
-preview_persisted_queries:
+persisted_queries:
   enabled: true
   log_unknown: true
   safelist:
     enabled: true
     require_id: true #highlight-line
 apq:
-  enabled: false # APQ must be turned off 
+  enabled: false # APQ must be turned off
 ```
 
 > **Note:** To enable safelisting, you _must_ turn off [automatic persisted queries](/router/configuration/in-memory-caching#caching-automatic-persisted-queries-apq) (APQs). APQs let clients [register arbitrary operations at runtime](#differences-from-automatic-persisted-queries) while safelisting restricts operations to those that have been explicitly preregistered.
