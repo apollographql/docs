@@ -10,6 +10,10 @@ In SDUI, the goal of the client is to handle pixels, not data. We should simply 
 
 We usually start with simple things like text and images. As we move to more logic to the server, like component layout, clients can then have a collection of types mapped to which UI component they should use for their specific platform and render it with the correct data.
 
+## Component Registry
+Once our API has more control to decide what components our apps should render we will need to define the mapping from our GraphQL types to the UI equivalant components (React, SwiftUI, Jetpack, etc.).
+
+Here is a simplified version of a React component registry:
 ```jsx
 const { data } = useQuery(FeaturedProductsCollection);
 
@@ -26,4 +30,24 @@ if (!component) { throw new Error('Unknown Type Returned!'); }
 renderComponent(component, data);
 ```
 
-This means that from the API response you can dynamically choose when to render different components or start displaying different components based on any of our API inputs, including headers or user information.
+This means that from the API response you can dynamically choose when to render different components or start displaying different components based on any of our client inputs, including headers, user information, or even info from previous server respones.
+
+## Design Systems and Tokens
+Client libraries also may implement design systems. While the choice of what grid format to use and spacing should be kept in the client, other choices like whether a badge should be red or green based on user state or data should be controlled by the API.
+Rather than returning hex codes though, consider using a design system that operates on tokens, so you can change the format or business logic of which color lines up with each state.
+
+As a client consuming this response I don't need to know what each badge is for, I just render the list and each one gets the same logic:
+```json
+{
+  "badges": [
+    {
+      "text": "Loyalty members get a discount",
+      "theme": "brand-color:primary"
+    },
+    {
+      "text": "Inventory is low, buy now!",
+      "theme": "brand-color:warning"
+    }
+  ]
+}
+```
