@@ -65,7 +65,7 @@ export function DocsetMenu({docset, versions = [], currentVersion, ...props}) {
   return (
     <>
       <ButtonGroup isAttached {...props}>
-        <Button rightIcon={<FiGrid />} onClick={onOpen} colorScheme="indigo">
+        <Button rightIcon={<FiGrid />} onClick={onOpen} colorScheme="horizon">
           {docset}
         </Button>
         {versions.length > 1 && (

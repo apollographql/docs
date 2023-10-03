@@ -48,8 +48,8 @@ const theme = extendTheme({
         _dark: 'whiteAlpha.300'
       },
       primary: {
-        default: 'indigo.500',
-        _dark: 'indigo.200'
+        default: 'horizon.600',
+        _dark: 'horizon.300'
       },
       secondary: {
         default: 'pink.600',
