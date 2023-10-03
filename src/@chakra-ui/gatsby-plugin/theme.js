@@ -48,7 +48,7 @@ const theme = extendTheme({
         _dark: 'whiteAlpha.300'
       },
       primary: {
-        default: 'horizon.600',
+        default: 'satellite.900',
         _dark: 'horizon.300'
       },
       secondary: {
@@ -86,6 +86,10 @@ const theme = extendTheme({
     yellow: createColorPalette(yellow),
     orange: createColorPalette(orange),
     regolith: '#FFEADB',
+    titan: '#FCD200',
+    aurora: '#00FCB5',
+    neptune: '#0083FC',
+    cosmos: '#7B00C7',
     horizon: createColorPalette({
       darkest: '#612000',
       darker: '#943000',
