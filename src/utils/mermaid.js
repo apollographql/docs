@@ -4,9 +4,9 @@ import {useMemo} from 'react';
 
 export function useMermaidStyles() {
   const [primary, secondary, tertiary, fill, background] = useToken('colors', [
-    useColorModeValue('indigo.500', 'indigo.300'),
-    useColorModeValue('pink.700', 'pink.200'),
-    useColorModeValue('teal.700', 'teal.200'),
+    useColorModeValue('horizon.500', 'horizon.300'),
+    useColorModeValue('satellite.700', 'satellite.700'),
+    useColorModeValue('nebula.500', 'nebula.200'),
     useColorModeValue('gray.50', 'gray.700'),
     'bg'
   ]);
