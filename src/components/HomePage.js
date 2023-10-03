@@ -17,8 +17,8 @@ import {Link as GatsbyLink} from 'gatsby';
 import {PrimaryLink} from './RelativeLink';
 
 export function Odyssey() {
-  const lightGradient = useToken('colors', ['blue.50', 'indigo.50']);
-  const darkGradient = useToken('colors', ['blue.600', 'indigo.600']);
+  const lightGradient = useToken('colors', ['horizon.50', 'horizon.400']);
+  const darkGradient = useToken('colors', ['nebula.400', 'nebula.700']);
   return (
     <Grid
       gap={{base: 6, lg: 10}}
@@ -42,7 +42,7 @@ export function Odyssey() {
         <Button
           as="a"
           href="https://www.apollographql.com/tutorials"
-          colorScheme="indigo"
+          colorScheme="horizon"
           rightIcon={<FiArrowRight />}
         >
           Explore Tutorials
