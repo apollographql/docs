@@ -122,7 +122,7 @@ type AddCustomerResponse {
 
 ### Enforcing conventions
 
-Use GraphQL-ESLint's [naming-convention rule](https://github.com/B2o5T/graphql-eslint/blob/master/website/src/pages/rules/naming-convention.md) to catch violations.
+Use GraphOS [schema linting](/graphos/delivery/schema-linter/) to catch naming violations. GraphOS schema linting can be done within [schema checks](/graphos/delivery/schema-checks) which can allow you to enforce this in your CI/CD pipelines, or it can be run using [Rover](/graphos/delivery/schema-linter#one-off-linting) for one-off requests locally.
 
 ### Namespacing
 
