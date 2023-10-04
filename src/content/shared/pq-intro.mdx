@@ -20,36 +20,35 @@ At runtime, the [Apollo Router](/router/) checks incoming requests against the P
 
 ```mermaid
 flowchart LR
-  subgraph Apps["First-party apps"]
-  direction LR
-  webClient("Web client");
-  androidClient("Android client");
-  iosClient("iOS client");
-  end
-  subgraph Supergraph["Supergraph"]
-    subgraph Router["Apollo Router"]
-        direction TB
-        router(["Graph<br/>Router"]);
-        pql[[Persisted<br/>Query List]];
-        router <--> pql
-    end
-    subgraph Subgraphs
-      direction LR
-      api1(["GraphQL API"]);
-      api2(["GraphQL API"]);
-      api3(["GraphQL API"]);
-    end
-  end
-  webClient --> Router
-  androidClient -->|Requests| Router
-  iosClient --> Router
-  Router -.->|"❌ Unregistered<br/> subgraph operations"| Subgraphs
-  Router -->|"✅ Registered<br/> subgraph operations"| Subgraphs
+subgraph Apps["First-party apps"]
+direction LR
+webClient("Web client");
+androidClient("Android client");
+iosClient("iOS client");
+end
+subgraph Supergraph["Supergraph"]
+subgraph Router["Apollo Router"]
+direction TB
+router(["Graph<br/>Router"]);
+pql[[Persisted<br/>Query List]];
+router <--> pql
+end
+subgraph Subgraphs
+direction LR
+api1(["Subgraph A"]);
+api2(["Subgraph B"]);
+api3(["Subgraph C"]);
+end
+end
+Apps -->|"✅ Registered<br/> operations"| Router
+Apps-->|"❌ Unregistered<br/> operations"| Router
+Router -->|"✅ Registered<br/> operations"| Subgraphs
 ```
 
 Your router can use its persisted query list (PQL) to both **protect your supergraph** and **speed up your clients' operations**:
 
 - When you enable **safelisting**, your router rejects any incoming operations not registered in its PQL.
+
 - Client apps can execute an operation by providing its PQL-specified ID _instead of_ the entire operation string.
   - Requesting by ID can significantly reduce latency and bandwidth usage for very large operation strings.
   - Your router can _require_ that clients provide operations by ID and _reject_ full operation strings—even operation strings present in the PQL.
