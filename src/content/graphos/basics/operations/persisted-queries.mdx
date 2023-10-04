@@ -19,15 +19,15 @@ APQ has a few limitations compared to registered persisted queries.
   <thead>
     <tr>
       <th></th>
-      <th>automatic persisted queries </th>
-      <th>Registered persisted queries</th>
+      <th style="min-width: 400px">Automatic persisted queries </th>
+      <th style="min-width: 400px">Registered persisted queries</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>Query performance</td>
-      <td>✅ Clients can send identifiers instead of full operation strings, reducing request sizes dramatically and latency.</td>
-      <td>✅ Same as APQ</td>
+      <td>Operation performance</td>
+      <td>✅ Clients can send identifiers instead of full operation strings, reducing request sizes and latency dramatically.</td>
+      <td>🌟 Registered persisted queries share the same performance enhancement mechanism as APQs. Additionally, they benefit from query plan <a href="/router/configuration/in-memory-caching/#cache-warm-up">cache warm-ups</a>, which are active by default from version <a href="https://github.com/apollographql/router/releases/tag/v1.31.0">1.31.0</a> of the router.</td>
     </tr>
     <tr>
       <td>Build- vs. runtime registration</td>
