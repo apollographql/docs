@@ -40,7 +40,9 @@ flowchart LR
       api3(["GraphQL API"]);
     end
   end
-  Apps -->|Requests| Router
+  webClient --> Router
+  androidClient -->|Requests| Router
+  iosClient --> Router
   Router -.->|"❌ Unregistered<br/> subgraph operations"| Subgraphs
   Router -->|"✅ Registered<br/> subgraph operations"| Subgraphs
 ```
