@@ -10,7 +10,7 @@ flowchart LR
   end
   pql[[Persisted<br/>Query List]];
   webClient --> pql
-  androidClient -->|Register operations| pql
+  androidClient -->|Register trusted operations| pql
   iosClient --> pql
 ```
 
@@ -20,12 +20,14 @@ At runtime, the [Apollo Router](/router/) checks incoming requests against the P
 
 ```mermaid
 flowchart LR
+
 subgraph Apps["First-party apps"]
-direction LR
-webClient("Web client");
-androidClient("Android client");
-iosClient("iOS client");
+  direction LR
+  webClient("Web client");
+  androidClient("Android client");
+  iosClient("iOS client");
 end
+bad("Bad actor")
 subgraph Supergraph["Supergraph"]
 subgraph Router["Apollo Router"]
 direction TB
@@ -41,8 +43,9 @@ api3(["Subgraph C"]);
 end
 end
 Apps -->|"✅ Registered<br/> operations"| Router
-Apps-->|"❌ Unregistered<br/> operations"| Router
+bad -->|"❌ Unregistered<br/> operations"| Router
 Router -->|"✅ Registered<br/> operations"| Subgraphs
+class bad secondary;
 ```
 
 Your router can use its persisted query list (PQL) to both **protect your supergraph** and **speed up your clients' operations**:
