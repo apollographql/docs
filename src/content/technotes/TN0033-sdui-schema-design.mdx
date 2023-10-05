@@ -1,15 +1,14 @@
 ---
-title: Server-Driven UI Schema Design
+title: Server-driven UI schema design
 id: TN0033
 tags: [schema-design, server-driven-ui]
 ---
 
+These patterns provide examples of server-driven UI (SDUI) and how you can structure your graph's schema to encode and represent UI elements. Clients can then use platform-specific rendering engines to interpret the schema and generate UI components. For more information on SDUI in general, see [Server-driven UI basics](TN0032-sdui-basics/).
 
-These patterns provide examples of server-driven ui and how you may structure your graph’s schema to encode and represent user-interface elements. A client would use a platform specific rendering engine to interpret the schema and generate interface components, for an example of a dynamic rendering client see [Server-Driven UI Basics](TN0032-sdui-basics/).
+## Device-based SDUI with enums
 
-## Device-based SDUI (with Enums)
-
-Using a known device-type list can be useful in cases where a structured interface is provided through the graph on a per-device basis.
+Different devices (for example, mobile, web, Roku, Apple TV) may require different UI layouts or components. You can use enums for device type lists to declare which UI type to retrieve. By adjusting your UI to a specific device, you can request UI content tailored to that specific platform.
 
 ```graphql
 enum UIDeviceType {
@@ -32,9 +31,11 @@ type Query {
 }
 ```
 
-## Device-based SDUI (with Contracts)
+In this example, the `UIDeviceType` enum lets you specify the type of device you want to retrieve the `UIApp` for.
 
-A similar device-based SDUI with Contracts could be used to remove interface components from the schema which are unrelated to the target platform.
+## Device-based SDUI with contracts
+
+You can use a similar device-based SDUI with [contracts](/graphos/delivery/contracts/) to remove UI components that are unrelated to the target platform from your schema.
 
 ```graphql
 type UIApp {
@@ -49,9 +50,9 @@ type Query {
 }
 ```
 
-## SDUI Web Dashboard (static)
+## SDUI web dashboard
 
-An example of a web application dashboard with a static structure encoded into the schema.
+The example below could be used to build a web dashboard UI with a static structure encoded into the schema.
 
 ```graphql
 type AppLogo {
@@ -97,9 +98,9 @@ type Query {
 }
 ```
 
-## SDUI Web Dashboard using Interfaces
+## SDUI web dashboard using interfaces
 
-This example uses interfaces to construct dynamic responses. Using this pattern the “experience” subgraph can dynamically return different interface components.
+The example schema below is also for a web dashboard UI, but it uses [interfaces](/apollo-server/schema/unions-interfaces/#interface-type) to construct dynamic responses for the UI. By using interfaces, an "experience" subgraph can dynamically return different UI components.
 
 ```graphql
 interface UIComponent {
