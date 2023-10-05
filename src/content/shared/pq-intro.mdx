@@ -1,4 +1,4 @@
-With [GraphOS Enterprise](/graphos/enterprise/), you can enhance your supergraph's security by maintaining a **persisted query list** (**PQL**) for your supergraph's self-hosted router. To create and update the PQL, first-party apps register their operations to the PQL at build time.
+With [GraphOS Enterprise](/graphos/enterprise/), you can enhance your supergraph's security by maintaining a **persisted query list** (**PQL**) for your supergraph's self-hosted router. To create and update the PQL, first-party apps register trusted operations to the PQL at _build time_.
 
 ```mermaid
 flowchart LR
@@ -10,13 +10,13 @@ flowchart LR
   end
   pql[[Persisted<br/>Query List]];
   webClient --> pql
-  androidClient -->|Register trusted operations| pql
+  androidClient -->|Register <br> trusted operations| pql
   iosClient --> pql
 ```
 
-> You can register any kind of operation to your PQL, including queries, mutations, and subscriptions.
+> Clients can register any kind of operation to a PQL, including queries, mutations, and subscriptions.
 
-At runtime, the [Apollo Router](/router/) checks incoming requests against the PQL, which can act as operation safelist, depending on your [router configuration](#2-router-configuration).
+At _runtime_, the [Apollo Router](/router/) checks incoming requests against the PQL, which can act as operation safelist, depending on your [router configuration](#2-router-configuration).
 
 ```mermaid
 flowchart LR
