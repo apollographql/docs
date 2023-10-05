@@ -1,19 +1,21 @@
 ---
-title: Server-Driven UI Client Design
+title: Server-driven UI client design
 id: TN0042
 tags: [client, server-driven-ui]
 ---
 
-## Client Implementations
+In server-driven UI (SDUI), the client's goal is to handle pixels, not data. It should simply take what the API provides and render it in the proper location.
 
-In SDUI, the goal of the client is to handle pixels, not data. We should simply take what is provided by the API and render it in the proper location.
+When [adopting SDUI incrementally](./TN0032-sdui-basics/#adopt-sdui-incrementally), you usually start with basic UI elements like text and images. As you shift more logic, such as component layouts, to the server,  clients can have a set of [UI component types mapped to their specific platform](#device-based-sdui-with-enums). This allows clients to render content tailored to their platform.
 
-We usually start with simple things like text and images. As we move to more logic to the server, like component layout, clients can then have a collection of types mapped to which UI component they should use for their specific platform and render it with the correct data.
+> For more information on SDUI in general, see [Server-driven UI basics](TN0032-sdui-basics/).
 
-## Component Registry
-Once our API has more control to decide what components our apps should render we will need to define the mapping from our GraphQL types to the UI equivalant components (React, SwiftUI, Jetpack, etc.).
+## Component registry
 
-Here is a simplified version of a React component registry:
+Once your API has more control over which components apps should render, you need to define the mapping from GraphQL types to the UI equivalent components (for example, in React, SwiftUI, Jetpack, etc.). This mapping is called a **component registry**.
+
+The snippet below includes a simplified version of a React component registry:
+
 ```jsx
 const { data } = useQuery(FeaturedProductsCollection);
 
@@ -30,13 +32,16 @@ if (!component) { throw new Error('Unknown Type Returned!'); }
 renderComponent(component, data);
 ```
 
-This means that from the API response you can dynamically choose when to render different components or start displaying different components based on any of our client inputs, including headers, user information, or even info from previous server respones.
+This snippet uses the registry (`TYPE_COMPONENTS`) to dynamically render the appropriate UI component based on the `__typename` of the API response. The request generating that response could be based on client inputs, including headers, user information, or even information from previous server responses.
 
-## Design Systems and Tokens
-Client libraries also may implement design systems. While the choice of what grid format to use and spacing should be kept in the client, other choices like whether a badge should be red or green based on user state or data should be controlled by the API.
-Rather than returning hex codes though, consider using a design system that operates on tokens, so you can change the format or business logic of which color lines up with each state.
+## Design systems and tokens
 
-As a client consuming this response I don't need to know what each badge is for, I just render the list and each one gets the same logic:
+Client libraries may also implement design systems. While the choice of what grid format to use or spacing should be kept on the client side, the API should control other choices, like whether a badge should be red or green based on user state or data.
+
+Rather than returning hex codes in a request for something like badge color, it's best to use a design system that operates on tokens so you can change the business logic behind color choices more easily.
+
+A client consuming such a response doesn't need to know what each badge is for or its color; it only needs to render the list of badges.
+
 ```json
 {
   "badges": [
