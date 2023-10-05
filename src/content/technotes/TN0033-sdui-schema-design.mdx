@@ -4,11 +4,13 @@ id: TN0033
 tags: [schema-design, server-driven-ui]
 ---
 
-These patterns provide examples of server-driven UI (SDUI) and how you can structure your graph's schema to encode and represent UI elements. Clients can then use platform-specific rendering engines to interpret the schema and generate UI components. For more information on SDUI in general, see [Server-driven UI basics](TN0032-sdui-basics/).
+These patterns provide examples of server-driven UI (SDUI) and how you can structure your graph's schema to encode and represent UI elements. Clients can then use platform-specific rendering engines to interpret the schema and generate UI components.
+
+> For more information on SDUI in general, see [Server-driven UI basics](TN0032-sdui-basics/).
 
 ## Device-based SDUI with enums
 
-Different devices (for example, mobile, web, Roku, Apple TV) may require different UI layouts or components. You can use enums for device type lists to declare which UI type to retrieve. By adjusting your UI to a specific device, you can request UI content tailored to that specific platform.
+Different devices (for example, mobile, web, Roku, Apple TV) may require different UI layouts or components. You can use enums for device type lists to declare which UI type to retrieve.
 
 ```graphql
 enum UIDeviceType {
@@ -52,7 +54,7 @@ type Query {
 
 ## SDUI web dashboard
 
-The example below could be used to build a web dashboard UI with a static structure encoded into the schema.
+The following example shows a schema with a static structure that clients can use to create a web dashboard UI.
 
 ```graphql
 type AppLogo {
