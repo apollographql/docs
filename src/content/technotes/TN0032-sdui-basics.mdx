@@ -1,54 +1,66 @@
 ---
-title: Server-Driven UI Basics
+title: Server-driven UI basics
 id: TN0032
 tags: [schema-design, server-driven-ui]
 ---
 
-Server-Driven UI (SDUI) is an architectural pattern that aims to reduce client-side logic and provide consistency across client platforms (web/iOS/Android/etc) by returning product infomation from an API instead of domain data. This approach is geared toward use cases where collaboration between front-end and back-end teams is possible and there is a strong desire to build a cohesive experience across multiple teams and organizations.
+Server-driven UI (SDUI) is an architectural pattern that aims to reduce client-side logic and provide consistency across client platforms (web, iOS,Android, etc.) by returning product information from an API instead of domain data. This approach is geared toward use cases where collaboration between front-end and back-end teams is possible, and there is a strong desire to build a cohesive experience across multiple teams and organizations.
 
-> For advanced patterns and schema types see [more SDUI topics](/technotes/tags/server-driven-ui).
+> For advanced patterns and schema types, see [more SDUI topics](/technotes/tags/server-driven-ui).
 
-## Architectual Goals
+## Architectural goals
 
-When building a graph with server-driven UI, it’s often desirable to converge the schema with the design language being used by client teams. In practice, this requires a definitive design system and a well-defined collection of components to use on the front end to render views.
+The primary need for SDUI comes from mobile native-app development. These platforms require shipping versions of your client-side app to a store that usually has a lengthy review process before a new version gets published. Then, even after a new app version is released, users have to update their versions from the store to start using or experiencing the new features.
 
-The primary need for SDUI comes from mobile native-app development. These platforms require shipping versions of your client-side app to a store that usually has a lengthy review process before a new version gets published. Then, even after a new version of the app is released, users have to update their versions from the store to start using or experiencing the new features.
+If your API returns exactly what to display on the screen, you can control the different UI elements or text without app version updates. You can also change the inputs sent to the API without requiring any app updates.
 
-Instead, if your API returned exactly what was displayed on the screen you could control when different UI elements or text are displayed. Changes can also be made to the inputs sent to the API without requiring any app updates.
+When building a graph with server-driven UI, converging the schema with the design language used by client teams is often desirable. This requires a definitive design system and a well-defined collection of components to render views on the frontend.
 
-## Guiding Principles
+## Guiding principles
 
-SDUI is not a framework or library you can install, but a design pattern that can be implemented and followed in many different ways while still adhering the same core principles. You may have just a few parts of the app controlled from the server, like text or if certain elements should be hidden. It could then advance to more parts like changing theming or component features from the API, all the way to having a generic layout that could render any UI component in any order.
+SDUI is not a framework or library you can install. It's a design pattern you can implement in different ways while still adhering to the same core principles. You may start with just a few parts of your app controlled by the server, like text or whether to hide certain UI elements. SDUI could then advance to more parts of your app, like changing theming or component features from the API, all the way to having a generic layout that can render any UI component in any order.
 
-### Start with UI Mocks
+### Start with UI designs
 
-Instead of looking at data models or API responses, start with your UI designs. Take a [demand-driven schema design approach](/technotes/TN0027-demand-oriented-schema-design/) and write your prefered query from the client's perspective. The demand-driven concept can apply to any client, but for UI applications **we want to have a direct line from API response to items on the screen**.
+Start with your UI designs instead of looking at data models or API responses.  Take a [demand-driven schema design approach](/technotes/TN0027-demand-oriented-schema-design/) write your preferred query from the client's perspective. The demand-driven concept can apply to any client, but UI applications should **have a direct connection from the API response to items on the screen**.
 
-If you find yourself describing steps to go from API to views those are warning signs that you have to duplicate that logic across clients.
+If you find yourself describing steps to go from API to views, that's a warning sign that you'll have to duplicate that logic across clients.
 
 ### Reduce logic in existing client code
 
-For existing code, identify any locations with conditional or switches as logic. This may be new to some as we traditionally think of logic as business rules in our backend. However, if you have ever had to update these areas of the code for a new feature or your product manager has asked you to tweak how the feature works then this can be considered logic. If you had to change things in one client, you probbably had to change them in others.
+Next, identify any logic in your existing client code. Some may think of "logic" as only business rules in the backend. However, if you've ever had to update conditionals or switch statements for a new feature, or to update how a feature works, you can consider these frontend portions as "logic," too. Any other places that accept your API response and then transform, concatenate, or use helper functions are additional warning signs for logic. 
+
+If you had to change this type of logic in one client, you probably had to change it in others. You can reduce this redundancy by moving the logic to your API.
 
 ### Return product info, not domain data
 
-Any other places that accept your API response and involve transforms, concatinations, or helper functions are additional warning signs for logic. Instead of enums, booleans, or numbers, you most likely only need to use strings. With using only strings the server can handle all concerns on the backend and return formatted and localized text that is ready to display. The one area of "logic" we can use is nullable strings (`String` vs `String!`). With server controlled nullability, our client code can check the API response: if the field is present it renders that component, if it is missing it does nothing.
+Product information includes details about UI components' layout, appearance, and content. Domain data is raw or low-level data representing an application's core information and business logic. Ideally, your server provides specific information related to the presentation and behavior of your UI elements on the client rather than sending domain data.
+
+Instead of enums, booleans, or numbers, you most likely only need your API to return strings. By returning only strings, the server can handle all concerns on the backend and return formatted, localized, and ready-to-display text to the client.
+
+Using nullable strings (`String` vs `String!`) is also a best practice. With server-controlled nullability, the client code can directly use the API response—if a field is present, it renders that component; if missing, it does nothing.
 
 ### Use a design system
 
-Now that our API is being used the same by all clients, we need a shared language that client apps use to render their views. This is exactly what a design system is for. With a shared design, we can plan a change once to the API and know that all clients who are using that version of the design system can consume it.
+Once all your clients use your API in the same way, you need a shared language that client apps can use to render their views. This is what [design systems](https://www.nngroup.com/articles/design-systems-101/) are for. With a shared design system, you can plan an API change once and be confident that all clients using the design system can consume it.
 
 ### Define your capabilities with GraphQL types
 
-Once we have a design system we have to implement it in code. Our GraphQL schema is the place where we can codify the capabilities of our API and using GraphQL queries, clients can still opt-in to only selecting the features or types that they support
+Once you have a design system, the next step is to implement it in code. Your server's GraphQL schema is where you can codify the capabilities of your API. Using GraphQL queries, clients can still opt-in to select only the features or types they support.
 
 ### Adopt SDUI incrementally
 
-Following all the guiding principles, teams can go beyond what is needed and over complicate their apps by making everything server-driven. If you still have static parts of the app or things that do not need updating, keep those as-is before you require clients to change to adopt a new pattern. SDUI will speed up feature release time in the future, but the initial adoption still requires work.
+Following all the guiding principles, teams may be tempted to overcomplicate their apps by making everything server-driven all at once. By taking small, manageable steps towards SDUI, your team can balance innovation and stability while enhancing the overall user experience.
 
-## Schema Design
+For example, you can begin by implementing SDUI for a single UI component or feature within your application. This could be a simple widget or a specific section of your app. This allows you to test the waters and learn how SDUI works in a controlled environment.
 
-Take for example this mock ecommerce schema which allows us to display a list of featured products:
+You can also use SDUI for new features or sections of your application while keeping the existing frontend intact. That way, you can use SDUI for new functionalities without affecting the legacy parts of your application.
+
+SDUI will speed up feature release time in the future, but the initial adoption requires some overhead.
+
+## Schema design
+
+Take, for example, this mock e-commerce schema, which allows clients to display a list of featured products:
 
 ```graphql
 type Product @key(fields: "id") {
@@ -79,7 +91,7 @@ type Query {
 }
 ```
 
-While querying `Query.featuredProducts` the client can now render multiple specific experiences depending on the query result. We can use the returned `__typename` value to determine if a collection of products should be rendered, or show the user an error message.
+While querying `Query.featuredProducts`, the client can render multiple specific experiences depending on the query result. You can use the returned `__typename` value to determine whether to render a collection of products or show the user an error message.
 
 ```graphql
 fragment productFields on Product {
