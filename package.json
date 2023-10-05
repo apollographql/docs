@@ -7,7 +7,7 @@
     "start:client": "npm start -- ../apollo-client",
     "start:platform-users": "npm start -- ../platform-users-docs",
     "start:server": "npm start -- ../apollo-server",
-    "start:ios": "npm start -- ../apollo-ios",
+    "start:ios": "npm start -- ../apollo-ios-dev",
     "start:kotlin": "npm start -- ../apollo-kotlin",
     "start:federation": "npm start -- ../federation",
     "start:rover": "npm start -- ../rover",
