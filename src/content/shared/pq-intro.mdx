@@ -14,7 +14,7 @@ flowchart LR
   iosClient --> pql
 ```
 
-> You can register any kind of operation in your PQL, including queries, mutations, and subscriptions.
+> You can register any kind of operation to your PQL, including queries, mutations, and subscriptions.
 
 At runtime, the [Apollo Router](/router/) checks incoming requests against the PQL, which can act as operation safelist, depending on your [router configuration](#2-router-configuration).
 
@@ -42,9 +42,10 @@ api2(["Subgraph B"]);
 api3(["Subgraph C"]);
 end
 end
-Apps -->|"✅ Registered<br/> operations"| Router
-bad -->|"❌ Unregistered<br/> operations"| Router
-Router -->|"✅ Registered<br/> operations"| Subgraphs
+Apps -->|"Registered<br/> operations"| Router
+bad -->|"Unregistered<br/> operations"| Router
+Router -->|"✅ Router executes <br/>registered operations"| Subgraphs
+Router -.-|"❌ Router blocks <br/>unregistered operations"| Subgraphs
 class bad secondary;
 ```
 
