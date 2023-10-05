@@ -20,7 +20,7 @@ With the exception of [contract checks](#types-of-checks), schema checks are **f
 
 GraphOS can perform the following types of schema checks:
 
-- [**Composition checks.**](#composition-checks) For supergraphs, verify whether your proposed changes to a subgraph schema will successfully compose with your _other_ subgraph schemas.
+- [**Build checks.**](#build-checks) For supergraphs, verify whether your proposed changes to a subgraph schema will successfully compose with your _other_ subgraph schemas.
 
 - [**Operation checks.**](#operation-checks) Compare your proposed schema changes against historical operations to verify whether the changes will break any of your graph's active clients.
 
@@ -136,17 +136,17 @@ The new checks run incorporates any changes made to excluded or included clients
 
 > **Note:** If you've [integrated schema checks with your GitHub PRs](#integrating-with-github), a rerun of the check also updates the status of the check in Github.
 
-## Composition checks
+## Build checks
 
-When you run `rover subgraph check`, GraphOS performs a **composition check** _before_ it performs any other checks. A composition check verifies that changes you make to a subgraph schema are valid GraphQL definitions and are compatible with your _other_ subgraph schemas, enabling them to compose into a _supergraph_ schema for your router ([learn more](/federation/federated-types/composition/)).
+When you run `rover subgraph check`, GraphOS first performs a **build check** to verify that the subgraph schema still contains valid GraphQL after any changes. Build checks are also known as a **composition checks** because they verify that changes to the subgraph are compatible with your _other_ subgraph schemas, enabling them to compose into a _supergraph_ schema for your router ([learn more](/federation/federated-types/composition/)).
 
-> If a composition check fails, Studio does _not_ then perform additional checks for the provided schema.
+> If a build check fails, Studio does _not_ perform additional checks for the provided schema.
 
-From your graph's Checks page in GraphOS Studio, you can click on a particular composition check to view its result. If composition succeeded, you can view the composed supergraph schema. Regardless of success, you can view the proposed subgraph schema.
+From your graph's Checks page in GraphOS Studio, you can click on a particular build check to view its result. If composition succeeded, you can view the composed supergraph schema. Regardless of success, you can view the proposed subgraph schema.
 
 ## Operation checks
 
-If a [composition check](#composition-checks) succeeds, GraphOS then validates schema changes with **operation checks**. These checks use your graph's historical client operation data to determine whether any clients would be negatively affected by the proposed schema changes. For example, the changes might include removing a field that multiple clients currently include in their queries.
+If a [build check](#build-checks) succeeds, GraphOS then validates schema changes with **operation checks**. These checks use your graph's historical client operation data to determine whether any clients would be negatively affected by the proposed schema changes. For example, the changes might include removing a field that multiple clients currently include in their queries.
 
 ### Overriding flagged changes
 
