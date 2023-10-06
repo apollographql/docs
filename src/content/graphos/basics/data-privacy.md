@@ -17,7 +17,7 @@ The [Apollo Router](/router/), [Apollo Server](/apollo-server/), the [Rover CLI]
 
 The Rover CLI also collects anonymous usage data by default. [You can disable this.](/rover/privacy/)
 
-The [Apollo Kotlin IDE plugin](/kotlin/v4/testing/android-studio-plugin/) also collects anonymous usage data by default. [You can disable this.](/kotlin/v4/testing/android-studio-plugin/#telemetry)
+The [Apollo Kotlin IDE plugin](/kotlin/v4/testing/android-studio-plugin/) also collects anonymous usage data by default. [You can disable this.](/kotlin/v4/testing/android-studio-plugin/#privacy-and-data-collection)
 
 If you have a [cloud supergraph](./graphs/#cloud-supergraphs), its router is hosted and managed _by_ GraphOS, and it automatically enables metrics reporting. [Learn about data collection for cloud supergraphs.](#what-data-is-collected-by-a-cloud-supergraph)
 
@@ -38,7 +38,7 @@ All data sent to GraphOS is sent to an endpoint with one of the following base U
 | `https://persisted-queries.api.apollographql.com/`            | Apollo Router (v1.25.0+) with [GraphOS persisted queries](./routing/persisted-queries/) enabled                                                                                         |
 | `https://aws.persisted-queries.api.apollographql.com/`            | Apollo Router (v1.25.0+) with [GraphOS persisted queries](./operations/persisted-queries/) enabled                                                                                                 |
 | `https://schema-reporting.api.apollographql.com`      | Schema registration via schema reporting in Apollo Server (v2.18.0+) and third-party API servers           |
-| `https://graphql.api.apollographql.com/api/graphql`   | Anonymous usage data from the [Apollo Kotlin IDE plugin](/kotlin/v4/testing/android-studio-plugin/#telemetry) |
+| `https://graphql.api.apollographql.com/api/graphql`   | Anonymous usage data from the [Apollo Kotlin IDE plugin](/kotlin/v4/testing/android-studio-plugin/#privacy-and-data-collection) |
 | **Active legacy URLs**                                |
 | `https://engine-report.apollodata.com`                | Metrics reporting from Apollo Server (v2.0-2.17.x)                                                                                                                                                               |
 | `https://edge-server-reporting.api.apollographql.com` | Schema registration via schema reporting in Apollo Server (v2.15.0-2.17.x)                                                                                                                                       |
