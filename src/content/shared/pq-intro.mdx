@@ -1,4 +1,4 @@
-With [GraphOS Enterprise](/graphos/enterprise/), you can enhance your supergraph's security by maintaining a **persisted query list** (**PQL**) for your supergraph's self-hosted router. The [Apollo Router](/router/) checks incoming requests against the PQL, an operation safelist made by your first-party apps.
+With [GraphOS Enterprise](/graphos/enterprise/), you can enhance your supergraph's security by maintaining a **persisted query list** (**PQL**) for your supergraph's self-hosted router. To create and update the PQL, first-party apps register trusted operations to the PQL at _build time_.
 
 ```mermaid
 flowchart LR
@@ -8,24 +8,51 @@ flowchart LR
   androidClient("Android client");
   iosClient("iOS client");
   end
-    subgraph Router["Apollo Router"]
-        direction TB
-        router(["Graph<br/>Router"]);
-        pql[[Persisted<br/>Query List]];
-        router <--> pql
-    end
-  subgraph Supergraph
+  pql[[Persisted<br/>Query List]];
+  webClient --> pql
+  androidClient -->|Register <br> trusted operations| pql
+  iosClient --> pql
+```
+
+> Clients can register any kind of operation to a PQL, including queries, mutations, and subscriptions.
+
+At _runtime_, the [Apollo Router](/router/) checks incoming requests against the PQL, which can act as operation safelist, depending on your [router configuration](#2-router-configuration).
+
+```mermaid
+flowchart LR
+
+subgraph Apps["First-party apps"]
   direction LR
-  api1(["GraphQL API"]);
-  api2(["GraphQL API"]);
-  api3(["GraphQL API"]);
-  end
-  Apps -->|Queries| Router -->|Trusted<br/> queries| Supergraph
+  webClient("Web client");
+  androidClient("Android client");
+  iosClient("iOS client");
+end
+bad("Bad actor")
+subgraph Supergraph["Supergraph"]
+subgraph Router["Apollo Router"]
+direction TB
+router(["Graph<br/>Router"]);
+pql[[Persisted<br/>Query List]];
+router <--> pql
+end
+subgraph Subgraphs
+direction LR
+api1(["Subgraph A"]);
+api2(["Subgraph B"]);
+api3(["Subgraph C"]);
+end
+end
+Apps -->|"Registered<br/> operations"| Router
+bad -->|"Unregistered<br/> operations"| Router
+Router -->|"✅ Router executes <br/>registered operations"| Subgraphs
+Router -.-|"❌ Router blocks <br/>unregistered operations"| Subgraphs
+class bad secondary;
 ```
 
 Your router can use its persisted query list (PQL) to both **protect your supergraph** and **speed up your clients' operations**:
 
 - When you enable **safelisting**, your router rejects any incoming operations not registered in its PQL.
-- Client apps can execute an operation by providing its PQL-specified ID _instead of_ an entire operation string.
-  - Querying by ID can significantly reduce latency and bandwidth usage for very large operation strings.
+
+- Client apps can execute an operation by providing its PQL-specified ID _instead of_ the entire operation string.
+  - Requesting by ID can significantly reduce latency and bandwidth usage for very large operation strings.
   - Your router can _require_ that clients provide operations by ID and _reject_ full operation strings—even operation strings present in the PQL.

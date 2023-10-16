@@ -111,6 +111,9 @@ export function useMermaidStyles() {
         tspan: {
           fill: 'currentColor'
         }
+      },
+      [['.label foreignObject', '.cluster-label foreignObject']]: {
+        overflow: 'visible'
       }
     };
     return important(styles);

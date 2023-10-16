@@ -1,13 +1,10 @@
 ---
 title: Setting up a self-hosted supergraph
-description: Host your enterprise router in your own infrastructure
+description: Host your supergraph in your own infrastructure
 ---
 
-> **Self-hosted supergraphs are an [Enterprise feature](/graphos/enterprise/)** for organizations with advanced performance or compliance requirements.
->
-> If your organization _doesn't_ currently have an Enterprise plan, you can test out this functionality by signing up for a free [Enterprise trial](https://studio.apollographql.com/signup?type=enterprise-trial&referrer=docs-content).
-
-This tutorial gets you up and running with GraphOS and a self-hosted supergraph. If your organization _doesn't_ currently have an Enterprise plan and you want to test out this functionality, **[sign up for a free Enterprise trial.](../org/plans/#enterprise-trials)**
+This tutorial gets you up and running with GraphOS and a self-hosted supergraph, using the Apollo Router. While you can run the router regardless of your Apollo plan, connecting the router to GraphOS requires an [Enterprise plan](https://new.apollographql.com/pricing).
+If your organization doesn't currently have an Enterprise plan, you can test out this functionality by signing up for a free [Enterprise trial](https://studio.apollographql.com/signup?type=enterprise-trial&referrer=docs-content).
 
 > **Important:** This tutorial uses [Docker](https://www.docker.com/) for containerization of your supergraph's router.
 
@@ -151,7 +148,7 @@ Apollo Router v1.18.0 // (c) Apollo Graph, Inc. // Licensed as ELv2 (https://go.
 
 That's because we aren't currently providing a **supergraph schema** to the router! We'll fix that soon.
 
-## 3. Obtain your subgraph schemas
+## 4. Obtain your subgraph schemas
 
 
 <blockquote>
@@ -258,7 +255,7 @@ To compose a supergraph schema for our router, GraphOS needs the following infor
 
 Fortunately, we have all of this information! Let's send it to GraphOS.
 
-## 4. Publish your subgraph schemas
+## 5. Publish your subgraph schemas
 
 Because we've already configured the Rover CLI, we can now use its `subgraph publish` command to publish our subgraph schemas to GraphOS.
 
@@ -331,7 +328,7 @@ To publish our subgraph schema, we'll first use Rover to **introspect** the runn
 
 Every time we publish a subgraph schema, GraphOS automatically composes _all_ of our subgraph schemas into a **supergraph schema**! However, our router isn't yet _fetching_ that schema from Apollo. We'll tackle that next.
 
-## 5. Connect the router to GraphOS
+## 6. Connect the router to GraphOS
 
 It's time to enable our router to fetch its supergraph schema from GraphOS. To do that, we need a **graph API key** that we set as the value of an environment variable.
 
@@ -388,7 +385,8 @@ Now that our router is running, we can quickly open our browser to `localhost:40
 
 Let's execute some test queries against the supergraph. We'll look at metrics for those test queries in the next step.
 
-## 6. View operation and field metrics
+
+## 7. View operation and field metrics
 
 Because our router is connected to GraphOS, it automatically collects and reports metrics on incoming operations and their fields. You can then visualize those metrics in Studio.
 
@@ -404,7 +402,7 @@ Within a few minutes, the test queries you executed in the previous step should 
 
 Learn more about the available metrics in the [metrics documentation](../metrics).
 
-## 7. Deploy your router and connect clients
+## 8. Deploy your router and connect clients
 
 Now that our router is running successfully in our development environment, we can deploy it to our preferred platform (AWS, Google Cloud, etc.) so clients can begin querying it!
 
@@ -412,7 +410,7 @@ The exact details for deploying the router depend on which platform you use, but
 
 1. Build the Docker image in CI and push it to a container registry (some providers let you skip this step).
 2. Deploy the image to your preferred platform (there are [additional resources for Kubernetes deployments](/router/containerization/kubernetes)).
-3. Set the `APOLLO_KEY` and `APOLLO_GRAPH_REF` environment variables in the router's deployment environment, as we did locally in [this step](#5-connect-the-router-to-graphos).
+3. Set the `APOLLO_KEY` and `APOLLO_GRAPH_REF` environment variables in the router's deployment environment, as we did locally in [this step](#6-connect-the-router-to-graphos).
     - Keep in mind that `APOLLO_KEY` is a secret, so use an appropriate mechanism for storing it in your deployment environment.
 
 4. If your platform expects the router to listen on a particular port, set this port in the [`router.yaml`](https://github.com/dbanty/enterprise-router-test/blob/main/router.yaml) file included with the template:
