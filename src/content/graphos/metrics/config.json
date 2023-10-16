@@ -24,13 +24,13 @@
         [
           "enterprise"
         ]
-      ]
+      ],
+      "Operation signatures": "/operation-signatures"
     },
     "Insights and analysis": {
       "Operation metrics": "/operations",
       "Field usage": "/field-usage",
-      "Segmenting by client": "/client-awareness",
-      "Operation signatures": "/operation-signatures"
+      "Segmenting by client": "/client-awareness"
     },
     "Notifications and alerts": {
       "Setup": "/notifications/notification-setup",

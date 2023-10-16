@@ -3,7 +3,7 @@ title: Operation signatures
 description: How GraphOS identifies equivalent operations
 ---
 
-When you're viewing your graph's [operation metrics](#usage-reporting), Apollo Studio groups together operations based on the exact set of fields they include, _not_ based on operation _names_. This means that operations with the same name but different sets of fields are displayed separately:
+When you're viewing your graph's [operation metrics](#usage-reporting), GraphOS Studio groups together operations based on the exact set of fields they include, _not_ based on operation _names_. This means that operations with the same name but different sets of fields are displayed separately:
 
 <img
   src="../img/separate-operations.jpg"
@@ -140,7 +140,7 @@ query GetUser {
 
 The signature algorithm's primary purpose is to group together operations that differ only cosmetically (in terms of whitespace, field order, aliases, and so on). As an additional effect, the algorithm does [remove most in-line argument values](#1-transform-in-line-argument-values), which in theory helps maintain data privacy.
 
-**However, you should not rely on this!** Ideally, your sensitive data should never reach Apollo Studio in the first place. Whenever possible, [use GraphQL variables](/react/data/operation-best-practices/#use-graphql-variables-to-provide-arguments) instead of in-line values for arguments. This helps you control exactly which values are reported to Apollo. For details, see [Apollo Studio data privacy and compliance](../data-privacy/).
+**However, you should not rely on this!** Ideally, your sensitive data should never reach GraphOS Studio in the first place. Whenever possible, [use GraphQL variables](/react/data/operation-best-practices/#use-graphql-variables-to-provide-arguments) instead of in-line values for arguments. This helps you control exactly which values are reported to Apollo. For details, see [GraphOS Studio data privacy and compliance](../data-privacy/).
 
 
 ## Logging signatures at runtime
