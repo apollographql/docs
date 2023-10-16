@@ -9,6 +9,7 @@ Once you've configured your graph to send [operation metrics to GraphOS](./sendi
   src="../img/insights-quickstart.jpg"
   className="screenshot"
   alt="The Insights page in GraphOS Studio"
+  width="700"
 />
 
 This page combines operation and field metrics and has two main sections:
@@ -22,6 +23,7 @@ When you click an operation name from the left sidebar or overview, this view sh
   src="../img/operation-details.jpg"
   className="screenshot"
   alt="The Insights page in GraphOS Studio"
+  width="700"
 />
 
 You can always return to the overall view by clicking **Overview** the left sidebar.
@@ -44,6 +46,7 @@ Beneath each of those metrics, you can also see the individual operations with:
   src="../img/operations-overview.jpg"
   className="screenshot"
   alt="Operations Overview in GraphOS Studio"
+  width="700"
 />
 
 > The blue **M** icon next to an operation name indicates it's a mutation.
@@ -57,6 +60,7 @@ You can adjust the overview's timeframe and filter by client in the top right co
   src="../img/operations-overview-filters.jpg"
   className="screenshot"
   alt="Operations Overview in GraphOS Studio"
+  width="700"
 />
 
 ## Operation navigation
@@ -104,6 +108,7 @@ When you click an operation name, you open detailed information for that operati
   src="../img/operation-signature.jpg"
   className="screenshot"
   alt="The Insights page in GraphOS Studio"
+  width="600"
 />
 
 You can use the toggles below the operation name to view the operation's **usage**, **error** metrics, or [**traces**](#resolver-level-traces).
@@ -145,6 +150,7 @@ Directly below the [**Operations Overview**](#operations-overview), you can find
   src="../img/insights-request-rate.jpg"
   className="screenshot"
   alt="The Insights page in GraphOS Studio"
+  width="600"
 />
 
 The request rate chart enables you to keep an eye on your supergraph's traffic over time. Abrupt spikes or drops in request rates can highlight potential performance bottlenecks or shifts in user behavior.
@@ -157,6 +163,7 @@ Request rate metrics can also help with capacity planning. By tracking request r
   src="../img/insights-subscription-rate.jpg"
   className="screenshot"
   alt="The Insights page in GraphOS Studio"
+  width="600"
 />
 
 The subscription notification rate is the total number of updates sent to clients as the result of all [subscriptions](/apollo-server/data/subscriptions/) over a specified period of time. A sudden spike in subscription notification rate could indicate a surge in real-time activity and help you anticipate the need for scaling your infrastructure.
@@ -167,6 +174,7 @@ The subscription notification rate is the total number of updates sent to client
   src="../img/insights-request-latency.jpg"
   className="screenshot"
   alt="The Insights page in GraphOS Studio"
+  width="600"
 />
 
 Request latency measures the time it takes for a GraphQL operation to be processed and return a response to the client. Slow operations can lead to sluggish applications and frustrated users.
@@ -179,6 +187,7 @@ Request latency metrics provide crucial insights into the performance of various
   src="../img/insights-subscription-latency.jpg"
   className="screenshot"
   alt="The Insights page in GraphOS Studio"
+  width="600"
 />
 
 Subscription notification latency measures the amount of time it takes for your graph to send updates to clients as the result of a change in your graph.
@@ -227,6 +236,7 @@ High latency can indicate network issues or inefficient data fetching. Low laten
   src="../img/insights-request-latency-distribution.jpg"
   className="screenshot"
   alt="The Insights page in GraphOS Studio"
+  width="600"
 />
 
 The request latency distribution graph illustrates the frequency and volume of your request latencies. This graph can help you identify central tendencies, variability, and patterns in your request latency.
@@ -237,6 +247,7 @@ The request latency distribution graph illustrates the frequency and volume of y
   src="../img/insights-subscription-latency-distribution.jpg"
   className="screenshot"
   alt="The Insights page in GraphOS Studio"
+  width="600"
 />
 
 The subscription notification latency distribution graph offers the same data and insights as the request latency distribution histogram, but focusing only on subscription notifications latency rather.
