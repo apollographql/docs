@@ -26,9 +26,21 @@ async function transformer({data}) {
   // create mapping of sources to their internal status
   const isInternal = configs.nodes.reduce((acc, node) => {
     const {internal} = JSON.parse(node.fields.content);
+    let docset = node.sourceInstanceName;
+    // when the sourceInstanceName equals "__PROGRAMMATIC", we need to extract the docset name from the path
+    if (docset === '__PROGRAMMATIC__') {
+      // an example absolutePath looks like "...gatsby-source-remote-file/a9d8bf0a406c56687240f60090ff6f14/federation/v1/config.json""
+      const path = node.absolutePath.split('/config.json')[0];
+      const paths = path.split('/');
+      docset = paths[paths.length - 1];
+      // If the last part of the path has to do with a version, use the penultimate part of the path
+      if (docset.startsWith('v')) {
+        docset = paths[paths.length - 2];
+      }
+    }
     return {
       ...acc,
-      [node.sourceInstanceName]: internal === true
+      [docset]: internal === true
     };
   }, {});
 
@@ -147,6 +159,7 @@ const query = `
         fields {
           content
         }
+        absolutePath
         sourceInstanceName
       }
     }
