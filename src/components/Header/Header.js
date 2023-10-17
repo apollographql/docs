@@ -60,12 +60,12 @@ export function Header({children, algoliaFilters}) {
 
   return (
     <Box pos="sticky" top="0" zIndex="2">
-      <Eyebrow>
+      {/* <Eyebrow>
         Join us for GraphQL Summit, October 10-12 in San Diego.{' '}
         <Text as="span" display={{base: 'none', md: 'inline'}}>
           Use promo code ODYSSEY for $400 off your pass.
         </Text>
-      </Eyebrow>
+      </Eyebrow> */}
       <Flex
         align="center"
         as="header"
