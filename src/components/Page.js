@@ -17,6 +17,8 @@ import VersionBanner from './VersionBanner';
 import autolinkHeadings from 'rehype-autolink-headings';
 import rehypeReact from 'rehype-react';
 import useLocalStorage from 'react-use/lib/useLocalStorage';
+import {ReactComponent as ApolloLogo} from '@apollo/space-kit/logos/logo.svg';
+import {ReactComponent as ApolloMark} from '@apollo/space-kit/logos/mark.svg';
 import {
   Box,
   Button,
@@ -188,7 +190,9 @@ const mdxComponents = {
   EmbeddableExplorer,
   ButtonLink,
   MinVersion,
-  PreviewFeature
+  PreviewFeature,
+  ApolloLogo,
+  ApolloMark
 };
 
 const {processSync} = rehype()
