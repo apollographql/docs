@@ -166,7 +166,7 @@ Request rate metrics can also help with capacity planning. By tracking request r
   width="600"
 />
 
-The subscription notification rate is the total number of updates sent to clients as the result of all [subscriptions](/apollo-server/data/subscriptions/) over a specified period of time. A sudden spike in subscription notification rate could indicate a surge in real-time activity and help you anticipate the need for scaling your infrastructure.
+The subscription notification rate is the total number of updates ("notifications") sent to clients as the result of all [subscriptions](/apollo-server/data/subscriptions/) over a specified time period. A sudden spike in subscription notification rate could indicate a surge in real-time activity and help you anticipate the need for scaling your infrastructure.
 
 ### Request latency
 
@@ -190,9 +190,9 @@ Request latency metrics provide crucial insights into the performance of various
   width="600"
 />
 
-Subscription notification latency measures the amount of time it takes for your graph to send updates to clients as the result of a change in your graph.
+Subscription notification latency measures the time it takes for your graph to send updates to clients due to a change in your graph's data.
 
-For example, you can imagine subscriptions being used for a chat app like this:
+For example, imagine a chat app using subscriptions like this:
 
 - **Step 0**. A subscription is defined in your graph's schema. It might look something like this:
 
@@ -202,11 +202,11 @@ For example, you can imagine subscriptions being used for a chat app like this:
   }
   ```
 
-  This subscription is called `newMessage`, and it takes a `chatId` as an argument. It is used to subscribe to new messages in a specific chat.
+  This subscription is called `newMessage` and takes a `chatId` as an argument. It is used to subscribe to new messages in a specific chat.
 
-- **Step 1**. A client application initiates a WebSocket connection to the graph. The WebSocket connection allows for real-time communication between the client and graph.
+- **Step 1**. A client application initiates a WebSocket connection to the graph. The WebSocket connection allows for real-time communication between the client and the graph.
 
-- **Step 2**. When a user joins a chat or opens a messaging window, the client sends a subscription request to the server. For example:
+- **Step 2**. When a user joins a chat or opens a messaging window, the client sends a subscription request to the graph. For example:
 
   ```graphql
   subscription {
@@ -218,17 +218,45 @@ For example, you can imagine subscriptions being used for a chat app like this:
   }
   ```
 
-  This subscription request tells the graph to send new messages for the chat with `chatId` "123" to the client in real time. The client specifies which fields of the `Message` type it wants to receive.
+  This subscription request tells the graph to send new messages for the chat with `chatId` "123" to the client in real-time. The client specifies which fields of the `Message` type it wants to receive.
 
-- **Step 3**. When a new message is sent within the specified chat, the client initiates a GraphQL mutation to create the message. A mutation resolver is responsible for handling the request, including inserting data and returning it.
+- **Step 3**. When a user sends a new message within the specified chat, the client initiates a GraphQL mutation to create the message. A mutation resolver handles the request, including inserting data and returning a response.
 
-- **Step 4**. The graph publishes the new message data to the subscribed clients. It sends the new message data as a response to the client's subscription, over the WebSocket connection.
+- **Step 4**. The graph publishes the new message data to the subscribed clients. It sends the new message data as a response to the client's subscription over the WebSocket connection.
 
-- **Step 5**. The client application receives the new message data and updates the chat interface in real time. The user sees the incoming message instantly without needing to refresh or manually request updates.
+- **Step 5**. The client application receives the new message data and updates the chat interface in real-time. The user sees the incoming message instantly without needing to refresh or manually request updates.
 
-The subscription notification latency is the time between steps 4 and 5: from when your graph sends the update—often via your [router](/router)—to when the client receives it.
+The subscription notification latency is the time between steps 4 and 5, from when your graph sends the update—often via your [router](/router)—to when the client receives it.
 
-High latency can indicate network issues or inefficient data fetching. Low latency is crucial for real-time applications to deliver data in a timely manner.
+Low latency is crucial for real-time applications to deliver data promptly. High latency can indicate network issues. It can also indicate slow resolver performance or inefficient data fetching for federated subscriptions.
+
+#### Federated subscription notification latency
+
+**Federated subscriptions** are subscriptions that rely on data from multiple subgraphs. Federated subscriptions have an additional step after step 3: the Apollo Router must fetch data from any other necessary subgraphs before publishing an aggregated response to clients.
+
+```mermaid
+flowchart LR;
+
+  subgraph supergraph[" "]
+    direction LR
+    subgraph subgraphs[" "]
+      serviceA[Messages <br/>subgraph]
+      serviceB[Chats <br/>subgraph];
+      serviceC[Users <br/>subgraph];
+    end
+    router(["<b>Apollo Router</b>"]);
+  end
+  clients(Clients);
+  serviceA -->|Resolver <br/> response| router;
+  serviceB <-->|Data <br/> fetching| router;
+  serviceC <-->|Data <br/> fetching| router;
+  router -->|Aggregated <br/> response| clients;
+  class clients secondary;
+```
+
+For federated subscriptions, latency is measured from when the router receives a response from one subgraph's resolver until the client receives an aggregated response, _including the time it takes the router to fetch data from subsequent subgraphs and aggregate it into a single response_.
+
+Since fetching data from subsequent subgraphs requires those subgraphs' resolvers to complete, high latency in federated subscription notifications can indicate slow resolver performance.
 
 ### Request latency distribution
 
@@ -250,4 +278,4 @@ The request latency distribution graph illustrates the frequency and volume of y
   width="600"
 />
 
-The subscription notification latency distribution graph offers the same data and insights as the request latency distribution histogram, but focusing only on subscription notifications latency rather.
+The subscription notification latency distribution graph offers the same data and insights as the request latency distribution histogram but includes only subscription notification latency rather than all requests' latency.
