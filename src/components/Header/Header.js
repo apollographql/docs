@@ -25,7 +25,8 @@ const EYEBROW_HEIGHT = 32; // 0;
 const HEADER_HEIGHT = 60;
 const HEADER_BORDER_WIDTH = 1;
 export const TOTAL_HEADER_HEIGHT =
-  EYEBROW_HEIGHT + HEADER_HEIGHT + HEADER_BORDER_WIDTH;
+  // EYEBROW_HEIGHT +
+  HEADER_HEIGHT + HEADER_BORDER_WIDTH;
 
 function Eyebrow({children}) {
   const bgHover = useColorModeValue('indigo.100', 'indigo.700');
