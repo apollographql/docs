@@ -15,7 +15,7 @@ Once you've configured your graph to send [operation metrics to GraphOS](./sendi
 This page combines operation and field metrics and has two main sections:
 
 - The collapsible left sidebar, where you can [search, filter, and sort operations](#operation-metrics) and fields (refer to [Field usage](./fields-usage) for more information on field metrics)
-- The main insights view, which displays an [**Operations Overview**](#operations-overview) and overall [operation metrics](#operation-metrics), like the [request rate](#request-rate)
+- The main insights view, which displays an [**Operations Overview**](#operations-overview) and [operation metrics](#operation-metrics), like the [request rate](#request-rate)
 
 When you click an operation name from the left sidebar or overview, this view shows [detailed information](#operation-details) about the individual operation.
 
@@ -26,7 +26,7 @@ When you click an operation name from the left sidebar or overview, this view sh
   width="700"
 />
 
-You can always return to the overall view by clicking **Overview** the left sidebar.
+You can always return to the overall view by clicking **Overview** on the left sidebar.
 
 ## Operations overview
 
@@ -49,10 +49,10 @@ Beneath each of those metrics, you can also see the individual operations with:
   width="700"
 />
 
-> The blue **M** icon next to an operation name indicates it's a mutation.
-> The purple **S** icon next to an operation name indicates it's a subscription.
+> The blue **M** icon beside an operation name indicates it's a mutation.
+> The purple **S** icon beside an operation name indicates it's a subscription.
 
-You can click an operation name to view more [detailed information](#operation-details) about it or scroll down to see more overall [request metrics](#operation-metrics).
+You can click an operation name to view more [detailed information](#operation-details) or scroll down to see overall [operation metrics](#operation-metrics).
 
 You can adjust the overview's timeframe and filter by client in the top right corner.
 
@@ -98,51 +98,17 @@ Specifically, you can:
   width="300"
 />
 
-As with the operations overview, you can click an operation name to view more detailed information.
-
-### Operation details
-
-When you click an operation name, you open detailed information for that operation in the main insights view. This information includes the operation's [**operation signature**](./operation-signatures) and [**query plan**](/federation/query-plans/) as a chart or text, which you can view by clicking **View Operation**.
-
-<img
-  src="../img/operation-signature.jpg"
-  className="screenshot"
-  alt="The Insights page in GraphOS Studio"
-  width="600"
-/>
-
-You can use the toggles below the operation name to view the operation's **usage**, **error** metrics, or [**traces**](#resolver-level-traces).
-
-### Resolver-level traces
-
-If you [enable trace reporting](#enabling-traces) in your subgraphs, GraphOS Studio can also display resolver-level trace information about each operation.
-
-<img
-  src="../img/traces-tab.jpg"
-  className="screenshot"
-  alt="Traces tab for an operation in Apollo Studio"
-  width="600"
-/>
-
-The **Traces** tab for an operation provides a breakdown of timing and error information for _each field_ resolved as part of that operation. This helps you identify opportunities to improve your supergraph's overall performance by optimizing whichever resolvers currently act as a bottleneck.
-
-#### Enabling traces
-
-To enable federated trace reporting in your subgraphs, consult the documentation for the GraphQL server library your subgraph uses.
-
-> **Not all subgraph-compatible libraries support federated trace reporting.**
->
-> To confirm the support status for your library, check its **FEDERATED TRACING** entry in [Federation-compatible subgraph implementations](/federation/building-supergraphs/supported-subgraphs).
-
-If your subgraphs use [Apollo Server with the `@apollo/subgraph` library](/apollo-server/using-federation/apollo-subgraph-setup/), federated trace reporting is enabled by default. You can customize Apollo Server's trace reporting behavior with the [inline trace plugin](/apollo-server/api/plugin/inline-trace).
+As with the operations overview, you can click an operation name to view more [detailed information](#operation-details).
 
 ## Operation metrics
 
-Directly below the [**Operations Overview**](#operations-overview), you can find the following request and subscription metric visualizations:
+Directly below the [**Operations Overview**](#operations-overview), you can find the following overall operation metric visualizations:
 
 - Time series charts showing the [**request rate**](#request-rate) and [**subscription notification rate**](#subscription-notification-rate) in requests per minute (req/min)
 - [**Request latency**](#request-latency) and [**subscription notification latency**](#subscription-notification-rate) heatmaps, generally in milliseconds, seconds, and/or minutes (ms, s, min)
 - [**Request latency distribution**](#request-latency-distribution) and [**Subscription notification latency distribution**](#subscription-notification-latency-distribution) histograms
+
+The operations included in the **request** metric visualizations are queries, mutations, and subscription registrations. Request visualizations don't include data on **subscription notifications**, which are shown separately in the subscription notification charts.
 
 ### Request rate
 
@@ -206,7 +172,7 @@ For example, imagine a chat app using subscriptions like this:
 
 - **Step 1**. A client application initiates a WebSocket connection to the graph. The WebSocket connection allows for real-time communication between the client and the graph.
 
-- **Step 2**. When a user joins a chat or opens a messaging window, the client sends a subscription request to the graph. For example:
+- **Step 2**. When a user joins a chat or opens a messaging window, the client sends a subscription registration request to the graph. For example:
 
   ```graphql
   subscription {
@@ -218,7 +184,7 @@ For example, imagine a chat app using subscriptions like this:
   }
   ```
 
-  This subscription request tells the graph to send new messages for the chat with `chatId` "123" to the client in real-time. The client specifies which fields of the `Message` type it wants to receive.
+  This subscription registration tells the graph to send new messages for the chat with `chatId` "123" to the client in real-time. The client specifies which fields of the `Message` type it wants to receive.
 
 - **Step 3**. When a user sends a new message within the specified chat, the client initiates a GraphQL mutation to create the message. A mutation resolver handles the request, including inserting data and returning a response.
 
@@ -279,3 +245,45 @@ The request latency distribution graph illustrates the frequency and volume of y
 />
 
 The subscription notification latency distribution graph offers the same data and insights as the request latency distribution histogram but includes only subscription notification latency rather than all requests' latency.
+
+## Operation details
+
+When you click an operation name, you open detailed information for that operation in the main insights view. You can use the toggles below the operation name to view the operation's **usage**, **error** metrics, or [**traces**](#resolver-level-traces).
+
+The main **Usage** view includes **Client Usage** information and the operation's [**operation signature**](./operation-signatures) and [**query plan**](/federation/query-plans/) as a chart or text, which you can view by clicking **View Operation**.
+
+<img
+  src="../img/operation-signature.jpg"
+  className="screenshot"
+  alt="The Insights page in GraphOS Studio"
+  width="600"
+/>
+
+Below the client usage information, you can see the same [operation metrics](#operation-merics) as on the [operations overview](#operations-overview) page, but including only data for the particular operation you're viewing.
+
+### Subscription metrics
+
+If you view a specific subscription's detail page, you see visualizations containing data pertaining only to that subscription. These include all the [subscription notification visualizations](#operation-metrics) shown in the operations overview. However, a subscription's detail page shows subscription registration metrics instead of the request visualizations on the operations overview.
+
+### Resolver-level traces
+
+If you [enable trace reporting](#enabling-traces) in your subgraphs, GraphOS Studio can display resolver-level trace information about each operation.
+
+<img
+  src="../img/traces-tab.jpg"
+  className="screenshot"
+  alt="Traces tab for an operation in Apollo Studio"
+  width="600"
+/>
+
+The **Traces** tab for an operation provides a breakdown of timing and error information for _each field_ resolved as part of that operation. Traces help you identify opportunities to improve your supergraph's overall performance by optimizing whichever resolvers currently act as a bottleneck.
+
+#### Enabling traces
+
+To enable federated trace reporting in your subgraphs, consult the documentation for the GraphQL server library your subgraph uses.
+
+> **Not all subgraph-compatible libraries support federated trace reporting.**
+>
+> To confirm the support status for your library, check its **FEDERATED TRACING** entry in [Federation-compatible subgraph implementations](/federation/building-supergraphs/supported-subgraphs).
+
+If your subgraphs use [Apollo Server with the `@apollo/subgraph` library](/apollo-server/using-federation/apollo-subgraph-setup/), federated trace reporting is enabled by default. You can customize Apollo Server's trace reporting behavior with the [inline trace plugin](/apollo-server/api/plugin/inline-trace).
