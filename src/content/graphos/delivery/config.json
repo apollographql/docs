@@ -1,5 +1,5 @@
 {
-  "title": "Schema Delivery Pipeline",
+  "title": "Schema Pipeline",
   "algoliaFilters": [
     [
       "docset:graphos",
