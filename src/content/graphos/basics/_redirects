@@ -73,3 +73,4 @@
 /graphs/overview/ /docs/graphos/graphs
 /org/organizations/ /docs/graphos/org
 /odyssey https://www.apollographql.com/tutorials/
+/delivery/validating-client-operations /docs/rover/validating-client-operations
