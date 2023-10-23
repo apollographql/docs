@@ -102,13 +102,15 @@ As with the operations overview, you can click an operation name to view more [d
 
 ## Operation metrics
 
-Directly below the [**Operations Overview**](#operations-overview), you can find the following overall operation metric visualizations:
+Directly below the [**Operations Overview**](#operations-overview), you can find the following overall operation metric charts:
 
 - Time series charts showing the [**request rate**](#request-rate) and [**subscription notification rate**](#subscription-notification-rate) in requests per minute (req/min)
 - [**Request latency**](#request-latency) and [**subscription notification latency**](#subscription-notification-rate) heatmaps, generally in milliseconds, seconds, and/or minutes (ms, s, min)
 - [**Request latency distribution**](#request-latency-distribution) and [**Subscription notification latency distribution**](#subscription-notification-latency-distribution) histograms
 
-The operations included in the **request** metric visualizations are queries, mutations, and subscription registrations. Request visualizations don't include data on **subscription notifications**, which are shown separately in the subscription notification charts.
+The operations included in the **request** metric charts are queries, mutations, and subscription registrations. Request charts don't include data on **subscription notifications**, which are shown separately in subscription notification charts.
+
+> A [specific operation's detail page](#operation-details) shows subscription registration metrics instead of general request metrics.
 
 ### Request rate
 
@@ -263,7 +265,7 @@ Below the client usage information, you can see the same [operation metrics](#op
 
 ### Subscription metrics
 
-If you view a specific subscription's detail page, you see visualizations containing data pertaining only to that subscription. These include all the [subscription notification visualizations](#operation-metrics) shown in the operations overview. However, a subscription's detail page shows subscription registration metrics instead of the request visualizations on the operations overview.
+If you view a specific subscription's detail page, you see charts containing data pertaining only to that subscription. These include all the [subscription notification charts](#operation-metrics) shown in the operations overview. However, a subscription's detail page shows subscription registration metrics instead of the request charts on the operations overview.
 
 ### Resolver-level traces
 
