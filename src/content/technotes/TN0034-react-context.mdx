@@ -31,7 +31,7 @@ const QueryResultContext = createContext<QueryContextValue<any>>({
   refetch: () => Promise.resolve({} as ApolloQueryResult<any>),
 });
 
-interface QueryResultProviderProps<TVariables extends OperationVariables | undefined = Record<string, never>> {
+interface QueryResultProviderProps<TVariables extends OperationVariables | undefined = object> {
   query : any;
   variables ?: TVariables;
   children : React.ReactNode;
