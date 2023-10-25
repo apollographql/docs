@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import {Box, Center, Flex, Link, Text, chakra} from '@chakra-ui/react';
-import {IoPartlySunnyOutline} from 'react-icons/io5';
+import {IoFlaskOutline} from 'react-icons/io5';
 
-export const PreviewFeature = ({
+export const ExperimentalFeature = ({
   discordLink = 'https://discord.gg/yFZJH2QYrK'
 }) => {
   return (
@@ -24,17 +24,17 @@ export const PreviewFeature = ({
       <Flex as="span">
         <chakra.span pl="10px" pr="10px">
           <Center h="100%">
-            <IoPartlySunnyOutline />
+            <IoFlaskOutline />
           </Center>
         </chakra.span>
         <Text pl="1">
           <b>
-            This feature is currently in{' '}
+            This feature is currently{' '}
             <Link
               color={'primary'}
-              href="https://www.apollographql.com/docs/resources/product-launch-stages#preview"
+              href="https://www.apollographql.com/docs/resources/product-launch-stages#experimental-features"
             >
-              preview
+              experimental
             </Link>
             .
           </b>{' '}
@@ -51,6 +51,6 @@ export const PreviewFeature = ({
   );
 };
 
-PreviewFeature.propTypes = {
+ExperimentalFeature.propTypes = {
   discordLink: PropTypes.node.isRequired
 };
