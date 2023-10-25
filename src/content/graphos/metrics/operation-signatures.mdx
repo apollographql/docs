@@ -9,8 +9,10 @@ When you're viewing your graph's [operation metrics](#usage-reporting), GraphOS 
   src="../img/separate-operations.jpg"
   alt="Separate operations with same name in Studio"
   className="screenshot"
-  width="500"
+  width="300"
 />
+
+> Though each operation in the above example is named 'MyQuery', GraphOS treats them as different operations because they request different fields.
 
 To help GraphOS identify functionally identical operations, your router generates the **signature** for each operation it reports to Studio. This signature is a normalized representation for an operation with deterministic field order, whitespace, and values for in-line argument values.
 

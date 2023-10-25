@@ -3,11 +3,11 @@ title: Metrics and insights in GraphOS
 description: Understand your supergraph's usage and performance
 ---
 
-GraphOS Studio offers a performant and intuitive UI to help you monitor and understand your supergraph's performance.
+GraphOS Studio offers a performant and intuitive UI to help you monitor and understand your supergraph's usage and performance.
 
 ## Metrics collection and forwarding
 
-To visualize operation metrics in GraphOS Studio, you first need to report them to GraphOS. If you have a [cloud supergraph](../quickstart/cloud), its router automatically reports operation metrics. If you have a [self-hosted supergraph](../quickstart/self-hosted), you need to [connect your router to GraphOS](./sending-operation-metrics) to report metrics. Apollo also offers a [Datadog integration](./datadog-integration) to forward your graph's performance metrics to your Datadog account.
+To analyze operation metrics in GraphOS Studio, you first need to report them to GraphOS. If you have a [cloud supergraph](../quickstart/cloud), its router automatically reports operation metrics. If you have a [self-hosted supergraph](../quickstart/self-hosted), you need to [connect your router to GraphOS](./sending-operation-metrics) to report metrics. Apollo also offers a [Datadog integration](./datadog-integration) to forward your graph's performance metrics to your Datadog account.
 
 > Connecting a self-hosted router to GraphOS and forwarding metrics to Datadog are only available for [Enterprise plans](https://www.apollographql.com/pricing/).
 
@@ -25,7 +25,7 @@ Once you've configured your graph to send operation and field metrics to GraphOS
 The Insights page offers:
 
 - A collapsible left sidebar that acts as a paginated index of your graph's operations and fields
-  - You can search, filter, and sort operations and fields to find specific ones
+  - You can search, filter, and sort operations and fields
 - An operations overview
   - You can adjust the overviews timeframe and filter it to specific clients
 - Individual and overall operations performance metrics, including request rate and latency
