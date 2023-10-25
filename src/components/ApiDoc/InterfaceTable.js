@@ -37,9 +37,7 @@ function mdToReact(text) {
 
 export function InterfaceTable({canonicalReference}) {
   const ctx = useApiDocContext();
-  const args = ctx.apiDocInterfaces.find(
-    item => item.canonicalReference === canonicalReference
-  );
+  const args = ctx.find(item => item.canonicalReference === canonicalReference);
 
   return (
     <>

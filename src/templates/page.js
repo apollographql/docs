@@ -9,9 +9,7 @@ import {useConfig} from '../utils/config';
 
 export default function PageTemplate({data, location}) {
   const config = useConfig(data.file.basePath);
-  const page = <ApiDocContext.Provider value={{
-    apiDocInterfaces: data.apiDocInterfaces.nodes
-  }}><Page file={data.file} uri={location.pathname} /></ApiDocContext.Provider>;
+  const page = <ApiDocContext.Provider value={data.apiDoc}><Page file={data.file} uri={location.pathname} /></ApiDocContext.Provider>;
 
   if (!config.internal) {
     return page;
@@ -31,7 +29,7 @@ PageTemplate.propTypes = {
 };
 
 export const pageQuery = graphql`
-  query GetPage($id: String!, $api_doc: [String]) {
+  query GetPage($id: String!, $api_doc: [String!]!) {
     file(id: {eq: $id}) {
       name
       basePath: sourceInstanceName
@@ -71,45 +69,91 @@ export const pageQuery = graphql`
         }
       }
     }
-    apiDocInterfaces: allApiDocInterface(
-      filter: {canonicalReference: {in: $api_doc}}
-    ) {
-      nodes {
-        id
-        canonicalReference
-        displayName
-        file
-        excerpt
-        kind
-        releaseTag
-        comment {
-          summary
-          deprecated
-          remarks
-        }
-        typeParameters {
-          name
-          optional
-          comment
-        }
-        properties {
-          id
-          displayName
-          canonicalReference
-          file
-          type
-          excerpt
-          kind
-          optional
-          readonly
-          releaseTag
-          comment {
-            summary
-            deprecated
-            remarks
-          }
-        }
-      }
+    apiDoc(canonicalReference: $api_doc) {
+      ...Base
+      ...Interface
+      ...Property
+      ...Function
+      ...Class
+      ...Property
+      ...Method
     }
   }
+
+fragment Base on ApiDocBase {
+  id
+  canonicalReference
+  displayName
+  file
+  excerpt
+  kind
+  releaseTag
+  comment {
+    summary
+    deprecated
+    remarks
+    examples
+  }
+}
+
+fragment Interface on ApiDocInterface {
+  typeParameters {
+    name
+    optional
+    comment
+  }
+  properties {
+    ...Base
+    ...PropertySignature
+  }
+}
+
+fragment PropertySignature on ApiDocPropertySignature {
+  optional
+  readonly
+}
+
+fragment Function on ApiDocFunction {
+  parameters {
+    ...FunctionParameter
+  }
+}
+
+fragment Class on ApiDocClass {
+  implements
+  properties {
+    ...Base
+    ...Property
+  }
+  methods {
+    ...Base
+    ...Method
+  }
+}
+
+fragment Property on ApiDocProperty {
+  abstract
+  optional
+  protected
+  static
+  readonly
+}
+
+fragment Method on ApiDocMethod {
+  abstract
+  optional
+  protected
+  static
+  parameters {
+    ...FunctionParameter
+  }
+}
+
+fragment FunctionParameter on ApiDocFunctionParameter {
+  name
+  type
+  optional
+  comment
+}
+
 `;

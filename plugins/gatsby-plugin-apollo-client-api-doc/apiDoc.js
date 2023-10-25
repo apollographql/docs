@@ -4,7 +4,6 @@
 
 /** @type {import("@microsoft/api-extractor-model")} */
 const model = require("@microsoft/api-extractor-model");
-const { ApiModel, ApiInterface, ApiPropertySignature, ReleaseTag } = model;
 /** @type {import("@microsoft/tsdoc")} */
 const tsdoc = require("@microsoft/tsdoc");
 
@@ -12,8 +11,7 @@ function loadApiDoc(
   /** @type {string} */ fileName,
   /** @type {import("gatsby").SourceNodesArgs} */ gatsbyApi
 ) {
-  const model = new ApiModel();
-  const pkg = model.loadPackage(fileName);
+  const pkg = new model.ApiModel().loadPackage(fileName);
 
   handleMember(pkg, gatsbyApi);
 }
@@ -26,19 +24,30 @@ function handleMember(
   for (const child of item.members) {
     handleMember(child, gatsbyApi);
   }
-  const id = getId(item, gatsbyApi);
-  if (item instanceof ApiInterface || item instanceof ApiPropertySignature) {
+  const id = getId(item);
+  if (
+    item instanceof model.ApiInterface ||
+    item instanceof model.ApiPropertySignature ||
+    item instanceof model.ApiFunction ||
+    item instanceof model.ApiClass ||
+    item instanceof model.ApiMethod ||
+    item instanceof model.ApiProperty
+  ) {
     createGatsbyNode({
       gatsbyApi,
       input: {
         type: "ApiDoc" + item.kind,
         data: {
           id,
-          parent: item.parent ? getId(item.parent, gatsbyApi) : null,
-          children: item.members.map((m) => getId(m, gatsbyApi)),
+          parent: item.parent ? getId(item.parent) : null,
+          children: item.members.map(getId),
           kind: item.kind,
           canonicalReference: item.canonicalReference.toString(),
           displayName: item.displayName,
+          excerpt: item.excerpt.text,
+          file: item.sourceLocation.fileUrl || item.fileUrlPath,
+          comment: processDocComment(item.tsdocComment),
+          releaseTag: model.ReleaseTag[item.releaseTag],
           ...extraData(item),
         },
       },
@@ -50,12 +59,8 @@ function handleMember(
 function extraData(
   /** @type  {import("@microsoft/api-extractor-model").ApiItem} */ item
 ) {
-  return item instanceof ApiInterface
+  return item instanceof model.ApiInterface
     ? {
-        excerpt: item.excerpt.text,
-        comment: processDocComment(item.tsdocComment),
-        file: item.sourceLocation.fileUrl || item.fileUrlPath,
-        releaseTag: ReleaseTag[item.releaseTag],
         typeParameters: item.typeParameters.map((p) => ({
           name: p.name,
           optional: p.isOptional,
@@ -64,22 +69,50 @@ function extraData(
       }
     : item instanceof model.ApiPropertySignature
     ? {
-        type: item.propertyTypeExcerpt.text,
-        excerpt: item.excerpt.text,
-        comment: processDocComment(item.tsdocComment),
-        file: item.sourceLocation.fileUrl || item.fileUrlPath,
-        releaseTag: ReleaseTag[item.releaseTag],
         readonly: item.isReadonly,
         optional: item.isOptional,
+      }
+    : item instanceof model.ApiFunction
+    ? {
+        parameters: item.parameters.map((p) => ({
+          type: p.parameterTypeExcerpt.text,
+          name: p.name,
+          optional: p.isOptional,
+          comment: renderDocNode(p.tsdocParamBlock?.content.nodes),
+        })),
+      }
+    : item instanceof model.ApiClass
+    ? {
+        implements: item.implementsTypes.map((p) => p.excerpt.text),
+      }
+    : item instanceof model.ApiMethod
+    ? {
+        abstract: item.isAbstract,
+        optional: item.isOptional,
+        protected: item.isProtected,
+        static: item.isStatic,
+        parameters: item.parameters.map((p) => ({
+          type: p.parameterTypeExcerpt.text,
+          name: p.name,
+          optional: p.isOptional,
+          comment: renderDocNode(p.tsdocParamBlock?.content.nodes),
+        })),
+      }
+    : item instanceof model.ApiProperty
+    ? {
+        abstract: item.isAbstract,
+        optional: item.isOptional,
+        protected: item.isProtected,
+        static: item.isStatic,
+        readonly: item.isReadonly,
       }
     : {};
 }
 
 function getId(
-  /** @type  {import("@microsoft/api-extractor-model").ApiItem} */ item,
-  /** @type {import("gatsby").SourceNodesArgs} */ gatsbyApi
+  /** @type  {import("@microsoft/api-extractor-model").ApiItem} */ item
 ) {
-  return gatsbyApi.createNodeId(item.canonicalReference.toString());
+  return item.canonicalReference.toString();
 }
 
 /** @typedef INodeBuilderArgs
