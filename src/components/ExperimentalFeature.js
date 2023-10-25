@@ -3,7 +3,9 @@ import React from 'react';
 import {Box, Center, Flex, Link, Text, chakra} from '@chakra-ui/react';
 import {IoFlaskOutline} from 'react-icons/io5';
 
-export const ExperimentalFeature = ({discordLink}) => {
+export const ExperimentalFeature = ({
+  discordLink = 'https://discord.gg/yFZJH2QYrK'
+}) => {
   return (
     <Box
       pl="2"
