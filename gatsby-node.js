@@ -112,7 +112,7 @@ exports.createPages = async ({actions, graphql}) => {
       context: {
         id,
         basePath: sourceInstanceName,
-        api_doc: frontmatter?.api_doc,
+        api_doc: frontmatter?.api_doc || [],
       }
     });
   });
