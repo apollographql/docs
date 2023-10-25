@@ -3,10 +3,13 @@
 /* eslint-disable prettier/prettier */
 
 const { loadApiDoc } = require("./apiDoc");
+const fs = require("fs");
 
 /** @type {import("gatsby").GatsbyNode['sourceNodes']} */
 exports.sourceNodes = async (api, { file }) => {
-  loadApiDoc(file, api);
+  if (fs.existsSync(file)) {
+    loadApiDoc(file, api);
+  }
 };
 
 /** @type {import("gatsby").GatsbyNode['createSchemaCustomization']} */

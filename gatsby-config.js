@@ -167,18 +167,14 @@ const plugins = [
       dataDomainScript: process.env.OT_DATA_DOMAIN_SCRIPT,
       skip: !isProduction
     }
-  }
-];
-
-const docModel = join(__dirname, 'local/shared/client.api.json')
-if (fs.existsSync(docModel)) {
- plugins.push({
+  },
+  {
     resolve: 'gatsby-plugin-apollo-client-api-doc',
     options: {
-      file: docModel, 
+      file: join(__dirname, 'local/shared/client.api.json'), 
     }
-  })
-}
+  }
+];
 
 if (process.env.CONTEXT === 'production') {
   plugins.push({
