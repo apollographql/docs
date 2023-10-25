@@ -36,6 +36,7 @@
     "@loadable/component": "^5.15.2",
     "@mdx-js/mdx": "^1.6.22",
     "@mdx-js/react": "^1.6.22",
+    "@microsoft/api-extractor-model": "^7.28.2",
     "@react-icons/all-files": "^4.1.0",
     "@svgr/webpack": "^5.5.0",
     "@theowenyoung/gatsby-source-git": "^2.3.1",

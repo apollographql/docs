@@ -8,6 +8,7 @@ const {query, transformer} = require('./algolia');
 const yaml = require('js-yaml');
 const fs = require('fs');
 const remoteSources = require('./sources/remote');
+const {join} = require('path');
 
 const isProduction = process.env.CONTEXT === 'production';
 
@@ -168,6 +169,16 @@ const plugins = [
     }
   }
 ];
+
+const docModel = join(__dirname, 'local/shared/client.api.json')
+if (fs.existsSync(docModel)) {
+ plugins.push({
+    resolve: 'gatsby-plugin-apollo-client-api-doc',
+    options: {
+      file: docModel, 
+    }
+  })
+}
 
 if (process.env.CONTEXT === 'production') {
   plugins.push({
