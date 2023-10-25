@@ -134,7 +134,7 @@ Request rate metrics can also help with capacity planning. By tracking request r
   width="600"
 />
 
-The subscription notification rate is the total number of updates ("notifications") sent to clients as the result of all [subscriptions](/apollo-server/data/subscriptions/) over a specified time period. A sudden spike in subscription notification rate could indicate a surge in real-time activity and help you anticipate the need for scaling your infrastructure.
+The subscription notification rate is the total number of updates ("notifications") sent to clients as the result of all [subscriptions](/apollo-server/data/subscriptions/) over a specified time. A sudden spike in subscription notification rate could indicate a surge in real-time activity and help you anticipate the need for scaling your infrastructure.
 
 ### Request latency
 
@@ -145,7 +145,7 @@ The subscription notification rate is the total number of updates ("notification
   width="600"
 />
 
-Request latency measures the time it takes for a GraphQL operation to be processed and return a response to the client. Slow operations can lead to sluggish applications and frustrated users.
+Request latency measures the time it takes for a GraphQL operation to be processed and to return a response to the client. Slow operations can lead to sluggish applications and frustrated users.
 
 Request latency metrics provide crucial insights into the performance of various components of your services, such as resolvers, data sources, and third-party services. This data can help you identify areas where optimization is needed.
 
@@ -248,6 +248,10 @@ The request latency distribution graph illustrates the frequency and volume of y
 
 The subscription notification latency distribution graph offers the same data and insights as the request latency distribution histogram but includes only subscription notification latency rather than all requests' latency.
 
+### Deferred fields in operation metrics
+
+You can use the [`@defer`](../operations/defer/) directive to defer returning data for certain fields in your schema. Using `@defer` doesn't affect latency metrics since they only take into account the initial response containing non-deferred fields. You can view deferred fields' execution times in [resolver-level traces](#resolver-execution-time).
+
 ## Operation details
 
 When you click an operation name, you open detailed information for that operation in the main insights view. You can use the toggles below the operation name to view the operation's **usage**, **error** metrics, or [**traces**](#resolver-level-traces).
@@ -265,7 +269,7 @@ Below the client usage information, you can see the same [operation metrics](#op
 
 ### Subscription metrics
 
-If you view a specific subscription's detail page, you see charts containing data pertaining only to that subscription. These include all the [subscription notification charts](#operation-metrics) shown in the operations overview. However, a subscription's detail page shows subscription registration metrics instead of the request charts on the operations overview.
+If you view a specific subscription's detail page, you see charts containing only data about that subscription.These include all the [subscription notification metrics](#operation-metrics) shown in the operations overview. A subscription's detail page shows subscription registration metrics instead of the request metrics on the operations overview.
 
 ### Resolver-level traces
 
@@ -278,7 +282,11 @@ If you [enable trace reporting](#enabling-traces) in your subgraphs, GraphOS Stu
   width="600"
 />
 
-The **Traces** tab for an operation provides a breakdown of timing and error information for _each field_ resolved as part of that operation. Traces help you identify opportunities to improve your supergraph's overall performance by optimizing whichever resolvers currently act as a bottleneck.
+The **Traces** tab for an operation provides a breakdown of timing and error information for each field resolved as part of that operation. Traces help you identify opportunities to improve your supergraph's overall performance by optimizing whichever resolvers currently act as a bottleneck.
+
+#### Resolver execution time
+
+Below the sample trace and latency distribution chart, you can view the time each resolver involved in an operation takes to complete. The execution time for [deferred fetches](../operations/defer/) only includes the time it takes for the deferred field's resolver to complete, not the time the response to the client with those fields was deferred.
 
 #### Enabling traces
 
