@@ -54,7 +54,9 @@ Click a field name in the sidebar to learn more about its usage.
 
 ## Field details
 
-When you click a field name, you open detailed information for that field in the main insights view. The left side shows the field in the context of the schema, including the field description and tags. You can also see when the field first and last received traffic.
+When you click a field name, you open detailed information for that field in the main insights view. The includes when the field first and last received traffic, any applied [tags](../graphs/federated-graphs/#schema-tagging), and the subgraphs that provide the field.
+
+Below that, you can view the field definitions within your subgraph schema.
 
 <img
   src="../img/field-insights.jpg"
@@ -62,9 +64,9 @@ When you click a field name, you open detailed information for that field in the
   alt="Field Insights page"
 />
 
-The right side of the view displays which clients and operations contribute to the field's usage, along with performance metrics such as request rate, latency distribution, and error metrics.
+Next you see which clients and operations contribute to the field's usage. Each row in the the **Clients & Operations** table shows a client that requested the field, the number of operations the client made that used the field, and the total number of requests the client made. Selecting a client shows more details about the operations that requested and executed the field.
 
-Each row in the the **Clients & Operations** table shows a client that requested the field, the number of operations the client made that used the field, and the total number of requests the client made. Clicking a row in the table shows more details about the operations and clients that requested and executed the field. 
+Below Clients & Operations, you can view visualizations for the field's request rate, latency distribution, and error metrics.
 
 ### Field requests and executions
 
@@ -73,7 +75,7 @@ Each row in the **Clients & Operations** table displays some combination of the 
 | Metric              | Description                                                                                                                         |
 | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
 | Client versions     | How many different client versions have sent the operation                                                                          |
-| Requests            | How many operations sent by clients over a given time period have included the field, according to metrics provided by your servers |
+| Requests            | How many operations sent by clients over a given time period included the field, according to [metrics provided by your servers](./sending-operation-metrics#reporting-field-usage-metrics) |
 | Executions          | How many times your servers have executed the resolver for the field over a given time period                                       |
 
 For each of these columns to appear on the Insights page, your GraphQL servers must [report the associated metrics to GraphOS](./sending-operation-metrics#reporting-field-usage). If some but not _all_ of your GraphQL servers report this data, the Insights page presents an incomplete picture of your graph's field usage.

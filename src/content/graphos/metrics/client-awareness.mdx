@@ -13,12 +13,12 @@ You view client-segmented metrics from a variant's **Clients** page in Studio:
 
 <img
   src="../img/client-awareness/overview.jpg"
-  class="screenshot"
+  className="screenshot"
   alt="Client awareness overview"
   width="400"
 />
 
-> If a particular client doesn't identify itself in its requests, its metrics are included in an **Unidentified clients** category.
+> If a particular client doesn't identify itself in its requests, its metrics are included in an **Unidentified client** category.
 
 ## Setup
 
@@ -26,15 +26,15 @@ Your supergraph's router checks for the presence of the following HTTP headers i
 
 - `apollographql-client-name`
 - `apollographql-client-version`
-    - Segmenting metrics by client version in Studio requires a [GraphOS Enterprise plan](https://www.apollographql.com/pricing). You can safely include this header in requests regardless of your plan type.
+  - Segmenting metrics by client version in Studio requires a [GraphOS Enterprise plan](https://www.apollographql.com/pricing). You can safely include this header in requests regardless of your plan type.
 
 If one or both of these headers are present, your router automatically extracts their values and includes them in the metrics data that it sends to GraphOS.
 
 **If you're using Apollo Client**, you can populate these headers automatically for every operation request by providing the `name` and `version` options to the `ApolloClient` constructor, like so:
 
 ```js {8-9}
-import { ApolloClient } from 'apollo-client';
-import { HttpLink } from 'apollo-link-http';
+import {ApolloClient} from 'apollo-client';
+import {HttpLink} from 'apollo-link-http';
 
 const client = new ApolloClient({
   link: new HttpLink({
@@ -59,7 +59,7 @@ Modifying or removing an existing field in your schema is often a **breaking cha
 
 <img
   src="../img/client-awareness/field-usage.png"
-  class="screenshot"
+  className="screenshot"
   alt="Table of client field usage"
 />
 
