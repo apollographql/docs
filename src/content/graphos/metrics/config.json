@@ -19,13 +19,13 @@
     "Overview": "/",
     "Metrics collection and forwarding": {
       "Sending metrics to GraphOS": "/sending-operation-metrics",
+      "Operation signatures": "/operation-signatures",
       "Datadog forwarding": [
         "/datadog-integration",
         [
           "enterprise"
         ]
-      ],
-      "Operation signatures": "/operation-signatures"
+      ]
     },
     "Insights and analysis": {
       "Operation metrics": "/operations",
