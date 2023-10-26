@@ -1,5 +1,6 @@
 ---
 title: Setting up GraphOS notifications
+description: Set up notifications for your graph's performance, schema changes, and more
 ---
 
 GraphOS can notify your team about changes to your graph and its performance. These notifications help you stay up to date and address issues as they arise.

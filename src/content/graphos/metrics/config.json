@@ -45,7 +45,8 @@
       "Build status": [
         "/notifications/build-status-notification",
         [
-          "enterprise"
+          "enterprise",
+          "preview"
         ]
       ]
     }

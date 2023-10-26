@@ -1,5 +1,6 @@
 ---
 title: Daily reports from Apollo Studio
+description: Learn how to act on daily summaries of your graph's activity
 ---
 
 You can [configure GraphOS](./notification-setup/) to send your team a daily summary of your graph's activity over the last 24 hours:

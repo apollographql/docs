@@ -1,5 +1,6 @@
 ---
 title: Schema change notifications
+description: Receive alerts whenever changes are made to your graph's schema
 ---
 
 You can [configure GraphOS](./notification-setup) to notify your team whenever any changes (additions, deprecations, removals, etc.) are made to your graph's registered schema:
