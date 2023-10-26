@@ -22,7 +22,7 @@ Both the Apollo Router and Apollo Server use the same mechanism to enable operat
 
 2. Obtain the **graph ref** for the graph and variant you want to report metrics for.
 
-   Your variant's graph ref is shown at the top of its README page in Apollo Studio. It has the format `graph-id@variant-name` (such as `my-graph@staging`).
+   Your variant's graph ref is shown at the top of its README page in GraphOS Studio. It has the format `graph-id@variant-name` (such as `my-graph@staging`).
 
 3. Use the obtained values to set the following environment variables in your environment _before_ starting up your router/server:
 
@@ -62,7 +62,7 @@ As a starting point, we recommend implementing an extension to the GraphQL execu
 
 #### Operation signing
 
-For Apollo Studio to correctly group GraphQL queries, your reporting agent should define a function to generate a **query signature** for each distinct query. This can be challenging, because two _structurally_ different queries can be _functionally_ equivalent. For instance, all of the following queries request the same information:
+For GraphOS Studio to correctly group GraphQL queries, your reporting agent should define a function to generate a **query signature** for each distinct query. This can be challenging, because two _structurally_ different queries can be _functionally_ equivalent. For instance, all of the following queries request the same information:
 
 ```graphql
 query AuthorForPost($foo: String!) {
