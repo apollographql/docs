@@ -57,11 +57,15 @@ fn process_request(request) {
 }
 ```
 
+> If you're an enterprise customer looking for more material on this topic, try the [Enterprise best practices: Router extensibility](https://www.apollographql.com/tutorials/router-extensibility) course on Odyssey.
+>
+> Not an enterprise customer? [Learn about Apollo plans.](https://www.apollographql.com/pricing/)
+
 ## Enforcing in Apollo Server
 
 If you're using Apollo Server for your gateway, you can require client metadata in every incoming request with a [custom plugin](/apollo-server/integrations/plugins/):
 
-> The header names used below are the default headers sent by Apollo Client, but you can change them to whatever names your client uses. Additionally, these changes should be reflected in the [usage reporting plugin](/apollo-server/api/plugin/usage-reporting/#generateclientinfo).
+> The header names used below are the default headers sent by Apollo Client, but you can change them to whatever names your client uses. Additionally, these changes should be reflected in the [usage reporting plugin](/apollo-server/api/plugin/usage-reporting/#generateclientinfo). For an example, see [Using custom client id headers](/apollo-server/monitoring/metrics#using-custom-headers).
 
 <MultiCodeBlock>
 
