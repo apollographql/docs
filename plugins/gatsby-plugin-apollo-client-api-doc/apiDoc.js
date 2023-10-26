@@ -31,7 +31,9 @@ function handleMember(
     item instanceof model.ApiFunction ||
     item instanceof model.ApiClass ||
     item instanceof model.ApiMethod ||
-    item instanceof model.ApiProperty
+    item instanceof model.ApiProperty ||
+    item instanceof model.ApiConstructor ||
+    item instanceof model.ApiMethodSignature
   ) {
     createGatsbyNode({
       gatsbyApi,
@@ -72,8 +74,20 @@ function extraData(
         readonly: item.isReadonly,
         optional: item.isOptional,
       }
+    : item instanceof model.ApiMethodSignature
+    ? {
+        optional: item.isOptional,
+        returnType: item.returnTypeExcerpt.text,
+        parameters: item.parameters.map((p) => ({
+          type: p.parameterTypeExcerpt.text,
+          name: p.name,
+          optional: p.isOptional,
+          comment: renderDocNode(p.tsdocParamBlock?.content.nodes),
+        })),
+      }
     : item instanceof model.ApiFunction
     ? {
+        returnType: item.returnTypeExcerpt.text,
         parameters: item.parameters.map((p) => ({
           type: p.parameterTypeExcerpt.text,
           name: p.name,
@@ -89,8 +103,17 @@ function extraData(
     ? {
         abstract: item.isAbstract,
         optional: item.isOptional,
-        protected: item.isProtected,
         static: item.isStatic,
+        returnType: item.returnTypeExcerpt.text,
+        parameters: item.parameters.map((p) => ({
+          type: p.parameterTypeExcerpt.text,
+          name: p.name,
+          optional: p.isOptional,
+          comment: renderDocNode(p.tsdocParamBlock?.content.nodes),
+        })),
+      }
+    : item instanceof model.ApiConstructor
+    ? {
         parameters: item.parameters.map((p) => ({
           type: p.parameterTypeExcerpt.text,
           name: p.name,

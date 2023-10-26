@@ -2,14 +2,14 @@ import AuthCheck from '../components/AuthCheck';
 import Page from '../components/Page';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {ApiDocContext} from '../components/ApiDoc/index.js';
+import {Provider as ApiDocContextProvider} from '../components/ApiDoc/index.js';
 import {GatsbySeo} from 'gatsby-plugin-next-seo';
 import {graphql} from 'gatsby';
 import {useConfig} from '../utils/config';
 
 export default function PageTemplate({data, location}) {
   const config = useConfig(data.file.basePath);
-  const page = <ApiDocContext.Provider value={data.apiDoc}><Page file={data.file} uri={location.pathname} /></ApiDocContext.Provider>;
+  const page = <ApiDocContextProvider value={data.apiDoc}><Page file={data.file} uri={location.pathname} /></ApiDocContextProvider>;
 
   if (!config.internal) {
     return page;
@@ -77,6 +77,8 @@ export const pageQuery = graphql`
       ...Class
       ...Property
       ...Method
+      ...PropertySignature
+      ...MethodSignature
     }
   }
 
@@ -105,6 +107,7 @@ fragment Interface on ApiDocInterface {
   properties {
     ...Base
     ...PropertySignature
+    ...MethodSignature
   }
 }
 
@@ -113,7 +116,16 @@ fragment PropertySignature on ApiDocPropertySignature {
   readonly
 }
 
+fragment MethodSignature on ApiDocMethodSignature {
+  optional
+	returnType
+  parameters {
+    ...FunctionParameter
+  }
+}
+
 fragment Function on ApiDocFunction {
+  returnType
   parameters {
     ...FunctionParameter
   }
@@ -121,6 +133,10 @@ fragment Function on ApiDocFunction {
 
 fragment Class on ApiDocClass {
   implements
+  constructorMethod {
+    ...Base
+    ...Constructor
+  }
   properties {
     ...Base
     ...Property
@@ -134,7 +150,6 @@ fragment Class on ApiDocClass {
 fragment Property on ApiDocProperty {
   abstract
   optional
-  protected
   static
   readonly
 }
@@ -142,8 +157,14 @@ fragment Property on ApiDocProperty {
 fragment Method on ApiDocMethod {
   abstract
   optional
-  protected
   static
+  returnType
+  parameters {
+    ...FunctionParameter
+  }
+}
+
+fragment Constructor on ApiDocConstructor {
   parameters {
     ...FunctionParameter
   }
@@ -155,5 +176,4 @@ fragment FunctionParameter on ApiDocFunctionParameter {
   optional
   comment
 }
-
 `;

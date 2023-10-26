@@ -38,6 +38,7 @@ import {
   chakra
 } from '@chakra-ui/react';
 import {CustomHeading} from './CustomHeading';
+import {DocBlock, InterfaceDetails} from './ApiDoc'
 import {
   EmbeddableExplorer,
   MarkdownCodeBlock,
@@ -49,7 +50,6 @@ import {FiGithub, FiMessageCircle} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
 import {Global} from '@emotion/react';
 import {HighlightKeyTerms} from '@apollo/pedia';
-import {InterfaceTable} from './ApiDoc'
 import {MDXProvider} from '@mdx-js/react';
 import {MDXRenderer} from 'gatsby-plugin-mdx';
 import {MinVersion} from './MinVersion';
@@ -194,7 +194,8 @@ const mdxComponents = {
   PreviewFeature,
   ApolloLogo,
   ApolloMark,
-  InterfaceTable
+  InterfaceDetails,
+  DocBlock
 };
 
 const {processSync} = rehype()

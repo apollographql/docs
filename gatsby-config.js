@@ -113,6 +113,12 @@ const plugins = [
     }
   },
   {
+    resolve: 'gatsby-plugin-apollo-client-api-doc',
+    options: {
+      file: join(__dirname, 'local/shared/client.api.json'), 
+    }
+  },
+  {
     resolve: 'gatsby-plugin-google-gtag',
     options: {
       // todo: remove ua property in the nearish future
@@ -166,12 +172,6 @@ const plugins = [
       otSDKStubSrc: process.env.OT_SDKSTUB_SRC,
       dataDomainScript: process.env.OT_DATA_DOMAIN_SCRIPT,
       skip: !isProduction
-    }
-  },
-  {
-    resolve: 'gatsby-plugin-apollo-client-api-doc',
-    options: {
-      file: join(__dirname, 'local/shared/client.api.json'), 
     }
   }
 ];

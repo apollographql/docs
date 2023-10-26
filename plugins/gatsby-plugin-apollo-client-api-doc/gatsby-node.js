@@ -29,15 +29,23 @@ exports.createResolvers = ({ createResolvers }) => {
     },
     ApiDocInterface: {
       properties: {
-        type: "[ApiDocPropertySignature!]",
+        type: "[InterfaceMember!]",
         resolve: (source, args, context) =>
           context.nodeModel.getNodesByIds({
             ids: source.children,
-            type: "ApiDocPropertySignature",
+            type: "InterfaceMember",
           }),
       },
     },
     ApiDocClass: {
+      constructorMethod: {
+        type: "ApiDocConstructor",
+        resolve: (source, args, context) =>
+          context.nodeModel.getNodesByIds({
+            ids: source.children,
+            type: "ApiDocConstructor",
+          })[0] || null,
+      },
       methods: {
         type: "[ApiDocMethod!]",
         resolve: (source, args, context) =>
@@ -55,6 +63,14 @@ exports.createResolvers = ({ createResolvers }) => {
           }),
       },
     },
+    MarkdownRemarkFrontmatter: {
+      api_doc: {
+        type: "[String!]!",
+        resolve(source) {
+          return source.api_doc || [];
+        },
+      },
+    },
   };
   createResolvers(resolvers);
 };
@@ -62,7 +78,8 @@ exports.createResolvers = ({ createResolvers }) => {
 /** @type {import("gatsby").GatsbyNode['createSchemaCustomization']} */
 exports.createSchemaCustomization = ({ actions }) => {
   actions.createTypes(`
-      union ApiDoc = ApiDocInterface | ApiDocPropertySignature | ApiDocFunction | ApiDocClass | ApiDocMethod | ApiDocProperty
+      union ApiDoc = ApiDocInterface | ApiDocPropertySignature | ApiDocMethodSignature | ApiDocFunction | ApiDocClass | ApiDocMethod | ApiDocProperty
+      union InterfaceMember = ApiDocPropertySignature | ApiDocMethodSignature
 
       interface ApiDocBase {
         id: ID!
@@ -106,6 +123,7 @@ exports.createSchemaCustomization = ({ actions }) => {
         excerpt: String
         comment: ApiDocTypeDoc
         releaseTag: String
+        returnType: String
         parameters: [ApiDocFunctionParameter]
       }
 
@@ -124,6 +142,24 @@ exports.createSchemaCustomization = ({ actions }) => {
         releaseTag: String
         readonly: Boolean
         optional: Boolean
+      }
+
+      type ApiDocMethodSignature implements Node & ApiDocBase {
+        id: ID!
+        parent: Node
+        children: [Node!]!
+        internal: Internal!
+        kind: String
+        canonicalReference: String
+        displayName: String
+        file: String
+        type: String
+        excerpt: String
+        comment: ApiDocTypeDoc
+        releaseTag: String
+        optional: Boolean
+        returnType: String
+        parameters: [ApiDocFunctionParameter]
       }
 
       type ApiDocClass implements Node & ApiDocBase {
@@ -157,9 +193,24 @@ exports.createSchemaCustomization = ({ actions }) => {
         releaseTag: String
         abstract: Boolean
         optional: Boolean
-        protected: Boolean
         static: Boolean
         readonly: Boolean
+      }
+
+      type ApiDocConstructor implements Node & ApiDocBase {
+        id: ID!
+        parent: Node
+        children: [Node!]!
+        internal: Internal!
+        kind: String
+        canonicalReference: String
+        displayName: String
+        file: String
+        type: String
+        excerpt: String
+        comment: ApiDocTypeDoc
+        releaseTag: String
+        parameters: [ApiDocFunctionParameter]
       }
 
       type ApiDocMethod implements Node & ApiDocBase {
@@ -177,7 +228,7 @@ exports.createSchemaCustomization = ({ actions }) => {
         releaseTag: String
         abstract: Boolean
         optional: Boolean
-        protected: Boolean
+        returnType: String
         static: Boolean
         parameters: [ApiDocFunctionParameter]
       }
@@ -202,11 +253,6 @@ exports.createSchemaCustomization = ({ actions }) => {
         deprecated: String
         remarks: String
         examples: [String!]
-      }
-
-
-      type MarkdownRemarkFrontmatter {
-        api_doc: String
       }
     `);
 };
