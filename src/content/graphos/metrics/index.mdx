@@ -7,9 +7,17 @@ GraphOS Studio offers a performant and intuitive UI to help you monitor and unde
 
 ## Metrics collection and forwarding
 
-To analyze operation metrics in GraphOS Studio, you first need to report them to GraphOS. If you have a [cloud supergraph](../quickstart/cloud), its router automatically reports operation metrics. If you have a [self-hosted supergraph](../quickstart/self-hosted), you need to [connect your router to GraphOS](./sending-operation-metrics) to report metrics. Apollo also offers a [Datadog integration](./datadog-integration) to forward your graph's performance metrics to your Datadog account.
+To analyze operation metrics in GraphOS Studio, you must first report them to GraphOS. If you have a [cloud supergraph](../quickstart/cloud), its router automatically reports operation metrics.
 
-> Connecting a self-hosted router to GraphOS and forwarding metrics to Datadog are only available for [Enterprise plans](https://www.apollographql.com/pricing/).
+If you have a [self-hosted supergraph](../quickstart/self-hosted), you need to [connect your router to GraphOS](./sending-operation-metrics) to report metrics. The reporting mechanism is the same if you're using [Apollo Server](/apollo-server/) without the Apollo Router. If you're using a third-party server, you need to [set up a reporting agent](./sending-operation-metrics#from-a-third-party-server-advanced).
+
+Apollo also offers a [Datadog integration](./datadog-integration) to forward your graph's performance metrics to your Datadog account.
+
+> The following require an [Enterprise plan](https://www.apollographql.com/pricing/):
+>
+> - Reporting metrics from Apollo Server or a [monograph](../graphs/#monographs)
+> - Connecting a self-hosted router to GraphOS
+> - Forwarding metrics to Datadog
 
 ## Insights and analysis
 
@@ -24,10 +32,8 @@ Once you've configured your graph to send operation and field metrics to GraphOS
 
 The Insights page offers:
 
-- A collapsible left sidebar that acts as a paginated index of your graph's operations and fields
-  - You can search, filter, and sort operations and fields
-- An operations overview
-  - You can adjust the overviews timeframe and filter it to specific clients
+- A collapsible left sidebar that acts as a paginated index of your graph's operations and fields, where you can search, filter, and sort operations and fields
+- An operations overview where you can adjust the overviews timeframe and filter it to specific clients
 - Individual and overall operations performance metrics, including request rate and latency
 - [Resolver-level traces](./operations#resolver-level-traces), if you've configured them
 - Field usage metrics
