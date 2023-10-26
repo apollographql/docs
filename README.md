@@ -40,6 +40,8 @@ The central piece of this repo, the docs infrastructure, is a [Gatsby](https://w
       - [YouTube](#youtube)
       - [TypeScriptApiBox](#typescriptapibox)
       - [MinVersion](#minversion)
+      - [Release stage components](#release-stage-components)
+      - [Plan components](#plan-components)
       - [Admonitions](#admonitions)
 - [History](#history)
   - [Benefits](#benefits)
