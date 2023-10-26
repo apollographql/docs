@@ -8,8 +8,8 @@ export const Note = ({children, ...props}) => {
     <Box
       pl="4"
       py="1"
-      borderLeftWidth="2px"
-      borderColor="primary"
+      borderLeftWidth="4px"
+      borderColor="gray.400"
       fontSize="md"
       sx={{
         '>': {
@@ -21,7 +21,7 @@ export const Note = ({children, ...props}) => {
       {...props}
     >
       <Text>
-        &#9432; <b>NOTE</b>
+        &#9432; <strong>NOTE</strong>
       </Text>
       <HighlightKeyTerms>{children}</HighlightKeyTerms>
     </Box>

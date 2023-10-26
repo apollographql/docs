@@ -8,8 +8,8 @@ export const Tip = ({children, ...props}) => {
     <Box
       pl="4"
       py="1"
-      borderLeftWidth="2px"
-      borderColor="primary"
+      borderLeftWidth="4px"
+      borderColor="green.400"
       fontSize="md"
       sx={{
         '>': {
@@ -21,7 +21,7 @@ export const Tip = ({children, ...props}) => {
       {...props}
     >
       <Text>
-        &#128161; <b>TIP</b>
+        &#128161; <strong>TIP</strong>
       </Text>
       <HighlightKeyTerms>{children}</HighlightKeyTerms>
     </Box>

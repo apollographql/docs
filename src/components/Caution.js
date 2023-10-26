@@ -8,8 +8,8 @@ export const Caution = ({children, ...props}) => {
     <Box
       pl="4"
       py="1"
-      borderLeftWidth="2px"
-      borderColor="primary"
+      borderLeftWidth="4px"
+      borderColor="yellow.400"
       fontSize="md"
       sx={{
         '>': {
@@ -21,7 +21,7 @@ export const Caution = ({children, ...props}) => {
       {...props}
     >
       <Text>
-        ⚠️ <b>CAUTION</b>
+        ⚠️ <strong>CAUTION</strong>
       </Text>
       <HighlightKeyTerms>{children}</HighlightKeyTerms>
     </Box>
