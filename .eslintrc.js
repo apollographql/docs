@@ -19,6 +19,7 @@ module.exports = {
         ClientPQIntro: 'readonly',
         DirectiveCompositionRules: 'readonly',
         Disclaimer: 'readonly',
+        EntepriseFeature: 'readonly',
         ExperimentalFeature: 'readonly',
         GraphOSEnterpriseRequired: 'readonly',
         InconsistentCompositionRules: 'readonly',

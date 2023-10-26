@@ -44,6 +44,7 @@ import {
   MultiCodeBlock,
   MultiCodeBlockContext
 } from '@apollo/chakra-helpers';
+import {EnterpriseFeature} from './EnterpriseFeature';
 import {ExperimentalFeature} from './ExperimentalFeature';
 import {FeedbackButton} from './FeedbackButton';
 import {FiGithub, FiMessageCircle} from 'react-icons/fi';
@@ -191,6 +192,7 @@ const mdxComponents = {
   EmbeddableExplorer,
   ButtonLink,
   MinVersion,
+  EnterpriseFeature,
   ExperimentalFeature,
   PreviewFeature,
   ApolloLogo,
