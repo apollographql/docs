@@ -578,20 +578,22 @@ Use this component to add a tag beside page headings indicating the version of t
 
 ##### Release stage components
 
-You should use the `<PreviewFeature />` and `<ExperimentalFeature/ >` components to call out features or products that are still in [preview](https://www.apollographql.com/docs/resources/product-launch-stages/#preview) or [experimental stage](https://www.apollographql.com/docs/resources/product-launch-stages/#experimental-features). Use these components at the top of the page or relevant section.
+You should use the `<PreviewFeature />` and `<ExperimentalFeature/ >` components to call out features or products that are still in [preview](https://www.apollographql.com/docs/resources/product-launch-stages/#preview) or are [experimental](https://www.apollographql.com/docs/resources/product-launch-stages/#experimental-features). Use these components at the top of the page or relevant section.
 
 Both components take an optional `discordLink` prop through which you can provide the link to a relevant Discord channel. If there's isn't a relevant channel, you can omit the prop and it defaults to a generic link to Apollo Discord.
 
-```md
+```mdx
+
 # This Discord link brings folks to the channel about the @authorization directives.
+
 <PreviewFeature discordLink="https://discord.com/channels/1022972389463687228/1148623262104965120"/>
+
 ```
 
 ##### Plan components
 
 Currently, the only plan component is `<EnterpriseFeature />`.
 Like the release stage components, this component should be put at the top of the relevant page or section.
-
 If a feature has both a release stage component and the `<EnterpriseFeature />`, the `<EnterpriseFeature />` should come first.
 
 Without the `text` prop, `<EnterpriseFeature />` renders this text:
@@ -600,11 +602,11 @@ Without the `text` prop, `<EnterpriseFeature />` renders this text:
 
 If you need to include custom text, it completely replaces this text. Please make sure to include links to the Enterprise plan and Enterprise trial docs accordingly.
 
-```jsx
-<EnterpriseFeature text={`This is some _custom markdown text_ that still includes a link to the [GraphOS Enterprise plan**](http://apollographql.com/graphos/enterprise/) and [Enterprise trial](https://www.apollographql.com/docs/graphos/enterprise/#enterprise-trial) docs.`} />
-```
+```mdx
 
-The 
+<EnterpriseFeature text={`This is some _custom markdown text_ that still includes a link to the [GraphOS Enterprise plan**](http://apollographql.com/graphos/enterprise/) and [Enterprise trial](https://www.apollographql.com/docs/graphos/enterprise/#enterprise-trial) docs.`} />
+
+```
 
 ##### Admonitions
 
@@ -614,13 +616,12 @@ We have three types of admonitions components: `<Caution>`, `<Note>`, and `<Tip>
 
 You can use `<Caution>`, `<Note>`, and `<Tip>` components directly in `.mdx` pages like so:
 
-```md
+```mdx
 <Caution>
 
 `<Caution>` admonitions generate anxiety. Never use them for anything other than highly important information which may cause serious issues if not acknowledged. Most of the time, prefer `<Note>`s.
 
 </Caution>
-
 
 <Note>
 
