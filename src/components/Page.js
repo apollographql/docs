@@ -37,6 +37,7 @@ import {
   UnorderedList,
   chakra
 } from '@chakra-ui/react';
+import {Caution} from './Caution';
 import {CustomHeading} from './CustomHeading';
 import {
   EmbeddableExplorer,
@@ -54,6 +55,7 @@ import {HighlightKeyTerms} from '@apollo/pedia';
 import {MDXProvider} from '@mdx-js/react';
 import {MDXRenderer} from 'gatsby-plugin-mdx';
 import {MinVersion} from './MinVersion';
+import {Note} from './Note';
 import {
   PAGE_FOOTER_HEIGHT,
   PAGE_PADDING_BOTTOM,
@@ -64,6 +66,7 @@ import {
 import {PreviewFeature} from './PreviewFeature';
 import {SiDiscord} from 'react-icons/si';
 import {TOTAL_HEADER_HEIGHT} from './Header';
+import {Tip} from './Tip';
 import {YouTube} from './YouTube';
 import {join} from 'path';
 import {kebabCase} from 'lodash';
@@ -181,16 +184,19 @@ const mdxComponents = {
   ...sharedContent,
   inlineCode: InlineCode,
   Button, // TODO: consider making pages import this from @chakra-ui/react
+  Caution,
   ExpansionPanel,
   ExpansionPanelList,
   ExpansionPanelListItem,
   MultiCodeBlock,
+  Note,
   YouTube,
   CodeColumns,
   TypeScriptApiBox,
   TypescriptApiBox: TypeScriptApiBox,
   EmbeddableExplorer,
   ButtonLink,
+  Tip,
   MinVersion,
   EnterpriseFeature,
   ExperimentalFeature,
