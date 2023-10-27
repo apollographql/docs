@@ -197,4 +197,5 @@ You can combine the strategies to handle a number of authentication requirements
 
 1. Use a coprocessor to identify traffic using a legacy authentication strategy and convert legacy session tokens to JWTs.
 2. Use the JWT Authentication plugin to validate JWT-based authentication tokens.
-3. Forward JWTs to subgraphs for additional authorization.
+3. Use authorization directives to enforce authorization at the router layer
+4. Forward JWTs to subgraphs for additional authorization.
