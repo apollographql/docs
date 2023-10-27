@@ -65,7 +65,7 @@ fn process_request(request) {
 
 If you're using Apollo Server for your gateway, you can require client metadata in every incoming request with a [custom plugin](/apollo-server/integrations/plugins/):
 
-> The header names used below are the default headers sent by Apollo Client, but you can change them to whatever names your client uses. Additionally, these changes should be reflected in the [usage reporting plugin](/apollo-server/api/plugin/usage-reporting/#generateclientinfo). For an example, see [Using custom client id headers](/apollo-server/monitoring/metrics#using-custom-headers).
+> The header names used below are the default headers sent by Apollo Client, but you can change them to whatever names your client uses. Additionally, these changes must be reflected in the [usage reporting plugin](/apollo-server/api/plugin/usage-reporting/#generateclientinfo) in order to report client headers to GraphOS. For an example, see [using custom client id headers](/apollo-server/monitoring/metrics#using-custom-headers).
 
 <MultiCodeBlock>
 
