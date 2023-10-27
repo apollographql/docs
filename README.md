@@ -578,7 +578,7 @@ Use this component to add a tag beside page headings indicating the version of t
 
 ##### Release stage components
 
-You should use the `<PreviewFeature />` and `<ExperimentalFeature/ >` components to call out features or products that are still in [preview](https://www.apollographql.com/docs/resources/product-launch-stages/#preview) or are [experimental](https://www.apollographql.com/docs/resources/product-launch-stages/#experimental-features). Use these components at the top of the page or relevant section.
+You should use the `<PreviewFeature />` and `<ExperimentalFeature />` components to call out features or products that are in [preview](https://www.apollographql.com/docs/resources/product-launch-stages/#preview) or are [experimental](https://www.apollographql.com/docs/resources/product-launch-stages/#experimental-features). Use these components at the top of the page or relevant section.
 
 Both components take an optional `discordLink` prop through which you can provide the link to a relevant Discord channel. If there's isn't a relevant channel, you can omit the prop and it defaults to a generic link to Apollo Discord.
 
@@ -596,7 +596,9 @@ Currently, the only plan component is `<EnterpriseFeature />`.
 Like the release stage components, this component should be put at the top of the relevant page or section.
 If a feature has both a release stage component and the `<EnterpriseFeature />`, the `<EnterpriseFeature />` should come first.
 
-Without the `text` prop, `<EnterpriseFeature />` renders this text:
+Custom text for `<EnterpriseFeature />` can be provided with the `text` prop.
+
+By default, without the `text` prop, `<EnterpriseFeature />` renders this text:
 
 > **This feature is only available with a [**GraphOS Enterprise plan**](http://apollographql.com/graphos/enterprise/). If your organization doesn't currently have an Enterprise plan, you can test this functionality by signing up for a free [Enterprise trial](https://www.apollographql.com/docs/graphos/enterprise/#enterprise-trial).
 
@@ -612,7 +614,11 @@ If you need to include custom text, it completely replaces this text. Please mak
 
 Admonitions are designed to catch readers' attention and break the flow of the text. They’re helpful to make a piece of information stand out, but should be used wisely and sparingly. Use them only for information that shouldn’t be missed.
 
-We have three types of admonitions components: `<Caution>`, `<Note>`, and `<Tip>`.
+We support the following admonition components: 
+* `<Caution>`
+* `<Note>`
+* `<Tip>`
+
 
 You can use `<Caution>`, `<Note>`, and `<Tip>` components directly in `.mdx` pages like so:
 
