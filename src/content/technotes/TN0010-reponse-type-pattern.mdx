@@ -59,7 +59,7 @@ This `Query.users` field makes intuitive sense: if you query it, you get back a 
 * Even if the list is populated, did the API return _all_ users or just a subset?
 * Are there multiple pages of results?
 
-To answer questions like these, it may be helpful for top-level fields of `Query` to return "wrapper" objects that can include both the operation result _and_ metadata about the operation's execution. Some examples of where this is specifically helpful is in cases where you need to [paginate your results](/technotes/TN0027-demand-oriented-schema-design/#a-brief-sidebar-on-pagination-conventions) or implement [Relay-style connections](/technotes/TN0029-relay-style-connections/).
+To answer questions like these, it may be helpful for top-level fields of `Query` to return "wrapper" objects that can include both the operation result _and_ metadata about the operation's execution. For example, in cases where you need to [paginate your results](/technotes/TN0027-demand-oriented-schema-design/#a-brief-sidebar-on-pagination-conventions) or implement [Relay-style connections](/technotes/TN0029-relay-style-connections/) this pattern can be helpful.
 
 ### Example: `UsersResponse`
 
@@ -74,13 +74,13 @@ type User {
 
 type UsersResponse {
   offset: Int!
-  perPage: Int!
+  limit: Int!
   totalResults: Int!
   data: [User!]!
 }
 
 type Query {
-  users(perPage: Int = 10, offset: Int = 0): UsersResponse!
+  users(limit: Int = 10, offset: Int = 0): UsersResponse!
 }
 ```
 
@@ -88,7 +88,7 @@ With this change, a client's query can specify how many results per page, what p
 
 ```graphql
 query FetchUsers {
-  users(perPage: 20, offset: 0) {
+  users(limit: 20, offset: 0) {
     totalResults
     data {
       id
