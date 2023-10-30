@@ -232,4 +232,4 @@ This query's execution starts in the Reviews subgraph, but it needs to obtain ea
 
 To help resolve these references, the Reviews subgraph _must_ return each `Product`'s `id` field, even though that field isn't included in the original query. This is because `id` is a `@key` field for `Product`.
 
-Therefore, this query contributes one zero requests and one execution for `Product.id`. Similar logic applies to fields that use the [`@requires` directive](/federation/entities-advanced#contributing-computed-entity-fields).
+Therefore, this query contributes zero requests and one execution for `Product.id`. Similar logic applies to fields that use the [`@requires` directive](/federation/entities-advanced#contributing-computed-entity-fields).
