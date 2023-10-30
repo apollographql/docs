@@ -45,6 +45,7 @@ export const pageQuery = graphql`
         }
         frontmatter {
           title
+          subtitle
           description
           toc
           tags
@@ -61,6 +62,7 @@ export const pageQuery = graphql`
         }
         frontmatter {
           title
+          subtitle
           description
           headingDepth
           minVersion
