@@ -59,23 +59,19 @@ If you're interested in collaborating with Apollo on creating a dedicated integr
 
 #### Reporting format
 
-The GraphOS reporting endpoint accepts batches of traces and metrics that are encoded in **protocol buffer** format. Each trace corresponds to the execution of a single GraphQL operation, including a breakdown of the timing and error information for each field that's resolved as part of the operation.
+The GraphOS reporting endpoint accepts batches of traces and metrics that are encoded in **protocol buffer** format. Each trace corresponds to the execution of a single GraphQL operation, including a breakdown of the timing and error information for each field that's resolved as part of the operation. The schema for this protocol buffer is defined as the `Report` message in [the protobuf schema](https://usage-reporting.api.apollographql.com/proto/reports.proto).
 
-The schema for this protocol buffer is defined as the `Report` message in [the protobuf schema](https://usage-reporting.api.apollographql.com/proto/reports.proto).
+[The protobuf schema](https://usage-reporting.api.apollographql.com/proto/reports.proto) document describes how to create a report whose `tracesPerQuery` objects consist solely of a list of detailed execution traces in the `trace` array. GraphOS now allows your server to describe usage as a mix of detailed execution traces and pre-aggregated metrics (released in Apollo Server 2.24), which leads to much more efficient reports. This document doesn't describe how to generate these metrics. Nor does it descibe how to report the number of requests for a particular operation shown in the [**Clients & Operations** table](./field-usage#field-details) on the Insights page.
 
 <Note>
 
-This document describes how to create a report whose `tracesPerQuery` objects consist solely of a list of detailed execution traces in the `trace` array. GraphOS now allows your server to describe usage as a mix of detailed execution traces and pre-aggregated metrics (released in Apollo Server 2.24), which leads to much more efficient reports. This document doesn't describe how to generate these metrics. It also doesn't describe how to support the "referencing operations" feature of [the Insights page](./field-usage/). We strongly encourage developers to contact Apollo support at **support@apollographql.com** to discuss their use case before building their own reporting agent using this module.
+We strongly encourage developers to contact Apollo support at **support@apollographql.com** to discuss their use case before building their own reporting agent using this module.
 
 </Note>
 
 As a starting point, we recommend implementing an extension to the GraphQL execution that creates a report with a single trace, as defined in the `Trace` message of [the protobuf schema](https://usage-reporting.api.apollographql.com/proto/reports.proto). Then, you can batch multiple traces into a single report. We recommend sending batches approximately every 20 seconds and limiting each batch to a reasonable size (~4MB).
 
-<Note>
-
 Many server runtimes already support emitting tracing information as a [GraphQL extension](https://github.com/apollographql/apollo-tracing). Such extensions are available for [Node](/apollo-server/api/plugin/usage-reporting/), [Ruby](https://github.com/uniiverse/apollo-tracing-ruby), [Scala](https://github.com/sangria-graphql/sangria-slowlog#apollo-tracing-extension), [Java](https://github.com/graphql-java/graphql-java/pull/577), [Elixir](https://github.com/sikanhe/apollo-tracing-elixir), and [.NET](https://graphql-dotnet.github.io/docs/getting-started/metrics/). If you're working on adding metrics reporting functionality for one of these languages, reading through that tracing instrumentation is a good place to start. For other languages, we recommend consulting the [Apollo Server usage reporting plugin](/apollo-server/api/plugin/usage-reporting).
-
-</Note>
 
 #### Operation signing
 
