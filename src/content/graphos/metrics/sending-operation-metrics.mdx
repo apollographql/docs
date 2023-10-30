@@ -6,10 +6,7 @@ description: Learn how to report operation and field usage metrics to GraphOS
 GraphOS Studio offers visualizations of metrics like request rate, latency, and more to help you analyze your supergraph's performance. Studio also lets you analyze how individual fields in your GraphQL requests are being used by clients. To analyze operation metrics and field usage in Studio, you first need to report them to GraphOS.
 
 <EnterpriseFeature
-  text={`Reporting metrics from [Apollo Server](/apollo-server) or a [monograph](../graphs/#monographs) requires an [Enterprise or legacy Team plan](../orgs/plans).\n\nThe following require an [Enterprise plan](https://www.apollographql.com/pricing/):
-- Connecting a self-hosted router to GraphOS
-- Forwarding metrics to Datadog
-\nIf your organization doesn't currently have an Enterprise plan, you can test out this functionality by signing up for a free [Enterprise trial](../enterprise/#enterprise-trial)
+  text={`Reporting metrics from [Apollo Server](/apollo-server) or a [monograph](../graphs/#monographs) requires an [Enterprise or legacy Team plan](../orgs/plans). Connecting a self-hosted router to GraphOS requires an [Enterprise plan](https://www.apollographql.com/pricing/). If your organization doesn't currently have an Enterprise plan, you can test out this functionality by signing up for a free [Enterprise trial](https://studio.apollographql.com/signup?type=enterprise-trial&referrer=docs-content).
 `}
 />
 
@@ -36,7 +33,11 @@ Both the Apollo Router and Apollo Server use the same mechanism to enable operat
    export APOLLO_GRAPH_REF=<YOUR_GRAPH_REF>
    ```
 
-> Consult your production environment's documentation to learn how to set its environment variables.
+<Note>
+
+Consult your production environment's documentation to learn how to set its environment variables.
+
+</Note>
 
 Now when your router or server starts up, it automatically begins reporting operation metrics to GraphOS.
 
@@ -51,7 +52,11 @@ You can set up a reporting agent in your GraphQL server to push metrics to Graph
 
 Apollo Server defines its agent for performing these tasks in [the usage reporting plugin](https://github.com/apollographql/apollo-server/blob/main/packages/server/src/plugin/usageReporting).
 
-> If you're interested in collaborating with Apollo on creating a dedicated integration for your GraphQL server, please get in touch with us at **support@apollographql.com**.
+<Note>
+
+If you're interested in collaborating with Apollo on creating a dedicated integration for your GraphQL server, please get in touch with us at **support@apollographql.com**.
+
+</Note>
 
 #### Reporting format
 
@@ -59,11 +64,19 @@ The GraphOS reporting endpoint accepts batches of traces and metrics that are en
 
 The schema for this protocol buffer is defined as the `Report` message in [the protobuf schema](https://usage-reporting.api.apollographql.com/proto/reports.proto).
 
-> This document describes how to create a report whose `tracesPerQuery` objects consist solely of a list of detailed execution traces in the `trace` array. GraphOS now allows your server to describe usage as a mix of detailed execution traces and pre-aggregated metrics (released in Apollo Server 2.24), which leads to much more efficient reports. This document does not yet describe how to generate these metrics. It also does not describe how to support the "referencing operations" feature of [the Insights page](./field-usage/). We strongly encourage developers to contact Apollo support at **support@apollographql.com** to discuss their use case prior to building their own reporting agent using this module.
+<Note>
+
+This document describes how to create a report whose `tracesPerQuery` objects consist solely of a list of detailed execution traces in the `trace` array. GraphOS now allows your server to describe usage as a mix of detailed execution traces and pre-aggregated metrics (released in Apollo Server 2.24), which leads to much more efficient reports. This document does not yet describe how to generate these metrics. It also does not describe how to support the "referencing operations" feature of [the Insights page](./field-usage/). We strongly encourage developers to contact Apollo support at **support@apollographql.com** to discuss their use case prior to building their own reporting agent using this module.
+
+</Note>
 
 As a starting point, we recommend implementing an extension to the GraphQL execution that creates a report with a single trace, as defined in the `Trace` message of [the protobuf schema](https://usage-reporting.api.apollographql.com/proto/reports.proto). Then, you can batch multiple traces into a single report. We recommend sending batches approximately every 20 seconds, and limiting each batch to a reasonable size (~4MB).
 
-> Many server runtimes already support emitting tracing information as a [GraphQL extension](https://github.com/apollographql/apollo-tracing). Such extensions are available for [Node](/apollo-server/api/plugin/usage-reporting/), [Ruby](https://github.com/uniiverse/apollo-tracing-ruby), [Scala](https://github.com/sangria-graphql/sangria-slowlog#apollo-tracing-extension), [Java](https://github.com/graphql-java/graphql-java/pull/577), [Elixir](https://github.com/sikanhe/apollo-tracing-elixir), and [.NET](https://graphql-dotnet.github.io/docs/getting-started/metrics/). If you're working on adding metrics reporting functionality for one of these languages, reading through that tracing instrumentation is a good place to start. For other languages, we recommend consulting the [Apollo Server usage reporting plugin](/apollo-server/api/plugin/usage-reporting).
+<Note>
+
+Many server runtimes already support emitting tracing information as a [GraphQL extension](https://github.com/apollographql/apollo-tracing). Such extensions are available for [Node](/apollo-server/api/plugin/usage-reporting/), [Ruby](https://github.com/uniiverse/apollo-tracing-ruby), [Scala](https://github.com/sangria-graphql/sangria-slowlog#apollo-tracing-extension), [Java](https://github.com/graphql-java/graphql-java/pull/577), [Elixir](https://github.com/sikanhe/apollo-tracing-elixir), and [.NET](https://graphql-dotnet.github.io/docs/getting-started/metrics/). If you're working on adding metrics reporting functionality for one of these languages, reading through that tracing instrumentation is a good place to start. For other languages, we recommend consulting the [Apollo Server usage reporting plugin](/apollo-server/api/plugin/usage-reporting).
+
+</Note>
 
 #### Operation signing
 
@@ -127,7 +140,11 @@ Only graph-level API keys (starting with the prefix `service:`) are supported.
 
 The request can also optionally include a `Content-Type` header with value `application/protobuf`, but this is not required.
 
-> ⚠️ **The reporting endpoint rejects reports that are older than 50 minutes.** If you see an error like `Rejecting report from service <your service> with skewed timestamp`, make sure your traces are current and that your timestamp calculations are accurate.
+<Caution>
+
+**The reporting endpoint rejects reports that are older than 50 minutes.** If you see an error like `Rejecting report from service {your service} with skewed timestamp`, make sure your traces are current and that your timestamp calculations are accurate.
+
+</Caution>
 
 For a reference implementation, see the `sendReport()` function in the [TypeScript reference agent](https://github.com/apollographql/apollo-server/blob/main/packages/server/src/plugin/usageReporting/plugin.ts).
 
@@ -168,7 +185,11 @@ Apollo Server automatically reports field usage metrics as long as you follow th
   - Your GraphQL server can run any recent version of Apollo Server 2.x or 3.x.
   - If you have a [federated graph](/federation), your subgraphs must support federated tracing. For compatible libraries, see the `FEDERATED TRACING` entry for libraries in [this table](/federation/building-supergraphs/supported-subgraphs/).
 
-> If some of your subgraphs support federated tracing and others don't, only executions in compatible subgraphs are reported to Apollo.
+<Note>
+
+If some of your subgraphs support federated tracing and others don't, only executions in compatible subgraphs are reported to Apollo.
+
+</Note>
 
 #### Disabling execution metrics
 
@@ -214,7 +235,11 @@ new ApolloServer({
 
 If you do so, Apollo Server randomly chooses to enable field-level instrumentation for each request according to the given probability.
 
-> ⚠️ Make sure to pass a _number_ (like `0.01`), _not_ a function that always _returns_ the same number (like `() => 0.01`), which has a [different effect](#custom-sampling).
+<Caution>
+
+Make sure to pass a _number_ (like `0.01`), _not_ a function that always _returns_ the same number (like `() => 0.01`), which has a [different effect](#custom-sampling).
+
+</Caution>
 
 In this case, whenever field-level instrumentation _is_ enabled for a particular request, Apollo Server reports it to Studio with a weight based on the given probability. The "executions" statistic on the Insights page (along with execution timing hints) is scaled by this weight.
 

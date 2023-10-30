@@ -49,8 +49,13 @@ Beneath each of those metrics, you can also see the individual operations with:
   width="700"
 />
 
-> The blue **M** icon beside an operation name indicates it's a mutation.
-> The purple **S** icon beside an operation name indicates it's a subscription.
+<Note>
+
+The blue **M** icon beside an operation name indicates it's a mutation.
+
+The purple **S** icon beside an operation name indicates it's a subscription.
+
+</Note>
 
 You can click an operation name to view more [detailed information](#operation-details) or scroll down to see overall [operation metrics](#operation-metrics).
 
@@ -110,7 +115,11 @@ Directly below the [**Operations Overview**](#operations-overview), you can find
 
 The operations included in the **request** metric charts are queries, mutations, and subscription registrations. Request charts don't include data on **subscription notifications**, which are shown separately in subscription notification charts.
 
-> A [specific operation's detail page](#operation-details) shows subscription registration metrics instead of general request metrics.
+<Note>
+
+A [specific operation's detail page](#operation-details) shows subscription registration metrics instead of general request metrics.
+
+</Note>
 
 ### Request rate
 
@@ -299,8 +308,12 @@ Below the sample trace and latency distribution chart, you can view the time eac
 
 To enable federated trace reporting in your subgraphs, consult the documentation for the GraphQL server library your subgraph uses.
 
-> **Not all subgraph-compatible libraries support federated trace reporting.**
->
-> To confirm the support status for your library, check its **FEDERATED TRACING** entry in [Federation-compatible subgraph implementations](/federation/building-supergraphs/supported-subgraphs).
+<Note>
+
+**Not all subgraph-compatible libraries support federated trace reporting.**
+
+To confirm the support status for your library, check its **FEDERATED TRACING** entry in [Federation-compatible subgraph implementations](/federation/building-supergraphs/supported-subgraphs).
+
+</Note>
 
 If your subgraphs use [Apollo Server with the `@apollo/subgraph` library](/apollo-server/using-federation/apollo-subgraph-setup/), federated trace reporting is enabled by default. You can customize Apollo Server's trace reporting behavior with the [inline trace plugin](/apollo-server/api/plugin/inline-trace).

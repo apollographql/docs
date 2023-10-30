@@ -5,7 +5,11 @@ description: Understand how different clients use your graph
 
 In GraphOS Studio, you can view GraphQL operation metrics broken down by the different clients that _execute_ those operations (such as your web, iOS, and Android apps). This feature (called **client awareness**) becomes more and more useful as you create additional clients that consume your supergraph.
 
-> To enable client awareness, your clients must identify themselves in their requests to your router. [Learn how.](#setup)
+<Note>
+
+To enable client awareness, your clients must identify themselves in their requests to your router. [Learn how.](#setup)
+
+</Note>
 
 [GraphOS Enterprise](https://www.apollographql.com/pricing) organizations can segment operation metrics even further, by individual client _versions_ (`1.0`, `1.1`, etc.). This helps you track adoption of new versions and identify _older_ versions you can safely deprecate or discontinue.
 
@@ -18,7 +22,11 @@ You view client-segmented metrics from a variant's **Clients** page in Studio:
   width="400"
 />
 
-> If a particular client doesn't identify itself in its requests, its metrics are included in an **Unidentified client** category.
+<Note>
+
+If a particular client doesn't identify itself in its requests, its metrics are included in an **Unidentified client** category.
+
+</Note>
 
 ## Setup
 
