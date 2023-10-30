@@ -5,8 +5,13 @@ description: Learn how to report operation and field usage metrics to GraphOS
 
 GraphOS Studio offers visualizations of metrics like request rate, latency, and more to help you analyze your supergraph's performance. Studio also lets you analyze how individual fields in your GraphQL requests are being used by clients. To analyze operation metrics and field usage in Studio, you first need to report them to GraphOS.
 
-> Reporting metrics from a [monograph](../graphs/#monographs), [Apollo Server](/apollo-server/), or a [self-hosted supergraph](../graphs/#self-hosted-supergraphs) requires an [Enterprise plan](../org/plans/).
-> If your organization doesn't currently have an Enterprise plan, you can test out this functionality by signing up for a free [Enterprise trial](https://studio.apollographql.com/signup?type=enterprise-trial&referrer=docs-content).
+<EnterpriseFeature
+  text={`Reporting metrics from [Apollo Server](/apollo-server) or a [monograph](../graphs/#monographs) requires an [Enterprise or legacy Team plan](../orgs/plans).\n\nThe following require an [Enterprise plan](https://www.apollographql.com/pricing/):
+- Connecting a self-hosted router to GraphOS
+- Forwarding metrics to Datadog
+\nIf your organization doesn't currently have an Enterprise plan, you can test out this functionality by signing up for a free [Enterprise trial](../enterprise/#enterprise-trial)
+`}
+/>
 
 ## Reporting operation metrics
 
