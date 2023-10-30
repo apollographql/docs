@@ -14,12 +14,53 @@ tags: [server, router, auth]
 
 When using the Apollo Router as the entry point to your federated supergraph, you have a few options for authenticating incoming client requests:
 
+- [Use Authorization Directives](#use-authorization-directives)
 - [Delegate authentication to your subgraphs.](#authenticate-in-subgraphs)
 - [Use the JWT Authentication plugin](#use-the-jwt-authentication-plugin) to your supergraph.
 - [Use a coprocessor](#use-a-coprocessor).
-- [Use Authorization Directives](#use-authorization-directives)
+
 
 In fact, we recommend you [combine all three strategies](#combining-authentication-strategies) to create a more robust authentication system!
+
+## Use Authorization Directives
+In addition to the the approaches outlined below, you can use [authorization directives](/router/configuration/authorization/) to enforce authorization at the router layer. 
+This allows you to authorize requests prior to them hitting your subgraphs saving on bandwidth and processing time.
+
+<EnterpriseFeature text={`This is an [Enterprise feature](/router/enterprise-features) of the Apollo Router. It requires an organization with a [GraphOS Enterprise plan](https://www.apollographql.com/pricing/).`} />
+
+
+```mermaid
+sequenceDiagram
+  Client->>Router: Request with token
+  note over Router: Validate request
+  alt Request is invalid
+    Router->>Client: Respond 401 Unauthorized
+  else Request is valid
+    Router->>Subgraph: Request Data
+  end
+```
+
+Once the request's claims are made available via the JWT validation or a coprocessor, they can be used to match against the required type and field scopes to enforce authorization policies.
+
+```graphql
+# Request's authorization claims must contain `read:users`
+type Query {
+  users: [User!]! @requiresScopes(scopes: [["read:users"]])
+}
+
+# Request must be authenticated
+type Mutation {
+  updateUser(input: UpdateUserInput!): User! @authenticated
+}
+```
+
+Pros:
+
+- Validating authorization before processing requests enables the early termination of unauthorized requests reducing the load on your services
+- Declarative approach that can be adopted and maintained by each subgraph while enforced centrally
+
+Cons
+- Schema updates will need to be made to each subgraph to opt into this authorization model
 
 ## Authenticate in subgraphs
 
@@ -149,53 +190,12 @@ Cons:
 
 - The initial lift of implementing a coprocessor is non-trivial, but once it's in place you can leverage it for any number of router customizations.
 
-## Use Authorization Directives
-In addition to the the approaches above, you can use [authorization directives](/router/configuration/authorization/) to enforce authorization at the router layer. 
-This allows you to authorize requests prior to them hitting your subgraphs saving on bandwidth and processing time.
-
-<EnterpriseFeature text={`This is an [Enterprise feature](/router/enterprise-features) of the Apollo Router. It requires an organization with a [GraphOS Enterprise plan](https://www.apollographql.com/pricing/).`} />
-
-
-```mermaid
-sequenceDiagram
-  Client->>Router: Request with token
-  note over Router: Validate request
-  alt Request is invalid
-    Router->>Client: Respond 401 Unauthorized
-  else Request is valid
-    Router->>Subgraph: Request Data
-  end
-```
-
-Once the request's "claims" are made available via the JWT and/or a coprocessor, they can be used as scopes to enforce authorization policies.
-
-```graphql
-# Request's authorization claims must contain `read:users`
-type Query {
-  users: [User!]! @requiresScopes(scopes: [["read:users"]])
-}
-
-# Request must be authenticated
-type Mutation {
-  updateUser(input: UpdateUserInput!): User! @authenticated
-}
-```
-
-Pros:
-
-- Validating authorization before processing requests enables the early termination of unauthorized requests reducing the load on your services
-- Declarative approach that can be adopted and maintained by each subgraph while enforced centrally
-
-Cons
-- Updates will need to be made to each subgraph to opt into this authorization model
-- If a coprocesser is required, initial lift of implementing a coprocessor is non-trivial
-
 
 ## Combining authentication strategies
 
 You can combine the strategies to handle a number of authentication requirements and practice "defense-in-depth":
 
-1. Use a coprocessor to identify traffic using a legacy authentication strategy and convert legacy session tokens to JWTs.
-2. Use the JWT Authentication plugin to validate JWT-based authentication tokens.
-3. Use authorization directives to enforce authorization at the router layer
+1. Use the JWT Authentication plugin to validate JWT-based authentication tokens.
+2. Use auth directives to enforce authentication and authorization and at the supergraph layer
+3. Use a coprocessor to identify traffic using a legacy authentication strategy and convert legacy session tokens to JWTs.
 4. Forward JWTs to subgraphs for additional authorization.
