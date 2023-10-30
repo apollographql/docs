@@ -1,6 +1,6 @@
 ---
 title: Operation metrics in GraphOS
-description: Understand your operation performance
+description: Understand your operation metrics, including request rate and latency
 ---
 
 Once you've configured your graph to send [operation metrics to GraphOS](./sending-operation-metrics/), you can view them in [GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content) from any variant's **Insights** page:
@@ -83,18 +83,18 @@ Specifically, you can:
   width="300"
 />
 
-- Sort operations (descending or ascending) by:
-
-  - Total requests (count)
-  - Request rate in requests per minute (rpm)
-  - Total error (count)
-  - Error rate
-  - Error percentage (%)
-  - Cache hit percentage (%)
-  - p50 Cache TTL in seconds, minutes (s, min)
-  - p50, p90, p95, and p99 service time in milliseconds, seconds, or minutes (ms, s, min)
-  - Total duration in milliseconds, seconds, minutes, or hours (ms, s, min, hr)
-  - Signature size in bytes (B, KB)
+- Sort operations (descending or ascending):
+  - Alphabetically
+  - By total requests (count)
+  - By request rate in requests per minute (rpm)
+  - By total error (count)
+  - By error rate
+  - By error percentage (%)
+  - By cache hit percentage (%)
+  - By p50 Cache TTL in seconds, minutes (s, min)
+  - By p50, p90, p95, and p99 service time in milliseconds, seconds, or minutes (ms, s, min)
+  - By total duration in milliseconds, seconds, minutes, or hours (ms, s, min, hr)
+  - By signature size in bytes (B, KB)
 
 <img
   src="../img/operation-sidebar-sort.jpg"
@@ -300,13 +300,15 @@ If you [enable trace reporting](#enabling-traces) in your subgraphs, GraphOS Stu
 
 The **Traces** tab for an operation provides a breakdown of timing and error information for each field resolved as part of that operation. Traces help you identify opportunities to improve your supergraph's overall performance by optimizing whichever resolvers currently act as a bottleneck.
 
-#### Resolver execution time
+#### Deferred fetches
 
-Below the sample trace and latency distribution chart, you can view the time each resolver involved in an operation takes to complete. The execution time for [deferred fetches](../operations/defer/) only includes the time it takes for the deferred field's resolver to complete, not the time the response to the client with those fields was deferred.
+The execution time for [deferred fetches](../operations/defer/) only includes the time it takes for the deferred field's resolver to complete, not the time the response to the client with those fields was deferred.
 
 #### Enabling traces
 
-To enable federated trace reporting in your subgraphs, consult the documentation for the GraphQL server library your subgraph uses.
+If your subgraphs use [Apollo Server with the `@apollo/subgraph` library](/apollo-server/using-federation/apollo-subgraph-setup/), federated trace reporting is enabled by default. You can customize Apollo Server's trace reporting behavior with the [inline trace plugin](/apollo-server/api/plugin/inline-trace).
+
+For instructions for third-party GraphQL servers, refer to the documentation for the specific server library your subgraph uses.
 
 <Note>
 
@@ -315,5 +317,3 @@ To enable federated trace reporting in your subgraphs, consult the documentation
 To confirm the support status for your library, check its **FEDERATED TRACING** entry in [Federation-compatible subgraph implementations](/federation/building-supergraphs/supported-subgraphs).
 
 </Note>
-
-If your subgraphs use [Apollo Server with the `@apollo/subgraph` library](/apollo-server/using-federation/apollo-subgraph-setup/), federated trace reporting is enabled by default. You can customize Apollo Server's trace reporting behavior with the [inline trace plugin](/apollo-server/api/plugin/inline-trace).
