@@ -13,6 +13,7 @@ export const Provider = ({value, children}) => {
       if (node.constructorMethod) traverse(node.constructorMethod);
       node.properties?.forEach(traverse);
       node.methods?.forEach(traverse);
+      node.references?.forEach(n => n.target && traverse(n.target));
     }
     value.forEach(traverse);
     return allNodes;

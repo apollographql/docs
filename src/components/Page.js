@@ -38,7 +38,7 @@ import {
   chakra
 } from '@chakra-ui/react';
 import {CustomHeading} from './CustomHeading';
-import {DocBlock, InterfaceDetails} from './ApiDoc'
+import {DocBlock, FunctionDetails, InterfaceDetails} from './ApiDoc'
 import {
   EmbeddableExplorer,
   MarkdownCodeBlock,
@@ -195,6 +195,7 @@ const mdxComponents = {
   ApolloLogo,
   ApolloMark,
   InterfaceDetails,
+  FunctionDetails,
   DocBlock
 };
 

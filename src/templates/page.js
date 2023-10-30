@@ -70,17 +70,32 @@ export const pageQuery = graphql`
       }
     }
     apiDoc(canonicalReference: $api_doc) {
-      ...Base
-      ...Interface
-      ...Property
-      ...Function
-      ...Class
-      ...Property
-      ...Method
-      ...PropertySignature
-      ...MethodSignature
+      ...Combined
+      ... on ApiDocBase {
+        references {
+          text
+          canonicalReference
+          target {
+            ...Combined
+          }
+        }
+      }
     }
   }
+
+
+  fragment Combined on ApiDocBase {
+  ...Base
+  ...Interface
+  ...TypeAlias
+  ...Property
+  ...Function
+  ...Class
+  ...Property
+  ...Method
+  ...PropertySignature
+  ...MethodSignature
+}
 
 fragment Base on ApiDocBase {
   id
@@ -111,6 +126,15 @@ fragment Interface on ApiDocInterface {
   }
 }
 
+fragment TypeAlias on ApiDocTypeAlias {
+  typeParameters {
+    name
+    optional
+    comment
+  }
+  type
+}
+
 fragment PropertySignature on ApiDocPropertySignature {
   optional
   readonly
@@ -118,7 +142,7 @@ fragment PropertySignature on ApiDocPropertySignature {
 
 fragment MethodSignature on ApiDocMethodSignature {
   optional
-	returnType
+  returnType
   parameters {
     ...FunctionParameter
   }

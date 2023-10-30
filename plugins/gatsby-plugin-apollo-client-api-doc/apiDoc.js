@@ -33,7 +33,8 @@ function handleMember(
     item instanceof model.ApiMethod ||
     item instanceof model.ApiProperty ||
     item instanceof model.ApiConstructor ||
-    item instanceof model.ApiMethodSignature
+    item instanceof model.ApiMethodSignature ||
+    item instanceof model.ApiTypeAlias
   ) {
     createGatsbyNode({
       gatsbyApi,
@@ -47,6 +48,21 @@ function handleMember(
           canonicalReference: item.canonicalReference.toString(),
           displayName: item.displayName,
           excerpt: item.excerpt.text,
+          references: item.excerpt.tokens
+            .filter(
+              (token, index) =>
+                token.kind === "Reference" &&
+                token.canonicalReference &&
+                // prevent duplicates
+                item.excerpt.tokens.findIndex(
+                  (other) =>
+                    other.canonicalReference === token.canonicalReference
+                ) === index
+            )
+            .map((token) => ({
+              canonicalReference: token.canonicalReference?.toString(),
+              text: token.text,
+            })),
           file: item.sourceLocation.fileUrl || item.fileUrlPath,
           comment: processDocComment(item.tsdocComment),
           releaseTag: model.ReleaseTag[item.releaseTag],
@@ -68,6 +84,15 @@ function extraData(
           optional: p.isOptional,
           comment: renderDocNode(p.tsdocTypeParamBlock?.content.nodes),
         })),
+      }
+    : item instanceof model.ApiTypeAlias
+    ? {
+        typeParameters: item.typeParameters.map((p) => ({
+          name: p.name,
+          optional: p.isOptional,
+          comment: renderDocNode(p.tsdocTypeParamBlock?.content.nodes),
+        })),
+        type: item.typeExcerpt.text,
       }
     : item instanceof model.ApiPropertySignature
     ? {

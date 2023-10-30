@@ -1,10 +1,14 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import {ApiDocHeading, DocBlock, PropertySignatureTable} from '.';
-export function InterfaceDetails({canonicalReference}) {
+export function InterfaceDetails({canonicalReference, headingLevel, link}) {
   return (
     <>
-      <ApiDocHeading canonicalReference={canonicalReference} headingLevel={3} />
+      <ApiDocHeading
+        canonicalReference={canonicalReference}
+        headingLevel={headingLevel}
+        link={link}
+      />
       <DocBlock
         canonicalReference={canonicalReference}
         heading
@@ -20,5 +24,7 @@ export function InterfaceDetails({canonicalReference}) {
 }
 
 InterfaceDetails.propTypes = {
-  canonicalReference: PropTypes.string.isRequired
+  canonicalReference: PropTypes.string.isRequired,
+  headingLevel: PropTypes.number,
+  link: PropTypes.bool
 };

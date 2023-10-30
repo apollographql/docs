@@ -71,6 +71,17 @@ exports.createResolvers = ({ createResolvers }) => {
         },
       },
     },
+    ApiDocReference: {
+      target: {
+        type: "ApiDoc",
+        resolve(source, args, context) {
+          return context.nodeModel.getNodeById({
+            id: source.canonicalReference,
+            type: "ApiDoc",
+          });
+        },
+      },
+    },
   };
   createResolvers(resolvers);
 };
@@ -78,7 +89,7 @@ exports.createResolvers = ({ createResolvers }) => {
 /** @type {import("gatsby").GatsbyNode['createSchemaCustomization']} */
 exports.createSchemaCustomization = ({ actions }) => {
   actions.createTypes(`
-      union ApiDoc = ApiDocInterface | ApiDocPropertySignature | ApiDocMethodSignature | ApiDocFunction | ApiDocClass | ApiDocMethod | ApiDocProperty
+      union ApiDoc = ApiDocInterface | ApiDocPropertySignature | ApiDocMethodSignature | ApiDocFunction | ApiDocClass | ApiDocMethod | ApiDocProperty | ApiDocTypeAlias
       union InterfaceMember = ApiDocPropertySignature | ApiDocMethodSignature
 
       interface ApiDocBase {
@@ -90,6 +101,7 @@ exports.createSchemaCustomization = ({ actions }) => {
         canonicalReference: String
         displayName: String
         excerpt: String
+        references: [ApiDocReference]
         file: String
         comment: ApiDocTypeDoc
         releaseTag: String
@@ -104,10 +116,28 @@ exports.createSchemaCustomization = ({ actions }) => {
         canonicalReference: String
         displayName: String
         excerpt: String
+        references: [ApiDocReference]
         file: String
         comment: ApiDocTypeDoc
         releaseTag: String
         typeParameters: [ApiDocTypeParameter!]
+      }
+
+      type ApiDocTypeAlias implements Node & ApiDocBase {
+        id: ID!
+        parent: Node
+        children: [Node!]!
+        internal: Internal!
+        kind: String
+        canonicalReference: String
+        displayName: String
+        excerpt: String
+        references: [ApiDocReference]
+        file: String
+        comment: ApiDocTypeDoc
+        releaseTag: String
+        typeParameters: [ApiDocTypeParameter!]
+        type: String
       }
 
       type ApiDocFunction implements Node & ApiDocBase {
@@ -121,6 +151,7 @@ exports.createSchemaCustomization = ({ actions }) => {
         file: String
         type: String
         excerpt: String
+        references: [ApiDocReference]
         comment: ApiDocTypeDoc
         releaseTag: String
         returnType: String
@@ -138,6 +169,7 @@ exports.createSchemaCustomization = ({ actions }) => {
         file: String
         type: String
         excerpt: String
+        references: [ApiDocReference]
         comment: ApiDocTypeDoc
         releaseTag: String
         readonly: Boolean
@@ -155,6 +187,7 @@ exports.createSchemaCustomization = ({ actions }) => {
         file: String
         type: String
         excerpt: String
+        references: [ApiDocReference]
         comment: ApiDocTypeDoc
         releaseTag: String
         optional: Boolean
@@ -173,6 +206,7 @@ exports.createSchemaCustomization = ({ actions }) => {
         file: String
         type: String
         excerpt: String
+        references: [ApiDocReference]
         comment: ApiDocTypeDoc
         releaseTag: String
         implements: [String]
@@ -189,6 +223,7 @@ exports.createSchemaCustomization = ({ actions }) => {
         file: String
         type: String
         excerpt: String
+        references: [ApiDocReference]
         comment: ApiDocTypeDoc
         releaseTag: String
         abstract: Boolean
@@ -208,6 +243,7 @@ exports.createSchemaCustomization = ({ actions }) => {
         file: String
         type: String
         excerpt: String
+        references: [ApiDocReference]
         comment: ApiDocTypeDoc
         releaseTag: String
         parameters: [ApiDocFunctionParameter]
@@ -224,6 +260,7 @@ exports.createSchemaCustomization = ({ actions }) => {
         file: String
         type: String
         excerpt: String
+        references: [ApiDocReference]
         comment: ApiDocTypeDoc
         releaseTag: String
         abstract: Boolean
@@ -233,6 +270,10 @@ exports.createSchemaCustomization = ({ actions }) => {
         parameters: [ApiDocFunctionParameter]
       }
 
+      type ApiDocReference {
+        canonicalReference: String!
+        text: String!
+      }
 
       type ApiDocTypeParameter {
         name: String

@@ -6,7 +6,6 @@ import {Table, Tbody, Td, Th, Thead, Tr, chakra} from '@chakra-ui/react';
 
 export function PropertySignatureTable({canonicalReference}) {
   const item = useApiDocContext(canonicalReference);
-
   return (
     <>
       <div>
