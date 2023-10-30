@@ -3,7 +3,7 @@ title: Operation signatures
 description: Understand how GraphOS identifies equivalent operations
 ---
 
-When you're viewing your graph's [operation metrics](#usage-reporting), GraphOS Studio groups together operations based on the exact set of fields they include, _not_ based on operation _names_. This means that operations with the same name but different sets of fields are displayed separately:
+When you're viewing your graph's [operation metrics](./operations), GraphOS Studio groups operations based on the set of fields they include, _not_ based on operation names. That means that operations with the same name but different sets of fields are displayed separately:
 
 <img
   src="../img/separate-operations.jpg"
@@ -12,9 +12,9 @@ When you're viewing your graph's [operation metrics](#usage-reporting), GraphOS 
   width="300"
 />
 
-Though each operation in the above example is named 'MyQuery', GraphOS treats them as different operations because they request different fields.
+Though each operation in the above example is named `MyQuery`, GraphOS treats them as different operations because they request different fields.
 
-To help GraphOS identify functionally identical operations, your router generates the **signature** for each operation it reports to Studio. This signature is a normalized representation for an operation with deterministic field order, whitespace, and values for in-line argument values.
+To help GraphOS identify functionally identical operations, your router generates an **operation signature** for each operation it reports to Studio. This signature is a normalized representation for an operation with deterministic field order, whitespace, and values for in-line argument values.
 
 ## Why do we need an operation signature?
 
@@ -43,9 +43,9 @@ query GetPostDetails($postId: String!) {
 }
 ```
 
-Despite some cosmetic differences (including comments), all of these operations execute identically on a particular GraphQL server. Therefore, Studio should group them when displaying performance information.
+Despite some cosmetic differences (including comments), all these operations execute identically on a particular GraphQL server. Therefore, Studio should group them when displaying performance metrics.
 
-Helpfully, Apollo libraries use a [signature algorithm](#signature-algorithm) to generate the _exact same operation signature_ for all of these operations, which means Studio _does_ group them.
+Apollo libraries use a [signature algorithm](#signature-algorithm) to generate the exact same operation signature for all these operations, allowing Studio to group them.
 
 ## Signature algorithm
 
@@ -61,9 +61,9 @@ The signature algorithm performs the following modifications on an operation to 
 
 ### 1. Transform in-line argument values
 
-If an operation includes any in-line argument values, those values are transformed according to their type:
+If an operation includes any in-line argument values, the algorithm transforms those values according to their type:
 
-- `Boolean` and `enum` values are _preserved_.
+- `Boolean` and `enum` values are preserved.
 - `Int` and `Float` values are replaced with `0`.
 - `String`, list, and object values are replaced with their "empty" counterpart (`""`, `[]`, or `{}`).
 
@@ -75,15 +75,15 @@ Argument values provided as GraphQL variable names are preserved.
 
 ### 2. Remove extraneous characters
 
-Most unnecessary characters in the operation definition (including comments and redundant whitespace) are removed.
+The algorithm removes most unnecessary characters in the operation definition, including comments and redundant whitespace.
 
-If the operation document includes _multiple_ operations, then operations besides the _executed_ operation are removed.
+If the operation document includes multiple operations, then operations besides the executed operation are removed.
 
-If the operation document includes fragments that _aren't used_ by the executed operation, then those fragments are removed (other fragments are preserved).
+If the operation document includes fragments that aren't used by the executed operation, then those fragments are removed (other fragments are preserved).
 
 ### 3. Reorder definitions
 
-Any preserved fragment definitions appear _first_, sorted alphanumerically by fragment name. The definition of the executed operation appears after all fragment definitions.
+Any preserved fragment definitions appear first, sorted alphanumerically by fragment name. The definition of the executed operation appears after all fragment definitions.
 
 <Note>
 
@@ -152,7 +152,7 @@ query GetUser {
 
 ## Signatures and sensitive data
 
-The signature algorithm's primary purpose is to group together operations that differ only cosmetically (in terms of whitespace, field order, aliases, and so on). As an additional effect, the algorithm does [remove most in-line argument values](#1-transform-in-line-argument-values), which in theory helps maintain data privacy.
+The signature algorithm's primary purpose is to group operations that differ only cosmetically in terms of whitespace, field order, aliases, and so on. As an additional effect, the algorithm does [remove most in-line argument values](#1-transform-in-line-argument-values), which, in theory, helps maintain data privacy.
 
 **However, you should not rely on this!** Ideally, your sensitive data should never reach GraphOS Studio in the first place. Whenever possible, [use GraphQL variables](/react/data/operation-best-practices/#use-graphql-variables-to-provide-arguments) instead of in-line values for arguments. This helps you control exactly which values are reported to Apollo. For details, see [GraphOS Studio data privacy and compliance](../data-privacy/).
 
