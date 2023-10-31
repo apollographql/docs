@@ -36,6 +36,7 @@ module.exports = {
         PublishPQMs: 'readonly',
         RegisterCLI: 'readonly',
         RegisterFederatedCLI: 'readonly',
+        SetApolloVCSCommit: 'readonly',
         TopLevelAwait: 'readonly'
       },
       rules: {
