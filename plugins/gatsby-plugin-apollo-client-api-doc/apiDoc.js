@@ -43,7 +43,7 @@ function handleMember(
         data: {
           id,
           parent: item.parent ? getId(item.parent) : null,
-          children: item.members.map(getId),
+          ...extractChildren(item),
           kind: item.kind,
           canonicalReference: item.canonicalReference.toString(),
           displayName: item.displayName,
@@ -72,6 +72,26 @@ function handleMember(
     });
     return id;
   }
+}
+
+function extractChildren(
+  /** @type  {import("@microsoft/api-extractor-model").ApiItem} */ item
+) {
+  if (model.ApiItemContainerMixin.isBaseClassOf(item)) {
+    const extracted = item.findMembersWithInheritance();
+    if (extracted.maybeIncompleteResult) {
+      return {
+        children: item.members.map(getId),
+        childrenIncomplete: true,
+      };
+    } else {
+      return {
+        children: extracted.items.map(getId),
+        childrenIncomplete: false,
+      };
+    }
+  }
+  return { children: item.members.map(getId) };
 }
 
 function extraData(

@@ -1,7 +1,7 @@
 import InlineCode from '../InlineCode';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {InterfaceDetails, PropertySignatureTable, useApiDocContext} from '.';
+import {PropertySignatureTable, useApiDocContext} from '.';
 import {Table, Tbody, Td, Th, Thead, Tr, chakra} from '@chakra-ui/react';
 import {mdToReact} from './mdToReact';
 

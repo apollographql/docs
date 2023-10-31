@@ -111,6 +111,7 @@ exports.createSchemaCustomization = ({ actions }) => {
         id: ID!
         parent: Node
         children: [Node!]!
+        childrenIncomplete: Boolean
         internal: Internal!
         kind: String
         canonicalReference: String
@@ -199,6 +200,7 @@ exports.createSchemaCustomization = ({ actions }) => {
         id: ID!
         parent: Node
         children: [Node!]!
+        childrenIncomplete: Boolean
         internal: Internal!
         kind: String
         canonicalReference: String

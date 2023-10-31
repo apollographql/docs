@@ -17,6 +17,13 @@ export function PropertySignatureTable({canonicalReference}) {
           letterSpacing="wider"
         >
           Properties
+          {item.childrenIncomplete ? (
+            <>
+              <br />
+              (Warning: some properties might be missing from the table due to
+              complex inheritance!)
+            </>
+          ) : null}
         </chakra.h6>
         <Table w="full">
           <Thead>

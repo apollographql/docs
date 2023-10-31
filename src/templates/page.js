@@ -120,6 +120,7 @@ fragment Interface on ApiDocInterface {
     optional
     comment
   }
+  childrenIncomplete
   properties {
     ...Base
     ...PropertySignature
@@ -163,6 +164,7 @@ fragment Class on ApiDocClass {
     ...Base
     ...Constructor
   }
+  childrenIncomplete
   properties {
     ...Base
     ...Property
