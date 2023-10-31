@@ -92,4 +92,5 @@ A single request to the gateway usually transforms into multiple requests to sub
 A failure in a subgraph can cause a backup in the gateway. If this backup is due to load, overload protection helps short-circuit the return of an error. This relieves the pressure in both the gateway and the subgraph by allowing the gateway to return errors faster.
 
 ## Additional Protections
-To further protect against overloading of your graph and system, you should enable [limiting query depth](/technotes/TN0021-graph-security/#limit-query-depth) and [rate limiting](/technotes/TN0021-graph-security/#use-rate-limiting-as-needed).
+
+To further protect against overloading your graph and system, you should enable [limiting query depth](/technotes/TN0021-graph-security/#limit-query-depth) and [rate limiting](/technotes/TN0021-graph-security/#use-rate-limiting-as-needed).
