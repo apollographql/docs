@@ -383,21 +383,24 @@ Now that our router is running, we can quickly open our browser to `localhost:40
 
 <img src="../../img/gateway_sandbox.jpg" class="screenshot" alt="Schema view in Apollo Sandbox" width="600" />
 
-While we're here, execute some test queries against the supergraph! We'll look at metrics for those test queries in the next step.
+Let's execute some test queries against the supergraph. We'll look at metrics for those test queries in the next step.
 
-## 7. View operation metrics
 
-Because our router is connected to GraphOS, it automatically collects and reports metrics on incoming operations. You can then visualize those metrics in Studio.
+## 7. View operation and field metrics
 
-Return to [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content) and go to your supergraph variant's Operations page, which looks like this:
+Because our router is connected to GraphOS, it automatically collects and reports metrics on incoming operations and their fields. You can then visualize those metrics in Studio.
+
+Return to [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content) and go to your supergraph variant's **Insights** page, which looks like this:
 
 <img
-  src="../../img/operations-quickstart.jpg"
+  src="../../img/insights-quickstart.jpg"
   className="screenshot"
-  alt="The Operations page in Studio after executing an operation"
+  alt="The Insights page in GraphOS Studio, showing metrics for operations and their fields"
 />
 
-The test queries you executed in the previous step should already be represented on this page! (If they aren't there yet, check the page again in a few minutes.) After you update all of your clients to query your router, the Operations page becomes vital to monitoring your supergraph's performance.
+Within a few minutes, the test queries you executed in the previous step should be represented on this page. The Insights page is vital to monitoring your supergraph's performance across all of your clients that query the router.
+
+Learn more about the available metrics in the [metrics documentation](../metrics).
 
 ## 8. Deploy your router and connect clients
 
