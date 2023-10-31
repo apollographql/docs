@@ -2,16 +2,24 @@
 title: Connecting Apollo Studio to GitHub
 ---
 
-To enhance the convenience and helpfulness of [schema checks](./schema-checks/), the Apollo Studio app for GitHub adds links to schema check results on the pull requests that initiate them:
+To enhance the convenience and helpfulness of [schema checks](./schema-checks/), the [Apollo Studio app for GitHub](https://github.com/marketplace/apollo-studio) adds links to schema check results on the pull requests that initiate them:
 
-<img class="screenshot" src="../img/integrations/github-integration.jpg" alt="GitHub status view" width="500" />
+<img
+  className="screenshot"
+  src="../img/integrations/github-integration.jpg"
+  alt="GitHub status view"
+  width="500"
+/>
 
 ## Install the GitHub application
 
 Go to [https://github.com/marketplace/apollo-studio#pricing-and-setup](https://github.com/marketplace/apollo-studio#pricing-and-setup) and click **Install it for free** to add the app to the GitHub profile or organization that you want to set up checks for.
 
-## Configure Rover with git information
-Make sure to send the proper git information via environment variables when [setting up Rover in CI\CD](https://www.apollographql.com/docs/rover/ci-cd/#github-actions).
+## Configure Rover
+
+If you haven't already, [install the Rover CLI](/rover/getting-started/) in your development environment and [authenticate it with GraphOS](/rover/configuring/#authenticating-with-graphos).
+
+<SetApolloVCSCommit />
 
 ## Run a check on each commit
 
