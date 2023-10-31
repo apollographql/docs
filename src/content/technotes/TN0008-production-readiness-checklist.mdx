@@ -18,7 +18,7 @@ We recommend that you complete this checklist before your supergraph begins hand
 
 ## Server-side
 
-- For security, disable introspection for all production GraphQL servers.
+- For security, [disable introspection](/router/configuration/overview/#introspection) for all production GraphQL servers.
   - You can continue to view and fetch your GraphQL schemas from Apollo Studio.
 - Ensure that you've correctly configured [managed federation](/federation/managed-federation/setup/).
 - Ensure that you've integrated [`rover subgraph check`](/rover/commands/subgraphs#subgraph-check) and [`rover subgraph publish`](/rover/commands/subgraphs#subgraph-publish) into your CI/CD pipeline.
@@ -32,7 +32,7 @@ We recommend that you complete this checklist before your supergraph begins hand
     - Additionally, you can configure your gateway can send APQ requests to your subgraphs.
       - [See the example below.](#apollo-gateway-apq-example)
   - Optionally add [full response caching](/apollo-server/performance/caching/) to improve performance.
-- Ensure that you've load-tested your graph.
+- Ensure that you've [load-tested your graph](/technotes/TN0035-load-testing-graphql/).
   - Test loads should be representative of your current traffic (both in terms of volume _and_ in terms of the actual operations you execute in the test).
   - To investigate performance issues, use Apollo Studio to identify which operations are performing slowly.
     - Look at resolver execution times to identify slow areas of execution.
