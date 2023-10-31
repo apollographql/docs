@@ -98,6 +98,7 @@ function extraData(
     ? {
         readonly: item.isReadonly,
         optional: item.isOptional,
+        type: item.propertyTypeExcerpt.text,
       }
     : item instanceof model.ApiMethodSignature
     ? {

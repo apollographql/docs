@@ -1,22 +1,20 @@
-import InlineCode from '../InlineCode';
+import PropTypes from 'prop-types';
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
-import {PrimaryLink} from '../RelativeLink';
-import {Text} from '@chakra-ui/react';
+import {useMDXComponents} from '@mdx-js/react';
 
 export function mdToReact(text) {
   const sanitized = text
     .replace(/\{@link (\w*)\}/g, '[$1](#$1)')
     .replace(/<p ?\/>/g, '');
+  return <RenderMd markdown={sanitized} />;
+}
+
+function RenderMd({markdown}) {
   return (
-    <ReactMarkdown
-      components={{
-        p: Text,
-        a: PrimaryLink,
-        code: ({children}) => <InlineCode>{children}</InlineCode>
-      }}
-    >
-      {sanitized}
-    </ReactMarkdown>
+    <ReactMarkdown components={useMDXComponents()}>{markdown}</ReactMarkdown>
   );
 }
+RenderMd.propTypes = {
+  markdown: PropTypes.string.isRequired
+};

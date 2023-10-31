@@ -89,7 +89,7 @@ exports.createResolvers = ({ createResolvers }) => {
 /** @type {import("gatsby").GatsbyNode['createSchemaCustomization']} */
 exports.createSchemaCustomization = ({ actions }) => {
   actions.createTypes(`
-      union ApiDoc = ApiDocInterface | ApiDocPropertySignature | ApiDocMethodSignature | ApiDocFunction | ApiDocClass | ApiDocMethod | ApiDocProperty | ApiDocTypeAlias
+      union ApiDoc = ApiDocInterface | ApiDocPropertySignature | ApiDocMethodSignature | ApiDocFunction | ApiDocClass | ApiDocMethod | ApiDocProperty | ApiDocTypeAlias | ApiDocConstructor
       union InterfaceMember = ApiDocPropertySignature | ApiDocMethodSignature
 
       interface ApiDocBase {

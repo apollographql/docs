@@ -91,6 +91,7 @@ export const pageQuery = graphql`
   ...Property
   ...Function
   ...Class
+  ...Constructor
   ...Property
   ...Method
   ...PropertySignature
@@ -138,6 +139,7 @@ fragment TypeAlias on ApiDocTypeAlias {
 fragment PropertySignature on ApiDocPropertySignature {
   optional
   readonly
+  type
 }
 
 fragment MethodSignature on ApiDocMethodSignature {

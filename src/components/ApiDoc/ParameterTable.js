@@ -1,11 +1,11 @@
-import InlineCode from "../InlineCode";
-import PropTypes from "prop-types";
-import React from "react";
-import { InterfaceDetails, PropertySignatureTable, useApiDocContext } from ".";
-import { Table, Tbody, Td, Th, Thead, Tr, chakra } from "@chakra-ui/react";
-import { mdToReact } from "./mdToReact";
+import InlineCode from '../InlineCode';
+import PropTypes from 'prop-types';
+import React from 'react';
+import {InterfaceDetails, PropertySignatureTable, useApiDocContext} from '.';
+import {Table, Tbody, Td, Th, Thead, Tr, chakra} from '@chakra-ui/react';
+import {mdToReact} from './mdToReact';
 
-export function ParameterTable({ canonicalReference }) {
+export function ParameterTable({canonicalReference}) {
   const item = useApiDocContext(canonicalReference);
 
   return (
@@ -20,7 +20,7 @@ export function ParameterTable({ canonicalReference }) {
         >
           Parameters
         </chakra.h6>
-        <Table w="auto">
+        <Table w="full">
           <Thead>
             <Tr>
               <Th>
@@ -31,20 +31,20 @@ export function ParameterTable({ canonicalReference }) {
             </Tr>
           </Thead>
           <Tbody>
-            {item.parameters.map((parameter) => {
-              const baseType = parameter.type.split("<")[0];
+            {item.parameters.map(parameter => {
+              const baseType = parameter.type.split('<')[0];
               const interfaceReference = item.references?.find(
-                (r) =>
+                r =>
                   r.text === baseType &&
                   r.target &&
-                  r.target.kind === "Interface"
+                  r.target.kind === 'Interface'
               );
               return (
                 <React.Fragment key={parameter.id}>
                   <Tr fontSize="md">
                     <Td
-                      sx={{ code: { bg: "none", p: 0 } }}
-                      borderBottom={interfaceReference ? "none" : undefined}
+                      sx={{code: {bg: 'none', p: 0}}}
+                      borderBottom={interfaceReference ? 'none' : undefined}
                     >
                       <chakra.h6 fontSize="lg" mb="1">
                         <InlineCode>{parameter.name}</InlineCode>
@@ -54,7 +54,7 @@ export function ParameterTable({ canonicalReference }) {
                     </Td>
                     <Td
                       lineHeight="base"
-                      borderBottom={interfaceReference ? "none" : undefined}
+                      borderBottom={interfaceReference ? 'none' : undefined}
                     >
                       {mdToReact(parameter.comment)}
                     </Td>
@@ -86,5 +86,5 @@ export function ParameterTable({ canonicalReference }) {
 }
 
 ParameterTable.propTypes = {
-  canonicalReference: PropTypes.string.isRequired,
+  canonicalReference: PropTypes.string.isRequired
 };

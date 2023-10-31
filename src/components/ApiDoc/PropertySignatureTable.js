@@ -18,7 +18,7 @@ export function PropertySignatureTable({canonicalReference}) {
         >
           Properties
         </chakra.h6>
-        <Table w="auto">
+        <Table w="full">
           <Thead>
             <Tr>
               <Th>
@@ -33,18 +33,21 @@ export function PropertySignatureTable({canonicalReference}) {
               <Tr key={property.id} fontSize="md">
                 <Td sx={{code: {bg: 'none', p: 0}}}>
                   <chakra.h6 fontSize="lg" mb="1">
-                    <InlineCode>
-                      {property.kind === 'MethodSignature' ? (
-                        <FunctionSignature
-                          canonicalReference={property.canonicalReference}
-                        />
-                      ) : (
-                        property.displayName
-                      )}
-                    </InlineCode>
+                    <InlineCode>{property.displayName}</InlineCode>
                     {property.optional ? <em> (optional)</em> : null}
                   </chakra.h6>
-                  <InlineCode color="tertiary">{property.type}</InlineCode>
+                  <InlineCode color="tertiary">
+                    {property.kind === 'MethodSignature' ? (
+                      <FunctionSignature
+                        canonicalReference={property.canonicalReference}
+                        name={false}
+                        parameterTypes
+                        arrow
+                      />
+                    ) : (
+                      property.type
+                    )}
+                  </InlineCode>
                 </Td>
                 <Td lineHeight="base">
                   <DocBlock canonicalReference={property.canonicalReference} />

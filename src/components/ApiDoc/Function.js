@@ -4,13 +4,15 @@ import {ApiDocHeading, DocBlock, ParameterTable, useApiDocContext} from '.';
 
 export function FunctionSignature({
   canonicalReference,
-  parameterTypes = false
+  parameterTypes = false,
+  name = true,
+  arrow = false
 }) {
   const {displayName, parameters, returnType} =
     useApiDocContext(canonicalReference);
   return (
     <>
-      {displayName}(
+      {name ? displayName : ''}(
       {parameters
         .map(
           p =>
@@ -19,14 +21,16 @@ export function FunctionSignature({
             }`
         )
         .join(', ')}
-      ): {returnType}
+      ){arrow ? ' =>' : ':'} {returnType}
     </>
   );
 }
 
 FunctionSignature.propTypes = {
   canonicalReference: PropTypes.string.isRequired,
-  parameterTypes: PropTypes.bool
+  parameterTypes: PropTypes.bool,
+  name: PropTypes.bool,
+  arrow: PropTypes.bool
 };
 
 export function FunctionDetails({canonicalReference}) {

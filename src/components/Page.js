@@ -38,7 +38,7 @@ import {
   chakra
 } from '@chakra-ui/react';
 import {CustomHeading} from './CustomHeading';
-import {DocBlock, FunctionDetails, InterfaceDetails} from './ApiDoc'
+import {DocBlock, DocPiece, FunctionDetails, InterfaceDetails} from './ApiDoc'
 import {
   EmbeddableExplorer,
   MarkdownCodeBlock,
@@ -196,7 +196,8 @@ const mdxComponents = {
   ApolloMark,
   InterfaceDetails,
   FunctionDetails,
-  DocBlock
+  DocBlock,
+  DocPiece
 };
 
 const {processSync} = rehype()
