@@ -20,6 +20,7 @@ GraphOS provides **schema linting** to help you enforce formatting conventions a
 ## Configuring the linter
 
 The GraphOS schema linter uses a [predefined collection of rules](./linter-rules/) to identify issues with proposed schema changes.
+The predefined collection includes [schema composition](/federation/federated-types/composition) rules.
 
 - **Currently,** you can define **graph-wide linter defaults** that apply to all variants of a particular graph.
 - **In a future release,** you'll also be able to configure how _individual_ variants of your graph treat violations of each linter rule.
@@ -97,6 +98,8 @@ The Rover CLI provides `subgraph lint` and `graph lint` commands for running the
 - Use `subgraph lint` for subgraphs in a supergraph.
 - Use `graph lint` for [monographs](../graphs/#monographs) (not recommended).
 
+> ⚠️ The `rover subgraph lint` and `rover graph lint` commands validate all [linter rules](./linter-rules) _except_ for [composition rules](./linter-rules#composition-rules). Use [`rover subgraph check`](/rover/commands/subgraphs#subgraph-check) or [`rover supergraph compose`](/rover/commands/supergraphs#supergraph-compose) to validate composition rules locally.
+
 ```bash title="Example command"
 rover subgraph lint --name products --schema ./products-schema.graphql my-graph@my-variant
 ```
@@ -163,4 +166,4 @@ By default, one-off linting flags _all_ violations in your local schema.
 
 ## Linter rules
 
-See [this article](./linter-rules).
+See this [reference list of rules](./linter-rules).

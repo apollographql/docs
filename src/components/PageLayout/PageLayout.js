@@ -16,7 +16,9 @@ import {PageWidthProvider} from '../PageWidthContext';
 import {PathContext} from '../../utils';
 import {dirname} from 'path';
 import {navigate} from 'gatsby';
+import {signupTracer} from '@apollo/signup-tracer';
 import {useConfig} from '../../utils/config';
+import {utmGrabber} from '@apollo/utm-grabber';
 
 export const PAGE_PADDING_TOP = 40;
 export const PAGE_PADDING_BOTTOM = 48;
@@ -60,6 +62,8 @@ export function PageLayout({pageContext, children, location, data}) {
 
   useEffect(() => {
     setNow(Date.now());
+    utmGrabber();
+    signupTracer('docs');
   }, []);
 
   return (

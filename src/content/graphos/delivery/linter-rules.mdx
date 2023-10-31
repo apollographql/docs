@@ -5,37 +5,11 @@ description: Reference
 
 This reference lists the rules that you can enforce with [GraphOS schema linting](./schema-linter/), along with the code that GraphOS returns for each rule violation.
 
-Rules are categorized by the part(s) of your schema that they correspond to.
+## Naming rules
 
-## Schema
+These rules enforce naming conventions. Rules are categorized by the part(s) of your schema that they correspond to.
 
-#### `DOES_NOT_PARSE`
-
-The schema linter raises this violation if it attempts to read a malformed GraphQL schema. Check your schema for any syntax errors.
-
-<hr/>
-
-#### `QUERY_DOCUMENT_DECLARATION`
-
-A GraphQL schema should never include definitions of GraphQL _operations_ (such as queries and mutations).
-
-<p style="margin-bottom: 0">❌</p>
-
-```graphql title="schema.graphql"
-type Query {
-  users: [User!]!
-}
-
-#highlight-start
-query GetUsers { # Don't define operations in a schema document
-  users {
-    id
-  }
-}
-#highlight-end
-```
-
-## All fields
+### Fields
 
 #### `FIELD_NAMES_SHOULD_BE_CAMEL_CASE`
 
@@ -91,7 +65,7 @@ type Query {
 }
 ```
 
-## All types
+### Types
 
 These rules apply to _all_ types that appear in a GraphQL schema, including:
 
@@ -169,7 +143,7 @@ type Book { # highlight-line
 }
 ```
 
-## Objects
+### Objects
 
 #### `OBJECT_PREFIX`
 
@@ -213,7 +187,7 @@ type Book { # highlight-line
 }
 ```
 
-## Interfaces
+### Interfaces
 
 #### `INTERFACE_PREFIX`
 
@@ -261,7 +235,7 @@ interface Book { # highlight-line
 }
 ```
 
-## Inputs & arguments
+### Inputs & arguments
 
 #### `INPUT_ARGUMENT_NAMES_SHOULD_BE_CAMEL_CASE`
 
@@ -311,7 +285,7 @@ input BlogPostDetailsInput { #highlight-line
 }
 ```
 
-## Enums
+### Enums
 
 #### `ENUM_VALUES_SHOULD_BE_SCREAMING_SNAKE_CASE`
 
@@ -453,7 +427,7 @@ type Query {
 }
 ```
 
-## Directives
+### Directives
 
 #### `DIRECTIVE_NAMES_SHOULD_BE_CAMEL_CASE`
 
@@ -473,10 +447,128 @@ directive @specialField on FIELD_DEFINITION # camelCase
 
 <hr/>
 
+<MinVersion version="2.4">
+
+## Composition rules
+
+</MinVersion>
+
+> Composition rules are only available for graphs on [federation version `2.4`](/federation/federation-versions/#v24) or later. You can update a graph's version from its **Settings** page in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content).
+
+These rules flag potential improvements to a supergraph schema [composed](/federation/federated-types/composition) of [subgraph](/federation/building-supergraphs/subgraphs-overview/) schemas.
+
+### Inconsistent elements
+
+<InconsistentCompositionRules />
+
+### Overridden and unused elements
+
+<OverriddenCompositionRules />
+
+### Directives
+
+<DirectiveCompositionRules />
+
+## Other rules
+
+These rules define conventions for the entire schema and directive usage outside of composition.
+
+### Schema
+
+These rules apply to the entire schema.
+
+#### `DOES_NOT_PARSE`
+
+The schema linter raises this violation if it attempts to read a malformed GraphQL schema. Check your schema for any syntax errors.
+
+<hr/>
+
+#### `ALL_ELEMENTS_REQUIRE_DESCRIPTION`
+
+Each element in the schema must include a description.
+
+<p style="margin-bottom: 0">❌</p>
+
+```graphql title="schema.graphql"
+type User {
+  username: String!
+}
+```
+
+<p style="margin-bottom: 0">✅</p>
+
+```graphql title="schema.graphql"
+"Represents a user"
+type User {
+  "The user's username"
+  username: String!
+}
+```
+
+<hr/>
+
+#### `DEFINED_TYPES_ARE_USED`
+
+Every type defined in a schema should be used at least once.
+
+Unused types commonly appear after you refactor other parts of your schema. You should remove unused types to prevent confusion.
+
+<p style="margin-bottom: 0">❌</p>
+
+```graphql title="schema.graphql"
+type SomeUnusedType { # Also fails the TYPE_SUFFIX rule!
+  name: String!
+}
+
+type AnActuallyUsedType {
+  name: String!
+}
+
+type Query {
+  hello: String!
+  title: AnActuallyUsedType
+}
+```
+
+<p style="margin-bottom: 0">✅</p>
+
+```graphql title="schema.graphql"
+type Book {
+  title: String!
+}
+
+type Query {
+  books: [Book!]!
+}
+```
+
+<hr/>
+
+#### `QUERY_DOCUMENT_DECLARATION`
+
+A GraphQL schema should never include definitions of GraphQL _operations_ (such as queries and mutations).
+
+<p style="margin-bottom: 0">❌</p>
+
+```graphql title="schema.graphql"
+type Query {
+  users: [User!]!
+}
+
+#highlight-start
+query GetUsers { # Don't define operations in a schema document
+  users {
+    id
+  }
+}
+#highlight-end
+```
+
+### Directives
+
 #### `CONTACT_DIRECTIVE_MISSING`
 
 A subgraph schema should always provide owner contact details via the `@contact` directive. [Learn more.](../graphs/federated-graphs#contact-info-for-subgraphs)
-
 
 <p style="margin-bottom: 0">✅</p>
 

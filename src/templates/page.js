@@ -45,11 +45,13 @@ export const pageQuery = graphql`
         }
         frontmatter {
           title
+          subtitle
           description
           toc
           tags
           headingDepth
           minVersion
+          noIndex
         }
       }
       childMarkdownRemark {
@@ -60,9 +62,11 @@ export const pageQuery = graphql`
         }
         frontmatter {
           title
+          subtitle
           description
           headingDepth
           minVersion
+          noIndex
         }
       }
     }

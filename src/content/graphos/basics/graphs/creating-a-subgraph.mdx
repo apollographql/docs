@@ -14,24 +14,13 @@ The fastest way to create a new subgraph is to start with one of the templates p
 
 > If your installed version of Rover doesn't include the `template` command (or if you don't have Rover installed at all), [install the latest version.](/rover/getting-started/)
 
-Templates are currently available for the following libraries and languages:
-
-| Language   | Name                                                                                   | ID                                   | Template Repository                                                                                        |
-| ---------- | -------------------------------------------------------------------------------------- | ------------------------------------ | ---------------------------------------------------------------------------------------------------------- |
-| Go         | [Go (gqlgen)](https://gqlgen.com/getting-started/)                                     | `subgraph-go-gqlgen`                 | [View repository](https://github.com/apollographql/subgraph-template-go-gqlgen-boilerplate)                |
-| Java       | [Spring GraphQL](https://spring.io/projects/spring-graphql)                            | `subgraph-java-spring-graphql`       | [View repository](https://github.com/apollographql/subgraph-template-java-spring-graphql-boilerplate)      |
-| JavaScript | [Apollo Server (JS)](https://www.apollographql.com/docs/apollo-server/)                | `subgraph-javascript-apollo-server`  | [View repository](https://github.com/apollographql/subgraph-template-javascript-apollo-server-boilerplate) |
-| Kotlin     | [GraphQL Kotlin](https://opensource.expediagroup.com/graphql-kotlin/docs/)             | `subgraph-graphql-kotlin`            | [View repository](https://github.com/apollographql/subgraph-template-graphql-kotlin-boilerplate)           |
-| Python     | [Strawberry with FastAPI](https://strawberry.rocks)                                    | `subgraph-python-strawberry-fastapi` | [View repository](https://github.com/strawberry-graphql/subgraph-template-strawberry-fastapi)              |
-| Python     | [Ariadne with FastAPI](https://ariadnegraphql.org)                                     | `subgraph-python-ariadne-fastapi`    | [View repository](https://github.com/patrick91/subgraph-template-ariadne-fastapi)                          |
-| Rust       | [async-graphql with Axum](https://async-graphql.github.io/async-graphql/en/index.html) | `subgraph-rust-async-graphql`        | [View repository](https://github.com/apollographql/subgraph-template-rust-async-graphql)                   |
-| TypeScript | [Apollo Server (TS)](https://www.apollographql.com/docs/apollo-server/)                | `subgraph-typescript-apollo-server`  | [View repository](https://github.com/apollographql/subgraph-template-typescript-apollo-server-boilerplate) |
-
 You start by running `rover template use`, providing it the ID of your chosen template. For example, the following command creates a new directory called `my-subgraph` that contains the boilerplate code for a subgraph written in TypeScript using the Apollo Server library:
 
 ```bash
-rover template use subgraph-typescript-apollo-server my-subgraph
+rover template use "my-subgraph" --template="subgraph-typescript-apollo-server"
 ```
+
+> To see the full list of available templates, see the [Rover template docs](/rover/commands/template)
 
 After generating the boilerplate code, you can start filling in your business logic. The generated code includes example resolvers for `Query` and `Mutation`, along with some [entity types](/federation/entities/) to use as your starting point. All templates also come with example GitHub Actions workflows to help with [publishing your schema in CI/CD](../delivery/#publishing-with-continuous-delivery).
 

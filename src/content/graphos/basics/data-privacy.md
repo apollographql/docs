@@ -17,6 +17,8 @@ The [Apollo Router](/router/), [Apollo Server](/apollo-server/), the [Rover CLI]
 
 The Rover CLI also collects anonymous usage data by default. [You can disable this.](/rover/privacy/)
 
+The [Apollo Kotlin IDE plugin](/kotlin/v4/testing/android-studio-plugin/) also collects anonymous usage data by default. [You can disable this.](/kotlin/v4/testing/android-studio-plugin/#privacy-and-data-collection)
+
 If you have a [cloud supergraph](./graphs/#cloud-supergraphs), its router is hosted and managed _by_ GraphOS, and it automatically enables metrics reporting. [Learn about data collection for cloud supergraphs.](#what-data-is-collected-by-a-cloud-supergraph)
 
 Apollo Client libraries do **not** send data to GraphOS.
@@ -29,11 +31,14 @@ All data sent to GraphOS is sent to an endpoint with one of the following base U
 | ----------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Latest URLs**                                       |
 | `https://usage-reporting.api.apollographql.com`       | Metrics reporting from the [Apollo Router](/router/configuration/apollo-telemetry) (v0.1.0+), [Apollo Server](./metrics/sending-operation-metrics/) (v2.18.0+), and third-party API servers                   |
-| `https://schema-reporting.api.apollographql.com`      | Schema registration via schema reporting in Apollo Server (v2.18.0+) and third-party API servers           |
 | `https://rover.apollo.dev`                            | The [Rover CLI](/rover/)—all commands if [telemetry is enabled](/rover/privacy), `rover supergraph compose` when fetching new plugin versions, all `rover template` commands, and once per day to check for version updates |
 | `https://api.apollographql.com/graphql`               | All [Rover CLI](/rover/) (v0.6+) commands that communicate with GraphOS, along with all requests to the [GraphOS Platform API](./platform-api/) |
-| `https://uplink.api.apollographql.com`                | Apollo Server with Apollo Gateway (v0.34.0+) with [managed federation](/federation/managed-federation/overview/) and Apollo Router (v0.1.0+) with [managed federation](/federation/managed-federation/overview/)                                                                                                 |
-| `https://aws.uplink.api.apollographql.com`            | Apollo Server with Apollo Gateway (v0.45.0+) with [managed federation](/federation/managed-federation/overview/) and Apollo Router (v0.1.0+) with [managed federation](/federation/managed-federation/overview/)                                                                                                 |
+| `https://uplink.api.apollographql.com`                | Apollo Router (v0.1.0+) with [managed federation](/federation/managed-federation/overview/) and/or [Enterprise features](/router/enterprise-features/) enabled, Apollo Server with Apollo Gateway (v0.34.0+) with [managed federation](/federation/managed-federation/overview/)                                                                                             |
+| `https://aws.uplink.api.apollographql.com`            | Apollo Router (v0.1.0+) with [managed federation](/federation/managed-federation/overview/) and/or [Enterprise features](/router/enterprise-features/) enabled, Apollo Server with Apollo Gateway (v0.45.0+) with [managed federation](/federation/managed-federation/overview/)                                                                                                 |
+| `https://persisted-queries.api.apollographql.com/`            | Apollo Router (v1.25.0+) with [GraphOS persisted queries](./routing/persisted-queries/) enabled                                                                                         |
+| `https://aws.persisted-queries.api.apollographql.com/`            | Apollo Router (v1.25.0+) with [GraphOS persisted queries](./operations/persisted-queries/) enabled                                                                                                 |
+| `https://schema-reporting.api.apollographql.com`      | Schema registration via schema reporting in Apollo Server (v2.18.0+) and third-party API servers           |
+| `https://graphql.api.apollographql.com/api/graphql`   | Anonymous usage data from the [Apollo Kotlin IDE plugin](/kotlin/v4/testing/android-studio-plugin/#privacy-and-data-collection) |
 | **Active legacy URLs**                                |
 | `https://engine-report.apollodata.com`                | Metrics reporting from Apollo Server (v2.0-2.17.x)                                                                                                                                                               |
 | `https://edge-server-reporting.api.apollographql.com` | Schema registration via schema reporting in Apollo Server (v2.15.0-2.17.x)                                                                                                                                       |

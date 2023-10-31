@@ -29,7 +29,6 @@ You can sign up for a GraphOS Enterprise trial to freely test out _most_ Enterpr
   </ButtonLink>
 </p>
 
-
 ## Self-hosted routing
 
 With GraphOS Enterprise, you can deploy your supergraph's [Apollo Router](/router/) instances into your own infrastructure, instead of using a GraphOS-provisioned cloud router:
@@ -59,9 +58,10 @@ This architecture helps you satisfy sophisticated requirements around data compl
 
 - **Real-time updates** via [GraphQL subscriptions](/router/executing-operations/subscription-support/)
 - **Authentication of inbound requests** via [JSON Web Token (JWT)](/router/configuration/authn-jwt/)
+- [**Authorization** of specific fields and types](/router/configuration/authorization) through the [`@requiresScopes`](/router/configuration/authorization#requiresscopes) and [`@authenticated`](/router/configuration/authorization#authenticated) directives
 - Redis-backed [**distributed caching** of query plans and persisted queries](/router/configuration/distributed-caching/)
 - **Custom request handling** in any language via [external coprocessing](/router/customizations/coprocessor/)
-- **Mitigation of potentially malicious requests** via [operation limits](/router/configuration/operation-limits)
+- **Mitigation of potentially malicious requests** via [operation limits](/router/configuration/operation-limits) and [safelisting](../operations/persisted-queries/)
 
 > [Learn more about Enterprise features in the Apollo Router.](/router/enterprise-features/)
 

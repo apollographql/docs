@@ -8,6 +8,10 @@ tags: [server, observability]
 >
 > [Learn about Apollo plans.](https://www.apollographql.com/pricing/)
 
+> If you're an enterprise customer looking for more material on this topic, try the [Enterprise best practices: Supergraph observability](https://www.apollographql.com/tutorials/supergraph-observability) course on Odyssey.
+>
+> Not an enterprise customer? [Learn about GraphOS for Enterprise.](/graphos/enterprise)
+
 Operation traces provide insight into performance issues that are occurring at various execution points in your graph. However, individual traces don't provide a view of your graph's broader performance.
 
 Helpfully, you can convert your operation traces into aggregated metrics without requiring manual instrumentation. To accomplish this, we'll use `spanmetricsprocessor` in an OpenTelemetry Collector instance to automatically generate metrics from our existing trace spans.
