@@ -120,7 +120,8 @@ The output also includes a Studio URL that provides full details on the changes 
 />
 
 > If you've [integrated schema checks with your GitHub PRs](#integrating-with-github), the "Details" link in your GitHub check takes you to this same details page.
-> Additionally, if you run a check within a Git repository, `rover subgraph check` sends both the commit hash and that hash's author to GraphOS to display on the check. If you want to override these values, you can [set environment variables in Rover](/rover/configuring/#overriding) to do so.
+
+If you run a check within a Git repository, `rover subgraph check` sends both the commit hash and that hash's author to GraphOS to display on the check. If you haven't [integrated schema checks with GitHub](#integrating-with-github), the author appears as "Unknown." If you want to override author, commit, or other values, you can [set environment variables in Rover](/rover/configuring/#overriding) to do so.
 
 ### Rerunning checks
 
