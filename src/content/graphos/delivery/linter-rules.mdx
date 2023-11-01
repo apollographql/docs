@@ -1,6 +1,7 @@
 ---
-title: GraphOS schema linter rules
-description: Reference
+title: Schema linter rules
+subtitle: Reference
+description: Reference for GraphOS schema linting rules with examples, ensuring GraphQL schema naming conventions and best practices.
 ---
 
 This reference lists the rules that you can enforce with [GraphOS schema linting](./schema-linter/), along with the code that GraphOS returns for each rule violation.
@@ -35,7 +36,7 @@ type User {
 }
 ```
 
-<hr/>
+<hr />
 
 #### `RESTY_FIELD_NAMES`
 
@@ -84,7 +85,7 @@ All type names should use `PascalCase`.
 ```graphql title="schema.graphql"
 # highlight-start
 type streamingService { # camelCase
-# highlight-end
+  # highlight-end
   id: ID!
 }
 ```
@@ -94,12 +95,12 @@ type streamingService { # camelCase
 ```graphql title="schema.graphql"
 # highlight-start
 type StreamingService { # PascalCase
-# highlight-end
+  # highlight-end
   id: ID!
 }
 ```
 
-<hr/>
+<hr />
 
 #### `TYPE_PREFIX`
 
@@ -121,7 +122,7 @@ type Book { # highlight-line
 }
 ```
 
-<hr/>
+<hr />
 
 #### `TYPE_SUFFIX`
 
@@ -165,7 +166,7 @@ type Book { # highlight-line
 }
 ```
 
-<hr/>
+<hr />
 
 #### `OBJECT_SUFFIX`
 
@@ -211,7 +212,7 @@ interface Book { # highlight-line
 }
 ```
 
-<hr/>
+<hr />
 
 #### `INTERFACE_SUFFIX`
 
@@ -261,7 +262,7 @@ type Mutation {
 }
 ```
 
-<hr/>
+<hr />
 
 #### `INPUT_TYPE_SUFFIX`
 
@@ -311,7 +312,7 @@ enum Amenity {
 }
 ```
 
-<hr/>
+<hr />
 
 #### `ENUM_PREFIX`
 
@@ -337,7 +338,7 @@ enum Residence { # highlight-line
 }
 ```
 
-<hr/>
+<hr />
 
 #### `ENUM_SUFFIX`
 
@@ -363,7 +364,7 @@ enum Residence { # highlight-line
 }
 ```
 
-<hr/>
+<hr />
 
 #### `ENUM_USED_AS_INPUT_WITHOUT_SUFFIX`
 
@@ -395,7 +396,7 @@ type Query {
 }
 ```
 
-<hr/>
+<hr />
 
 #### `ENUM_USED_AS_OUTPUT_DESPITE_SUFFIX`
 
@@ -445,7 +446,7 @@ directive @SpecialField on FIELD_DEFINITION # PascalCase
 directive @specialField on FIELD_DEFINITION # camelCase
 ```
 
-<hr/>
+<hr />
 
 <MinVersion version="2.4">
 
@@ -481,7 +482,7 @@ These rules apply to the entire schema.
 
 The schema linter raises this violation if it attempts to read a malformed GraphQL schema. Check your schema for any syntax errors.
 
-<hr/>
+<hr />
 
 #### `ALL_ELEMENTS_REQUIRE_DESCRIPTION`
 
@@ -505,7 +506,7 @@ type User {
 }
 ```
 
-<hr/>
+<hr />
 
 #### `DEFINED_TYPES_ARE_USED`
 
@@ -542,7 +543,7 @@ type Query {
 }
 ```
 
-<hr/>
+<hr />
 
 #### `QUERY_DOCUMENT_DECLARATION`
 
@@ -556,7 +557,8 @@ type Query {
 }
 
 #highlight-start
-query GetUsers { # Don't define operations in a schema document
+query GetUsers {
+  # Don't define operations in a schema document
   users {
     id
   }
@@ -582,14 +584,15 @@ directive @contact(
   description: String
 ) on SCHEMA
 
-extend schema @contact(
-  name: "Products Team",
-  url: "https://myteam.slack.com/archives/teams-chat-room-url",
-  description: "Send urgent issues to [#oncall](https://yourteam.slack.com/archives/oncall)."
-)
+extend schema
+  @contact(
+    name: "Products Team"
+    url: "https://myteam.slack.com/archives/teams-chat-room-url"
+    description: "Send urgent issues to [#oncall](https://yourteam.slack.com/archives/oncall)."
+  )
 ```
 
-<hr/>
+<hr />
 
 #### `DEPRECATED_DIRECTIVE_MISSING_REASON`
 
@@ -613,7 +616,7 @@ type Product {
 }
 ```
 
-<hr/>
+<hr />
 
 #### `TAG_DIRECTIVE_USES_UNKNOWN_NAME`
 
