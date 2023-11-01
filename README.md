@@ -596,9 +596,9 @@ Currently, the only plan component is `<EnterpriseFeature />`.
 Like the release stage components, this component should be put at the top of the relevant page or section.
 If a feature has both a release stage component and the `<EnterpriseFeature />`, the `<EnterpriseFeature />` should come first.
 
-Custom text for `<EnterpriseFeature />` can be provided with the `text` prop.
+Custom text for `<EnterpriseFeature />` can be provided by nesting Markdown within the component.
 
-By default, without the `text` prop, `<EnterpriseFeature />` renders this text:
+By default, without any children, `<EnterpriseFeature />` renders this text:
 
 > **This feature is only available with a [**GraphOS Enterprise plan**](http://apollographql.com/graphos/enterprise/). If your organization doesn't currently have an Enterprise plan, you can test this functionality by signing up for a free [Enterprise trial](https://www.apollographql.com/docs/graphos/enterprise/#enterprise-trial).
 
@@ -606,7 +606,11 @@ If you need to include custom text, it completely replaces this text. Please mak
 
 ```mdx
 
-<EnterpriseFeature text={`This is some _custom markdown text_ that still includes a link to the [GraphOS Enterprise plan**](http://apollographql.com/graphos/enterprise/) and [Enterprise trial](https://www.apollographql.com/docs/graphos/enterprise/#enterprise-trial) docs.`} />
+<EnterpriseFeature>
+
+This is some _custom markdown text_ that still includes a link to the [GraphOS Enterprise plan**](http://apollographql.com/graphos/enterprise/) and [Enterprise trial](https://www.apollographql.com/docs/graphos/enterprise/#enterprise-trial) docs.
+
+</EnterpriseFeature>
 
 ```
 
