@@ -56,11 +56,7 @@ export const MarkdownInAdmonitions = ({children}) => {
           </ListItem>
         ),
         p: ({children}) => {
-          return (
-            <Text>
-              <HighlightKeyTerms>{children}</HighlightKeyTerms>
-            </Text>
-          );
+          return <HighlightKeyTerms>{children}</HighlightKeyTerms>;
         },
         a: RelativeLink,
         pre: MarkdownCodeBlock
