@@ -11,7 +11,7 @@ Whenever you make changes to a graph's schema, you should **publish** those chan
 1. [Install the Rover CLI](/rover/getting-started/).
 2. [Authenticate Rover](/rover/configuring/#authenticating-with-graphos) with GraphOS.
 
-## Subgraph schemas
+## Publish subgraph schemas
 
 Every supergraph in GraphOS includes one or more **subgraphs**. These are the individual GraphQL-powered microservices in your organization.
 
@@ -69,7 +69,7 @@ If this composition succeeds, your router is updated with the result. This enabl
 
 You can manually fetch your router's latest supergraph schema with the `rover supergraph fetch` command, or retrieve it from your supergraph's **Schema > SDL** page in GraphOS Studio.
 
-## Monograph schemas
+## Publish monograph schemas
 
 <Note>
 
@@ -94,7 +94,7 @@ These instructions apply only to [monographs](../graphs/#monographs), which are 
 
    As shown, the first positional argument you provide `rover graph publish` is a [graph ref](/rover/conventions/#graph-refs), a string that specifies a particular variant of a particular graph in GraphOS.
 
-## Publishing with continuous delivery
+## Publish with continuous delivery
 
 To get the most out of GraphOS, you should **publish each update to any production schema as soon as it occurs**. Consequently, schema publishing should be part of your continuous delivery pipeline.
 
