@@ -42,13 +42,14 @@ GraphOS can perform the following types of schema checks:
 To enable schema checks for your supergraph, do the following if you haven't yet:
 
 1. Make sure you've published all of your subgraph schemas to GraphOS, and that those schemas are up to date.
-    - [Learn how to publish schemas.](./)
+   - [Learn how to publish schemas.](./)
 2. For operation checks, make sure your supergraph is sending operation metrics to GraphOS. GraphOS uses historical metrics to determine whether a potentially dangerous schema change is safe.
 
-    ⚠️ **If GraphOS has no operation metrics to compare against, all potentially dangerous schema changes result in a failed check!**
+   ⚠️ **If GraphOS has no operation metrics to compare against, all potentially dangerous schema changes result in a failed check!**
 
    - If you have a [cloud supergraph](../graphs/#cloud-supergraphs), your router reports metrics automatically.
-    - [See setup for other graph types.](../metrics/sending-operation-metrics/)
+   - [See setup for other graph types.](../metrics/sending-operation-metrics/)
+
 3. [Install the Rover CLI](/rover/getting-started/) in your development environment and [authenticate it with GraphOS](/rover/configuring/#authenticating-with-graphos).
 
 ## Running your first check
@@ -120,6 +121,8 @@ The output also includes a Studio URL that provides full details on the changes 
 
 > If you've [integrated schema checks with your GitHub PRs](#integrating-with-github), the "Details" link in your GitHub check takes you to this same details page.
 
+If you run a check within a Git repository, `rover subgraph check` sends both the commit hash and that hash's author to GraphOS to display on the check. If you haven't [integrated schema checks with GitHub](#integrating-with-github), the author appears as "Unknown." If you want to override author, commit, or other values, you can [set environment variables in Rover](/rover/configuring/#overriding) to do so.
+
 ### Rerunning checks
 
 You can rerun checks from GraphOS Studio:
@@ -164,9 +167,9 @@ In cases like this, you can **override** a flagged change in GraphOS Studio from
 You override flagged changes on an operation-by-operation basis. For each operation with flagged changes, you can override those changes in the following ways:
 
 - **Mark the changes as safe.** In this case, schema checks will _not_ flag these exact changes for the operation in any future execution. This effectively "approves" the changes for the operation.
-    - If a future check detects approved changes along with _new_ unsafe changes to the operation, the new unsafe changes _will_ be flagged.
+  - If a future check detects approved changes along with _new_ unsafe changes to the operation, the new unsafe changes _will_ be flagged.
 - **Ignore the operation.** In this case, schema checks will completely ignore the operation when checking _all_ changes in any future execution.
-    - This option is useful when you know an operation originates _only_ from clients or client versions that you don't actively support.
+  - This option is useful when you know an operation originates _only_ from clients or client versions that you don't actively support.
 
 ## Linter checks
 
@@ -194,7 +197,6 @@ The following config defines a schema check job for a CircleCI pipeline. Your co
 version: 2
 
 jobs:
-
   # ...other jobs...
 
   # Define a separate job for each environment you validate against.

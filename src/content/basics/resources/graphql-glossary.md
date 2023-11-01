@@ -1,6 +1,7 @@
 ---
 title: GraphQL Glossary
-description: Familiarize yourself with common GraphQL terms
+subtitle: Familiarize yourself with common GraphQL terms
+description: Glossary of common GraphQL terminology
 ---
 
 As you explore the GraphQL ecosystem, you might encounter some unfamiliar terms and phrases along the way. To help you on your journey, we've defined some of the most common GraphQL vocabulary here in this handy cheat sheet.
