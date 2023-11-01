@@ -41,7 +41,7 @@ export const EnterpriseFeature = ({children}) => {
             you can test this functionality by signing up for a free{' '}
             <Link
               color={'primary'}
-              href="/graphos/org/plans/#enterprise-trials"
+              href="https://studio.apollographql.com/signup?type=enterprise-trial&referrer=docs-content"
             >
               Enterprise trial
             </Link>
