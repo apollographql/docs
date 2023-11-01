@@ -3,8 +3,11 @@ import React from 'react';
 import {Box, Center, Flex, Link, Text, chakra} from '@chakra-ui/react';
 import {IoPartlySunnyOutline} from 'react-icons/io5';
 
+import {MarkdownInAdmonitions} from './MarkdownInAdmonitions';
+
 export const PreviewFeature = ({
-  discordLink = 'https://discord.gg/yFZJH2QYrK'
+  discordLink = 'https://discord.gg/yFZJH2QYrK',
+  appendText = ''
 }) => {
   return (
     <Box
@@ -44,7 +47,10 @@ export const PreviewFeature = ({
             {' '}
             Apollo GraphQL Discord
           </Link>
-          .
+          .{' '}
+          {appendText.length > 0 && (
+            <MarkdownInAdmonitions>{appendText}</MarkdownInAdmonitions>
+          )}
         </Text>
       </Flex>
     </Box>
@@ -52,5 +58,6 @@ export const PreviewFeature = ({
 };
 
 PreviewFeature.propTypes = {
-  discordLink: PropTypes.node.isRequired
+  discordLink: PropTypes.string,
+  appendText: PropTypes.node
 };
