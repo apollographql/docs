@@ -16,16 +16,18 @@
     ]
   ],
   "sidebar": {
-    "Publishing schemas": "/",
-    "Validation": {
-      "Schema checks": "/schema-checks",
+    "Overview": "/",
+    "Schema checks": {
+      "Overview": "/schema-checks",
       "Configuring schema checks": "/check-configurations",
-      "Schema linting": "/schema-linter",
-      "Linter rules": "/linter-rules",
-      "Connecting to GitHub": "/github-integration",
-      "Validating client operations": "/validating-client-operations"
+      "Connecting to GitHub": "/github-integration"
     },
-    "Delivery": {
+    "Schema linting": {
+      "Overview": "/schema-linter",
+      "Linter rules": "/linter-rules"
+    },
+    "Schema delivery": {
+      "Publishing schemas": "/publishing-schemas",
       "Launches": "/launches",
       "Contracts": [
         "/contracts",
