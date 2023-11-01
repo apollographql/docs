@@ -1,31 +1,8 @@
-import Markdown from 'react-markdown';
 import PropTypes from 'prop-types';
 import React from 'react';
-import RelativeLink from './RelativeLink';
-import {
-  Box,
-  Center,
-  Flex,
-  Link,
-  ListItem,
-  OrderedList,
-  Text,
-  UnorderedList,
-  chakra
-} from '@chakra-ui/react';
-import {HighlightKeyTerms} from '@apollo/pedia';
-import {MarkdownCodeBlock} from '@apollo/chakra-helpers';
+import {Box, Center, Flex, Link, Text, chakra} from '@chakra-ui/react';
+import {MarkdownInAdmonitions} from './MarkdownInAdmonitions';
 import {TbComponents} from 'react-icons/tb';
-
-const LIST_SPACING = 1;
-
-const NESTED_LIST_STYLES = {
-  [['ul', 'ol']]: {
-    mt: 3,
-    fontSize: 'md',
-    lineHeight: 'normal'
-  }
-};
 
 export const EnterpriseFeature = ({text = ''}) => {
   return (
@@ -70,55 +47,7 @@ export const EnterpriseFeature = ({text = ''}) => {
           </Text>
         ) : (
           <Text>
-            <Markdown
-              components={{
-                ul: props => (
-                  <UnorderedList
-                    spacing={LIST_SPACING}
-                    sx={{
-                      ...NESTED_LIST_STYLES,
-                      marginStart: '2em',
-                      ul: {
-                        listStyleType: 'circle'
-                      }
-                    }}
-                    {...props}
-                  />
-                ),
-                ol: props => (
-                  <OrderedList
-                    spacing={LIST_SPACING}
-                    sx={NESTED_LIST_STYLES}
-                    {...props}
-                  />
-                ),
-                li: ({children, ...props}) => (
-                  <ListItem
-                    sx={{
-                      '>': {
-                        ':not(:last-child)': {
-                          mb: 3
-                        }
-                      }
-                    }}
-                    {...props}
-                  >
-                    <HighlightKeyTerms>{children}</HighlightKeyTerms>
-                  </ListItem>
-                ),
-                p: ({children}) => {
-                  return (
-                    <Text>
-                      <HighlightKeyTerms>{children}</HighlightKeyTerms>
-                    </Text>
-                  );
-                },
-                a: RelativeLink,
-                pre: MarkdownCodeBlock
-              }}
-            >
-              {text}
-            </Markdown>
+            <MarkdownInAdmonitions>{text}</MarkdownInAdmonitions>
           </Text>
         )}
       </Flex>
