@@ -48,7 +48,10 @@ A schema change is backward compatible if it doesn’t affect existing operation
 - Making a nullable field non-nullable (this restricts the set of possible output values)
 - Removing or changing _unused_ schema elements (no existing operation will be broken)
 
-> This also includes changes to schema metadata like adding or changing a deprecations or descriptions, but we won't consider these changes because they don’t affect runtime behavior.
+<Note>
+
+This also includes changes to schema metadata like adding or changing a deprecations or descriptions, but we won't consider these changes because they don’t affect runtime behavior.
+</Note>
 
 ### Release steps
 
@@ -93,7 +96,10 @@ We can accomplish this by creating a special variant of our graph that tracks th
 
 If the build check against the `current` variant fails, we'll need to coordinate with another subgraph team to ensure that our subgraph schemas are compatible before we attempt to release changes to production.
 
-> The longer the time between merging and releasing our change, the more important it is to track changes using the `current` variant. On the other hand, if we have a continuous delivery release process and the time between merge and release is relatively short, it's less likely for teams to introduce incompatible changes with unreleased subgraph schemas.
+<Note>
+
+The longer the time between merging and releasing our change, the more important it is to track changes using the `current` variant. On the other hand, if we have a continuous delivery release process and the time between merge and release is relatively short, it's less likely for teams to introduce incompatible changes with unreleased subgraph schemas.
+</Note>
 
 ### Rollbacks
 
@@ -122,6 +128,18 @@ Instead of attempting rollbacks of schema changes, we may want to release our ch
 5. Perform the standard release process. Because we've tagged our new field with "alpha", the schema for the beta and GA variants will not change. This gives us plenty of opportunity to test our change with alpha versions of our clients.
 6. Releasing the change to a wider audience is simply a matter of changing the tag to "beta" or removing it altogether.
 
+<Tip>
+
+Read more on [contracts usage patterns](/technotes/TN0014-contracts-patterns/).
+</Tip>
+
+<Tip>
+
+If you're an enterprise customer looking for more material on this topic, try the [Enterprise best practices: Contracts](https://www.apollographql.com/tutorials/contracts) course on Odyssey.
+
+ Not an enterprise customer? [Learn about GraphOS for Enterprise.](/graphos/enterprise)
+</Tip>
+
 ## Backward incompatible subgraph schema changes
 
 Backward incompatible schema changes remove or alter schema elements in ways that would break existing operations.
@@ -137,7 +155,10 @@ The release steps for backward incompatible changes are similar to those for bac
 3. Continue to track usage until it reaches zero (or to a minimally acceptable level, for example, where a field is still in use by an older version of a mobile application that is no longer supported).
 4. [Perform the release steps for a backward compatible change](#release-steps).
 
-> Consider enforcing that all requests to your supergraph have the proper identification headers. These identifiers enable the metrics that allow you to make potentially breaking changes with confidence. Read more about [Client Awareness here][clientids]. See [Client Id Enforcement](/technotes/TN0001-client-id-enforcement) for an example implementation
+<Tip>
+
+Consider enforcing that all requests to your supergraph have the proper identification headers. These identifiers enable the metrics that allow you to make potentially breaking changes with confidence. Read more about [Client Awareness here][clientids]. See [Client Id Enforcement](/technotes/TN0001-client-id-enforcement) for an example implementation.
+</Tip>
 
 [clientids]: /graphos/metrics/client-awareness
 
