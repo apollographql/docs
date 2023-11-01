@@ -14,11 +14,11 @@ GraphOS provides schema pipeline tools to efficiently develop and deploy changes
 GraphOS provides the following schema governance tools:
 
 - [Schema checks](./schema-checks) help identify breaking changes before you make them and help determine when a potentially dangerous change is, in fact, safe.
-- [Schema linting](./schema-linter) ensures a consistent, well-formed schemas across all your services. Automated linting lowers maintenance overheads and improves developer productivity. Schema linting can run as part of schema checks in GraphOS Studio and as one-offs via the Rover CLI.
+- [Schema linting](./schema-linter) ensures consistent, well-formed schemas across all your services. Automated linting lowers maintenance overheads and improves developer productivity. Schema linting can run as part of schema checks in GraphOS Studio and as one-offs via the Rover CLI.
 
 ## Schema delivery
 
-Schema delivery refers to the process of making your supergraph schema available to clients. GraphOS requires you to [publish schema changes using the Rover CLI](./publication) to do so. Publication happens via a CLI command so you can readily integrate it into your continuous delivery pipeline.
+Schema delivery refers to the process of making your supergraph schema available to clients. GraphOS requires you to [publish schema changes using the Rover CLI](./publication). Publication happens via a CLI command so you can readily integrate it into your continuous delivery pipeline.
 
 To incorporate other important aspects of your supergraph configuration, such as your router configuration or federation version, GraphOS uses the concept of [**launches**](./launches). Schema publications trigger launches, and you can monitor them from the Launches page in GraphOS Studio.
 
@@ -26,7 +26,7 @@ To incorporate other important aspects of your supergraph configuration, such as
 
 ### Contracts
 
-GraphOS **contracts** are an enterprise feature that let you deliver _different_ subsets of your supergraph to different consumers. Contracts rely on `@tags` across various subgraph schemas to denote which types and fields are accessible to different consumers. Check out the [contract documentation](./contracts) for more information.
+GraphOS [**contracts**](./contracts) are an enterprise feature that let you deliver _different_ subsets of your supergraph to different consumers. Contracts rely on `@tags` across various subgraph schemas to denote which types and fields are accessible to different consumers.
 
 ## Client operation validation
 
