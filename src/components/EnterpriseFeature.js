@@ -1,10 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import {Box, Center, Flex, Link, Text, chakra} from '@chakra-ui/react';
-import {MarkdownInAdmonitions} from './MarkdownInAdmonitions';
 import {TbComponents} from 'react-icons/tb';
 
-export const EnterpriseFeature = ({text = ''}) => {
+export const EnterpriseFeature = ({children}) => {
   return (
     <Box
       pl="2"
@@ -26,15 +25,18 @@ export const EnterpriseFeature = ({text = ''}) => {
             <TbComponents />
           </Center>
         </chakra.span>
-        {text.length === 0 ? (
+
+        {children ? (
+          <Text pl="1">{children}</Text>
+        ) : (
           <Text pl="1">
-            <b>
+            <strong>
               This feature is only available with a{' '}
               <Link color={'primary'} href="/graphos/enterprise/">
                 GraphOS Enterprise plan
               </Link>
-              .
-            </b>{' '}
+              .{' '}
+            </strong>
             If your organization doesn&apos;t currently have an Enterprise plan,
             you can test this functionality by signing up for a free{' '}
             <Link
@@ -45,10 +47,6 @@ export const EnterpriseFeature = ({text = ''}) => {
             </Link>
             .
           </Text>
-        ) : (
-          <Text>
-            <MarkdownInAdmonitions>{text}</MarkdownInAdmonitions>
-          </Text>
         )}
       </Flex>
     </Box>
@@ -56,61 +54,5 @@ export const EnterpriseFeature = ({text = ''}) => {
 };
 
 EnterpriseFeature.propTypes = {
-  text: PropTypes.string
+  children: PropTypes.node
 };
-
-// Use children instead of text prop
-
-// export const EnterpriseFeature = ({children}) => {
-//   return (
-//     <Box
-//       pl="2"
-//       py="1"
-//       borderLeftWidth="2px"
-//       borderColor="primary"
-//       fontSize="md"
-//       sx={{
-//         '>': {
-//           ':not(:last-child)': {
-//             mb: 2
-//           }
-//         }
-//       }}
-//     >
-//       <Flex as="span">
-//         <chakra.span pl="10px" pr="10px">
-//           <Center h="100%">
-//             <TbComponents />
-//           </Center>
-//         </chakra.span>
-
-//         {children ? (
-//           <Text pl="1">{children}</Text>
-//         ) : (
-//           <Text pl="1">
-//             <strong>
-//               This feature is only available with a{' '}
-//               <Link color={'primary'} href="/graphos/enterprise/">
-//                 GraphOS Enterprise plan
-//               </Link>
-//               .{' '}
-//             </strong>
-//             If your organization doesn&apos;t currently have an Enterprise plan,
-//             you can test this functionality by signing up for a free{' '}
-//             <Link
-//               color={'primary'}
-//               href="/graphos/org/plans/#enterprise-trials"
-//             >
-//               Enterprise trial
-//             </Link>
-//             .
-//           </Text>
-//         )}
-//       </Flex>
-//     </Box>
-//   );
-// };
-
-// EnterpriseFeature.propTypes = {
-//   children: PropTypes.node
-// };
