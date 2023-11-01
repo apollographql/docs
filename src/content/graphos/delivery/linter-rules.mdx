@@ -48,7 +48,7 @@ A field's name should never start with any of the following verbs:
 - `put`
 - `patch`
 
-> Most fields should not start with _any_ verb, with the exception of `Mutation` fields. For `Mutation` fields, use a verb that more specifically describes the action being performed (such as `create`, `delete`, or `edit`).
+Most fields should not start with _any_ verb, with the exception of `Mutation` fields. For `Mutation` fields, use a verb that more specifically describes the action being performed (such as `create`, `delete`, or `edit`).
 
 <p style="margin-bottom: 0">❌</p>
 
@@ -454,7 +454,11 @@ directive @specialField on FIELD_DEFINITION # camelCase
 
 </MinVersion>
 
-> Composition rules are only available for graphs on [federation version `2.4`](/federation/federation-versions/#v24) or later. You can update a graph's version from its **Settings** page in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content).
+<Note>
+
+Composition rules are only available for graphs on [federation version `2.4`](/federation/federation-versions/#v24) or later. You can update a graph's version from its **Settings** page in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content).
+
+</Note>
 
 These rules flag potential improvements to a supergraph schema [composed](/federation/federated-types/composition) of [subgraph](/federation/building-supergraphs/subgraphs-overview/) schemas.
 
