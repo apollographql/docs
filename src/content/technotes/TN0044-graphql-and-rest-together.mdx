@@ -69,8 +69,8 @@ Many API strategies start this way but very quickly get out of control. Every cl
 **Problems**:
 
 - Separation of concerns
-- "Fat" clients and inconsistent UX
-- Logic is thrown away on every client rewrite
+- ❌ "Fat" clients and inconsistent UX
+- ❌ Logic is thrown away on every client rewrite
 - ❌ Not Rapid Self-Service
 - ❌ Not an Insulating Contract
 - ❌ Does not Magnify Existing Investments
@@ -87,13 +87,13 @@ Many API strategies start this way but very quickly get out of control. Every cl
 BFFs are a reasonable approach to this problem as it allows data to be aggregated from the many backing APIs. However, as more and more clients are added, especially if your companies utilizes micro frontends, this can quickly grow out of control and become a problem of maintainability as well as make governance impossible.
 
 **Problems**:
-- Number of BFFs can expand to a point of it becoming impossible to manage
+- ❌ Number of BFFs can expand to a point of it becoming impossible to manage
 - ❌ Does not Magnify Existing Investments
 - ❌ No Governance
 
 <Note>It is possible that you may still have a need for a BFF in addition to GraphQL for "Utility" endpoints that are specific to your application. In this case, you could utilize a passthrough pattern to direct data fetch/mutation through your BFF to your GraphQL layer.</Note>
 
-## Using GraphQL and Federation
+## Using GraphQL
 <img
   src="./images/graphql-and-rest/graphql.png"
   alt="Diagram showing a GraphQL layer bettween the Presentation and Application layers"
