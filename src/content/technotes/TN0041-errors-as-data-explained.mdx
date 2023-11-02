@@ -4,6 +4,13 @@ id: TN0041
 tags: [schema-design]
 ---
 
+<Tip>
+
+If you're an enterprise customer looking for more material on this topic, try the [Enterprise best practices: Schema design](https://www.apollographql.com/tutorials/schema-design-best-practices) course on Odyssey.
+
+Not an enterprise customer? [Learn about GraphOS for Enterprise.](/graphos/enterprise)
+</Tip>
+
 Union types in GraphQL are an excellent way to represent multiple types of data in a single field. This can be extremely useful when dealing with different types of responses, such as success and error cases. By leveraging union types, developers can create a flexible and expressive API that handles different scenarios elegantly and efficiently.
 
 One of the core features of GraphQL is its built-in error handling mechanism, which uses an **`errors`** array in the response to represent any errors that occurred during the request. However, not all errors may want to be included in this array. If we are following the Errors as Data pattern, the **`errors`** array should be used for system errors – those that would typically result in an HTTP 500 error.
