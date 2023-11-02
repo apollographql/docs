@@ -4,9 +4,11 @@ id: TN0016
 tags: [router, kubernetes]
 ---
 
-> Self-hosting the Apollo Router is limited to Apollo Enterprise plans. Other plan types use [managed cloud routing with GraphOS](/graphos/routing/cloud/).
->
-> [Learn about Apollo plans.](https://www.apollographql.com/pricing/)
+<EnterpriseFeature
+  text={
+    'Self-hosting the Apollo Router is limited to [GraphOS Enterprise plans](/graphos/enterprise/). Other plan types use [managed cloud routing with GraphOS](/graphos/routing/cloud/). Check out the [pricing page](https://www.apollographql.com/pricing/) to learn more.'
+  }
+/>
 
 Determining the correct resource requests and limits for your application pods in a Kubernetes system is not an exact science. Your specific needs depend on many factors, including:
 

@@ -4,6 +4,13 @@ id: TN0035
 tags: [testing, performance]
 ---
 
+<Tip>
+
+If you're an enterprise customer looking for more material on this topic, try the [Enterprise best practices: Testing](https://www.apollographql.com/tutorials/testing) course on Odyssey.
+
+Not an enterprise customer? [Learn about GraphOS for Enterprise.](/graphos/enterprise)
+</Tip>
+
 When it comes to load testing a GraphQL API, the process is similar to that of any other type of API, and the majority of considerations will remain the same. However, there are certain distinctions specific to GraphQL and the Apollo ecosystem that are worth considering before conducting a load test.
 
 It's important to note that the purpose of this article is to bring attention to these unique considerations for load testing with GraphQL, rather than serving as a comprehensive guide on the setup and execution of GraphQL load tests.
@@ -29,7 +36,10 @@ Apollo offers first-class support for sending metrics outside Apollo Studio to a
 
 When load testing a graph in production, exclude load test metrics from live production metrics. For metrics sent to GraphOS, consider sending load test traffic to a dedicated schema variant, i.e. `My-Graph@load-variant`. This will allow you to cleanly separate production metrics from load tests. 
 
-> _consider excluding load test metrics from other parts of your system, as it applies._
+<Tip>
+
+ Consider excluding load test metrics from other parts of your system, as it applies.
+</Tip>
 
 ## Use a Realistic Load Pattern that Resembles Production Usage
 
