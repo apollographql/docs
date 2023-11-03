@@ -29,7 +29,7 @@ export function ResponsiveGridStyles() {
           gap: '1px'
         },
         '.responsive-grid > *, .responsive-grid > details > *': {
-          background: 'white'
+          background: 'var(--chakra-colors-bg)'
         },
         '.responsive-grid .cell, .responsive-grid .row': {
           padding: 'var(--chakra-space-4)'
