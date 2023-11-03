@@ -9,6 +9,8 @@ export function ParameterTable({canonicalReference}) {
   const getItem = useApiDocContext();
   const item = getItem(canonicalReference);
 
+  if (item.parameters.length === 0) return null;
+
   return (
     <>
       <div>
