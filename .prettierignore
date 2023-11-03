@@ -1,8 +1,0 @@
-*
-!plugins
-!plugins/gatsby-plugin-apollo-client-api-doc
-!plugins/gatsby-plugin-apollo-client-api-doc/**/*
-!src
-!src/components
-!src/components/ApiDoc
-!src/components/ApiDoc/**/*
