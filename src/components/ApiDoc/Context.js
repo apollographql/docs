@@ -4,8 +4,6 @@ import React, {createContext, useContext, useMemo} from 'react';
 const ApiDocContext = createContext();
 
 export const Provider = ({value, children}) => {
-  console.log('Provider input', value);
-
   const allNodes = useMemo(() => {
     const allNodes = {};
     function traverse(node) {
@@ -22,8 +20,6 @@ export const Provider = ({value, children}) => {
     value.forEach(traverse);
     return allNodes;
   }, [value]);
-
-  console.log('Provider allNodes', allNodes);
 
   return (
     <ApiDocContext.Provider value={allNodes}>{children}</ApiDocContext.Provider>
