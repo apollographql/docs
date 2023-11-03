@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, {createContext, useContext, useMemo} from 'react';
+import React, {createContext, useCallback, useContext, useMemo} from 'react';
 
 const ApiDocContext = createContext();
 
@@ -41,17 +41,20 @@ export function useApiDocContext() {
    * @param {string | { canonicalReference: string }} canonicalReference
    * @param {boolean} throwIfNotFound
    */
-  return function getItem(canonicalReference, throwIfNotFound = true) {
-    if (!canonicalReference) return null;
-    if (typeof canonicalReference !== 'string') {
-      // eslint-disable-next-line prefer-destructuring
-      canonicalReference = canonicalReference.canonicalReference;
-    }
-    const value = ctx[canonicalReference];
-    if (throwIfNotFound && !value)
-      throw new Error(
-        'No value found for canonicalReference: ' + canonicalReference
-      );
-    return value;
-  };
+  return useCallback(
+    function getItem(canonicalReference, throwIfNotFound = true) {
+      if (!canonicalReference) return null;
+      if (typeof canonicalReference !== 'string') {
+        // eslint-disable-next-line prefer-destructuring
+        canonicalReference = canonicalReference.canonicalReference;
+      }
+      const value = ctx[canonicalReference];
+      if (throwIfNotFound && !value)
+        throw new Error(
+          'No value found for canonicalReference: ' + canonicalReference
+        );
+      return value;
+    },
+    [ctx]
+  );
 }

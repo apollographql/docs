@@ -1,6 +1,6 @@
 import InlineCode from '../InlineCode';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useMemo} from 'react';
 import {DocBlock, FunctionSignature, useApiDocContext} from '.';
 import {GridItem, Text, chakra} from '@chakra-ui/react';
 import {ResponsiveGrid} from './ResponsiveGrid';
@@ -9,11 +9,31 @@ export function PropertySignatureTable({
   canonicalReference,
   prefix = '',
   showHeaders = true,
-  display = 'parent'
+  display = 'parent',
+  customOrder = []
 }) {
   const getItem = useApiDocContext();
   const item = getItem(canonicalReference);
   const Wrapper = display === 'parent' ? ResponsiveGrid : React.Fragment;
+
+  const sortedProperties = useMemo(
+    () =>
+      item.properties.map(getItem).sort((a, b) => {
+        const aIndex = customOrder.indexOf(a.displayName);
+        const bIndex = customOrder.indexOf(b.displayName);
+        if (aIndex >= 0 && bIndex >= 0) {
+          return aIndex - bIndex;
+        } else if (aIndex >= 0) {
+          return -1;
+        } else if (bIndex >= 0) {
+          return 1;
+        } else {
+          return a.displayName.localeCompare(b.displayName);
+        }
+      }),
+    [item.properties, getItem, customOrder]
+  );
+
   return (
     <>
       {showHeaders ? (
@@ -46,7 +66,7 @@ export function PropertySignatureTable({
           </>
         ) : null}
 
-        {item.properties.map(getItem).map(property => (
+        {sortedProperties.map(property => (
           <React.Fragment key={property.id}>
             <GridItem
               className="first cell"
@@ -89,5 +109,6 @@ PropertySignatureTable.propTypes = {
   canonicalReference: PropTypes.string.isRequired,
   prefix: PropTypes.string,
   showHeaders: PropTypes.bool,
-  display: PropTypes.oneOf(['parent', 'child'])
+  display: PropTypes.oneOf(['parent', 'child']),
+  customOrder: PropTypes.arrayOf(PropTypes.string)
 };

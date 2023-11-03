@@ -34,7 +34,7 @@ FunctionSignature.propTypes = {
   arrow: PropTypes.bool
 };
 
-export function FunctionDetails({canonicalReference}) {
+export function FunctionDetails({canonicalReference, customParameterOrder}) {
   return (
     <>
       <ApiDocHeading canonicalReference={canonicalReference} headingLevel={3} />
@@ -44,11 +44,15 @@ export function FunctionDetails({canonicalReference}) {
         remarkCollapsible
         example
       />
-      <ParameterTable canonicalReference={canonicalReference} />
+      <ParameterTable
+        canonicalReference={canonicalReference}
+        customOrder={customParameterOrder}
+      />
     </>
   );
 }
 
 FunctionDetails.propTypes = {
-  canonicalReference: PropTypes.string.isRequired
+  canonicalReference: PropTypes.string.isRequired,
+  customParameterOrder: PropTypes.arrayOf(PropTypes.string)
 };
