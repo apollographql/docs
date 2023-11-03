@@ -84,7 +84,7 @@ exports.createPages = async ({actions, graphql}) => {
                 slug
               }
               frontmatter {
-                api_doc
+                api_doc: recursive_api_doc(depth: 4)
               }
             }
             ... on MarkdownRemark {

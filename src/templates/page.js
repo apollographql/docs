@@ -70,32 +70,29 @@ export const pageQuery = graphql`
       }
     }
     apiDoc(canonicalReference: $api_doc) {
-      ...Combined
+      ...Base
+      ...Interface
+      ...TypeAlias
+      ...Property
+      ...Function
+      ...Class
+      ...Constructor
+      ...Property
+      ...Method
+      ...PropertySignature
+      ...MethodSignature
       ... on ApiDocBase {
         references {
           text
           canonicalReference
-          target {
-            ...Combined
-          }
         }
       }
     }
   }
 
 
-  fragment Combined on ApiDocBase {
-  ...Base
-  ...Interface
-  ...TypeAlias
-  ...Property
-  ...Function
-  ...Class
-  ...Constructor
-  ...Property
-  ...Method
-  ...PropertySignature
-  ...MethodSignature
+fragment Ref on ApiDocBase {
+  canonicalReference
 }
 
 fragment Base on ApiDocBase {
@@ -122,9 +119,7 @@ fragment Interface on ApiDocInterface {
   }
   childrenIncomplete
   properties {
-    ...Base
-    ...PropertySignature
-    ...MethodSignature
+    ...Ref
   }
 }
 
@@ -161,17 +156,14 @@ fragment Function on ApiDocFunction {
 fragment Class on ApiDocClass {
   implements
   constructorMethod {
-    ...Base
-    ...Constructor
+    ...Ref
   }
   childrenIncomplete
   properties {
-    ...Base
-    ...Property
+    ...Ref
   }
   methods {
-    ...Base
-    ...Method
+    ...Ref
   }
 }
 

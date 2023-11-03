@@ -5,7 +5,8 @@ import {DocBlock, FunctionSignature, useApiDocContext} from '.';
 import {Table, Tbody, Td, Th, Thead, Tr, chakra} from '@chakra-ui/react';
 
 export function PropertySignatureTable({canonicalReference}) {
-  const item = useApiDocContext(canonicalReference);
+  const getItem = useApiDocContext();
+  const item = getItem(canonicalReference);
   return (
     <>
       <div>
@@ -36,7 +37,7 @@ export function PropertySignatureTable({canonicalReference}) {
             </Tr>
           </Thead>
           <Tbody>
-            {item.properties.map(property => (
+            {item.properties.map(getItem).map(property => (
               <Tr key={property.id} fontSize="md">
                 <Td sx={{code: {bg: 'none', p: 0}}}>
                   <chakra.h6 fontSize="lg" mb="1">

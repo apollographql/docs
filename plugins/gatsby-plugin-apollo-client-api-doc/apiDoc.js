@@ -220,7 +220,8 @@ function processDocComment(
     remarks: renderDocNode(docComment?.remarksBlock),
     examples: docComment?.customBlocks
       .filter((v) => v.blockTag.tagName === "@example")
-      .map(renderDocNode),
+      .map(renderDocNode)
+      .map((example) => example.replace(/^\s*@example/g, "")),
   };
 }
 

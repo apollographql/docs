@@ -6,7 +6,8 @@ import {Table, Tbody, Td, Th, Thead, Tr, chakra} from '@chakra-ui/react';
 import {mdToReact} from './mdToReact';
 
 export function ParameterTable({canonicalReference}) {
-  const item = useApiDocContext(canonicalReference);
+  const getItem = useApiDocContext();
+  const item = getItem(canonicalReference);
 
   return (
     <>
@@ -33,12 +34,14 @@ export function ParameterTable({canonicalReference}) {
           <Tbody>
             {item.parameters.map(parameter => {
               const baseType = parameter.type.split('<')[0];
-              const interfaceReference = item.references?.find(
-                r =>
-                  r.text === baseType &&
-                  r.target &&
-                  r.target.kind === 'Interface'
+              const reference = getItem(
+                item.references?.find(r => r.text === baseType)
+                  ?.canonicalReference,
+                false
               );
+              const interfaceReference =
+                reference?.kind === 'Interface' ? reference : null;
+
               return (
                 <React.Fragment key={parameter.id}>
                   <Tr fontSize="md">

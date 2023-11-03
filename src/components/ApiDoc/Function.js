@@ -8,8 +8,9 @@ export function FunctionSignature({
   name = true,
   arrow = false
 }) {
-  const {displayName, parameters, returnType} =
-    useApiDocContext(canonicalReference);
+  const getItem = useApiDocContext();
+  const {displayName, parameters, returnType} = getItem(canonicalReference);
+
   return (
     <>
       {name ? displayName : ''}(

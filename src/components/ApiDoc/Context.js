@@ -4,20 +4,26 @@ import React, {createContext, useContext, useMemo} from 'react';
 const ApiDocContext = createContext();
 
 export const Provider = ({value, children}) => {
+  console.log('Provider input', value);
+
   const allNodes = useMemo(() => {
     const allNodes = {};
     function traverse(node) {
-      if (node.canonicalReference) {
+      if (
+        node.canonicalReference &&
+        Object.keys(node).length >
+          Object.keys(allNodes[node.canonicalReference] || {}).length
+      ) {
         allNodes[node.canonicalReference] = node;
       }
-      if (node.constructorMethod) traverse(node.constructorMethod);
-      node.properties?.forEach(traverse);
-      node.methods?.forEach(traverse);
+      node.children?.forEach(traverse);
       node.references?.forEach(n => n.target && traverse(n.target));
     }
     value.forEach(traverse);
     return allNodes;
   }, [value]);
+
+  console.log('Provider allNodes', allNodes);
 
   return (
     <ApiDocContext.Provider value={allNodes}>{children}</ApiDocContext.Provider>
@@ -29,16 +35,27 @@ Provider.propTypes = {
   children: PropTypes.node.isRequired
 };
 
-export function useApiDocContext(canonicalReference) {
+export function useApiDocContext() {
   const ctx = useContext(ApiDocContext);
   if (!ctx)
     throw new Error(
       '`useApiDocContext` can only be used wrapped in `ApiDocContext.Prodiver`!'
     );
-  const value = ctx[canonicalReference];
-  if (!value)
-    throw new Error(
-      'No value found for canonicalReference: ' + canonicalReference
-    );
-  return value;
+  /**
+   * @param {string | { canonicalReference: string }} canonicalReference
+   * @param {boolean} throwIfNotFound
+   */
+  return function getItem(canonicalReference, throwIfNotFound = true) {
+    if (!canonicalReference) return null;
+    if (typeof canonicalReference !== 'string') {
+      // eslint-disable-next-line prefer-destructuring
+      canonicalReference = canonicalReference.canonicalReference;
+    }
+    const value = ctx[canonicalReference];
+    if (throwIfNotFound && !value)
+      throw new Error(
+        'No value found for canonicalReference: ' + canonicalReference
+      );
+    return value;
+  };
 }

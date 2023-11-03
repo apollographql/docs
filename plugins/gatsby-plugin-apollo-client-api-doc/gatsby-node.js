@@ -63,11 +63,34 @@ exports.createResolvers = ({ createResolvers }) => {
           }),
       },
     },
-    MarkdownRemarkFrontmatter: {
-      api_doc: {
+    MdxFrontmatter: {
+      recursive_api_doc: {
         type: "[String!]!",
-        resolve(source) {
-          return source.api_doc || [];
+        args: {
+          depth: "Int",
+        },
+        async resolve(source, args, context) {
+          const accumulated = new Set();
+          const unqueried = new Set(source.api_doc);
+          for (let depth = 0; depth < args.depth; depth++) {
+            const items = await context.nodeModel.getNodesByIds({
+              ids: Array.from(unqueried),
+            });
+            unqueried.clear();
+            for (const item of items) {
+              accumulated.add(item.canonicalReference);
+              for (const ref of item.references) {
+                if (!accumulated.has(ref.canonicalReference))
+                  unqueried.add(ref.canonicalReference);
+              }
+              for (const canonicalReference of item.children) {
+                if (!accumulated.has(canonicalReference))
+                  unqueried.add(canonicalReference);
+              }
+            }
+          }
+
+          return accumulated;
         },
       },
     },

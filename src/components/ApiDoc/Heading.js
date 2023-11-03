@@ -1,27 +1,28 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import {Box, Heading} from '@chakra-ui/react';
-import {FunctionSignature} from '.';
-import {PrimaryLink} from '../RelativeLink';
-import {useApiDocContext} from './Context';
+import PropTypes from "prop-types";
+import React from "react";
+import { Box, Heading } from "@chakra-ui/react";
+import { FunctionSignature } from ".";
+import { PrimaryLink } from "../RelativeLink";
+import { useApiDocContext } from "./Context";
 
 const levels = {
-  3: 'xl',
-  4: 'md',
-  5: 'sm',
-  6: 'xs'
+  3: "xl",
+  4: "md",
+  5: "sm",
+  6: "xs",
 };
 
 export function ApiDocHeading({
   canonicalReference,
   headingLevel = 3,
-  link = true
+  link = true,
 }) {
-  const item = useApiDocContext(canonicalReference);
+  const getItem = useApiDocContext();
+  const item = getItem(canonicalReference);
   const heading =
-    item.kind === 'MethodSignature' ||
-    item.kind === 'Function' ||
-    item.kind === 'Method' ? (
+    item.kind === "MethodSignature" ||
+    item.kind === "Function" ||
+    item.kind === "Method" ? (
       <FunctionSignature
         canonicalReference={canonicalReference}
         parameterTypes={false}
@@ -60,5 +61,5 @@ export function ApiDocHeading({
 ApiDocHeading.propTypes = {
   canonicalReference: PropTypes.string.isRequired,
   headingLevel: PropTypes.number,
-  link: PropTypes.bool
+  link: PropTypes.bool,
 };

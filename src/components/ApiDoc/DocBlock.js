@@ -52,7 +52,8 @@ export function DocPiece({
   deprecated = false,
   collapsible = false
 }) {
-  const item = useApiDocContext(canonicalReference);
+  const getItem = useApiDocContext();
+  const item = getItem(canonicalReference);
   let jsx = null;
   if (example === true) example = 0;
 
