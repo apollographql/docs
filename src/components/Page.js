@@ -87,6 +87,7 @@ import 'prismjs/components/prism-swift';
 import 'prismjs/components/prism-tsx';
 import 'prismjs/components/prism-typescript';
 import 'prismjs/components/prism-yaml';
+import { ResponsiveGridStyles } from './ApiDoc/ResponsiveGrid';
 
 // use JS syntax highlighting for rhai codeblocks
 Prism.languages.rhai = Prism.languages.javascript;
@@ -307,6 +308,7 @@ export default function Page({file}) {
           }
         }}
       />
+      <ResponsiveGridStyles />
       <PageSeo
         noindex={noIndex === true}
         title={title}
