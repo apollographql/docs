@@ -27,7 +27,6 @@ export function ResponsiveGridStyles() {
         '.responsive-grid': {
           background: 'var(--chakra-colors-border)',
           gap: '1px'
-          // border: "var(--chakra-borders-1px) var(--chakra-colors-gray-100)",
         },
         '.responsive-grid > *, .responsive-grid > details > *': {
           background: 'white'
