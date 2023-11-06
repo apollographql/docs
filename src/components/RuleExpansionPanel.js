@@ -6,9 +6,12 @@ import {
   Circle,
   Collapse,
   Flex,
+  Heading,
   List,
   ListItem,
   Stack,
+  StackDivider,
+  Text,
   useDisclosure
 } from '@chakra-ui/react';
 import {CustomHeading} from './CustomHeading';
@@ -66,15 +69,21 @@ ExpansionPanelList.propTypes = {
   children: PropTypes.node.isRequired
 };
 
-export default function RuleExpansionPanel({children, title, defaultIsOpen}) {
+export default function RuleExpansionPanel({
+  children,
+  title,
+  whatItDoes,
+  rationale,
+  defaultIsOpen
+}) {
   const {isOpen, onToggle} = useDisclosure({defaultIsOpen});
   return (
-    <Box borderWidth="0px" overflow="hidden">
+    <Box borderWidth="1px" overflow="hidden">
       <Button
         isFullWidth
         variant="ghost"
         rounded="none"
-        borderWidth="1px"
+        borderBottomWidth="1px"
         justifyContent="flex-start"
         leftIcon={isOpen ? <FiChevronUp /> : <FiChevronDown />}
         onClick={onToggle}
@@ -85,8 +94,36 @@ export default function RuleExpansionPanel({children, title, defaultIsOpen}) {
         </CustomHeading>
       </Button>
       <Collapse in={isOpen}>
-        <Stack shouldWrapChildren p="0">
-          {children}
+        <Stack
+          shouldWrapChildren
+          divider={<StackDivider borderColor="gray.200" />}
+          spacing="6"
+          p="6"
+        >
+          {whatItDoes && (
+            <>
+              <Heading as="h4" size="md" mb={2}>
+                What it does
+              </Heading>
+              <Text>{whatItDoes}</Text>
+            </>
+          )}
+          {rationale && (
+            <>
+              <Heading as="h4" size="md" mb={2}>
+                Rationale
+              </Heading>
+              <Text>{rationale}</Text>
+            </>
+          )}
+          {children && (
+            <>
+              <Heading as="h4" size="md" mb={2}>
+                Examples
+              </Heading>
+              {children}
+            </>
+          )}
         </Stack>
       </Collapse>
     </Box>
@@ -96,5 +133,7 @@ export default function RuleExpansionPanel({children, title, defaultIsOpen}) {
 RuleExpansionPanel.propTypes = {
   defaultIsOpen: PropTypes.bool,
   children: PropTypes.node.isRequired,
-  title: PropTypes.string
+  title: PropTypes.string,
+  whatItDoes: PropTypes.string,
+  rationale: PropTypes.string
 };
