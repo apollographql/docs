@@ -9,7 +9,6 @@ import {
   List,
   ListItem,
   Stack,
-  StackDivider,
   useDisclosure
 } from '@chakra-ui/react';
 import {CustomHeading} from './CustomHeading';
@@ -97,5 +96,5 @@ export default function RuleExpansionPanel({children, title, defaultIsOpen}) {
 RuleExpansionPanel.propTypes = {
   defaultIsOpen: PropTypes.bool,
   children: PropTypes.node.isRequired,
-  title: PropTypes.string.isRequired
+  title: PropTypes.string
 };

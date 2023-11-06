@@ -158,7 +158,6 @@ const components = {
     <Box
       borderRadius={props.unround ? 0 : 4}
       borderWidth={1}
-      borderWidthTop={props.noTopBorder ? 4 : 1}
       overflow="auto"
       sx={{table: {borderWidth: 0}}}
     >
