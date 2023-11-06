@@ -40,7 +40,7 @@ To navigate to your linter configuration:
       width="700"
     />
 
-This page organizes linter options into the following sections:
+This page organizes linter options into the following categories:
 
 - **General Linter Configuration** provides high-level options, including disabling the linter entirely.
 - **Approved @tag names** enables you to specify approved values for the `name` argument of the `@tag` directive. This directive is used most commonly with [GraphOS contracts](./contracts/).
@@ -52,7 +52,7 @@ If you view this configuration for a single variant, each category displays a **
 
 ### Setting severity levels
 
-The **Linter Rules** category of your linter configuration displays all predefined rules and the current **severity** level for each:
+The **Rules Severity Configuration** category of your linter configuration displays all predefined rules and the current **severity** level for each:
 
 <img
     src="../img/linter-rules-list.jpg"
@@ -67,6 +67,8 @@ Click a rule's severity to set it to any of the following:
     - This in turn causes the _entire schema checks run_ to fail, which is useful for failing builds in CI.
 - **Warn.** Violations of this rule are flagged in checks reports, but they _don't_ cause the associated linter check to fail.
 - **Ignore.** Violations of this rule are ignored entirely.
+
+For information on specific rules, see the [reference list of rules](./linter-rules).
 
 ## Running the linter
 
