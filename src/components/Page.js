@@ -11,6 +11,7 @@ import Prism from 'prismjs';
 import PropTypes from 'prop-types';
 import React, {Fragment, createElement, useMemo} from 'react';
 import RelativeLink, {ButtonLink} from './RelativeLink';
+import RuleExpansionPanel from './RuleExpansionPanel';
 import TableOfContents from './TableOfContents';
 import TypeScriptApiBox from './TypeScriptApiBox';
 import VersionBanner from './VersionBanner';
@@ -155,8 +156,9 @@ const components = {
   pre: MarkdownCodeBlock,
   table: props => (
     <Box
-      rounded="md"
+      borderRadius={props.unround ? 0 : 4}
       borderWidth={1}
+      borderWidthTop={props.noTopBorder ? 4 : 1}
       overflow="auto"
       sx={{table: {borderWidth: 0}}}
     >
@@ -195,6 +197,7 @@ const mdxComponents = {
   TypeScriptApiBox,
   TypescriptApiBox: TypeScriptApiBox,
   EmbeddableExplorer,
+  RuleExpansionPanel,
   ButtonLink,
   Tip,
   MinVersion,
@@ -227,8 +230,16 @@ export default function Page({file}) {
     file;
 
   const {frontmatter, headings} = childMdx || childMarkdownRemark;
-  const {title, subtitle, description, toc, tags, headingDepth, minVersion, noIndex} =
-    frontmatter;
+  const {
+    title,
+    subtitle,
+    description,
+    toc,
+    tags,
+    headingDepth,
+    minVersion,
+    noIndex
+  } = frontmatter;
 
   const publishedSubtitle = subtitle ? subtitle : description;
 
@@ -413,16 +424,16 @@ export default function Page({file}) {
         title={title}
         subtitle={
           <>
-              {publishedSubtitle && (
-                <chakra.h2
-                  fontSize={{base: 'xl', md: '2xl'}}
-                  lineHeight="normal"
-                  mt={{base: 2, md: 3}}
-                  fontWeight="normal"
-                >
-                  {publishedSubtitle}
-                </chakra.h2>
-              )}
+            {publishedSubtitle && (
+              <chakra.h2
+                fontSize={{base: 'xl', md: '2xl'}}
+                lineHeight="normal"
+                mt={{base: 2, md: 3}}
+                fontWeight="normal"
+              >
+                {publishedSubtitle}
+              </chakra.h2>
+            )}
             {tags?.length && (
               <HStack mt={{base: 2, md: 3}}>
                 {tags.map((tag, index) => (
