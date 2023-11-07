@@ -5,7 +5,7 @@
 
 <RuleExpansionPanel
   title="MERGED_NON_REPEATABLE_DIRECTIVE_ARGUMENTS"
-  whatItDoes="Checks if a non-[`repeatable`](https://spec.graphql.org/draft/#sel-GAHnBRVABeBoB_2T) directive has been applied to a schema element in different subgraphs with different arguments. In this case, arguments values are merged using [directive configured strategies](/apollo-server/schema/directives/#in-subgraphs)."
+  whatItDoes="Checks if a non-[`repeatable`](https://spec.graphql.org/draft/#sel-GAHnBRVABeBoB_2T) directive has been applied to the schema element in different subgraphs with different arguments. In this case, arguments values are merged using [directive configured strategies](/apollo-server/schema/directives/#in-subgraphs)."
   rationale="Arguments should be consistent across a non-[`repeatable`](https://spec.graphql.org/draft/#sel-GAHnBRVABeBoB_2T) directive's usage. If arguments differ, it may be a sign that subgraph owners need to communicate about the directive's usage. If the arguments _need_ to differ, consider using a [`repeatable`](https://spec.graphql.org/draft/#sel-GAHnBRVABeBoB_2T) directive."
 >
 
@@ -93,7 +93,7 @@ directive @log(message: String!) on QUERY | FIELD
 <RuleExpansionPanel
   title="FROM_SUBGRAPH_DOES_NOT_EXIST"
   whatItDoes="Checks that the source subgraph specified by [`@override`](/federation/federated-types/federated-directives/#override) directive exists."
-  rationale="The [`@override`](/federation/federated-types/federated-directives/#override) directive indicates that an object field is now resolved by this subgraph instead of other subgraph where it's also defined. The directive can't work unless you specify the subgraph to resolve the field from."
+  rationale="The [`@override`](/federation/federated-types/federated-directives/#override) directive indicates that an object field is now resolved a different subgraph. The directive can't work unless you specify an existing subgraph to resolve the field from."
 >
 
 <p style="margin-bottom: 0">❌</p>
