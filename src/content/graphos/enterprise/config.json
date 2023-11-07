@@ -17,6 +17,7 @@
   ],
   "sidebar": {
     "Overview": "/",
+    "Reference Architecture": "/reference-architecture",
     "Self-Hosted Routing": {
       "Overview": "https://www.apollographql.com/docs/graphos/routing/self-hosted",
       "Setup": "https://www.apollographql.com/docs/graphos/quickstart/self-hosted",
