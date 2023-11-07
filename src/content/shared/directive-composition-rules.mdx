@@ -1,10 +1,13 @@
-#### `DIRECTIVE_COMPOSITION`
+<RuleExpansionPanel
+  title="DIRECTIVE_COMPOSITION"
+  whatItDoes="Checks for issues when composing custom directives."
+/>
 
-Indicates that an issue was detected when composing custom directives.
-
-#### `MERGED_NON_REPEATABLE_DIRECTIVE_ARGUMENTS`
-
-Indicates a non-repeatable directive has been applied to a schema element in different subgraphs with different arguments and the arguments values were merged using the directive configured strategies.
+<RuleExpansionPanel
+  title="MERGED_NON_REPEATABLE_DIRECTIVE_ARGUMENTS"
+  whatItDoes="Checks if a non-[`repeatable`](https://spec.graphql.org/draft/#sel-GAHnBRVABeBoB_2T) directive has been applied to a schema element in different subgraphs with different arguments. In this case, arguments values are merged using [directive configured strategies](/apollo-server/schema/directives/#in-subgraphs)."
+  rationale="Arguments should be consistent across a non-[`repeatable`](https://spec.graphql.org/draft/#sel-GAHnBRVABeBoB_2T) directive's usage. If arguments differ, it may be a sign that subgraph owners need to communicate about the directive's usage. If the arguments _need_ to differ, consider using a [`repeatable`](https://spec.graphql.org/draft/#sel-GAHnBRVABeBoB_2T) directive."
+>
 
 <p style="margin-bottom: 0">❌</p>
 
@@ -29,7 +32,7 @@ type Query {
   products: [Product] @customDirective(orderBy: ["price"]) #highlight-line
 }
 ```
-
+<br/>
 <p style="margin-bottom: 0">✅</p>
 
 ```graphql title="Subgraph A"
@@ -54,53 +57,44 @@ type Query {
 }
 ```
 
-<hr/>
+</RuleExpansionPanel>
 
-#### `NO_EXECUTABLE_DIRECTIVE_INTERSECTION`
-
-Indicates that an executable directive definition is declared with no shared locations across subgraphs.
+<RuleExpansionPanel
+  title="NO_EXECUTABLE_DIRECTIVE_INTERSECTION"
+  whatItDoes="Checks for executable directive definitions with no shared [locations](https://spec.graphql.org/June2018/#ExecutableDirectiveLocation) across subgraphs."
+  rationale="Directives must only be used in the locations they are declared to belong in. If the same executable directive is defined with different locations in different subgraphs, it may be a sign that subgraph owners need to communicate about the directive's usage."
+>
 
 <p style="margin-bottom: 0">❌</p>
 
-<CodeColumns>
-
 ```graphql title="Subgraph A"
-directive @log(
-  message: String!
-) on QUERY  #highlight-line
+directive @log(message: String!) on QUERY #highlight-line
 ```
 
 ```graphql title="Subgraph B"
-directive @log(
-  message: String!
-) on FIELD #highlight-line
+directive @log(message: String!) on FIELD #highlight-line
 ```
 
-</CodeColumns>
 
+<br/>
 <p style="margin-bottom: 0">✅</p>
 
-<CodeColumns>
 
 ```graphql title="Subgraph A"
-directive @log(
-  message: String!
-) on QUERY | FIELD
+directive @log(message: String!) on QUERY | FIELD
 ```
 
 ```graphql title="Subgraph B"
-directive @log(
-  message: String!
-) on QUERY | FIELD
+directive @log(message: String!) on QUERY | FIELD
 ```
 
-</CodeColumns>
+</RuleExpansionPanel>
 
-<hr/>
-
-#### `FROM_SUBGRAPH_DOES_NOT_EXIST`
-
-Indicates the source subgraph specified by `@override` directive doesn't exist.
+<RuleExpansionPanel
+  title="FROM_SUBGRAPH_DOES_NOT_EXIST"
+  whatItDoes="Checks that the source subgraph specified by [`@override`](/federation/federated-types/federated-directives/#override) directive exists."
+  rationale="The [`@override`](/federation/federated-types/federated-directives/#override) directive indicates that an object field is now resolved by this subgraph instead of other subgraph where it's also defined. The directive can't work unless you specify the subgraph to resolve the field from."
+>
 
 <p style="margin-bottom: 0">❌</p>
 
@@ -114,7 +108,7 @@ type Product @key(fields: "id") {
 ```graphql title="Subgraph B"
 # Subgraph B doesn't exist
 ```
-
+<br/>
 <p style="margin-bottom: 0">✅</p>
 
 ```graphql title="Subgraph A"
@@ -130,3 +124,4 @@ type Product @key(fields: "id") {
   inStock: Boolean!
 }
 ```
+</RuleExpansionPanel>

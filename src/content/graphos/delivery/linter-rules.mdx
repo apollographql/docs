@@ -14,8 +14,8 @@ These rules enforce naming conventions. Rules are categorized by the part(s) of 
 
 <RuleExpansionPanel
   title="FIELD_NAMES_SHOULD_BE_CAMEL_CASE"
-  whatItDoes="Checks that all field names use camel case."
-  rationale="Camel case is a common convention for field names in GraphQL."
+  whatItDoes="Checks that all field names use `camelCase`."
+  rationale="`camelCase` is a common convention for field names in GraphQL."
 >
 
 <p style="margin-bottom: 0">❌</p>
@@ -28,6 +28,7 @@ type User {
 }
 ```
 
+<br/>
 <p style="margin-bottom: 0">✅</p>
 
 ```graphql title="schema.graphql"
@@ -42,8 +43,8 @@ type User {
 
 <RuleExpansionPanel
   title="RESTY_FIELD_NAMES"
-  whatItDoes={`Checks that field's name don't start with any of the following verbs: "get," "list," "post," "put," "patch."`}
-  rationale={`Most fields should not start with any verb, with the exception of mutation fields. For mutation fields, it's best to use a verb that more specifically describes the action being performed, for example, "create," "delete," or "edit."`}>
+  whatItDoes="Checks that field's name don't start with any of the following verbs: `get`, `list`, `post`, `put`, `patch`."
+  rationale="Most fields should not start with any verb, with the exception of mutation fields. For mutation fields, it's best to use a verb that more specifically describes the action being performed, for example, `create`, `delete`, or `edit`.">
 
 <p style="margin-bottom: 0">❌</p>
 
@@ -53,6 +54,7 @@ type Query {
 }
 ```
 
+<br/>
 <p style="margin-bottom: 0">✅</p>
 
 ```graphql title="schema.graphql"
@@ -75,8 +77,8 @@ These rules apply to _all_ types that appear in a GraphQL schema, including:
 
 <RuleExpansionPanel
   title="TYPE_NAMES_SHOULD_BE_PASCAL_CASE"
-  whatItDoes='Checks that all type names use "Pascal case.'
-  rationale="Pascal case is a common convention for type names in GraphQL."
+  whatItDoes="Checks that all type names use `PascalCase`."
+  rationale="`PascalCase` is a common convention for type names in GraphQL."
 >
 
 <p style="margin-bottom: 0">❌</p>
@@ -89,6 +91,7 @@ type streamingService { # camelCase
 }
 ```
 
+<br/>
 <p style="margin-bottom: 0">✅</p>
 
 ```graphql title="schema.graphql"
@@ -104,7 +107,7 @@ type StreamingService { # PascalCase
 <RuleExpansionPanel
   title="TYPE_PREFIX"
   whatItDoes="Checks that type names don't use the prefix `Type`."
-  rationale="Starting type names with `Type` can make your schema definitions verbose. It can be redundant and make the schema harder to read and understand."
+  rationale="Starting type names with `Type` is redundant. It makes your schema definitions longer than necessary and your schema less readable."
 >
 
 <p style="margin-bottom: 0">❌</p>
@@ -115,6 +118,7 @@ type TypeBook { # highlight-line
 }
 ```
 
+<br/>
 <p style="margin-bottom: 0">✅</p>
 
 ```graphql title="schema.graphql"
@@ -128,7 +132,7 @@ type Book { # highlight-line
 <RuleExpansionPanel
   title="TYPE_SUFFIX"
   whatItDoes="Checks that type names don't use the suffix `Type`."
-  rationale="Adding `Type` as a suffix to your type names can be redundant and make your schema definitions longer than necessary. This can make the schema more verbose and less readable."
+  rationale="Ending type names with `Type` is redundant. It makes your schema definitions longer than necessary and your schema less readable."
 >
 
 <p style="margin-bottom: 0">❌</p>
@@ -139,6 +143,7 @@ type BookType { # highlight-line
 }
 ```
 
+<br/>
 <p style="margin-bottom: 0">✅</p>
 
 ```graphql title="schema.graphql"
@@ -154,8 +159,8 @@ type Book { # highlight-line
 
 <RuleExpansionPanel
   title="OBJECT_PREFIX"
-  whatItDoes="Checks that object type's name don't use the prefix `Object`."
-  rationale="Adding `Object` as a prefix to object names can be redundant and make your schema definitions longer than necessary. This can make the schema more verbose and less readable."
+  whatItDoes="Checks that object type names don't use the prefix `Object`."
+  rationale="Starting object type names with `Object` is redundant. It makes your schema definitions longer than necessary and your schema less readable."
 >
 
 <p style="margin-bottom: 0">❌</p>
@@ -166,6 +171,7 @@ type ObjectBook { # highlight-line
 }
 ```
 
+<br/>
 <p style="margin-bottom: 0">✅</p>
 
 ```graphql title="schema.graphql"
@@ -178,8 +184,8 @@ type Book { # highlight-line
 
 <RuleExpansionPanel
   title="OBJECT_SUFFIX"
-  whatItDoes="An object type's name should never use the suffix `Object`."
-  rationale="Adding `Object` as a suffix to object names can be redundant and make your schema definitions longer than necessary. This can make the schema more verbose and less readable."
+  whatItDoes="Checks that object type names don't use the suffix `Object`."
+  rationale="Ending object type names with `Object` is redundant. It makes your schema definitions longer than necessary and your schema less readable."
 >
 
 <p style="margin-bottom: 0">❌</p>
@@ -190,6 +196,7 @@ type BookObject { # highlight-line
 }
 ```
 
+<br/>
 <p style="margin-bottom: 0">✅</p>
 
 ```graphql title="schema.graphql"
@@ -206,7 +213,7 @@ type Book { # highlight-line
 <RuleExpansionPanel
   title="INTERFACE_PREFIX"
   whatItdoes="Checks that interface type names don't use the prefix `Interface`."
-  rationale={` `}
+  rationale="Starting interface type names with `Interface` is redundant. It makes your schema definitions longer than necessary and your schema less readable."
 >
 
 <p style="margin-bottom: 0">❌</p>
@@ -218,6 +225,7 @@ interface InterfaceBook { # highlight-line
 }
 ```
 
+<br/>
 <p style="margin-bottom: 0">✅</p>
 
 ```graphql title="schema.graphql"
@@ -231,8 +239,8 @@ interface Book { # highlight-line
 
 <RuleExpansionPanel
   title="INTERFACE_SUFFIX"
-  whatItDoes={`Checks that interface type names don't use the suffix "Interface"`}
-  rationale={` `}
+  whatItDoes="Checks that interface type names don't use the suffix `Interface`."
+  rationale="Ending interface type names with `Interface` is redundant. It makes your schema definitions longer than necessary and your schema less readable."
 >
 
 <p style="margin-bottom: 0">❌</p>
@@ -244,6 +252,7 @@ interface BookInterface { # highlight-line
 }
 ```
 
+<br/>
 <p style="margin-bottom: 0">✅</p>
 
 ```graphql title="schema.graphql"
@@ -256,12 +265,12 @@ interface Book { # highlight-line
 </RuleExpansionPanel>
 
 
-### Inputs & arguments
+### Inputs and arguments
 
 <RuleExpansionPanel
   title="INPUT_ARGUMENT_NAMES_SHOULD_BE_CAMEL_CASE"
-  whatItDoes={`Checks that GraphQL argument names use camel case.`}
-  rationale={` `}
+  whatItDoes="Checks that argument names use `camelCase`."
+  rationale="`camelCase` is a common convention for argument names in GraphQL."
 >
 
 <p style="margin-bottom: 0">❌</p>
@@ -274,6 +283,7 @@ type Mutation {
 }
 ```
 
+<br/>
 <p style="margin-bottom: 0">✅</p>
 
 ```graphql title="schema.graphql"
@@ -288,8 +298,8 @@ type Mutation {
 
 <RuleExpansionPanel
   title="INPUT_TYPE_SUFFIX"
-  whatItDoes={`An input type's name should always use the suffix "input."`}
-  rationale={` `}
+  whatItDoes="Checks that input type names use the suffix `Input`."
+  rationale='Ending input type names with `Input` distinguishes input types from "output" types like objects.'
 >
 
 <p style="margin-bottom: 0">❌</p>
@@ -301,6 +311,7 @@ input BlogPostDetails { #highlight-line
 }
 ```
 
+<br/>
 <p style="margin-bottom: 0">✅</p>
 
 ```graphql title="schema.graphql"
@@ -316,8 +327,8 @@ input BlogPostDetailsInput { #highlight-line
 
 <RuleExpansionPanel
   title="ENUM_VALUES_SHOULD_BE_SCREAMING_SNAKE_CASE"
-  whatItDoes={`Checks that enum values use screaming snake case.`}
-  rationale={` `}
+  whatItDoes="Checks that enum values use `SCREAMING_SNAKE_CASE`."
+  rationale="`SCREAMING_SNAKE_CASE` is a common convention for enum values in GraphQL."
 >
 
 <p style="margin-bottom: 0">❌</p>
@@ -330,6 +341,7 @@ enum Amenity {
 }
 ```
 
+<br/>
 <p style="margin-bottom: 0">✅</p>
 
 ```graphql title="schema.graphql"
@@ -344,8 +356,8 @@ enum Amenity {
 
 <RuleExpansionPanel
   title="ENUM_PREFIX"
-  whatItDoes={`Check that enum type names don't use the prefix "enum".`}
-  rationale={` `}
+  whatItDoes="Checks that enum type names don't use the prefix `Enum`."
+  rationale="Starting enum type names with `Enum` is redundant. It makes your schema definitions longer than necessary and your schema less readable."
 >
 
 <p style="margin-bottom: 0">❌</p>
@@ -358,6 +370,7 @@ enum EnumResidence { # highlight-line
 }
 ```
 
+<br/>
 <p style="margin-bottom: 0">✅</p>
 
 ```graphql title="schema.graphql"
@@ -372,8 +385,8 @@ enum Residence { # highlight-line
 
 <RuleExpansionPanel
   title="ENUM_SUFFIX"
-  whatItDoes={`Checks that enum type names don't use the suffix "enum".`}
-  rationale={` `}
+  whatItDoes="Checks that enum type names don't use the suffix `Enum`."
+  rationale="Ending enum type names with `Enum` is redundant. It makes your schema definitions longer than necessary and your schema less readable."
 >
 
 <p style="margin-bottom: 0">❌</p>
@@ -386,6 +399,7 @@ enum ResidenceEnum { # highlight-line
 }
 ```
 
+<br/>
 <p style="margin-bottom: 0">✅</p>
 
 ```graphql title="schema.graphql"
@@ -401,7 +415,7 @@ enum Residence { # highlight-line
 <RuleExpansionPanel
   title="ENUM_USED_AS_INPUT_WITHOUT_SUFFIX"
   whatItDoes="If an enum type is used as an input argument, checks that its name uses the suffix `Input`."
-  rationale={` `}
+  rationale='Ending input arguments with `Input` distinguishes inputs from "output" types like objects.'
 >
 
 <p style="margin-bottom: 0">❌</p>
@@ -417,6 +431,7 @@ type Query {
 }
 ```
 
+<br/>
 <p style="margin-bottom: 0">✅</p>
 
 ```graphql title="schema.graphql"
@@ -435,7 +450,7 @@ type Query {
 <RuleExpansionPanel
   title="ENUM_USED_AS_OUTPUT_DESPITE_SUFFIX"
   whatItDoes="If an enum is used as the return type of a _non_-input field, checks that its name doesn't use the suffix `Input`."
-  rationale={` `}
+  rationale="Including the suffix `Input` on an output type is confusing."
 >
 
 <p style="margin-bottom: 0">❌</p>
@@ -451,6 +466,7 @@ type Query {
 }
 ```
 
+<br/>
 <p style="margin-bottom: 0">✅</p>
 
 ```graphql title="schema.graphql"
@@ -470,8 +486,8 @@ type Query {
 
 <RuleExpansionPanel
   title="DIRECTIVE_NAMES_SHOULD_BE_CAMEL_CASE"
-  whatItDoes="Checks that directive use camel case."
-  rationale={` `}
+  whatItDoes="Checks that directive names use `camelCase`."
+  rationale="`camelCase` is a common convention for directive names in GraphQL."
 >
 
 <p style="margin-bottom: 0">❌</p>
@@ -480,6 +496,7 @@ type Query {
 directive @SpecialField on FIELD_DEFINITION # PascalCase
 ```
 
+<br/>
 <p style="margin-bottom: 0">✅</p>
 
 ```graphql title="schema.graphql"
@@ -525,15 +542,12 @@ These rules apply to the entire schema.
 <RuleExpansionPanel
   title="DOES_NOT_PARSE"
   whatItDoes="Checks for malformed GraphQL schemas. Check your schema for any syntax errors."
-  rationale={` `}
->
-
-</RuleExpansionPanel>
+/>
 
 <RuleExpansionPanel
   title="ALL_ELEMENTS_REQUIRE_DESCRIPTION"
-  whatItDoes="Checks that each element in the schema includes a description."
-  rationale={` `}
+  whatItDoes="Checks that each element in the schema includes a [description](/apollo-server/schema/schema/#descriptions-docstrings)."
+  rationale="Descriptions serve as documentation for your GraphQL schema. They make it easier for consumers of your graph discover fields and learn how to use them. Check out [examples](/apollo-server/schema/schema/#descriptions-docstrings)."
 >
 
 <p style="margin-bottom: 0">❌</p>
@@ -544,6 +558,7 @@ type User {
 }
 ```
 
+<br/>
 <p style="margin-bottom: 0">✅</p>
 
 ```graphql title="schema.graphql"
@@ -579,6 +594,7 @@ type Query {
 }
 ```
 
+<br/>
 <p style="margin-bottom: 0">✅</p>
 
 ```graphql title="schema.graphql"
@@ -595,8 +611,8 @@ type Query {
 
 <RuleExpansionPanel
   title="QUERY_DOCUMENT_DECLARATION"
-  whatItDoes="Checks that GraphQL schemas never include definitions of GraphQL _operations_ (such as queries and mutations)."
-  rationale={` `}
+  whatItDoes="Checks that schemas don't define operations such as queries and mutations."
+  rationale="Schemas define types, fields, and their relationships. Operations specify what data to fetch or change. Since what to fetch or change is a client concern, operations should be defined on the client side. This separation allows for a clean and modular architecture, making it easier to manage and evolve the API over time."
 >
 
 <p style="margin-bottom: 0">❌</p>
@@ -622,11 +638,9 @@ query GetUsers {
 
 <RuleExpansionPanel
   title="CONTACT_DIRECTIVE_MISSING"
-  whatItDoes="Checks that the subgraph schemas always provide owner contact details via the `@contact` directive. [Learn more.](../graphs/federated-graphs#contact-info-for-subgraphs)"
-  rationale={` `}
+  whatItDoes="Checks that subgraph schemas always provide owner contact details via the `@contact` directive."
+  rationale="You can use the `@contact` directive to add your team's contact info to a subgraph schema. This info is displayed in GraphOS Studio, which helps other teams know who to contact for assistance with the subgraph. [Learn more](../graphs/federated-graphs#contact-info-for-subgraphs)."
 >
-
-
 
 <p style="margin-bottom: 0">✅</p>
 
@@ -653,10 +667,8 @@ extend schema
 <RuleExpansionPanel
   title="DEPRECATED_DIRECTIVE_MISSING_REASON"
   whatItDoes="Checks that the `@deprecated` directive always includes a `reason` argument."
-  rationale={` `}
+  rationale="The `reason` argument can help graph consumers understand which field to use instead. "
 >
-
-
 
 <p style="margin-bottom: 0">❌</p>
 
@@ -667,6 +679,7 @@ type Product {
 }
 ```
 
+<br/>
 <p style="margin-bottom: 0">✅</p>
 
 ```graphql title="schema.graphql"
@@ -680,8 +693,8 @@ type Product {
 
 <RuleExpansionPanel
   title="TAG_DIRECTIVE_USES_UNKNOWN_NAME"
-  whatItDoes="Checks that the `@tag` directive should always use an approved value for its `name` argument. You specify approved values in [GraphOS Studio](./schema-linter/#configuring-the-linter)."
-  rationale={` `}
+  whatItDoes="Checks that the [`@tag`](/federation/federated-types/federated-directives/#tag) directive uses an approved value for its `name` argument. You specify approved values in [GraphOS Studio](./schema-linter/#configuring-the-linter)."
+  rationale="This directive is used most commonly with [GraphOS contracts](../contracts). Validating `@tag` names ensures contracts work as intended."
 >
 
 </RuleExpansionPanel>
