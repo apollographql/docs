@@ -98,31 +98,30 @@ export default function RuleExpansionPanel({
           shouldWrapChildren
           divider={<StackDivider borderColor="gray.200" />}
           spacing="6"
-          p="6"
         >
           {whatItDoes && (
-            <>
+            <Box px="6" pt="6">
               <Heading as="h4" size="md" mb={2}>
                 What it does
               </Heading>
               <Text>{whatItDoes}</Text>
-            </>
+            </Box>
           )}
           {rationale && (
-            <>
+            <Box px="6">
               <Heading as="h4" size="md" mb={2}>
                 Rationale
               </Heading>
               <Text>{rationale}</Text>
-            </>
+            </Box>
           )}
           {children && (
-            <>
+            <Box px="6" pb="6">
               <Heading as="h4" size="md" mb={2}>
                 Examples
               </Heading>
               {children}
-            </>
+            </Box>
           )}
         </Stack>
       </Collapse>
