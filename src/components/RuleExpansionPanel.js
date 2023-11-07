@@ -16,6 +16,7 @@ import {
 } from '@chakra-ui/react';
 import {CustomHeading} from './CustomHeading';
 import {FiCheck, FiChevronDown, FiChevronUp} from 'react-icons/fi';
+import {MarkdownInAdmonitions} from './MarkdownInAdmonitions';
 
 function ExpansionPanelLine(props) {
   return <Box w="px" mx="auto" bg="current" {...props} />;
@@ -98,13 +99,14 @@ export default function RuleExpansionPanel({
           shouldWrapChildren
           divider={<StackDivider borderColor="gray.200" />}
           spacing="6"
+          pb="6"
         >
           {whatItDoes && (
             <Box px="6" pt="6">
               <Heading as="h4" size="md" mb={2}>
                 What it does
               </Heading>
-              <Text>{whatItDoes}</Text>
+              <MarkdownInAdmonitions>{whatItDoes}</MarkdownInAdmonitions>
             </Box>
           )}
           {rationale && (
@@ -112,15 +114,15 @@ export default function RuleExpansionPanel({
               <Heading as="h4" size="md" mb={2}>
                 Rationale
               </Heading>
-              <Text>{rationale}</Text>
+              <MarkdownInAdmonitions>{rationale}</MarkdownInAdmonitions>
             </Box>
           )}
           {children && (
-            <Box px="6" pb="6">
+            <Box px="6">
               <Heading as="h4" size="md" mb={2}>
                 Examples
               </Heading>
-              {children}
+              {children ? children : ' '}
             </Box>
           )}
         </Stack>

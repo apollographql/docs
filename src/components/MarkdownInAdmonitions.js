@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {ListItem, OrderedList, Text, UnorderedList} from '@chakra-ui/react';
+import {ListItem, OrderedList, UnorderedList} from '@chakra-ui/react';
 
+import InlineCode from './InlineCode';
 import Markdown from 'react-markdown';
 import RelativeLink from './RelativeLink';
 import {HighlightKeyTerms} from '@apollo/pedia';
@@ -59,7 +60,8 @@ export const MarkdownInAdmonitions = ({children}) => {
           return <HighlightKeyTerms>{children}</HighlightKeyTerms>;
         },
         a: RelativeLink,
-        pre: MarkdownCodeBlock
+        pre: MarkdownCodeBlock,
+        code: ({children}) => <InlineCode>{children}</InlineCode>
       }}
     >
       {children}
