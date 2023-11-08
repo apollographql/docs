@@ -15,13 +15,269 @@ It consists of the following github repos:
 To get started with the reference architcture, start in the main [build-a-supergraph](https://github.com/apollosolutions/build-a-supergraph) respository and follow the instructions. It will walk you through everything from setup to CI/CD to load testing the resulting architecture.
 
 ## Architecture Overview
-<img src="./images/build-a-supergraph-overview.png"
-  alt="Image depictint the overall architecture utilized in the reference architecture"
-  width="100%"
-/>
-
 The reference architcture utilizes multiple Kubernetes clusters to break the architecture into dev and prod environments. Inside of those environments are pods that host the router and sub graphs.
 
-Additionally, the cluster contains pods for trace collection and a k6 load testing with Grafana for viewing the results.
+Additionally, the cluster contains pods for trace collection and a K6 load testing with Grafana for viewing the results.
 
 In the case of both the dev and prod clusters, the router fetches it's schema cia the Schema Registry / Uplink. The schema is pushed to the registry when the sub graphs are run through CI/CD via Github Actions.
+
+### Development Environment
+```mermaid
+flowchart TB
+	developers[Developers]
+	subgraph cloud["Cloud (AWS or GCP)"]
+		subgraph devcluster["Dev Cluster"]
+			subgraph ingresscontainer["Ingress"]
+				ingress{"🔀"}
+			end
+
+			router["Router"]
+			subgrapha["Subgraph A"]
+			subgraphb["Subgraph B"]
+		end
+	end
+
+  subgraph graphos["Apollo GraphOS"]
+    uplink["Schema Registry/Uplink"]
+    checks["Schema Checks"]
+    metrics["Usage Metrics"]
+  end
+
+  subgraph github["Github"]
+      githubactions["Subgraph CI/CD (Github Actions)"]
+  end
+	
+	%% Relationships
+	developers --> ingress
+	ingress --> router
+	router --> subgrapha
+	router --> subgraphb
+	uplink -.-> router
+  router -.-> metrics
+  githubactions -.-> uplink
+  uplink -.-> checks
+	
+```
+
+### Production Environment
+```mermaid
+flowchart TB
+	developers[Developers]
+	subgraph cloud["Cloud (AWS or GCP)"]
+		subgraph devcluster["Prod Cluster"]
+			subgraph ingresscontainer["Ingress"]
+				ingress{"🔀"}
+			end
+
+			router["Router"]
+			subgrapha["Subgraph A"]
+			subgraphb["Subgraph B"]
+
+			collector["OTel Collector"]
+			tracestorage[("Trace Storage")]
+			zipkin[Zipkin]
+			
+			k6["K6 Load Tester"]
+			grafana["Grafana"]
+
+		end
+	end
+
+  subgraph graphos["Apollo GraphOS"]
+    uplink["Schema Registry/Uplink"]
+    checks["Schema Checks"]
+    metrics["Usage Metrics"]
+  end
+
+  subgraph github["Github"]
+      githubactions["Subgraph CI/CD (Github Actions)"]
+  end
+	
+	%% Relationships
+	developers --> ingress
+	ingress --> router
+	router --> subgrapha
+	router --> subgraphb
+	
+	router -.-> collector
+	subgrapha -.-> collector
+	subgraphb -.-> collector
+	zipkin -.-> tracestorage
+	collector -.-> tracestorage
+	
+	k6 -.-> router
+	k6 -.-> grafana
+
+  uplink -.-> router
+  router -.-> metrics
+  githubactions -.-> uplink
+  uplink -.-> checks
+	
+```
+
+## CI/CD (Github Actions)
+This architecture utilizes Github Actions for it's CI/CD. Included in this is:
+
+- PR level schema checks
+- Building of containers using Docker
+- Deployment to the Kubernetes clusters
+- Publishing of schema to the Apollo Uplink
+- Deployment of the Router to the Kubernetes cluster
+- Deployment of OTEL collector
+- Deployment of Grafana
+- Running Load Test
+
+### Development Merge/Push/Deploy
+These jobs are triggered by submitting a PR and on merge of a PR.
+
+```mermaid
+flowchart TB
+  submit(["Submit PR"])
+  mergedpr(["Merge PR"])
+
+  subgraph githubactions["Github Actions"]
+    checkspr["Job: Schema Checks"]
+    builddev["Job: Build, Deploy, Schema Publish"]
+  end
+
+  subgraph devcluster["Dev Cluster"]
+    router["Router"]
+    subgraphs["Subgraph"]
+  end
+
+  subgraph graphos["Apollo Graphos"]
+    checks["Schema Checks"]
+    uplink["Schema Uplink"]
+  end
+
+  submit -.-> checkspr
+  checkspr --> checks
+  submit --> mergedpr
+  mergedpr -.-> builddev
+  builddev --> subgraphs
+  builddev --> uplink
+  uplink -.-> checks
+  uplink -.-> router
+```
+
+### Production Deploy
+This job is manually triggered within Github Actions.
+
+```mermaid
+flowchart TB
+  trigger(["Trigger Production Deployment"])
+
+  subgraph githubactions["Github Actions"]
+    builddev["Job: Build, Deploy, Schema Publish"]
+  end
+
+  subgraph devcluster["Production Cluster"]
+    router["Router"]
+    subgraphs["Subgraph"]
+  end
+
+  subgraph graphos["Apollo Graphos"]
+    checks["Schema Checks"]
+    uplink["Schema Uplink"]
+  end
+
+  trigger -.-> builddev
+  builddev --> subgraphs
+  builddev --> uplink
+  uplink -.-> checks
+  uplink -.-> router
+```
+
+### Deploy Router
+This job is manually triggered within Github Actions.
+
+```mermaid
+flowchart LR
+  trigger(["Trigger Production Deployment"])
+
+  subgraph githubactions["Github Actions"]
+    deploy["Job: Deploy Router"]
+  end
+
+  subgraph cluster["Dev/Production Cluster"]
+    router["Router"]
+  end
+
+  trigger -.-> deploy
+  deploy --> router
+```
+
+### Deploy OTEL Collector
+This job is manually triggered within Github Actions.
+
+```mermaid
+flowchart LR
+  trigger(["Trigger Production Deployment"])
+
+  subgraph githubactions["Github Actions"]
+    deploy["Job: Deploy Router"]
+  end
+
+  subgraph cluster["Production Cluster"]
+    collector["OTel Collector"]
+    tracestorage[("Trace Storage")]
+    zipkin[Zipkin]
+  end
+
+  trigger -.-> deploy
+  deploy --> collector
+  deploy --> tracestorage
+  deploy --> zipkin
+```
+
+### Deploy Load Test Infrastructure
+This job is manually triggered within Github Actions.
+
+```mermaid
+flowchart LR
+  trigger(["Trigger Production Deployment"])
+
+  subgraph githubactions["Github Actions"]
+    deploy["Job: Deploy Router"]
+  end
+
+  subgraph cluster["Production Cluster"]
+    k6["K6 Load Tester"]
+		grafana["Grafana"]
+  end
+
+  trigger -.-> deploy
+  deploy --> k6
+  deploy --> grafana
+```
+
+## Router
+The Router is deployed to Kubernetes by utilizing the apollograph helm charts provided for router deployments.
+
+```yaml title="Chart.yaml"
+dependencies:
+  - name: router
+    version: 1.33.2
+    repository: oci://ghcr.io/apollographql/helm-charts
+```
+
+Configuration for the router is provided in the `values.yaml` file in `router.router.configuration`. These config values are provided to router at run time.
+
+```yaml title="values.yaml"
+router:
+  router:
+    configuration:
+      health_check:
+        listen: 0.0.0.0:8080
+      sandbox:
+        enabled: true
+      homepage:
+        enabled: false
+```
+
+This approach allows you to get up and running with Router in Kubernetes with minimal effort required.
+
+<!--<img src="./images/build-a-supergraph-overview.png"
+  alt="Image depictint the overall architecture utilized in the reference architecture"
+  width="100%"
+/>-->
