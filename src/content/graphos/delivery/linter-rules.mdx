@@ -1,6 +1,7 @@
 ---
-title: GraphOS schema linter rules
-description: Reference
+title: Schema linter rules
+subtitle: Reference
+description: Reference for GraphOS schema linting rules with examples
 ---
 
 This reference lists the rules that you can enforce with [GraphOS schema linting](./schema-linter/), along with the code that GraphOS returns for each rule violation.
@@ -35,7 +36,7 @@ type User {
 }
 ```
 
-<hr/>
+<hr />
 
 #### `RESTY_FIELD_NAMES`
 
@@ -47,7 +48,7 @@ A field's name should never start with any of the following verbs:
 - `put`
 - `patch`
 
-> Most fields should not start with _any_ verb, with the exception of `Mutation` fields. For `Mutation` fields, use a verb that more specifically describes the action being performed (such as `create`, `delete`, or `edit`).
+Most fields should not start with _any_ verb, with the exception of `Mutation` fields. For `Mutation` fields, use a verb that more specifically describes the action being performed (such as `create`, `delete`, or `edit`).
 
 <p style="margin-bottom: 0">❌</p>
 
@@ -84,7 +85,7 @@ All type names should use `PascalCase`.
 ```graphql title="schema.graphql"
 # highlight-start
 type streamingService { # camelCase
-# highlight-end
+  # highlight-end
   id: ID!
 }
 ```
@@ -94,12 +95,12 @@ type streamingService { # camelCase
 ```graphql title="schema.graphql"
 # highlight-start
 type StreamingService { # PascalCase
-# highlight-end
+  # highlight-end
   id: ID!
 }
 ```
 
-<hr/>
+<hr />
 
 #### `TYPE_PREFIX`
 
@@ -121,7 +122,7 @@ type Book { # highlight-line
 }
 ```
 
-<hr/>
+<hr />
 
 #### `TYPE_SUFFIX`
 
@@ -165,7 +166,7 @@ type Book { # highlight-line
 }
 ```
 
-<hr/>
+<hr />
 
 #### `OBJECT_SUFFIX`
 
@@ -211,7 +212,7 @@ interface Book { # highlight-line
 }
 ```
 
-<hr/>
+<hr />
 
 #### `INTERFACE_SUFFIX`
 
@@ -261,7 +262,7 @@ type Mutation {
 }
 ```
 
-<hr/>
+<hr />
 
 #### `INPUT_TYPE_SUFFIX`
 
@@ -311,7 +312,7 @@ enum Amenity {
 }
 ```
 
-<hr/>
+<hr />
 
 #### `ENUM_PREFIX`
 
@@ -337,7 +338,7 @@ enum Residence { # highlight-line
 }
 ```
 
-<hr/>
+<hr />
 
 #### `ENUM_SUFFIX`
 
@@ -363,7 +364,7 @@ enum Residence { # highlight-line
 }
 ```
 
-<hr/>
+<hr />
 
 #### `ENUM_USED_AS_INPUT_WITHOUT_SUFFIX`
 
@@ -395,7 +396,7 @@ type Query {
 }
 ```
 
-<hr/>
+<hr />
 
 #### `ENUM_USED_AS_OUTPUT_DESPITE_SUFFIX`
 
@@ -445,7 +446,7 @@ directive @SpecialField on FIELD_DEFINITION # PascalCase
 directive @specialField on FIELD_DEFINITION # camelCase
 ```
 
-<hr/>
+<hr />
 
 <MinVersion version="2.4">
 
@@ -453,7 +454,11 @@ directive @specialField on FIELD_DEFINITION # camelCase
 
 </MinVersion>
 
-> Composition rules are only available for graphs on [federation version `2.4`](/federation/federation-versions/#v24) or later. You can update a graph's version from its **Settings** page in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content).
+<Note>
+
+Composition rules are only available for graphs on [federation version `2.4`](/federation/federation-versions/#v24) or later. You can update a graph's version from its **Settings** page in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content).
+
+</Note>
 
 These rules flag potential improvements to a supergraph schema [composed](/federation/federated-types/composition) of [subgraph](/federation/building-supergraphs/subgraphs-overview/) schemas.
 
@@ -481,7 +486,7 @@ These rules apply to the entire schema.
 
 The schema linter raises this violation if it attempts to read a malformed GraphQL schema. Check your schema for any syntax errors.
 
-<hr/>
+<hr />
 
 #### `ALL_ELEMENTS_REQUIRE_DESCRIPTION`
 
@@ -505,7 +510,7 @@ type User {
 }
 ```
 
-<hr/>
+<hr />
 
 #### `DEFINED_TYPES_ARE_USED`
 
@@ -542,7 +547,7 @@ type Query {
 }
 ```
 
-<hr/>
+<hr />
 
 #### `QUERY_DOCUMENT_DECLARATION`
 
@@ -556,7 +561,8 @@ type Query {
 }
 
 #highlight-start
-query GetUsers { # Don't define operations in a schema document
+query GetUsers {
+  # Don't define operations in a schema document
   users {
     id
   }
@@ -582,14 +588,15 @@ directive @contact(
   description: String
 ) on SCHEMA
 
-extend schema @contact(
-  name: "Products Team",
-  url: "https://myteam.slack.com/archives/teams-chat-room-url",
-  description: "Send urgent issues to [#oncall](https://yourteam.slack.com/archives/oncall)."
-)
+extend schema
+  @contact(
+    name: "Products Team"
+    url: "https://myteam.slack.com/archives/teams-chat-room-url"
+    description: "Send urgent issues to [#oncall](https://yourteam.slack.com/archives/oncall)."
+  )
 ```
 
-<hr/>
+<hr />
 
 #### `DEPRECATED_DIRECTIVE_MISSING_REASON`
 
@@ -613,7 +620,7 @@ type Product {
 }
 ```
 
-<hr/>
+<hr />
 
 #### `TAG_DIRECTIVE_USES_UNKNOWN_NAME`
 
