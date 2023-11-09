@@ -43,19 +43,36 @@
       "Safelisting with persisted queries": [
         "/operations/persisted-queries",
         [
-          "enterprise"
+          "enterprise",
+          "preview"
         ]
       ]
     },
     "Routing": {
-      "Cloud routing overview": "/routing/cloud",
-      "Configuring cloud routing": "/routing/cloud-configuration",
+      "Overview": "/routing",
       "Self-hosted routing": [
         "/routing/self-hosted",
         [
           "enterprise"
         ]
-      ]
+      ],
+      "Cloud routing": {
+        "Overview": "/routing/cloud",
+        "Configuration": "/routing/cloud-configuration",
+        "Dedicated cloud routing": [{
+          "Overview": ["/routing/cloud-dedicated", [
+            "preview"
+          ]],
+          "AWS Lattice configuration": ["/routing/cloud-dedicated/lattice", [
+            "preview"
+          ]],
+          "AWS Lattice troubleshooting": ["/routing/cloud-dedicated/lattice-troubleshooting", [
+            "preview"
+          ]]
+        },         [
+          "preview"
+        ]]
+    }
     },
     "Client Operations": {
       "Using @defer": "/operations/defer",
