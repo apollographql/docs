@@ -12,10 +12,10 @@ It consists of the following github repos:
 - [build-a-supergraph-subgraph-a](https://github.com/apollosolutions/build-a-supergraph-subgraph-a) and [build-a-supergraph-subgraph-b](https://github.com/apollosolutions/build-a-supergraph-subgraph-b) - Demo sub-graphs for demo purposes
 
 ## Getting Started
-To get started with the reference architcture, start in the main [build-a-supergraph](https://github.com/apollosolutions/build-a-supergraph) respository and follow the instructions. It will walk you through everything from setup to CI/CD to load testing the resulting architecture.
+To get started with the reference architecture, start in the main [build-a-supergraph](https://github.com/apollosolutions/build-a-supergraph) repository and follow the instructions. It will walk you through everything from setup to CI/CD to load testing the resulting architecture.
 
 ## Architecture Overview
-The reference architcture utilizes multiple Kubernetes clusters to break the architecture into dev and prod environments. Inside of those environments are pods that host the router and sub graphs.
+The reference architecture utilizes multiple Kubernetes clusters to break the architecture into dev and prod environments. Inside of those environments are pods that host the router and sub graphs.
 
 Additionally, the cluster contains pods for trace collection and a K6 load testing with Grafana for viewing the results.
 
@@ -62,7 +62,7 @@ flowchart TB
 ### Production Environment
 ```mermaid
 flowchart TB
-	developers[Developers]
+	applications[Applications / Consumers]
 	subgraph cloud["Cloud (AWS or GCP)"]
 		subgraph devcluster["Prod Cluster"]
 			subgraph ingresscontainer["Ingress"]
@@ -74,11 +74,11 @@ flowchart TB
 			subgraphb["Subgraph B"]
 
 			collector["OTel Collector"]
-			tracestorage[("Trace Storage")]
 			zipkin[Zipkin]
 			
 			k6["K6 Load Tester"]
 			grafana["Grafana"]
+      influxdb[("InfluxDB")]
 
 		end
 	end
@@ -94,7 +94,7 @@ flowchart TB
   end
 	
 	%% Relationships
-	developers --> ingress
+	applications --> ingress
 	ingress --> router
 	router --> subgrapha
 	router --> subgraphb
@@ -102,17 +102,222 @@ flowchart TB
 	router -.-> collector
 	subgrapha -.-> collector
 	subgraphb -.-> collector
-	zipkin -.-> tracestorage
-	collector -.-> tracestorage
+	collector -.-> zipkin
 	
 	k6 -.-> router
-	k6 -.-> grafana
+	k6 -.-> influxdb
+  grafana --> influxdb
 
   uplink -.-> router
   router -.-> metrics
   githubactions -.-> uplink
   uplink -.-> checks
+```
+
+## Components
+### Router
+The Router is [deployed via Github Actions](#deploy-router) to Kubernetes by utilizing the apollograph helm charts provided for router deployments.
+
+```yaml title="Chart.yaml"
+dependencies:
+  - name: router
+    version: 1.33.2
+    repository: oci://ghcr.io/apollographql/helm-charts
+```
+
+Configuration for the router is provided in the `values.yaml` file in `router.router.configuration`. These config values are provided to router at run time.
+
+```yaml title="values.yaml"
+router:
+  router:
+    configuration:
+      health_check:
+        listen: 0.0.0.0:8080
+      sandbox:
+        enabled: true
+      homepage:
+        enabled: false
+```
+
+This approach allows you to get up and running with Router in Kubernetes with minimal effort required.
+
+The router receives it's schema and subgraph configuration from the GraphOS Schema Uplink / Registry that has already been checked, validated, and composed.
+
+```mermaid
+flowchart LR
+	applications[Application/Consumers]
+  subgraph devcluster["Prod Cluster"]
+    subgraph ingresscontainer["Ingress"]
+      ingress{"🔀"}
+    end
+
+    router["Router"]
+    subgrapha["Subgraph A"]
+    subgraphb["Subgraph B"]
+
+  end
+
+  subgraph graphos["Apollo GraphOS"]
+    uplink["Schema Registry/Uplink"]
+    metrics["Usage Metrics"]
+  end
 	
+	%% Relationships
+	applications --> ingress
+	ingress --> router
+	router --> subgrapha
+	router --> subgraphb
+
+  uplink -.-> router
+  router -.-> metrics
+```
+
+### Subgraphs
+Each subgraph is [deployed via Github Actions](#development-mergepushdeploy) (including publishing their schema to the Schema Registry) to Kubernetes utilizing a Helm chart. The services are deployed using a `HorizontalPodAutoscaler`
+to automatically scale up instances of the service based on CPU utilization or Memory utilization.
+
+```yaml title="values.yaml"
+autoscaling:
+  enabled: false
+  targetCPUUtilizationPercentage: 80
+  minReplicas: 1
+  maxReplicas: 100
+```
+
+```yaml title="hpa.yaml"
+minReplicas: {{ .Values.autoscaling.minReplicas }}
+maxReplicas: {{ .Values.autoscaling.maxReplicas }}
+metrics:
+  {{- if .Values.autoscaling.targetCPUUtilizationPercentage }}
+  - type: Resource
+    resource:
+      name: cpu
+      targetAverageUtilization: {{ .Values.autoscaling.targetCPUUtilizationPercentage }}
+  {{- end }}
+  {{- if .Values.autoscaling.targetMemoryUtilizationPercentage }}
+  - type: Resource
+    resource:
+      name: memory
+      targetAverageUtilization: {{ .Values.autoscaling.targetMemoryUtilizationPercentage }}
+  {{- end }}
+```
+
+The subgraphs are called directly by the Router.
+
+```mermaid
+flowchart LR
+	applications[Application/Consumers]
+  subgraph devcluster["Prod Cluster"]
+    subgraph ingresscontainer["Ingress"]
+      ingress{"🔀"}
+    end
+
+    router["Router"]
+    subgrapha["Subgraph A"]
+    subgraphb["Subgraph B"]
+
+  end
+	
+	%% Relationships
+	applications --> ingress
+	ingress --> router
+	router --> subgrapha
+	router --> subgraphb
+```
+
+### Open Telemetry and Zipkin
+The Open Telemetry collector is [deployed via Github Actions](#deploy-open-telemetry-collector) to Kubernetes utilizing the `otel/opentelemetry-collector-contrib` docker image.
+
+```yml [title="values.yml"]
+image:
+  repository: otel/opentelemetry-collector-contrib
+  pullPolicy: IfNotPresent
+  tag: "0.59.0"
+```
+
+It is configured to export trace metrics to the Zipkin `spans` endpoint.
+
+```yml [title="configmap.yml"]
+exporters:
+  zipkin:
+    endpoint: "http://zipkin.zipkin.svc.cluster.local:9411/api/v2/spans"
+```
+
+Zipkin is [deployed via Github Actions](#deploy-open-telemetry-collector) to Kubernetes utilizing the `https://openzipkin.github.io/zipkin` helm chart.
+
+```yml [title="Chart.yaml"]
+dependencies:
+  - name: zipkin
+    version: 0.3.0
+    repository: https://openzipkin.github.io/zipkin
+```
+
+```mermaid
+flowchart TB
+  subgraph devcluster["Prod Cluster"]
+    router["Router"]
+    subgrapha["Subgraph A"]
+    subgraphb["Subgraph B"]
+
+    collector["OTel Collector"]
+    zipkin[Zipkin]
+  end
+	
+	%% Relationships
+	router --> subgrapha
+	router --> subgraphb
+	
+	router -.-> collector
+	subgrapha -.-> collector
+	subgraphb -.-> collector
+	collector -.-> zipkin
+```
+
+### Performance Testing, K6, and Grafana
+The [K6 Operator](https://github.com/grafana/k6-operator) is [deployed via Github Actions](#deploy-open-telemetry-collector) to Kubernetes. The test results are exported to influxdb which can be viewed in Grafana.
+
+```yaml [title="_run-loadtest-aws.yaml"]
+spec:
+  parallelism: ${{ inputs.parallelism }}
+  arguments: "--out influxdb=http://influxdb.monitoring:8086/db"
+  script:
+    configMap:
+      name: tests
+      file: ${{ inputs.test }}.js
+```
+
+```yaml [title="value.yaml"]
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+      - name: InfluxDB
+        type: influxdb
+        access: proxy
+        url: http://influxdb.monitoring:8086
+```
+
+```mermaid
+flowchart LR
+  subgraph devcluster["Prod Cluster"]
+
+    router["Router"]
+    subgrapha["Subgraph A"]
+    subgraphb["Subgraph B"]
+    
+    k6["K6 Load Tester"]
+    influxdb[("InfluxDB")]
+    grafana["Grafana"]
+
+  end
+	
+	%% Relationships
+	router --> subgrapha
+	router --> subgraphb
+	
+	k6 ---> router
+	k6 -.-> influxdb
+  grafana --> influxdb
 ```
 
 ## CI/CD (Github Actions)
@@ -207,7 +412,7 @@ flowchart LR
   deploy --> router
 ```
 
-### Deploy OTEL Collector
+### Deploy Open Telemetry Collector
 This job is manually triggered within Github Actions.
 
 ```mermaid
@@ -215,18 +420,16 @@ flowchart LR
   trigger(["Trigger Production Deployment"])
 
   subgraph githubactions["Github Actions"]
-    deploy["Job: Deploy Router"]
+    deploy["Job: Deploy OTEL"]
   end
 
   subgraph cluster["Production Cluster"]
     collector["OTel Collector"]
-    tracestorage[("Trace Storage")]
     zipkin[Zipkin]
   end
 
   trigger -.-> deploy
   deploy --> collector
-  deploy --> tracestorage
   deploy --> zipkin
 ```
 
@@ -238,46 +441,48 @@ flowchart LR
   trigger(["Trigger Production Deployment"])
 
   subgraph githubactions["Github Actions"]
-    deploy["Job: Deploy Router"]
+    deploy["Job: Deploy Load Test Infrastructure"]
   end
 
   subgraph cluster["Production Cluster"]
     k6["K6 Load Tester"]
 		grafana["Grafana"]
+		tests["Load Tests"]
+    influxdb[("InfluxDB")]
   end
 
   trigger -.-> deploy
   deploy --> k6
   deploy --> grafana
+  deploy --> tests
+  deploy --> influxdb
 ```
 
-## Router
-The Router is deployed to Kubernetes by utilizing the apollograph helm charts provided for router deployments.
+### Run Load Tests
+This job is manually triggered within Github Actions.
 
-```yaml title="Chart.yaml"
-dependencies:
-  - name: router
-    version: 1.33.2
-    repository: oci://ghcr.io/apollographql/helm-charts
+```mermaid
+flowchart LR
+  trigger(["Trigger Load Tests"])
+
+  subgraph githubactions["Github Actions"]
+    run["Job: Run Load Tests"]
+  end
+
+  subgraph cluster["Production Cluster"]
+    router["Router"]
+    subgraphs["Subgraphs"]
+
+    k6["K6 Load Tester"]
+		tests["Load Tests"]
+    influxdb[("InfluxDB")]
+  end
+
+  router --> subgraphs
+
+  trigger -.-> run
+  run --> k6
+  k6 --> router
+  k6 -.-> tests
+  k6 -.-> influxdb
 ```
-
-Configuration for the router is provided in the `values.yaml` file in `router.router.configuration`. These config values are provided to router at run time.
-
-```yaml title="values.yaml"
-router:
-  router:
-    configuration:
-      health_check:
-        listen: 0.0.0.0:8080
-      sandbox:
-        enabled: true
-      homepage:
-        enabled: false
-```
-
-This approach allows you to get up and running with Router in Kubernetes with minimal effort required.
-
-<!--<img src="./images/build-a-supergraph-overview.png"
-  alt="Image depictint the overall architecture utilized in the reference architecture"
-  width="100%"
-/>-->
