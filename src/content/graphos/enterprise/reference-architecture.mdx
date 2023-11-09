@@ -13,9 +13,17 @@ It consists of the following Github repositories:
 
 ## Design Considerations
 
-Val: I'd add a blurb on where GraphOS fits into a modern cloud-native stack. This should set the scene for how this arch has been built and the choices we made.
+In a modern cloud-native stack, your components must be scalable with high availability. This reference architecture takes this into consideration with 
+autoscaling built in. Additionally, the Router component is also built to scale. It is many times faster and less resource intensive when compared to the Gateway.
 
-...
+<Tip>
+
+Check out our blog post [Deploying the Apollo Router at Apollo](https://www.apollographql.com/blog/announcement/platform/deploying-the-apollo-router-at-apollo/) to learn about Apollo's 
+internal utilization of the Router, including the performance improvements and resource utilization reductions.
+</Tip>
+
+In this architecture, GraphOS serves the important role of being the Schema Registry and Uplink. This allows the router to get the latest schema and routing configuration from GraphOS as
+subgraph changes are published via CI/CD. Additionally, the the router is able to push performance and utilization metrics to GraphOS via this same Uplink.
 
 ## Getting Started
 To get started with the reference architecture, start in the main [build-a-supergraph](https://github.com/apollosolutions/build-a-supergraph) repository and start with the README. It will walk you through everything from setup to CI/CD to load testing the resulting architecture.
