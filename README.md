@@ -590,6 +590,27 @@ Both components take an optional `discordLink` prop through which you can provid
 
 ```
 
+The components also take an optional `appendText` prop that adds text to the default text.
+
+```mdx
+
+<PreviewFeature appendText="This is some additional text appended to the end of the default text."/>
+
+```
+
+If necessary, you can nest markdown within the component to completely replace the text.
+
+
+```mdx
+
+<ExperimentalFeature>
+
+This _completely_ replaces the text within the component.
+
+</ExperimentalFeature>
+
+```
+
 ##### Plan components
 
 Currently, the only plan component is `<EnterpriseFeature />`.
