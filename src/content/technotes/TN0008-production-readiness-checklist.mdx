@@ -6,10 +6,10 @@ tags: [server, sre, client]
 
 We recommend that you complete this checklist before your supergraph begins handling production traffic from clients.
 
-## In Apollo Studio
+## In GraphOS Studio
 
 - Ensure that you've created multiple [variants](/graphos/graphs/#variants) to represent the different environments where your supergraph runs (production, staging, and so on).
-  - Optionally, [protect your production variant](/graphos/graphs/studio-features#protected-variants-enterprise-only) to avoid accidental changes while working in Apollo Studio.
+  - Optionally, [protect your production variant](/graphos/graphs/studio-features#protected-variants-enterprise-only) to avoid accidental changes while working in GraphOS Studio.
 - Ensure that your [clients identify themselves](/graphos/metrics/client-awareness/) by name and version.
   - If you're using an Apollo Client library, you can add a client name and version to the constructor.
     - For example, the [React client uses the `name` and `version` attributes](/react/api/core/ApolloClient#name) in the constructor options.
@@ -19,10 +19,10 @@ We recommend that you complete this checklist before your supergraph begins hand
 ## Server-side
 
 - For security, [disable introspection](/router/configuration/overview/#introspection) for all production GraphQL servers.
-  - You can continue to view and fetch your GraphQL schemas from Apollo Studio.
+  - You can continue to view and fetch your GraphQL schemas from GraphOS Studio.
 - Ensure that you've correctly configured [managed federation](/federation/managed-federation/setup/).
 - Ensure that you've integrated [`rover subgraph check`](/rover/commands/subgraphs#subgraph-check) and [`rover subgraph publish`](/rover/commands/subgraphs#subgraph-publish) into your CI/CD pipeline.
-- If your subgraph servers are listed as [compatible with `FEDERATED TRACING`](/federation/building-supergraphs/supported-subgraphs/), ensure that you've enabled [federated traces](/federation/metrics/), and that you can view operation metrics as expected in Apollo Studio.
+- If your subgraph servers are listed as [compatible with `FEDERATED TRACING`](/federation/building-supergraphs/supported-subgraphs/), ensure that you've enabled [federated traces](/federation/metrics/), and that you can view operation metrics as expected in GraphOS Studio.
   - Enable [fractional trace sampling via `fieldLevelInstrumentation`](/graphos/metrics/field-usage/#fractional-sampling) to reduce performance hits due to tracing.
 - Consider adding caching layers.
   - Apollo Server and the Apollo Router both support [automatic persisted queries (APQ)](/apollo-server/performance/apq/) out of the box.
@@ -34,7 +34,7 @@ We recommend that you complete this checklist before your supergraph begins hand
   - Optionally add [full response caching](/apollo-server/performance/caching/) to improve performance.
 - Ensure that you've [load-tested your graph](/technotes/TN0035-load-testing-graphql/).
   - Test loads should be representative of your current traffic (both in terms of volume _and_ in terms of the actual operations you execute in the test).
-  - To investigate performance issues, use Apollo Studio to identify which operations are performing slowly.
+  - To investigate performance issues, use GraphOS Studio to identify which operations are performing slowly.
     - Look at resolver execution times to identify slow areas of execution.
     - Whenever possible, avoid making multiple calls to data sources within a single resolver.
     - Understand [query plan execution](/federation/query-plans) to help understand slow operations and optimize your supergraph to avoid them.
