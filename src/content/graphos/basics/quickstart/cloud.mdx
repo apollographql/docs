@@ -50,10 +50,10 @@ _Some_ legacy organizations can upgrade to a current plan. [See details.](../org
 
 ## 2. Create your first supergraph
 
-You now have a GraphOS Studio account, but it doesn't contain any graphs yet. The next steps guide you to creating a **cloud supergraph**.
+You now have a GraphOS Studio account, but it doesn't contain any graphs yet. The next steps guide you to create a **cloud supergraph**.
 A cloud supergraph automatically provisions a GraphOS-managed **router** in front of your API. Clients query your router instead of querying your API directly.
 
-With this architecture, you can later combine multiple APIs into a single graph, all orchestrated by the router:
+With this architecture, you can combine multiple APIs into a single graph, all orchestrated by the router:
 
 ```mermaid
 flowchart LR;
@@ -79,7 +79,7 @@ Otherwise, continue with the steps below.
 
 ### From a new account
 
-1. Next, Studio prompts you to **Connect your API** or **Try a demo graph**. If you have the URL of your running GraphQL server, select **Connect API**. Otherwise, you can select **Try a demo graph**, and Apollo creates a demo graph for you to play with.
+1. Studio prompts you to **Connect your API** or **Try a demo graph**. If you have the URL of your running GraphQL server, select **Connect API**. Otherwise, you can select **Try a demo graph**, and Apollo creates a demo graph for you to play with.
 
    <img
      src="../../img/start-building-with-graphos.jpg"
@@ -103,7 +103,7 @@ Otherwise, continue with the steps below.
 
    <Note>
 
-   You cannot change this name later.
+   The service name is immutable.
 
    </Note>
 
@@ -121,7 +121,7 @@ Otherwise, continue with the steps below.
    />
 
    - The name is displayed throughout Studio and helps your team distinguish between your different graphs. You can change your graph's name at any time.
-   - The ID is **immutable** and must be unique across all of Apollo. Make sure it starts with a letter and contains only letters, numbers, and dashes. You'll use this value to reference your graph from various tools, such as the Rover CLI.
+   - The ID is **immutable** and must be unique across all of Apollo. Make sure it starts with a letter and contains only letters, numbers, and dashes. You'll use the ID to reference your graph from various tools, such as the Rover CLI.
 
 6. Click **Continue**.
 
@@ -183,7 +183,7 @@ Skip to [the next step](#3-learn-about-your-variant) to learn about **variants**
 
    <Note>
 
-   You cannot change this name later.
+   A subgraph name is immutable.
 
    </Note>
 
@@ -203,11 +203,11 @@ Skip to [the next step](#3-learn-about-your-variant) to learn about **variants**
 7. Provide a name and ID for your new supergraph.
 
    - The name is displayed throughout Studio and helps your team distinguish between your different graphs. You can change your graph's name at any time.
-   - The ID is **immutable** and must be unique across all of Apollo. Make sure it starts with a letter and contains only letters, numbers, and dashes. You'll use this value to reference your graph from various tools, such as the Rover CLI.
+   - The ID is **immutable** and must be unique across all of Apollo. Make sure it starts with a letter and contains only letters, numbers, and dashes. You'll use the ID to reference your graph from various tools, such as the Rover CLI.
 
 8. Click **Create Supergraph**.
 
-You've now created your first cloud supergraph, which is listed in your organization's **Graphs** tab:
+You've now created your first cloud supergraph, and you can view it listed in your organization's **Graphs** tab:
 
 <img
   src="../../img/supergraph-list.jpg"
@@ -217,13 +217,12 @@ You've now created your first cloud supergraph, which is listed in your organiza
 />
 
 Your GraphQL API is now the first **subgraph** in that cloud supergraph.
-Continue on to [the next step](#3-learn-about-your-variant) to learn about **variants**.
 
 ## 3. Learn about your variant
 
-When you created your supergraph, you also created its first **variant**—named `current` by default. Every graph in GraphOS has one or more variants. Each variant represents a different environment where the graph runs, such as staging or production.
+When you created your supergraph, you also created its first **variant**. Every graph in GraphOS has one or more variants representing a different environment where the graph runs, such as staging or production. Each variant has a name that you set or is `current` by default.
 
-Let's look at the helpful views that Studio provides for your variant:
+Let's look at the views that Studio provides to help you understand your variant:
 
 From your **Graphs** tab, click your graph's `current` variant. This opens the variant's README page.
 
@@ -291,7 +290,7 @@ Let's modify this default config to work with your clients and your subgraph.
 
 <Note>
 
-After you make any necessary changes to your configuration YAML in Studio, make sure to enter `command+S` to save.
+Make sure to save any changes you make to your configuration YAML in Studio.
 
 </Note>
 
@@ -299,7 +298,7 @@ After you make any necessary changes to your configuration YAML in Studio, make 
 
 <Note>
 
-If no browser-based GraphQL clients will communicate with your supergraph, you can skip this.
+If no browser-based GraphQL clients will communicate with your supergraph, you can skip this section.
 
 </Note>
 
@@ -338,7 +337,7 @@ For advanced CORS options, see [Configuring cloud routing](../routing/cloud-conf
 
 <Note>
 
-If your router doesn't need to provide specific HTTP headers in its requests to your subgraph, you can skip this.
+If your router doesn't need to provide specific HTTP headers in its requests to your subgraph, you can skip this section.
 
 </Note>
 
@@ -445,7 +444,7 @@ Similarly, any _new_ client applications should use your router's URL.
 
 - For all browser-based clients, make sure their origin is allowed in your router's [CORS rules](#cors-rules).
 
-- Only update clients that communicate with the correct instance of your GraphQL API! For example, if your API has staging and production instances, only update clients that communicate with the instance used by this supergraph variant.
+- Only update clients that communicate with the correct instance of your GraphQL API. For example, if your API has staging and production instances, only update clients that communicate with the instance used by this supergraph variant.
 
 </Note>
 
