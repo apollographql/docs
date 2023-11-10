@@ -43,8 +43,7 @@
       "Safelisting with persisted queries": [
         "/operations/persisted-queries",
         [
-          "enterprise",
-          "preview"
+          "enterprise"
         ]
       ]
     },
