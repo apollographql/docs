@@ -86,7 +86,7 @@ Thanks to GraphQL's [strong typing](https://graphql.org/learn/schema) and built-
 
 Apollo provides a cloud-hosted collection of tools that help you build your graph, measure its performance, and grow it safely. These tools are together known as [**Apollo GraphOS**](/graphos/).
 
-After registering your schema with GraphOS, you can use the **Apollo Studio Explorer** to inspect all of its types and fields. You can also build and run queries against your running server:
+After registering your schema with GraphOS, you can use the **GraphOS Studio Explorer** to inspect all of its types and fields. You can also build and run queries against your running server:
 
 <img src="../img/explorer-tab.jpg" alt="Studio Explorer tab" class="screenshot" />
 

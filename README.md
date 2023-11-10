@@ -244,7 +244,7 @@ You can publish docsets that are viewable only by Apollo team members by setting
 }
 ```
 
-If a visitor to that page is logged in to Apollo Studio **and** is a member of one of our internal orgs, the page content will be rendered normally. If neither of those conditions are true, a 404 page will be shown. Internal-only pages are excluded from the sitemap and won't be indexed by Google.
+If a visitor to that page is logged in to GraphOS Studio **and** is a member of one of our internal orgs, the page content will be rendered normally. If neither of those conditions are true, a 404 page will be shown. Internal-only pages are excluded from the sitemap and won't be indexed by Google.
 
 It's important to note that you must sign in to and out of your account using Studio or Odyssey, as the docs don't currently have their own sign in form. For local development, sign in to the staging Studio.
 
@@ -454,7 +454,7 @@ _shared/configure-project.mdx_
 
 ```mdx
 1. Sign up for an Apollo account
-2. Create a graph in Apollo Studio
+2. Create a graph in GraphOS Studio
 3. Add environment variables to your project
 ```
 
@@ -549,7 +549,7 @@ const foo = 123;
 A YouTube player exported from MDX Embed. Check out all of the different props and options [on their docs](https://www.mdx-embed.com/?path=/docs/components-youtube--usage).
 
 ```mdx
-Check out this introduction to Apollo Studio:
+Check out this introduction to GraphOS Studio:
 
 <YouTube youTubeId="sarXMaz3OpY" />
 ```
