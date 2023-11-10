@@ -30,7 +30,7 @@ graph BT;
 
 This helps you test out adding new subgraphs (or removing existing ones) in non-production environments.
 
-When you [publish a subgraph's schema](../delivery/), you can specify which variant of the supergraph you're publishing that schema to.
+When you [publish a subgraph's schema](../delivery/publishing-schemas/#publish-subgraph-schema), you can specify which variant of the supergraph you're publishing that schema to.
 
 ### Adding a variant
 
@@ -80,7 +80,7 @@ You can add a new variant to your existing GraphOS supergraph in the following w
 
 To add a new variant to your supergraph with Rover, you publish its first subgraph's schema! To do this, you use the exact same Rover command as [updating an _existing_ subgraph](../quickstart/next-steps/#update-a-subgraph-schema). The only difference is that you provide the name of the new variant to the command.
 
-[Learn about publishing subgraph schemas.](../delivery/#subgraph-schemas)
+[Learn about publishing subgraph schemas.](../delivery/publishing-schemas/#publish-subgraph-schemas)
 
 ## Managing subgraphs
 
@@ -134,7 +134,7 @@ You can add your new subgraph to your GraphOS supergraph in the following ways:
 
 To add a subgraph to your supergraph with Rover, you publish the subgraph's schema! To do this, you use the exact same Rover command as [updating an _existing_ subgraph](../quickstart/next-steps/#update-a-subgraph-schema). The only difference is that you provide the name of the _new_ subgraph to the command.
 
-[Learn about publishing subgraph schemas.](../delivery/#subgraph-schemas)
+[Learn about publishing subgraph schemas.](../delivery/publishing-schemas/#publish-subgraph-schemas)
 
 ### Modifying a subgraph
 
@@ -343,7 +343,7 @@ This field supports Markdown-formatted links.
 
 #### Known `@contact` limitations
 
-- To provide the `@contact` directive to Apollo, you must publish your subgraph schemas by providing a local `.graphql` file as the `--schema` option of [`rover subgraph publish`](../delivery/).
+- To provide the `@contact` directive to Apollo, you must publish your subgraph schemas by providing a local `.graphql` file as the `--schema` option of [`rover subgraph publish`](../delivery/publishing-schemas/).
   - If you provide an introspection result to the command instead, the `@contact` directive is **not** included in that result.
 
 ### Viewing contact info

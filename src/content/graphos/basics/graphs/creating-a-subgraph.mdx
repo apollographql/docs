@@ -22,7 +22,7 @@ rover template use "my-subgraph" --template="subgraph-typescript-apollo-server"
 
 > To see the full list of available templates, see the [Rover template docs](/rover/commands/template)
 
-After generating the boilerplate code, you can start filling in your business logic. The generated code includes example resolvers for `Query` and `Mutation`, along with some [entity types](/federation/entities/) to use as your starting point. All templates also come with example GitHub Actions workflows to help with [publishing your schema in CI/CD](../delivery/#publishing-with-continuous-delivery).
+After generating the boilerplate code, you can start filling in your business logic. The generated code includes example resolvers for `Query` and `Mutation`, along with some [entity types](/federation/entities/) to use as your starting point. All templates also come with example GitHub Actions workflows to help with [publishing your schema in CI/CD](../delivery/publishing-schemas/#publish-with-continuous-delivery).
 
 When you're ready to add your new subgraph to your supergraph, [see below](#adding-to-your-supergraph).
 
@@ -40,7 +40,7 @@ When you're ready to add a new subgraph to your existing GraphOS supergraph, do 
 1. Enable federation support in your subgraph library.
    - If you [built from a template](#starting-from-a-template), federation support is already enabled. Otherwise, consult the documentation for your chosen library.
 2. [Check your schema](/federation/managed-federation/federated-schema-checks) against your existing supergraph and handle any conflicts.
-3. Set up your CI/CD pipeline to perform checks and also [publish your subgraph schema](../delivery/).
+3. Set up your CI/CD pipeline to perform checks and also [publish your subgraph schema](../delivery/publishing-schemas/#publish-subgraph-schemas).
 
 After you publish your subgraph's schema for the first time, GraphOS recognizes it as part of your supergraph, and you can start querying for data from _all_ of your subgraphs!
 
