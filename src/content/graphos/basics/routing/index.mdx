@@ -1,6 +1,7 @@
 ---
-title: Routing for supergraphs in GraphOS
-description: Choose between self-hosted and cloud routing options
+title: Routing for supergraphs
+subtitle: Learn about self-hosted and cloud routing options
+description: A router acts as an entry point to your GraphQL APIs and provides a unified interface for clients to interact with. Apollo provides cloud and self-hosted options.
 ---
 
 With supergraph architecture (also known as [Apollo Federation](/federation/)), each component service is known as a **subgraph**. A **router** acts as an entry point to your subgraphs and provides a unified interface for clients to interact with. Clients send operations to your router's public endpoint instead of directly to your APIs.
@@ -77,7 +78,7 @@ Apollo offers the following router options, in increasing order of configurabili
   </thead>
   <tbody>
     <tr>
-      <th>Shared cloud router</th>
+      <th>Cloud shared router</th>
       <td>
         Apollo provisions and manages the router on shared infrastructure.
       </td>
@@ -90,7 +91,7 @@ Apollo offers the following router options, in increasing order of configurabili
       </td>
     </tr>
     <tr>
-      <th>Dedicated cloud router</th>
+      <th>Cloud Dedicated router</th>
       <td>
         The router runs on dedicated, pre-provisioned infrastructure that you
         control and scale.
@@ -107,7 +108,7 @@ Apollo offers the following router options, in increasing order of configurabili
       <th>Self-hosted router</th>
       <td>You host and manage the router on your own infrastructure.</td>
       <td>
-        Highly configurable, including all options in the Dedicated cloud router
+        Highly configurable, including all options in the Cloud Dedicated router
         and additional{' '}
         <a href="/router/enterprise-features">enterprise-only configurations</a>{' '}
         and{' '}
@@ -124,7 +125,7 @@ Apollo offers the following router options, in increasing order of configurabili
   </tbody>
 </table>
 
-Somes organizations might need to use Dedicated cloud or self-hosted routing instead of shared cloud routing for these reasons:
+Somes organizations might need to use Cloud Dedicated or self-hosted routing instead of shared cloud routing for these reasons:
 
 - **Compliance.** All of your supergraph's components must be hosted in a particular region to adhere to compliance requirements.
 - **Performance.** You need to minimize latency between your router and subgraphs by enabling them to communicate _without_ traversing the public internet (e.g., by hosting all components in a VPC).
@@ -132,7 +133,7 @@ Somes organizations might need to use Dedicated cloud or self-hosted routing ins
 
 With the exception of Apollo-managed routing, self-hosted supergraphs benefit from all of the same GraphOS features as cloud supergraphs: metrics reporting, schema checks, the Explorer, etc.
 
-If you are interested in either Dedicated cloud or self-hosted routing, don't hesitate to [get in touch](https://www.apollographql.com/contact-sales/).
+If you are interested in either Cloud Dedicated or self-hosted routing, don't hesitate to [get in touch](https://www.apollographql.com/contact-sales/).
 
 ## Setup and configuration
 

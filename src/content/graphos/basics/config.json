@@ -53,7 +53,7 @@
       "Cloud routing": {
         "Overview": "/routing/cloud",
         "Configuration": "/routing/cloud-configuration",
-        "Dedicated cloud routing": {
+        "Cloud Dedicated routing": {
           "Overview": ["/routing/cloud-dedicated", [
             "preview"
           ]],
