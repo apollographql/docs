@@ -66,7 +66,7 @@
         }
       },
       "Self-hosted routing": [
-        "/routing/self-hosted",
+        "/quickstart/self-hosted",
         [
           "enterprise"
         ]
