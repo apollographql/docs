@@ -3,13 +3,18 @@ title: Reference Architecture
 description: Reference for Enterprise Deployment of GraphOS
 ---
 
+<EnterpriseFeature>
+
+Self-hosting the Apollo Router is limited to [GraphOS Enterprise plans](/graphos/enterprise/). Other plan types use [managed cloud routing with GraphOS](/graphos/routing/cloud/). Check out the [pricing page](https://www.apollographql.com/pricing/) to learn more.
+</EnterpriseFeature>
+
 Apollo supplies a reference architecture that is a blueprint to self-hosting the router and subgraphs in an enterprise cloud environment using Kubernetes and Helm.
 
 It consists of the following Github repositories:
 
 - [build-a-supergraph](https://github.com/apollosolutions/build-a-supergraph) - The main repository that contains the step-by-step guide to utilizing the architecture and deploying it to AWS or GCP
-- [build-a-supergraph-infra](https://github.com/apollosolutions/build-a-supergraph-infra) - The "template" repository for Kubernetes deployment of the router, collector, Grafana, performance tests, and Zipkin
-- [build-a-supergraph-subgraph-a](https://github.com/apollosolutions/build-a-supergraph-subgraph-a) and [build-a-supergraph-subgraph-b](https://github.com/apollosolutions/build-a-supergraph-subgraph-b) - Demo sub-graphs for demonstration purposes
+- [build-a-supergraph-infra](https://github.com/apollosolutions/build-a-supergraph-infra) - The template repository for Kubernetes deployment of the router, collector, Grafana, performance tests, and Zipkin
+- [build-a-supergraph-subgraph-a](https://github.com/apollosolutions/build-a-supergraph-subgraph-a) and [build-a-supergraph-subgraph-b](https://github.com/apollosolutions/build-a-supergraph-subgraph-b) - Template repositories for the subgraphs used in the reference architecture
 
 ## Design Considerations
 
@@ -23,17 +28,17 @@ internal utilization of the Router, including the performance improvements and r
 </Tip>
 
 In this architecture, GraphOS serves the important role of being the Schema Registry and Uplink. This allows the router to get the latest schema and routing configuration from GraphOS as
-subgraph changes are published via CI/CD. Additionally, the the router is able to push performance and utilization metrics to GraphOS via this same Uplink.
+subgraph changes are published via CI/CD. Additionally, the router is able to push performance and utilization metrics to GraphOS via this same Uplink.
 
 ## Getting Started
 To get started with the reference architecture, start in the main [build-a-supergraph](https://github.com/apollosolutions/build-a-supergraph) repository and start with the README. It will walk you through everything from setup to CI/CD to load testing the resulting architecture.
 
 ## Architecture Overview
-The reference architecture utilizes multiple Kubernetes clusters to break the architecture into dev and prod environments. Inside of those environments are pods that host the router and sub graphs.
+The reference architecture utilizes two Kubernetes clusters to break the architecture into dev and prod environments. Inside of those environments are pods that host the router and subgraphs.
 
 Additionally, the cluster contains pods for trace collection and a K6 load testing with Grafana for viewing the results.
 
-In the case of both the dev and prod clusters, the router fetches it's schema cia the Schema Registry / Uplink. The schema is pushed to the registry when the sub graphs are run through CI/CD via Github Actions.
+In the case of both the dev and prod clusters, the router fetches its schema via the Schema Registry / Uplink. The schema is pushed to the registry for each subgraph using CI/CD via Github Actions.
 
 ### Development Environment
 ```mermaid
@@ -130,7 +135,7 @@ flowchart TB
 
 ## Components
 ### Router
-The Router is [deployed via Github Actions](#deploy-router) to Kubernetes by utilizing the apollograph helm charts provided for router deployments.
+The Router is [deployed via Github Actions](#deploy-router) to Kubernetes by utilizing the Helm charts provided for router deployments.
 
 ```yaml title="Chart.yaml"
 dependencies:
@@ -139,7 +144,7 @@ dependencies:
     repository: oci://ghcr.io/apollographql/helm-charts
 ```
 
-Configuration for the router is provided in the `values.yaml` file in `router.router.configuration`. These config values are provided to router at run time.
+The router configuration is provided in the `values.yaml` file in `router.router.configuration`. These config values are provided to the router at runtime.
 
 ```yaml title="values.yaml"
 router:
@@ -187,7 +192,7 @@ flowchart LR
 ```
 
 ### Subgraphs
-Each subgraph is [deployed via Github Actions](#development-mergepushdeploy) (including publishing their schema to the Schema Registry) to Kubernetes utilizing a Helm chart. The services are deployed using a `HorizontalPodAutoscaler`
+Each subgraph is [deployed via Github Actions](#development-mergepushdeploy) (including publishing their schema to the Schema Registry) to Kubernetes utilizing a Helm chart. Each subgraph is deployed to their own Kubernetes namespace and the subgraphs utilize a `HorizontalPodAutoscaler`
 to automatically scale up instances of the service based on CPU utilization or Memory utilization.
 
 ```yaml title="values.yaml"
@@ -239,8 +244,8 @@ flowchart LR
 	router --> subgraphb
 ```
 
-### Open Telemetry and Zipkin
-The Open Telemetry collector is [deployed via Github Actions](#deploy-open-telemetry-collector) to Kubernetes utilizing the `otel/opentelemetry-collector-contrib` docker image.
+### OpenTelemetry and Zipkin
+The OpenTelemetry Collector is [deployed via Github Actions](#deploy-open-telemetry-collector) to Kubernetes utilizing the `otel/opentelemetry-collector-contrib` docker image.
 
 ```yml [title="values.yml"]
 image:
@@ -278,17 +283,14 @@ flowchart TB
   end
 	
 	%% Relationships
-	router --> subgrapha
-	router --> subgraphb
-	
 	router -.-> collector
 	subgrapha -.-> collector
 	subgraphb -.-> collector
 	collector -.-> zipkin
 ```
 
-### Performance Testing, K6, and Grafana
-The [K6 Operator](https://github.com/grafana/k6-operator) is [deployed via Github Actions](#deploy-open-telemetry-collector) to Kubernetes. The test results are exported to influxdb which can be viewed in Grafana.
+### K6 and Grafana
+The [K6 Operator](https://github.com/grafana/k6-operator) is [deployed via Github Actions](#deploy-open-telemetry-collector) to Kubernetes. The test results are exported to InfluxDB to be viewed in Grafana.
 
 ```yaml [title="_run-loadtest-aws.yaml"]
 spec:
@@ -335,7 +337,7 @@ flowchart LR
 ```
 
 ## CI/CD (Github Actions)
-This architecture utilizes Github Actions for it's CI/CD. Included in this is:
+This architecture utilizes Github Actions for its CI/CD. Included in this is:
 
 - PR level schema checks
 - Building of containers using Docker
@@ -412,7 +414,7 @@ This job is manually triggered within Github Actions.
 
 ```mermaid
 flowchart LR
-  trigger(["Trigger Production Deployment"])
+  trigger(["Trigger Deployment"])
 
   subgraph githubactions["Github Actions"]
     deploy["Job: Deploy Router"]
@@ -426,12 +428,12 @@ flowchart LR
   deploy --> router
 ```
 
-### Deploy Open Telemetry Collector
+### Deploy OpenTelemetry Collector
 This job is manually triggered within Github Actions.
 
 ```mermaid
 flowchart LR
-  trigger(["Trigger Production Deployment"])
+  trigger(["Trigger Deployment"])
 
   subgraph githubactions["Github Actions"]
     deploy["Job: Deploy OTEL"]
