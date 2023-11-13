@@ -8,7 +8,7 @@ One of the advantages of using GraphQL is that it provides an abstraction betwee
 the teams maintaining the backend services. 
 
 In an architecture where each application has a BFF and that BFF connects to a number of backend services, the number of 
-connections grows quickly and a change to any of the backing APIs/Components has major implications. 
+connections proliferates, and a change to any of the backing APIs/Components has major implications. 
 
 ```mermaid
 flowchart LR
@@ -25,11 +25,11 @@ flowchart LR
   bff4[BFF]
   bff5[BFF]
 
-  rest1[Rest Service 1]
-  rest2[Rest Service 2]
-  rest3[Rest Service 3]
-  rest4[Rest Service 4]
-  rest5[Rest Service 5]
+  rest1[REST Service 1]
+  rest2[REST Service 2]
+  rest3[REST Service 3]
+  rest4[REST Service 4]
+  rest5[REST Service 5]
 
   soap1[SOAP Service 1]
   soap2[SOAP Service 2]
@@ -86,7 +86,7 @@ flowchart LR
 ## Example: Service Migration
 
 Imagine an architecture with 10 applications, each with it's own BFF. The company is migrating one of many backend APIs to a 
-different technology. As a result, there are  10 BFFs to update due to the data orchestration happening for each application within those BFFs. Clients must be aware of what is happening during 
+different technology. As a result of the BFFs owning data orchestration, the organization must update 10 different BFFs or Experience APIs. Clients must be aware of what is happening during 
 those changes, must track timelines, track changes to field names, etc.
 
 ```mermaid
@@ -152,7 +152,7 @@ flowchart LR
 
 
 However, if that company was using GraphQL as an abstraction layer, the consumers don't need to know about this change as the backing services 
-are abstracted behind the schema of the graph. The only change needed is at the GraphQL layer.
+have been abstracted behind the schema of the graph by the organization. The only change needed is at the GraphQL layer.
 
 ```mermaid
 flowchart LR
@@ -187,7 +187,7 @@ flowchart LR
   graphql -.-> newservice
 ```
 
-Scaling this up to enterprise level, this could potentially eliminate hundreds of updates, deployments, 
+Scaling this up to an enterprise level, this could potentially eliminate hundreds of updates, deployments, 
 dependencies, etc due to the reduced impact of changes to backing services.
 
 ## Conclusion
