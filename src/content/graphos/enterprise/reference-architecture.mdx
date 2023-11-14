@@ -9,6 +9,10 @@ While you can run the Apollo Router regardless of your Apollo plan, connecting t
 
 </EnterpriseFeature>
 
+In this guide, learn about the fundamental concepts and configuration underlying Apollo's reference architecture for enterprise deployment of GraphOS with a self-hosted router. Use this guide as a companion reference to the [Apollo reference architecture repositories](#reference-architecture-repositories).
+
+## About Apollo's reference architecture
+
 In a modern cloud-native stack, your components must be scalable with high availability. The [Apollo Router](/router) is built with this in mind. The router is [much faster and less resource-intensive than the Apollo Gateway](https://www.apollographql.com/blog/announcement/backend/apollo-router-our-graphql-federation-runtime-in-rust/#apollo-router-vs-apollo-gateway-benchmarks), Apollo's original runtime.
 
 Apollo provides a reference architecture for self-hosting the router and subgraphs in an enterprise cloud environment using Kubernetes and Helm. This reference architecture includes autoscaling to suit the needs of a modern enterprise application. Continue reading to learn more about the reference architecture and how to use it.
@@ -20,7 +24,7 @@ internal use of the router, including the performance improvements and resource 
 
 </Tip>
 
-## Reference architecture structure
+## Reference architecture repositories
 
 The reference architecture consists of the following GitHub repositories:
 
@@ -33,19 +37,21 @@ The reference architecture consists of the following GitHub repositories:
 
 ## Getting started
 
-To get started with the reference architecture, begin with the README in the main [build-a-supergraph](https://github.com/apollosolutions/build-a-supergraph) repository. 
-The README walks you through building a supergraph with the reference architecture. It gives step-by-step instructions for setup, CI/CD,  load testing, and more. This page serves as a complementary reference of the architecture's organization and configuration.
+To get started with the reference architecture, follow the README in the main [build-a-supergraph](https://github.com/apollosolutions/build-a-supergraph) repository. 
+The README provides a how-to guide that walks you through building a supergraph with the reference architecture. It gives step-by-step instructions for setup, CI/CD, load testing, and more. 
+
+While you work through the steps of deploying the reference architecture, you can use this guide as a complementary reference of the architecture's organization and configuration.
 
 ## Architecture overview
 
-The reference architecture uses two Kubernetes clusters to support development and production environments. Each cluster has pods for:
+The reference architecture uses two Kubernetes clusters, one for a development environment and other for a production environment. Each cluster has pods for:
 
-- hosting the router
-- hosting subgraphs
-- trace collection
-- K6 load testing with Grafana for viewing the results
+- Hosting the router
+- Hosting subgraphs
+- Collecting traces
+- Load testing K6 and viewing results with Grafana
 
-For both environments, GraphOS serves as a schema registry. Each subgraph publishes schema updates to the registry via CI/CD. The router regularly polls an endpoint called [Apollo Uplink](/federation/managed-federation/uplink/) to get the latest schema and routing configurations from GraphOS.
+For both environments, GraphOS serves as a schema registry. Each subgraph publishes schema updates to the registry via CI/CD, and GraphOS validates and composes them into a supergraph schema. The router regularly polls an endpoint called [Apollo Uplink](/federation/managed-federation/uplink/) to get the latest supergraph schema and routing configurations from GraphOS.
 
 ```mermaid
 graph LR;
