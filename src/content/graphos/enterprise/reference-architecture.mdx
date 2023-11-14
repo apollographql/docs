@@ -396,7 +396,7 @@ The reference architecture uses [GitHub Actions](https://docs.github.com/en/acti
 
 ### Development actions
 
-When a PR is submitted, GitHub Actions uses GraphOS to validate schema changes using schema checks.
+When a PR is submitted to one of the subgraphs, GitHub Actions uses GraphOS to validate schema changes using schema checks.
 
 When the PR is merged, GitHub Actions publishes schema updates to Uplink, and GraphOS validates them using schema checks before making them available to the router. Additionally, the subgraph service is deployed.
 
