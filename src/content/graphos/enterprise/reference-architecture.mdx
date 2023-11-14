@@ -390,7 +390,9 @@ The reference architecture uses [GitHub Actions](https://docs.github.com/en/acti
 
 ### Development actions
 
-Submitting and merging a PR triggers the following GitHub Actions workflows:
+When a PR is submitted, Github Actions uses GraphOS to validate them using schema checks.
+
+When the PR is merged, GitHub Actions publishes schema updates to Uplink and GraphOS validates them using schema checks before making them available to the router. Additionally, the subgraph service is deployed.
 
 ```mermaid
 flowchart TB
@@ -399,7 +401,7 @@ flowchart TB
 
   subgraph githubactions["GitHub Actions"]
     checkspr["Job: Schema Checks"]
-    builddev["Job: Build, Deploy, Schema Publish"]
+    builddev["Job: Build + Deploy Subgraph, Schema Publish"]
   end
 
   subgraph devcluster["Dev Cluster"]
@@ -424,14 +426,14 @@ flowchart TB
 
 ### Production deploy
 
-When you manually trigger a production deployment, GitHub Actions publish schema updates to Uplink and GraphOS validates them using schema checks before making them available to the router.
+When you manually trigger a production deployment, GitHub Actions publishes schema updates to Uplink and GraphOS validates them using schema checks before making them available to the router. Additionally, the subgraph service is deployed.
 
 ```mermaid
 flowchart TB
   trigger(["Trigger Production Deployment"])
 
   subgraph githubactions["GitHub Actions"]
-    builddev["Job: Build, Deploy, Schema Publish"]
+    builddev["Job: Build + Deploy Subgraph, Schema Publish"]
   end
 
   subgraph devcluster["Production Cluster"]
@@ -453,7 +455,7 @@ flowchart TB
 
 ### Deploy router
 
-This job is manually triggered within GitHub Actions.
+When you manually trigger a router deployment, GitHub Actions deploys the router to the Kubernetes cluster.
 
 ```mermaid
 flowchart LR
@@ -473,7 +475,7 @@ flowchart LR
 
 ### Deploy OpenTelemetry collector
 
-This job is manually triggered within GitHub Actions.
+When you manually trigger an OpenTelemetry deployment, GitHub Actions deploys the OpenTelemetry Collector and Zipkin to the Kubernetes cluster.
 
 ```mermaid
 flowchart LR
@@ -495,7 +497,7 @@ flowchart LR
 
 ### Deploy load test infrastructure
 
-This job is manually triggered within GitHub Actions.
+When you manually trigger a load test infrastructure deployment, GitHub Actions deploys the K6 Load Tester, Grafana, the load tests, and InfluxDB to the Kubernetes cluster.
 
 ```mermaid
 flowchart LR
@@ -521,7 +523,7 @@ flowchart LR
 
 ### Run load tests
 
-This job is manually triggered within GitHub Actions.
+When you manually trigger a load test run, GitHub Actions triggers the K6 Load Tester to pull the Load Tests from the environment, run the tests against the router, and store the results in InfluxDB.
 
 ```mermaid
 flowchart LR
