@@ -7,8 +7,7 @@ tags: [architecture-patterns]
 One of the advantages of using GraphQL is that it provides an abstraction between the consumers of the graph and 
 the teams maintaining the backend services. 
 
-In an architecture where each application has a BFF and that BFF connects to a number of backend services, the number of 
-connections proliferates, and a change to any of the backing APIs/Components has major implications. 
+In an backend-for-frontend (BFF) architecture, each BFF connects to a number of backend services. As you add new BFFs for each application, the number of connections proliferates and a change to any of the backing APIs/components has major implications. 
 
 ```mermaid
 flowchart LR
@@ -187,8 +186,7 @@ flowchart LR
   graphql -.-> newservice
 ```
 
-Scaling this up to an enterprise level, this could potentially eliminate hundreds of updates, deployments, 
-dependencies, etc due to the reduced impact of changes to backing services.
+As a company grows, this could potentially eliminate hundreds of updates, deployments, dependencies, or more due to the reduced impact of changes to backing services.
 
 ## Conclusion
 GraphQL provides a great tool to abstract away the complexities of your backing services from your front end consumers. It can 
