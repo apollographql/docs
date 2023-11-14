@@ -69,7 +69,7 @@ The router also pushes performance and utilization metrics to GraphOS via Uplink
 
 ### Development environment
 
-The development environment consists of the router and its subgraphs hosted in a Kubernetes cluster in either AWS or GCP.  GraphOS validates subgraph schemas using [schema checks](/federation/managed-federation/federated-schema-checks/) and makes them available to the router via [Uplink](/federation/managed-federation/uplink/). The router also reports usage metrics back to GraphOS.
+The development environment consists of the router and subgraphs hosted in a Kubernetes cluster in either AWS or GCP.  GraphOS validates subgraph schemas using [schema checks](/federation/managed-federation/federated-schema-checks/) and makes them available to the router via [Uplink](/federation/managed-federation/uplink/). The router also reports usage metrics back to GraphOS.
 
 ```mermaid
 flowchart TB
@@ -171,7 +171,7 @@ flowchart TB
 
 ## Components
 
-This section summarizes the various services and runtimes that make up the reference architecture. This includes the router, subgraphs, OpenTelemetry, Zipkin, K6, and Grafana.
+This section summarizes the various services and runtimes that comprise the reference architecture. These include the router, subgraphs, OpenTelemetry, Zipkin, K6, and Grafana.
 
 ### Router
 
@@ -390,9 +390,9 @@ The reference architecture uses [GitHub Actions](https://docs.github.com/en/acti
 
 ### Development actions
 
-When a PR is submitted, Github Actions uses GraphOS to validate them using schema checks.
+When a PR is submitted, GitHub Actions uses GraphOS to validate schema changes using schema checks.
 
-When the PR is merged, GitHub Actions publishes schema updates to Uplink and GraphOS validates them using schema checks before making them available to the router. Additionally, the subgraph service is deployed.
+When the PR is merged, GitHub Actions publishes schema updates to Uplink, and GraphOS validates them using schema checks before making them available to the router. Additionally, the subgraph service is deployed.
 
 ```mermaid
 flowchart TB
