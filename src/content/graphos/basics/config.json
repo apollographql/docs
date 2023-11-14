@@ -49,6 +49,12 @@
     },
     "Routing": {
       "Overview": "/routing",
+      "Self-hosted routing": [
+        "/quickstart/self-hosted",
+        [
+          "enterprise"
+        ]
+      ],
       "Cloud routing": {
         "Overview": "/routing/cloud",
         "Configuration": "/routing/cloud-configuration",
@@ -63,13 +69,7 @@
             "preview"
           ]]
         }
-      },
-      "Self-hosted routing": [
-        "/quickstart/self-hosted",
-        [
-          "enterprise"
-        ]
-      ]
+      }
     },
     "Client Operations": {
       "Using @defer": "/operations/defer",

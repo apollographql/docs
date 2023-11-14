@@ -18,7 +18,6 @@
   "sidebar": {
     "Overview": "/",
     "Self-Hosted Routing": {
-      "Overview": "https://www.apollographql.com/docs/graphos/routing/self-hosted",
       "Setup": "https://www.apollographql.com/docs/graphos/quickstart/self-hosted",
       "Apollo Router Features": {
         "Overview": "https://www.apollographql.com/docs/router/enterprise-features",

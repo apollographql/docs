@@ -60,13 +60,9 @@ On the [**Serverless** plan](../org/plans/), you can configure:
 
 * [Introspection](#introspection) to allow resolving introspection queries.
 
-<Tip>
-
 [Dedicated and Enterprise plans](../org/plans/) offer a [wider variety of configurations](/router/configuration/overview#yaml-config-file).
 
 **If you require more advanced router customization,** please [reach out](https://www.apollographql.com/contact-sales/) to learn about your about Dedicated and Enterprise plan options.
-
-</Tip>
 
 ### HTTP header rules
 
@@ -108,7 +104,7 @@ You can specify which headers to propagate based on a matching [regex pattern](h
 
 <Note>
 
-The router _never_ propagates so-called [hop-by-hop headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers#hop-by-hop_headers) (such as `Content-Length`) when propagating by pattern.
+The router _never_ propagates so-called [hop-by-hop headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers#hop-by-hop_headers), such as `Content-Length`, when propagating by pattern.
 
 </Note>
 
@@ -226,7 +222,7 @@ headers:
 
 ### CORS settings
 
-<Tip>
+<Note>
 
 If your router serves exclusively _non_-browser-based clients, you probably don't need to modify the default CORS configuration.
 
@@ -235,7 +231,7 @@ For a more general introduction to CORS and common considerations, see the follo
 - [Why use CORS?](/apollo-server/security/cors#why-use-cors)
 - [Choosing CORS options for your project](/apollo-server/security/cors#choosing-cors-options-for-your-project)
 
-</Tip>
+</Note>
 
 By default, the router enables _only_ GraphOS Studio to initiate browser connections to it. If your supergraph serves data to other browser-based applications, you need to do one of the following in the `cors` section of your **Router configuration YAML**:
 

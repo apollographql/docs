@@ -14,18 +14,13 @@ GraphOS **Cloud Dedicated** is the Apollo offering that lets you run a cloud rou
 
 ## Private preview
 
-Cloud Dedicated is a new product and is in [preview](/resources/product-launch-stages/#preview) while it matures. Cloud Dedicated is more performant and reliable that GraphOS Cloud Serverless; however, you should load-test and evaluate the platform before migrating any production workloads.
+Cloud Dedicated is a new product and is in [preview](/resources/product-launch-stages/#preview) while it matures. It is only available to select customers on an invite-only basis. If you have feedback or are interested in joining the preview, [get in touch](mailto:cloud@apollographql.com).
 
-### Preview limitations
+Please note the following while Cloud Dedicated is in preview:
 
-While in preview, Dedicated has the following limitations:
-
-- Only available to select customers on an invite-only basis
-- Limited to customers running subgraphs in AWS
 - 99.9% SLA for ingress traffic
+- Limited to customers running subgraphs in AWS
 - Month-to-month billing, pricing subject to change
-
-If you have feedback or are interested in joining the preview, [get in touch](mailto:cloud@apollographql.com).
 
 ## Pricing
 
@@ -39,11 +34,11 @@ GCUs run on AWS in the region of your choice. You can scale them via [GraphOS St
 
 ### GCU performance
 
-<Note>
+<PreviewFeature>
 
 While Cloud Dedicated is in [preview](#private-preview), these performance expectations may change.
 
-</Note>
+</PreviewFeature>
 
 From a single GCU, you can expect the following performance:
 
@@ -51,4 +46,4 @@ From a single GCU, you can expect the following performance:
 - 150 subgraph RPS
 - Up to 0.5 megabytes of response data per second
 
-GCU performance varies depending on your GraphQL workload and architecture. For example, queries that return large payloads decrease throughput below the baseline 25 RPS. Conversely, queries that return small amounts of data from several subgraphs likely achieve the baseline 25 RPS. Apollo recommends load testing your GraphQL workload on Cloud Dedicated before going into production.
+GCU performance varies depending on your GraphQL workload and architecture. For example, queries that return large payloads may decrease throughput below the baseline 25 RPS. Conversely, queries that return small amounts of data from several subgraphs may achieve above the baseline 25 RPS. Apollo recommends load testing your GraphQL workload on Cloud Dedicated before going into production.
