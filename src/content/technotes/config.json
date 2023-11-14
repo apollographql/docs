@@ -4,6 +4,7 @@
   "sidebar": {
     "Home": "/",
     "Tags": {
+      "architecture-patterns": "/tags/architecture-patterns",
       "auth": "/tags/auth",
       "caching": "/tags/caching",
       "client": "/tags/client",
@@ -20,8 +21,7 @@
       "server-driven-ui": "/tags/server-driven-ui",
       "sre": "/tags/sre",
       "subgraphs": "/tags/subgraphs",
-      "testing": "/tags/testing",
-      "architecture-patterns": "/tags/architecture-patterns"
+      "testing": "/tags/testing"
     }
   }
 }

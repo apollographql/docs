@@ -84,9 +84,10 @@ flowchart LR
 
 ## Example: Service Migration
 
-Imagine an architecture with 10 applications, each with it's own BFF. The company is migrating one of many backend APIs to a 
-different technology. As a result of the BFFs owning data orchestration, the organization must update 10 different BFFs or Experience APIs. Clients must be aware of what is happening during 
-those changes, must track timelines, track changes to field names, etc.
+A fictional company has an architecture with 10 applications with each having it's own BFF. The company is migrating 
+one of many backend APIs to a different technology, and as a result of the BFFs owning data orchestration, the 
+organization must update 10 different BFFs. Clients must be aware of what is happening during those changes, must track
+timelines, track changes to field names, etc to avoid breaking changes and negative impacts to their applications.
 
 ```mermaid
 flowchart LR
