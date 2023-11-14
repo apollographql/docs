@@ -33,7 +33,9 @@ The reference architecture consists of the following GitHub repositories:
 
 ## Getting started
 
-To get started with the reference architecture, begin with the README in the main [build-a-supergraph](https://github.com/apollosolutions/build-a-supergraph) repository. The README walks you through everything from setup to CI/CD to load testing the resulting architecture.
+To get started with the reference architecture, begin with the README in the main [build-a-supergraph](https://github.com/apollosolutions/build-a-supergraph) repository. 
+The README walks you through everything from setup to CI/CD to load testing the resulting architecture. You can utilize this page as a reference for how the architecture
+is setup.
 
 ## Architecture overview
 
@@ -67,6 +69,8 @@ graph LR;
 The router also pushes performance and utilization metrics to GraphOS via Uplink so you can [analyze them in GraphOS Studio](../metrics/).
 
 ### Development environment
+The development environment consists of a the router and its subgraphs hosted in a Kubernetes cluster in either AWS or GCP. The subgraph schemas
+are pushed to Apollo GraphOS via the Schema Uplink and verified using schema checks. The resulting supergraph schema is made available to the Router. The Router reports usage metrics back to GraphOS.
 
 ```mermaid
 flowchart TB
@@ -106,6 +110,10 @@ flowchart TB
 ```
 
 ### Production environment
+The production environment is similar to the development environment with some additions. 
+
+- The router and subgraphs send their OpenTelemetry data to a collector to be viewable in Zepkin
+- The Load Testing infrastructure (K6 Load Tester, InfluxDB, Grafana) are deployed. K6 is configured to send traffic to the router.
 
 ```mermaid
 flowchart TB
@@ -162,6 +170,8 @@ flowchart TB
 ```
 
 ## Components
+
+This section will summarize the various services and runtimess that make up the architecture. This includes the router, subgraphs, OpenTelemetry, Zipkin, K6, and Grafana.
 
 ### Router
 
@@ -221,7 +231,7 @@ flowchart LR
 
 ### Subgraphs
 
-Each subgraph is [deployed via GitHub Actions](#development-actions) to Kubernetes using a Helm chart. Each subgraph also uses GitHub Actions to publish its schema updates to the schema registry. Each subgraph is deployed to its own Kubernetes namespace. The subgraphs use a `HorizontalPodAutoscaler` to automatically scale up service instances based on CPU or memory utilization.
+Each subgraph is [deployed via GitHub Actions](#development-actions) to Kubernetes using a Helm chart. Each subgraph also uses GitHub Actions to publish its schema updates to the schema registry. Each subgraph is deployed to its own Kubernetes namespace. The subgraphs use a [`HorizontalPodAutoscaler`](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/) to automatically scale up service instances based on CPU or memory utilization.
 
 ```yaml title="values.yaml"
 autoscaling:
