@@ -15,12 +15,16 @@ export function FunctionSignature({
     <>
       {name ? displayName : ''}(
       {parameters
-        .map(
-          p =>
-            `${p.name}${p.optional ? '?' : ''}${
-              parameterTypes ? ': ' + p.type : ''
-            }`
-        )
+        .map(p => {
+          let pStr = p.name;
+          if (p.optional) {
+            pStr += '?';
+          }
+          if (parameterTypes) {
+            pStr += ': ' + p.type;
+          }
+          return pStr;
+        })
         .join(', ')}
       ){arrow ? ' =>' : ':'} {returnType}
     </>

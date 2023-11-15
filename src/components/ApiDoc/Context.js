@@ -6,18 +6,9 @@ const ApiDocContext = createContext();
 export const Provider = ({value, children}) => {
   const allNodes = useMemo(() => {
     const allNodes = {};
-    function traverse(node) {
-      if (
-        node.canonicalReference &&
-        Object.keys(node).length >
-          Object.keys(allNodes[node.canonicalReference] || {}).length
-      ) {
-        allNodes[node.canonicalReference] = node;
-      }
-      node.children?.forEach(traverse);
-      node.references?.forEach(n => n.target && traverse(n.target));
+    for (const node of value) {
+      allNodes[node.canonicalReference] = node;
     }
-    value.forEach(traverse);
     return allNodes;
   }, [value]);
 

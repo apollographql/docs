@@ -55,30 +55,38 @@ export function DocPiece({
   const getItem = useApiDocContext();
   const item = getItem(canonicalReference);
   let jsx = null;
-  if (example === true) example = 0;
 
   switch (true) {
-    case deprecated:
-      jsx = item.comment?.deprecated ? (
-        <b>{mdToReact(item.comment?.deprecated)}</b>
+    case deprecated: {
+      const value = item.comment?.deprecated;
+      jsx = value ? <b>{mdToReact(value)}</b> : null;
+      break;
+    }
+    case since: {
+      const value = item.comment?.since;
+      jsx = value /* TODO schema */ ? (
+        <i>Added to Apollo Client in version {value}</i>
       ) : null;
       break;
-    case since:
-      jsx = item.comment?.since /* TODO schema */ ? (
-        <i>Added to Apollo Client in version {item.comment?.since}</i>
-      ) : null;
+    }
+    case summary: {
+      const value = item.comment?.summary;
+      jsx = value ? mdToReact(value) : null;
       break;
-    case summary:
-      jsx = item.comment?.summary ? mdToReact(item.comment?.summary) : null;
+    }
+    case remark: {
+      const value = item.comment?.remark;
+      jsx = value ? mdToReact(value) : null;
       break;
-    case remark:
-      jsx = item.comment?.remark ? mdToReact(item.comment?.remark) : null;
+    }
+    case example !== false: {
+      // special case: `example`: 0 references the first example, so we can't check for a truthy value
+      // `true` will be interpreted as `0` here
+      const value =
+        item.comment?.examples[Number.isInteger(example) ? example : 0];
+      jsx = value ? <b>{mdToReact(value)}</b> : null;
       break;
-    case example !== false:
-      jsx = item.comment?.examples[example] ? (
-        <>{mdToReact(item.comment?.examples[example])}</>
-      ) : null;
-      break;
+    }
     default:
       throw new Error(
         'You need to call `DocPiece` with  one of the following props:' +
