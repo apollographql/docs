@@ -8,22 +8,24 @@ We recommend that you read through this checklist and idenitify critical feature
 
 ## GraphOS Studio
 - Ensure that you've created multiple [variants](/graphos/graphs/#variants) to represent the different environments where your supergraph runs (production, staging, and so on).
-- Optionally, [protect your production variant](/graphos/graphs/studio-features#protected-variants-enterprise-only) to avoid accidental changes while working in Apollo Studio.
+- [Protect your production variant](/graphos/graphs/studio-features#protected-variants-enterprise-only) to avoid accidental changes while working in Studio.
 
 ## Apollo Router
 - Ensure that you've correctly configured [managed federation](/federation/managed-federation/setup/) and [GraphOS schema usage reporting](/router/configuration/apollo-telemetry).
 - For security, [disable introspection](/router/configuration/overview/#introspection) for all production routers (by default Router disables introspection, but makes sure you are not using `--dev` mode).
-  - You can continue to view and fetch your GraphQL schemas from Apollo Studio and run operations from [Studio Explorer](/graphos/explorer).
+  - You can continue to view and fetch your GraphQL schemas from GraphOS and run operations from [Studio Explorer](/graphos/explorer).
 - Configure the [Router traffic shapping](/router/configuration/traffic-shaping) features:
   - Set request and subgraph level timeouts and rate limits
   - Deduplicate subgraph requests
   - Communicate with subgraphs using APQ
 - Enable [operation limits](/router/configuration/operation-limits) to block large and malicous requests
-- Configure additional [tracing, metrics, and logging](router/configuration/tracing) through OpenTelemetry or Prometheous
+- Configure additional [tracing, metrics, and logging](/router/configuration/tracing) through OpenTelemetry or Prometheous
+- Enable the operation and query plan [distributed cache](/router/configuration/distributed-caching)
+- Optionally, enable any [other features](/router/enterprise-features/) deemed critical for your deployment of Apollo Router
 
 ## Subgraphs/Servers
 - For security, [disable introspection](/apollo-server/api/apollo-server/#introspection) for all production GraphQL subgraphs.
-  - You can continue to view and fetch your GraphQL schemas from Apollo Studio.
+  - You can continue to view and fetch your GraphQL schemas from GraphOS and run operations from [Studio Explorer](/graphos/explorer).
 - Ensure that you've integrated [`rover subgraph check`](/rover/commands/subgraphs#subgraph-check) and [`rover subgraph publish`](/rover/commands/subgraphs#subgraph-publish) into your CI/CD pipeline.
 - If your subgraph servers are listed as [compatible with `FEDERATED TRACING`](/federation/building-supergraphs/supported-subgraphs/), ensure that you've enabled [federated traces](/federation/metrics/), and that you can view operation metrics as expected in Apollo Studio.
   - Enable [fractional trace sampling via `fieldLevelInstrumentation`](/graphos/metrics/field-usage/#fractional-sampling) to reduce performance hits due to tracing.
