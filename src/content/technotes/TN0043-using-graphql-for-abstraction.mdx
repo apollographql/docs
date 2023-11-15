@@ -1,13 +1,13 @@
 ---
-title: Graphql as an Abstraction Layer
+title: GraphQL as an abstraction layer
 id: TN0043
 tags: [architecture-patterns]
 ---
 
-One of the advantages of using GraphQL is that it provides an abstraction between the consumers of the graph and 
+One of the advantages of using GraphQL is that it provides an abstraction between service consumers and 
 the teams maintaining the backend services. 
 
-In an backend-for-frontend (BFF) architecture, each BFF connects to a number of backend services. As you add new BFFs for each application, the number of connections proliferates and a change to any of the backing APIs/components has major implications. 
+In a backend-for-frontend (BFF) architecture, each BFF connects to any number of backend services. As you add new BFFs for each application, the number of connections proliferates, and changes to any backend services have major implications.
 
 ```mermaid
 flowchart LR
@@ -82,12 +82,14 @@ flowchart LR
   bff5 --> grpc5
 ```
 
-## Example: Service Migration
+## Service migration example
 
-A fictional company has an architecture with 10 applications with each having it's own BFF. The company is migrating 
-one of many backend APIs to a different technology, and as a result of the BFFs owning data orchestration, the 
-organization must update 10 different BFFs. Clients must be aware of what is happening during those changes, must track
-timelines, track changes to field names, etc to avoid breaking changes and negative impacts to their applications.
+Suppose a company has an architecture with ten applications, each with its own BFF. The company is migrating one of many backend APIs to a different technology. As a result of the BFFs owning data orchestration, the organization must update ten different BFFs. 
+
+To avoid breaking changes, clients must:
+- be aware of what is happening during those change,
+- track timelines,
+- and track changes to field names.
 
 ```mermaid
 flowchart LR
@@ -151,7 +153,7 @@ flowchart LR
 ```
 
 
-However, if that company was using GraphQL as an abstraction layer, the consumers don't need to know about this change as the backing services 
+If the company used GraphQL as an abstraction layer, the consumers wouldn't need to know about this change because the organization has abstracted backend APIs behind a graph schema. The only change needed is at the GraphQL layer.
 have been abstracted behind the schema of the graph by the organization. The only change needed is at the GraphQL layer.
 
 ```mermaid
@@ -187,7 +189,7 @@ flowchart LR
   graphql -.-> newservice
 ```
 
-As a company grows, this could potentially eliminate hundreds of updates, deployments, dependencies, or more due to the reduced impact of changes to backing services.
+As a company grows, this could eliminate hundreds of updates, deployments, and dependencies due to the reduced impact of changes to backend services.
 
 ## Conclusion
 GraphQL provides a great tool to abstract away the complexities of your backing services from your front end consumers. It can 
