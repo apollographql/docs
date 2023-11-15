@@ -7,7 +7,8 @@ import {MarkdownInAdmonitions} from './MarkdownInAdmonitions';
 
 export const PreviewFeature = ({
   discordLink = 'https://discord.gg/yFZJH2QYrK',
-  appendText = ''
+  appendText = '',
+  children
 }) => {
   return (
     <Box
@@ -31,25 +32,32 @@ export const PreviewFeature = ({
           </Center>
         </chakra.span>
         <Text pl="1">
-          <b>
-            This feature is currently in{' '}
-            <Link
-              color={'primary'}
-              href="https://www.apollographql.com/docs/resources/product-launch-stages#preview"
-            >
-              preview
-            </Link>
-            .
-          </b>{' '}
-          Your questions and feedback are highly valued{'—'}don&apos;t hesitate
-          to get in touch with your Apollo contact or on the official
-          <Link color={'primary'} href={discordLink}>
-            {' '}
-            Apollo GraphQL Discord
-          </Link>
-          .{' '}
-          {appendText.length > 0 && (
-            <MarkdownInAdmonitions>{appendText}</MarkdownInAdmonitions>
+          {children ? (
+            children
+          ) : (
+            <>
+              <b>
+                This feature is currently in{' '}
+                <Link
+                  color={'primary'}
+                  href="https://www.apollographql.com/docs/resources/product-launch-stages#preview"
+                >
+                  preview
+                </Link>
+                .
+              </b>{' '}
+              Your questions and feedback are highly valued{'—'}don&apos;t
+              hesitate to get in touch with your Apollo contact or on the
+              official
+              <Link color={'primary'} href={discordLink}>
+                {' '}
+                Apollo GraphQL Discord
+              </Link>
+              .{' '}
+              {appendText.length > 0 && (
+                <MarkdownInAdmonitions>{appendText}</MarkdownInAdmonitions>
+              )}
+            </>
           )}
         </Text>
       </Flex>
@@ -59,5 +67,6 @@ export const PreviewFeature = ({
 
 PreviewFeature.propTypes = {
   discordLink: PropTypes.string,
-  appendText: PropTypes.node
+  appendText: PropTypes.node,
+  children: PropTypes.node
 };

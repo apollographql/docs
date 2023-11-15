@@ -1,21 +1,23 @@
 ---
 title: Managing your Apollo plan
+subtitle: Understand your Apollo plan, features, and billing
+description: Learn about Apollo Serverless (Free), Serverless, Dedicated, and Enterprise plans
 ---
 
 Every Apollo organization has an associated plan that determines which GraphOS features the organization has access to, along with how it's billed.
-
-<blockquote>
 
 **Every newly created organization starts on one of the following:**
 
 - The [**Serverless (Free)**](#current-plans) plan
 - A free [Enterprise trial](#enterprise-trials) (which enables you to test out most GraphOS Enterprise features)
 
-</blockquote>
-
 You can check your organization's current plan in GraphOS Studio. From your organization's page, go to the **Settings** tab and scroll down to the **Plan and Billing** section:
 
-<img class="screenshot" alt="The Plan and Billing section in GraphOS Studio" src="../img/plan-and-billing.jpg" />
+<img
+  className="screenshot"
+  alt="The Plan and Billing section in GraphOS Studio"
+  src="../img/plan-and-billing.jpg"
+/>
 
 ## Current plans
 
@@ -23,11 +25,12 @@ Apollo offers the following plans to new organizations:
 
 > **These are _brief summaries_ of each plan.** For complete plan details, see the [pricing page](https://apollographql.com/pricing).
 
-| Plan | Description |
-|------|-------------|
-| **Serverless (Free)** | Provides access to serverless [cloud supergraphs](../graphs/#cloud-supergraphs), along with many other GraphOS features. Sets a fixed limit on monthly serverless operations. This plan is free. |
-| **Serverless** | Removes the operation limit included in the **Serverless (Free)** plan, and is billed based on usage _above_ that limit. Also expands metrics data retention. |
-| **Enterprise** | These plans feature self-hosted routing, advanced security and schema delivery features, access control, and more. They include negotiable usage rates. They do _not_ currently support cloud supergraphs. You can try out most Enterprise features for free with an [Enterprise trial](#enterprise-trials). |
+| Plan                             | Description                                                                                                                                                                                                                                                                                                |
+| -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Serverless (Free)**            | Provides access to serverless [cloud supergraphs](../graphs/#cloud-supergraphs), along with many other GraphOS features. Sets a fixed limit on monthly serverless operations. This plan is free.                                                                                                           |
+| **Serverless**                   | Removes the operation limit of the **Serverless (Free)** plan, and is billed based on usage _above_ that limit. Also expands metrics data retention.                                                                                                                                                       |
+| **Dedicated <br/> (In preview)** | This plan lets you run a cloud router on dedicated, pre-provisioned infrastructure that you control and scale. It is currently in invite-only preview. [Get in touch](mailto:cloud@apollographql.com) if you'd like to request access or have any questions.                                               |
+| **Enterprise**                   | The Enterprise plan features self-hosted routing, advanced security and schema delivery features, access control, and more. It does _not_ support cloud supergraphs. It includes negotiable usage rates. You can try out most Enterprise features for free with an [Enterprise trial](#enterprise-trials). |
 
 > An Enterprise plan provides access to all GraphOS Enterprise features, our Graph Champions community, and a dedicated support channel for your team to talk with Apollo supergraph experts. We'll work with you to customize a query volume limit and support package that's right for you.
 >
@@ -55,11 +58,21 @@ With an Enterprise trial, you create a _new_ GraphOS organization that behaves i
 
 You can identify your trial organization in [GraphOS Studio](https://studio.apollographql.com) by the `ENTERPRISE TRIAL` label next to its name in the upper left:
 
-<img class="screenshot" alt="Label applied to Enterprise orgs in Studio" src="../img/trial-org-label.jpg" width="500" />
+<img
+  className="screenshot"
+  alt="Label applied to Enterprise orgs in Studio"
+  src="../img/trial-org-label.jpg"
+  width="500"
+/>
 
 Studio also displays how many days remain in your trial in the upper right:
 
-<img class="screenshot" alt="Enterprise trial duration indicator in Studio" src="../img/trial-org-timeleft.jpg" width="500" />
+<img
+  className="screenshot"
+  alt="Enterprise trial duration indicator in Studio"
+  src="../img/trial-org-timeleft.jpg"
+  width="500"
+/>
 
 In the final few days of your trial period, Studio displays an additional notification banner.
 
@@ -69,19 +82,19 @@ At the end of the trial, you can contact Apollo to upgrade your organization to 
 
 When your Enterprise trial period ends, your trial organization becomes _locked_ unless you contact Apollo to upgrade to a full Enterprise organization (you can upgrade any time before _or_ after the trial period ends).
 
-You can't access a locked organization from GraphOS Studio, and GraphOS stops serving supergraph schemas and [Enterprise entitlements](/router/enterprise-features#the-enterprise-entitlement) to your [self-hosted routers](../routing/self-hosted/).
+You can't access a locked organization from GraphOS Studio, and GraphOS stops serving supergraph schemas and [Enterprise entitlements](/router/enterprise-features#the-enterprise-entitlement) to your [self-hosted routers](../quickstart/self-hosted/).
 
 ## Legacy plans
 
 If you have a non-Enterprise Apollo organization that was created before **4 October 2022**, it's on one of the following legacy plans.
 
-> These plans do _not_ support serverless cloud supergraphs, and they might not support other new GraphOS features moving forward.
+> These plans do _not_ support cloud supergraphs, and they might not support other new GraphOS features moving forward.
 >
 > If your organization is on one of these plans, we strongly recommend [upgrading to a current plan](#upgrading-to-a-current-plan).
 
-| Plan | Description |
-|------|-------------|
-| **Free** | Our legacy free plan, different from the current **Serverless (Free)** plan. Provides basic GraphOS features, with _very_ limited data retention and maximum query volume. |
+| Plan     | Description                                                                                                                                                                                                          |
+| -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Free** | Our legacy free plan, different from the current **Serverless (Free)** plan. Provides basic GraphOS features, with _very_ limited data retention and maximum query volume.                                           |
 | **Team** | Our legacy plan for small and medium teams, which is billed based on the number of team members (i.e., seat-based). Raises the retention and query volume limits from the **Free** plan, but does not _remove_ them. |
 
 ### Upgrading to a current plan
@@ -90,6 +103,10 @@ To create cloud supergraphs, your Apollo organization needs to be on either the 
 
 **If your organization is on the legacy Free plan,** you can convert your organization to the current **Serverless (Free)** plan by clicking **Convert to Serverless (Free)** in the top-right corner of your organization's page in Studio:
 
-<img class="screenshot" alt="A screenshot of the Convert to Serverless (Free) button" src="../img/convert-to-serverless.jpg" />
+<img
+  className="screenshot"
+  alt="A screenshot of the Convert to Serverless (Free) button"
+  src="../img/convert-to-serverless.jpg"
+/>
 
-**If you're on the legacy Teams plan**, you currently need to create a _new_ organization to be able to create cloud supergraphs.
+**If you're on the legacy Team plan**, you currently need to create a _new_ organization to be able to create cloud supergraphs.
