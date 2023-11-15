@@ -13,7 +13,7 @@ We recommend that you read through this checklist and idenitify critical feature
 ## Apollo Router
 - Ensure that you've correctly configured [managed federation](/federation/managed-federation/setup/) and [GraphOS schema usage reporting](/router/configuration/apollo-telemetry).
 - For security, [disable introspection](/router/configuration/overview/#introspection) for all production routers (by default Router disables introspection, but make sure you are not using `--dev` mode).
-  - You can continue to view and fetch your GraphQL schemas from GraphOS and run operations from [Studio Explorer](/graphos/explorer).
+  - You can continue to view and fetch your GraphQL schemas from GraphOS and run operations from [GraphOS Studio Explorer](/graphos/explorer).
 - Configure the [Router traffic shapping](/router/configuration/traffic-shaping) features:
   - Set request and subgraph level timeouts and rate limits
   - Deduplicate subgraph requests
@@ -25,7 +25,7 @@ We recommend that you read through this checklist and idenitify critical feature
 
 ## Subgraphs/Servers
 - For security, [disable introspection](/apollo-server/api/apollo-server/#introspection) for all production GraphQL subgraphs.
-  - You can continue to view and fetch your GraphQL schemas from GraphOS and run operations from [Studio Explorer](/graphos/explorer).
+  - You can continue to view and fetch your GraphQL schemas from GraphOS and run operations from [GraphOS Studio Explorer](/graphos/explorer).
 - Ensure that you've integrated [`rover subgraph check`](/rover/commands/subgraphs#subgraph-check) and [`rover subgraph publish`](/rover/commands/subgraphs#subgraph-publish) into your CI/CD pipeline.
 - If your subgraph servers are listed as [compatible with `FEDERATED TRACING`](/federation/building-supergraphs/supported-subgraphs/), ensure that you've enabled [federated traces](/federation/metrics/), and that you can view operation metrics as expected in Apollo Studio.
   - Enable [fractional trace sampling via `fieldLevelInstrumentation`](/graphos/metrics/field-usage/#fractional-sampling) to reduce performance hits due to tracing.
