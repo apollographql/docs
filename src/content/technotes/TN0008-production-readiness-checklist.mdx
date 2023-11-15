@@ -12,7 +12,7 @@ We recommend that you read through this checklist and idenitify critical feature
 
 ## Apollo Router
 - Ensure that you've correctly configured [managed federation](/federation/managed-federation/setup/) and [GraphOS schema usage reporting](/router/configuration/apollo-telemetry).
-- For security, [disable introspection](/router/configuration/overview/#introspection) for all production routers (by default Router disables introspection, but makes sure you are not using `--dev` mode).
+- For security, [disable introspection](/router/configuration/overview/#introspection) for all production routers (by default Router disables introspection, but make sure you are not using `--dev` mode).
   - You can continue to view and fetch your GraphQL schemas from GraphOS and run operations from [Studio Explorer](/graphos/explorer).
 - Configure the [Router traffic shapping](/router/configuration/traffic-shaping) features:
   - Set request and subgraph level timeouts and rate limits
