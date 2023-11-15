@@ -99,7 +99,7 @@ GraphQL includes some built-in directives (such as `@deprecated`), and you can a
 
 ## Docstring
 
-Provides the description of a type, field, or argument. Docstrings automatically appear in many common GraphQL tools, including the Apollo Studio Explorer.
+Provides the description of a type, field, or argument. Docstrings automatically appear in many common GraphQL tools, including the GraphOS Studio Explorer.
 
 ```graphql
 """

@@ -118,7 +118,7 @@ This guide walks through configuring Azure Active Directory (Azure AD) as your A
 
 After you successfully configure the identity bridge between Azure AD and PingOne, you need to configure and enable Apollo as an OIDC application. The configuration for this application should already be initialized, and you can access it via the **Complete your Application Configuration** reminder under **Applications** in the PingOne admin console.
 
-1. Select **Meteor Development Group - Apollo Studio** under **Complete your Application Configuration**.
+1. Select **Meteor Development Group - GraphOS Studio** under **Complete your Application Configuration**.
 
     > ⚠️ If the **Add OIDC Application** wizard doesn’t automatically pop-up, select the **SAML** tab and then select the **OIDC** tab.
 

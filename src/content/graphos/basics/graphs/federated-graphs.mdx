@@ -2,7 +2,7 @@
 title: Supergraph-specific Studio features
 ---
 
-Apollo Studio provides tools to help multiple teams collaborate on a supergraph and its subgraphs.
+GraphOS Studio provides tools to help multiple teams collaborate on a supergraph and its subgraphs.
 
 ## Supergraph variants
 
@@ -30,16 +30,16 @@ graph BT;
 
 This helps you test out adding new subgraphs (or removing existing ones) in non-production environments.
 
-When you [publish a subgraph's schema](../delivery/), you can specify which variant of the supergraph you're publishing that schema to.
+When you [publish a subgraph's schema](../delivery/publishing-schemas/#publish-subgraph-schema), you can specify which variant of the supergraph you're publishing that schema to.
 
 ### Adding a variant
 
 You can add a new variant to your existing GraphOS supergraph in the following ways:
 
-* [In Apollo Studio](#adding-a-variant-in-apollo-studio) (cloud supergraphs only)
+* [In GraphOS Studio](#adding-a-variant-in-graphos-studio) (cloud supergraphs only)
 * [Via the Rover CLI](#adding-a-variant-via-the-rover-cli)
 
-#### Adding a variant in Apollo Studio
+#### Adding a variant in GraphOS Studio
 
 > This method of adding a variant is available only to cloud supergraphs. For other graph types, see [Adding a variant via the Rover CLI](#adding-a-variant-via-the-rover-cli)
 
@@ -80,7 +80,7 @@ You can add a new variant to your existing GraphOS supergraph in the following w
 
 To add a new variant to your supergraph with Rover, you publish its first subgraph's schema! To do this, you use the exact same Rover command as [updating an _existing_ subgraph](../quickstart/next-steps/#update-a-subgraph-schema). The only difference is that you provide the name of the new variant to the command.
 
-[Learn about publishing subgraph schemas.](../delivery/#subgraph-schemas)
+[Learn about publishing subgraph schemas.](../delivery/publishing-schemas/#publish-subgraph-schemas)
 
 ## Managing subgraphs
 
@@ -99,10 +99,10 @@ The list includes each subgraph's name and routing URL, along with type and fiel
 
 You can add your new subgraph to your GraphOS supergraph in the following ways:
 
-* [In Apollo Studio](#adding-a-subgraph-in-apollo-studio) (cloud supergraphs only)
+* [In GraphOS Studio](#adding-a-subgraph-in-graphos-studio) (cloud supergraphs only)
 * [Via the Rover CLI](#adding-a-subgraph-via-the-rover-cli)
 
-#### Adding a subgraph in Apollo Studio
+#### Adding a subgraph in GraphOS Studio
 
 > This method of adding a subgraph is available only to cloud supergraphs. For other graph types, see [Adding a subgraph via the Rover CLI](#adding-a-subgraph-via-the-rover-cli)
 
@@ -134,7 +134,7 @@ You can add your new subgraph to your GraphOS supergraph in the following ways:
 
 To add a subgraph to your supergraph with Rover, you publish the subgraph's schema! To do this, you use the exact same Rover command as [updating an _existing_ subgraph](../quickstart/next-steps/#update-a-subgraph-schema). The only difference is that you provide the name of the _new_ subgraph to the command.
 
-[Learn about publishing subgraph schemas.](../delivery/#subgraph-schemas)
+[Learn about publishing subgraph schemas.](../delivery/publishing-schemas/#publish-subgraph-schemas)
 
 ### Modifying a subgraph
 
@@ -343,7 +343,7 @@ This field supports Markdown-formatted links.
 
 #### Known `@contact` limitations
 
-- To provide the `@contact` directive to Apollo, you must publish your subgraph schemas by providing a local `.graphql` file as the `--schema` option of [`rover subgraph publish`](../delivery/).
+- To provide the `@contact` directive to Apollo, you must publish your subgraph schemas by providing a local `.graphql` file as the `--schema` option of [`rover subgraph publish`](../delivery/publishing-schemas/).
   - If you provide an introspection result to the command instead, the `@contact` directive is **not** included in that result.
 
 ### Viewing contact info
@@ -383,7 +383,7 @@ By default, these tags are _removed_ from the [API schema](/federation/federated
 If tag information _should_ be visible to clients (for example, to help document your API), you can enable this for a variant in Studio with the following steps:
 
 
-1. Go to the **Settings** page for your variant in Apollo Studio. 
+1. Go to the **Settings** page for your variant in GraphOS Studio. 
 2. On the **General** tab, click **Edit Configuration**. The Update Build Configuration dialog appears.
 3. If you have a Federation 1 supergraph, enable the toggle for the `@tag` directive under **Directives** (this step isn't necessary for Federation 2 supergraphs).
 4. Under **Build Settings**, enable the toggle labeled **Show all uses of @tag directives to consumers in Schema Reference and Explorer**.
@@ -413,7 +413,7 @@ Tags are also visible in the Explorer's Documentation tab:
 
 ## Supergraph support in the Explorer
 
-The [Apollo Studio Explorer](../explorer/) provides enhanced support for working with supergraphs:
+The [GraphOS Studio Explorer](../explorer/) provides enhanced support for working with supergraphs:
 
 - You can preview how your supergraph's router resolves data for an operation by inspecting the operation's [query plan](/federation/query-plans) in the Response pane.
 - While you're building operations in the Explorer, you can see which subgraph each field of your operation originates in by enabling subgraph hints from the Explorer's Settings tab.
