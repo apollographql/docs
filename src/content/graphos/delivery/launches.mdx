@@ -55,8 +55,6 @@ graph TB;
 
 <PreviewFeature />
 
-You can manually call the [GraphOS Platform API](../basics/platform-api) to publish a batch of subgraph schema updates to trigger a launch. This is useful when you don't want the latest validated supergraph schema retrieved from Uplink, and instead you want the supergraph schemas for different sets of subgraph schemas (such as for different deployment environments).
+You can manually trigger a launch by calling the [GraphOS Platform API](../basics/platform-api) to publish subgraph schema updates. This is useful for deployments that require progressive rollouts, where different environments have unique subgraph schemas. In this scenario, you can publish the subgraph schemas for an environment, wait for the completed launch (and any downstream launches), then retrieve the supergraph schema with the launch ID.  
 
-For more details about a workflow that manually triggers launches, see [Bypass Uplink](/federation/managed-federation/uplink#bypassing-uplink).
-
-For an example scenario, see [Using variants to control rollout](/federation/managed-federation/deployment/#using-variants-to-control-rollout).  
+For more details about workflows that manually trigger launches, see [Advanced deployment workflows](federation/managed-federation/deployment#advanced-deployment-workflows).
