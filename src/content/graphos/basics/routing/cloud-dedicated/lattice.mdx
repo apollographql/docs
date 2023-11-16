@@ -167,7 +167,7 @@ Congratulations! You've created an AWS VPC Lattice target group. Repeat this pro
     src="../../../img/cloud-dedicated/custom-domain.jpg"
   />
 
-6. In the **Service access** section, select the AWS IAM authentication type and paste the following auth policy. This policy ensures that only the AWS Organization for Cloud Dedicated can send traffic to your subgraphs.
+6. In the **Service access** section, select the AWS IAM authentication type and paste the following authorization policy. This policy ensures that only the AWS Organization for Cloud Dedicated can send traffic to your subgraphs.
 
   ```json
   {
@@ -541,7 +541,78 @@ When your AWS resource is set to private, it isn't accessible by external servic
 
 Congratulations! You've now added a private subgraph to your GraphOS Cloud Router.
 
-## Removing access to private subgraphs
+## Further restrict access to private subgraphs
+
+Once you configure an AWS VPC Lattice service to accept traffic from the Apollo AWS Organization, it is protected by multiple security layers:
+
+- The AWS VPC Lattice service network only allows traffic with a valid signature and over HTTPS.
+- The AWS VPC Lattice service's configured authorization policy ensures that traffic only comes from Apollo's AWS accounts. (This is the authorization policy you configured in step 6 [when creating your Lattice service](#step-2-create-an-aws-vpc-lattice-service).)
+- Apollo Cloud Router Provisioning compares subgraphs in a graph variant configuration against the list of known private subgraphs in its Apollo account, and refuses to create or update Cloud Routers with unknown private subgraphs.
+- Cloud Routers are only granted permissions to invoke private subgraphs that are listed in their graph variant configuration.
+
+You can further restrict access to your private subgraphs by configuring additional [conditions](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_condition.html) in your service's authorization policy.
+Specifically, you can add conditions to restrict traffic based on your organization's Apollo account ID or your subgraph's graph ref.
+
+### Update a Lattice service's authorization policy
+
+To update a Lattice service's authorization policy with additional restrictions:
+
+1. Find your account ID and or graph ref in your Apollo account.
+  - Log in to [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content).
+  - To-do: instructions on finding your account ID
+  - To find your graph ref, click on a graph variant in the **Graphs** page. The graph ref will be at the top of the page. You can click it to copy it.
+  - If you are using the terraform-graphos-aws module, you must the `apollo_account_ids` and `apollo_graph_refs` variables.
+2. In the AWS Console for your region of choice, go to the VPC service page:
+
+- [US East (N. Virginia) — us-east-1](https://us-east-1.console.aws.amazon.com/ram/home?region=us-east-1)
+- [Europe (Ireland) — eu-west-1](https://eu-west-1.console.aws.amazon.com/ram/home?region=eu-west-1)
+
+3. In the menu on the left, scroll down and open **Services** in the **VPC Lattice** section.
+
+  <img
+    className="screenshot"
+    alt="AWS VPC service page left menu"
+    src="../../../img/cloud-dedicated/vpc-lattice-menu.jpg"
+    width="175px"
+  />
+
+4. Click the name of the Lattice service you want to configure the authorization policy for.
+
+  <img
+    className="screenshot"
+    alt="AWS VPC service page"
+    src="../../../img/cloud-dedicated/select-lattice-service.jpg"
+  />
+
+5. In the **Service access** section, update your authorization policy. You can use the following as an example–make sure to replace the account ID and/or graph ref depending on which conditions you are adding.
+
+  ```json {13-17}
+  {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Principal": "*",
+        "Action": "vpc-lattice-svcs:Invoke",
+        "Resource": "*",
+        "Condition": {
+          "ForAnyValue:StringLike": {
+            "aws:PrincipalOrgPaths": "o-9vaxczew6u/*/ou-leyb-l9pccq2t/ou-leyb-fvqz35yo/*"
+          },
+          // Restrict traffic based on Apollo account IDs or graphRefs
+          "StringEquals": {
+            "aws:PrincipalTag/Apollo:accountId": "my_account_id_xezf34",
+            "aws:PrincipalTag/Apollo:graphRef": "my-graph@my-variant"
+          }
+        }
+      }
+    ]
+  }
+  ```
+
+6. Update your Cloud Router.
+
+## Remove access to private subgraphs
 
 To remove Cloud Dedicated access to private subgraphs, you need to remove both resource shares and service network associations. Keep in mind that any existing supergraph that sends traffic to your private subgraphs will stop working once you remove access.
 
