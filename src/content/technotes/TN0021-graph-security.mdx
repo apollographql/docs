@@ -53,7 +53,7 @@ In addition to the above security concerns, preventing the outside world from ac
 
 After you implement measures to limit API discoverability in public-facing environments, the next step in protecting a GraphQL API is to guard it against both intentionally and unintentionally malicious queries. Again, many GraphQL-related vulnerabilities have to do with how an unprotected API may be exploited in DoS attacks, but there are other considerations as well.
 
-In the sections that follow, we will explore measures that can help mitigate the impact of malicious queries for any GraphQL API, such as limiting query depth and amount, paginating list fields where appropriate, validating and sanitizing data, setting timeouts, authenticating and authorizing at the router, and guarding against batched query abuse. And for GraphQL APIs with third-party clients, we will also explore using query cost analysis to support rate limiting.
+In the sections that follow, we will explore measures that can help mitigate the impact of malicious queries for any GraphQL API, such as limiting query depth and amount, paginating list fields where appropriate, validating and sanitizing data, setting timeouts, authentication and authorization in the router, and guarding against batched query abuse. And for GraphQL APIs with third-party clients, we will also explore using query cost analysis to support rate limiting.
 
 ### Limit query depth
 
@@ -141,11 +141,11 @@ For example, you might want to set fixed costs for different kinds of nodes, or 
 
 Given the potential scope of developing a bespoke query cost analysis solution, you should first verify that your API actually _needs_ one. For graphs that are consumed by first-party clients only, other demand control mechanisms might suffice. If you do need to add comprehensive query cost analysis to your GraphQL API, then the work that IBM has done in this area to develop the [GraphQL Cost Directives specification](https://ibm.github.io/graphql-specs/cost-spec.html) may be instructive. Their work in this area was originally [published in a paper](https://arxiv.org/pdf/2009.05632.pdf) (with a [supplemental video](https://youtu.be/StgZQ0s_JGI) to highlight some of the key concepts) and is further explored in [this series of blog posts](https://mmatsa.com/blog/why-cost-analysis/).
 
-### Authentication and authorization at the router
+### Authentication and authorization in the router
 
-Enforcing authentication and authorization at the router protects your underlying APIs from malicious queries. Dropping unauthenticated, unauthorized queries at the entry point of your supergraph frees up your downstream graphs to process only valid requests, thereby reducing load and enhancing performance.
+Enforcing authentication and authorization in the router protects your underlying APIs from malicious queries. Dropping unauthenticated, unauthorized queries at the entry point of your supergraph frees up your downstream graphs to process only valid requests, thereby reducing load and enhancing performance.
 
-Hardening access to your supergraph at the router also adds another layer of security when implementing zero-trust and defense-in-depth strategies. The router centralizes authentication and authorization logic, which downstream services can reinforce with checks of their own.
+Hardening access to your supergraph at the router also adds another layer of security when implementing zero-trust and defense-in-depth strategies. The router centralizes authentication and authorization logic, which downstream services can reinforce with their own checks.
 
 To enforce authentication and authorization in the Apollo Router:
 * [Enable JSON Web Token (JWT) authentication](/router/configuration/authn-jwt/).
