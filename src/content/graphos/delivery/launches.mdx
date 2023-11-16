@@ -18,6 +18,8 @@ Updates that trigger a launch include:
 
 A launch might consist entirely of changes that don't affect your supergraph's public API (such as migrating fields between subgraphs).
 
+A launch can be [triggered manually by calling a platform API](#manually-trigger-launch).
+
 ## Launch status
 
 Your supergraph's Launches page in GraphOS Studio enables you to observe and monitor the schema delivery process for both in-progress and past launches:
@@ -48,3 +50,13 @@ graph TB;
   class complete tertiary;
   class subgraphPublished secondary;
 ```
+
+## Manually triggered launch
+
+<PreviewFeature />
+
+You can manually call the [GraphOS Platform API](../basics/platform-api) to publish a batch of subgraph schema updates to trigger a launch. This is useful when you don't want the latest validated supergraph schema retrieved from Uplink, and instead you want the supergraph schemas for different sets of subgraph schemas (such as for different deployment environments).
+
+For more details about a workflow that manually triggers launches, see [Bypass Uplink](/federation/managed-federation/uplink#bypassing-uplink).
+
+For an example scenario, see [Using variants to control rollout](/federation/managed-federation/deployment/#using-variants-to-control-rollout).  
