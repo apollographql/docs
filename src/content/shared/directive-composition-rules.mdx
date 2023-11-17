@@ -9,9 +9,10 @@
   rationale="Arguments should be consistent across a non-[`repeatable`](https://spec.graphql.org/draft/#sel-GAHnBRVABeBoB_2T) directive's usage. If arguments differ, it may be a sign that subgraph owners need to communicate about the directive's usage. If the arguments _need_ to differ, consider using a [`repeatable`](https://spec.graphql.org/draft/#sel-GAHnBRVABeBoB_2T) directive."
 >
 
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
+<br/>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -22,7 +23,7 @@ type Query {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -33,9 +34,11 @@ type Query {
 }
 ```
 <br/>
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -46,7 +49,7 @@ type Query {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -65,26 +68,29 @@ type Query {
   rationale="Directives must only be used in the locations they are declared to belong in. If the same executable directive is defined with different locations in different subgraphs, it may be a sign that subgraph owners need to communicate about the directive's usage."
 >
 
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
+<br/>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 directive @log(message: String!) on QUERY #highlight-line
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 directive @log(message: String!) on FIELD #highlight-line
 ```
 
 
 <br/>
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 directive @log(message: String!) on QUERY | FIELD
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 directive @log(message: String!) on QUERY | FIELD
 ```
 
@@ -96,29 +102,32 @@ directive @log(message: String!) on QUERY | FIELD
   rationale="The [`@override`](/federation/federated-types/federated-directives/#override) directive indicates that an object field is now resolved a different subgraph. The directive can't work unless you specify an existing subgraph to resolve the field from."
 >
 
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
+<br/>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 type Product @key(fields: "id") {
   id: ID!
   inStock: Boolean! @override(from: "Subgraph B")
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 # Subgraph B doesn't exist
 ```
 <br/>
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 type Product @key(fields: "id") {
   id: ID!
   inStock: Boolean! @override(from: "Subgraph B")
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 type Product @key(fields: "id") {
   id: ID!
   inStock: Boolean!

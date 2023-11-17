@@ -2,9 +2,10 @@
 
 Indicates that an optional argument (of a field or directive definition) isn't present in all subgraphs and therefore won't be part of the supergraph.
 
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
+<br/>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -12,7 +13,7 @@ type Product {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -20,9 +21,11 @@ type Product {
 }
 ```
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -30,7 +33,7 @@ type Product {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -52,11 +55,12 @@ Two types are compatible if one is:
 
 of the other.
 
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
+<br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -73,7 +77,7 @@ enum Currency {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -92,11 +96,13 @@ enum Currency {
 
 </CodeColumns>
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -113,7 +119,7 @@ enum Currency {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -146,11 +152,12 @@ Two types are compatible if one is:
 
 of the other.
 
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
+<br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -172,7 +179,7 @@ enum Currency {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -196,11 +203,13 @@ enum Currency {
 
 </CodeColumns>
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -222,7 +231,7 @@ enum Currency {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -252,11 +261,12 @@ enum Currency {
 
 Indicates that an argument definition (of a field, input field, or directive definition) has a default value in only some of the subgraphs that define the argument.
 
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
+<br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -264,7 +274,7 @@ type Product {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -274,11 +284,13 @@ type Product {
 
 </CodeColumns>
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -286,7 +298,7 @@ type Product {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -302,11 +314,12 @@ type Product {
 
 Indicates that an element has a description in more than one subgraph, and the descriptions aren't equal.
 
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
+<br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 """
 A type representing a product.
 """
@@ -316,7 +329,7 @@ type Product {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 """
 An object representing a product.
 """
@@ -327,11 +340,13 @@ type Product {
 ```
 </CodeColumns>
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 """
 A type representing a product.
 """
@@ -341,7 +356,7 @@ type Product {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 """
 A type representing a product.
 """
@@ -358,18 +373,19 @@ type Product {
 
 Indicates that an object is declared as an entity (has a `@key`) in only some of the subgraphs in which the object is defined.
 
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
+<br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 type Product @key(fields: "id") { #highlight-line
   id: ID!
   name: String
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 type Product { #highlight-line
   id: ID!
   stock: Int
@@ -378,18 +394,20 @@ type Product { #highlight-line
 
 </CodeColumns>
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 type Product @key(fields: "id") { #highlight-line
   id: ID!
   name: String
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 type Product @key(fields: "id") { #highlight-line
   id: ID!
   stock: Int
@@ -404,11 +422,12 @@ type Product @key(fields: "id") { #highlight-line
 
 Indicates that a value of an enum type definition, that is only used as an input type, hasn't been merged into the supergraph because it's defined in only some of the subgraphs that declare the enum.
 
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
+<br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 enum ProductStatus {
   AVAILABLE
   SOLD_OUT
@@ -421,7 +440,7 @@ input ProductInput {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 enum ProductStatus {
   AVAILABLE
   SOLD_OUT
@@ -435,11 +454,13 @@ input ProductInput {
 
 </CodeColumns>
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 enum ProductStatus {
   AVAILABLE
   SOLD_OUT
@@ -452,7 +473,7 @@ input ProductInput {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 enum ProductStatus {
   AVAILABLE
   SOLD_OUT
@@ -473,11 +494,12 @@ input ProductInput {
 
 Indicates that a value of an enum type definition, that is only used as an output type or is unused, _has_ been merged in the supergraph but is defined in only some of the subgraphs that declare the enum.
 
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
+<br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 enum OrderStatus {
   CREATED
   PROCESSING #highlight-line
@@ -490,7 +512,7 @@ type Order {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 enum OrderStatus {
   CREATED
   COMPLETED
@@ -504,11 +526,13 @@ type Order {
 
 </CodeColumns>
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 enum OrderStatus {
   CREATED
   PROCESSING
@@ -521,7 +545,7 @@ type Order {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 enum OrderStatus {
   CREATED
   PROCESSING
@@ -542,17 +566,18 @@ type Order {
 
 Indicates that an executable directive definition is declared with inconsistent locations across subgraphs. (The supergraph schema then uses the intersection of all locations in the supergraph.)
 
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
+<br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 directive @log(
   message: String!
 ) on QUERY | FIELD  #highlight-line
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 directive @log(
   message: String!
 ) on FIELD #highlight-line
@@ -560,17 +585,19 @@ directive @log(
 
 </CodeColumns>
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 directive @log(
   message: String!
 ) on QUERY | FIELD
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 directive @log(
   message: String!
 ) on QUERY | FIELD
@@ -584,33 +611,36 @@ directive @log(
 
 Indicates that an executable directive definition is declared in only some of the subgraphs.
 
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
+<br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 directive @modify(
   field: String!
 ) on FIELD
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 # 🦗🦗🦗
 ```
 
 </CodeColumns>
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 directive @modify(
   field: String!
 ) on FIELD
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 directive @modify(
   field: String!
 ) on FIELD
@@ -624,17 +654,18 @@ directive @modify(
 
 Indicates that an executable directive definition is marked repeatable in only some of the subgraphs and won't be repeatable in the supergraph.
 
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
+<br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 directive @validateLength(
   max: Int!
 ) repeatable on FIELD
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 directive @validateLength(
   max: Int!
 ) on FIELD
@@ -643,17 +674,19 @@ directive @validateLength(
 
 </CodeColumns>
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 directive @validateLength(
   max: Int!
 ) repeatable on FIELD
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 directive @validateLength(
   max: Int!
 ) repeatable on FIELD
@@ -667,11 +700,12 @@ directive @validateLength(
 
 Indicates that a field of an input object type definition is only defined in some of the subgraphs that declare the input object.
 
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
+<br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 input ProductInput {
   name: String
   price: Float #highlight-line
@@ -682,7 +716,7 @@ input OrderInput {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 input ProductInput {
   name: String
 }
@@ -694,11 +728,13 @@ input OrderInput {
 
 </CodeColumns>
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 input ProductInput {
   name: String
   price: Float
@@ -709,7 +745,7 @@ input OrderInput {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 input ProductInput {
   name: String
   price: Float
@@ -728,9 +764,10 @@ input OrderInput {
 
 Indicates that a field of an interface "value type" (has no `@key` in any subgraph) isn't defined in all the subgraphs that declare the type.
 
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
+<br/>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 interface Product {
   id: ID!
   name: String
@@ -745,7 +782,7 @@ type DigitalProduct implements Product {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 interface Product {
   id: ID!
   name: String
@@ -761,9 +798,11 @@ type PhysicalProduct implements Product {
 
 ```
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 interface Product {
   id: ID!
   name: String
@@ -778,7 +817,7 @@ type DigitalProduct implements Product {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 interface Product {
   id: ID!
   name: String
@@ -799,9 +838,10 @@ type PhysicalProduct implements Product {
 
 A non-repeatable directive is applied to a schema element in different subgraphs but with arguments that are different.
 
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
+<br/>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -812,7 +852,7 @@ type Query {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -823,9 +863,11 @@ type Query {
 }
 ```
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -836,7 +878,7 @@ type Query {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -853,11 +895,12 @@ type Query {
 
 Indicates that a field of an object "value type" (has no `@key` in any subgraph) isn't defined in all the subgraphs that declare the type.
 
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
+<br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -865,7 +908,7 @@ type Product {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -875,11 +918,13 @@ type Product {
 
 </CodeColumns>
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -887,7 +932,7 @@ type Product {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -903,11 +948,12 @@ type Product {
 
 Indicates that a @shareable field returns different sets of runtime types in the different subgraphs in which it's defined.
 
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
+<br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -919,7 +965,7 @@ type Details {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -933,11 +979,13 @@ type Details {
 
 </CodeColumns>
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -949,7 +997,7 @@ type Details {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -969,17 +1017,18 @@ type Details {
 
 Indicates that an executable directive definition is declared with inconsistent locations across subgraphs. (The supergraph schema then uses the intersection of all locations in the supergraph.)
 
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
+<br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 directive @customDirective(
   message: String!
 ) on OBJECT | FIELD_DEFINITION  #highlight-line
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 directive @customDirective(
   message: String!
 ) on FIELD_DEFINITION #highlight-line
@@ -987,17 +1036,19 @@ directive @customDirective(
 
 </CodeColumns>
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 directive @customDirective(
   message: String!
 ) on OBJECT | FIELD_DEFINITION
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 directive @customDirective(
   message: String!
 ) on OBJECT | FIELD_DEFINITION
@@ -1011,23 +1062,26 @@ directive @customDirective(
 
 Indicates that a type system directive definition is marked repeatable in only some of the subgraphs that declare the directive and will be repeatable in the supergraph.
 
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
+<br/>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 directive @customDirective on OBJECT
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 directive @customDirective repeatable on OBJECT
 ```
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 directive @customDirective repeatable on OBJECT
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 directive @customDirective repeatable on OBJECT
 ```
 
@@ -1037,9 +1091,10 @@ directive @customDirective repeatable on OBJECT
 
 Indicates that a member of a union type definition is only defined in some of the subgraphs that declare the union.
 
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
+<br/>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -1053,7 +1108,7 @@ type Service {
 union SearchResult = Product | Service #highlight-line
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -1062,9 +1117,11 @@ type Product {
 union SearchResult = Product #highlight-line
 ```
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -1078,7 +1135,7 @@ type Service {
 union SearchResult = Product | Service #highlight-line
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String

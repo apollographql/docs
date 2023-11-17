@@ -18,9 +18,10 @@ These rules enforce naming conventions. Rules are categorized by the part(s) of 
   rationale="`camelCase` is a common convention for field names in GraphQL."
 >
 
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
 type User {
   # highlight-start
   FirstName: String! # PascalCase
@@ -29,9 +30,10 @@ type User {
 ```
 
 <br/>
-<p style="margin-bottom: 0">✅</p>
+Use instead:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
 type User {
   # highlight-start
   firstName: String # camelCase
@@ -46,18 +48,20 @@ type User {
   whatItDoes="Checks that field's name don't start with any of the following verbs: `get`, `list`, `post`, `put`, `patch`."
   rationale="Most fields should not start with any verb, with the exception of mutation fields. For mutation fields, it's best to use a verb that more specifically describes the action being performed, for example, `create`, `delete`, or `edit`.">
 
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
 type Query {
   getUsers: [User!]! # highlight-line
 }
 ```
 
 <br/>
-<p style="margin-bottom: 0">✅</p>
+Use instead:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
 type Query {
   users: [User!]! # highlight-line
 }
@@ -81,9 +85,10 @@ These rules apply to _all_ types that appear in a GraphQL schema, including:
   rationale="`PascalCase` is a common convention for type names in GraphQL."
 >
 
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
 # highlight-start
 type streamingService { # camelCase
   # highlight-end
@@ -92,9 +97,10 @@ type streamingService { # camelCase
 ```
 
 <br/>
-<p style="margin-bottom: 0">✅</p>
+Use instead:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
 # highlight-start
 type StreamingService { # PascalCase
   # highlight-end
@@ -110,18 +116,20 @@ type StreamingService { # PascalCase
   rationale="Starting type names with `Type` is redundant. It makes your schema definitions longer than necessary and your schema less readable."
 >
 
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
 type TypeBook { # highlight-line
   title: String!
 }
 ```
 
 <br/>
-<p style="margin-bottom: 0">✅</p>
+Use instead:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
 type Book { # highlight-line
   title: String!
 }
@@ -135,18 +143,20 @@ type Book { # highlight-line
   rationale="Ending type names with `Type` is redundant. It makes your schema definitions longer than necessary and your schema less readable."
 >
 
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
 type BookType { # highlight-line
   title: String!
 }
 ```
 
 <br/>
-<p style="margin-bottom: 0">✅</p>
+Use instead:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
 type Book { # highlight-line
   title: String!
 }
@@ -163,18 +173,20 @@ type Book { # highlight-line
   rationale="Starting object type names with `Object` is redundant. It makes your schema definitions longer than necessary and your schema less readable."
 >
 
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
 type ObjectBook { # highlight-line
   title: String!
 }
 ```
 
 <br/>
-<p style="margin-bottom: 0">✅</p>
+Use instead:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
 type Book { # highlight-line
   title: String!
 }
@@ -188,18 +200,20 @@ type Book { # highlight-line
   rationale="Ending object type names with `Object` is redundant. It makes your schema definitions longer than necessary and your schema less readable."
 >
 
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
 type BookObject { # highlight-line
   title: String!
 }
 ```
 
 <br/>
-<p style="margin-bottom: 0">✅</p>
+Use instead:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
 type Book { # highlight-line
   title: String!
 }
@@ -216,9 +230,10 @@ type Book { # highlight-line
   rationale="Starting interface type names with `Interface` is redundant. It makes your schema definitions longer than necessary and your schema less readable."
 >
 
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
 interface InterfaceBook { # highlight-line
   title: String
   author: String
@@ -226,9 +241,10 @@ interface InterfaceBook { # highlight-line
 ```
 
 <br/>
-<p style="margin-bottom: 0">✅</p>
+Use instead:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
 interface Book { # highlight-line
   title: String
   author: String
@@ -243,9 +259,10 @@ interface Book { # highlight-line
   rationale="Ending interface type names with `Interface` is redundant. It makes your schema definitions longer than necessary and your schema less readable."
 >
 
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
 interface BookInterface { # highlight-line
   title: String
   author: String
@@ -253,9 +270,10 @@ interface BookInterface { # highlight-line
 ```
 
 <br/>
-<p style="margin-bottom: 0">✅</p>
+Use instead:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
 interface Book { # highlight-line
   title: String
   author: String
@@ -273,9 +291,10 @@ interface Book { # highlight-line
   rationale="`camelCase` is a common convention for argument names in GraphQL."
 >
 
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
 type Mutation {
   #highlight-start
   createBlogPost(BlogPostContent: BlogPostContent!): Post # PascalCase
@@ -284,9 +303,10 @@ type Mutation {
 ```
 
 <br/>
-<p style="margin-bottom: 0">✅</p>
+Use instead:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
 type Mutation {
   #highlight-start
   createBlogPost(blogPostContent: BlogPostContent!): Post # camelCase
@@ -302,9 +322,10 @@ type Mutation {
   rationale='Ending input type names with `Input` distinguishes input types from "output" types like objects.'
 >
 
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
 input BlogPostDetails { #highlight-line
   title: String!
   content: String!
@@ -312,9 +333,10 @@ input BlogPostDetails { #highlight-line
 ```
 
 <br/>
-<p style="margin-bottom: 0">✅</p>
+Use instead:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
 input BlogPostDetailsInput { #highlight-line
   title: String!
   content: String!
@@ -331,9 +353,10 @@ input BlogPostDetailsInput { #highlight-line
   rationale="`SCREAMING_SNAKE_CASE` is a common convention for enum values in GraphQL."
 >
 
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
 enum Amenity {
   # highlight-start
   public_park # snake_case
@@ -342,9 +365,10 @@ enum Amenity {
 ```
 
 <br/>
-<p style="margin-bottom: 0">✅</p>
+Use instead:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
 enum Amenity {
   # highlight-start
   PUBLIC_PARK # SCREAMING_SNAKE_CASE 😱
@@ -360,9 +384,10 @@ enum Amenity {
   rationale="Starting enum type names with `Enum` is redundant. It makes your schema definitions longer than necessary and your schema less readable."
 >
 
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
 enum EnumResidence { # highlight-line
   HOUSE
   APARTMENT
@@ -371,9 +396,10 @@ enum EnumResidence { # highlight-line
 ```
 
 <br/>
-<p style="margin-bottom: 0">✅</p>
+Use instead:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
 enum Residence { # highlight-line
   HOUSE
   APARTMENT
@@ -389,9 +415,10 @@ enum Residence { # highlight-line
   rationale="Ending enum type names with `Enum` is redundant. It makes your schema definitions longer than necessary and your schema less readable."
 >
 
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
 enum ResidenceEnum { # highlight-line
   HOUSE
   APARTMENT
@@ -400,9 +427,10 @@ enum ResidenceEnum { # highlight-line
 ```
 
 <br/>
-<p style="margin-bottom: 0">✅</p>
+Use instead:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
 enum Residence { # highlight-line
   HOUSE
   APARTMENT
@@ -418,9 +446,10 @@ enum Residence { # highlight-line
   rationale='Ending input arguments with `Input` distinguishes inputs from "output" types like objects.'
 >
 
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
 enum Role { # highlight-line
   EDITOR
   VIEWER
@@ -432,9 +461,10 @@ type Query {
 ```
 
 <br/>
-<p style="margin-bottom: 0">✅</p>
+Use instead:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
 enum RoleInput { # highlight-line
   EDITOR
   VIEWER
@@ -453,9 +483,10 @@ type Query {
   rationale="Including the suffix `Input` on an output type is confusing."
 >
 
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
 enum RoleInput { # highlight-line
   EDITOR
   VIEWER
@@ -467,9 +498,10 @@ type Query {
 ```
 
 <br/>
-<p style="margin-bottom: 0">✅</p>
+Use instead:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
 enum Role { # highlight-line
   EDITOR
   VIEWER
@@ -490,16 +522,18 @@ type Query {
   rationale="`camelCase` is a common convention for directive names in GraphQL."
 >
 
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
 directive @SpecialField on FIELD_DEFINITION # PascalCase
 ```
 
 <br/>
-<p style="margin-bottom: 0">✅</p>
+Use instead:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
 directive @specialField on FIELD_DEFINITION # camelCase
 ```
 
@@ -550,18 +584,20 @@ These rules apply to the entire schema.
   rationale="Descriptions serve as documentation for your GraphQL schema. They make it easier for consumers of your graph discover fields and learn how to use them. Check out [examples](/apollo-server/schema/schema/#descriptions-docstrings)."
 >
 
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
 type User {
   username: String!
 }
 ```
 
 <br/>
-<p style="margin-bottom: 0">✅</p>
+Use instead:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
 "Represents a user"
 type User {
   "The user's username"
@@ -577,9 +613,10 @@ type User {
   rationale="Unused types commonly appear after you refactor other parts of your schema. You should remove unused types to prevent confusion."
 >
 
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
 type SomeUnusedType { # Also fails the TYPE_SUFFIX rule!
   name: String!
 }
@@ -595,9 +632,10 @@ type Query {
 ```
 
 <br/>
-<p style="margin-bottom: 0">✅</p>
+Use instead:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
 type Book {
   title: String!
 }
@@ -615,9 +653,10 @@ type Query {
   rationale="Schemas define types, fields, and their relationships. Operations specify what data to fetch or change. Since what to fetch or change is a client concern, operations should be defined on the client side. This separation allows for a clean and modular architecture, making it easier to manage and evolve the API over time."
 >
 
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
 type Query {
   users: [User!]!
 }
@@ -642,9 +681,10 @@ query GetUsers {
   rationale="You can use the `@contact` directive to add your team's contact info to a subgraph schema. This info is displayed in GraphOS Studio, which helps other teams know who to contact for assistance with the subgraph. [Learn more](../graphs/federated-graphs#contact-info-for-subgraphs)."
 >
 
-<p style="margin-bottom: 0">✅</p>
+Use instead:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
 directive @contact(
   "Contact title of the subgraph owner"
   name: String!
@@ -670,9 +710,10 @@ extend schema
   rationale="The `reason` argument can help graph consumers understand which field to use instead. "
 >
 
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
 type Product {
   title: String @deprecated #highlight-line
   name: String!
@@ -680,9 +721,10 @@ type Product {
 ```
 
 <br/>
-<p style="margin-bottom: 0">✅</p>
+Use instead:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
 type Product {
   title: String @deprecated(reason: "Use Product.name instead") #highlight-line
   name: String!

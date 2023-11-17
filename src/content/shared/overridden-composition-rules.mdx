@@ -2,32 +2,35 @@
 
 Indicates a field with the @override directive no longer exists in a source subgraph, so the directive can be safely removed.
 
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
+<br/>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 type Product @key(fields: "id") {
   id: ID!
   inStock: Boolean! @override(from: "Subgraph B")
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 type Product @key(fields: "id") {
   id: ID!
   name: String!
 }
 ```
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 type Product @key(fields: "id") {
   id: ID!
   inStock: Boolean!
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 type Product @key(fields: "id") {
   id: ID!
   name: String!
@@ -40,9 +43,10 @@ type Product @key(fields: "id") {
 
 Indicates that a field has been overridden by another subgraph. You should consider removing the overriden field to avoid confusion.
 
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
+<br/>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 type Product @key(fields: "id") {
   id: ID!
   name: String!
@@ -50,23 +54,25 @@ type Product @key(fields: "id") {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 type Product @key(fields: "id") {
   id: ID!
   inStock: Boolean!
 }
 ```
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 type Product @key(fields: "id") {
   id: ID!
   name: String!
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 type Product @key(fields: "id") {
   id: ID!
   inStock: Boolean!
@@ -79,11 +85,12 @@ type Product @key(fields: "id") {
 
 Indicates that an enum type is defined in some subgraphs but is unused (no field/argument references it). All values from subgraphs defining that enum will be included in the supergraph.
 
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
+<br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 enum ProductStatus {
   AVAILABLE
   SOLD_OUT
@@ -95,7 +102,7 @@ type Product {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 type Order {
   id: ID!
   product: Product
@@ -105,11 +112,13 @@ type Order {
 
 </CodeColumns>
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
 
 type Product {
   id: ID!
@@ -118,7 +127,7 @@ type Product {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
 
 type Order {
   id: ID!
