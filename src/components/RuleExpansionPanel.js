@@ -97,7 +97,7 @@ export default function RuleExpansionPanel({
       <Collapse in={isOpen}>
         <Stack
           shouldWrapChildren
-          divider={<StackDivider borderColor="gray.200" />}
+          divider={<StackDivider borderColor="border" />}
           spacing="6"
           pb="6"
         >
