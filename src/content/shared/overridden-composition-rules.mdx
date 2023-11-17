@@ -1,11 +1,13 @@
-#### `OVERRIDE_DIRECTIVE_CAN_BE_REMOVED`
-
-Indicates a field with the @override directive no longer exists in a source subgraph, so the directive can be safely removed.
+<RuleExpansionPanel
+  title="OVERRIDE_DIRECTIVE_CAN_BE_REMOVED"
+  whatItDoes="Checks that a field with the `@override` directive no longer exists in a source subgraph."
+  rationale="If a field with the `@override` directive no longer exists in a source subgraph, the directive can be safely removed."
+>
 
 The following example violates the rule:
 <br/>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false {3}
 type Product @key(fields: "id") {
   id: ID!
   inStock: Boolean! @override(from: "Subgraph B")
@@ -23,7 +25,7 @@ type Product @key(fields: "id") {
 Use instead:
 <br/>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false {3}
 type Product @key(fields: "id") {
   id: ID!
   inStock: Boolean!
@@ -37,16 +39,18 @@ type Product @key(fields: "id") {
 }
 ```
 
-<hr/>
+</RuleExpansionPanel>
 
-#### `OVERRIDDEN_FIELD_CAN_BE_REMOVED`
-
-Indicates that a field has been overridden by another subgraph. You should consider removing the overriden field to avoid confusion.
+<RuleExpansionPanel
+  title="OVERRIDDEN_FIELD_CAN_BE_REMOVED"
+  whatItDoes="Checks if a field has been overridden by another subgraph."
+  rationale="You should consider removing overriden fields to avoid confusion."
+>
 
 The following example violates the rule:
 <br/>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false {4}
 type Product @key(fields: "id") {
   id: ID!
   name: String!
@@ -79,11 +83,13 @@ type Product @key(fields: "id") {
 }
 ```
 
-<hr/>
+</RuleExpansionPanel>
 
-#### `UNUSED_ENUM_TYPE`
-
-Indicates that an enum type is defined in some subgraphs but is unused (no field/argument references it). All values from subgraphs defining that enum will be included in the supergraph.
+<RuleExpansionPanel
+  title="UNUSED_ENUM_TYPE"
+  whatItDoes="Checks if an enum type is defined but no field or argument in any subgraph references it."
+  rationale="If the enum is defined, it should likely be used or removed."
+>
 
 The following example violates the rule:
 <br/>
@@ -102,7 +108,7 @@ type Product {
 }
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false  {4}
 type Order {
   id: ID!
   product: Product
@@ -127,7 +133,7 @@ type Product {
 }
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false {4}
 
 type Order {
   id: ID!
@@ -137,4 +143,4 @@ type Order {
 ```
 </CodeColumns>
 
-<hr/>
+</RuleExpansionPanel>

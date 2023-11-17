@@ -34,7 +34,6 @@ type Query {
 }
 ```
 <br/>
-<br/>
 Use instead:
 <br/>
 
@@ -81,7 +80,6 @@ directive @log(message: String!) on FIELD #highlight-line
 
 
 <br/>
-<br/>
 Use instead:
 <br/>
 
@@ -99,13 +97,13 @@ directive @log(message: String!) on QUERY | FIELD
 <RuleExpansionPanel
   title="FROM_SUBGRAPH_DOES_NOT_EXIST"
   whatItDoes="Checks that the source subgraph specified by [`@override`](/federation/federated-types/federated-directives/#override) directive exists."
-  rationale="The [`@override`](/federation/federated-types/federated-directives/#override) directive indicates that an object field is now resolved a different subgraph. The directive can't work unless you specify an existing subgraph to resolve the field from."
+  rationale="The [`@override`](/federation/federated-types/federated-directives/#override) directive indicates that an object field is now resolved by a different subgraph. The directive can't work unless you specify an existing subgraph to resolve the field from."
 >
 
 The following example violates the rule:
 <br/>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false {3}
 type Product @key(fields: "id") {
   id: ID!
   inStock: Boolean! @override(from: "Subgraph B")
@@ -116,11 +114,10 @@ type Product @key(fields: "id") {
 # Subgraph B doesn't exist
 ```
 <br/>
-<br/>
 Use instead:
 <br/>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false {3}
 type Product @key(fields: "id") {
   id: ID!
   inStock: Boolean! @override(from: "Subgraph B")

@@ -1,6 +1,8 @@
-#### `INCONSISTENT_ARGUMENT_PRESENCE`
-
-Indicates that an optional argument (of a field or directive definition) isn't present in all subgraphs and therefore won't be part of the supergraph.
+<RuleExpansionPanel
+  title="INCONSISTENT_ARGUMENT_PRESENCE"
+  whatItDoes="Checks that an optional argument of a field or directive definition is present in all subgraphs."
+  rationale="Unless an optional argument is in all subgraphs' definitions of a field or directive, it won't be part of the supergraph schema."
+>
 
 The following example violates the rule:
 <br/>
@@ -41,11 +43,13 @@ type Product {
 }
 ```
 
-<hr/>
+</RuleExpansionPanel>
 
-#### `INCONSISTENT_BUT_COMPATIBLE_ARGUMENT_TYPE`
-
-Indicates that an argument type (of a field, input field, or directive definition) doesn't have the exact same type in all subgraphs, but that the types are compatible.
+<RuleExpansionPanel
+  title="INCONSISTENT_BUT_COMPATIBLE_ARGUMENT_TYPE"
+  whatItDoes="Checks that argument types (of a field, input field, or directive definition) have the exact same type in all subgraphs."
+  rationale="To-do"
+>
 
 Two types are compatible if one is:
 - a non-nullable version
@@ -138,11 +142,13 @@ enum Currency {
 
 </CodeColumns>
 
-<hr/>
+</RuleExpansionPanel>
 
-#### `INCONSISTENT_BUT_COMPATIBLE_FIELD_TYPE`
-
-Indicates that a field doesn't have the exact same types in all subgraphs, but that the types are compatible.
+<RuleExpansionPanel
+  title="INCONSISTENT_BUT_COMPATIBLE_FIELD_TYPE"
+  whatItDoes="Checks that fields have the exact same types in all subgraphs."
+  rationale="To-do"
+>
 
 Two types are compatible if one is:
 - a non-nullable version
@@ -255,11 +261,13 @@ enum Currency {
 
 </CodeColumns>
 
-<hr/>
+</RuleExpansionPanel>
 
-#### `INCONSISTENT_DEFAULT_VALUE_PRESENCE`
-
-Indicates that an argument definition (of a field, input field, or directive definition) has a default value in only some of the subgraphs that define the argument.
+<RuleExpansionPanel
+  title="INCONSISTENT_DEFAULT_VALUE_PRESENCE"
+  whatItDoes="Checks that argument definitions (of a field, input field, or directive definition) consistently include a default in all subgraphs that define the argument."
+  rationale="To-do"
+>
 
 The following example violates the rule:
 <br/>
@@ -308,11 +316,13 @@ type Product {
 
 </CodeColumns>
 
-<hr/>
+</RuleExpansionPanel>
 
-#### `INCONSISTENT_DESCRIPTION`
-
-Indicates that an element has a description in more than one subgraph, and the descriptions aren't equal.
+<RuleExpansionPanel
+  title="INCONSISTENT_DESCRIPTION"
+  whatItDoes="Checks that a type's description is consistent across subgraphs."
+  rationale="To-do"
+>
 
 The following example violates the rule:
 <br/>
@@ -367,11 +377,13 @@ type Product {
 ```
 </CodeColumns>
 
-<hr/>
+</RuleExpansionPanel>
 
-#### `INCONSISTENT_ENTITY`
-
-Indicates that an object is declared as an entity (has a `@key`) in only some of the subgraphs in which the object is defined.
+<RuleExpansionPanel
+  title="INCONSISTENT_ENTITY"
+  whatItDoes="Checks that an object is consistently declared as an entity (has a `@key`) in all subgraphs in which the object is defined."
+  rationale="To-do"
+>
 
 The following example violates the rule:
 <br/>
@@ -416,11 +428,13 @@ type Product @key(fields: "id") { #highlight-line
 
 </CodeColumns>
 
-<hr/>
+</RuleExpansionPanel>
 
-#### `INCONSISTENT_ENUM_VALUE_FOR_INPUT_ENUM`
-
-Indicates that a value of an enum type definition, that is only used as an input type, hasn't been merged into the supergraph because it's defined in only some of the subgraphs that declare the enum.
+<RuleExpansionPanel
+  title="INCONSISTENT_ENUM_VALUE_FOR_INPUT_ENUM"
+  whatItDoes="Checks that values of an input enum type are consistently defined in all subgraphs that declare the enum."
+  rationale="When a value of an enum that is only used as an input type is defined in only some of the subgraphs that declare the enum, inconsistent values won't be merged into the supergraph."
+>
 
 The following example violates the rule:
 <br/>
@@ -488,11 +502,15 @@ input ProductInput {
 
 </CodeColumns>
 
-<hr/>
+</RuleExpansionPanel>
 
-#### `INCONSISTENT_ENUM_VALUE_FOR_OUTPUT_ENUM`
+<RuleExpansionPanel
+  title="INCONSISTENT_ENUM_VALUE_FOR_OUTPUT_ENUM"
+  whatItDoes="Checks that values of an output enum type are consistently defined in all subgraphs that declare the enum."
+  rationale="When values of an output or unused enum type definition are inconsistent all values are merged into the supergraph."
+>
 
-Indicates that a value of an enum type definition, that is only used as an output type or is unused, _has_ been merged in the supergraph but is defined in only some of the subgraphs that declare the enum.
+Indicates that a 
 
 The following example violates the rule:
 <br/>
@@ -560,11 +578,13 @@ type Order {
 
 </CodeColumns>
 
-<hr/>
+</RuleExpansionPanel>
 
-#### `INCONSISTENT_EXECUTABLE_DIRECTIVE_LOCATIONS`
-
-Indicates that an executable directive definition is declared with inconsistent locations across subgraphs. (The supergraph schema then uses the intersection of all locations in the supergraph.)
+<RuleExpansionPanel
+  title="INCONSISTENT_EXECUTABLE_DIRECTIVE_LOCATIONS"
+  whatItDoes="Checks that an executable directive definition is declared with consistent locations across subgraphs."
+  rationale="To-do -- (The supergraph schema then uses the intersection of all locations in the supergraph.)"
+>
 
 The following example violates the rule:
 <br/>
@@ -605,11 +625,13 @@ directive @log(
 
 </CodeColumns>
 
-<hr/>
+</RuleExpansionPanel>
 
-#### `INCONSISTENT_EXECUTABLE_DIRECTIVE_PRESENCE`
-
-Indicates that an executable directive definition is declared in only some of the subgraphs.
+<RuleExpansionPanel
+  title="INCONSISTENT_EXECUTABLE_DIRECTIVE_PRESENCE"
+  whatItDoes="Checks that an executable directive definition is declared in all subgraphs."
+  rationale="To-do"
+>
 
 The following example violates the rule:
 <br/>
@@ -648,11 +670,13 @@ directive @modify(
 
 </CodeColumns>
 
-<hr/>
+</RuleExpansionPanel>
 
-#### `INCONSISTENT_EXECUTABLE_DIRECTIVE_REPEATABLE`
-
-Indicates that an executable directive definition is marked repeatable in only some of the subgraphs and won't be repeatable in the supergraph.
+<RuleExpansionPanel
+  title="INCONSISTENT_EXECUTABLE_DIRECTIVE_REPEATABLE"
+  whatItDoes="Checks that an executable directive definition is marked repeatable in all subgraphs that define it."
+  rationale="Unless an executable directive is defined as repeatable in all subgraphs, it won't be repeatable in the supergraph."
+>
 
 The following example violates the rule:
 <br/>
@@ -694,11 +718,13 @@ directive @validateLength(
 
 </CodeColumns>
 
-<hr/>
+</RuleExpansionPanel>
 
-#### `INCONSISTENT_INPUT_OBJECT_FIELD`
-
-Indicates that a field of an input object type definition is only defined in some of the subgraphs that declare the input object.
+<RuleExpansionPanel
+  title="INCONSISTENT_INPUT_OBJECT_FIELD"
+  whatItDoes="Checks that a field of an input object type definition is define in all the subgraphs that declare the input object."
+  rationale="To-do"
+>
 
 The following example violates the rule:
 <br/>
@@ -758,11 +784,13 @@ input OrderInput {
 
 </CodeColumns>
 
-<hr/>
+</RuleExpansionPanel>
 
-#### `INCONSISTENT_INTERFACE_VALUE_TYPE_FIELD`
-
-Indicates that a field of an interface "value type" (has no `@key` in any subgraph) isn't defined in all the subgraphs that declare the type.
+<RuleExpansionPanel
+  title="INCONSISTENT_INTERFACE_VALUE_TYPE_FIELD"
+  whatItDoes="Checks that that a field of an interface 'value type' (has no `@key` in any subgraph) is defined in all the subgraphs that declare the type."
+  rationale="To-do"
+>
 
 The following example violates the rule:
 <br/>
@@ -832,11 +860,13 @@ type PhysicalProduct implements Product {
 }
 ```
 
-<hr/>
+</RuleExpansionPanel>
 
-#### `INCONSISTENT_NON_REPEATABLE_DIRECTIVE_ARGUMENTS`
-
-A non-repeatable directive is applied to a schema element in different subgraphs but with arguments that are different.
+<RuleExpansionPanel
+  title="INCONSISTENT_NON_REPEATABLE_DIRECTIVE_ARGUMENTS"
+  whatItDoes="Checks if a non-repeatable directive is applied to a schema element in different subgraphs but with arguments that are different."
+  rationale="To-do"
+>
 
 The following example violates the rule:
 <br/>
@@ -889,11 +919,13 @@ type Query {
 }
 ```
 
-<hr/>
+</RuleExpansionPanel>
 
-#### `INCONSISTENT_OBJECT_VALUE_TYPE_FIELD`
-
-Indicates that a field of an object "value type" (has no `@key` in any subgraph) isn't defined in all the subgraphs that declare the type.
+<RuleExpansionPanel
+  title="INCONSISTENT_OBJECT_VALUE_TYPE_FIELD"
+  whatItDoes="Checks that a field of an object 'value type' (has no `@key` in any subgraph) is defined in all subgraphs that declare the type."
+  rationale="To-do"
+>
 
 The following example violates the rule:
 <br/>
@@ -942,11 +974,13 @@ type Product {
 
 </CodeColumns>
 
-<hr/>
+</RuleExpansionPanel>
 
-#### `INCONSISTENT_RUNTIME_TYPES_FOR_SHAREABLE_RETURN`
-
-Indicates that a @shareable field returns different sets of runtime types in the different subgraphs in which it's defined.
+<RuleExpansionPanel
+  title="INCONSISTENT_RUNTIME_TYPES_FOR_SHAREABLE_RETURN"
+  whatItDoes="Checks that a `@shareable` field returns consistent sets of runtime types in all subgraphs in which it's defined."
+  rationale="To-do"
+>
 
 The following example violates the rule:
 <br/>
@@ -1011,11 +1045,13 @@ type Details {
 
 </CodeColumns>
 
-<hr/>
+</RuleExpansionPanel>
 
-#### `INCONSISTENT_TYPE_SYSTEM_DIRECTIVE_LOCATIONS`
-
-Indicates that an executable directive definition is declared with inconsistent locations across subgraphs. (The supergraph schema then uses the intersection of all locations in the supergraph.)
+<RuleExpansionPanel
+  title="INCONSISTENT_TYPE_SYSTEM_DIRECTIVE_LOCATIONS"
+  whatItDoes="Checks that an executable directive definition is declared with consistent locations across subgraphs. (The supergraph schema then uses the intersection of all locations in the supergraph.)"
+  rationale="To-do"
+>
 
 The following example violates the rule:
 <br/>
@@ -1056,11 +1092,13 @@ directive @customDirective(
 
 </CodeColumns>
 
-<hr/>
+</RuleExpansionPanel>
 
-#### `INCONSISTENT_TYPE_SYSTEM_DIRECTIVE_REPEATABLE`
-
-Indicates that a type system directive definition is marked repeatable in only some of the subgraphs that declare the directive and will be repeatable in the supergraph.
+<RuleExpansionPanel
+  title="INCONSISTENT_TYPE_SYSTEM_DIRECTIVE_REPEATABLE"
+  whatItDoes="Checks that a type system directive definition is marked `repeatable` in all subgraphs that declare the directive and will be repeatable in the supergraph."
+  rationale="To-do"
+>
 
 The following example violates the rule:
 <br/>
@@ -1085,11 +1123,13 @@ directive @customDirective repeatable on OBJECT
 directive @customDirective repeatable on OBJECT
 ```
 
-<hr/>
+</RuleExpansionPanel>
 
-#### `INCONSISTENT_UNION_MEMBER`
-
-Indicates that a member of a union type definition is only defined in some of the subgraphs that declare the union.
+<RuleExpansionPanel
+  title="INCONSISTENT_UNION_MEMBER"
+  whatItDoes="Checks that a member of a union type definition is defined in all subgraphs that declare the union."
+  rationale="To-do"
+>
 
 The following example violates the rule:
 <br/>
@@ -1149,4 +1189,4 @@ type Service {
 union SearchResult = Product | Service #highlight-line
 ```
 
-<hr/>
+</RuleExpansionPanel>
