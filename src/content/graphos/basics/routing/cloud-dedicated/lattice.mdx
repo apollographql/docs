@@ -169,7 +169,7 @@ Congratulations! You've created an AWS VPC Lattice target group. Repeat this pro
 
 6. In the **Service access** section, select the AWS IAM authentication type and paste the following authorization policy. This policy ensures that only the AWS Organization for Cloud Dedicated can send traffic to your subgraphs.
 
-  ```json
+  ```json showLineNumbers=false
   {
     "Version": "2012-10-17",
     "Statement": [
@@ -551,23 +551,37 @@ Once you configure an AWS VPC Lattice service to accept traffic from the Apollo 
 - Cloud Routers only have permission to invoke private subgraphs listed in their graph variant configuration.
 
 You can further restrict access to your private subgraphs by configuring additional [conditions](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_condition.html) in your service's authorization policy.
-Specifically, you can add conditions to restrict traffic based on your organization's Apollo account ID or your supergraph's graph ref.
+Specifically, you can add conditions to restrict traffic based on your organization's Apollo account ID or your graph's graph ref.
 
-### Update a Lattice service's authorization policy
+<Note>
+
+If you are using the [Apollo Terraform module](https://github.com/apollographql/terraform-graphos-aws), you must the `apollo_account_ids` and `apollo_graph_refs` variables.
+
+</Note>
+
+### Update Lattice service authorization policy
 
 To update a Lattice service's authorization policy with additional restrictions:
 
-1. Find your account ID and or graph ref in your Apollo account.
-  - Log in to [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content).
-  - To-do: instructions on finding your account ID
-  - To find your graph ref, click on a graph variant on the **Graphs** page. The graph ref will be at the top of the page. You can click it to copy it.
-  - If you are using the [Apollo Terraform module](https://github.com/apollographql/terraform-graphos-aws), you must the `apollo_account_ids` and `apollo_graph_refs` variables.
-2. In the AWS Console for your region of choice, go to the VPC service page:
+1. [Contact Apollo](mailto:cloud@apollographql.com) to request your Apollo account ID.
+
+<Note>
+
+The Apollo account ID value to use in your authorization policy is _not_ the Apollo organization ID you can find in Apollo GraphOS Studio.
+Currently, the only way to obtain your account ID is by [contacting Apollo](mailto:cloud@apollographql.com).
+
+</Note>
+
+2. Find your supergraph's graph ref in your Apollo account:
+    - Log in to [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content).
+    - Click on a graph variant on the **Graphs** page. The graph ref will be at the top of the page—click it to copy.
+
+3. In the AWS Console for your region of choice, go to the VPC service page:
 
 - [US East (N. Virginia) — us-east-1](https://us-east-1.console.aws.amazon.com/ram/home?region=us-east-1)
 - [Europe (Ireland) — eu-west-1](https://eu-west-1.console.aws.amazon.com/ram/home?region=eu-west-1)
 
-3. In the menu on the left, scroll down and open **Services** in the **VPC Lattice** section.
+4. In the menu on the left, scroll down and open **Services** in the **VPC Lattice** section.
 
   <img
     className="screenshot"
@@ -576,7 +590,7 @@ To update a Lattice service's authorization policy with additional restrictions:
     width="175px"
   />
 
-4. Click the name of the Lattice service whose authorization policy you want to configure.
+5. Click the name of the Lattice service whose authorization policy you want to configure.
 
   <img
     className="screenshot"
@@ -584,9 +598,9 @@ To update a Lattice service's authorization policy with additional restrictions:
     src="../../../img/cloud-dedicated/select-lattice-service.jpg"
   />
 
-5. In the **Service access** section, update your authorization policy. You can use the following as an example–make sure to replace the account ID and/or graph ref depending on which conditions you are adding.
+6. In the **Service access** section, update your authorization policy. You can use the following as an example&mdash;make sure to replace the account ID and graph ref depending on which conditions you are adding.
 
-  ```json {13-17}
+  ```json {13-17} showLineNumbers=false
   {
     "Version": "2012-10-17",
     "Statement": [
@@ -610,7 +624,17 @@ To update a Lattice service's authorization policy with additional restrictions:
   }
   ```
 
-6. Update your Cloud Router.
+<Note>
+
+If you want to provide multiple supergraphs access to the same private subgraph, you can use a comma-separated string of multiple graph refs for `aws:PrincipalTag/Apollo:graphRef`.
+
+For example:
+
+```json showLineNumbers=false
+"aws:PrincipalTag/Apollo:graphRef": "my-graph@my-variant, my-graph@another-variant, another-graph@another-variant"
+```
+
+</Note>
 
 ## Remove access to private subgraphs
 
