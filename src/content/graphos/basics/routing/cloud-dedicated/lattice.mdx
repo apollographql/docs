@@ -553,35 +553,42 @@ Once you configure an AWS VPC Lattice service to accept traffic from the Apollo 
 You can further restrict access to your private subgraphs by configuring additional [conditions](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_condition.html) in your service's authorization policy.
 Specifically, you can add conditions to restrict traffic based on your organization's Apollo account ID or your graph's graph ref.
 
-<Note>
-
-If you are using the [Apollo Terraform module](https://github.com/apollographql/terraform-graphos-aws), you must the `apollo_account_ids` and `apollo_graph_refs` variables.
-
-</Note>
 
 ### Update Lattice service authorization policy
 
-To update a Lattice service's authorization policy with additional restrictions:
+To update a Lattice service's authorization policy with additional restrictions, you first need the **Apollo account ID** and **graph ref** to which you want to restrict subgraph access.
 
-1. [Contact Apollo](mailto:cloud@apollographql.com) to request your Apollo account ID.
+#### Obtain account ID and graph ref
 
-<Note>
+- [Contact Apollo](mailto:cloud@apollographql.com) to obtain your account ID.
 
-The Apollo account ID value to use in your authorization policy is _not_ the Apollo organization ID you can find in Apollo GraphOS Studio.
-Currently, the only way to obtain your account ID is by [contacting Apollo](mailto:cloud@apollographql.com).
+  <Note>
 
-</Note>
+  The Apollo account ID you specify in your authorization policy is _not_ the Apollo organization ID you can find in Apollo GraphOS Studio.
 
-2. Find your supergraph's graph ref in your Apollo account:
+  </Note>
+
+- You can find your supergraph's graph ref in your Apollo account:
     - Log in to [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content).
     - Click on a graph variant on the **Graphs** page. The graph ref will be at the top of the page—click it to copy.
 
-3. In the AWS Console for your region of choice, go to the VPC service page:
+#### Update policy
+
+Then, if you are using the [Apollo Terraform module](https://github.com/apollographql/terraform-graphos-aws), you can set the  [`apollo_account_ids` and `apollo_graph_refs` variables](https://github.com/apollographql/terraform-graphos-aws#usage) to update your authorization policy. If you want to provide subgraph access to multiple Apollo accounts or supergraphs, you can include multiple account IDs and graph refs.
+
+```txt showLineNumbers=false disableCopy=true
+apollo_account_ids = ["my_account_id", "another_account_id"]
+apollo_graph_refs  = ["my-graph@my-variant", "my-graph@another-variant"]
+```
+
+If you aren't using the Apollo Terraform module, follow these steps:
+
+1. In the AWS Console for your region of choice, go to the VPC service page:
 
 - [US East (N. Virginia) — us-east-1](https://us-east-1.console.aws.amazon.com/ram/home?region=us-east-1)
 - [Europe (Ireland) — eu-west-1](https://eu-west-1.console.aws.amazon.com/ram/home?region=eu-west-1)
 
-4. In the menu on the left, scroll down and open **Services** in the **VPC Lattice** section.
+2. In the menu on the left, scroll down and open **Services** in the **VPC Lattice** section.
 
   <img
     className="screenshot"
@@ -590,7 +597,7 @@ Currently, the only way to obtain your account ID is by [contacting Apollo](mail
     width="175px"
   />
 
-5. Click the name of the Lattice service whose authorization policy you want to configure.
+3. Click the name of the Lattice service whose authorization policy you want to configure.
 
   <img
     className="screenshot"
@@ -598,7 +605,7 @@ Currently, the only way to obtain your account ID is by [contacting Apollo](mail
     src="../../../img/cloud-dedicated/select-lattice-service.jpg"
   />
 
-6. In the **Service access** section, update your authorization policy. You can use the following as an example&mdash;make sure to replace the account ID and graph ref depending on which conditions you are adding.
+4. In the **Service access** section, update your authorization policy. You can use the following as an example&mdash;make sure to replace the account ID and graph ref with your own.
 
   ```json {13-17} showLineNumbers=false
   {
@@ -624,17 +631,17 @@ Currently, the only way to obtain your account ID is by [contacting Apollo](mail
   }
   ```
 
-<Note>
+If there are multiple supergraphs which should have access to the subgraph, use a comma-separated string of graph refs for `aws:PrincipalTag/Apollo:graphRef`. For example:
 
-If you want to provide multiple supergraphs access to the same private subgraph, you can use a comma-separated string of multiple graph refs for `aws:PrincipalTag/Apollo:graphRef`.
-
-For example:
-
-```json showLineNumbers=false
+```json showLineNumbers=false disableCopy=true
 "aws:PrincipalTag/Apollo:graphRef": "my-graph@my-variant, my-graph@another-variant, another-graph@another-variant"
 ```
 
-</Note>
+If there are multiple Apollo accounts which should have access to the subgraph, use a comma-separated string of account IDs for `aws:PrincipalTag/Apollo:accountId`:
+
+```json showLineNumbers=false disableCopy=true
+"aws:PrincipalTag/Apollo:accountId": "my_account_id_xezf34, "my_account_id_dehs56"
+```
 
 ## Remove access to private subgraphs
 
