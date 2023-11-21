@@ -560,7 +560,7 @@ To update a Lattice service's authorization policy with additional restrictions,
 
 #### Obtain account ID and graph ref
 
-- [Contact Apollo](mailto:cloud@apollographql.com) to obtain your account ID.
+- [Contact Apollo](mailto:cloud@apollographql.com) to obtain your account ID. Specify you would like the account ID needed to update your Lattice service's authorization policy.
 
   <Note>
 
@@ -572,13 +572,19 @@ To update a Lattice service's authorization policy with additional restrictions,
     - Log in to [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content).
     - Click on a graph variant on the **Graphs** page. The graph ref will be at the top of the page—click it to copy.
 
+<Note>
+
+If you want to provide subgraph access to multiple Apollo accounts or supergraphs, you can specify multiple account IDs and graph refs when updating your policy.
+
+</Note>
+
 #### Update policy
 
-Then, if you are using the [Apollo Terraform module](https://github.com/apollographql/terraform-graphos-aws), you can set the  [`apollo_account_ids` and `apollo_graph_refs` variables](https://github.com/apollographql/terraform-graphos-aws#usage) to update your authorization policy. If you want to provide subgraph access to multiple Apollo accounts or supergraphs, you can include multiple account IDs and graph refs.
+If you are using the [Apollo Terraform module](https://github.com/apollographql/terraform-graphos-aws), you can set the  [`apollo_account_ids` and `apollo_graph_refs` variables](https://github.com/apollographql/terraform-graphos-aws#usage) to update your authorization policy. Provide one or more Apollo account IDs or graph refs:
 
 ```txt showLineNumbers=false disableCopy=true
 apollo_account_ids = ["my_account_id", "another_account_id"]
-apollo_graph_refs  = ["my-graph@my-variant", "my-graph@another-variant"]
+apollo_graph_refs  = ["my-graph@my-variant", "another-graph@my-variant"]
 ```
 
 If you aren't using the Apollo Terraform module, follow these steps:
