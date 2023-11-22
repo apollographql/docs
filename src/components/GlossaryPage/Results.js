@@ -1,16 +1,17 @@
 import InlineCode from '../InlineCode';
 import Markdown from 'react-markdown';
 import React from 'react';
-import {Box, Button, Text} from '@chakra-ui/react';
+import {Box, Flex, HStack, Tag, TagLabel, Text} from '@chakra-ui/react';
 import {CustomHeading} from '../CustomHeading';
 import {PrimaryLink} from '../RelativeLink';
 import {useHits} from 'react-instantsearch';
 
 const Results = () => {
-  const {hits, hasMore, refineNext} = useHits();
+  const {hits} = useHits();
 
-  const handleLoadMore = () => {
-    refineNext();
+  const handleLabelClick = label => {
+    //To-do: Hook into search state and refine on the label
+    console.log(label);
   };
 
   return (
@@ -26,6 +27,21 @@ const Results = () => {
           <CustomHeading as="h4" fontSize="lg" fontWeight="bold">
             {hit.term}
           </CustomHeading>
+          <HStack mt="2">
+            {hit.labels &&
+              hit.labels.map(label => (
+                <Tag
+                  key={label}
+                  size="sm"
+                  variant="solid"
+                  colorScheme="indigo"
+                  borderRadius="md"
+                  onClick={() => handleLabelClick(label)}
+                >
+                  <TagLabel>{label}</TagLabel>
+                </Tag>
+              ))}
+          </HStack>
           <Markdown
             components={{
               p: Text,
@@ -35,14 +51,8 @@ const Results = () => {
           >
             {hit.shortDefinition}
           </Markdown>
-          {/* Add additional content based on your hit structure */}
         </Box>
       ))}
-      {hasMore && (
-        <Button onClick={handleLoadMore} mt="4" size="sm">
-          Load More
-        </Button>
-      )}
     </Box>
   );
 };
