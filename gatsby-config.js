@@ -8,8 +8,12 @@ const {query, transformer} = require('./algolia');
 const yaml = require('js-yaml');
 const fs = require('fs');
 const remoteSources = require('./sources/remote');
+const {join} = require('path');
 
 const isProduction = process.env.CONTEXT === 'production';
+
+const isLocalMode = process.env.DOCS_MODE === 'local';
+const isSingleDocset = isLocalMode || process.env.DOCS_LOCAL;
 
 const gatsbyRemarkPlugins = [
   '@fec/remark-a11y-emoji/gatsby',
@@ -112,6 +116,14 @@ const plugins = [
     }
   },
   {
+    resolve: 'gatsby-plugin-apollo-client-api-doc',
+    options: {
+      file: isSingleDocset
+        ? join(__dirname, 'local/shared/client.api.json')
+        : 'https://apollo-client-docs.netlify.app/client.api.json'
+    }
+  },
+  {
     resolve: 'gatsby-plugin-google-gtag',
     options: {
       // todo: remove ua property in the nearish future
@@ -194,9 +206,6 @@ if (process.env.CONTEXT === 'production') {
     }
   });
 }
-
-const isLocalMode = process.env.DOCS_MODE === 'local';
-const isSingleDocset = isLocalMode || process.env.DOCS_LOCAL;
 
 for (const name in remoteSources) {
   const {remote, branch} = remoteSources[name];
