@@ -49,7 +49,7 @@ include_subgraph_errors:
   src="../../../img/cloud-dedicated/router-yaml-subgraph-errors.png"
 />
 
-Configuration changes trigger a new launch. Please wait a few minutes for your Cloud Router to update with this new configuration. You can monitor the deployment status in the Launches page for your graph variant.
+Configuration changes trigger a new launch. Please wait a few minutes for your cloud router to update with this new configuration. You can monitor the deployment status in the Launches page for your graph variant.
 
 Once you've identißfied and resolved the underlying issue, we recommend you disable subgraph errors by removing the block that sets `include_subgraph_errors` and saving the Router configuration YAML again.
 
@@ -81,7 +81,7 @@ Then, ensure you update your subgraphs to check for either `Authorization` or yo
 
 ### Error trying to connect: Connection reset by peer (os error 104)
 
-This error is likely to occur when your Cloud Router tries to send traffic to a port different from the listener on your AWS VPC Lattice service. Apollo GraphOS Cloud only supports communicating with private subgraphs over HTTPS on port 443.
+This error is likely to occur when your cloud router tries to send traffic to a port different from the listener on your AWS VPC Lattice service. Apollo GraphOS Cloud only supports communicating with private subgraphs over HTTPS on port 443.
 
 You can validate that your Lattice services are configured to receive traffic on the right port by navigating to the service routing page:
 

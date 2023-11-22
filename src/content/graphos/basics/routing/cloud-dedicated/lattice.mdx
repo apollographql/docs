@@ -37,7 +37,7 @@ flowchart LR;
 
 <Note>
 
-- You can only use Lattice for subgraphs in the **same AWS region as your Cloud Router**. If you need to run subgraphs in different AWS regions or run your workloads in a region not yet supported by Cloud Dedicated, please [let us know](mailto:cloud@apollographql.com).
+- You can only use Lattice for subgraphs in the **same AWS region as your cloud router**. If you need to run subgraphs in different AWS regions or run your workloads in a region not yet supported by Cloud Dedicated, please [let us know](mailto:cloud@apollographql.com).
 - Using AWS VPC Lattice incurs costs outside of your Cloud Dedicated spend. Refer to the [Lattice pricing page](https://aws.amazon.com/vpc/lattice/pricing/) to learn more.
 
 </Note>
@@ -208,7 +208,7 @@ Congratulations! You've created an AWS VPC Lattice target group. Repeat this pro
 
   <Note>
 
-  For security reasons, we require you to use HTTPS for your listener. This enforces encryption in transit of the traffic between your GraphOS Cloud Router and your Lattice listener.
+  For security reasons, we require you to use HTTPS for your listener. This enforces encryption in transit of the traffic between your GraphOS cloud router and your Lattice listener.
 
   </Note>
 
@@ -418,7 +418,7 @@ Setup from this point differs based on whether this is [your first private subgr
 
   <Note>
   
-  All private subgraphs connected to a GraphOS Cloud Router must be in the same region.
+  All private subgraphs connected to a GraphOS cloud router must be in the same region.
 
   </Note>
 
@@ -489,7 +489,7 @@ When your AWS resource is set to private, it isn't accessible by external servic
     width="200"
 />
 
-Congratulations! You've now created a GraphOS Cloud Router with a private subgraph.
+Congratulations! You've now created a GraphOS cloud router with a private subgraph.
 
 #### Setup for existing graphs
 
@@ -539,24 +539,24 @@ When your AWS resource is set to private, it isn't accessible by external servic
 
 7. To finish, click **Add Subgraph**.
 
-Congratulations! You've now added a private subgraph to your GraphOS Cloud Router.
+Congratulations! You've now added a private subgraph to your GraphOS cloud router.
 
 ## Further restrict access to private subgraphs
 
 Once you configure an AWS VPC Lattice service to accept traffic from the Apollo AWS Organization, it is protected by multiple security layers:
 
 - The AWS VPC Lattice service network only allows traffic with a valid signature and over HTTPS.
-- The AWS VPC Lattice service's configured authorization policy ensures traffic only comes from Apollo's AWS accounts. (This is the authorization policy you configured in step 6 [when creating your Lattice service](#step-2-create-an-aws-vpc-lattice-service).)
-- Apollo Cloud Router Provisioning compares subgraphs in a graph variant configuration against the list of known private subgraphs in its Apollo account. It refuses to create or update Cloud Routers with unknown private subgraphs.
-- Cloud Routers only have permission to invoke private subgraphs listed in their graph variant configuration.
+- The Lattice service's configured authorization policy ensures traffic only comes from Apollo's AWS accounts. (This is the authorization policy you configured in step 6 [when creating your Lattice service](#step-2-create-an-aws-vpc-lattice-service).)
+- Apollo cloud router provisioning compares subgraphs in a supergraph's configuration against the list of known private subgraphs in its Apollo account. It refuses to create or update cloud routers with unknown private subgraphs.
+- Cloud routers only have permission to invoke private subgraphs listed in their supergraph configuration.
 
 You can further restrict access to your private subgraphs by configuring additional [conditions](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_condition.html) in your service's authorization policy.
-Specifically, you can add conditions to restrict traffic based on your organization's Apollo account ID or your graph's graph ref.
+Specifically, you can add conditions to restrict traffic based on your organization's Apollo account ID or your supergraph's graph ref.
 
 
 ### Update Lattice service authorization policy
 
-To update a Lattice service's authorization policy with additional restrictions, you first need the **Apollo account ID** and **graph ref** to which you want to restrict subgraph access.
+To update a Lattice service's authorization policy with additional restrictions, you first need the **Apollo account ID** and/or **graph ref** to which you want to restrict subgraph access.
 
 #### Obtain account ID and graph ref
 
@@ -572,11 +572,8 @@ To update a Lattice service's authorization policy with additional restrictions,
     - Log in to [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content).
     - Click on a graph variant on the **Graphs** page. The graph ref will be at the top of the page—click it to copy.
 
-<Note>
 
 If you want to provide subgraph access to multiple Apollo accounts or supergraphs, you can specify multiple account IDs and graph refs when updating your policy.
-
-</Note>
 
 #### Update policy
 
@@ -643,7 +640,7 @@ If there are multiple supergraphs which should have access to the subgraph, use 
 "aws:PrincipalTag/Apollo:graphRef": "my-graph@my-variant, my-graph@another-variant, another-graph@another-variant"
 ```
 
-If there are multiple Apollo accounts which should have access to the subgraph, use a comma-separated string of account IDs for `aws:PrincipalTag/Apollo:accountId`:
+Similarly, you can use a comma-separated string of account IDs for `aws:PrincipalTag/Apollo:accountId`:
 
 ```json showLineNumbers=false disableCopy=true
 "aws:PrincipalTag/Apollo:accountId": "my_account_id_xezf34, "my_account_id_dehs56"
