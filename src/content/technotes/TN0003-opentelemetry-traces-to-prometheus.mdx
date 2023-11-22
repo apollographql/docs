@@ -4,9 +4,18 @@ id: TN0003
 tags: [server, observability]
 ---
 
-> Self-hosting the Apollo Router is limited to Apollo Enterprise plans. Other plan types use [managed cloud routing with GraphOS](/graphos/routing/cloud/).
->
-> [Learn about Apollo plans.](https://www.apollographql.com/pricing/)
+<EnterpriseFeature
+  text={
+    'Self-hosting the Apollo Router is limited to [GraphOS Enterprise plans](/graphos/enterprise/). Other plan types use [managed cloud routing with GraphOS](/graphos/routing/cloud/). Check out the [pricing page](https://www.apollographql.com/pricing/) to learn more.'
+  }
+/>
+
+<Tip>
+
+If you're an enterprise customer looking for more material on this topic, try the [Enterprise best practices: Supergraph observability](https://www.apollographql.com/tutorials/supergraph-observability) course on Odyssey.
+
+Not an enterprise customer? [Learn about GraphOS for Enterprise.](/graphos/enterprise)
+</Tip>
 
 Operation traces provide insight into performance issues that are occurring at various execution points in your graph. However, individual traces don't provide a view of your graph's broader performance.
 
@@ -21,7 +30,10 @@ OpenTelemetry provides two different repositories for their OpenTelemetry Collec
 
 These repositories are similar in scope, but the contributor library includes extended features that aren't suitable for the core library. To derive performance metrics from our existing spans, we'll use the contributor library to take advantage of the `spanmetricsprocessor` via the associated Docker image.
 
-> We also recommend checking out the [Collector Builder](https://github.com/open-telemetry/opentelemetry-collector/tree/main/cmd/builder) to build binaries that are tailored to your environment instead of relying on prebuilt images.
+<Tip>
+
+We also recommend checking out the [Collector Builder](https://github.com/open-telemetry/opentelemetry-collector/tree/main/cmd/builder) to build binaries that are tailored to your environment instead of relying on prebuilt images.
+</Tip>
 
 When your OpenTelemetry Collector is ready to run, you can start configuring it with this barebones example:
 

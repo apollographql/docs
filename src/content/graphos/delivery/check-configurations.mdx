@@ -1,6 +1,7 @@
 ---
 title: Configuring schema checks
-description: Define exactly what schema changes are checked against
+subtitle: Define how schema checks are applied to schema changes
+description: Learn how to customize your GraphQL schema checks using Apollo GraphOS Studio or Rover CLI.
 ---
 
 After you [enable schema checks](./schema-checks/) for your graph, you can customize their behavior to suit your use case. For example, you can:
@@ -9,14 +10,14 @@ After you [enable schema checks](./schema-checks/) for your graph, you can custo
 - Exclude past operations that were executed relatively infrequently
 - Check schema changes against multiple graph variants
 
-## Using Apollo Studio (recommended)
+## Using GraphOS Studio (recommended)
 
-In [Apollo Studio](https://studio.apollographql.com), you can configure default rules that are applied to every executed schema check. You define these rules from the **Configuration** tab of your variant's **Checks** page:
+In [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content), you can configure default rules that are applied to every executed schema check. You define these rules from the **Configuration** tab of your variant's **Checks** page:
 
 <img
   className="screenshot"
   src="../img/check-configurations/check-configuration-page.png"
-  alt="Check configuration page in Apollo Studio"
+  alt="Check configuration page in GraphOS Studio"
 />
 
 ### Configuration options
@@ -29,12 +30,12 @@ In [Apollo Studio](https://studio.apollographql.com), you can configure default 
   <img
     class="screenshot"
     src="../img/check-configurations/excluded-clients.png"
-    alt="Excluded clients configuration in Apollo Studio"
+    alt="Excluded clients configuration in GraphOS Studio"
   />
 
 ## Using the CLI
 
-You can customize a single run of schema checks by providing options to the Rover CLI. If you've _also_ [configured default rules](#using-apollo-studio-recommended) for schema checks, any command-line options you provide take precedence over those rules.
+You can customize a single run of schema checks by providing options to the Rover CLI. If you've _also_ [configured default rules](#using-graphos-studio-recommended) for schema checks, any command-line options you provide take precedence over those rules.
 
 ### Validation period
 
@@ -51,7 +52,11 @@ Valid durations are represented as any combination of `years`, `months`, `weeks`
 - `1 month 2 weeks`
 - `525600 min`
 
-> If you specify a `--validation-period` that exceeds your organization's operation retention period, the `subgraph check` command fails with an error.
+<Note>
+
+If you specify a `--validation-period` that exceeds your organization's operation retention period, the `subgraph check` command fails with an error.
+
+</Note>
 
 ### Threshold values
 
@@ -64,7 +69,11 @@ Provide threshold values with the following flags:
 - `--query-count-threshold` - Check your schema only against operations that have been executed _at least_ the specified number of times within the specified duration.
 - `--query-percentage-threshold` - Check your schema only against operations that account for _at least_ the specified percentage of _all_ operations against the graph within the specified duration. For example, specify `3` to set this threshold to 3%.
 
-> **Note:** You can provide values for both of these flags. If you do, an operation must meet or exceed _both_ thresholds for schema checks to include it.
+<Note>
+
+You can provide values for both of these flags. If you do, an operation must meet or exceed _both_ thresholds for schema checks to include it.
+
+</Note>
 
 Here's an example of running `rover subgraph check` with threshold values:
 

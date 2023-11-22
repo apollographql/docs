@@ -37,6 +37,7 @@ import {
   UnorderedList,
   chakra
 } from '@chakra-ui/react';
+import {Caution} from './Caution';
 import {CustomHeading} from './CustomHeading';
 import {DocBlock, DocPiece, FunctionDetails, InterfaceDetails} from './ApiDoc'
 import {
@@ -45,6 +46,8 @@ import {
   MultiCodeBlock,
   MultiCodeBlockContext
 } from '@apollo/chakra-helpers';
+import {EnterpriseFeature} from './EnterpriseFeature';
+import {ExperimentalFeature} from './ExperimentalFeature';
 import {FeedbackButton} from './FeedbackButton';
 import {FiGithub, FiMessageCircle} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
@@ -53,6 +56,7 @@ import {HighlightKeyTerms} from '@apollo/pedia';
 import {MDXProvider} from '@mdx-js/react';
 import {MDXRenderer} from 'gatsby-plugin-mdx';
 import {MinVersion} from './MinVersion';
+import {Note} from './Note';
 import {
   PAGE_FOOTER_HEIGHT,
   PAGE_PADDING_BOTTOM,
@@ -63,6 +67,7 @@ import {
 import {PreviewFeature} from './PreviewFeature';
 import {SiDiscord} from 'react-icons/si';
 import {TOTAL_HEADER_HEIGHT} from './Header';
+import {Tip} from './Tip';
 import {YouTube} from './YouTube';
 import {join} from 'path';
 import {kebabCase} from 'lodash';
@@ -181,17 +186,22 @@ const mdxComponents = {
   ...sharedContent,
   inlineCode: InlineCode,
   Button, // TODO: consider making pages import this from @chakra-ui/react
+  Caution,
   ExpansionPanel,
   ExpansionPanelList,
   ExpansionPanelListItem,
   MultiCodeBlock,
+  Note,
   YouTube,
   CodeColumns,
   TypeScriptApiBox,
   TypescriptApiBox: TypeScriptApiBox,
   EmbeddableExplorer,
   ButtonLink,
+  Tip,
   MinVersion,
+  EnterpriseFeature,
+  ExperimentalFeature,
   PreviewFeature,
   ApolloLogo,
   ApolloMark,
@@ -223,8 +233,10 @@ export default function Page({file}) {
     file;
 
   const {frontmatter, headings} = childMdx || childMarkdownRemark;
-  const {title, description, toc, tags, headingDepth, minVersion, noIndex} =
+  const {title, subtitle, description, toc, tags, headingDepth, minVersion, noIndex} =
     frontmatter;
+
+  const publishedSubtitle = subtitle ? subtitle : description;
 
   const {docset, versions, currentVersion, navItems, versionBanner} =
     useConfig(basePath);
@@ -408,16 +420,16 @@ export default function Page({file}) {
         title={title}
         subtitle={
           <>
-            {description && (
-              <chakra.h2
-                fontSize={{base: 'xl', md: '2xl'}}
-                lineHeight="normal"
-                mt={{base: 2, md: 3}}
-                fontWeight="normal"
-              >
-                {description}
-              </chakra.h2>
-            )}
+              {publishedSubtitle && (
+                <chakra.h2
+                  fontSize={{base: 'xl', md: '2xl'}}
+                  lineHeight="normal"
+                  mt={{base: 2, md: 3}}
+                  fontWeight="normal"
+                >
+                  {publishedSubtitle}
+                </chakra.h2>
+              )}
             {tags?.length && (
               <HStack mt={{base: 2, md: 3}}>
                 {tags.map((tag, index) => (

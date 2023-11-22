@@ -19,6 +19,11 @@ module.exports = {
         ClientPQIntro: 'readonly',
         DirectiveCompositionRules: 'readonly',
         Disclaimer: 'readonly',
+        EnterpriseFeature: 'readonly',
+        Caution: 'readonly',
+        Note: 'readonly',
+        Tip: 'readonly',
+        ExperimentalFeature: 'readonly',
         GraphOSEnterpriseRequired: 'readonly',
         InconsistentCompositionRules: 'readonly',
         ObtainGraphApiKey: 'readonly',
@@ -27,9 +32,11 @@ module.exports = {
         PQIntro: 'readonly',
         PQRouterConfiguration: 'readonly',
         PQSecurityLevels: 'readonly',
+        PreviewFeature: 'readonly',
         PublishPQMs: 'readonly',
         RegisterCLI: 'readonly',
         RegisterFederatedCLI: 'readonly',
+        SetApolloVCSCommit: 'readonly',
         TopLevelAwait: 'readonly'
       },
       rules: {
