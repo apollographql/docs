@@ -21,7 +21,7 @@ exports.sourceNodes = async (api, options) => {
       loadApiDoc(file, api);
     }
   } finally {
-    fs.rm(tempDir, {recursive: true});
+    fs.rmSync(tempDir, {recursive: true});
   }
 };
 
