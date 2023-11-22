@@ -2,11 +2,25 @@
 
 const {loadApiDoc} = require('./apiDoc');
 const fs = require('fs');
+const path = require('path');
 
 /** @type {import("gatsby").GatsbyNode['sourceNodes']} */
-exports.sourceNodes = async (api, {file}) => {
-  if (fs.existsSync(file)) {
-    loadApiDoc(file, api);
+exports.sourceNodes = async (api, options) => {
+  const tempDir = fs.mkdtempSync('api-model');
+  try {
+    let {file} = /** @type {{file:string}} */ (options);
+
+    if (file.includes('://')) {
+      const request = await fetch(file);
+      const contents = await request.text();
+      file = path.join(tempDir, 'api.json');
+      fs.writeFileSync(file, contents);
+    }
+    if (fs.existsSync(file)) {
+      loadApiDoc(file, api);
+    }
+  } finally {
+    fs.rm(tempDir, {recursive: true});
   }
 };
 
