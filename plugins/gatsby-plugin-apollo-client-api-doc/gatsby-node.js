@@ -3,6 +3,7 @@
 const {loadApiDoc} = require('./apiDoc');
 const fs = require('fs');
 const path = require('path');
+const {default: fetch} = require('node-fetch');
 
 /** @type {import("gatsby").GatsbyNode['sourceNodes']} */
 exports.sourceNodes = async (api, options) => {
