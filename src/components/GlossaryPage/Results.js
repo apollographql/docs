@@ -1,8 +1,9 @@
 import InlineCode from '../InlineCode';
 import Markdown from 'react-markdown';
 import React from 'react';
-import {Box, Flex, HStack, Tag, TagLabel, Text} from '@chakra-ui/react';
+import {Box, HStack, Tag, TagLabel, Text} from '@chakra-ui/react';
 import {CustomHeading} from '../CustomHeading';
+import {MarkdownCodeBlock} from '@apollo/chakra-helpers';
 import {PrimaryLink} from '../RelativeLink';
 import {useHits} from 'react-instantsearch';
 
@@ -46,10 +47,10 @@ const Results = () => {
             components={{
               p: Text,
               a: PrimaryLink,
-              code: ({children}) => <InlineCode>{children}</InlineCode>
+              pre: MarkdownCodeBlock
             }}
           >
-            {hit.shortDefinition}
+            {hit.definition}
           </Markdown>
         </Box>
       ))}
