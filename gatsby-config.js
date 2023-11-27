@@ -119,7 +119,7 @@ const plugins = [
     resolve: 'gatsby-plugin-apollo-client-api-doc',
     options: {
       file: isSingleDocset
-        ? join(__dirname, 'local/shared/client.api.json')
+        ? join(__dirname, 'local/public/client.api.json')
         : 'https://apollo-client-docs.netlify.app/client.api.json'
     }
   },
