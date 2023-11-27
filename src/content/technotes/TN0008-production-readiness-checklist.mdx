@@ -29,17 +29,17 @@ We recommend that you read through this checklist and idenitify critical feature
 - Ensure that you've integrated [`rover subgraph check`](/rover/commands/subgraphs#subgraph-check) and [`rover subgraph publish`](/rover/commands/subgraphs#subgraph-publish) into your CI/CD pipeline.
 - If your subgraph servers are listed as [compatible with `FEDERATED TRACING`](/federation/building-supergraphs/supported-subgraphs/), ensure that you've enabled [federated traces](/federation/metrics/), and that you can view operation metrics as expected in Apollo Studio.
   - Enable [fractional trace sampling via `fieldLevelInstrumentation`](/graphos/metrics/field-usage/#fractional-sampling) to reduce performance hits due to tracing.
-- Consider adding caching layers.
-  - Apollo Server supports [automatic persisted queries (APQ)](/apollo-server/performance/apq/) out of the box.
-    - If using Apollo Server, ensure that you use a [distributed caching system](/apollo-server/performance/cache-backends) for APQ in production to avoid cache inconsistency across server instances.
-    - Optionally use the [`@cacheControl` directive](/apollo-server/api/plugin/cache-control) to enable your CDN to cache APQ GET requests using the `Cache-Control` header.
-  - Optionally add [full response caching](/apollo-server/performance/caching/) to improve performance.
 - Ensure that you've [load-tested your graph](/technotes/TN0035-load-testing-graphql/).
   - Test loads should be representative of your current traffic (both in terms of volume _and_ in terms of the actual operations you execute in the test).
   - To investigate performance issues, use Apollo Studio to identify which operations are performing slowly.
     - Look at resolver execution times to identify slow areas of execution.
     - Whenever possible, avoid making multiple calls to data sources within a single resolver.
     - Understand [query plan execution](/federation/query-plans) to help understand slow operations and optimize your supergraph to avoid them.
+- Consider adding caching layers.
+  - Apollo Server supports [automatic persisted queries (APQ)](/apollo-server/performance/apq/) out of the box.
+    - If using Apollo Server, ensure that you use a [distributed caching system](/apollo-server/performance/cache-backends) for APQ in production to avoid cache inconsistency across server instances.
+    - Optionally use the [`@cacheControl` directive](/apollo-server/api/plugin/cache-control) to enable your CDN to cache APQ GET requests using the `Cache-Control` header.
+  - Optionally add [full response caching](/apollo-server/performance/caching/) to improve performance.
 
 ## Clients
 - Ensure that your [clients identify themselves](/graphos/metrics/client-awareness/) by name and version.
