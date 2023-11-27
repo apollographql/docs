@@ -1,0 +1,27 @@
+---
+title: Schema proposals
+description: Propose, collaborate on, and review schema changes before publication
+---
+
+<GraphOSEnterpriseRequired />
+
+As your supergraph schema grows in complexity, it can be increasingly challenging to make changes to it. Schema development can stall without the clear cross-team communication needed to negotiate, verify, and track changes.
+
+**Schema proposals** provide a centralized, GraphOS-native schema change management process that strengthens schema governance and fosters collaboration:
+
+- Because the proposal process is conducted within GraphOS, it leverages GraphOS schema checks at every stage, minimizing the likelihood of errors and inconsistencies. Additionally, the process consolidates a comprehensive history of discussions and changes, enhancing auditability.
+
+- Schema proposals facilitate communication across your organization. In particular, they empower graph consumers to actively participate in the schema change process. This increased coordination leads to more informed design decisions, ultimately streamlining development cycles.
+
+## Permissions
+
+[Permissions](/graphos/org/members) for actions in the proposal process are set at the graph level with the following defaults. Org and graph admins can update permissions based on an organization's needs.
+
+| Role              | Create | Edit | View proposal | Comment | Suggest changes | Approve |
+| ----------------- | ------ | ---- | ------------- | ------- | --------------- | ------- |
+| Org / Graph Admin | ✔️     | ✔️   | ✔️            | ✔️      | ✔️              | ✔️      |
+| Contributor       | ✔️     | ✔️   | ✔️            | ✔️      | ✔️              | ✔️      |
+| Documenter        | ✔️     | ✔️   | ✔️            | ✔️      | ✔️              | ✔️      |
+| Observer          | ✔️     | ✔️   | ✔️            | ✔️      | ✔️              | ✔️      |
+| Consumer          | ❌     | ❌   | ❌            | ✔️      | ❌              | ❌      |
+| Billing Admin     | ❌     | ❌   | ❌            | ❌      | ❌              | ❌      |

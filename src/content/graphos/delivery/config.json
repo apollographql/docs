@@ -35,6 +35,28 @@
           "enterprise"
         ]
       ]
+    },
+    "Schema change proposals": {
+      "Overview": ["/schema-proposals",
+      [
+        "enterprise"
+      ]],
+      "Proposing changes":[ "/proposing-changes",
+      [
+        "enterprise"
+      ]],
+      "Reviewing proposals":[ "/reviewing-proposals",
+      [
+        "enterprise"
+      ]],
+      "Integrating schema checks":[ "/proposals-checks-integration",
+      [
+        "enterprise"
+      ]],
+      "Configuring notifications":[ "/proposals-notifications",
+      [
+        "enterprise"
+      ]]
     }
   }
 }
