@@ -218,11 +218,7 @@ After you create a PQL, you can link it to one or more variants of your graph. E
 
 4. Click **Save**.
 
-After you link a PQL to a variant:
-
-1. GraphOS validates the PQL against the variant's reported operation history and flags any recent operations not represented in the PQL.
-
-2. GraphOS then uploads the PQL to [Uplink](/federation/managed-federation/uplink/), the service that delivers configuration to your router at runtime.
+After you link a PQL to a variant, GraphOS makes the PQL available in [Uplink](/federation/managed-federation/uplink/), the service that delivers configurations to your router at runtime. Once [configured](#2-router-configuration), the router polls Uplink to ensure it uses the most up-to-date PQL for linked variants.
 
 ### 2. Router configuration
 
