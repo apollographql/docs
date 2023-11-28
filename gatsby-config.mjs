@@ -1,14 +1,19 @@
-const {algoliaSettings} = require('apollo-algolia-transform');
-const {
-  remarkTypescript,
+import fs from 'fs';
+import path, {join} from 'path';
+import rehypeAutolinkHeadings from 'rehype-autolink-headings';
+import remoteSources from './sources/remote.js';
+import yaml from 'js-yaml';
+import {algoliaSettings} from 'apollo-algolia-transform';
+import {fileURLToPath} from 'url';
+import {
   highlightPreservation,
-  isWrapped
-} = require('remark-typescript');
-const {query, transformer} = require('./algolia');
-const yaml = require('js-yaml');
-const fs = require('fs');
-const remoteSources = require('./sources/remote');
-const {join} = require('path');
+  isWrapped,
+  remarkTypescript
+} from 'remark-typescript';
+import {query, transformer} from './algolia/index.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const isProduction = process.env.CONTEXT === 'production';
 
@@ -93,20 +98,22 @@ const plugins = [
     resolve: 'gatsby-plugin-mdx',
     options: {
       gatsbyRemarkPlugins,
-      remarkPlugins: [
-        [
-          remarkTypescript,
-          {
-            filter: isWrapped({wrapperComponent: 'MultiCodeBlock'}),
-            customTransformations: [highlightPreservation()],
-            prettierOptions: {
-              trailingComma: 'all',
-              singleQuote: true
+      mdxOptions: {
+        remarkPlugins: [
+          [
+            remarkTypescript,
+            {
+              filter: isWrapped({wrapperComponent: 'MultiCodeBlock'}),
+              customTransformations: [highlightPreservation()],
+              prettierOptions: {
+                trailingComma: 'all',
+                singleQuote: true
+              }
             }
-          }
-        ]
-      ],
-      rehypePlugins: [[require('rehype-autolink-headings'), {behavior: 'wrap'}]]
+          ]
+        ],
+        rehypePlugins: [[rehypeAutolinkHeadings, {behavior: 'wrap'}]]
+      }
     }
   },
   {
@@ -269,7 +276,7 @@ if (isSingleDocset) {
   plugins.push('gatsby-plugin-local-docs');
 }
 
-module.exports = {
+export default {
   pathPrefix: '/docs',
   siteMetadata: {
     siteUrl: 'https://www.apollographql.com'

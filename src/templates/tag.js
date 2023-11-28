@@ -9,7 +9,7 @@ export const pageQuery = graphql`
   query AllTechNotesWithTag($tag: String) {
     notes: allFile(
       filter: {childMdx: {frontmatter: {tags: {in: [$tag]}}}}
-      sort: {fields: childMdx___frontmatter___title, order: ASC}
+      sort: {childMdx: {frontmatter: {title: ASC}}}
       limit: 2000
     ) {
       nodes {

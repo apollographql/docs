@@ -10,7 +10,7 @@ export function TagList({onClick, selected}) {
     graphql`
       query AllTags {
         allMdx {
-          group(field: frontmatter___tags) {
+          group(field: {frontmatter: {tags: SELECT}}) {
             tag: fieldValue
             totalCount
           }
