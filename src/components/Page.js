@@ -12,7 +12,7 @@ import PropTypes from 'prop-types';
 import React, {Fragment, createElement, useMemo} from 'react';
 import RelativeLink, {ButtonLink} from './RelativeLink';
 import TableOfContents from './TableOfContents';
-import TrackableLink from './TrackableLink';
+import TrackableButton from './TrackableButton';
 import TypeScriptApiBox from './TypeScriptApiBox';
 import VersionBanner from './VersionBanner';
 import autolinkHeadings from 'rehype-autolink-headings';
@@ -210,7 +210,7 @@ const mdxComponents = {
   FunctionDetails,
   DocBlock,
   DocPiece,
-  TrackableLink
+  TrackableButton
 };
 
 const {processSync} = rehype()
