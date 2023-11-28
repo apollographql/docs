@@ -4,11 +4,19 @@ title: Schema proposal configurations
 
 <GraphOSEnterpriseRequired />
 
-To-do: Overview of configurations
+[Org and graph admins](../org/members/#organization-wide-member-roles) can configure the following aspects of schema proposals:
 
-## Configure permissions
+- Which [roles](../org/members/#organization-wide-member-roles) can create and edit proposals
+- Which team members are default reviewers
+- The minimum number of approvals required for a proposal to be approved
+- How schema checks incorporate proposals
+- [Coming soon] Which events in the proposals workflow trigger email notifications and to whom
 
-- **Permissions**: the minimum [role](../org/members/#organization-wide-member-roles) required to create proposals
+<Note>
+
+Schema proposal configurations are on a per-graph&mdash;not per-organization&mdash;basis.
+
+</Note>
 
 <img
   src="../img/schema-proposals/schema-proposal-settings.jpg"
@@ -16,71 +24,137 @@ To-do: Overview of configurations
   alt="Schema proposals settings in Studio"
 />
 
-[Permissions](/graphos/org/members) for actions in the proposal process are set at the graph level with the following defaults. Org and graph admins can update permissions based on an organization's needs.
+## Configure permissions and approvals
 
-| Role              | Create | Edit | View proposal | Comment | Suggest changes | Approve |
-| ----------------- | ------ | ---- | ------------- | ------- | --------------- | ------- |
-| Org / Graph Admin | ✔️     | ✔️   | ✔️            | ✔️      | ✔️              | ✔️      |
-| Contributor       | ✔️     | ✔️   | ✔️            | ✔️      | ✔️              | ✔️      |
-| Documenter        | ✔️     | ✔️   | ✔️            | ✔️      | ✔️              | ✔️      |
-| Observer          | ✔️     | ✔️   | ✔️            | ✔️      | ✔️              | ✔️      |
-| Consumer          | ❌     | ❌   | ❌            | ✔️      | ❌              | ❌      |
-| Billing Admin     | ❌     | ❌   | ❌            | ❌      | ❌              | ❌      |
+[Permissions](/graphos/org/members) for proposal actions are set at the graph level with the following defaults:
 
-## Configure reviews and approvals
+|                      | Create | Edit | View | Comment | Suggest changes | Approve |
+| ------------------   | ------ | ---- | ---- | ------- | ------- | ------- |
+| Org / Graph Admin    | ✔️     | ✔️   | ✔️   | ✔️      | ✔️      | ✔️      |
+| Contributor          | ✔️     | ✔️   | ✔️   | ✔️      | ✔️      | ✔️      |
+| Documenter           | ✔️     | ✔️   | ✔️   | ✔️      | ✔️      | ✔️      |
+| Observer             | ✔️     | ✔️   | ✔️   | ✔️      | ✔️      | ✔️      |
+| Consumer             | ❌     | ❌   | ✔️   | ✔️      | ✔️      | ✔️      |
+| Billing Admin        | ❌     | ❌   | ❌   | ❌      | ❌      | ❌      |
 
-From a graph's **Settings** page, [graph admins](../org/members/#organization-wide-member-roles) can set:
 
-To-do: Create table with default values
+[Org and graph admins](../org/members/#organization-wide-member-roles) can configure which roles can _create_ and _edit_ proposals and other aspects of the proposal process from a graph's **Settings** page in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content).
 
-- **Approval requirements**: the minimum number of approvals a proposal must receive for its status to be **Approved**
+Refer to the table below for configurations and default and valid values.
 
-    <Note>
+### Configuration reference
 
-  Changing the minimum number of required approvals changes the status of existing proposals that aren't [**Closed** or **Implemented**](./propose-changes#change-proposal-status) based on whether their current number of approvals meets the new minimum required approvals threshold.
+<table class="field-table">
+  <thead>
+    <tr>
+      <th>Configuration/ <br/> Default value</th>
+      <th>Description</th>
+      <th>Valid values</th>
+    </tr>
+  </thead>
 
-    </Note>
+<tbody>
 
-- **Default reviewers**: the team members to mark as default reviewers
+<tr>
 
-## Configure schema checks
+<td>
 
-[Schema checks](./schema-checks) include a **Proposals** task that checks whether diffs included in a check have matching and approved proposals.
+##### Permissions
 
-<img
-  src="../img/schema-proposals/proposal-checks.jpg"
-  className="screenshot"
-  alt="Schema proposals settings in Studio"
-/>
+Default: `Observers`
 
-By default, the severity of this task is set to **Off**. You can configure the severity in a graph's **Settings** page:
+</td>
 
-- With the severity set to **Off**, the proposals task isn't included in list of tasks a check must pass for the check to succeed.
-- Setting the severity to **Error** means the check tasks fails when proposals contain diffs that aren't already in approved proposals.
-- Setting the severity to **Warning** means the proposals tasks can still pass even when proposals contain diffs that aren't already in approved proposals. However, warnings appear in the check run.
+<td>
+
+The _minimum_ [role](../org/members/#organization-wide-member-roles) required to create and edit proposals.
+
+<br/>
+
+`Admins` is the most restrictive setting and observers the least.
+If you select `Admins`, only org and graph admins can create and edit proposals.
+If you select `Observers`, all organization members except Consumers and Billing Admins can create and edit proposals.
+
+</td>
+
+<td>
+
+`Admins`, `Contributors`, `Documentors`, and `Observers`
+
+</td>
+
+</tr>
+<tr>
+<td>
+
+##### Default reviewers
+
+Default: `None`
+
+</td>
+<td>
+
+The team members automatically marked as reviewers once a proposal's status becomes **Open for feedback**.
+
+</td>
+
+<td>
+
+Any member of your organization can be a default reviewer except for [billing admins](../org/members/#organization-wide-member-roles)
+
+</td>
+
+</tr>
+
+<tr>
+<td>
+
+##### Required approvals
+
+Default: `3`
+
+</td>
+<td>
+
+The minimum number of approvals a proposal must receive for its status to become **Approved**.
+
+</td>
+
+<td>
+
+1 - 6
+
+</td>
+
+</tr>
+
+</tbody>
+</table>
 
 <Note>
 
-The proposals task also checks _comments_ in the SDL. For example, if an approved proposal includes a schema comment with a period and the diff submitted to Checks doesn't, the check fails.
+Changing the number of required approvals updates the status of existing proposals that aren't [**Closed** or **Implemented**](./propose-changes#change-proposal-status) based on whether their current number of approvals meets the new number of required approvals.
 
 </Note>
 
-When a check runs, you see the following:
+## Configure schema checks
 
-- A check with matching approved proposals shows a checkmark alongside the diffs the check ran on
-- A check without matching approved proposals displays either a warning or error icon depending on the configured severity.
+You can configure [schema checks](./schema-checks) to include a **Proposals** task that checks whether the changes a check is running on have matching and approved schema proposals.
 
 <img
-  src="../img/schema-proposals/proposal-check-diff.jpg"
+  src="../img/schema-proposals/proposal-check-settings.jpg"
   className="screenshot"
   alt="Schema proposals settings in Studio"
 />
 
-Clicking the icons reveals a list of matching proposals in the right panel.
-Clicking **Ignore** will result in the status of Proposals to not cause a check to warn or fail, and will automatically re-run the check to apply this setting.
+By default, the severity of this task is **Off**. You can select from the following severity levels:
 
-Incoming subgraph changes in the checks pipeline and approved proposals don't need to map 1:1. That is, if you have an approved proposal with changes across multiple subgraphs, you can push those changes through the pipeline one by one and they will still get matched. Similarly, if a single proposal contains a large change that you would like to divide into multiple check requests in the pipeline, then those will still get matched.
+- With the severity set to **Off**, the proposals task isn't in list of tasks a check must pass for the check to succeed.
+- Setting the severity to **Error** means the proposals task fails when the change being checked isn't included in approved proposals.
+- Setting the severity to **Warning** means the proposals tasks can still pass even when the change being checked isn't included in approved proposals. However, warnings appear in the check run.
+
+Integrating schema proposals into schema checks is a key part of the [proposal workflow](./schema-proposals#proposal-workflow). See the [Implement approved proposals](./implement-proposals) article for more information on how to use schema checks as part of your proposal workflow.
 
 ## Configure notifications
 
-To-do
+Coming soon!
