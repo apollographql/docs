@@ -36,8 +36,12 @@
         ]
       ]
     },
-    "Schema change proposals": {
+    "Schema proposals": {
       "Overview": ["/schema-proposals",
+      [
+        "enterprise"
+      ]],
+      "Configure proposals":[ "/configure-proposals",
       [
         "enterprise"
       ]],
@@ -50,7 +54,7 @@
       [
         "enterprise"
       ]],
-      "Configure proposals":[ "/configure-proposals",
+      "Implement approved proposals":[ "/implement-proposals",
       [
         "enterprise"
       ]]
