@@ -4,6 +4,16 @@ title: Schema proposal configurations
 
 <GraphOSEnterpriseRequired />
 
+## Reading proposal subgraphs with Rover
+
+Subgraph schemas can be pulled from proposals using rover subgraph fetch the same way as pulling subgraph schemas from a variant, with the proposal's id taking the place of the variant name. The proposal's id is always prefixed with p- followed by a number, and can be found in the URL of a proposal.
+
+An example is rover subgraph fetch my-graph@p-101 --name subgraph
+
+Pushing to a proposal via rover subgraph publish isn't supported.
+
+## Validating changes
+
 When a schema published to the proposal's source-variant contains changes that are in an open proposal, the corresponding [launch](./launches) appears in the proposal's activity log.
 
 <img
