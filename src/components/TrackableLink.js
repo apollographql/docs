@@ -1,22 +1,22 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {Button} from '@chakra-ui/react';
+import RelativeLink from './RelativeLink';
 
-const TrackableButton = ({href, eventName, children, ...props}) => {
+const TrackableLink = ({href, eventName, children, ...props}) => {
   return (
-    <Button
+    <RelativeLink
       href={href}
       onClick={() => window?.gtag?.('event', `docs_${eventName}`)}
       {...props}
     >
       {children}
-    </Button>
+    </RelativeLink>
   );
 };
 
-export default TrackableButton;
+export default TrackableLink;
 
-TrackableButton.propTypes = {
+TrackableLink.propTypes = {
   href: PropTypes.string.isRequired,
   eventName: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired
