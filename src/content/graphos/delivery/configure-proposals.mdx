@@ -1,0 +1,77 @@
+---
+title: Schema proposal configurations
+---
+
+<GraphOSEnterpriseRequired />
+
+## Reviewer and role configurations
+
+From a graph's **Settings** page, [graph admins](../org/members/#organization-wide-member-roles) can set:
+
+- **Approval requirements**: the minimum number of approvals a proposal must receive for its status to be **Approved**
+
+    <Note>
+
+  Changing the minimum number of required approvals changes the status of existing proposals that aren't [**Closed** or **Implemented**](./propose-changes#change-proposal-status) based on whether their current number of approvals meets the new minimum required approvals threshold.
+
+    </Note>
+
+- **Default reviewers**: the team members to mark as default reviewers
+- **Permisssions**: the minimum [role](../org/members/#organization-wide-member-roles) required to create proposals
+
+<img
+  src="../img/schema-proposals/schema-proposal-settings.jpg"
+  className="screenshot"
+  alt="Schema proposals settings in Studio"
+/>
+
+### Permission defaults
+
+[Permissions](/graphos/org/members) for actions in the proposal process are set at the graph level with the following defaults. Org and graph admins can update permissions based on an organization's needs.
+
+| Role              | Create | Edit | View proposal | Comment | Suggest changes | Approve |
+| ----------------- | ------ | ---- | ------------- | ------- | --------------- | ------- |
+| Org / Graph Admin | ✔️     | ✔️   | ✔️            | ✔️      | ✔️              | ✔️      |
+| Contributor       | ✔️     | ✔️   | ✔️            | ✔️      | ✔️              | ✔️      |
+| Documenter        | ✔️     | ✔️   | ✔️            | ✔️      | ✔️              | ✔️      |
+| Observer          | ✔️     | ✔️   | ✔️            | ✔️      | ✔️              | ✔️      |
+| Consumer          | ❌     | ❌   | ❌            | ✔️      | ❌              | ❌      |
+| Billing Admin     | ❌     | ❌   | ❌            | ❌      | ❌              | ❌      |
+
+## Configure proposals in schema checks
+
+[Schema checks](./schema-checks) include a **Proposals** task that checks whether diffs included in a check have matching and approved proposals.
+
+<img
+  src="../img/schema-proposals/proposal-checks.jpg"
+  className="screenshot"
+  alt="Schema proposals settings in Studio"
+/>
+
+By default, the severity of this task is set to **Off**. You can configure the severity in a graph's **Settings** page:
+
+- With the severity set to **Off**, the proposals task isn't included in list of tasks a check must pass for the check to succeed.
+- Setting the severity to **Error** means the check tasks fails when proposals contain diffs that aren't already in approved proposals.
+- Setting the severity to **Warning** means the proposals tasks can still pass even when proposals contain diffs that aren't already in approved proposals. However, warnings appear in the check run.
+
+<Note>
+
+The proposals task also checks _comments_ in the SDL. For example, if an approved proposal includes a schema comment with a period and the diff submitted to Checks doesn't, the check fails.
+
+</Note>
+
+When a check runs, you see the following:
+
+- A check with matching approved proposals shows a checkmark alongside the diffs the check ran on
+- A check without matching approved proposals displays either a warning or error icon depending on the configured severity.
+
+<img
+  src="../img/schema-proposals/proposal-check-diff.jpg"
+  className="screenshot"
+  alt="Schema proposals settings in Studio"
+/>
+
+Clicking the icons reveals a list of matching proposals in the right panel.
+Clicking **Ignore** will result in the status of Proposals to not cause a check to warn or fail, and will automatically re-run the check to apply this setting.
+
+Incoming subgraph changes in the checks pipeline and approved proposals don't need to map 1:1. That is, if you have an approved proposal with changes across multiple subgraphs, you can push those changes through the pipeline one by one and they will still get matched. Similarly, if a single proposal contains a large change that you would like to divide into multiple check requests in the pipeline, then those will still get matched.

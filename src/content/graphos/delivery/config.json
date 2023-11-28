@@ -19,15 +19,15 @@
     "Overview": "/",
     "Schema checks": {
       "Overview": "/schema-checks",
-      "Configuring schema checks": "/check-configurations",
-      "Connecting to GitHub": "/github-integration"
+      "Configure schema checks": "/check-configurations",
+      "Connect to GitHub": "/github-integration"
     },
     "Schema linting": {
       "Overview": "/schema-linter",
       "Linter rules": "/linter-rules"
     },
     "Schema delivery": {
-      "Publishing schemas": "/publishing-schemas",
+      "Publish schemas": "/publishing-schemas",
       "Launches": "/launches",
       "Contracts": [
         "/contracts",
@@ -41,19 +41,19 @@
       [
         "enterprise"
       ]],
-      "Proposing changes":[ "/proposing-changes",
+      "Configure proposals":[ "/configure-proposals",
       [
         "enterprise"
       ]],
-      "Reviewing proposals":[ "/reviewing-proposals",
+      "Propose changes":[ "/propose-changes",
       [
         "enterprise"
       ]],
-      "Integrating schema checks":[ "/proposals-checks-integration",
+      "Review proposals":[ "/review-proposals",
       [
         "enterprise"
       ]],
-      "Configuring notifications":[ "/proposals-notifications",
+      "Configure notifications":[ "/proposals-notifications",
       [
         "enterprise"
       ]]
