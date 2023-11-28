@@ -41,10 +41,7 @@
       [
         "enterprise"
       ]],
-      "Configure proposals":[ "/configure-proposals",
-      [
-        "enterprise"
-      ]],
+
       "Propose changes":[ "/propose-changes",
       [
         "enterprise"
@@ -53,7 +50,7 @@
       [
         "enterprise"
       ]],
-      "Configure notifications":[ "/proposals-notifications",
+      "Configure proposals":[ "/configure-proposals",
       [
         "enterprise"
       ]]
