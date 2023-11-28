@@ -6,7 +6,7 @@ const TrackableLink = ({href, eventName, children, ...props}) => {
   return (
     <RelativeLink
       href={href}
-      onClick={() => window?.gtag?.('event', eventName)}
+      onClick={() => window?.gtag?.('event', `docs_${eventName}`)}
       {...props}
     >
       {children}
