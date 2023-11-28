@@ -37,3 +37,27 @@ Implemented proposals are no longer editable.
 Proposals in draft mode can't receive the **Implemented** status, even when all changes are incorporated into launmches. A draft proposal's status automatically switches to Implemented once its status is changed to **Open for feedback**.
 
 </Note>
+
+--- Checks info
+
+When a check runs, you see the following:
+
+- A check with matching approved proposals shows a checkmark alongside the diffs the check ran on
+- A check without matching approved proposals displays either a warning or error icon depending on the configured severity.
+
+<img
+  src="../img/schema-proposals/proposal-check-diff.jpg"
+  className="screenshot"
+  alt="Schema proposals settings in Studio"
+/>
+
+<Note>
+
+The proposals task also checks _comments_ in the SDL. For example, if an approved proposal includes a schema comment with a period and the change the check is running on doesn't, the check fails.
+
+</Note>
+
+Clicking the icons reveals a list of matching proposals in the right panel.
+Clicking **Ignore** will result in the status of Proposals to not cause a check to warn or fail, and will automatically re-run the check to apply this setting.
+
+Incoming subgraph changes in the checks pipeline and approved proposals don't need to map 1:1. That is, if you have an approved proposal with changes across multiple subgraphs, you can push those changes through the pipeline one by one and they will still get matched. Similarly, if a single proposal contains a large change that you would like to divide into multiple check requests in the pipeline, then those will still get matched.
