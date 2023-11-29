@@ -4,17 +4,9 @@ title: Review schema change proposals
 
 <GraphOSEnterpriseRequired />
 
-## Review proposal
+## Review a proposal
 
-You can review different aspects of a proposal from its three non-editor tabs:
-
-- Overview
-- Changes
-- Schema Reference
-
-You can also provide commentary on changes from the **Changes** tab.
-
-### Overview
+Proposal creators and reviewers can review different aspects of a proposal from its four non-editor tabs in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content).
 
 <img
   src="../img/schema-proposals/proposal-overview.jpg"
@@ -22,15 +14,19 @@ You can also provide commentary on changes from the **Changes** tab.
   alt="Schema proposals overview in Studio"
 />
 
-- A proposal's **Overview** tab is where you can:
+- A proposal's **Overview** tab is where team members with [the appropriate permissions](./configure-proposals#configure-permissions-and-approvals) can:
   - View and edit a proposal's description by clicking the pencil icon on the **README**.
-  - View the proposal's status
-  - Monitor changes to the proposal over time
-  - Select and manage reviewers
+  - Use the **Proposal activity** log to monitor changes over time and leave overall commentary.
+  - View the proposal's status and author.
+  - Select reviewers.
+- The [**Changes**](#changes) tab shows both a summary and detailed view of the schema changes that make up a proposal.
+  - All viewers can also [provide commentary](#add-comments) on changes from the **Changes** tab.
+- The [**Schema Reference**](#schema-reference) tab shows the entire supergraph schema reference with the proposal's changes applied.
+- The [**Checks**](./propose-changes#schema-checks) tab shows all [schema checks](./schema-checks) that have run for [saved revisions](./propose-changes#save-revisions).
 
 ### Changes
 
-A proposal's **Changes** tab gives you a summary and detailed view of the schema changes that make up a proposal.
+A proposal's **Changes** tab shows both a **Summary** and **Detailed view** of the schema changes that make up a proposal:
 
 <img
   src="../img/schema-proposals/changes.jpg"
@@ -38,45 +34,55 @@ A proposal's **Changes** tab gives you a summary and detailed view of the schema
   alt="Schema proposals changes tab in Studio"
 />
 
+- The **Summary** shows the number of objects, interfaces, and other types that were changed in the proposal. Each type shows the number of lines there were added, deleted, and modified.
+
+- The **Detailed view** shows a collapsible diff for each changed type.
+
 #### Add comments
 
 You can comment on any lines in the detailed view's diff. Hover over the line and click on the chat icon that appears.
 
 <img
-  src="../img/schema-proposals/changes-commentary.jpg"
+  src="../img/schema-proposals/add-comment.jpg"
   className="screenshot"
   alt="Schema proposals changes tab in Studio"
 />
 
-In the panel that appears, you can write a comment for that line.
+Write your comment in the panel that appears on the right.
 
 <img
-  src="../img/schema-proposals/changes-write-comment.jpg"
+  src="../img/schema-proposals/write-comment.jpg"
   className="screenshot"
   alt="Schema proposals changes tab in Studio"
 />
 
-Click on the **...** button next to a comment to edit or delete it.
+Click on the **•••** button next to a comment to edit or delete it.
 
 <img
-  src="../img/schema-proposals/changes-edit-comment.jpg"
+  src="../img/schema-proposals/edit-comment.jpg"
   className="screenshot"
   alt="Schema proposals changes tab in Studio"
 />
 
-A blue tab shows the number of comments a particular line has.
+Share comment by clicking the link button to copy its URL.
 
 <img
-  src="../img/schema-proposals/changes-comment-number.jpg"
+  src="../img/schema-proposals/share-comment.jpg"
   className="screenshot"
   alt="Schema proposals changes tab in Studio"
 />
 
-Comments also appear on the proposal's overview tab.
+The blue tab that appears next to a line shows the number of comments that line has.
+
+<img
+  src="../img/schema-proposals/comments-number.jpg"
+  className="screenshot"
+  alt="Schema proposals changes tab in Studio"
+/>
 
 ### Schema Reference
 
-The **Schema Reference** tab lets see the entire supergraph schema reference with the proposal's changes applied.
+The **Schema Reference** tab shows the entire supergraph schema reference with the proposal's changes applied:
 
 <img
   src="../img/schema-proposals/schema-references.jpg"
@@ -84,7 +90,7 @@ The **Schema Reference** tab lets see the entire supergraph schema reference wit
   alt="Schema proposals changes tab in Studio"
 />
 
-You can filter the changes based on (to-do).
+Select **Proposal changes only** to view only the changes.
 
 <img
   src="../img/schema-proposals/schema-references-filtered.jpg"
@@ -92,11 +98,19 @@ You can filter the changes based on (to-do).
   alt="Schema proposals changes tab in Studio"
 />
 
-This tab also shows which fields were removed and added.
+You can use the other filters to the left of **Proposal changes only** to hone in on certain subgraphs, tags, directives, and more.
+
+The left nav shows you the number of types the proposal changes. Clicking into a type, for example **Object**, shows the specific objects that were changed. You can click on any changed type to see which fields were added and removed.
+
+<img
+  src="../img/schema-proposals/schema-reference-detailed.jpg"
+  className="screenshot"
+  alt="Schema proposals changes tab in Studio"
+/>
 
 ## Add a review
 
-Once you've reviewed a proposal, you can click the **Add review** button on a proposal's overview tab.
+Once you've reviewed a proposal, click the **Add review** button on the top right of the proposal's overview tab to formalize your review.
 
 <img
   src="../img/schema-proposals/add-review.jpg"
@@ -110,12 +124,16 @@ A modal appears where you can leave general commentary on the proposal and selec
   src="../img/schema-proposals/add-review-modal.jpg"
   className="screenshot"
   alt="Schema proposals overview tab in Studio"
+  width="300"
 />
 
-You can edit your review by clicking on the pencil icon next to your name in the list of **Reviewers**.
+You can edit your review by clicking the pencil icon next to your name in the list of **Reviewers**.
 
 <img
-  src="../img/schema-proposals/reviewers.jpg"
+  src="../img/schema-proposals/edit-review.jpg"
   className="screenshot"
   alt="Schema proposals overview tab in Studio"
+  width="200"
 />
+
+<ApprovedSchemaProposals />
