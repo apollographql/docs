@@ -4,6 +4,7 @@ module.exports = {
     {
       files: ['*.mdx'],
       globals: {
+        ApprovedSchemaProposals: 'readonly',
         Button: 'readonly',
         ButtonLink: 'readonly',
         ExpansionPanel: 'readonly',

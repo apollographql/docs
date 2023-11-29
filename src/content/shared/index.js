@@ -1,3 +1,4 @@
+export {default as ApprovedSchemaProposals} from './approved-schema-proposals.mdx';
 export {default as CalloutCard} from './callout-card.mdx';
 export {default as ClientPQDifferences} from './client-pq-differences.mdx';
 export {default as ClientPQImplementation} from './client-pq-implementation.mdx';
