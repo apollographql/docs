@@ -1,6 +1,6 @@
 ---
 title: Schema proposal configurations
-subtitle: Configure permissions, default reviewers, approval requirements, and more
+subtitle: Configure default reviewers, approval requirements, and more
 description: Fine-tune schema proposal workflows by configuring permissions, default reviewers, and approval requirements, and proposals in schema checks.
 ---
 
@@ -20,12 +20,6 @@ Schema proposal configurations are on a per-graph&mdash;not per-organization&mda
 
 </Note>
 
-<img
-  src="../img/schema-proposals/schema-proposal-settings.jpg"
-  className="screenshot"
-  alt="Schema proposals settings in Studio"
-/>
-
 ## Configure permissions and approvals
 
 [Permissions](/graphos/org/members) for proposal actions are set at the graph level with the following defaults:
@@ -40,9 +34,15 @@ Schema proposal configurations are on a per-graph&mdash;not per-organization&mda
 | Billing Admin        | ❌     | ❌   | ❌   | ❌      | ❌      | ❌      |
 
 
-[Org and graph admins](../org/members/#organization-wide-member-roles) can configure which roles can _create_ and _edit_ proposals and other aspects of the proposal process from a graph's **Settings** page in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content).
+[Org and graph admins](../org/members/#organization-wide-member-roles) can configure which roles can _create_ and _edit_ proposals. Permissions for other proposal actions are not configurable. Permissions and other configurations are available on a graph's **Settings** page in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content).
 
-Refer to the table below for configurations and default and valid values.
+<img
+  src="../img/schema-proposals/schema-proposal-settings.jpg"
+  className="screenshot"
+  alt="Schema proposals settings in Studio"
+/>
+
+Refer to the table below for default and valid values.
 
 ### Configuration reference
 
@@ -73,9 +73,9 @@ The _minimum_ [role](../org/members/#organization-wide-member-roles) required to
 
 <br/>
 
-`Admins` is the most restrictive setting and observers the least.
+`Admins` is the most restrictive setting and `Observers` the least.
+The `Observers` default means all organization members except Consumers and Billing Admins can create and edit proposals.
 If you select `Admins`, only org and graph admins can create and edit proposals.
-If you select `Observers`, all organization members except Consumers and Billing Admins can create and edit proposals.
 
 </td>
 
