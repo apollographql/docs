@@ -1,5 +1,7 @@
 ---
 title: Propose schema changes
+subtitle: Edit schemas, lint and check changes, and request reviews
+description: Learn to propose schema changes in GraphOS Studio. Edit schemas, lint, save revisions, and request reviews for distributed collaboration.
 ---
 
 <GraphOSEnterpriseRequired />
@@ -8,7 +10,7 @@ title: Propose schema changes
 
 You can create a new proposal in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content) from either:
 
-- A graph's proposals list page
+- A graph's proposals list
 
   - To access the proposals list page, click the pencil icon with the tooltip that says **Go to schema change proposals**.
 
@@ -18,7 +20,7 @@ You can create a new proposal in [GraphOS Studio](https://studio.apollographql.c
       alt="Graphs page in Studio"
     />
 
-- A variant's schema SDL page
+- A variant's schema SDL
   - To access a variant's SDL, click the variant from the **Graphs** page, select **Schema** from the left nav, and then select **SDL**.
 
     <img
@@ -29,7 +31,7 @@ You can create a new proposal in [GraphOS Studio](https://studio.apollographql.c
 
 From either location:
 
-1. Click the **Propose changes** button. A modal entitled **Propose schema changes** appears.
+1. Click the **Propose changes** button in the top right. A modal entitled **Propose schema changes** appears.
    <img
      src="../img/schema-proposals/proposal-modal.jpg"
      className="screenshot"
@@ -40,7 +42,7 @@ From either location:
 
    <Note>
 
-   You cannot change a proposal's title once created.
+   You cannot change a proposal's title once it's created.
 
    </Note>
 
@@ -48,7 +50,7 @@ From either location:
 
    <Note>
 
-   The source variant's schema is used to start the proposal, but the proposal is not kept in sync with any changes that occur while the proposal is in progress.
+   The source variant's schema is used to start the proposal, but the proposal is not kept in sync with any schema changes that occur while the proposal is in progress.
 
    </Note>
 
@@ -56,17 +58,17 @@ From either location:
 
     <Note>
 
-    If you want to edit the proposal's description later, you can do so from its [**Overview** tab](#overview).
+    If you want to edit the proposal's README later, you can do so from its [**Overview** tab](./review-proposals/#overview).
 
     </Note>
 
 5. Click **Create Proposal**.
 
-Once you've created the proposal, you land on the newly created proposal's **Editor** tab. This tab is where you can [make the schema changes](#edit-subgraph-schemas) you want to propose.
+Once you've created the proposal, you land on the newly created proposal's **Editor** tab. This tab is where you [make the schema changes](#edit-subgraph-schemas) you want to propose.
 
 ## Edit subgraph schemas
 
-On a proposal's **Editor** tab, you can directly edit one or more subgraph schemas.
+You can directly edit one or more subgraph schemas on a proposal's **Editor** tab.
 
 <img
   src="../img/schema-proposals/subgraph-schema-editor.jpg"
@@ -74,7 +76,7 @@ On a proposal's **Editor** tab, you can directly edit one or more subgraph schem
   alt="Schema proposals editor in Studio"
 />
 
-To propose adding a new subgraph, click **+Add new** from the subgraph schema selector in the left nav. You can also delete and rename existing subgraph schemas by clicking the **•••** menu to the right of a subgraph's name.
+To start a new subgraph, click **+Add new** from the subgraph schema selector in the left nav.
 
 <img
   src="../img/schema-proposals/subgraph-schema-selector.jpg"
@@ -83,9 +85,11 @@ To propose adding a new subgraph, click **+Add new** from the subgraph schema se
   width="200px"
 />
 
+You can also delete and rename existing subgraph schemas by clicking the **•••** menu to the right of a subgraph's name.
+
 ### Lint changes
 
-To lint the schema changes you've made, you can click the broom icon in the top right of the editor.
+To lint the schema changes you've made, click the broom icon in the top right of the editor.
 
 <img
   src="../img/schema-proposals/lint-changes.jpg"
@@ -104,7 +108,7 @@ After successfully running a lint on your schema, the panel displays any linter 
   width="500px"
 />
 
-If you are having trouble finding the exact location of where the lint violation occurred, you can click the line in the results list to reveal the violating line in the editor.
+If you are having trouble finding the exact location of where the lint violation occurred, click the line in the violations list to highlight it in the editor.
 
 <img
   src="../img/schema-proposals/linter-location.jpg"
@@ -115,17 +119,16 @@ If you are having trouble finding the exact location of where the lint violation
 
 <Note>
 
-When a coordinate that has a lint violation is modified such that it no longer exists—either because you've renamed or deleted a field—it appears grayed out so you know to ignore it while working on the other violations you may have.
+When a coordinate with a lint violation is changed so that it no longer exists—either because you've renamed or deleted a field—it appears grayed out in the violations list. See, for example, the `line 52 + User.token` in the screenshot above. This indicates you can ignore the violation.
 
 </Note>
 
-Once you have made changes to your schema, you can rerun your lint using the rerun button in the top right of the **Schema linting** panel.
+Once you've made changes in the editor, rerun linting by clicking the rerun button in the top right of the **Schema linting** panel.
 
 ### Save revisions
 
 Once you've made changes, click the **Save Revision** button in the top right of the editor to save them to your proposal.
-A modal appears where you can optionally include a summary of your changes.
-This summary appears in your proposal's overview tab.
+A modal appears where you can optionally include a summary of your changes. This field accepts [Markdown](https://www.markdownguide.org/getting-started/).
 
 <img
   src="../img/schema-proposals/save-revision.jpg"
@@ -134,12 +137,11 @@ This summary appears in your proposal's overview tab.
   width="500px"
 />
 
-A proposal can include as many revisions as necessary.
+This summary appears in the activity your proposal's overview tab. A proposal can include as many revisions as necessary.
 
 <Tip>
 
-In the version control paradigm, you can think of each each revision as equal to a [commit](<https://en.wikipedia.org/wiki/Commit_(version_control)>).
-To give reviewers an overview of the revisions that make up a proposal, it can be helpful to make each revision an atomic change.
+You can think of each revision as equal to a [commit](<https://en.wikipedia.org/wiki/Commit_(version_control)>) in the version control paradigm. Making each revision an atomic change can more easily give reviewers an overview of the changes that make up a proposal.
 
 </Tip>
 
@@ -151,44 +153,30 @@ To give reviewers an overview of the revisions that make up a proposal, it can b
   src="../img/schema-proposals/schema-checks.jpg"
   className="screenshot"
   alt="Schema checks for a proposal in Studio"
-  width="500px"
 />
 
-Checks run against the source variant that the proposal was created from.
-This enables checks to capture breaking changes based on operation history from the source variant.
+Checks run against the schema of the source variant from which the proposal was created.
+This enables checks to capture breaking changes based on the source variant's operation history.
 
 <Note>
 
-The checks run against the source variant's schema as it was when the proposal was created.
-Changes to the source variant that were made after the proposal was created are not incorporated into the schema.
+Checks run against the source variant's schema as it was when the proposal was created.
+Changes to the source variant schema made after the proposal was created aren't considered during checks.
 For example, if the source variant schema includes a new type, unless the proposal also adds the type, then the proposal's checks show that type as being deleted.
 
 </Note>
 
 ## Self-review and commentary
 
-While working on a proposal and before requesting reviews from teammates, you may want to review the proposal yourself. See the [Review proposals doc](./review-proposals) for how you can review different aspects of a proposal and [provide commentary](./review-proposals/#add-comments) on it.
-
-## Request review
-
-Once your proposal is ready for review, you can add reviewers by clicking **Manage reviewers** on the proposal's overview tab.
-Adding reviewers automatically sets the [proposal's status](#change-proposal-status) to **Open for Feedback*.
-
-<img
-  src="../img/schema-proposals/request-approval.jpg"
-  className="screenshot"
-  alt="Schema proposals overview tab in Studio"
-/>
-
-Once a proposal receives the minimum number of approvals, its status changes to **Approved**.
-
-<Note>
-
-Changes made to an approved proposal will not change the approved status of the Proposal.
-
-</Note>
+While working on a proposal and before requesting reviews from teammates, you may want to review the proposal yourself. See the [Review proposals](./review-proposals) article for how to review different aspects of a proposal and [provide commentary](./review-proposals/#add-comments) on it.
 
 ## Change proposal status
+
+You can manually change the proposal's status from the overview page by clicking **Edit status**. You have the following choices:
+
+- **Draft**: default status upon creation
+- **Open for feedback**: signals the proposal is ready for review
+- **Closed**: signals the proposal is abandoned or suspended&mdash;you can always reopen a proposal by resetting the status
 
 <img
   src="../img/schema-proposals/edit-status.jpg"
@@ -196,10 +184,34 @@ Changes made to an approved proposal will not change the approved status of the 
   alt="Schema proposals overview tab in Studio"
 />
 
-You can manually change the proposal's status from the overview page to one of the following:
+**Approved** and **Implemented** statuses are automatically set once [necessary conditions](./schema-proposals#proposal-workflow) have been met.
 
-- Draft: default status upon creation
-- Open for feedback: default status once reviewers are selected
-- Closed: you may want to close your proposal in case it no longer needs review 
+## Request review
+
+Add reviewers by clicking **Manage reviewers** on the proposal's overview tab:
+
+<img
+  src="../img/schema-proposals/request-approval.jpg"
+  className="screenshot"
+  alt="Schema proposals overview tab in Studio"
+/>
+
+Once a proposal receives the [minimum number of approvals](./configure-proposals#required-approvals), its status changes to **Approved**. 
+
+<Note>
+
+Changes made to an approved proposal don't change the **Approved** status of the proposal.
+If you want to reset the proposal's status to **Open for feedback** or another status, you can [do so manually](#change-proposal-status) from the overview page.
+
+</Note>
+
+<img
+  src="../img/schema-proposals/approved-proposal.jpg"
+  className="screenshot"
+  alt="Schema proposals overview tab in Studio"
+/>
+
+Once a proposal is approved, your team can then begin [implementing the approved changes](./implement-proposals).
+
 
 
