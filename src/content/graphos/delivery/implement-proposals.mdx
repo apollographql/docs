@@ -1,28 +1,84 @@
 ---
-title: Schema proposal configurations
+title: Implement approved proposals
+subtitle: Use Rover and schema checks to implement only approved changes
+description: Pull GraphQL schema changes from schema proposals using Rover, validate them with schema checks, and publish them to GraphOS.
 ---
 
 <GraphOSEnterpriseRequired />
 
-## Reading proposal subgraphs with Rover
+Once a schema proposal is **Approved**, its changes need to be implemented.
+For those implementing the changes, [pulling the approved schema changes](#pull-subgraphs-schemas-with-rover) into their IDE is a great starting point.
 
-Subgraph schemas can be pulled from proposals using rover subgraph fetch the same way as pulling subgraph schemas from a variant, with the proposal's id taking the place of the variant name. The proposal's id is always prefixed with p- followed by a number, and can be found in the URL of a proposal.
+Once the changes are implemented—including updating resolvers and other supporting work—you can use the [schema checks workflow](#validate-changes-with-schema-checks) to ensure that your organization only publishes changes that were part of an approved proposal.
 
-An example is rover subgraph fetch my-graph@p-101 --name subgraph
+## Pull proposed schemas with Rover
 
-Pushing to a proposal via rover subgraph publish isn't supported.
+You can pull a proposal's subgraph schemas using the [`rover subgraph fetch` command](/rover/commands/subgraphs/#subgraph-fetch). This command is also used to pull subgraph schemas from a variant. To pull a schema from a _proposal_, use the proposal's ID instead of a variant name.
 
-## Validating changes
+```bash disableLineNumbers=true
+rover subgraph fetch my-graph@p-101 --name subgraph
+```
 
-When a schema published to the proposal's source-variant contains changes that are in an open proposal, the corresponding [launch](./launches) appears in the proposal's activity log.
+A proposal's ID is always prefixed with `p-` and followed by a number. You can find the proposal ID in the proposal's URL in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content). For example, a proposal with the following URL `https://studio.apollographql.com/graph/Example-supergraph/proposal/p-0/home` has an ID of `p-0`.
+
+<Note>
+
+You cannot push schema changes to proposals with the `rover subgraph publish` command.
+
+</Note>
+
+## Validate changes with checks
+
+GraphOS provides [schema checks](./schema-checks) to help you identify breaking changes before you make them. You [run checks on local changes](./schema-checks#the-checks-lifecycle) before publishing them.
+
+Since schema checks [run on every revision](./propose-changes#schema-checks) in a proposal, if your last revision's checks pass, any changes you implement from a proposal should pass, too.
+
+### Ensure changes match an approved proposal
+
+You can [configure schema checks](./configure-proposals/#configure-schema-checks) to include a **Proposals** task that checks whether the changes a check is running on have matching and approved schema proposals.
 
 <img
-  src="../img/schema-proposals/proposal-implementation-status.jpg"
+  src="../img/schema-proposals/proposal-check-settings.jpg"
   className="screenshot"
   alt="Schema proposals settings in Studio"
 />
 
-When an open proposal's changes have been fully implemented, its status changes to **Implemented**. Multiple launches can contribute to a proposal being fully implemented.
+Configuring the **Proposals** task's severity to **Error** ensures that only changes that have gone through the proposal workflow are published. You can set the severity to **Warning** if you want to be able to publish changes that haven't gone through the workflow but receive warnings about them.
+
+<Note>
+
+The Proposals task also checks _comments_ in the SDL. For example, the Proposals task fails if a matching approved proposal includes a comment with a period and the change the check is running on doesn't.
+
+</Note>
+
+When a check with the **Proposals** task runs, you can see the following by clicking the **Proposals** task on the **Checks** page:
+
+<img
+  src="../img/schema-proposals/proposal-check-diff.jpg"
+  className="screenshot"
+  alt="Schema proposals check task in Studio"
+/>
+
+- Changes with matching approved proposals show checkmark icons.
+- Changes without matching approved proposals show warning or error icons depending on the [configured severity](./configure-proposals#configure-schema-checks).
+
+Clicking the icons reveals a list of matching proposals in the right panel.
+Click **Ignore** to allow the Proposals task to succeed without matching approved proposals for all changes.
+
+**Incoming changes and approved proposals don't need to match one-to-one.** For example, if you have an approved proposal with changes in multiple subgraphs, you can check each subgraph's changes separately—they'll still match. Similarly, if a single proposal contains a large change in one subgraph that you want to divide into multiple checks, those will also match.
+
+## Publish changes to GraphOS
+
+Publishing changes that are part of a schema proposal uses the same [publishing steps](./publishing-schemas) as any other changes.
+When a schema published to a [proposal's source variant](./propose-changes/#start-a-proposal) contains changes that are in an open proposal, the corresponding [launch](./launches) appears in the proposal's activity log.
+
+<img
+  src="../img/schema-proposals/proposal-implementation-status.jpg"
+  className="screenshot"
+  alt="Schema proposals overview in Studio"
+/>
+
+When an open proposal's changes have been fully implemented—whether from one launch or many—the proposal's status changes to **Implemented**.
 
 <img
   src="../img/schema-proposals/fully-implemented-proposal.jpg"
@@ -30,34 +86,9 @@ When an open proposal's changes have been fully implemented, its status changes 
   alt="Schema proposals settings in Studio"
 />
 
-Implemented proposals are no longer editable.
-
 <Note>
 
-Proposals in draft mode can't receive the **Implemented** status, even when all changes are incorporated into launmches. A draft proposal's status automatically switches to Implemented once its status is changed to **Open for feedback**.
+- A proposal with **Draft** status can't become **Implemented**, even when all its changes are published. Once such a proposal's status is changed to **Open for feedback**, it automatically switches to **Implemented**.
+- **Implemented** (and **closed**) proposals cannot receive further revisions.
 
 </Note>
-
---- Checks info
-
-When a check runs, you see the following:
-
-- A check with matching approved proposals shows a checkmark alongside the diffs the check ran on
-- A check without matching approved proposals displays either a warning or error icon depending on the configured severity.
-
-<img
-  src="../img/schema-proposals/proposal-check-diff.jpg"
-  className="screenshot"
-  alt="Schema proposals settings in Studio"
-/>
-
-<Note>
-
-The proposals task also checks _comments_ in the SDL. For example, if an approved proposal includes a schema comment with a period and the change the check is running on doesn't, the check fails.
-
-</Note>
-
-Clicking the icons reveals a list of matching proposals in the right panel.
-Clicking **Ignore** will result in the status of Proposals to not cause a check to warn or fail, and will automatically re-run the check to apply this setting.
-
-Incoming subgraph changes in the checks pipeline and approved proposals don't need to map 1:1. That is, if you have an approved proposal with changes across multiple subgraphs, you can push those changes through the pipeline one by one and they will still get matched. Similarly, if a single proposal contains a large change that you would like to divide into multiple check requests in the pipeline, then those will still get matched.
