@@ -8,9 +8,10 @@ title: Propose schema changes
 
 You can create a new proposal in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content) from either:
 
-- The proposals list page
+- A graph's proposals list page
 
   - To access the proposals list page, click the pencil icon with the tooltip that says **Go to schema change proposals**.
+
     <img
       src="../img/schema-proposals/proposals-list-page.jpg"
       className="screenshot"
@@ -19,7 +20,7 @@ You can create a new proposal in [GraphOS Studio](https://studio.apollographql.c
 
 - A variant's schema SDL page
   - To access a variant's SDL, click the variant from the **Graphs** page, select **Schema** from the left nav, and then select **SDL**.
-    {' '}
+
     <img
       src="../img/schema-proposals/sdl-page.jpg"
       className="screenshot"
@@ -28,18 +29,18 @@ You can create a new proposal in [GraphOS Studio](https://studio.apollographql.c
 
 From either location:
 
-1. Select **Propose changes**. A modal entitled **Propose schema changes** appears.
+1. Click the **Propose changes** button. A modal entitled **Propose schema changes** appears.
    <img
      src="../img/schema-proposals/proposal-modal.jpg"
      className="screenshot"
      alt="Schema proposals modal in Studio"
      width="500px"
    />
-2. Enter a descriptive **proposal title** that outlines the changes you plan to propose.
+2. Enter a descriptive **proposal title** that outlines the schema changes you plan to propose.
 
    <Note>
 
-   You cannot change a proposal's title once it's been created.
+   You cannot change a proposal's title once created.
 
    </Note>
 
@@ -47,11 +48,11 @@ From either location:
 
    <Note>
 
-   The source variant's schema is used to start the proposal, but the proposal is not kept in sync with the variant's schema if it changes while the proposal is being worked on.
+   The source variant's schema is used to start the proposal, but the proposal is not kept in sync with any changes that occur while the proposal is in progress.
 
    </Note>
 
-4. Optionally, enter the rationale for the proposed changes in Markdown. This description appears in your proposal's README and gives collaborators and reviewers context for the proposed changes.
+4. Optionally, enter the rationale for the proposed changes. This rationale appears as your proposal's README on the proposal overview and gives collaborators and reviewers context for the proposed changes. This field accepts [Markdown](https://www.markdownguide.org/getting-started/).
 
     <Note>
 
@@ -61,17 +62,25 @@ From either location:
 
 5. Click **Create Proposal**.
 
-Once you've created the proposal, you land on the newly created proposal's **Editor** tab. This is where you can [make the schema changes](#edit-subgraph-schemas) you want to propose.
+Once you've created the proposal, you land on the newly created proposal's **Editor** tab. This tab is where you can [make the schema changes](#edit-subgraph-schemas) you want to propose.
 
 ## Edit subgraph schemas
 
-On a proposal's **Editor** tab, you can directly edit one or more subgraph schemas. To propose adding a new subgraph, click **+Add new** from the subgraph schema selector in the left nav.
+On a proposal's **Editor** tab, you can directly edit one or more subgraph schemas.
+
+<img
+  src="../img/schema-proposals/subgraph-schema-editor.jpg"
+  className="screenshot"
+  alt="Schema proposals editor in Studio"
+/>
+
+To propose adding a new subgraph, click **+Add new** from the subgraph schema selector in the left nav. You can also delete and rename existing subgraph schemas by clicking the **•••** menu to the right of a subgraph's name.
 
 <img
   src="../img/schema-proposals/subgraph-schema-selector.jpg"
   className="screenshot"
   alt="Schema proposals editor in Studio"
-  width="500px"
+  width="200px"
 />
 
 ### Lint changes
@@ -85,30 +94,11 @@ To lint the schema changes you've made, you can click the broom icon in the top 
   width="500px"
 />
 
-Clicking the button opens a panel where you can run the [schema linter](./schema-linter) on the current changes made in the editor.
-
-<img
-  src="../img/schema-proposals/lint-panel.jpg"
-  className="screenshot"
-  alt="Schema proposals editor in Studio"
-  width="500px"
-/>
-
-After successfully running a lint on your schema, you can see any linter violations if they exist so you can change them accordingly.
+Clicking the button opens a panel where you can run the [schema linter](./schema-linter) on the current changes in the editor.
+After successfully running a lint on your schema, the panel displays any linter violations so you can fix them accordingly.
 
 <img
   src="../img/schema-proposals/linter-violations.jpg"
-  className="screenshot"
-  alt="Schema proposals editor in Studio"
-  width="500px"
-/>
-
-Once you have made changes to your schema, you can rerun your lint using the rerun button in the top right of the panel.
-
-When a coordinate that has a lint violation is modified such that it no longer exists (i.e. renaming a type/deleting a field), it shows up as greyed out so you know to ignore it while working on the other violations you may have.
-
-<img
-  src="../img/schema-proposals/linter-rerun.jpg"
   className="screenshot"
   alt="Schema proposals editor in Studio"
   width="500px"
@@ -123,9 +113,17 @@ If you are having trouble finding the exact location of where the lint violation
   width="500px"
 />
 
+<Note>
+
+When a coordinate that has a lint violation is modified such that it no longer exists—either because you've renamed or deleted a field—it appears grayed out so you know to ignore it while working on the other violations you may have.
+
+</Note>
+
+Once you have made changes to your schema, you can rerun your lint using the rerun button in the top right of the **Schema linting** panel.
+
 ### Save revisions
 
-Once you've made changes, click **Save Revision** in the top right of the editor to save them to your proposal.
+Once you've made changes, click the **Save Revision** button in the top right of the editor to save them to your proposal.
 A modal appears where you can optionally include a summary of your changes.
 This summary appears in your proposal's overview tab.
 
