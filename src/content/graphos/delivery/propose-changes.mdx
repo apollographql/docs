@@ -6,6 +6,22 @@ description: Propose GraphQL schema changes in GraphOS Studio. Edit and lint sch
 
 <GraphOSEnterpriseRequired />
 
+This article describes actions in the **Proposal creation** stage of the [schema proposal process](./schema-proposals#proposal-process).
+
+```mermaid
+graph LR
+    subgraph Draft ["Proposal creation"]
+    direction LR
+    Creation["Start proposal"]
+    DraftStatus(("Draft status"))
+    Edit["Edit subgraphs, lint, <br/> save, and check changes"]
+    Request["Request reviews"]
+    Creation -->  DraftStatus --> Edit --> Request
+    end
+    class DraftStatus secondary;
+    class DraftStatus CircleSize50;
+```
+
 ## Start a proposal
 
 You can create a new proposal in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content) from either:
@@ -160,8 +176,7 @@ This enables checks to capture breaking changes based on the source variant's op
 
 <Note>
 
-Checks run against the source variant's schema as it was when the proposal was created.
-Changes to the source variant schema made after the proposal was created aren't considered during checks.
+Proposals don't inherit schema changes made to a source variant after the proposal was created.
 For example, if the source variant schema includes a new type, unless the proposal also adds the type, then the proposal's checks show that type as being deleted.
 
 </Note>
