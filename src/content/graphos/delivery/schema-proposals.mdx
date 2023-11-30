@@ -83,7 +83,7 @@ graph LR
     ApprovedStatus((Approved))
     Fetch["Fetch proposal and <br> implement locally"]
     Push["Push changes to <br> GraphOS  for validation"]
-    Check[["Automated integrated* <br/> schema checks"]]
+    Check[["GraphOS integrated* <br/> schema checks"]]
     ApprovedStatus --> Fetch --> Push --> Check
     end
     class ApprovedStatus secondary;
@@ -93,9 +93,9 @@ graph LR
 graph LR
     subgraph Implemented ["Proposal publication"]
     direction LR
-    Checks[["Checks for matching, <br/> approved proposals"]]
-    Publish["Schema published <br/> to GraphOS"]
-    Monitor["GraphOS marks changes <br/> as implemented"]
+    Checks[["GraphOS proposals** <br/> schema checks"]]
+    Publish["Publish schema <br/> to GraphOS"]
+    Monitor[["GraphOS marks changes <br/> as implemented"]]
     ImplementedStatus((Implemented))
     Checks --> Publish --> Monitor --> ImplementedStatus
     end
@@ -104,7 +104,9 @@ graph LR
 
 <Note>
 
-Integrated schema checks refer to [composition, operation, linter, and contract checks](./schema-checks#types-of-checks).
+\* Integrated schema checks refer to [composition, operation, linter, and contract checks](./schema-checks#types-of-checks).
+
+\*\* Proposals schema checks refer to checking published changes correspond to an approved proposal.
 
 </Note>
 
@@ -114,7 +116,7 @@ Integrated schema checks refer to [composition, operation, linter, and contract 
 graph TB
   Status((Proposal <br/> status))
   User["User action"]
-  Automated[["Automated task"]]
+  Automated[["Automated <br/> GraphOS action"]]
   class Status secondary;
 ```
 
