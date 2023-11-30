@@ -9,7 +9,7 @@ description: Pull GraphQL schema changes from schema proposals using Rover, vali
 Once a schema proposal is **Approved**, its changes need to be implemented.
 For those implementing the changes, [pulling the approved schema changes](#pull-subgraphs-schemas-with-rover) into their IDE is a great starting point.
 
-Once the changes are implemented—including updating resolvers and other supporting work—you can use the [schema checks workflow](#validate-changes-with-schema-checks) to ensure that your organization only publishes changes that were part of an approved proposal.
+Once the changes are implemented—including updating resolvers and other supporting work—you can use the [schema checks process](#validate-changes-with-checks) to ensure that your organization only publishes changes that were part of an approved proposal.
 
 ## Pull proposed schemas with Rover
 
@@ -32,6 +32,7 @@ You cannot push schema changes to proposals with the `rover subgraph publish` co
 GraphOS provides [schema checks](./schema-checks) to help you identify breaking changes before you make them. You [run checks on local changes](./schema-checks#the-checks-lifecycle) before publishing them.
 
 Since schema checks [run on every revision](./propose-changes#schema-checks) in a proposal, if your last revision's checks pass, any changes you implement from a proposal should pass, too.
+Regardless, it's best to run checks before publishing changes to make sure no unintentional errors have been made.
 
 ### Ensure changes match an approved proposal
 
@@ -43,7 +44,7 @@ You can [configure schema checks](./configure-proposals/#configure-schema-checks
   alt="Schema proposals settings in Studio"
 />
 
-Configuring the **Proposals** task's severity to **Error** ensures that only changes that have gone through the proposal workflow are published. You can set the severity to **Warning** if you want to be able to publish changes that haven't gone through the workflow but receive warnings about them.
+Configuring the **Proposals** task's severity to **Error** ensures that only changes that have gone through the proposal process are published. You can set the severity to **Warning** if you want to be able to publish changes that haven't gone through the process but receive warnings about them.
 
 <Note>
 
@@ -65,7 +66,9 @@ When a check with the **Proposals** task runs, you can see the following by clic
 Clicking the icons reveals a list of matching proposals in the right panel.
 Click **Ignore** to allow the Proposals task to succeed without matching approved proposals for all changes.
 
-**Incoming changes and approved proposals don't need to match one-to-one.** For example, if you have an approved proposal with changes in multiple subgraphs, you can check each subgraph's changes separately—they'll still match. Similarly, if a single proposal contains a large change in one subgraph that you want to divide into multiple checks, those will also match.
+### Matching changes to proposals
+
+**Incoming changes and approved proposals don't need to match one-to-one.** For example, if you have an approved proposal with changes in multiple subgraphs, you can check each subgraph's changes separately. The changes still match and the check still passes even though the change doesn't encompass all changes in the approved proposal. Similarly, if a single proposal contains a large change in one subgraph that you want to divide into multiple checks, those will also match and pass.
 
 ## Publish changes to GraphOS
 
@@ -78,7 +81,7 @@ When a schema published to a [proposal's source variant](./propose-changes/#star
   alt="Schema proposals overview in Studio"
 />
 
-When an open proposal's changes have been fully implemented—whether from one launch or many—the proposal's status changes to **Implemented**.
+When an **Approved** or **Open for feedback** proposal's changes have been fully implemented—[whether from one launch or many](#matching-changes-to-proposals)—the proposal's status changes to **Implemented**.
 
 <img
   src="../img/schema-proposals/fully-implemented-proposal.jpg"
@@ -89,6 +92,6 @@ When an open proposal's changes have been fully implemented—whether from one l
 <Note>
 
 - A proposal with **Draft** status can't become **Implemented**, even when all its changes are published. Once such a proposal's status is changed to **Open for feedback**, it automatically switches to **Implemented**.
-- **Implemented** (and **closed**) proposals cannot receive further revisions.
+- **Implemented** proposals cannot receive further revisions, nor their status changed.
 
 </Note>

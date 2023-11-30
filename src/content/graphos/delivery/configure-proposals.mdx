@@ -1,18 +1,18 @@
 ---
 title: Schema proposal configurations
 subtitle: Configure default reviewers, approval requirements, and more
-description: Fine-tune GraphQL schema proposal workflows by configuring permissions, default reviewers, approval requirements, and schema checks with GraphOS.
+description: Fine-tune GraphQL the schema proposal process by configuring permissions, default reviewers, approval requirements, and schema checks with GraphOS.
 ---
 
 <GraphOSEnterpriseRequired />
 
 [Org and graph admins](../org/members/#organization-wide-member-roles) can configure the following aspects of schema proposals:
 
-- Which [roles](../org/members/#organization-wide-member-roles) can create and edit proposals
-- Which team members are default reviewers
-- The minimum number of approvals required for a proposal to be approved
-- How schema checks incorporate proposals
-- [Coming soon] Which events in the proposals workflow trigger email notifications and to whom
+- Which [roles can create and edit proposals](#configure-permissions-and-approvals)
+- Which team members are [default reviewers](#default-reviewers)
+- The [minimum number of approvals](#required-approvals) required for a proposal to achieve [**Approved** status](./schema-proposals#proposal-statuses)
+- Whether and how [schema checks incorporate proposals](#configure-schema-checks)
+- [Coming soon] Which actions in the proposals process trigger [email notifications](#configure-notifications) and to whom
 
 <Note>
 
@@ -73,7 +73,7 @@ The _minimum_ [role](../org/members/#organization-wide-member-roles) required to
 
 <br/>
 
-`Admins` is the most restrictive setting and `Observers` the least.
+`Observers` is the least restrictive setting and `Admins` the most restrictive.
 The `Observers` default means all organization members except Consumers and Billing Admins can create and edit proposals.
 If you select `Admins`, only org and graph admins can create and edit proposals.
 
@@ -96,7 +96,7 @@ Default: `None`
 </td>
 <td>
 
-The team members automatically marked as reviewers once a proposal's status becomes **Open for feedback**.
+The team members automatically marked as reviewers once a proposal's status becomes [**Open for feedback**](./schema-proposals#proposal-statuses).
 
 </td>
 
@@ -118,7 +118,7 @@ Default: `3`
 </td>
 <td>
 
-The minimum number of approvals a proposal must receive for its status to become **Approved**.
+The minimum number of approvals a proposal must receive for its status to become [**Approved**](./schema-proposals#proposal-statuses).
 
 </td>
 
@@ -151,11 +151,12 @@ You can configure [schema checks](./schema-checks) to include a **Proposals** ta
 
 By default, the severity of this task is **Off**. You can select from the following severity levels:
 
-- With the severity set to **Off**, the proposals task isn't in list of tasks a check must pass for the check to succeed.
+- With the severity set to **Off**, the proposals task isn't part of the checks that changes must pass for the check to succeed.
 - Setting the severity to **Error** means the proposals task fails when the change being checked isn't included in approved proposals.
 - Setting the severity to **Warning** means the proposals tasks can still pass even when the change being checked isn't included in approved proposals. However, warnings appear in the check run.
 
-Integrating schema proposals into schema checks is a key part of the [proposal workflow](./schema-proposals#proposal-workflow). See the [Implement approved proposals](./implement-proposals) article for more information on how to use schema checks as part of your proposal workflow.
+Integrating schema proposals into schema checks is a key part of [proposal process](./schema-proposals#proposal-process).
+See the [Implement approved proposals](./implement-proposals) article for more information on how to use schema checks as part of your proposal process.
 
 ## Configure notifications
 
