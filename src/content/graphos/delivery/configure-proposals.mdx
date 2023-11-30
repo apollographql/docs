@@ -10,7 +10,7 @@ description: Fine-tune GraphQL the schema proposal process by configuring permis
 
 - Which [roles can create and edit proposals](#configure-permissions-and-approvals)
 - Which team members are [default reviewers](#default-reviewers)
-- The [minimum number of approvals](#required-approvals) required for a proposal to achieve [**Approved** status](./schema-proposals#proposal-statuses)
+- The [minimum number of approvals](#required-approvals) required for a proposal to achieve [**Approved** stage](./schema-proposals#proposal-stages)
 - Whether and how [schema checks incorporate proposals](#configure-schema-checks)
 - [Coming soon] Which actions in the proposals process trigger [email notifications](#configure-notifications) and to whom
 
@@ -96,7 +96,7 @@ Default: `None`
 </td>
 <td>
 
-The team members automatically marked as reviewers once a proposal's status becomes [**Open for feedback**](./schema-proposals#proposal-statuses).
+The team members automatically marked as reviewers once a proposal's stage becomes [**Open for feedback**](./schema-proposals#proposal-stages).
 
 </td>
 
@@ -118,7 +118,7 @@ Default: `3`
 </td>
 <td>
 
-The minimum number of approvals a proposal must receive for its status to become [**Approved**](./schema-proposals#proposal-statuses).
+The minimum number of approvals a proposal must receive for its stage to become [**Approved**](./schema-proposals#proposal-stages).
 
 </td>
 
@@ -135,7 +135,7 @@ The minimum number of approvals a proposal must receive for its status to become
 
 <Note>
 
-Changing the number of required approvals updates the status of existing proposals that aren't [**Closed** or **Implemented**](./propose-changes#change-proposal-status) based on whether their current number of approvals meets the new number of required approvals.
+Changing the number of required approvals updates the stage of existing proposals that aren't [**Closed** or **Implemented**](./propose-changes#change-proposal-stage) based on whether their current number of approvals meets the new number of required approvals.
 
 </Note>
 
