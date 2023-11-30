@@ -13,18 +13,22 @@ Once schema design changes are agreed upon, ensuring they are honored later in t
 These challenges multiply when attempting to change multiple subgraph schemas simultaneously.
 Schema development can stall without the clear cross-team communication needed to understand, verify, and track changes.
 
-**Schema proposals** provide GraphOS-native schema change management.
-The centralized proposal process strengthens schema governance and fosters collaboration.
-Graph consumers can actively participate by commenting on, reviewing, and approving proposals.
+## Schema proposals as schema change management
 
-Finally, your organization can incorporate proposals into [schema checks](./schema-checks) to ensure that only approved changes are published.
+**Schema proposals** provide GraphOS-native schema change management.
+The centralized proposal process strengthens schema governance and fosters collaboration:
+
+- Subgraph developers can propose changes in the context of the supergraph and use automated checks and reviewer feedback to validate them.
+- Graph consumers can actively participate by commenting on, reviewing, and approving proposals.
+- Graph owners and governance teams can use proposals to set standards and ensure that only approved changes are published.
+
 This increased coordination improves design decisions and accountability, making development cycles more efficient.
 
 ## Benefits of native schema change management
 
 Managing schema changes _directly in GraphOS Studio_ provides the following benefits:
 
-- The proposal process **leverages GraphOS [schema checks](./schema-checks)&mdash;including [schema linting](./schema-linter)&mdash;at every stage**.
+- The proposal process **leverages GraphOS [schema checks](./schema-checks)&mdash;including [schema linting](./schema-linter)&mdash;at every status**.
   - This provides an immediate understanding of the changes' impacts on composition and client operations.
   - It also minimizes the likelihood of errors and inconsistencies.
 - Editing, reviewing, and approving changes in GraphOS allows for **GraphQL-aware schema diffing**.
@@ -36,43 +40,43 @@ Managing schema changes _directly in GraphOS Studio_ provides the following bene
 
 Schema proposals are [created](./propose-changes), [reviewed](./review-proposals), and [approved](./review-proposals#approved-reviews) in GraphOS Studio. After approval, the proposal is implemented &mdash;including resolver and any other supporting code changes&mdash; before being published back to GraphOS. You can [configure schema checks](./schema-checks/#proposals-checks) to ensure your organization only publishes changes that are part of an approved proposal.
 
-Before describing the details of this proposal process, it's helpful to understand the stages a proposal progresses through.
+Before describing the details of this proposal process, it's helpful to understand the statuses a proposal progresses through.
 
-### Proposal stages
+### Proposal statuses
 
-| Stage             | Description                                                                                                                                                                                                    |
-| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Draft             | Default stage upon creation and until the proposal is ready for review.                                                                                                                                        |
-| Open for feedback | Signals the proposal is ready for review.                                                                                                                                                                      |
-| Approved          | The [minimum number of reviewers](./configure-proposals#required-approvals) has approved the proposal.                                                                                                         |
-| Implemented       | All the proposal's changes have been [published](./publishing-schemas). <br/> <br/> - Implemented proposals cannot receive further revisions <br/> - Their stage cannot be updated.                            |
-| Closed            | Signals the proposal is suspended or abandoned. <br/> <br/> - Closed proposals cannot receive further revisions. <br/> - You can reopen a proposal by setting the stage to **Draft** or **Open for feedback**. |
+| Status            | Description                                                                                                                                                                                                     |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Draft             | Default status upon creation and until the proposal is ready for review.                                                                                                                                        |
+| Open for feedback | Signals the proposal is ready for review.                                                                                                                                                                       |
+| Approved          | The [minimum number of reviewers](./configure-proposals#required-approvals) has approved the proposal.                                                                                                          |
+| Implemented       | All the proposal's changes have been [published](./publishing-schemas). <br/> <br/> - Implemented proposals cannot receive further revisions <br/> - Their status cannot be updated.                            |
+| Closed            | Signals the proposal is suspended or abandoned. <br/> <br/> - Closed proposals cannot receive further revisions. <br/> - You can reopen a proposal by setting the status to **Draft** or **Open for feedback**. |
 
 A proposal doesn't have to progress linearly from **Draft** to **Implemented**. It may be **Closed** before returning to **Draft** and continuing through the process.
 
 ### Proposal process
 
-These proposal stages enable the following end-to-end schema change management process:
+The schema proposal statuses enable the following end-to-end schema change management process:
 
 ```mermaid
 graph LR
     subgraph Draft ["Proposal creation"]
     direction LR
     Creation["Start proposal"]
-    DraftStage(("Draft stage"))
+    DraftStatus(("Draft status"))
     Edit["Edit subgraphs,  <br/> lint and save changes"]
     Request["Request reviews"]
-    Creation -->  DraftStage --> Edit --> Request
+    Creation -->  DraftStatus --> Edit --> Request
     end
-    class DraftStage secondary;
-    class DraftStage CircleSize50;
+    class DraftStatus secondary;
+    class DraftStatus CircleSize50;
 ```
 
 ```mermaid
 graph LR
     subgraph Open4Feedback ["Proposal review"]
     direction LR
-    Feedback((Open for <br/>feedback <br/> stage))
+    Feedback((Open for <br/>feedback <br/> status))
     Feedback1["Receive feedback "]
     Feedback2["Address feedback "]
     Approvals["Receive<br/>minimum approvals"]
@@ -86,14 +90,14 @@ graph LR
 graph LR
     subgraph Approved ["Proposal implementation"]
     direction LR
-    ApprovedStage((Approved <br/> stage))
+    ApprovedStatus((Approved <br/> status))
     Fetch["Fetch proposal and <br> implement locally"]
     Push["Run checks on <br> local changes"]
     Check[["GraphOS <br/> schema checks"]]
-    ApprovedStage --> Fetch --> Push --> Check
+    ApprovedStatus --> Fetch --> Push --> Check
     end
-    class ApprovedStage secondary;
-    class ApprovedStage CircleSize50;
+    class ApprovedStatus secondary;
+    class ApprovedStatus CircleSize50;
     class Check tertiary;
 ```
 
@@ -101,14 +105,14 @@ graph LR
 graph LR
     subgraph Implemented ["Proposal publication"]
     direction LR
-    Checks[["GraphOS schema <br/> checks pass"]]
+    Checks[["Schema checks <br/> pass"]]
     Publish["Publish schema <br/> to GraphOS"]
     Monitor[["GraphOS matches <br/> changes to proposals"]]
-    ImplementedStage((Implemented <br/> stage))
-    Checks --> Publish --> Monitor --> ImplementedStage
+    ImplementedStatus((Implemented <br/> status))
+    Checks --> Publish --> Monitor --> ImplementedStatus
     end
-    class ImplementedStage secondary;
-    class ImplementedStage CircleSize50;
+    class ImplementedStatus secondary;
+    class ImplementedStatus CircleSize50;
     class Checks,Monitor tertiary;
 ```
 
@@ -116,16 +120,18 @@ graph LR
 
 ```mermaid
 graph TB
-  Stage((Proposal <br/> stage))
+  Status((Proposal <br/> status))
   User["User action"]
   Automated[["Automated <br/> GraphOS action"]]
-  class Stage secondary;
+  class Status secondary;
   class Automated tertiary;
+  User:::padding
+  classDef padding padding-left:5em, padding-right:5em
 ```
 
 ## Next steps
 
-To learn more about each stage in the process, refer to the following articles:
+To learn more about each part of the process, refer to the following articles:
 
 - [Proposal configuration](./configure-proposals)
 - [Proposal creation](./propose-changes)

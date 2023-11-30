@@ -8,11 +8,11 @@ description: Fine-tune GraphQL the schema proposal process by configuring permis
 
 [Org and graph admins](../org/members/#organization-wide-member-roles) can configure the following aspects of schema proposals:
 
-- Which [roles can create and edit proposals](#configure-permissions-and-approvals)
+- Which [roles can create and edit proposals and manually change proposal status](#configure-permissions-and-approvals)
 - Which team members are [default reviewers](#default-reviewers)
-- The [minimum number of approvals](#required-approvals) required for a proposal to achieve [**Approved** stage](./schema-proposals#proposal-stages)
+- The [minimum number of approvals](#required-approvals) required for a proposal to achieve [**Approved** status](./schema-proposals#proposal-statuses)
 - Whether and how [schema checks incorporate proposals](#configure-schema-checks)
-- [Coming soon] Which actions in the proposals process trigger [email notifications](#configure-notifications) and to whom
+- [Coming soon] Whether to mute [email notifications](#configure-notifications) from proposal activty
 
 <Note>
 
@@ -24,17 +24,24 @@ Schema proposal configurations are on a per-graph&mdash;not per-organization&mda
 
 [Permissions](/graphos/org/members) for proposal actions are set at the graph level with the following defaults:
 
-|                      | Create | Edit | View | Comment | Suggest changes | Approve |
-| ------------------   | ------ | ---- | ---- | ------- | ------- | ------- |
-| Org / Graph Admin    | ✔️     | ✔️   | ✔️   | ✔️      | ✔️      | ✔️      |
-| Contributor          | ✔️     | ✔️   | ✔️   | ✔️      | ✔️      | ✔️      |
-| Documenter           | ✔️     | ✔️   | ✔️   | ✔️      | ✔️      | ✔️      |
-| Observer             | ✔️     | ✔️   | ✔️   | ✔️      | ✔️      | ✔️      |
-| Consumer             | ❌     | ❌   | ✔️   | ✔️      | ✔️      | ✔️      |
-| Billing Admin        | ❌     | ❌   | ❌   | ❌      | ❌      | ❌      |
+|                      | Create | Edit | Change status | Add Reviewers | View | Comment | Approve |
+| ------------------   | ------ | ---- | ------------- | ---------------- | ---- | ------- | ------- |
+| Org / Graph Admin    | ✔️      | ✔️    | ✔️             | ✔️                | ✔️    | ✔️       | ✔️       |
+| Contributor          | ✔️      | ✔️    | ❌            | ✔️                | ✔️    | ✔️       | ✔️       |
+| Documenter           | ✔️      | ✔️    | ❌            | ✔️                | ✔️    | ✔️       | ✔️       |
+| Observer             | ✔️      | ✔️    | ❌            | ✔️                | ✔️    | ✔️       | ✔️       |
+| Consumer             | ❌     | ❌   | ❌            | ❌               | ✔️    | ✔️       | ✔️       |
+| Billing Admin        | ❌     | ❌   | ❌            | ❌               | ❌   | ❌      | ❌      |
 
 
-[Org and graph admins](../org/members/#organization-wide-member-roles) can configure which roles can _create_ and _edit_ proposals. Permissions for other proposal actions are not configurable. Permissions and other configurations are available on a graph's **Settings** page in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content).
+
+[Org and graph admins](../org/members/#organization-wide-member-roles) can configure which roles can:
+- Create proposals
+- Edit proposals
+- Manually [change proposal status](./propose-changes#change-proposal-status)
+
+Permissions for other proposal actions are not configurable.
+Permissions and other configurations are available on a graph's **Settings** page in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content).
 
 <img
   src="../img/schema-proposals/schema-proposal-settings.jpg"
@@ -45,6 +52,9 @@ Schema proposal configurations are on a per-graph&mdash;not per-organization&mda
 Refer to the table below for default and valid values.
 
 ### Configuration reference
+
+[Org and graph admins](../org/members/#organization-wide-member-roles) can set the following proposal configurations on a graph's **Proposals** tab on **Settings** page in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content).
+
 
 <table class="field-table">
   <thead>
@@ -69,7 +79,7 @@ Default: `Observers`
 
 <td>
 
-The _minimum_ [role](../org/members/#organization-wide-member-roles) required to create and edit proposals.
+The _minimum_ [role](../org/members/#organization-wide-member-roles) required to create and edit proposals and manually change proposal status.
 
 <br/>
 
@@ -96,13 +106,13 @@ Default: `None`
 </td>
 <td>
 
-The team members automatically marked as reviewers once a proposal's stage becomes [**Open for feedback**](./schema-proposals#proposal-stages).
+The team members automatically marked as reviewers once a proposal's status becomes [**Open for feedback**](./schema-proposals#proposal-statuses).
 
 </td>
 
 <td>
 
-Any member of your organization can be a default reviewer except for [billing admins](../org/members/#organization-wide-member-roles)
+Any member of your organization can be a default reviewer except for [billing admins](../org/members/#organization-wide-member-roles).
 
 </td>
 
@@ -118,7 +128,7 @@ Default: `3`
 </td>
 <td>
 
-The minimum number of approvals a proposal must receive for its stage to become [**Approved**](./schema-proposals#proposal-stages).
+The minimum number of approvals a proposal must receive for its status to become [**Approved**](./schema-proposals#proposal-statuses).
 
 </td>
 
@@ -133,11 +143,35 @@ The minimum number of approvals a proposal must receive for its stage to become 
 </tbody>
 </table>
 
+Editing a proposal once created is l
+
 <Note>
 
-Changing the number of required approvals updates the stage of existing proposals that aren't [**Closed** or **Implemented**](./propose-changes#change-proposal-stage) based on whether their current number of approvals meets the new number of required approvals.
+Changing the number of required approvals updates the status of existing proposals that aren't [**Closed** or **Implemented**](./propose-changes#change-proposal-status) based on whether their current number of approvals meets the new number of required approvals.
 
 </Note>
+
+### Restrict edit permissions
+
+The **Permissions** configuration controls which roles can start, edit, and change proposal status.
+Additionally, [org and graph admins](../org/members/#organization-wide-member-roles) can restrict editing proposals to only the proposal's author and org and graph admins by selecting **Restrict editing**.
+
+<img
+  src="../img/schema-proposals/restrict-edits.jpg"
+  className="screenshot"
+  alt="Coming soon"
+/>
+
+### Default reviewers
+
+By default, _any_ team member's approval can contribute to the [minimum number of required approvals](#required-approvals).
+You can require at least one of the approvals to come from a [**default review**](#default-reviewers) by selecting **Make at least one default reviewer required**.
+
+<img
+  src="../img/schema-proposals/require-default-reviewer-approval.jpg"
+  className="screenshot"
+  alt="Coming soon"
+/>
 
 ## Configure schema checks
 
@@ -160,4 +194,33 @@ See the [Implement approved proposals](./implement-proposals) article for more i
 
 ## Configure notifications
 
-Coming soon!
+By default, the following roles receive notifications on the following proposal actions:
+
+|                 | Comments | Saved Revisions | Status Changes | Approvals |
+|-----------------|----------|-----------------|----------------|-----------|
+| Proposal author | ✔️        | ✔️              | ✔️               | ✔️         |
+| Commenter       | ✔️ **     | ❌             | ❌              | ❌        |
+| Reviewer        | ❌       | ✔️              | ❌              | ❌        |
+| Proposal editor | ❌       | ❌             | ❌              | ❌        |
+
+<Note>
+
+\*\*Commenters only receive notifications for new comments on threads that they commented on. They don't receive notifications for all new comments on a proposal.
+
+</Note>
+
+Notifications are cumulative. For example, if you comment on a particular thread and review a proposal, you get notifications for both new comments on the thread and saved revisions.
+
+To mute notifications, go to the graph's **Settings** page and open the **Proposals** tab. Select **Mute notifications**.
+
+<img
+  src="../img/schema-proposals/mute-notifications.jpg"
+  className="screenshot"
+  alt="Coming soon"
+/>
+
+<Note>
+
+Notifications are muted on a _per-graph_ (not per-proposal) basis. 
+
+</Note>
