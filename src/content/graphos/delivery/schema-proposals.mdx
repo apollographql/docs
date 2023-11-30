@@ -6,38 +6,43 @@ description: Use GraphOS's native GraphQL schema management process propose, rev
 
 <GraphOSEnterpriseRequired />
 
-As your supergraph schema grows in complexity, changing it can become increasingly cumbersome.
-Changes in one subgraph can impact others unintentionally, and changes' impacts on composition and client operations become harder to assess before publication.
+As your supergraph schema grows in complexity, changing it can become increasingly difficult.
+The impacts of schema changes on [composition](/federation/federated-types/composition/) and client operations become harder to assess before publication.
+Once schema design changes are agreed upon, ensuring they are honored later in the subgraph development lifecycle can become another challenge.
 
-When schema design changes are agreed upon, ensuring they are honored later in the subgraph development lifecycle can become another chore.
-These difficulties multiply when attempting to change multiple subgraph schemas simultaneously.
+These challenges multiply when attempting to change multiple subgraph schemas simultaneously.
 Schema development can stall without the clear cross-team communication needed to understand, verify, and track changes.
 
-**Schema proposals** provide a centralized, GraphOS-native schema change management process that strengthens schema governance and fosters collaboration. In particular, schema proposals empower graph consumers to actively participate in schema change through reviews, comments, and approvals. This increased coordination leads to more informed design decisions, ultimately streamlining development cycles.
+**Schema proposals** provide GraphOS-native schema change management.
+The centralized proposal process strengthens schema governance and fosters collaboration.
+Graph consumers can actively participate by commenting on, reviewing, and approving proposals.
+
+Finally, your organization can incorporate proposals into [schema checks](./schema-checks) to ensure that only approved changes are published.
+This increased coordination improves design decisions and accountability, making development cycles more efficient.
 
 ## Benefits of native schema change management
 
-Managing schema changes directly in GraphOS Studio provides the following benefits:
+Managing schema changes _directly in GraphOS Studio_ provides the following benefits:
 
 - Editing, reviewing, and approving changes in GraphOS allows for GraphQL-aware schema diffing.
-- The process leverages GraphOS [schema checks](./schema-checks)&mdash;including [schema linting](./schema-linter)&mdash;at every stage. This minimizes the likelihood of errors and inconsistencies and provides an immediate understanding of the changes' impacts on composition and client operations.
+- The proposal process leverages GraphOS [schema checks](./schema-checks)&mdash;including [schema linting](./schema-linter)&mdash;at every stage. This minimizes the likelihood of errors and inconsistencies and provides an immediate understanding of the changes' impacts on composition and client operations.
 - Centralizing the schema change process consolidates a comprehensive audit trail of discussions and changes to the schema.
 
 ## How schema proposals work
 
-Schema proposals are [created](./propose-changes), [reviewed](./review-proposals), and [approved](./review-proposals#approved-reviews) in GraphOS Studio. After approval, the proposal is implemented locally&mdash;including resolver and any other supporting code changes&mdash; before being published back to GraphOS Once [configured](./configure-proposals), GraphOS uses [schema checks](./schema-checks/#proposals-checks) to ensure that your organization only publishes changes that were part of an approved proposal.
+Schema proposals are [created](./propose-changes), [reviewed](./review-proposals), and [approved](./review-proposals#approved-reviews) in GraphOS Studio. After approval, the proposal is implemented &mdash;including resolver and any other supporting code changes&mdash; before being published back to GraphOS. You can [configure schema checks](./schema-checks/#proposals-checks) to ensure your organization only publishes changes that are part of an approved proposal.
 
 Before describing the details of this proposal process, it's helpful to know the statuses a proposal progresses through.
 
 ### Proposal statuses
 
-| Status            | Description                                                                                                                                                                                                    |
-| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Draft             | Default status upon creation and until the proposal is ready for review.                                                                                                                                       |
-| Open for feedback | Signals the proposal is ready for review.                                                                                                                                                                      |
-| Approved          | The [minimum number of reviewers](./configure-proposals#required-approvals) has approved the proposal.                                                                                                         |
-| Implemented       | All the proposal's changes have been [published](./publishing-schemas). <br/> <br/>Implemented proposals cannot receive further revisions and their status cannot be updated.                                  |
-| Closed            | Signals the proposal is suspended or abandoned. <br/> <br/> Closed proposals cannot receive further revisions. You can always reopen a proposal by resetting the status to **Draft** or **Open for feedback**. |
+| Status            | Description                                                                                                                                                                                                     |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Draft             | Default status upon creation and until the proposal is ready for review.                                                                                                                                        |
+| Open for feedback | Signals the proposal is ready for review.                                                                                                                                                                       |
+| Approved          | The [minimum number of reviewers](./configure-proposals#required-approvals) has approved the proposal.                                                                                                          |
+| Implemented       | All the proposal's changes have been [published](./publishing-schemas). <br/> <br/> - Implemented proposals cannot receive further revisions <br/> - Their status cannot be updated.                            |
+| Closed            | Signals the proposal is suspended or abandoned. <br/> <br/> - Closed proposals cannot receive further revisions. <br/> - You can reopen a proposal by setting the status to **Draft** or **Open for feedback**. |
 
 A proposal doesn't have to progress linearly from **Draft** to **Implemented**. It may be **Closed** before returning to **Draft** and continuing through the process.
 
