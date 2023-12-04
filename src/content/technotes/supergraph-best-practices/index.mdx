@@ -1,0 +1,34 @@
+---
+title: Supergraph Best Practices
+---
+
+The pages below provide detail on each of the supergraph best practices outlines in the [Supergraph Architecture Framework (SAF)](/graphos/enterprise/supergraph-architecture-framework).
+Review them to get further understanding of why each of them are a best practice and how to practically implement them in your organization.
+
+import { Grid, GridItem } from "../../../components/TechNotes";
+
+## Operational Excellence
+
+<Grid>
+  <GridItem title={"Schema Design"} path="operational-excellence/schema-design">
+    A successful schema has broad utility, meets front-end requirements, and support safe and 
+    continuous evolution as product requirements and upstream systems change.
+  </GridItem>
+  <GridItem title={"Org Structure"} path="best-practices-schema-design">
+    Institutional support is crucial for the success of your supergraph. This support includes training for teams to 
+    embed or cultivate GraphQL expertise, as well as the designation of a GraphQL stewardship group to review best practices and processes. 
+  </GridItem>
+  <GridItem title={"Scaling your Supergraph"} path="best-practices-schema-design">
+    Apollo Federation allows you to create independent, modular GraphQL services, which can then be served using Apollo
+    Router. The router acts as a graph gateway, allowing you to compose these services into a single, unified graph that 
+    can be accessed by clients.
+  </GridItem>
+  <GridItem title={"Enforcing Best Practices"} path="best-practices-schema-design">
+    In addition to enforcing subgraph standards and best practices, it is important to help supergraph contributors 
+    make effective use of the platform through tooling and documentation.
+  </GridItem>
+  <GridItem title={"Supergraph Health"} path="best-practices-schema-design">
+    By documenting the process for type and field migration, as well as workflows for 
+    field deprecation and removal, teams can ensure that the supergraph remains up-to-date as new requirements arise. 
+  </GridItem>
+</Grid>

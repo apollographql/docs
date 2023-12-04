@@ -22,6 +22,16 @@
       "sre": "/tags/sre",
       "subgraphs": "/tags/subgraphs",
       "testing": "/tags/testing"
+    },
+    "Supergraph Best Practices": {
+      "Supergraph Best Practices": "/supergraph-best-practices",
+      "Operational Excellence": {
+        "Schema Design": {
+          "Schema Design": "/supergraph-best-practices/operational-excellence/schema-design",
+          "BP-2: Design schema based on end-user requirements": "/supergraph-best-practices/operational-excellence/schema-design/end-user-requirements",
+          "BP-5 Design schema as an abstraction layer on top of data sources": "/supergraph-best-practices/operational-excellence/schema-design/abstraction-layer"
+        }
+      }
     }
   }
 }
