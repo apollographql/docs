@@ -1,5 +1,5 @@
 ---
-title: Using Graphql and REST Together
+title: Using GraphQL and REST together
 id: TN0044
 tags: [architecture-patterns]
 ---
@@ -14,7 +14,7 @@ It is common to hear GraphQL and REST pitted against each other as competing tec
 This page outlines some of the approaches typically taken, where GraphQL fits into the architectural toolbox best, and how it can help drive a resilient API strategy.
 
 ## Traditional N-Tier Architecture
-In a traditional n-tier architecture, the stack is broken into at least 3 layers: Presentation, Application, and Data layers. Each of these has a distinct purpose:
+In a traditional N-tier architecture, the stack is broken into at least 3 layers: Presentation, Application, and Data layers. Each of these has a distinct purpose:
 
 - Presentation: where our customers interact with our products, our experiences, and our API marketplaces
 - Application: where our services and business logic live and through which our Presentation clients access their Data
@@ -57,7 +57,7 @@ And from the Presentation side of the divide, the thinking is different:
 
 > "We are frustrated that the APIs we access either don't provide what we need, require too much aggregation, or orchestration, are too slow, there's just too many of them and they are always changing without notice!"
 
-Change is constant on both the Presentation and the Application tiers. There are always new clients, new data access requirements, product requirements, new data, new services, new business logic etc.
+Change is constant on both the Presentation and the Application tiers. There are always new clients, new data access requirements, product requirements, new data, new services, new business logic, and many other kinds of changes.```
 
 ```mermaid
 flowchart LR
@@ -124,7 +124,7 @@ The consumers of an API should be shielded from the complexities of the backing 
 the impact of changes to downstream services on upstream clients.
 
 ### Magnify existing investments
-Any effort investment into an API should pay dividends. An investment should have a positive impact to multiple use cases now as well as many use cases in the future.
+Any effort investment into an API should have a positive impact to multiple use cases now as well as many use cases in the future.
 
 ### Govern the middle layer
 An API should have a defined stewardship and governance model. Appropriate stakeholders should be represented as part of the governance model.
@@ -187,7 +187,7 @@ Many API strategies start this way but very quickly get out of control. Every cl
 - Separation of concerns
 - ❌ "Fat" clients and inconsistent UX
 - ❌ Logic is thrown away on every client rewrite
-- ❌ Not Rapid Self-Service
+- ❌ Not rapid or self-service
 - ❌ Not an Insulating Contract
 - ❌ Does not Magnify Existing Investments
 - ❌ No Governance
