@@ -12,6 +12,8 @@ import PropTypes from 'prop-types';
 import React, {Fragment, createElement, useMemo} from 'react';
 import RelativeLink, {ButtonLink} from './RelativeLink';
 import TableOfContents from './TableOfContents';
+import TrackableButton from './TrackableButton';
+import TrackableLink from './TrackableLink';
 import TypeScriptApiBox from './TypeScriptApiBox';
 import VersionBanner from './VersionBanner';
 import autolinkHeadings from 'rehype-autolink-headings';
@@ -39,6 +41,7 @@ import {
 } from '@chakra-ui/react';
 import {Caution} from './Caution';
 import {CustomHeading} from './CustomHeading';
+import {DocBlock, DocPiece, FunctionDetails, InterfaceDetails} from './ApiDoc';
 import {
   EmbeddableExplorer,
   MarkdownCodeBlock,
@@ -91,6 +94,7 @@ import 'prismjs/components/prism-swift';
 import 'prismjs/components/prism-tsx';
 import 'prismjs/components/prism-typescript';
 import 'prismjs/components/prism-yaml';
+import {ResponsiveGridStyles} from './ApiDoc/ResponsiveGrid';
 
 // use JS syntax highlighting for rhai codeblocks
 Prism.languages.rhai = Prism.languages.javascript;
@@ -202,7 +206,13 @@ const mdxComponents = {
   ExperimentalFeature,
   PreviewFeature,
   ApolloLogo,
-  ApolloMark
+  ApolloMark,
+  InterfaceDetails,
+  FunctionDetails,
+  DocBlock,
+  DocPiece,
+  TrackableButton,
+  TrackableLink
 };
 
 const {processSync} = rehype()
@@ -227,8 +237,16 @@ export default function Page({file}) {
     file;
 
   const {frontmatter, headings} = childMdx || childMarkdownRemark;
-  const {title, subtitle, description, toc, tags, headingDepth, minVersion, noIndex} =
-    frontmatter;
+  const {
+    title,
+    subtitle,
+    description,
+    toc,
+    tags,
+    headingDepth,
+    minVersion,
+    noIndex
+  } = frontmatter;
 
   const publishedSubtitle = subtitle ? subtitle : description;
 
@@ -314,6 +332,7 @@ export default function Page({file}) {
           }
         }}
       />
+      <ResponsiveGridStyles />
       <PageSeo
         noindex={noIndex === true}
         title={title}
@@ -413,16 +432,16 @@ export default function Page({file}) {
         title={title}
         subtitle={
           <>
-              {publishedSubtitle && (
-                <chakra.h2
-                  fontSize={{base: 'xl', md: '2xl'}}
-                  lineHeight="normal"
-                  mt={{base: 2, md: 3}}
-                  fontWeight="normal"
-                >
-                  {publishedSubtitle}
-                </chakra.h2>
-              )}
+            {publishedSubtitle && (
+              <chakra.h2
+                fontSize={{base: 'xl', md: '2xl'}}
+                lineHeight="normal"
+                mt={{base: 2, md: 3}}
+                fontWeight="normal"
+              >
+                {publishedSubtitle}
+              </chakra.h2>
+            )}
             {tags?.length && (
               <HStack mt={{base: 2, md: 3}}>
                 {tags.map((tag, index) => (

@@ -1,0 +1,140 @@
+---
+title: Routing for supergraphs
+subtitle: Learn about self-hosted and cloud routing options
+description: Apollo provides cloud and self-hosted routing options. A router acts as an entry point to your GraphQL APIs and provides a unified interface for clients to interact with.
+---
+
+With supergraph architecture (also known as [Apollo Federation](/federation/)), each component service is known as a **subgraph**. A **router** acts as an entry point to your subgraphs and provides a unified interface for clients to interact with. Clients send operations to your router's public endpoint instead of directly to your APIs.
+
+```mermaid
+flowchart LR;
+  clients(Clients);
+  router(["Router"]);
+  subgraphA[Subgraph A];
+  subgraphB[Subgraph B];
+  router --- subgraphA & subgraphB;
+  clients -.- router;
+  class clients secondary;
+```
+
+The router intelligently executes each incoming client operation across the appropriate combination of subgraphs. It then merges subgraph responses into a single response for the client. You can configure your router's error handling, CORS settings, other security features, and more. Your configuration options depend on your router type.
+
+## Router types
+
+With GraphOS, you can host your own Apollo Router, a configurable, high-performance routing runtime packaged as a standalone binary:
+
+```mermaid
+flowchart LR;
+  clients(Clients);
+  subgraph "Your infrastructure";
+  router(["Router"]);
+  serviceB[Subgraph A];
+  serviceC[Subgraph B];
+  router --- serviceB & serviceC;
+  end;
+  clients -.- router;
+  class clients secondary;
+```
+
+Or you can choose for Apollo to provision and manage a **cloud router** for you:
+
+```mermaid
+flowchart LR;
+  clients(Clients);
+  subgraph "Apollo Cloud"
+    router(["Router"]);
+  end;
+  subgraph YourInfra["Your infrastructure"];
+    subgraphA[Subgraph A];
+    subgraphB[Subgraph B];
+  end;
+  clients -.- router;
+  router --- subgraphA & subgraphB;
+  classDef padding padding-left:1em, padding-right:1em
+  YourInfra:::padding
+  class clients secondary;
+```
+
+Cloud routers use the same [Apollo Router binary](https://github.com/apollographql/router) that you can self-host.
+
+If you use a cloud router, you can choose to run it on shared or dedicated infrastructure. Running it on dedicated infrastructure offers more configuration options. Continue reading for a more detailed comparison of your router options.
+
+<Note>
+
+Apollo also offers the [`@apollo/gateway`](/federation/v1/gateway/) library, but we recommend the Apollo Router over `@apollo/gateway` because it provides [significant performance and security improvements](https://www.apollographql.com/blog/announcement/backend/apollo-router-our-graphql-federation-runtime-in-rust/). For more information about the differences and how to migrate, see the [migration guide](/router/migrating-from-gateway/).
+
+</Note>
+
+### Router comparison
+
+Apollo offers the following router options, in increasing order of configurability:
+
+<table>
+  <thead>
+    <tr>
+      <th>Router type</th>
+      <th>Description</th>
+      <th>Configurability</th>
+      <th>Plan availability</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Cloud shared router</th>
+      <td>Apollo provisions and manages routers on shared infrastructure.</td>
+      <td>
+        Basic configurability, including HTTP header rules, CORS settings, and
+        subgraph error inclusion
+      </td>
+      <td>
+        <a href="https://apollographql.com/pricing">Serverless</a>
+      </td>
+    </tr>
+    <tr>
+      <th>Cloud Dedicated router</th>
+      <td>
+        Apollo provisions and manages routers on dedicated infrastructure that
+        you control and scale.
+      </td>
+      <td>
+        Highly configurable, including all options for shared cloud routers and
+        additional configurations
+      </td>
+      <td>
+        <a href="https://apollographql.com/pricing">Dedicated</a>
+      </td>
+    </tr>
+    <tr>
+      <th>Self-hosted router</th>
+      <td>You host and manage the router on your own infrastructure.</td>
+      <td>
+        Highly configurable and customizable, including all options for Cloud
+        Dedicated routers and additional{' '}
+        <a href="/router/customizations/overview">customization options</a>
+      </td>
+      <td>
+        Apollo Router is available as a free and source-available runtime.
+        Connecting your self-hosted Router to GraphOS requires an{' '}
+        <a href="https://apollographql.com/pricing">Enterprise</a> plan.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+Somes organizations might need to use Cloud Dedicated or self-hosted routing instead of shared cloud routing for these reasons:
+
+- **Compliance.** All of your supergraph's components must be hosted in a particular region to adhere to compliance requirements.
+- **Performance.** You need to minimize latency between your router and subgraphs by enabling them to communicate _without_ traversing the public internet, for example by hosting all components in a VPC.
+- **Customization.** You need to configure or customize your router's behavior beyond what's available on shared infrastructure.
+
+With the exception of Apollo-managed routing, self-hosted supergraphs benefit from all of the same GraphOS features as cloud supergraphs: metrics reporting, schema checks, the Explorer, etc.
+
+If you are interested in either Cloud Dedicated or self-hosted routing, don't hesitate to <TrackableLink href="https://www.apollographql.com/contact-sales" eventName="content_contact_sales">get in touch</TrackableLink>.
+
+## Setup and configuration
+
+For setup and configuration instructions, refer to the respective router documentation:
+
+- [Cloud router on shared infrastructure](./cloud)
+- [Cloud router on dedicated infrastucture](./cloud-dedicated)
+- [Self-hosted router](../quickstart/self-hosted)
