@@ -300,28 +300,28 @@ GraphQL is a translation layer that allows the needs of the Presentation layer t
 
 ### Rapid Self Serve
 
-> ✅ GraphQL enables rapid self service for our presentation clients by replacing one-off handwritten BFF apis with declarative queries.
+> ✅ GraphQL enables [rapid self service](#offer-rapid-self-service) for our presentation clients by replacing one-off handwritten BFF apis with declarative queries.
 
 GraphQL accomplishes Rapid Self Service with queries: on-demand definitions of just what the presentation view needs, regardless of the source of that data. Each front-end use case (and/or each micro-front end if you have them) defines a declarative query to fetch precisely the data they need in a single request. 
 
 The key insight here is that this is demand driven API creation without endpoints. We don't need an endpoint for each query, they are all sent to the same single endpoint to be executed by a query planned and distributed efficiently to the underlying Application services and data tier.
 
 ### Insulating Contract
-> ✅ GraphQL provides an insulating contract between our Presentation and Application layers that is flexible enough to manage the constant change while stable enough to prevent breaking changes.
+> ✅ GraphQL provides an [insulating contract](#create-an-insulating-contract) between our Presentation and Application layers that is flexible enough to manage the constant change while stable enough to prevent breaking changes.
 
 The most stable portion of any enterprise architecture are the fundamental nouns that drive the business (E.g. Customer, Order, Product). They are defined by the very business model. They endure, even as the underlying data storage models and service models that define them are re-built.
 
 Modernization is coming for every part of our stack, so we know that anything in our stack has a fixed lifetime, and that lifetime is shortening every year. The answer is to model these entities in a layer that is declarative, is not embedded in our code, and can both survive and evolve.
 
 ### Magnify Investments
-> ✅ GraphQL goes beyond just preserving the value of our existing API's, to actually increasing and magnifying the value through federation and its ability to connect and compose independent APIs together.
+> ✅ GraphQL goes beyond just preserving the value of our existing API's, to actually increasing and [magnifying the value](#magnify-existing-investments) through federation and its ability to connect and compose independent APIs together.
 
 The abstraction that GraphQL provides allows new data entities and fields to be added over time without directly impacting the consuming clients. Our API clients can navigate across API bounds with no awareness that they are retrieving data from different teams, different APIs that could be written in different languages, with different API protocols, etc.
 
 This magnifies your investments because investments in the graph are both immediate value to all current clients and value to all potential future clients. All investments in your graph pay dividends.
 
 ### Governance
-> ✅ GraphQL brings a declarative layer and a control plane to the middle, enabling us to apply declarative governance in this crucial layer.
+> ✅ GraphQL brings a declarative layer and a control plane to the middle, enabling us to [apply declarative governance](#govern-the-middle-layer) in this crucial layer.
 
 Bringing all these core domain entities into one layer where they can satisfy an unlimited number of tailored queries from our clients, without creating a custom endpoint for each, means something important for governance.
 
