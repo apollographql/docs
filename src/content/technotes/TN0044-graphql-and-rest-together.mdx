@@ -6,7 +6,7 @@ tags: [architecture-patterns]
 
 <Tip>
 
-If you're looking for more material on this topic, watch Dan Boerner's keynote at API Summit 2023: [GraphQL and REST: True BFFs](https://www.youtube.com/watch?v=5DVi99KPALo).
+If you're looking for more material on this topic, watch Dan Boerner's keynote at API Summit 2023: [GraphQL and REST: true BFFs](https://www.youtube.com/watch?v=5DVi99KPALo).
 
 <ExpansionPanel title="Watch the video below">
 
@@ -16,17 +16,21 @@ If you're looking for more material on this topic, watch Dan Boerner's keynote a
 
 </Tip>
 
-It is common to hear GraphQL and REST pitted against each other as competing technologies. While both technologies have some overlap, most organizations who have adopted GraphQL utilize each for different purposes and at various layers of the stack.
+It's common to hear GraphQL and REST pitted against each other as competing technologies. While these technologies overlap, most organizations adopting GraphQL use both for different purposes and at different layers of the stack.
 
-This page outlines some of the approaches typically taken, where GraphQL fits into the architectural toolbox best, and how it can help drive a resilient API strategy.
+This page outlines:
 
-## Traditional N-Tier Architecture
+- Approaches organizations typically take
+- Where GraphQL fits into the architectural toolbox best
+- How it can help drive a resilient API strategy
 
-In a traditional N-tier architecture, the stack is broken into at least 3 layers: Presentation, Application, and Data layers. Each of these has a distinct purpose:
+## Traditional N-tier architecture
 
-- Presentation: where our customers interact with our products, our experiences, and our API marketplaces
-- Application: where our services and business logic live and through which our Presentation clients access their Data
-- Data: the storage of data about your company, customers, products, etc.
+In a traditional [N-tier architecture](https://en.wikipedia.org/wiki/Multitier_architecture), at least three layers comprise the stack: Presentation, Application, and Data. Each of these has a distinct purpose:
+
+- The **Presentation** layer is where customers interact with products, experiences, and API marketplaces.
+- The **Application** layer is where services and business logic live and through which **Presentation** apps access data.
+- The **Data** layer stores data about your company, customers, products, etc.
 
 ```mermaid
 flowchart LR
@@ -55,17 +59,17 @@ flowchart LR
   presentation --> application --> data
 ```
 
-However, there is a gap between the Presentation and Application tiers that can cause friction between teams and prevent us from getting our data and products into the hands of our customers.
+However, friction between the Presentation and Application layers can prevent organizations from getting products and data into customers' hands.
 
-From the Application Tier perspective:
+From the Application layer perspective:
 
-> "Our job is to expose everything we know, all the data we have access to, and all the capabilities we must deliver in the most efficient, most performant, least opinionated way we can. How clients consume, aggregate, orchestrate and enrich what we provide via our API endpoints isn't really our job. Remember, separation of concerns!"
+> "Our job is to expose everything we know, all the data we have access to, and all the capabilities we must deliver in the most efficient, most performant, least opinionated way we can. How clients consume, aggregate, orchestrate, and enrich what we provide via API endpoints isn't our job. Remember, separation of concerns!"
 
-And from the Presentation side of the divide, the thinking is different:
+From the Presentation side, the thinking is different:
 
-> "We are frustrated that the APIs we access either don't provide what we need, require too much aggregation, or orchestration, are too slow, there's just too many of them and they are always changing without notice!"
+> "We're frustrated that the APIs we access either require too much aggregation or orchestration or don't provide what we need, are too slow, that there's too many of them, and they are always changing without notice!"
 
-Change is constant on both the Presentation and the Application tiers. There are always new clients, new data access requirements, product requirements, new data, new services, new business logic, and many other kinds of changes.
+Change is constant in both the Presentation and the Application layers. There are always new clients, new data access and product requirements, new data, new services, new business logic, and other changes.
 
 ```mermaid
 flowchart LR
@@ -120,27 +124,30 @@ flowchart LR
   service5 -.-> database5
 ```
 
-## API Strategy Goals
+## API strategy goals
 
-As part of deciding an API strategy, there should be some high level goals set.
+Setting high-level goals should be part of deciding your organization's API strategy. Common goals include:
 
-### Offer rapid self-service
+- Offering rapid self-service
+- Creating an insulating contract
+- Magnifying existing investments
+- Governing the middle layer
 
-The biggest goal of any API strategy should be to enable consumers. In practice, this means having as low of friction as possible for consumers to
-get started consuming your API. The more a consumer can self-serve, the better.
+### Offering rapid self-service
 
-### Create an insulating contract
+A key goal of any API strategy should be to enable API consumers. That means having as little friction as possible for consumers onboarding onto your API. The more a consumer can self-serve, the better.
 
-The consumers of an API should be shielded from the complexities of the backing services and vise versa. Every effort should be made to reduce
-the impact of changes to downstream services on upstream clients.
+### Creating an insulating contract
 
-### Magnify existing investments
+Your API strategy should shield API consumers from the complexities of backend services. Conversely, the strategy should insulate the impact of upstream client changes on downstream services.
 
-Any effort investment into an API should have a positive impact to multiple use cases now as well as many use cases in the future.
+### Magnifying existing investments
 
-### Govern the middle layer
+Any API investment should positively impact its current and future use cases.
 
-An API should have a defined stewardship and governance model. Appropriate stakeholders should be represented as part of the governance model.
+### Governing the middle layer
+
+An API should have a defined stewardship and governance model, including appropriate stakeholders.
 
 <Tip>
 
@@ -148,9 +155,9 @@ Read more on [Supergraph stewardship](/technotes/TN0025-supergraph-stewardship/)
 
 </Tip>
 
-## Approaches to Growing Complexity
+## Approaches to growing complexity
 
-### Client Managed
+### Client-managed
 
 ```mermaid
 flowchart LR
@@ -199,21 +206,21 @@ flowchart LR
   service5 --> database5
 ```
 
-**Analysis**
+#### Analysis
 
-Many API strategies start this way but very quickly get out of control. Every client is on their own and this quickly leads to inconsistencies and maintainability issues.
+Many API strategies start as client-managed, but this strategy can quickly get out of control. Every client is on their own, leading to inconsistencies and maintainability issues.
 
-**Problems**:
+#### Problems
 
 - Separation of concerns
 - ❌ "Fat" clients and inconsistent UX
 - ❌ Logic is thrown away on every client rewrite
 - ❌ Not rapid or self-service
 - ❌ Not an insulating contract
-- ❌ Does not magnify existing investments
+- ❌ Doesn't magnify existing investments
 - ❌ No governance
 
-### Backend For Frontend APIs (BFFs)
+### Backend for Frontend APIs (BFFs)
 
 ```mermaid
 flowchart LR
@@ -278,21 +285,21 @@ flowchart LR
   bff5 --> grpc5
 ```
 
-**Analysis**
+#### Analysis
 
-BFFs are a reasonable approach to this problem as it allows data to be aggregated from the many backing APIs. However, as more and more clients are added, especially if your companies utilizes micro frontends, this can quickly grow out of control and become a problem of maintainability as well as make governance impossible.
+BFFs can be a reasonable approach to the issues of the client-managed approach. The BFF approach lets data get aggregated from many backend APIs. However, as your organization adds more and more clients, this approach can also grow out of control. This can especially become an issue for organizations using micro-frontends. Maintainability and governance can become increasingly challenging.
 
-**Problems**:
+#### Problems
 
-- ❌ Number of BFFs can expand to a point of it becoming impossible to manage
-- ❌ Does not Magnify Existing Investments
-- ❌ While an API Gateway could allow for some governance of BFFs, it still doesn't not allow much governance of the data retrieval.
+- ❌ Number of BFFs can expand to the point that it becomes impossible to manage them
+- ❌ Doesn't magnify existing investments
+- ❌ While an API Gateway can provide some governance of BFFs, it still doesn't provide much governance of data retrieval
 
 <Note>
-  It is possible that you may still have a need for a BFF in addition to GraphQL
-  for "Utility" endpoints that are specific to your application. In this case,
-  you could utilize a passthrough pattern to direct data fetch/mutation through
-  your BFF to your GraphQL layer.
+  You may still need a BFF in addition to GraphQL for "Utility" endpoints
+  specific to your application. In this case, you could use a passthrough
+  pattern to direct data fetching and mutations through your BFF to your GraphQL
+  layer.
 </Note>
 
 ## Using GraphQL
@@ -321,45 +328,43 @@ flowchart LR
   graphql --> cms
 ```
 
-GraphQL is a translation layer that allows the needs of the Presentation layer to be translated to the Application layer with its services and data. By its very nature, it is self-serve, it provides insulating contracts, all investments are magnified since all consumers benefit from all investments, and it is highly governable since all data is exposed through a single endpoint with declarative policies.
+GraphQL is a middle layer that translates the needs of the Presentation layer to the Application layer. By its nature, GraphQL is self-serve. A GraphQL schema acts as an insulating contract, and all investments are magnified since all consumers benefit from all investments. It is highly governable since a single endpoint exposes all data with declarative policies.
 
-### Rapid Self Serve
+### Rapid self-service
 
-> ✅ GraphQL enables [rapid self service](#offer-rapid-self-service) for our presentation clients by replacing one-off handwritten BFF apis with declarative queries.
+> ✅ GraphQL enables [rapid self-service](#offer-rapid-self-service) for Presentation layer clients by replacing one-off handwritten BFF APIs with declarative queries.
 
-GraphQL accomplishes Rapid Self Service with queries: on-demand definitions of just what the presentation view needs, regardless of the source of that data. Each front-end use case (and/or each micro-front end if you have them) defines a declarative query to fetch precisely the data they need in a single request.
+Queries are on-demand definitions of only what the Presentation layer needs, regardless of the data source. Each frontend use case (and each micro-frontend if you use them) defines a declarative query to fetch precisely the data it needs in a single request.
 
-The key insight here is that this is demand driven API creation without endpoints. We don't need an endpoint for each query, they are all sent to the same single endpoint to be executed by a query planned and distributed efficiently to the underlying Application services and data tier.
+GraphQL enables demand-driven API creation without creating new endpoints. Every client sends requests to the same endpoint to be executed by a query planner and distributed efficiently to the underlying Application and Data layers.
 
-### Insulating Contract
+### Creating an insulating contract
 
-> ✅ GraphQL provides an [insulating contract](#create-an-insulating-contract) between our Presentation and Application layers that is flexible enough to manage the constant change while stable enough to prevent breaking changes.
+> ✅ GraphQL provides an [insulating contract](#creating-an-insulating-contract) between Presentation and Application layers that is flexible enough to manage constant change while stable enough to prevent breaking changes.
 
-The most stable portion of any enterprise architecture are the fundamental nouns that drive the business (E.g. Customer, Order, Product). They are defined by the very business model. They endure, even as the underlying data storage models and service models that define them are re-built.
+The most stable portion of any enterprise data model is the fundamental objects that drive the business&mdash;for example, Customers, Orders, or Products. These objects endure, even as the underlying data storage and service models that define them are rebuilt.
 
-Modernization is coming for every part of our stack, so we know that anything in our stack has a fixed lifetime, and that lifetime is shortening every year. The answer is to model these entities in a layer that is declarative, is not embedded in our code, and can both survive and evolve.
+Modernization means that every part of a stack has a fixed lifetime, and that lifetime shortens every year. The answer is to model these entities in a declarative layer that is not embedded in code and can survive and evolve.
 
-### Magnify Investments
+### Magnifying investments
 
-> ✅ GraphQL goes beyond just preserving the value of our existing API's, to actually increasing and magnifying the value through federation and its ability to connect and compose independent APIs together.
+> ✅ GraphQL goes beyond preserving the value of our existing APIs to [magnifying investments](#magnifying-existing-investments) through [federation](/federation/) and its ability to connect and compose independent APIs.
 
-The abstraction that GraphQL provides allows new data entities and fields to be added over time without directly impacting the consuming clients. Our API clients can navigate across API bounds with no awareness that they are retrieving data from different teams, different APIs that could be written in different languages, with different API protocols, etc.
+GraphQL provides an abstraction layer that allows organizations to add new data entities and fields over time without directly impacting the consuming clients. API clients can navigate across APIs without awareness that they're retrieving data from different teams, different APIs potentially written in different languages, with different API protocols, etc.
 
-This magnifies your investments because investments in the graph are both immediate value to all current clients and value to all potential future clients. All investments in your graph pay dividends.
+All investments in the graph pay dividends because they provide value to both current and potential future clients.
 
 ### Governance
 
-> ✅ GraphQL brings a declarative layer and a control plane to the middle, enabling us to [apply declarative governance](#govern-the-middle-layer) in this crucial layer.
+> ✅ GraphQL provides a declarative control plane as the crucial middle layer of your architecture.
 
-Bringing all these core domain entities into one layer where they can satisfy an unlimited number of tailored queries from our clients, without creating a custom endpoint for each, means something important for governance.
-
-It means we have a single place, a static place in our registry where all our API surface area is defined. Rather than hundreds of endpoints and custom code.
+GraphQL enables organizations to centralize all core domain entities into a unified layer, catering to custom queries from clients without the need for individualized endpoints. This is great for governance since it gives organizations a single, static location to define their entire API surface area instead of managing hundreds of endpoints.
 
 ## Conclusion
 
-GraphQL is not in competition with REST, but rather is best used as a new layer in the stack with a different purpose: Bridge "The Middle",
-the gap between the Presentation and Application layers. It will enable you to drive a resilient API strategy that provide the correct governance and
-ownership while also reducing friction due to change and allowing your API consumers to increase their velocity through self-service.
+GraphQL is not in competition with REST. Rather, it is best suited as a new layer in the stack with a different purpose&mdash;**to bridge the gap between the Presentation and Application layers**.
+
+GraphQL enables organizations to drive a resilient API strategy that provides governance and ownership while reducing friction and allowing API consumers to increase their velocity through self-service.
 
 To use GraphQL and REST together:
 
