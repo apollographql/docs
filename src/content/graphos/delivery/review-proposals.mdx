@@ -24,7 +24,7 @@ graph LR
 
 ## Review a proposal
 
-Proposal creators and reviewers can review different aspects of a proposal from its four non-editor tabs in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content).
+Proposal creators and reviewers can review different aspects of a proposal from its non-editor tabs in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content).
 
 <img
   src="../img/schema-proposals/proposal-overview.jpg"
@@ -39,7 +39,6 @@ Proposal creators and reviewers can review different aspects of a proposal from 
   - Select reviewers.
 - The [**Changes**](#changes) tab shows both a summary and detailed view of the schema changes that make up a proposal.
   - All viewers can also [provide commentary](#add-comments) on changes from the **Changes** tab.
-- The [**Schema Reference**](#schema-reference) tab shows the entire supergraph schema reference with the proposal's changes applied.
 - The [**Checks**](./propose-changes#schema-checks) tab shows all [schema checks](./schema-checks) that have run for [saved revisions](./propose-changes#save-revisions).
 
 ### Changes
@@ -96,26 +95,6 @@ The blue tab that appears next to a line shows the number of comments that line 
   src="../img/schema-proposals/comments-number.jpg"
   className="screenshot"
   alt="Schema proposals changes tab in Studio"
-/>
-
-### Schema Reference
-
-The **Schema Reference** tab shows the entire supergraph schema reference with the proposal's changes applied. Select **Proposal changes only** to view only the changes.
-
-<img
-  src="../img/schema-proposals/schema-references-filtered.jpg"
-  className="screenshot"
-  alt="Schema proposals schema reference tab in Studio"
-/>
-
-You can use the other filters to the left of **Proposal changes only** to hone in on certain subgraphs, tags, directives, and more.
-
-The left nav shows you the number of types the proposal changes. Clicking into a type, for example **Object**, shows the specific objects that were changed. You can click on any changed type to see which fields were added and removed.
-
-<img
-  src="../img/schema-proposals/schema-reference-detailed.jpg"
-  className="screenshot"
-  alt="Schema proposals schema reference tab in Studio"
 />
 
 ## Add a review
