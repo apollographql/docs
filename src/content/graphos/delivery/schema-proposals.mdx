@@ -10,13 +10,13 @@ As your supergraph schema grows in complexity, changing it can become increasing
 The impacts of schema changes on [composition](/federation/federated-types/composition/) and client operations become harder to assess before publication.
 Once schema design changes are agreed upon, ensuring they are honored later in the subgraph development lifecycle can become another challenge.
 
-These challenges multiply when attempting to change multiple subgraph schemas simultaneously.
+These challenges multiply when attempting to update multiple subgraph schemas simultaneously.
 Schema development can stall without the clear cross-team communication needed to understand, verify, and track changes.
 
-## Schema proposals as schema change management
+## Schema proposals for schema change management
 
 **Schema proposals** provide GraphOS-native schema change management.
-The centralized proposal process strengthens schema governance and fosters collaboration:
+The centralized proposal process fosters collaboration and strengthens schema governance:
 
 - Subgraph developers can propose changes in the context of the supergraph and use automated checks and reviewer feedback to validate them.
 - Graph consumers can actively participate by commenting on, reviewing, and approving proposals.
@@ -28,7 +28,7 @@ This increased coordination improves design decisions and accountability, making
 
 Managing schema changes _directly in GraphOS Studio_ provides the following benefits:
 
-- The proposal process **leverages GraphOS [schema checks](./schema-checks)&mdash;including [schema linting](./schema-linter)&mdash;at every status**.
+- The proposal process **leverages GraphOS [schema checks](./schema-checks)&mdash;including [schema linting](./schema-linter)&mdash;at every step**.
   - This provides an immediate understanding of the changes' impacts on composition and client operations.
   - It also minimizes the likelihood of errors and inconsistencies.
 - Editing, reviewing, and approving changes in GraphOS allows for **GraphQL-aware schema diffing**.
@@ -61,7 +61,7 @@ Before describing the details of this proposal process, it's helpful to understa
 
 </td>
 <td>
-Automatic upon creation but can be <a href="./propose-changes#change-proposal-status">manually reset</a>
+Automatic at proposal creation but can be <br/> <a href="./propose-changes#change-proposal-status">manually reset</a>
 </td>
 <td>
 Default status upon creation until the proposal is ready for review.
@@ -101,7 +101,7 @@ has approved the proposal.
 <td>
 All the proposal's changes have been{' '}
 <a href="./publishing-schemas">published</a>. <br />
-<br /> - Implemented proposals cannot receive further revisions <br /> -
+<br /> - Implemented proposals cannot receive further revisions. <br /> -
 Their status cannot be updated.
 </td>
 </tr>
@@ -125,7 +125,7 @@ A proposal doesn't have to progress linearly from **Draft** to **Implemented**. 
 
 ### Proposal process
 
-The schema proposal statuses enable the following end-to-end schema change management process:
+Schema proposal statuses enable the following end-to-end schema change management process:
 
 ```mermaid
 graph LR
@@ -200,10 +200,12 @@ graph TB
 
 ## Next steps
 
+Schema proposal default configurations let you start using them out of the box. If you want to finetune your graph's proposal process, including permissions, approval requirements, and more, check out [Configure proposals](./configure-proposals).
+
 To learn more about each stage in the process, refer to the following articles:
 
-- [Proposal creation](./propose-changes)
-- [Proposal review](./review-proposals)
-- [Proposal implementation and publication](./implement-proposals)
+- [Propose changes](./propose-changes)
+- [Review proposals](./review-proposals)
+- [Implement proposals](./implement-proposals) (covers both implementation and publication)
 
-Proposal default configurations let you start using them out of the box. If you want to finetune your graph's proposal process, including permissions, approval requirements, and more, check out [Proposal configuration](./configure-proposals).
+
