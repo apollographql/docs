@@ -8,15 +8,15 @@ description: Fine-tune GraphQL the schema proposal process by configuring permis
 
 [Org and graph admins](../org/members/#organization-wide-member-roles) can configure the following aspects of schema proposals:
 
-- Which [roles can create and edit proposals and manually change proposal status](#configure-permissions-and-approvals)
-- Which team members are [default reviewers](#default-reviewers)
+- Which [roles can create, edit, and approve proposals](#configure-permissions-and-approvals)
+- Which team members are [default reviewers](#default-reviewers) and whether [default reviewer approval is required](#require-default-reviewer-approval)
 - The [minimum number of approvals](#required-approvals) required for a proposal to achieve [**Approved** status](./schema-proposals#proposal-statuses)
 - Whether and how [schema checks incorporate proposals](#configure-schema-checks)
 - [Coming soon] Whether to mute [email notifications](#configure-notifications) from proposal activty
 
 <Note>
 
-Schema proposal configurations are on a per-graph&mdash;not per-organization&mdash;basis, except for [muting notifications](#mute-notifications), which are on a per-teammate, per-proposal basis.
+Schema proposal configurations are on a **per-graph**&mdash;not per-organization nor per-proposal&mdash;basis. This includes [muting notifications](#mute-notifications), which are on a per-teammate, per-graph basis.
 
 </Note>
 
@@ -160,7 +160,7 @@ Additionally, [org and graph admins](../org/members/#organization-wide-member-ro
 ### Require default reviewer approval
 
 By default, _any_ team member's approval can contribute to the [minimum number of required approvals](#required-approvals).
-Once you've added [**default reviewers**](#default-reviewers), you can require _at least one_ of those approvals to come from a default reviewer by selecting **Require at least one default reviewer's approval**.
+Once you've added [**default reviewers**](#default-reviewers), you can require _at least one_ approval to come from a default reviewer by selecting **Require at least one default reviewer's approval**.
 
 <img
   src="../img/schema-proposals/require-default-reviewer-approval.jpg"
@@ -221,10 +221,10 @@ Notifications are enabled by default. To mute your notifications, go to a propos
   width="600"
 />
 
-A modal appears where you can select to mute your notifications. To re-enable them, click the same icon.
+A modal appears where you can select to mute your notifications. To re-enable them, click the same bell icon.
 
 <Note>
 
-Notifications are enabled or muted on a per-team member, per-proposal basis. 
+Notifications are enabled or muted on a per-team member, per-graph basis. 
 
 </Note>
