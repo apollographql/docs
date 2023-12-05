@@ -16,7 +16,7 @@ description: Fine-tune GraphQL the schema proposal process by configuring permis
 
 <Note>
 
-Schema proposal configurations are on a per-graph&mdash;not per-organization&mdash;basis.
+Schema proposal configurations are on a per-graph&mdash;not per-organization&mdash;basis, except for turning on or off notifications, which are on a per-teammate basis.
 
 </Note>
 
@@ -187,24 +187,24 @@ By default, the severity of this task is **Off**. You can select from the follow
 - Setting the severity to **Error** means the proposals task fails when the change being checked isn't included in approved proposals.
 - Setting the severity to **Warning** means the proposals tasks can still pass even when the change being checked isn't included in approved proposals. However, warnings appear in the check run.
 
-Integrating schema proposals into schema checks is a key part of [proposal process](./schema-proposals#proposal-process).
+Integrating the Proposals task into schema checks strengthens schema governance in the [publication stage of the proposal process](./schema-proposals#proposal-process).
 See the [Implement approved proposals](./implement-proposals) article for more information on how to use schema checks as part of your proposal process.
 
-## Configure notifications
+## Mute notifications
 
-All team members receive email notifications for the following proposal actions:
+By default, all team members receive email notifications for the following:
 
-- Whenever you're selected as a review on a proposal, whether because you are a default reviewer, or you've been manually selected
+- If you're selected as a reviewer on a proposal, whether because you are a [default reviewer](#default-reviewers), or you've been manually selected
 - Whenever you are @mentioned in a comment
 
-Additionally, the following roles receive notifications on the following proposal actions:
+Additionally, the following roles receive email notifications for the following proposal actions:
 
-|                 | Comments | Saved Revisions | Status Changes | Approvals |
+|                 | Comments | Saved Revisions | Status Changes | Reviews   |
 |-----------------|----------|-----------------|----------------|-----------|
-| Proposal author | ✔️        | ✔️              | ✔️               | ✔️         |
-| Commenter       | ✔️ **     | ❌             | ❌              | ❌        |
-| Reviewer        | ❌       | ✔️              | ❌              | ❌        |
-| Proposal editor | ❌       | ❌             | ❌              | ❌        |
+| Proposal author | ✔️        | ✔️               | ✔️              | ✔️         |
+| Commenter       | ✔️ **     | ❌              | ❌             | ❌        |
+| Reviewer        | ❌       | ✔️               | ❌             | ❌        |
+| Proposal editor | ❌       | ❌              | ❌             | ❌        |
 
 <Note>
 
@@ -214,7 +214,7 @@ Additionally, the following roles receive notifications on the following proposa
 
 Notifications are cumulative. For example, if you comment on a particular thread and review a proposal, you get notifications for both new comments on the thread and saved revisions.
 
-To mute notifications, go to the graph's **Settings** page and open the **Proposals** tab. Select **Mute notifications**.
+Email notifications are enabled by default. To mute your notifications, go to a Proposal's Overiew page and select the bell icon.
 
 <img
   src="../img/schema-proposals/mute-notifications.jpg"
@@ -224,6 +224,6 @@ To mute notifications, go to the graph's **Settings** page and open the **Propos
 
 <Note>
 
-Notifications are muted on a _per-graph_ (not per-proposal) basis. 
+Notifications are enabled or muted on a per-team member, per-proposal basis. 
 
 </Note>
