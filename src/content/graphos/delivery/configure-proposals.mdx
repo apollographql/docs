@@ -16,7 +16,7 @@ description: Fine-tune GraphQL the schema proposal process by configuring permis
 
 <Note>
 
-Schema proposal configurations are on a per-graph&mdash;not per-organization&mdash;basis, except for turning on or off notifications, which are on a per-teammate basis.
+Schema proposal configurations are on a per-graph&mdash;not per-organization&mdash;basis, except for [muting notifications](#mute-notifications), which are on a per-teammate, per-proposal basis.
 
 </Note>
 
@@ -35,12 +35,8 @@ Schema proposal configurations are on a per-graph&mdash;not per-organization&mda
 
 
 
-[Org and graph admins](../org/members/#organization-wide-member-roles) can configure which roles can:
-- Create proposals
-- Edit proposals
-- Manually [change proposal status](./propose-changes#change-proposal-status)
+[Org and graph admins](../org/members/#organization-wide-member-roles) can configure which roles can create, edit, and approve proposals. Permissions for other proposal actions are not configurable.
 
-Permissions for other proposal actions are not configurable.
 Permissions and other configurations are available on a graph's **Settings** page in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content).
 
 <img
@@ -79,13 +75,13 @@ Default: `Observers`
 
 <td>
 
-The _minimum_ [role](../org/members/#organization-wide-member-roles) required to create and edit proposals and manually change proposal status.
+The _minimum_ [role](../org/members/#organization-wide-member-roles) required to create and edit or approve proposals.
 
 <br/>
 
 `Observers` is the least restrictive setting and `Admins` the most restrictive.
-The `Observers` default means all organization members except Consumers and Billing Admins can create and edit proposals.
-If you select `Admins`, only org and graph admins can create and edit proposals.
+The `Observers` default means all organization members except Consumers and Billing Admins can create and edit or approve proposals.
+If you select `Admins`, only org and graph admins can create and edit or approve proposals.
 
 </td>
 
@@ -151,24 +147,25 @@ Changing the number of required approvals updates the status of existing proposa
 
 ### Restrict edit permissions
 
-The **Permissions** configuration controls which roles can start, edit, and change proposal status.
-Additionally, [org and graph admins](../org/members/#organization-wide-member-roles) can restrict editing proposals to only the proposal's author and org and graph admins by selecting **Restrict editing**.
+The **Permissions** configuration controls which roles can start, edit, and approve proposals.
+Additionally, [org and graph admins](../org/members/#organization-wide-member-roles) can restrict editing proposals to only the proposal's author and org and graph admins by selecting **Restrict editing to authors and admins**.
 
 <img
   src="../img/schema-proposals/restrict-edits.jpg"
   className="screenshot"
-  alt="Coming soon"
+  alt="Schema proposals settings in Studio"
+  width="400"
 />
 
 ### Require default reviewer approval
 
 By default, _any_ team member's approval can contribute to the [minimum number of required approvals](#required-approvals).
-You can require at least one of the approvals to come from a [**default review**](#default-reviewers) by selecting **Make at least one default reviewer required**.
+Once you've added [**default reviewers**](#default-reviewers), you can require _at least one_ of those approvals to come from a default reviewer by selecting **Require at least one default reviewer's approval**.
 
 <img
   src="../img/schema-proposals/require-default-reviewer-approval.jpg"
   className="screenshot"
-  alt="Coming soon"
+  alt="Schema proposals settings in Studio"
 />
 
 ## Configure schema checks
@@ -187,7 +184,7 @@ By default, the severity of this task is **Off**. You can select from the follow
 - Setting the severity to **Error** means the proposals task fails when the change being checked isn't included in approved proposals.
 - Setting the severity to **Warning** means the proposals tasks can still pass even when the change being checked isn't included in approved proposals. However, warnings appear in the check run.
 
-Integrating the Proposals task into schema checks strengthens schema governance in the [publication stage of the proposal process](./schema-proposals#proposal-process).
+Integrating the Proposals task into schema checks strengthens schema governance when [publishing changes](./schema-proposals#proposal-process).
 See the [Implement approved proposals](./implement-proposals) article for more information on how to use schema checks as part of your proposal process.
 
 ## Mute notifications
@@ -214,13 +211,17 @@ Additionally, the following roles receive email notifications for the following 
 
 Notifications are cumulative. For example, if you comment on a particular thread and review a proposal, you get notifications for both new comments on the thread and saved revisions.
 
-Email notifications are enabled by default. To mute your notifications, go to a Proposal's Overiew page and select the bell icon.
+Notifications are enabled by default. To mute your notifications, go to a proposal's Overiew page and click the bell icon.
+
 
 <img
   src="../img/schema-proposals/mute-notifications.jpg"
   className="screenshot"
-  alt="Coming soon"
+  alt="Proposals overview page in Studio"
+  width="600"
 />
+
+A modal appears where you can select to mute your notifications. To re-enable them, click the same icon.
 
 <Note>
 
