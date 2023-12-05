@@ -74,11 +74,11 @@ Even if you already have Rover installed, you should update your version now by 
 
 Install the latest Rover release with the appropriate command for your system:
 
-```bash title="Mac/Unix"
+```bash showLineNumbers=false title="Mac/Unix"
 curl -sSL https://rover.apollo.dev/nix/latest | sh
 ```
 
-```bash title="Windows"
+```bash showLineNumbers=false title="Windows" 
 iwr 'https://rover.apollo.dev/win/latest' | iex
 ```
 
@@ -117,7 +117,7 @@ This tutorial uses the `docker` command. Alternative commands usually look simil
 
 Try building and running your router container:
 
-```bash
+```bash showLineNumbers=false
 docker build -t router .
 docker run -it -p4000:4000 router
 ```
@@ -284,7 +284,7 @@ To publish our subgraph schema, we'll first use Rover to **introspect** the runn
 
 1. Paste the following multi-line command into your terminal, **but don't run it**—you need to modify it first.
 
-    ```bash
+    ```bash showLineNumbers=false
     rover subgraph introspect https://flyby-locations-sub.herokuapp.com/ | \
     rover subgraph publish --name locations \
     --routing-url https://flyby-locations-sub.herokuapp.com/ \
@@ -327,7 +327,7 @@ To publish our subgraph schema, we'll first use Rover to **introspect** the runn
 
 4. Do the same thing for the `reviews` subgraph, **again substituting your graph ref**:
 
-    ```bash
+    ```bash showLineNumbers=false
     rover subgraph introspect https://flyby-reviews-sub.herokuapp.com/ | \
     rover subgraph publish --name reviews \
     --routing-url https://flyby-reviews-sub.herokuapp.com/ \
@@ -380,7 +380,7 @@ We recommend that you create a separate API key for each system that communicate
 
 3. Paste this command into your terminal and run it:
 
-    ```bash
+    ```bash showLineNumbers=false
     docker run -it --env-file .env -p4000:4000 router
     ```
 
