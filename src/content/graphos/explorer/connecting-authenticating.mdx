@@ -110,7 +110,7 @@ Inject an environment variable into a GraphQL variable value by surrounding the 
 If you create a [custom script](#scripting) that runs before an operation executes, that script can access an environment variable's value like so:
 
 ```js
-const secretToken = explorer.environment.get('token');
+const secretToken = explorer.environment.get("token");
 ```
 
 ## Scripting
@@ -122,9 +122,11 @@ Similar to tools like Postman, the Explorer can run custom scripts when executin
 You can define two different types of scripts:
 
 - [**Preflight scripts.**](#preflight-scripts) You can define a _single_ preflight script _per variant_ of a graph. This script runs before _every Explorer operation_ that's executed against the associated variant (unless a user individually [disables the script](#disabling-preflight-scripts)).
-    - Preflight scripts are especially helpful for enabling organization-wide Explorer authentication against your graph.
-- [**Operation scripts.**](#operation-scripts) If you use [operation collections](./operation-collections/), you can define a separate script for each saved operation in a collection. This script can then control everything that happens before, during, and after an operation is executed (as long as a user individually [enables the script](#enabling-operation-scripts)).
-    - Operation scripts are especially helpful for debugging the behavior of individual operations when they're provided various values.
+  - Preflight scripts are especially helpful for enabling organization-wide Explorer authentication against your graph.
+- [**Operation scripts.**](#operation-scripts) If you use [operation collections](./operation-collections/), you can define a separate preflight and postflight script for each saved operation in a collection. These scripts can then control everything that happens before, during, and after an operation is executed (as long as a user individually [enables the scripts](#enabling-operation-scripts)).
+  - Pre-operation scripts will be run before the explorer operation.
+  - Post-operation scripts will be run after the explorer operation.
+  - Operation scripts are especially helpful for debugging the behavior of individual operations when they're provided various values.
 
 > If an Explorer operation runs _both_ types of scripts, the preflight script runs _before_ the operation script.
 
@@ -187,7 +189,6 @@ By default, a variant's preflight script runs automatically before every GraphQL
 
 To do so, toggle the switch to **OFF**.
 
-
 ### Operation scripts
 
 #### Creating operation scripts
@@ -205,27 +206,36 @@ To do so, toggle the switch to **OFF**.
      width="400"
    />
 
-2. From the Explorer's bottom panel, select the Script tab and click **+ Add Script**:
+2. From the Explorer's bottom panel, select the Pre-Operation or Post-Operation Script tab and click **+ Add Script**:
 
    <img
      class="screenshot"
-     src="../img/script-tab-new.png"
+     src="../img/new-operation-scripts-tab.png"
      alt="Adding a new operation script"
      width="500"
    />
 
-    The following modal appears:
+   The following modal appears:
 
-    <img
+   <img
      class="screenshot"
      src="../img/op-script-modal.png"
      alt="Editing operation scripts in the Explorer"
      width="600"
-    />
+   />
 
 3. Create, test, and save your script.
-    
-    - For details on script creation, see [Creating preflight scripts](#creating-preflight-scripts).
+
+   - For details on script creation, see [Creating preflight scripts](#creating-preflight-scripts).
+
+   To test your postflight operation script the operation script modal has a Mocked Operation Response area. A JSON graphql response can be added here for **Test script** to access with [`explorer.response.body`](#explorerresponsebody).
+
+   <img
+     class="screenshot"
+     src="../img/op-postflight-script-modal.png"
+     alt="Editing operation scripts in the Explorer"
+     width="600"
+   />
 
 #### Enabling operation scripts
 
@@ -343,8 +353,6 @@ The prompt supports Markdown rendering of the `msg` parameter.
 <tr>
 <td>
 
-
-
 ##### `explorer.oauth2Request`
 
 `(authUrl: string, queryParams?: Record<string, string>) => Promise<Record<string, string> | null>`
@@ -379,6 +387,21 @@ The body of the `POST` request that's sent to the configured GraphQL endpoint fo
 <tr>
 <td>
 
+##### `explorer.response.body`
+
+`JSONValue | null`
+
+</td>
+<td>
+
+The JSON representation of the GraphQL operation response.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
 ##### `explorer.CryptoJS`
 
 </td>
@@ -395,17 +418,18 @@ This exposes the `crypto-js` package for use within your script. For available f
 ### Examples
 
 #### Operation Scripts
+
 Here is a small example that runs an operation and sets an environment variable for use on future operations:
 
 ```js
 const response = await explorer.runOperation({
- scope: 'shared',
- graphRef: 'SpaceX-pxxbxen@current',
- collectionName: 'Mission Control',
- operationName: 'Ships',
-})
+  scope: "shared",
+  graphRef: "SpaceX-pxxbxen@current",
+  collectionName: "Mission Control",
+  operationName: "Ships",
+});
 
-const firstShipID = response.result.data.ships[0].id
+const firstShipID = response.result.data.ships[0].id;
 
-explorer.environment.set('shipID', firstShipID)
+explorer.environment.set("shipID", firstShipID);
 ```
