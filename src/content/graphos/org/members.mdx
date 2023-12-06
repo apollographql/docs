@@ -42,33 +42,72 @@ When **Contributor**s in an organization create a new graph, they are automatica
 
 ## Role permissions
 
-| Action                                                                      | Org Admin | Graph Admin |                                         Contributor                                          | Observer / Documenter | Consumer |
-| :-------------------------------------------------------------------------- | :-------: | :---------: | :------------------------------------------------------------------------------------------: | :-------------------: | :------: |
-| Invite members                                                              |     ✓     |             |                                                                                              |                       |          |
-| Remove members                                                              |     ✓     |             |                                                                                              |                       |          |
-| View and edit billing information                                           |     ✓     |             |                                                                                              |                       |          |
-| Manage organization configuration (name, avatar, etc.)                      |     ✓     |             |                                                                                              |                       |          |
-| Export [audit logs](./audit-log) (enterprise only)                          |     ✓     |             |                                                                                              |                       |          |
-| Delete the organization                                                     |     ✓     |             |                                                                                              |                       |          |
-| Manage which users have access to graphs                                    |     ✓     |      ✓      |                                                                                              |                       |          |
-| Manage graph integrations (Slack, Datadog, etc.)                            |     ✓     |      ✓      |                                                                                              |                       |          |
-| View and manage graph API keys                                              |     ✓     |      ✓      |                                                                                              |                       |          |
-| Modify schema checks configuration                                          |     ✓     |      ✓      |                                                                                              |                       |          |
-| Delete and rename graphs                                                    |     ✓     |      ✓      |                                                                                              |                       |          |
-| Create and modify [contracts](../delivery/contracts/) and contract variants |     ✓     |      ✓      |                                                                                              |                       |          |
-| View existing contracts                                                     |     ✓     |      ✓      |                                              ✓                                               |                       |          |
-| Create new variants                                                         |     ✓     |      ✓      | Non-[protected](../graphs/studio-features/#protected-variants-enterprise-only) variants only |                       |          |
-| Push schemas to a graph                                                     |     ✓     |      ✓      | Non-[protected](../graphs/studio-features/#protected-variants-enterprise-only) variants only |                       |          |
-| Manage Explorer settings (URL, etc)                                         |     ✓     |      ✓      | Non-[protected](../graphs/studio-features/#protected-variants-enterprise-only) variants only |                       |          |
-| Create graphs                                                               |     ✓     |      ✓      |                                              ✓                                               |                       |          |
-| Edit variant READMEs                                                        |     ✓     |      ✓      |                                              ✓                                               |    Documenter only    |          |
-| Run [schema checks](../delivery/schema-checks)                              |     ✓     |      ✓      |                                              ✓                                               |           ✓           |          |
-| See the schemas of subgraphs in federated graphs                            |     ✓     |      ✓      |                                              ✓                                               |           ✓           |          |
-| View graph usage metrics and traces                                         |     ✓     |      ✓      |                                              ✓                                               |           ✓           |          |
-| View graph schemas and changelogs                                           |     ✓     |      ✓      |                                              ✓                                               |           ✓           |    ✓     |
-| Query graphs with the Explorer                                              |     ✓     |      ✓      |                                              ✓                                               |           ✓           |    ✓     |
+### Organization management permissions
 
-> Currently, graph usage metrics and traces are not displayed to **Consumer**s via the Studio web app, but they are not blocked at the API layer. We intend to remove this capability from **Consumer**s, but for the time being you should understand that **Consumer**s are not fully prevented from accessing these metrics and traces.
+| Action                                                 | Org Admin | Graph Admin | Contributor | Observer / Documenter | Consumer |
+| :----------------------------------------------------- | :-------: | :---------: | :---------: | :-------------------: | :------: |
+| Manage organization configuration (name, avatar, etc.) |     ✓     |             |             |                       |          |
+| Delete the organization                                |     ✓     |             |             |                       |          |
+| View and edit billing information                      |     ✓     |             |             |                       |          |
+| Invite members                                         |     ✓     |             |             |                       |          |
+| Remove members                                         |     ✓     |             |             |                       |          |
+| Export [audit logs](./audit-log) (enterprise only)     |     ✓     |             |             |                       |          |
+| Manage which users have access to graphs               |     ✓     |      ✓      |             |                       |          |
+
+### Graph management permissions
+
+| Action                                           | Org Admin | Graph Admin |                                         Contributor                                          | Observer / Documenter | Consumer |
+| :----------------------------------------------- | :-------: | :---------: | :------------------------------------------------------------------------------------------: | :-------------------: | :------: |
+| View and manage graph API keys                   |     ✓     |      ✓      |                                                                                              |                       |          |
+| Manage graph integrations (Slack, Datadog, etc.) |     ✓     |      ✓      |                                                                                              |                       |          |
+| Delete and rename graphs                         |     ✓     |      ✓      |                                                                                              |                       |          |
+| Create graphs                                    |     ✓     |      ✓      |                                              ✓                                               |                       |          |
+| Create new variants                              |     ✓     |      ✓      | Non-[protected](../graphs/studio-features/#protected-variants-enterprise-only) variants only |                       |          |
+| Push schemas to a graph                          |     ✓     |      ✓      | Non-[protected](../graphs/studio-features/#protected-variants-enterprise-only) variants only |                       |          |
+| Manage Explorer settings (URL, etc)              |     ✓     |      ✓      | Non-[protected](../graphs/studio-features/#protected-variants-enterprise-only) variants only |                       |          |
+| See the schemas of subgraphs in federated graphs |     ✓     |      ✓      |                                              ✓                                               |           ✓           |          |
+| View graph usage metrics and traces\*            |     ✓     |      ✓      |                                              ✓                                               |           ✓           |          |
+| Edit variant READMEs                             |     ✓     |      ✓      |                                              ✓                                               |    Documenter only    |          |
+| Query graphs with the Explorer                   |     ✓     |      ✓      |                                              ✓                                               |           ✓           |    ✓     |
+| View graph schemas and changelogs                |     ✓     |      ✓      |                                              ✓                                               |           ✓           |    ✓     |
+
+> \*Currently, graph usage metrics and traces are not displayed to **Consumer**s via the Studio web app, but they are not blocked at the API layer. We intend to remove this capability from **Consumer**s, but for the time being you should understand that **Consumer**s are not fully prevented from accessing these metrics and traces.
+
+### Schema checks permissions
+
+Learn more about [schema checks](../delivery/schema-checks).
+
+| Action                             | Org Admin | Graph Admin | Contributor | Observer / Documenter | Consumer |
+| :--------------------------------- | :-------: | :---------: | :---------: | :-------------------: | :------: |
+| Modify schema checks configuration |     ✓     |      ✓      |             |                       |          |
+| Run schema checks                  |     ✓     |      ✓      |      ✓      |           ✓           |          |
+
+### Schema proposals permissions
+
+<GraphOSEnterpriseRequired />
+
+The table below shows _default_ schema proposal settings. You can [configure which roles can create, edit, and approve proposals](../delivery/configure-proposals#configure-permissions-and-approvals).
+
+| Action                 | Org Admin | Graph Admin | Contributor | Observer / Documenter | Consumer |
+| :--------------------- | :-------: | :---------: | :---------: | :-------------------: | :------: |
+| Change proposal status |     ✓     |      ✓      |             |                       |          |
+| Create proposals       |     ✓     |      ✓      |      ✓      |           ✓           |          |
+| Edit proposals         |     ✓     |      ✓      |      ✓      |           ✓           |          |
+| Add reviewers          |     ✓     |      ✓      |      ✓      |           ✓           |          |
+| View proposals         |     ✓     |      ✓      |      ✓      |           ✓           |    ✓     |
+| Make comments          |     ✓     |      ✓      |      ✓      |           ✓           |    ✓     |
+| Approve proposals      |     ✓     |      ✓      |      ✓      |           ✓           |    ✓     |
+
+### Contract permissions
+
+<GraphOSEnterpriseRequired />
+
+Learn more about [contracts](../delivery/contracts/).
+
+| Action                                            | Org Admin | Graph Admin | Contributor | Observer / Documenter | Consumer |
+| :------------------------------------------------ | :-------: | :---------: | :---------: | :-------------------: | :------: |
+| Create and modify contracts and contract variants |     ✓     |      ✓      |             |                       |          |
+| View existing contracts                           |     ✓     |      ✓      |      ✓      |                       |          |
 
 ### Billing managers
 
