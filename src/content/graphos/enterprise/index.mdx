@@ -65,7 +65,24 @@ This architecture helps you satisfy sophisticated requirements around data compl
 
 > [Learn more about Enterprise features in the Apollo Router.](/router/enterprise-features/)
 
-## Schema filtering with contracts
+## Schema pipeline
+
+GraphOS provides schema pipeline tools to efficiently develop and deploy changes to your supergraph schema. Check out the [Schema pipeline overview](../delivery) to learn more about the full suite of tools.
+
+### Schema change management with proposals
+
+[Schema proposals](../delivery/proposals) provide GraphOS-native schema change management.
+The centralized proposal process fosters collaboration and strengthens schema governance:
+
+- Subgraph developers can propose changes in the context of the supergraph and use automated checks and reviewer feedback to validate them.
+- Graph consumers can actively participate by commenting on, reviewing, and approving proposals.
+- Graph owners and governance teams can use proposals to set standards and ensure that only approved changes are published.
+
+This increased coordination improves design decisions and accountability, making development cycles more efficient.
+
+> [Learn more about schema proposals.](../delivery/schema-proposals/)
+
+### Schema filtering with contracts
 
 GraphOS [**Contracts**](../delivery/contracts/) enable you to filter your supergraph schema's types and fields according to different inclusion and exclusion rules you define:
 
