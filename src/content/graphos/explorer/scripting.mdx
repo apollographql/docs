@@ -1,8 +1,10 @@
 ---
 title: Preflight and operation scripts with the Explorer
+subtitle: Use custom scripts to manage auth flows and test response data
+description: Use preflight and operation scripts to manage authentication and validate GraphQL operations in the Apollo GraphOS Explorer.
 ---
 
-Similar to tools like Postman, the Explorer can run custom scripts when executing each GraphQL operation. These JavaScript-based scripts can populate the values of [environment variables](#environment-variables) that the Explorer then injects into HTTP header values or GraphQL variables. This can be useful for:
+Similar to tools like Postman, the GraphOS Explorer can run custom scripts when executing each GraphQL operation. These JavaScript-based scripts can populate the values of [environment variables](#environment-variables) that the Explorer then injects into HTTP header values or GraphQL variables. This can be useful for:
 
 - Managing authentication flows like OAuth, for example, by refreshing an expired access token
 - Validating response data and workflows that depend on response data
