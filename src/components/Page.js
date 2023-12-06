@@ -10,7 +10,7 @@ import Pagination from './Pagination';
 import Prism from 'prismjs';
 import PropTypes from 'prop-types';
 import React, {Fragment, createElement, useMemo} from 'react';
-import RelativeLink, {ButtonLink} from './RelativeLink';
+import RelativeLink, {ButtonLink, PrimaryLink} from './RelativeLink';
 import TableOfContents from './TableOfContents';
 import TrackableButton from './TrackableButton';
 import TrackableLink from './TrackableLink';
@@ -41,7 +41,7 @@ import {
 } from '@chakra-ui/react';
 import {Caution} from './Caution';
 import {CustomHeading} from './CustomHeading';
-import {DocBlock, DocPiece, FunctionDetails, InterfaceDetails} from './ApiDoc';
+import {DocBlock, DocPiece, FunctionDetails, InterfaceDetails, useApiDocContext} from './ApiDoc';
 import {
   EmbeddableExplorer,
   MarkdownCodeBlock,
@@ -212,7 +212,9 @@ const mdxComponents = {
   DocBlock,
   DocPiece,
   TrackableButton,
-  TrackableLink
+  TrackableLink,
+  useApiDocContext,
+  PrimaryLink
 };
 
 const {processSync} = rehype()
