@@ -60,7 +60,7 @@ Once configured, requests sent from `https://studio.apollographql.com` include t
 ### Environment variables
 
 The Explorer's Settings tab includes a section for defining environment variables. Here, you can provide sensitive information that you can then inject into header values, GraphQL variables, or [scripts](#scripting).
-This enables you to share operations (including their headers) with other team members _without_ exposing this sensitive data.
+This lets you share operations (including their headers) with other team members _without_ exposing this sensitive data.
 
 #### Defining
 
@@ -123,7 +123,7 @@ Similar to tools like Postman, the Explorer can run custom scripts when executin
 
 You can define two different types of scripts:
 
-- [**Preflight scripts**](#preflight-scripts): You can define a _single_ preflight script _per variant_ of a graph. This script runs before _every Explorer operation_ that's executed against the associated variant.
+- [**Preflight scripts**](#preflight-scripts): You can define a single preflight script _per variant_ of a graph. This script runs before _every Explorer operation_ that's executed against the associated variant.
   - Preflight scripts are especially helpful for enabling organization-wide Explorer authentication against your graph.
 - [**Operation scripts**](#operation-scripts): If you use [operation collections](./operation-collections/), you can define one pre- and one post-operation script for each saved operation in a collection.
   - Operation scripts are especially helpful for testing or debugging the behavior of individual operations or [operation chains](#chaining-operations).
@@ -153,8 +153,8 @@ graph LR
   </Caution>
 
 - If a team member has view access to a particular graph variant or operation collection, that team member can _also_ view any scripts associated with that variant or operation collection.
-- Preflight scripts are enabled by default. Individual team members can [turn them off](#disabling-preflight-scripts) for their own Explorer usage.
-- Operations scripts are turned off by default. Individual team members can [enable them](#enabling-operation-scripts) for their own Explorer usage.
+- Preflight scripts are on by default. Individual team members can [turn them off](#turning-off-preflight-scripts) for their own Explorer usage.
+- Operations scripts are off by default. Individual team members can [turn them on](#turning-on-operation-scripts) for their own Explorer usage.
 
 ### Preflight scripts
 
@@ -194,14 +194,14 @@ To create a preflight script:
 
 You're done! After you save your script, it's automatically loaded for any team member that uses the Explorer with the associated variant.
 
-#### Disabling preflight scripts
+#### Turning off preflight scripts
 
-By default, a variant's preflight script runs automatically before every GraphQL operation that's executed in the Explorer. Team members can individually disable the script from the **Personal Settings > Scripts** section of the Explorer's Settings tab:
+By default, a variant's preflight script runs automatically before every GraphQL operation that's executed in the Explorer. Team members can individually turn off the script from the **Personal Settings > Scripts** section of the Explorer's Settings tab:
 
 <img
   class="screenshot"
   src="../img/preflight-script-disable.png"
-  alt="Disabling preflight scripts in the Explorer"
+  alt="Turning off preflight scripts in the Explorer"
   width="500"
 />
 
@@ -257,9 +257,9 @@ To do so, toggle the switch to **OFF**.
 
    - Click **Test script** to test your script before saving it.
 
-#### Enabling operation scripts
+#### Turning on operation scripts
 
-By default, operation scripts are **disabled** for each individual user. Users can enable operation scripts from the Explorer's Settings tab:
+By default, operation scripts are **off** for each individual user. Users can turn on operation scripts from the Explorer's Settings tab:
 
 <img
   class="screenshot"
