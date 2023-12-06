@@ -8,7 +8,7 @@ description: Fine-tune GraphQL the schema proposal process by configuring permis
 
 [Org and graph admins](../org/members/#organization-wide-member-roles) can configure the following aspects of schema proposals:
 
-- Which [roles can create, edit, and approve proposals](#configure-permissions-and-approvals)
+- Which [roles can create and edit proposals](#configure-permissions-and-approvals)
 - Which team members are [default reviewers](#default-reviewers) and whether [default reviewer approval is required](#require-default-reviewer-approval)
 - The [minimum number of approvals](#required-approvals) required for a proposal to achieve [**Approved** status](./schema-proposals#proposal-statuses)
 - Whether and how [schema checks incorporate proposals](#configure-schema-checks)
@@ -55,7 +55,7 @@ Refer to the table below for default and valid values.
 <table class="field-table">
   <thead>
     <tr>
-      <th>Configuration/ <br/> Default value</th>
+      <th style="min-width: 175px">Configuration/ <br/> Default value</th>
       <th>Description</th>
       <th>Valid values</th>
     </tr>
@@ -69,19 +69,26 @@ Refer to the table below for default and valid values.
 
 ##### Permissions
 
-Default: `Observers`
+Defaults:
+
+Create: `Observers`
+
+Edit: `Admins`
 
 </td>
 
 <td>
 
-The _minimum_ [role](../org/members/#organization-wide-member-roles) required to create, edit, and approve proposals.
+The _minimum_ [roles](../org/members/#organization-wide-member-roles) required to create or edit proposals.
 
 <br/>
 
 `Observers` is the least restrictive setting and `Admins` the most restrictive.
-The `Observers` default means all organization members except Consumers and Billing Admins can create, edit, and approve proposals.
-If you select `Admins`, only org and graph admins can create, edit, and approve proposals.
+
+The `Observers` default for creating proposals means all organization members except Consumers and Billing Admins can create proposals.
+The `Admins` default for editing proposals means only org and graph admins can edit proposals they didn't create.
+
+_Proposal authors can always edit their own proposals regardless of their role._
 
 </td>
 
