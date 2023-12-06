@@ -75,13 +75,13 @@ Default: `Observers`
 
 <td>
 
-The _minimum_ [role](../org/members/#organization-wide-member-roles) required to create and edit or approve proposals.
+The _minimum_ [role](../org/members/#organization-wide-member-roles) required to create, edit, and approve proposals.
 
 <br/>
 
 `Observers` is the least restrictive setting and `Admins` the most restrictive.
-The `Observers` default means all organization members except Consumers and Billing Admins can create and edit or approve proposals.
-If you select `Admins`, only org and graph admins can create and edit or approve proposals.
+The `Observers` default means all organization members except Consumers and Billing Admins can create, edit, and approve proposals.
+If you select `Admins`, only org and graph admins can create, edit, and approve proposals.
 
 </td>
 
@@ -144,18 +144,6 @@ The minimum number of approvals a proposal must receive for its status to become
 Changing the number of required approvals updates the status of existing proposals that aren't [**Closed** or **Implemented**](./propose-changes#change-proposal-status) based on whether their current number of approvals meets the new number of required approvals.
 
 </Note>
-
-### Restrict edit permissions
-
-The **Permissions** configuration controls which roles can start, edit, and approve proposals.
-Additionally, [org and graph admins](../org/members/#organization-wide-member-roles) can restrict editing proposals to only the proposal's author and org and graph admins by selecting **Restrict editing to authors and admins**.
-
-<img
-  src="../img/schema-proposals/restrict-edits.jpg"
-  className="screenshot"
-  alt="Schema proposals settings in Studio"
-  width="400"
-/>
 
 ### Require default reviewer approval
 
