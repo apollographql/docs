@@ -24,16 +24,15 @@ Schema proposal configurations are on a **per-graph**&mdash;not per-organization
 
 [Permissions](/graphos/org/members) for proposal actions are set at the graph level with the following defaults:
 
-|                      | Create | Edit | Change status | Add Reviewers | View | Comment | Approve |
-| ------------------   | ------ | ---- | ------------- | ---------------- | ---- | ------- | ------- |
-| Org / Graph Admin    | ✔️      | ✔️    | ✔️             | ✔️                | ✔️    | ✔️       | ✔️       |
-| Contributor          | ✔️      | ✔️    | ❌            | ✔️                | ✔️    | ✔️       | ✔️       |
-| Documenter           | ✔️      | ✔️    | ❌            | ✔️                | ✔️    | ✔️       | ✔️       |
-| Observer             | ✔️      | ✔️    | ❌            | ✔️                | ✔️    | ✔️       | ✔️       |
-| Consumer             | ❌     | ❌   | ❌            | ❌               | ✔️    | ✔️       | ✔️       |
-| Billing Admin        | ❌     | ❌   | ❌            | ❌               | ❌   | ❌      | ❌      |
-
-
+|                        | Org Admin | Graph Admin | Contributor | Observer / Documenter | Consumer |
+| :--------------------- | :-------: | :---------: | :---------: | :-------------------: | :------: |
+| Change proposal status |     ✓     |      ✓      |             |                       |          |
+| Create proposals       |     ✓     |      ✓      |      ✓      |           ✓           |          |
+| Edit proposals         |     ✓     |      ✓      |      ✓      |           ✓           |          |
+| Add reviewers          |     ✓     |      ✓      |      ✓      |           ✓           |          |
+| View proposals         |     ✓     |      ✓      |      ✓      |           ✓           |    ✓     |
+| Make comments          |     ✓     |      ✓      |      ✓      |           ✓           |    ✓     |
+| Approve proposals      |     ✓     |      ✓      |      ✓      |           ✓           |    ✓     |
 
 [Org and graph admins](../org/members/#organization-wide-member-roles) can configure which roles can create, edit, and approve proposals. Permissions for other proposal actions are not configurable.
 
