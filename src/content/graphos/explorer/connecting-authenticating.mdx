@@ -115,28 +115,46 @@ const secretToken = explorer.environment.get("token");
 
 ## Scripting
 
-Similar to tools like Postman, the Explorer can run custom scripts when executing each GraphQL operation. These JavaScript-based scripts often populate the values of [environment variables](#environment-variables) that are then injected into HTTP header values or GraphQL variables. This can be especially useful for managing authentication flows like OAuth, for example by refreshing an expired access token, or validating response data. For an example, see [Operation Scripts](#operation-scripts).
+Similar to tools like Postman, the Explorer can run custom scripts when executing each GraphQL operation. These JavaScript-based scripts can populate the values of [environment variables](#environment-variables) that the Explorer then injects into HTTP header values or GraphQL variables. This can be useful for:
+- Managing authentication flows like OAuth, for example, by refreshing an expired access token
+- Validating response data and workflows that depend on response data
 
 ### Script types
 
 You can define two different types of scripts:
 
-- [**Preflight scripts.**](#preflight-scripts) You can define a _single_ preflight script _per variant_ of a graph. This script runs before _every Explorer operation_ that's executed against the associated variant (unless a user individually [disables the script](#disabling-preflight-scripts)).
+- [**Preflight scripts**](#preflight-scripts): You can define a _single_ preflight script _per variant_ of a graph. This script runs before _every Explorer operation_ that's executed against the associated variant.
   - Preflight scripts are especially helpful for enabling organization-wide Explorer authentication against your graph.
-- [**Operation scripts.**](#operation-scripts) If you use [operation collections](./operation-collections/), you can define a separate preflight and postflight script for each saved operation in a collection. These scripts can then control everything that happens before, during, and after an operation is executed (as long as a user individually [enables the scripts](#enabling-operation-scripts)).
-  - Pre-operation scripts will be run before the explorer operation.
-  - Post-operation scripts will be run after the explorer operation.
-  - Operation scripts are especially helpful for debugging the behavior of individual operations when they're provided various values.
+- [**Operation scripts**](#operation-scripts): If you use [operation collections](./operation-collections/), you can define one pre- and one post-operation script for each saved operation in a collection.
+  - Operation scripts are especially helpful for testing or debugging the behavior of individual operations or [operation chains](#chaining-operations).
+  - Pre-operation scripts run before the operation executes.
+  - Post-operation scripts run after the operation executes.
 
-> If an Explorer operation runs _both_ types of scripts, the preflight script runs _before_ the operation script.
+If a user has defined and turned on all possible scripts for a particular operation, the order is as follows:
+
+```mermaid
+graph LR
+    Preflight["Preflight script<br/> (for all operations in a variant)"]
+    PreOp[Pre-operation <br/>script]
+    Op[[Operation <br/>execution]]
+    PostOp[Post-operation <br/>script]
+    Preflight --> PreOp --> Op --> PostOp
+    class Preflight secondary;
+    class Op tertiary;
+```
 
 ### Important considerations for Explorer scripts
 
 - Scripts are stored in the Apollo cloud **in plaintext**.
-  - **Do not include secret credentials in scripts!** Instead, team members can provide their individual credentials to the Explorer via [environment variables](#environment-variables).
-- If a team member has view access to a particular graph variant or operation collection, that team member can _also_ view any scripts associated with that variant/collection.
-- Preflight scripts are _enabled_ by default, and individual team members can [disable them](#disabling-preflight-scripts).
-- Operation scripts are _disabled_ by default, and individual team members can [enable them](#enabling-operation-scripts).
+  <Caution>
+
+  **Do not include secret credentials in scripts.** Instead, team members can provide their individual credentials to the Explorer via [environment variables](#environment-variables).
+
+  </Caution>
+
+- If a team member has view access to a particular graph variant or operation collection, that team member can _also_ view any scripts associated with that variant or operation collection.
+- Preflight scripts are enabled by default. Individual team members can [turn them off](#disabling-preflight-scripts) for their own Explorer usage.
+- Operations scripts are turned off by default. Individual team members can [enable them](#enabling-operation-scripts) for their own Explorer usage.
 
 ### Preflight scripts
 
@@ -150,7 +168,7 @@ To create a preflight script:
 
 1. [Open GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content) and then open the Explorer for the graph and variant you want to create a script for.
 
-2. Open the Explorer's Settings tab and scroll down to the **Preflight script** section:
+2. Open the Explorer's Settings tab and scroll down to the **Preflight Script** section:
 
    <img
      class="screenshot"
@@ -159,7 +177,7 @@ To create a preflight script:
      width="500"
    />
 
-3. Click **Add script**. The following dialog appears:
+3. Click **+ Add script**. The following dialog appears:
 
    <img
      class="screenshot"
@@ -206,7 +224,7 @@ To do so, toggle the switch to **OFF**.
      width="400"
    />
 
-2. From the Explorer's bottom panel, select the Pre-Operation or Post-Operation Script tab and click **+ Add Script**:
+2. From the Explorer's bottom panel, select the **Pre-Operation Script** or **Post-Operation Script** tab and click **+ Add Script**:
 
    <img
      class="screenshot"
@@ -228,7 +246,7 @@ To do so, toggle the switch to **OFF**.
 
    - For details on script creation, see [Creating preflight scripts](#creating-preflight-scripts).
 
-   To test your postflight operation script the operation script modal has a Mocked Operation Response area. A JSON graphql response can be added here for **Test script** to access with [`explorer.response.body`](#explorerresponsebody).
+   - The operation script modal has a **Mocked Operation Response** area so you can test post-operation scripts. Scripts can access any JSON GraphQL response you add in the **Mocked Operation Response** via the [`explorer.response.body`](#explorerresponsebody) variable.
 
    <img
      class="screenshot"
@@ -236,6 +254,8 @@ To do so, toggle the switch to **OFF**.
      alt="Editing operation scripts in the Explorer"
      width="600"
    />
+
+   - Click **Test script** to test your script before saving it.
 
 #### Enabling operation scripts
 
@@ -394,7 +414,7 @@ The body of the `POST` request that's sent to the configured GraphQL endpoint fo
 </td>
 <td>
 
-The JSON representation of the GraphQL operation response.
+The JSON representation of the GraphQL operation response. Useful for testing [post-operation scripts](#creating-operation-scripts).
 
 </td>
 </tr>
