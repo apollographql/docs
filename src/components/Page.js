@@ -41,7 +41,6 @@ import {
 } from '@chakra-ui/react';
 import {Caution} from './Caution';
 import {CustomHeading} from './CustomHeading';
-import {DocBlock, DocPiece, FunctionDetails, InterfaceDetails, useApiDocContext} from './ApiDoc';
 import {
   EmbeddableExplorer,
   MarkdownCodeBlock,
@@ -74,6 +73,7 @@ import {YouTube} from './YouTube';
 import {join} from 'path';
 import {kebabCase} from 'lodash';
 import {rehype} from 'rehype';
+import {useApiDocContext} from './ApiDoc';
 import {useConfig} from '../utils/config';
 import {useFieldTableStyles} from '../utils';
 import {useMermaidStyles} from '../utils/mermaid';
@@ -207,10 +207,6 @@ const mdxComponents = {
   PreviewFeature,
   ApolloLogo,
   ApolloMark,
-  InterfaceDetails,
-  FunctionDetails,
-  DocBlock,
-  DocPiece,
   TrackableButton,
   TrackableLink,
   useApiDocContext,
