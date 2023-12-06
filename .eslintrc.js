@@ -38,6 +38,7 @@ module.exports = {
         RegisterCLI: 'readonly',
         RegisterFederatedCLI: 'readonly',
         SetApolloVCSCommit: 'readonly',
+        StudioPages: 'readonly',
         TopLevelAwait: 'readonly'
       },
       rules: {
