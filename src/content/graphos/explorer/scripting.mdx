@@ -367,18 +367,16 @@ explorer.environment.set("shipID", firstShipID);
 
 ### Transform and log response data
 
-You can use a post-operation script to filter, map, or otherwise transform response data and then log it. This can be helpful when a request returns numerous results in the response.
+You can use a post-operation script to filter, map, or otherwise transform response data and log it. This can be helpful when a request returns numerous results in the response.
 
 For example, imagine you have a query called `Ships`:
 
 ```graphql disableCopy=true
-{
-  Ships {
-    id
-    name
-    model
-    manufacturer
-  }
+query Ships {
+  id
+  name
+  model
+  manufacturer
 }
 ```
 
@@ -409,29 +407,29 @@ The corresponding response might look like this:
 You can use a post-operation script to access, transform, and log the returned results:
 
 ```js disableCopy=true
-function exampleTransform(ships, manufacturerFilter) {
-  // Filter the ships based on the manufacturer
-  const filteredShips = ships.filter(
-    (ship) => ship.manufacturer === manufacturerFilter
-  );
-
-  // Map the filtered ships to a new format
-  const mappedShips = filteredShips.map((ship) => ({
-    id: ship.id,
-    name: `${ship.name} (${ship.model})`, // Combine name and model
-    manufacturer: ship.manufacturer,
-  }));
-
+  // Filter and map ships using some filtering and mapping functions
+function exampleTransform(ships, filterFn, mapFn) {
+  const filteredShips = ships.filter(filterFn);
+  const mappedShips = filteredShips.map(mapFn);
   return mappedShips;
 }
 
-// Example: Filter ships manufactured by "Corellian Engineering Corporation" and map to a new format
+// Retrive and transform ships
 const allShips = explorer.response.body.data.Ships;
-const transformedShips = exampleTransform(
-  allShips,
-  "Corellian Engineering Corporation"
-);
+const transformedShips = exampleTransform( allShips, filterFn, mapFn);
 
 // Log the result
 console.log(transformedShips);
 ```
+
+<img
+  class="screenshot"
+  src="../img/example-postop-script.jpg"
+  alt="Example post-operation in the Explorer"
+/>
+
+<Note>
+
+You can view the output from `console.log`s in the **Console output** while writing and testing scripts. To see and interact with logged items when running an operation in Explorer, open your browser's devtools.
+
+</Note>
