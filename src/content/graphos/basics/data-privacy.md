@@ -9,7 +9,7 @@ This article describes which data is and is _not_ sent to Apollo GraphOS by othe
 
 ## Does GraphOS store operation result data returned by my graph?
 
-**No.** Your graph's operation results never even _reach_ any Apollo-managed service, with one important exception: [cloud supergraphs](#what-data-is-collected-by-a-cloud-supergraph) use a GraphOS-managed router, which passes results directly from your subgraphs to requesting clients, **without logging, persisting, or sending those results to any other system** (other data like operation metrics _are_ persisted).
+**No.** Your graph's operation results never even _reach_ any Apollo-managed service, with one important exception: [cloud supergraphs](#which-types-of-data-are-collected-by-a-cloud-supergraph) use a GraphOS-managed router, which passes results directly from your subgraphs to requesting clients, **without logging, persisting, or sending those results to any other system** (other data like operation metrics _are_ persisted).
 
 ## Which tools send data to GraphOS?
 
@@ -19,7 +19,7 @@ The Rover CLI also collects anonymous usage data by default. [You can disable th
 
 The [Apollo Kotlin IDE plugin](/kotlin/v4/testing/android-studio-plugin/) also collects anonymous usage data by default. [You can disable this.](/kotlin/v4/testing/android-studio-plugin/#privacy-and-data-collection)
 
-If you have a [cloud supergraph](./graphs/#cloud-supergraphs), its router is hosted and managed _by_ GraphOS, and it automatically enables metrics reporting. [Learn about data collection for cloud supergraphs.](#what-data-is-collected-by-a-cloud-supergraph)
+If you have a [cloud supergraph](./graphs/#cloud-supergraphs), its router is hosted and managed _by_ GraphOS, and it automatically enables metrics reporting. [Learn about data collection for cloud supergraphs.](#which-types-of-data-are-collected-by-a-cloud-supergraph)
 
 Apollo Client libraries do **not** send data to GraphOS.
 
@@ -64,7 +64,7 @@ You can configure both the Apollo Router and Apollo Server to report certain dat
 
 - [Trace data](#operation-traces) indicating the execution time for every resolver in the operation
 
-- The values of operation [GraphQL variables](#graphql-variables) and [HTTP headers](#http-headers)
+- The values of operation [GraphQL variables](#graphql-variable-values) and [HTTP headers](#http-headers)
 
 These types of data are covered in the subsections below.
 
@@ -114,7 +114,7 @@ You can use the [usage reporting plugin's `rewriteError` option](/apollo-server/
 
 ### Query operation strings
 
-The Apollo Router and Apollo Server both report a normalized string representation of each query operation to GraphOS. By default, this [normalization algorithm](/graphos/metrics/operation-signatures/) strips out string literals that are passed as arguments. However, we highly recommend that users **do not include sensitive data (such as passwords or personally identifiable information) in operation strings**. Instead, include this information in [GraphQL variables](#graphql-variables), which you can send selectively.
+The Apollo Router and Apollo Server both report a normalized string representation of each query operation to GraphOS. By default, this [normalization algorithm](/graphos/metrics/operation-signatures/) strips out string literals that are passed as arguments. However, we highly recommend that users **do not include sensitive data (such as passwords or personally identifiable information) in operation strings**. Instead, include this information in [GraphQL variables](#graphql-variable-values), which you can send selectively.
 
 ### Operation traces
 
