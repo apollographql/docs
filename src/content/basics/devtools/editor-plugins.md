@@ -49,7 +49,7 @@ Then go to your [User Settings page](https://studio.apollographql.com/user-setti
 
 After the key is found, add the following line to the `.env` file:
 
-```bash
+```bash showLineNumbers=false
 APOLLO_KEY=<enter copied key here>
 ```
 

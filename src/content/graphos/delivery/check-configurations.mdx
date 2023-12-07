@@ -43,7 +43,7 @@ You can provide the `--validation-period` option to specify how far back in time
 
 This command checks schema changes against the past two weeks of operations:
 
-```bash
+```bash showLineNumbers=false
 rover subgraph check docs-example-graph@current --name products --schema ./schema.graphql --validation-period="2 weeks"
 ```
 
@@ -77,7 +77,7 @@ You can provide values for both of these flags. If you do, an operation must mee
 
 Here's an example of running `rover subgraph check` with threshold values:
 
-```bash
+```bash showLineNumbers=false
 rover subgraph check docs-example-graph@current \
   # Path to schema file
   --schema ./schema.graphql
@@ -99,7 +99,7 @@ You might want to check schema changes against multiple environments, such as pr
 
 You specify which variant you want to check against in the [graph ref](/rover/conventions/#graph-refs) you provide to `rover subgraph check`:
 
-```bash
+```bash showLineNumbers=false
 rover subgraph check docs-example-graph@staging --name products --schema ./schema.graphql
 ```
 

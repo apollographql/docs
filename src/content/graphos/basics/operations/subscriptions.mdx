@@ -80,7 +80,7 @@ flowchart LR;
     }
     ```
 
-   - **The client does _not_ use a WebSocket protocol!** Instead, it receives updates via [multipart HTTP responses](./subscription-multipart-protocol/).
+   - **The client does _not_ use a WebSocket protocol!** Instead, it receives updates via [multipart HTTP responses](/router/executing-operations/subscription-multipart-protocol/).
    - By using HTTP for subscriptions, clients can execute _all_ GraphQL operation types over HTTP instead of using two different protocols.
    - Apollo Client for [Web](/react/data/subscriptions#http), [Kotlin](/kotlin/essentials/subscriptions#configuring-http-subscriptions), and [iOS](/ios/fetching/subscriptions#http) all support GraphQL subscriptions over HTTP with minimal configuration. See each library's documentation for details.
 
@@ -221,7 +221,7 @@ After receiving this query result from the Reviews subgraph, our router combines
 
 To quickly try out HTTP-based subscriptions _without_ setting up an Apollo Client library, you can execute a `curl` command against your cloud router with the following format:
 
-```bash title="Example curl request"
+```bash title="Example curl request" showLineNumbers=false
  curl 'https://main--my-org-supergraph.apollographos.net/graphql' -v \
   -H 'accept: multipart/mixed; boundary="graphql"; subscriptionSpec=1.0, application/json' \
   -H 'content-type: application/json' \
@@ -230,7 +230,7 @@ To quickly try out HTTP-based subscriptions _without_ setting up an Apollo Clien
 
 This command creates an HTTP multipart request and keeps an open connection that receives new subscription data in multiple response parts:
 
-```
+```text showLineNumbers=false disableCopy=true
 --graphql
 content-type: application/json
 
