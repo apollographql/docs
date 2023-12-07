@@ -11,12 +11,50 @@ import {
   ListItem,
   Stack,
   StackDivider,
-  Text,
   useDisclosure
 } from '@chakra-ui/react';
-import {CustomHeading} from './CustomHeading';
-import {FiCheck, FiChevronDown, FiChevronUp} from 'react-icons/fi';
+import {FiCheck, FiChevronDown, FiChevronUp, FiPaperclip} from 'react-icons/fi';
 import {MarkdownInAdmonitions} from './MarkdownInAdmonitions';
+
+function CustomHeader({level, id, children, ...props}) {
+  return React.createElement(
+    Heading,
+    {as: `h${level}`, ...props, id},
+    children
+  );
+}
+
+CustomHeader.propTypes = {
+  level: PropTypes.string.required,
+  id: PropTypes.string.required,
+  children: PropTypes.node.required
+};
+
+function CopyLinkButton({headingId}) {
+  const handleCopyLink = event => {
+    event.stopPropagation();
+    if (headingId) {
+      const basePath = window.location.origin + window.location.pathname;
+      const headingLink = `${basePath}#${headingId}`;
+      navigator.clipboard.writeText(headingLink);
+    }
+  };
+  return (
+    <Button
+      size="sm"
+      ml="2"
+      variant="ghost"
+      color="gray.500"
+      onClick={handleCopyLink}
+    >
+      <FiPaperclip />
+    </Button>
+  );
+}
+
+CopyLinkButton.propTypes = {
+  headingId: PropTypes.string.required
+};
 
 function ExpansionPanelLine(props) {
   return <Box w="px" mx="auto" bg="current" {...props} />;
@@ -90,9 +128,16 @@ export default function RuleExpansionPanel({
         onClick={onToggle}
         _focus={{shadow: 'none'}}
       >
-        <CustomHeading as="h4" size="sm">
+        <CustomHeader
+          level="4"
+          size="sm"
+          id={title.replace(/\s+/g, '-').toLowerCase()}
+        >
           <code>{title}</code>
-        </CustomHeading>
+          <CopyLinkButton
+            headingId={title.replace(/\s+/g, '-').toLowerCase()}
+          />
+        </CustomHeader>
       </Button>
       <Collapse in={isOpen}>
         <Stack
