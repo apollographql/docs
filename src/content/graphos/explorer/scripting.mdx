@@ -16,11 +16,11 @@ You can define two different types of scripts:
 - [**Preflight scripts**](#preflight-scripts): You can define a single preflight script _per variant_ of a graph. This script runs before _every Explorer operation_ that's executed against the associated variant.
   - Preflight scripts are helpful for enabling organization-wide Explorer authentication to your graph.
 - [**Operation scripts**](#operation-scripts): If you use [operation collections](./operation-collections/), you can define one pre- and one post-operation script for each saved operation in a collection.
-  - Operation scripts are helpful for testing or debugging the behavior of individual operations or [operation chains](#chaining-operations).
   - Pre-operation scripts run before the operation executes.
   - Post-operation scripts run after the operation executes.
+  - Operation scripts are helpful for testing or debugging the behavior of individual operations or [operation chains](#chaining-operations).
 
-If you define and use all possible scripts for a particular operation, the order is as follows:
+If you define and use all possible scripts for an operation, the order is as follows:
 
 ```mermaid
 graph LR
@@ -362,4 +362,71 @@ const response = await explorer.runOperation({
 const firstShipID = response.result.data.ships[0].id;
 
 explorer.environment.set("shipID", firstShipID);
+```
+
+### Transform and log response data
+
+You can use a post-operation script to filter, map, or otherwise transform response data and then log it. This can be helpful when a request returns numerous results in the response.
+
+For example, imagine you have a query called `Ships`:
+
+```graphql disableCopy=true
+{
+  Ships {
+    id
+    name
+    model
+    manufacturer
+  }
+}
+```
+
+The corresponding response might look like this:
+
+```json disableCopy=true
+{
+  "data": {
+    "Ships": [
+      {
+        "id": "1",
+        "name": "Millennium Falcon",
+        "model": "YT-1300 Light Freighter",
+        "manufacturer": "Corellian Engineering Corporation"
+      },
+      {
+        "id": "2",
+        "name": "X-wing Starfighter",
+        "model": "T-65 X-wing",
+        "manufacturer": "Incom Corporation"
+      },
+      // ... (thousands of ships)
+    ]
+  }
+}
+```
+
+You can use a post-operation script to access, transform, and log the returned results:
+
+```js disableCopy=true
+
+function exampleTransform(ships, manufacturerFilter) {
+  // Filter the ships based on the manufacturer
+  const filteredShips = ships.filter(ship => ship.manufacturer === manufacturerFilter);
+
+  // Map the filtered ships to a new format
+  const mappedShips = filteredShips.map(ship => ({
+    id: ship.id,
+    name: `${ship.name} (${ship.model})`, // Combine name and model
+    manufacturer: ship.manufacturer,
+  }));
+
+  return mappedShips;
+}
+
+// Example: Filter ships manufactured by "Corellian Engineering Corporation" and map to a new format
+const allShips = explorer.response.body.data.Ships;
+const transformedShips = exampleTransform(allShips, "Corellian Engineering Corporation");
+
+// Log the result
+console.log(transformedShips);
 ```
