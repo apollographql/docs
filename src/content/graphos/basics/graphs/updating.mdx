@@ -47,9 +47,9 @@ The method you use to update your router depends on which type of supergraph you
 
 - **If you have a [self-hosted supergraph](./#self-hosted-supergraphs),** you [download the latest Apollo Router binary](/router/quickstart#1-download-and-extract-the-apollo-router-binary) in every environment where your router runs.
 
-- **If you have a [serverless cloud supergraph](./#cloud-supergraphs),** GraphOS _automatically_ updates your router to the latest supported version whenever that version changes.
+- **If you have a [cloud supergraph](./#cloud-supergraphs),** GraphOS _automatically_ updates your router to the latest supported version whenever that version changes.
 
-  - You can see which Apollo Router version you're running from the **Cloud Router** section of your variant's Settings page in [Studio](https://studio.apollographql.com/):
+  - You can see which Apollo Router version you're running from the **Cloud Router** section of your variant's Settings page in [Studio](https://studio.apollographql.com/?referrer=docs-content):
 
   <img
     src="../../img/router-status.jpg"
@@ -62,7 +62,7 @@ For details on each Apollo Router version's corresponding Apollo _Federation_ ve
 
 ## 2. Update your build pipeline
 
-Whenever you make an operational change to your graph (such as [publishing changes to a subgraph schema](../delivery/publishing-schemas/#publish-subgraph-schemas)), GraphOS initiates a **build** that composes your graph's new _supergraph_ schema. From [Apollo Studio](https://studio.apollographql.com/), you can configure which version of Apollo Federation the build pipeline uses to perform this composition.
+Whenever you make an operational change to your graph (such as [publishing changes to a subgraph schema](../delivery/publishing-schemas/#publish-subgraph-schemas)), GraphOS initiates a **build** that composes your graph's new _supergraph_ schema. From [GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content), you can configure which version of Apollo Federation the build pipeline uses to perform this composition.
 
 > GraphOS enables you to choose between _minor_ versions of Federation (such as `2.1`). Each option automatically uses the latest supported _patch_ release of that minor version (such as `2.1.4`).
 >
@@ -98,7 +98,7 @@ If you host your own Apollo Router instance, you can use the [Rover CLI](/rover/
 
 If you _do_ perform composition with `rover supergraph compose`, the command uses the _exact_ version of composition you specify via the `federation_version` key in the YAML configuration file you pass:
 
-```bash
+```bash showLineNumbers=false
 rover supergraph compose --config ./supergraph.yaml
 ```
 
@@ -149,7 +149,7 @@ GraphOS supergraphs use the [Apollo Federation 2](/federation/) architecture. Fe
 
   Therefore, it's important to update your router _first_, before any _other_ supergraph component begins using a later Federation 2 version. Otherwise, you might cause your router to break by providing it a supergraph schema that it doesn't support.
 
-- Your graph's **Supergraph Pipeline Track** setting in Apollo Studio determines which version of Federation 2 is used to compose your supergraph schema. This composition process fails if one of your subgraph schemas uses a directive that was introduced in a Federation version later than your chosen pipeline track.
+- Your graph's **Supergraph Pipeline Track** setting in GraphOS Studio determines which version of Federation 2 is used to compose your supergraph schema. This composition process fails if one of your subgraph schemas uses a directive that was introduced in a Federation version later than your chosen pipeline track.
 
   - In the case of a failed build, GraphOS continues to provide your router with the supergraph schema from the most recent _successful_ build.
 

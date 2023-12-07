@@ -77,3 +77,7 @@
 # Move Validating client operations to Rover docs
 
 /delivery/validating-client-operations/ /docs/rover/validating-client-operations/
+
+# Redirect self-hosted routing setup to self-hosted quickstart
+
+/routing/self-hosted /docs/graphos/quickstart/self-hosted/

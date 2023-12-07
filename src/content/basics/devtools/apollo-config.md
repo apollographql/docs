@@ -35,7 +35,7 @@ There are a few different ways you can link your client to a schema:
 
 To link your client to a schema through the Apollo schema registry, you'll need to have at least one version of your schema published to the [registry](/graphos/delivery/publishing-schemas/).
 
-With Apollo Studio set up, you can point your client directly to your graph's schema by specifying your graph's name in your Apollo config, like so:
+With GraphOS Studio set up, you can point your client directly to your graph's schema by specifying your graph's name in your Apollo config, like so:
 
 ```js {3}
 module.exports = {

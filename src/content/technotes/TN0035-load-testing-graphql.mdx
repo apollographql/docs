@@ -9,6 +9,7 @@ tags: [testing, performance]
 If you're an enterprise customer looking for more material on this topic, try the [Enterprise best practices: Testing](https://www.apollographql.com/tutorials/testing) course on Odyssey.
 
 Not an enterprise customer? [Learn about GraphOS for Enterprise.](/graphos/enterprise)
+
 </Tip>
 
 When it comes to load testing a GraphQL API, the process is similar to that of any other type of API, and the majority of considerations will remain the same. However, there are certain distinctions specific to GraphQL and the Apollo ecosystem that are worth considering before conducting a load test.
@@ -19,26 +20,27 @@ It's important to note that the purpose of this article is to bring attention to
 
 When load testing a GraphQL API, there are two main ways to run the test:
 
--   Testing your entire deployed application stack
--   Testing each deployed service in isolation
+- Testing your entire deployed application stack
+- Testing each deployed service in isolation
 
 Both approaches have benefits and tradeoffs. Testing services in isolation allows you to test the limits of each service independently and provides valuable data for making performance improvements for each independent service. However, it may not give insight into where to focus efforts to make the most impact on the end-user experience. Running a full stack test is better suited for finding these types of bottlenecks, but may offer little insight into the limits of other services. We recommend focusing on testing services in isolation to maximize insight into not only the current bottlenecks, but also potential ones. This doesn't mean full stack tests should be avoided, as they have their place.
 
 ## Use Observability Tooling for Performance Insights
 
-A load test is only as valuable as the information obtained after running it. Having the proper observability setup is crucial for a successful load test. When load testing a GraphQL API, you want metrics that are GraphQL-aware and provide insight into the runtime and execution behavior of production operations. [Apollo GraphOS' metrics engine](/graphos/metrics/) provides this deep insight into operations by allowing you to see things like slow operations and [field-level performance metrics](/graphos/metrics/#resolver-level-traces) on every operation.
+A load test is only as valuable as the information obtained after running it. Having the proper observability setup is crucial for a successful load test. When load testing a GraphQL API, you want metrics that are GraphQL-aware and provide insight into the runtime and execution behavior of production operations. [Apollo GraphOS' metrics engine](/graphos/metrics/) provides this deep insight into operations by allowing you to see things like slow operations and [field-level performance metrics](/graphos/metrics/operations/#resolver-level-traces) on every operation.
 
-Gathering trace data can have a noticable impact on performance, so consider running tests with tracing disabled to measure peak load. Enabling traces during loads tests will help illuminate which parts of your graph are slow and what resolvers could be optimized. Our docs on [tracing performance considerations](/graphos/metrics/field-usage#performance-considerations) go into more detail about how to modify tracing behavior. The Router can emits metrics for [time spent processing a request](/router/configuration/metrics/#:~:text=apollo_router_processing_time), outside of waiting for external or subgraph requests. Combined, both the Router and tracing metrics provide plenty of detail to diagnose performance issues after a load test.
+Gathering trace data can have a noticable impact on performance, so consider running tests with tracing disabled to measure peak load. Enabling traces during loads tests will help illuminate which parts of your graph are slow and what resolvers could be optimized. Our docs on [tracing performance considerations](/graphos/metrics/field-usage#performance-considerations) go into more detail about how to modify tracing behavior. The Router can emits metrics for [time spent processing a request](/router/configuration/telemetry/instrumentation/standard-instruments/#performance), outside of waiting for external or subgraph requests. Combined, both the Router and tracing metrics provide plenty of detail to diagnose performance issues after a load test.
 
-Apollo offers first-class support for sending metrics outside Apollo Studio to any system that supports the [Open Telemetry](/federation/opentelemetry/) protocol (OTLP) as well as a built-in Datadog integration for enterprise customers.
+Apollo offers first-class support for sending metrics outside GraphOS Studio to any system that supports the [Open Telemetry](/federation/opentelemetry/) protocol (OTLP) as well as a built-in Datadog integration for enterprise customers.
 
 ## Don't Pollute Production Metrics
 
-When load testing a graph in production, exclude load test metrics from live production metrics. For metrics sent to GraphOS, consider sending load test traffic to a dedicated schema variant, i.e. `My-Graph@load-variant`. This will allow you to cleanly separate production metrics from load tests. 
+When load testing a graph in production, exclude load test metrics from live production metrics. For metrics sent to GraphOS, consider sending load test traffic to a dedicated schema variant, i.e. `My-Graph@load-variant`. This will allow you to cleanly separate production metrics from load tests.
 
 <Tip>
 
- Consider excluding load test metrics from other parts of your system, as it applies.
+Consider excluding load test metrics from other parts of your system, as it applies.
+
 </Tip>
 
 ## Use a Realistic Load Pattern that Resembles Production Usage
@@ -51,6 +53,6 @@ Performance bottlenecks will likley be at the application level (resolvers and b
 
 ### Operation Cardinality
 
-When a GraphQL API encounters a new operation, the operation must be parsed into the proper format, validated against the existing schema, and then finally executed. The Router goes through the additional step of [query planning](/federation/query-plans/) as well. These steps can account for some noticeable runtime overhead and latency if the volume of unique operations is high enough. All of these steps must happen for the initial request of every unique operation against your graph. 
+When a GraphQL API encounters a new operation, the operation must be parsed into the proper format, validated against the existing schema, and then finally executed. The Router goes through the additional step of [query planning](/federation/query-plans/) as well. These steps can account for some noticeable runtime overhead and latency if the volume of unique operations is high enough. All of these steps must happen for the initial request of every unique operation against your graph.
 
 Most of these steps are highly cacheable. Apollo has several built-in features that take advantage of this, such as [Automatic Persisted Queries (APQs)](/apollo-server/performance/apq/). APQ's are on by default in Apollo Server/Gateway and the Apollo Router, and just a simple configuration setting in Apollo Client to enable them. A graph which processes a high cardinality of operations that are only executed once, can't take advantage of most of these features. This isn't a big concern in most real world applications as operations are normally executed more than once.

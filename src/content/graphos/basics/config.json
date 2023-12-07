@@ -48,14 +48,28 @@
       ]
     },
     "Routing": {
-      "Cloud routing overview": "/routing/cloud",
-      "Configuring cloud routing": "/routing/cloud-configuration",
+      "Overview": "/routing",
       "Self-hosted routing": [
-        "/routing/self-hosted",
+        "/quickstart/self-hosted",
         [
           "enterprise"
         ]
-      ]
+      ],
+      "Cloud routing": {
+        "Overview": "/routing/cloud",
+        "Configuration": "/routing/cloud-configuration",
+        "Cloud Dedicated routing": {
+          "Overview": ["/routing/cloud-dedicated", [
+            "preview"
+          ]],
+          "AWS Lattice configuration": ["/routing/cloud-dedicated/lattice", [
+            "preview"
+          ]],
+          "AWS Lattice troubleshooting": ["/routing/cloud-dedicated/lattice-troubleshooting", [
+            "preview"
+          ]]
+        }
+      }
     },
     "Client Operations": {
       "Using @defer": "/operations/defer",
