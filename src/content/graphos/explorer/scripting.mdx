@@ -36,6 +36,7 @@ graph LR
 ## Important considerations for Explorer scripts
 
 - Scripts are stored in the Apollo cloud **in plaintext**.
+
   <Caution>
 
   **Do not include secret credentials in scripts.** Instead, team members can provide their individual credentials to the Explorer via [environment variables](./connecting-authenticating/#environment-variables).
@@ -135,7 +136,7 @@ Only organization members [with edit access](../org/members/#role-permissions) t
 
    <img
      class="screenshot"
-     src="../img/op-script-modal.png"
+     src="../img/op-preflight-script-modal.png"
      alt="Editing operation scripts in the Explorer"
      width="600"
    />
@@ -155,7 +156,7 @@ Only organization members [with edit access](../org/members/#role-permissions) t
 
    - Click **Test script** to test your script before saving it.
 
-After you save an operation script, make sure to [turn it on](#turn-on-operation-scripts) so that it runs before or after its designated operation execution in the Explorer. 
+After you save an operation script, make sure to [turn it on](#turn-on-operation-scripts) so that it runs before or after its designated operation execution in the Explorer.
 
 ### Turn on operation scripts
 
@@ -344,7 +345,7 @@ This exposes the `crypto-js` package for use within your script. For available f
 Scripts can access an environment variable [set in the Explorer's settings](./connecting-authenticating#defining) like so:
 
 ```js
-const secretToken = explorer.environment.get('token');
+const secretToken = explorer.environment.get("token");
 ```
 
 ### Set an environment variable
@@ -398,7 +399,7 @@ The corresponding response might look like this:
         "name": "X-wing Starfighter",
         "model": "T-65 X-wing",
         "manufacturer": "Incom Corporation"
-      },
+      }
       // ... (thousands of ships)
     ]
   }
@@ -408,13 +409,14 @@ The corresponding response might look like this:
 You can use a post-operation script to access, transform, and log the returned results:
 
 ```js disableCopy=true
-
 function exampleTransform(ships, manufacturerFilter) {
   // Filter the ships based on the manufacturer
-  const filteredShips = ships.filter(ship => ship.manufacturer === manufacturerFilter);
+  const filteredShips = ships.filter(
+    (ship) => ship.manufacturer === manufacturerFilter
+  );
 
   // Map the filtered ships to a new format
-  const mappedShips = filteredShips.map(ship => ({
+  const mappedShips = filteredShips.map((ship) => ({
     id: ship.id,
     name: `${ship.name} (${ship.model})`, // Combine name and model
     manufacturer: ship.manufacturer,
@@ -425,7 +427,10 @@ function exampleTransform(ships, manufacturerFilter) {
 
 // Example: Filter ships manufactured by "Corellian Engineering Corporation" and map to a new format
 const allShips = explorer.response.body.data.Ships;
-const transformedShips = exampleTransform(allShips, "Corellian Engineering Corporation");
+const transformedShips = exampleTransform(
+  allShips,
+  "Corellian Engineering Corporation"
+);
 
 // Log the result
 console.log(transformedShips);
