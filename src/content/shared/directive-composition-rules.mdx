@@ -12,7 +12,7 @@
 The following example violates the rule:
 <br/>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -23,7 +23,7 @@ type Query {
 }
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -37,7 +37,7 @@ type Query {
 Use instead:
 <br/>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -48,7 +48,7 @@ type Query {
 }
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -70,11 +70,11 @@ type Query {
 The following example violates the rule:
 <br/>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false
 directive @log(message: String!) on QUERY #highlight-line
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false
 directive @log(message: String!) on FIELD #highlight-line
 ```
 
@@ -84,11 +84,11 @@ Use instead:
 <br/>
 
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false
 directive @log(message: String!) on QUERY | FIELD
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
 directive @log(message: String!) on QUERY | FIELD
 ```
 
@@ -103,28 +103,28 @@ directive @log(message: String!) on QUERY | FIELD
 The following example violates the rule:
 <br/>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false {3}
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false {3}
 type Product @key(fields: "id") {
   id: ID!
   inStock: Boolean! @override(from: "Subgraph B")
 }
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false
 # Subgraph B doesn't exist
 ```
 <br/>
 Use instead:
 <br/>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false {3}
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false {3}
 type Product @key(fields: "id") {
   id: ID!
   inStock: Boolean! @override(from: "Subgraph B")
 }
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
 type Product @key(fields: "id") {
   id: ID!
   inStock: Boolean!

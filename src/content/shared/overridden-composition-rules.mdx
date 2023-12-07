@@ -7,14 +7,14 @@
 The following example violates the rule:
 <br/>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false {3}
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false {3}
 type Product @key(fields: "id") {
   id: ID!
   inStock: Boolean! @override(from: "Subgraph B")
 }
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false
 type Product @key(fields: "id") {
   id: ID!
   name: String!
@@ -25,14 +25,14 @@ type Product @key(fields: "id") {
 Use instead:
 <br/>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false {3}
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false {3}
 type Product @key(fields: "id") {
   id: ID!
   inStock: Boolean!
 }
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
 type Product @key(fields: "id") {
   id: ID!
   name: String!
@@ -50,7 +50,7 @@ type Product @key(fields: "id") {
 The following example violates the rule:
 <br/>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false {4}
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false {4}
 type Product @key(fields: "id") {
   id: ID!
   name: String!
@@ -58,7 +58,7 @@ type Product @key(fields: "id") {
 }
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false
 type Product @key(fields: "id") {
   id: ID!
   inStock: Boolean!
@@ -69,14 +69,14 @@ type Product @key(fields: "id") {
 Use instead:
 <br/>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false
 type Product @key(fields: "id") {
   id: ID!
   name: String!
 }
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
 type Product @key(fields: "id") {
   id: ID!
   inStock: Boolean!
@@ -96,7 +96,7 @@ The following example violates the rule:
 
 <CodeColumns>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false
 enum ProductStatus {
   AVAILABLE
   SOLD_OUT
@@ -108,7 +108,7 @@ type Product {
 }
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false  {4}
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false  {4}
 type Order {
   id: ID!
   product: Product
@@ -124,7 +124,7 @@ Use instead:
 
 <CodeColumns>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false
 
 type Product {
   id: ID!
@@ -133,7 +133,7 @@ type Product {
 }
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false {4}
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false {4}
 
 type Order {
   id: ID!

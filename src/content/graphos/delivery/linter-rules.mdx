@@ -21,7 +21,7 @@ These rules enforce naming conventions. Rules are categorized by the part(s) of 
 The following example violates the rule:
 <br/>
 
-```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
+```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 type User {
   # highlight-start
   FirstName: String! # PascalCase
@@ -33,7 +33,7 @@ type User {
 Use instead:
 <br/>
 
-```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
+```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 type User {
   # highlight-start
   firstName: String # camelCase
@@ -51,7 +51,7 @@ type User {
 The following example violates the rule:
 <br/>
 
-```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
+```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 type Query {
   getUsers: [User!]! # highlight-line
 }
@@ -61,7 +61,7 @@ type Query {
 Use instead:
 <br/>
 
-```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
+```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 type Query {
   users: [User!]! # highlight-line
 }
@@ -88,7 +88,7 @@ These rules apply to _all_ types that appear in a GraphQL schema, including:
 The following example violates the rule:
 <br/>
 
-```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
+```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 # highlight-start
 type streamingService { # camelCase
   # highlight-end
@@ -100,7 +100,7 @@ type streamingService { # camelCase
 Use instead:
 <br/>
 
-```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
+```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 # highlight-start
 type StreamingService { # PascalCase
   # highlight-end
@@ -112,14 +112,14 @@ type StreamingService { # PascalCase
 
 <RuleExpansionPanel
   title="TYPE_PREFIX"
-  whatItDoes="Checks that type names don't use the prefix `Type`."
+  whatItDoes="Checks that type names don't start with the prefix `Type`."
   rationale="Starting type names with `Type` is redundant. It makes your schema definitions longer than necessary and your schema less readable."
 >
 
 The following example violates the rule:
 <br/>
 
-```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
+```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 type TypeBook { # highlight-line
   title: String!
 }
@@ -129,7 +129,7 @@ type TypeBook { # highlight-line
 Use instead:
 <br/>
 
-```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
+```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 type Book { # highlight-line
   title: String!
 }
@@ -146,7 +146,7 @@ type Book { # highlight-line
 The following example violates the rule:
 <br/>
 
-```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
+```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 type BookType { # highlight-line
   title: String!
 }
@@ -156,7 +156,7 @@ type BookType { # highlight-line
 Use instead:
 <br/>
 
-```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
+```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 type Book { # highlight-line
   title: String!
 }
@@ -169,14 +169,14 @@ type Book { # highlight-line
 
 <RuleExpansionPanel
   title="OBJECT_PREFIX"
-  whatItDoes="Checks that object type names don't use the prefix `Object`."
+  whatItDoes="Checks that object type names don't start with the prefix `Object`."
   rationale="Starting object type names with `Object` is redundant. It makes your schema definitions longer than necessary and your schema less readable."
 >
 
 The following example violates the rule:
 <br/>
 
-```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
+```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 type ObjectBook { # highlight-line
   title: String!
 }
@@ -186,7 +186,7 @@ type ObjectBook { # highlight-line
 Use instead:
 <br/>
 
-```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
+```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 type Book { # highlight-line
   title: String!
 }
@@ -203,7 +203,7 @@ type Book { # highlight-line
 The following example violates the rule:
 <br/>
 
-```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
+```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 type BookObject { # highlight-line
   title: String!
 }
@@ -213,7 +213,7 @@ type BookObject { # highlight-line
 Use instead:
 <br/>
 
-```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
+```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 type Book { # highlight-line
   title: String!
 }
@@ -226,14 +226,14 @@ type Book { # highlight-line
 
 <RuleExpansionPanel
   title="INTERFACE_PREFIX"
-  whatItdoes="Checks that interface type names don't use the prefix `Interface`."
+  whatItDoes="Checks that interface type names don't start with the prefix `Interface`."
   rationale="Starting interface type names with `Interface` is redundant. It makes your schema definitions longer than necessary and your schema less readable."
 >
 
 The following example violates the rule:
 <br/>
 
-```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
+```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 interface InterfaceBook { # highlight-line
   title: String
   author: String
@@ -244,7 +244,7 @@ interface InterfaceBook { # highlight-line
 Use instead:
 <br/>
 
-```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
+```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 interface Book { # highlight-line
   title: String
   author: String
@@ -262,7 +262,7 @@ interface Book { # highlight-line
 The following example violates the rule:
 <br/>
 
-```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
+```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 interface BookInterface { # highlight-line
   title: String
   author: String
@@ -273,7 +273,7 @@ interface BookInterface { # highlight-line
 Use instead:
 <br/>
 
-```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
+```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 interface Book { # highlight-line
   title: String
   author: String
@@ -294,7 +294,7 @@ interface Book { # highlight-line
 The following example violates the rule:
 <br/>
 
-```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
+```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 type Mutation {
   #highlight-start
   createBlogPost(BlogPostContent: BlogPostContent!): Post # PascalCase
@@ -306,7 +306,7 @@ type Mutation {
 Use instead:
 <br/>
 
-```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
+```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 type Mutation {
   #highlight-start
   createBlogPost(blogPostContent: BlogPostContent!): Post # camelCase
@@ -325,7 +325,7 @@ type Mutation {
 The following example violates the rule:
 <br/>
 
-```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
+```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 input BlogPostDetails { #highlight-line
   title: String!
   content: String!
@@ -336,7 +336,7 @@ input BlogPostDetails { #highlight-line
 Use instead:
 <br/>
 
-```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
+```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 input BlogPostDetailsInput { #highlight-line
   title: String!
   content: String!
@@ -356,7 +356,7 @@ input BlogPostDetailsInput { #highlight-line
 The following example violates the rule:
 <br/>
 
-```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
+```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 enum Amenity {
   # highlight-start
   public_park # snake_case
@@ -368,7 +368,7 @@ enum Amenity {
 Use instead:
 <br/>
 
-```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
+```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 enum Amenity {
   # highlight-start
   PUBLIC_PARK # SCREAMING_SNAKE_CASE 😱
@@ -380,14 +380,14 @@ enum Amenity {
 
 <RuleExpansionPanel
   title="ENUM_PREFIX"
-  whatItDoes="Checks that enum type names don't use the prefix `Enum`."
+  whatItDoes="Checks that enum type names don't start with the prefix `Enum`."
   rationale="Starting enum type names with `Enum` is redundant. It makes your schema definitions longer than necessary and your schema less readable."
 >
 
 The following example violates the rule:
 <br/>
 
-```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
+```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 enum EnumResidence { # highlight-line
   HOUSE
   APARTMENT
@@ -399,7 +399,7 @@ enum EnumResidence { # highlight-line
 Use instead:
 <br/>
 
-```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
+```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 enum Residence { # highlight-line
   HOUSE
   APARTMENT
@@ -418,7 +418,7 @@ enum Residence { # highlight-line
 The following example violates the rule:
 <br/>
 
-```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
+```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 enum ResidenceEnum { # highlight-line
   HOUSE
   APARTMENT
@@ -430,7 +430,7 @@ enum ResidenceEnum { # highlight-line
 Use instead:
 <br/>
 
-```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
+```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 enum Residence { # highlight-line
   HOUSE
   APARTMENT
@@ -449,7 +449,7 @@ enum Residence { # highlight-line
 The following example violates the rule:
 <br/>
 
-```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
+```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 enum Role { # highlight-line
   EDITOR
   VIEWER
@@ -464,7 +464,7 @@ type Query {
 Use instead:
 <br/>
 
-```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
+```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 enum RoleInput { # highlight-line
   EDITOR
   VIEWER
@@ -486,7 +486,7 @@ type Query {
 The following example violates the rule:
 <br/>
 
-```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
+```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 enum RoleInput { # highlight-line
   EDITOR
   VIEWER
@@ -501,7 +501,7 @@ type Query {
 Use instead:
 <br/>
 
-```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
+```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 enum Role { # highlight-line
   EDITOR
   VIEWER
@@ -525,7 +525,7 @@ type Query {
 The following example violates the rule:
 <br/>
 
-```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
+```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 directive @SpecialField on FIELD_DEFINITION # PascalCase
 ```
 
@@ -533,7 +533,7 @@ directive @SpecialField on FIELD_DEFINITION # PascalCase
 Use instead:
 <br/>
 
-```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
+```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 directive @specialField on FIELD_DEFINITION # camelCase
 ```
 
@@ -587,7 +587,7 @@ These rules apply to the entire schema.
 The following example violates the rule:
 <br/>
 
-```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
+```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 type User {
   username: String!
 }
@@ -597,7 +597,7 @@ type User {
 Use instead:
 <br/>
 
-```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
+```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 "Represents a user"
 type User {
   "The user's username"
@@ -616,7 +616,7 @@ type User {
 The following example violates the rule:
 <br/>
 
-```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
+```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 type SomeUnusedType { # Also fails the TYPE_SUFFIX rule!
   name: String!
 }
@@ -635,7 +635,7 @@ type Query {
 Use instead:
 <br/>
 
-```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
+```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 type Book {
   title: String!
 }
@@ -656,7 +656,7 @@ type Query {
 The following example violates the rule:
 <br/>
 
-```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
+```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 type Query {
   users: [User!]!
 }
@@ -681,7 +681,7 @@ query GetUsers {
   rationale="You can use the `@contact` directive to add your team's contact info to a subgraph schema. This info is displayed in GraphOS Studio, which helps other teams know who to contact for assistance with the subgraph. [Learn more](../graphs/federated-graphs#contact-info-for-subgraphs)."
 >
 
-This example shows correct `@contact` directive usage:
+✅ This example shows correct `@contact` directive usage:
 <br/>
 
 ```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
@@ -713,7 +713,7 @@ extend schema
 The following example violates the rule:
 <br/>
 
-```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
+```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 type Product {
   title: String @deprecated #highlight-line
   name: String!
@@ -724,7 +724,7 @@ type Product {
 Use instead:
 <br/>
 
-```graphql title="schema.graphql" disableCopy=true showLineNumbers=false
+```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 type Product {
   title: String @deprecated(reason: "Use Product.name instead") #highlight-line
   name: String!

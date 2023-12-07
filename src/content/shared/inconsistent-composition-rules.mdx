@@ -7,7 +7,7 @@
 The following example violates the rule:
 <br/>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -15,7 +15,7 @@ type Product {
 }
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -27,7 +27,7 @@ type Product {
 Use instead:
 <br/>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -35,7 +35,7 @@ type Product {
 }
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -51,20 +51,14 @@ type Product {
   rationale="To-do"
 >
 
-Two types are compatible if one is:
-- a non-nullable version
-- a list version
-- a subtype
-- or a combination of any of these
-
-of the other.
-
+Two types are compatible if one is a non-nullable version, a list version, a subtype, or a combination of any of these of the other.
+<br/>
 The following example violates the rule:
 <br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -81,7 +75,7 @@ enum Currency {
 }
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -106,7 +100,7 @@ Use instead:
 
 <CodeColumns>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -123,7 +117,7 @@ enum Currency {
 }
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -150,20 +144,14 @@ enum Currency {
   rationale="To-do"
 >
 
-Two types are compatible if one is:
-- a non-nullable version
-- a list version
-- a subtype
-- or a combination of any of these
-
-of the other.
-
+Two types are compatible if one is a non-nullable version, a list version, a subtype, or a combination of any of these of the other.
+<br/>
 The following example violates the rule:
 <br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -185,7 +173,7 @@ enum Currency {
 }
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -215,7 +203,7 @@ Use instead:
 
 <CodeColumns>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -237,7 +225,7 @@ enum Currency {
 }
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -274,7 +262,7 @@ The following example violates the rule:
 
 <CodeColumns>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -282,7 +270,7 @@ type Product {
 }
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -298,7 +286,7 @@ Use instead:
 
 <CodeColumns>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -306,7 +294,7 @@ type Product {
 }
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -329,7 +317,7 @@ The following example violates the rule:
 
 <CodeColumns>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false
 """
 A type representing a product.
 """
@@ -339,7 +327,7 @@ type Product {
 }
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false
 """
 An object representing a product.
 """
@@ -356,7 +344,7 @@ Use instead:
 
 <CodeColumns>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false
 """
 A type representing a product.
 """
@@ -366,7 +354,7 @@ type Product {
 }
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
 """
 A type representing a product.
 """
@@ -390,14 +378,14 @@ The following example violates the rule:
 
 <CodeColumns>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false
 type Product @key(fields: "id") { #highlight-line
   id: ID!
   name: String
 }
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false
 type Product { #highlight-line
   id: ID!
   stock: Int
@@ -412,14 +400,14 @@ Use instead:
 
 <CodeColumns>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false
 type Product @key(fields: "id") { #highlight-line
   id: ID!
   name: String
 }
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
 type Product @key(fields: "id") { #highlight-line
   id: ID!
   stock: Int
@@ -441,7 +429,7 @@ The following example violates the rule:
 
 <CodeColumns>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false
 enum ProductStatus {
   AVAILABLE
   SOLD_OUT
@@ -454,7 +442,7 @@ input ProductInput {
 }
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false
 enum ProductStatus {
   AVAILABLE
   SOLD_OUT
@@ -474,7 +462,7 @@ Use instead:
 
 <CodeColumns>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false
 enum ProductStatus {
   AVAILABLE
   SOLD_OUT
@@ -487,7 +475,7 @@ input ProductInput {
 }
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
 enum ProductStatus {
   AVAILABLE
   SOLD_OUT
@@ -517,7 +505,7 @@ The following example violates the rule:
 
 <CodeColumns>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false
 enum OrderStatus {
   CREATED
   PROCESSING #highlight-line
@@ -530,7 +518,7 @@ type Order {
 }
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false
 enum OrderStatus {
   CREATED
   COMPLETED
@@ -550,7 +538,7 @@ Use instead:
 
 <CodeColumns>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false
 enum OrderStatus {
   CREATED
   PROCESSING
@@ -563,7 +551,7 @@ type Order {
 }
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
 enum OrderStatus {
   CREATED
   PROCESSING
@@ -591,13 +579,13 @@ The following example violates the rule:
 
 <CodeColumns>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false
 directive @log(
   message: String!
 ) on QUERY | FIELD  #highlight-line
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false
 directive @log(
   message: String!
 ) on FIELD #highlight-line
@@ -611,13 +599,13 @@ Use instead:
 
 <CodeColumns>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false
 directive @log(
   message: String!
 ) on QUERY | FIELD
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
 directive @log(
   message: String!
 ) on QUERY | FIELD
@@ -638,13 +626,13 @@ The following example violates the rule:
 
 <CodeColumns>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false
 directive @modify(
   field: String!
 ) on FIELD
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false
 # 🦗🦗🦗
 ```
 
@@ -656,13 +644,13 @@ Use instead:
 
 <CodeColumns>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false
 directive @modify(
   field: String!
 ) on FIELD
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
 directive @modify(
   field: String!
 ) on FIELD
@@ -683,13 +671,13 @@ The following example violates the rule:
 
 <CodeColumns>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false
 directive @validateLength(
   max: Int!
 ) repeatable on FIELD
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false
 directive @validateLength(
   max: Int!
 ) on FIELD
@@ -704,13 +692,13 @@ Use instead:
 
 <CodeColumns>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false
 directive @validateLength(
   max: Int!
 ) repeatable on FIELD
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
 directive @validateLength(
   max: Int!
 ) repeatable on FIELD
@@ -731,7 +719,7 @@ The following example violates the rule:
 
 <CodeColumns>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false
 input ProductInput {
   name: String
   price: Float #highlight-line
@@ -742,7 +730,7 @@ input OrderInput {
 }
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false
 input ProductInput {
   name: String
 }
@@ -760,7 +748,7 @@ Use instead:
 
 <CodeColumns>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false
 input ProductInput {
   name: String
   price: Float
@@ -771,7 +759,7 @@ input OrderInput {
 }
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
 input ProductInput {
   name: String
   price: Float
@@ -795,7 +783,7 @@ input OrderInput {
 The following example violates the rule:
 <br/>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false
 interface Product {
   id: ID!
   name: String
@@ -810,7 +798,7 @@ type DigitalProduct implements Product {
 }
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false
 interface Product {
   id: ID!
   name: String
@@ -830,7 +818,7 @@ type PhysicalProduct implements Product {
 Use instead:
 <br/>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false
 interface Product {
   id: ID!
   name: String
@@ -845,7 +833,7 @@ type DigitalProduct implements Product {
 }
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
 interface Product {
   id: ID!
   name: String
@@ -871,7 +859,7 @@ type PhysicalProduct implements Product {
 The following example violates the rule:
 <br/>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -882,7 +870,7 @@ type Query {
 }
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -897,7 +885,7 @@ type Query {
 Use instead:
 <br/>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -908,7 +896,7 @@ type Query {
 }
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -932,7 +920,7 @@ The following example violates the rule:
 
 <CodeColumns>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -940,7 +928,7 @@ type Product {
 }
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -956,7 +944,7 @@ Use instead:
 
 <CodeColumns>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -964,7 +952,7 @@ type Product {
 }
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -987,7 +975,7 @@ The following example violates the rule:
 
 <CodeColumns>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -999,7 +987,7 @@ type Details {
 }
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -1019,7 +1007,7 @@ Use instead:
 
 <CodeColumns>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -1031,7 +1019,7 @@ type Details {
 }
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -1058,13 +1046,13 @@ The following example violates the rule:
 
 <CodeColumns>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false
 directive @customDirective(
   message: String!
 ) on OBJECT | FIELD_DEFINITION  #highlight-line
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false
 directive @customDirective(
   message: String!
 ) on FIELD_DEFINITION #highlight-line
@@ -1078,13 +1066,13 @@ Use instead:
 
 <CodeColumns>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false
 directive @customDirective(
   message: String!
 ) on OBJECT | FIELD_DEFINITION
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
 directive @customDirective(
   message: String!
 ) on OBJECT | FIELD_DEFINITION
@@ -1103,11 +1091,11 @@ directive @customDirective(
 The following example violates the rule:
 <br/>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false
 directive @customDirective on OBJECT
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false
 directive @customDirective repeatable on OBJECT
 ```
 
@@ -1115,11 +1103,11 @@ directive @customDirective repeatable on OBJECT
 Use instead:
 <br/>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false
 directive @customDirective repeatable on OBJECT
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
 directive @customDirective repeatable on OBJECT
 ```
 
@@ -1134,7 +1122,7 @@ directive @customDirective repeatable on OBJECT
 The following example violates the rule:
 <br/>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -1148,7 +1136,7 @@ type Service {
 union SearchResult = Product | Service #highlight-line
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -1161,7 +1149,7 @@ union SearchResult = Product #highlight-line
 Use instead:
 <br/>
 
-```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -1175,7 +1163,7 @@ type Service {
 union SearchResult = Product | Service #highlight-line
 ```
 
-```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
