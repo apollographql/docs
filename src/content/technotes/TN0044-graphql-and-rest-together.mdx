@@ -141,6 +141,8 @@ A key goal of any API strategy should be to enable API consumers. That means hav
 
 Your API strategy should shield API consumers from the complexities of backend services. Conversely, the strategy should insulate the impact of upstream client changes on downstream services.
 
+The contract, the interface over which your API consumers communicate with your API, should act as an abstraction.
+
 ### Magnifying existing investments
 
 Any API investment should positively impact its current and future use cases.
@@ -157,7 +159,11 @@ Read more on [Supergraph stewardship](/technotes/TN0025-supergraph-stewardship/)
 
 ## Approaches to growing complexity
 
+Organizations frequently use a client-managed or Backend for Frontend (BFF) approach to handle complexity between Presentation and Application layers. These approaches can have limitations in achieving the goals of a resilient API strategy.
+
 ### Client-managed
+
+In a client-managed approach, each app talks directly to each backend service, creating a multitude of connections and dependencies.
 
 ```mermaid
 flowchart LR
@@ -213,14 +219,16 @@ Many API strategies start as client-managed, but this strategy can quickly get o
 #### Problems
 
 - Separation of concerns
-- ❌ "Fat" clients and inconsistent UX
-- ❌ Logic is thrown away on every client rewrite
-- ❌ Not rapid or self-service
-- ❌ Not an insulating contract
-- ❌ Doesn't magnify existing investments
-- ❌ No governance
+- "Thick" clients and inconsistent UX
+- Logic is thrown away on every client rewrite
+- Not rapid or self-service
+- Not an insulating contract
+- Doesn't magnify existing investments
+- No governance
 
 ### Backend for Frontend APIs (BFFs)
+
+In a Backend for Frontend (BFF) approach, each app has a dedicated API that they own called a BFF. This BFF is specific to the app, is maintained by the app team, and is responsible for the data orchestration needs of that app.
 
 ```mermaid
 flowchart LR
@@ -291,18 +299,20 @@ BFFs can offer a viable solution for addressing certain issues associated with t
 
 #### Problems
 
-- ❌ Number of BFFs can expand to the point that it becomes impossible to manage them
-- ❌ Doesn't magnify existing investments
-- ❌ While an API Gateway can provide some governance of BFFs, it still doesn't provide much governance of data retrieval
+- Number of BFFs can expand to the point that it becomes impossible to manage them
+- Doesn't magnify existing investments
+- While an API Gateway can provide some governance of BFFs, it still doesn't provide much governance of data retrieval
 
 <Note>
-  You may still need a BFF in addition to GraphQL for "Utility" endpoints
-  specific to your application. In this case, you could use a passthrough
-  pattern to direct data fetching and mutations through your BFF to your GraphQL
-  layer.
+  You may still need a BFF in addition to GraphQL for "Utility" endpoints specific to your application. In this case,
+  you could use a passthrough pattern to direct data fetching and mutations through your BFF to your GraphQL layer.
 </Note>
 
 ## Using GraphQL
+
+When using GraphQL, all apps talk to a common GraphQL middle layer that then orchestrates the calls to downstream data services.
+
+This middle layer translates the needs of the Presentation layer to the Application layer. By its nature, GraphQL is self-serve. A GraphQL schema acts as an insulating contract, and all investments are magnified since all consumers benefit from all investments. It is highly governable since a single endpoint exposes all data with declarative policies.
 
 ```mermaid
 flowchart LR
@@ -327,8 +337,6 @@ flowchart LR
   graphql --> bus
   graphql --> cms
 ```
-
-GraphQL is a middle layer that translates the needs of the Presentation layer to the Application layer. By its nature, GraphQL is self-serve. A GraphQL schema acts as an insulating contract, and all investments are magnified since all consumers benefit from all investments. It is highly governable since a single endpoint exposes all data with declarative policies.
 
 ### Rapid self-service
 
