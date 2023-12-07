@@ -18,7 +18,7 @@ It's common for public endpoints to set [CORS policies](https://developer.mozill
 
 To do so, include the following header(s) in your server's responses:
 
-```bash
+```bash showLineNumbers=false
 Access-Control-Allow-Origin: https://studio.apollographql.com
 
 # Include this only if your server *also* authenticates via cookies.
@@ -52,7 +52,7 @@ If your server uses cookies to authenticate, you can configure your endpoint to 
 
 To set this up, your [cookie's value must contain `SameSite=None; Secure`](https://www.chromium.org/updates/same-site). Additionally, the following CORS headers must be present in your server's response to Studio:
 
-```bash
+```bash showLineNumbers=false
 Access-Control-Allow-Origin: https://studio.apollographql.com
 Access-Control-Allow-Credentials: true
 ```
@@ -109,7 +109,7 @@ Inject an environment variable into a GraphQL variable value by surrounding the 
 
 ##### Custom scripts
 
-If you create a [preflight or pre-operation script](./scripting), that script can access an environment variable's value like so:
+If you create a [preflight or operation script](./scripting), that script can access an environment variable's value like so:
 
 ```js
 const secretToken = explorer.environment.get('token');
