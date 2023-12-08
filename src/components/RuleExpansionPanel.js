@@ -30,16 +30,18 @@ CustomHeader.propTypes = {
   children: PropTypes.node.required
 };
 
-function CopyLinkButton({headingId}) {
+function CopyLinkButton({headingId, isOpen}) {
   const handleCopyLink = event => {
-    event.stopPropagation();
+    if (isOpen) {
+      event.stopPropagation();
+    }
     if (headingId) {
       const basePath = window.location.origin + window.location.pathname;
       const headingLink = `${basePath}#${headingId}`;
       navigator.clipboard.writeText(headingLink);
 
       // Update the URL in the browser
-      const newUrl = `${window.location.origin}${window.location.pathname}#${headingId}`;
+      const newUrl = headingLink;
       window.history.pushState({path: newUrl}, '', newUrl);
     }
   };
@@ -58,7 +60,8 @@ function CopyLinkButton({headingId}) {
 }
 
 CopyLinkButton.propTypes = {
-  headingId: PropTypes.string.required
+  headingId: PropTypes.string.required,
+  isOpen: PropTypes.bool
 };
 
 function ExpansionPanelLine(props) {
@@ -136,7 +139,7 @@ export default function RuleExpansionPanel({
       >
         <CustomHeader level="4" size="sm" id={id}>
           <code>{title}</code>
-          <CopyLinkButton headingId={id} />
+          <CopyLinkButton headingId={id} isOpen={isOpen} />
         </CustomHeader>
       </Button>
       <Collapse in={isOpen}>
