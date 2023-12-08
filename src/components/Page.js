@@ -41,7 +41,13 @@ import {
 } from '@chakra-ui/react';
 import {Caution} from './Caution';
 import {CustomHeading} from './CustomHeading';
-import {DocBlock, DocPiece, FunctionDetails, InterfaceDetails} from './ApiDoc';
+import {
+  DocBlock,
+  DocPiece,
+  FunctionDetails,
+  InterfaceDetails,
+  useApiDocContext
+} from './ApiDoc';
 import {
   EmbeddableExplorer,
   MarkdownCodeBlock,
@@ -212,7 +218,8 @@ const mdxComponents = {
   DocBlock,
   DocPiece,
   TrackableButton,
-  TrackableLink
+  TrackableLink,
+  useApiDocContext
 };
 
 const {processSync} = rehype()
