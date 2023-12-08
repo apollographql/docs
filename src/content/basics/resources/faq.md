@@ -115,7 +115,7 @@ You understand how GraphQL works and the benefits it offers. You're trying to cr
 
 ### Which language should I use for my GraphQL server?
 
-There are GraphQL server tools available for most popular languages, but we recommend using [Apollo Server](https://www.apollographql.com/server) (Node.js) because of the ecosystem of tools developed for GraphQL in JavaScript. Node servers can also be run nearly anywhere, including on the edge.
+There are GraphQL server tools available for most popular languages, but we recommend using [Apollo Server](/apollo-server/) (Node.js) because of the ecosystem of tools developed for GraphQL in JavaScript. Node servers can also be run nearly anywhere, including on the edge.
 
 ### How do I wrap existing APIs?
 

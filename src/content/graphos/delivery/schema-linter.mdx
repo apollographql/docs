@@ -107,7 +107,7 @@ The Rover CLI provides `subgraph lint` and `graph lint` commands for running the
 
 The `rover subgraph lint` and `rover graph lint` commands validate all [linter rules](./linter-rules) _except_ for [composition rules](./linter-rules#composition-rules). Use [`rover subgraph check`](/rover/commands/subgraphs#subgraph-check) or [`rover supergraph compose`](/rover/commands/supergraphs#supergraph-compose) to validate composition rules locally.
 
-```bash title="Example command"
+```bash showLineNumbers=false title="Example command"
 rover subgraph lint --name products --schema ./products-schema.graphql my-graph@my-variant
 ```
 
