@@ -37,8 +37,13 @@ function CopyLinkButton({headingId}) {
       const basePath = window.location.origin + window.location.pathname;
       const headingLink = `${basePath}#${headingId}`;
       navigator.clipboard.writeText(headingLink);
+
+      // Update the URL in the browser
+      const newUrl = `${window.location.origin}${window.location.pathname}#${headingId}`;
+      window.history.pushState({path: newUrl}, '', newUrl);
     }
   };
+
   return (
     <Button
       size="sm"
@@ -116,8 +121,9 @@ export default function RuleExpansionPanel({
   defaultIsOpen
 }) {
   const {isOpen, onToggle} = useDisclosure({defaultIsOpen});
+  const id = title.replace(/\s+/g, '-').toLowerCase();
   return (
-    <Box borderWidth="1px" overflow="hidden">
+    <Box borderWidth="1px" overflow="hidden" id={`${id}-expansion-panel`}>
       <Button
         isFullWidth
         variant="ghost"
@@ -128,15 +134,9 @@ export default function RuleExpansionPanel({
         onClick={onToggle}
         _focus={{shadow: 'none'}}
       >
-        <CustomHeader
-          level="4"
-          size="sm"
-          id={title.replace(/\s+/g, '-').toLowerCase()}
-        >
+        <CustomHeader level="4" size="sm" id={id}>
           <code>{title}</code>
-          <CopyLinkButton
-            headingId={title.replace(/\s+/g, '-').toLowerCase()}
-          />
+          <CopyLinkButton headingId={id} />
         </CustomHeader>
       </Button>
       <Collapse in={isOpen}>
