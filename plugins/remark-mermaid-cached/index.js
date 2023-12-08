@@ -5,6 +5,13 @@ const crypto = require('crypto');
 const cacheDir = process.env.NETLIFY_CACHE_DIR
   ? `${process.env.NETLIFY_CACHE_DIR}/mermaid`
   : undefined;
+
+console.log(
+  'Mermaid cache dir',
+  cacheDir,
+  'process.env.NETLIFY_CACHE_DIR',
+  process.env.NETLIFY_CACHE_DIR
+);
 if (cacheDir) {
   fs.mkdirSync(cacheDir);
 }
@@ -26,25 +33,17 @@ module.exports = async (arg, options) => {
   const {markdownAST, markdownNode} = arg;
   const instances = [];
 
-  if (cacheDir) {
-    visit(
-      markdownAST,
-      {type: 'code', lang: 'mermaid'},
-      (node, index, parent) => {
-        const hash = hashNode(node);
-        const cacheFile = `${cacheDir}/${hash}.svg`;
-        if (cacheFile && fs.existsSync(cacheFile)) {
-          parent.children[index] = JSON.parse(
-            fs.readFileSync(cacheFile, 'utf-8')
-          );
-          console.log('Loaded Mermaid from cache', cacheFile);
-          return visit.SKIP;
-        } else {
-          instances.push({index, parent, cacheFile});
-        }
-      }
-    );
-  }
+  visit(markdownAST, {type: 'code', lang: 'mermaid'}, (node, index, parent) => {
+    const hash = hashNode(node);
+    const cacheFile = `${cacheDir}/${hash}.svg`;
+    if (cacheDir && cacheFile && fs.existsSync(cacheFile)) {
+      parent.children[index] = JSON.parse(fs.readFileSync(cacheFile, 'utf-8'));
+      console.log('Loaded Mermaid from cache', cacheFile);
+      return visit.SKIP;
+    } else {
+      instances.push({index, parent, cacheFile});
+    }
+  });
 
   if (instances.length > 0) {
     const vfile = new VFile({
