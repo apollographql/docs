@@ -1,21 +1,13 @@
 // @ts-check
 const fs = require('fs');
+const path = require('path');
 const crypto = require('crypto');
 const visit = require('unist-util-visit');
 
-const cacheDir = process.env.NETLIFY_CACHE_DIR
-  ? `${process.env.NETLIFY_CACHE_DIR}/mermaid`
-  : undefined;
+const cacheDir = path.resolve(__dirname, '../../.mermaid');
 
-console.log(
-  'Mermaid cache dir',
-  cacheDir,
-  'process.env.NETLIFY_CACHE_DIR',
-  process.env.NETLIFY_CACHE_DIR
-);
-if (cacheDir) {
-  fs.mkdirSync(cacheDir);
-}
+console.log('Mermaid cache dir', cacheDir);
+fs.mkdirSync(cacheDir, {recursive: true});
 
 function hashNode(node) {
   const representation = JSON.stringify({
@@ -35,8 +27,8 @@ module.exports = async (arg, options) => {
 
   visit(markdownAST, {type: 'code', lang: 'mermaid'}, (node, index, parent) => {
     const hash = hashNode(node);
-    const cacheFile = `${cacheDir}/${hash}.svg`;
-    if (cacheDir && cacheFile && fs.existsSync(cacheFile)) {
+    const cacheFile = `${cacheDir}/${hash}.node`;
+    if (cacheFile && fs.existsSync(cacheFile)) {
       parent.children[index] = JSON.parse(fs.readFileSync(cacheFile, 'utf-8'));
       console.log('Loaded Mermaid from cache', cacheFile);
       return visit.SKIP;
@@ -53,14 +45,12 @@ module.exports = async (arg, options) => {
     const transformer = plugin(options);
     const transformed = await transformer(markdownAST, vfile);
 
-    if (cacheDir) {
-      for (const {index, parent, cacheFile} of instances) {
-        const newNode = parent.children[index];
-        fs.writeFileSync(cacheFile, JSON.stringify(newNode), {
-          encoding: 'utf-8'
-        });
-        console.log('Saved transformed Mermaid to cache', cacheFile);
-      }
+    for (const {index, parent, cacheFile} of instances) {
+      const newNode = parent.children[index];
+      fs.writeFileSync(cacheFile, JSON.stringify(newNode), {
+        encoding: 'utf-8'
+      });
+      console.log('Saved transformed Mermaid to cache', cacheFile);
     }
 
     return transformed;
