@@ -1,8 +1,5 @@
 // @ts-check
 const fs = require('fs');
-const {VFile} = require('vfile');
-const {default: plugin} = require('remark-mermaidjs');
-const visit = require('unist-util-visit');
 const crypto = require('crypto');
 
 const cacheDir = process.env.NETLIFY_CACHE_DIR
@@ -22,6 +19,10 @@ function hashNode(node) {
 }
 
 module.exports = async (arg, options) => {
+  const {VFile} = await import('vfile');
+  const {default: plugin} = await import('remark-mermaidjs');
+  const visit = await import('unist-util-visit');
+
   const {markdownAST, markdownNode} = arg;
   const instances = [];
 
