@@ -14,7 +14,8 @@
     "start:router": "npm start -- ../router",
     "build": "gatsby build",
     "serve": "gatsby serve",
-    "test": "jest"
+    "test": "jest",
+    "postinstall": "npx playwright install"
   },
   "dependencies": {
     "@algolia/autocomplete-core": "^1.5.2",
@@ -37,6 +38,7 @@
     "@mdx-js/mdx": "^1.6.22",
     "@mdx-js/react": "^1.6.22",
     "@microsoft/api-extractor-model": "^7.28.2",
+    "@playwright/test": "^1.40.1",
     "@react-icons/all-files": "^4.1.0",
     "@svgr/webpack": "^5.5.0",
     "@theowenyoung/gatsby-source-git": "^2.3.1",
