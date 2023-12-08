@@ -46,22 +46,25 @@ module.exports = async (arg, options) => {
     );
   }
 
-  const vfile = new VFile({
-    value: markdownNode.rawMarkdownBody,
-    path: markdownNode.fileAbsolutePath
-  });
-  const transformer = plugin(options);
-  const transformed = await transformer(markdownAST, vfile);
+  if (instances.length > 0) {
+    const vfile = new VFile({
+      value: markdownNode.rawMarkdownBody,
+      path: markdownNode.fileAbsolutePath
+    });
+    const transformer = plugin(options);
+    const transformed = await transformer(markdownAST, vfile);
 
-  if (cacheDir) {
-    for (const {index, parent, cacheFile} of instances) {
-      const newNode = parent.children[index];
-      fs.writeFileSync(cacheFile, JSON.stringify(newNode), {
-        encoding: 'utf-8'
-      });
-      console.log('Saved transformed Mermaid to cache', cacheFile);
+    if (cacheDir) {
+      for (const {index, parent, cacheFile} of instances) {
+        const newNode = parent.children[index];
+        fs.writeFileSync(cacheFile, JSON.stringify(newNode), {
+          encoding: 'utf-8'
+        });
+        console.log('Saved transformed Mermaid to cache', cacheFile);
+      }
     }
-  }
 
-  return transformed;
+    return transformed;
+  }
+  return markdownAST;
 };
