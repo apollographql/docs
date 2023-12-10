@@ -30,6 +30,20 @@ module.exports = async (arg, options) => {
     const cacheFile = `${cacheDir}/${hash}.node`;
     if (cacheFile && fs.existsSync(cacheFile)) {
       parent.children[index] = JSON.parse(fs.readFileSync(cacheFile, 'utf-8'));
+      parent.children[index].value =
+        '<div class="mermaid">' + parent.children[index].value + "</div>";
+      Object.assign(parent.children[index].data, {
+        hChildren: [
+          {
+            type: "element",
+            tagName: "div",
+            properties: {
+              class: "mermaid",
+            },
+            children: parent.children[index].data.hChildren,
+          },
+        ],
+      });
       console.log('Loaded Mermaid from cache', cacheFile);
       return visit.SKIP;
     } else {
@@ -47,20 +61,6 @@ module.exports = async (arg, options) => {
 
     for (const {index, parent, cacheFile} of instances) {
       const newNode = parent.children[index];
-      newNode.children[0].value =
-        '<div class="mermaid">' + newNode.children[0].value + "</div>";
-      Object.assign(newNode.data, {
-        hChildren: [
-          {
-            type: "element",
-            tagName: "div",
-            properties: {
-              class: "mermaid",
-            },
-            children: newNode.data.hChildren,
-          },
-        ],
-      });
       fs.writeFileSync(cacheFile, JSON.stringify(newNode), {
         encoding: 'utf-8'
       });
