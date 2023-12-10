@@ -47,6 +47,20 @@ module.exports = async (arg, options) => {
 
     for (const {index, parent, cacheFile} of instances) {
       const newNode = parent.children[index];
+      newNode.children[0].value =
+        '<div class="mermaid">' + newNode.children[0].value + "</div>";
+      Object.assign(newNode.data, {
+        hChildren: [
+          {
+            type: "element",
+            tagName: "div",
+            properties: {
+              class: "mermaid",
+            },
+            children: newNode.data.hChildren,
+          },
+        ],
+      });
       fs.writeFileSync(cacheFile, JSON.stringify(newNode), {
         encoding: 'utf-8'
       });
