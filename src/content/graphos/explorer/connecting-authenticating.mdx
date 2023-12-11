@@ -57,6 +57,11 @@ Access-Control-Allow-Credentials: true
 
 Once configured, requests sent from `https://studio.apollographql.com` include the cookies from your domain when you run queries with the Explorer. If you're logged in on your domain, requests from the Explorer will also be logged in. If you log out on your domain and the cookie is removed, requests from the Explorer will be logged out.
 
+#### Cookies for Safari users
+
+Safari `13.1` and later [blocks third-party cookies by default](https://webkit.org/blog/10218/full-third-party-cookie-blocking-and-more/). When using Explorer in Safari, it considers your server's endpoint to be "third-party" to GraphOS Studio.  Therefore, Safari users need to open **Settings > Privacy** in Safari and uncheck **Prevent cross-site tracking** to send Explorer requests with cookies.
+
+
 ### Environment variables
 
 The Explorer's Settings tab includes a section for defining environment variables. Here, you can provide sensitive information that you can then inject into header values, GraphQL variables, or [scripts](#scripting).
