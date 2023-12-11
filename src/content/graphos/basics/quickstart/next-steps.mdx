@@ -3,7 +3,7 @@ title: Supergraph next steps
 description: Get the most out of GraphOS
 ---
 
-After you [create a supergraph](./cloud/) in Apollo Studio, read below to learn about some of the next steps you should take to get the most out of it and the entire GraphOS platform.
+After you [create a supergraph](./cloud/) with GraphOS Studio, read below to learn about some of the next steps you should take to get the most out of it and the entire GraphOS platform.
 
 > For the most part, you can perform these next steps in any order. But you should definitely start by [installing the Rover CLI](#first-install-the-rover-cli).
 
@@ -21,7 +21,7 @@ See [this article](../graphs/local-development/).
 
 ### Update a subgraph schema
 
-When you first set up your cloud supergraph, Apollo Studio fetches your existing GraphQL API's schema. Your existing API becomes the first **subgraph** in your supergraph:
+When you first set up your cloud supergraph, GraphOS Studio fetches your existing GraphQL API's schema. Your existing API becomes the first **subgraph** in your supergraph:
 
 ```mermaid
 flowchart LR;
@@ -39,7 +39,7 @@ flowchart LR;
 
 This initial schema fetch is a one-time action to help you get started. Whenever your API's schema _changes_, Studio _doesn't_ automatically fetch it again. This means your router _doesn't know_ about those changes. Clients can't include any new schema fields in their queries until your router _does_ know about the changes!
 
-Whenever you update your subgraph's schema, you need to **publish** those changes with the Rover CLI. [Learn about publishing subgraph schemas.](../delivery/#subgraph-schemas)
+Whenever you update your subgraph's schema, you need to **publish** those changes with the Rover CLI. [Learn about publishing subgraph schemas.](../delivery/publishing-schemas/#publish-subgraph-schemas)
 
 After learning about the publishing process, you should [integrate it into your CI workflow](#set-up-continuous-delivery).
 
@@ -98,7 +98,7 @@ After you make these changes, you can start using powerful federation features i
 
 - [Entities](/federation/entities/) (object types that are defined and resolved across multiple subgraphs)
 - [Federation-specific directives](/federation/federated-types/federated-directives) for sharing types, marking fields as inaccessible, and more
-- [Federated trace reporting](/federation/metrics/) for metrics visualization in Apollo Studio
+- [Federated trace reporting](/federation/metrics/) for metrics visualization in GraphOS Studio
 
 ### Set up continuous delivery
 
@@ -107,7 +107,7 @@ Every time you want to make changes to one of your subgraphs, you should do the 
 1. Verify that your proposed changes won't break your supergraph _or_ any of your existing clients.
    - To do this, you set up [schema checks](../delivery/schema-checks/) for your supergraph.
 2. Whenever you deploy verified changes, always publish your updated subgraph schema to GraphOS as part of that deployment.
-   - For a basic example of this, see [Publishing with continuous delivery](../delivery/#publishing-with-continuous-delivery).
+   - For a basic example of this, see [Publishing with continuous delivery](../delivery/publishing-schemas/#publish-with-continuous-delivery).
 
 ### Disable client-subgraph communication
 

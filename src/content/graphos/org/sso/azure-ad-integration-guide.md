@@ -2,7 +2,7 @@
 title: Setting up Apollo SSO with Azure AD
 ---
 
-> ⚠️ Single sign-on (SSO) is available only for [Enterprise plans](https://www.apollographql.com/pricing/).
+> ⚠️ **Single sign-on (SSO) is available only for [Enterprise plans](https://www.apollographql.com/pricing/).** Unlike most Enterprise features, this feature is _not_ available as part of an [Enterprise trial](../plans/#enterprise-trials).
 
 This guide walks through configuring Azure Active Directory (Azure AD) as your Apollo organization's identity provider (IdP) for single sign-on (SSO).
 
@@ -118,7 +118,7 @@ This guide walks through configuring Azure Active Directory (Azure AD) as your A
 
 After you successfully configure the identity bridge between Azure AD and PingOne, you need to configure and enable Apollo as an OIDC application. The configuration for this application should already be initialized, and you can access it via the **Complete your Application Configuration** reminder under **Applications** in the PingOne admin console.
 
-1. Select **Meteor Development Group - Apollo Studio** under **Complete your Application Configuration**.
+1. Select **Meteor Development Group - GraphOS Studio** under **Complete your Application Configuration**.
 
     > ⚠️ If the **Add OIDC Application** wizard doesn’t automatically pop-up, select the **SAML** tab and then select the **OIDC** tab.
 

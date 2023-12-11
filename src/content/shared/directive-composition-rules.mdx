@@ -1,0 +1,132 @@
+#### `DIRECTIVE_COMPOSITION`
+
+Indicates that an issue was detected when composing custom directives.
+
+#### `MERGED_NON_REPEATABLE_DIRECTIVE_ARGUMENTS`
+
+Indicates a non-repeatable directive has been applied to a schema element in different subgraphs with different arguments and the arguments values were merged using the directive configured strategies.
+
+<p style="margin-bottom: 0">❌</p>
+
+```graphql title="Subgraph A"
+type Product {
+  id: ID!
+  name: String
+}
+
+type Query {
+  products: [Product] @customDirective(orderBy: ["name"]) #highlight-line
+}
+```
+
+```graphql title="Subgraph B"
+type Product {
+  id: ID!
+  name: String
+}
+
+type Query {
+  products: [Product] @customDirective(orderBy: ["price"]) #highlight-line
+}
+```
+
+<p style="margin-bottom: 0">✅</p>
+
+```graphql title="Subgraph A"
+type Product {
+  id: ID!
+  name: String
+}
+
+type Query {
+  products: [Product] @customDirective(orderBy: ["name", "price"]) #highlight-line
+}
+```
+
+```graphql title="Subgraph B"
+type Product {
+  id: ID!
+  name: String
+}
+
+type Query {
+  products: [Product] @customDirective(orderBy: ["name", "price"]) #highlight-line
+}
+```
+
+<hr/>
+
+#### `NO_EXECUTABLE_DIRECTIVE_INTERSECTION`
+
+Indicates that an executable directive definition is declared with no shared locations across subgraphs.
+
+<p style="margin-bottom: 0">❌</p>
+
+<CodeColumns>
+
+```graphql title="Subgraph A"
+directive @log(
+  message: String!
+) on QUERY  #highlight-line
+```
+
+```graphql title="Subgraph B"
+directive @log(
+  message: String!
+) on FIELD #highlight-line
+```
+
+</CodeColumns>
+
+<p style="margin-bottom: 0">✅</p>
+
+<CodeColumns>
+
+```graphql title="Subgraph A"
+directive @log(
+  message: String!
+) on QUERY | FIELD
+```
+
+```graphql title="Subgraph B"
+directive @log(
+  message: String!
+) on QUERY | FIELD
+```
+
+</CodeColumns>
+
+<hr/>
+
+#### `FROM_SUBGRAPH_DOES_NOT_EXIST`
+
+Indicates the source subgraph specified by `@override` directive doesn't exist.
+
+<p style="margin-bottom: 0">❌</p>
+
+```graphql title="Subgraph A"
+type Product @key(fields: "id") {
+  id: ID!
+  inStock: Boolean! @override(from: "Subgraph B")
+}
+```
+
+```graphql title="Subgraph B"
+# Subgraph B doesn't exist
+```
+
+<p style="margin-bottom: 0">✅</p>
+
+```graphql title="Subgraph A"
+type Product @key(fields: "id") {
+  id: ID!
+  inStock: Boolean! @override(from: "Subgraph B")
+}
+```
+
+```graphql title="Subgraph B"
+type Product @key(fields: "id") {
+  id: ID!
+  inStock: Boolean!
+}
+```

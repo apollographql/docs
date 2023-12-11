@@ -1,10 +1,12 @@
 ---
 title: Launches
+subtitle: Learn about the process of deploying updates to supergraphs
+description: Discover what changes trigger a launch, how to monitor launch status, and the steps involved in an Apollo GraphOS launch.
 ---
 
 In GraphOS, a **launch** represents the complete process of applying a set of updates to a supergraph. Launches are _usually_ triggered by making changes to one of your published subgraph schemas.
 
-<img class="screenshot" src="../img/launch-completed.jpg" width="500" />
+<img className="screenshot" src="../img/launch-completed.jpg" width="500" />
 
 Updates that trigger a launch include:
 
@@ -12,20 +14,23 @@ Updates that trigger a launch include:
 - Adding or removing entire subgraphs
 - Migrating types or fields between subgraphs
 - Modifying your [cloud router's configuration](../routing/cloud-configuration/)
+- Updating your federation version
 
 A launch might consist entirely of changes that don't affect your supergraph's public API (such as migrating fields between subgraphs).
 
+You can [trigger a launch manually by calling the GraphOS Platform API](#manually-trigger-launch).
+
 ## Launch status
 
-Your supergraph's Launches page in Apollo Studio enables you to observe and monitor the schema delivery process for both in-progress and past launches:
+Your supergraph's Launches page in GraphOS Studio enables you to observe and monitor the schema delivery process for both in-progress and past launches:
 
-<img class="screenshot" src="../img/launches-page.jpg" width="500" />
+<img className="screenshot" src="../img/launches-page.jpg" width="500" />
 
 The green **PUBLISHED** badge indicates which launch corresponds to your supergraph's current published schema.
 
 Selecting a launch provides a breakdown of its individual steps and any errors or warnings that occurred during it:
 
-<img class="screenshot" src="../img/launch-completed.jpg" width="500" />
+<img className="screenshot" src="../img/launch-completed.jpg" width="500" />
 
 From this detail view, you can view the timestamp and other details for each step in the launch process. You can also view the launch's associated supergraph schema (or any build errors if composition failed).
 
@@ -45,3 +50,11 @@ graph TB;
   class complete tertiary;
   class subgraphPublished secondary;
 ```
+
+## Manually trigger launch
+
+<PreviewFeature />
+
+You can trigger a launch manually by calling the [GraphOS Platform API](/graphos/platform-api) to publish subgraph schema updates. This is useful for deployments that require progressive rollouts, where different environments have unique subgraph schemas. In this scenario, you can publish the subgraph schemas for an environment, wait for the completed launch (and any downstream launches), then retrieve the supergraph schema with the launch ID.  
+
+For an example workflow using GraphOS Platform API to manually trigger a launch, see the [Advanced deployment workflow for blue-green deployment](/federation/managed-federation/deployment/#example-blue-green-deployment).

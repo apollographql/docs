@@ -47,11 +47,12 @@ if (process.env.CONTEXT === 'production') {
       key="qualified-js"
       id="qualified-js"
       async
-      src="https://js.qualified.com/qualified.js?token=mdpGqx2V2oJXA51Q"
+      src="https://js.qualified.com/qualified.js?token=mdpGqx2V2oJXA51Q" // gitleaks:allow
     />
   );
 }
 
-export const onRenderBody = ({setHeadComponents}) => {
+export const onRenderBody = ({setHeadComponents, setHtmlAttributes}) => {
   setHeadComponents(headComponents);
+  setHtmlAttributes({lang: 'en'});
 };

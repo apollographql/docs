@@ -2,7 +2,7 @@
 title: Setting up Apollo SSO with a SAML-based IdP
 ---
 
-> ⚠️ Single sign-on (SSO) is available only for [Enterprise plans](https://www.apollographql.com/pricing/).
+> ⚠️ **Single sign-on (SSO) is available only for [Enterprise plans](https://www.apollographql.com/pricing/).** Unlike most Enterprise features, this feature is _not_ available as part of an [Enterprise trial](../plans/#enterprise-trials).
 
 This guide walks through configuring a generic SAML-based identity provider (IdP) for use with Apollo single sign-on (SSO). These steps require administrative access to your IdP.
 
@@ -18,7 +18,7 @@ This guide walks through configuring a generic SAML-based identity provider (IdP
 1. Create a new application in your SSO environment. While doing so, set the following values:
 
     * **App Name**:  `Apollo GraphOS` 
-    * **App logo**: [Apollo logo](../img/sso/apollo-sk-logo.png) (optional) 
+    * **App logo**: [Apollo logo](../../img/sso/apollo-sk-logo.png) (optional) 
 
 2. If possible, upload the appropriate Apollo SAML metadata for your organization:
     * If your organization **does not** already use the Entity ID `PingConnect`: [apollo_studio_pingconnect_metadata.xml](apollo_studio_pingconnect_metadata.xml)

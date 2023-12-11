@@ -4,6 +4,14 @@ id: TN0025
 tags: [schema-design]
 ---
 
+<Tip>
+
+If you're an enterprise customer looking for more material on this topic, try the [Enterprise best practices: Effective supergraph stewardship](https://www.apollographql.com/tutorials/effective-stewardship) course on Odyssey.
+
+Not an enterprise customer? [Learn about GraphOS for Enterprise.](/graphos/enterprise)
+
+</Tip>
+
 Initial GraphQL adoption often emerges either from within a single team or a small number of teams, and at that scale, managing stewardship concerns may be handled on an informal basis. However, the move toward a unified supergraph requires a more intentional approach. Given the evolutionary nature of a supergraph, strong stewardship practices are needed to help maintain its integrity while simultaneously driving its adoption across teams.
 
 The establishment of a graph stewardship group is an important factor in the success of a supergraph adoption project. This group may be thought of as the "GraphQL Center of Excellence" within a company and it should represent a cross-section of key graph stakeholders. Ultimately, the stewardship of a supergraph is largely concerned with empowering the people who will contribute to and consume it with processes that will help them operate as good citizens of the graph. Once the graph stewardship group has been established, the work largely focuses on setting standards that help maintain the quality of the graph, facilitate its continuous evolution, support its operation, and enforce standards for client usage.
@@ -39,7 +47,7 @@ Once changes are made to the graph, teams that contribute to and consume the API
 
 ### Graph operation
 
-Having the right observability tools in place is a key factor in maintaining smooth graph operations and minimizing mean time to recovery when something unexpected happens. [Federated traces](/graphos/metrics/#resolver-level-traces) provide insight into API usage at the field, operation, and client levels in GraphOS and this data can be used to tune performance, debug errors, and support a safe rollover strategy for deprecated fields (and performance reports and alerts can also be pushed directly to a Slack channel from GraphOS).
+Having the right observability tools in place is a key factor in maintaining smooth graph operations and minimizing mean time to recovery when something unexpected happens. [Federated traces](/graphos/metrics/operations/#resolver-level-traces) provide insight into API usage at the field, operation, and client levels in GraphOS and this data can be used to tune performance, debug errors, and support a safe rollover strategy for deprecated fields (and performance reports and alerts can also be pushed directly to a Slack channel from GraphOS).
 
 The stewardship group should proactively establish performance best practices that support graph operation. For example, caching may happen at various levels in the stack—from the normalized cache in Apollo Client, to Automatic Persisted Queries that support edge caching with CDNs, to full response caching in subgraphs—and service owners and client teams alike must be aware of what the standard practices are within the graph. Similar guidelines may be provided for areas such as using data loaders to batch requests to underlying data sources, providing minimal unit test coverage for subgraph resolvers, and running automated performance tests for known operations.
 
@@ -47,7 +55,7 @@ The stewardship group should proactively establish performance best practices th
 
 It's a best practice for [clients to identify themselves by name and version](/technotes/TN0001-client-id-enforcement/) before querying data from the graph, and clients should also assign names to all of the operations they send to the API. Ideally, these operation names are defined using a shared naming scheme, so it will be the role of the graph stewardship group to set, communicate, and enforce these naming standards.
 
-Additionally, the stewardship group may wish to set standards for using query variables instead of literals as operation arguments. This measure will help minimize operation cardinality and take advantage of some of Apollo Studio's reporting optimizations in the gateway. And to guard against potentially abusive operations, the stewardship group may also put appropriate mechanisms in place to limit query depth, breadth, and overall cost.
+Additionally, the stewardship group may wish to set standards for using query variables instead of literals as operation arguments. This measure will help minimize operation cardinality and take advantage of some of GraphOS Studio's reporting optimizations in the gateway. And to guard against potentially abusive operations, the stewardship group may also put appropriate mechanisms in place to limit query depth, breadth, and overall cost.
 
 ## Onboarding and supporting teams
 

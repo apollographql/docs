@@ -1,10 +1,12 @@
 # Reorganize file structure in GraphOS docset
+/routing/persisted-queries/ /docs/graphos/operations/persisted-queries/
+/routing/defer/ /docs/graphos/operations/defer/
 /check-configurations/ /docs/graphos/delivery/check-configurations/
 /contracts/ /docs/graphos/delivery/contracts/
 /github-integration/ /docs/graphos/delivery/github-integration/
 /launches/ /docs/graphos/delivery/launches/
 /schema-checks/ /docs/graphos/delivery/schema-checks/
-/validating-client-operations/ /docs/graphos/delivery/validating-client-operations/
+/validating-client-operations/ /docs/rover/validating-client-operations/
 /federated-graphs/ /docs/graphos/graphs/federated-graphs/
 /local-development/ /docs/graphos/graphs/local-development/
 /org/graphs/ /docs/graphos/graphs/
@@ -71,3 +73,11 @@
 /graphs/overview/ /docs/graphos/graphs
 /org/organizations/ /docs/graphos/org
 /odyssey https://www.apollographql.com/tutorials/
+
+# Move Validating client operations to Rover docs
+
+/delivery/validating-client-operations/ /docs/rover/validating-client-operations/
+
+# Redirect self-hosted routing setup to self-hosted quickstart
+
+/routing/self-hosted /docs/graphos/quickstart/self-hosted/

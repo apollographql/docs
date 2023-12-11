@@ -9,16 +9,26 @@ export default function StudioButton() {
     <Button
       flexShrink={0}
       colorScheme="indigo"
+      _dark={{
+        color: 'indigo.200'
+      }}
       variant="ghost"
       rightIcon={<FiArrowRight />}
       as="a"
       ml="2"
-      href="https://studio.apollographql.com?referrer=docs"
+      href={`https://studio.apollographql.com${
+        user ? '' : '/signup'
+      }?referrer=docs`}
       target="_blank"
       rel="noopener noreferrer"
       d={{base: 'none', lg: 'flex'}}
+      onClick={() => {
+        window.gtag?.('event', 'studio_button_click', {
+          value: user ? 1 : 0
+        });
+      }}
     >
-      {user ? 'Launch Studio' : 'Try GraphOS'}
+      Launch GraphOS Studio
     </Button>
   );
 }

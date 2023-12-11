@@ -6,8 +6,7 @@ import {
   DarkMode,
   Stack,
   StackDivider,
-  chakra,
-  useColorModeValue
+  chakra
 } from '@chakra-ui/react';
 import {DOCSET_ICONS} from '../DocsetMenu';
 import {
@@ -25,15 +24,17 @@ export const COLLAPSED_SIDEBAR_WIDTH = 93;
 export function LeftSidebarNav(props) {
   const {sidebarOpen, dismissSidebar} = useContext(DocsetContext);
 
-  const bgColor = useColorModeValue('gray.800', 'gray.900');
-
   return (
     <Box
       color="white"
       fontWeight="semibold"
-      bgColor={bgColor}
+      bgColor="gray.800"
+      _dark={{
+        bgColor: 'gray.900'
+      }}
       flexShrink="0"
-      overflow="auto"
+      overflowY="auto"
+      overflowX="hidden"
       overscrollBehavior="none"
       {...props}
     >
@@ -106,6 +107,10 @@ export function LeftSidebarNav(props) {
           />
           <SidebarCategoryLink docset="rover" icon={DOCSET_ICONS.rover} />
           <SidebarCategoryLink docset="router" icon={DOCSET_ICONS.router} />
+          <SidebarCategoryLink
+            docset="graphos/enterprise"
+            icon={DOCSET_ICONS.enterprise}
+          />
           <SidebarCategoryLink
             docset="technotes"
             icon={DOCSET_ICONS.technotes}

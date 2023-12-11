@@ -26,9 +26,23 @@ async function transformer({data}) {
   // create mapping of sources to their internal status
   const isInternal = configs.nodes.reduce((acc, node) => {
     const {internal} = JSON.parse(node.fields.content);
+    let docset = node.sourceInstanceName;
+    // when the sourceInstanceName equals "__PROGRAMMATIC__", we need to extract
+    // the docset name from the path
+    if (docset === '__PROGRAMMATIC__') {
+      // an example relativeDirectory looks like:
+      // .cache/caches/gatsby-source-remote-file/2740f1d9...c765648d9fe/react/v2
+      const paths = node.relativeDirectory.split('/');
+      docset = paths.pop();
+      // If the last part of the path has to do with a version, use the
+      // penultimate part of the path
+      if (/^v\d+$/.test(docset)) {
+        docset = paths.pop();
+      }
+    }
     return {
       ...acc,
-      [node.sourceInstanceName]: internal === true
+      [docset]: internal === true
     };
   }, {});
 
@@ -112,7 +126,7 @@ const query = `
       }
     }
 
-    allMarkdownRemark {
+    allMarkdownRemark (filter: {frontmatter: {noIndex: {ne: true}}}) {
       nodes {
         ...NodeFragment
         htmlAst
@@ -127,7 +141,7 @@ const query = `
       }
     }
 
-    allMdx {
+    allMdx (filter: {frontmatter: {noIndex: {ne: true}}}) {
       nodes {
         ...NodeFragment
         mdxAST
@@ -147,6 +161,7 @@ const query = `
         fields {
           content
         }
+        relativeDirectory
         sourceInstanceName
       }
     }

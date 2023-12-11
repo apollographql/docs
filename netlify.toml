@@ -8,3 +8,10 @@
   API_URL = "https://graphql.api.apollographql.com"
   PREFIX_PATHS = "true"
   GATSBY_DISABLE_CACHE_PERSISTENCE = "1"
+[[plugins]]
+  package = "@netlify/plugin-lighthouse"
+
+[[plugins]]
+package = "netlify-plugin-cache"
+  [plugins.inputs]
+  paths = [".mermaid"]

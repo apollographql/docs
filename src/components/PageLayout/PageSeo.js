@@ -5,7 +5,7 @@ import {GatsbySeo} from 'gatsby-plugin-next-seo';
 import {PathContext} from '../../utils';
 import {graphql, useStaticQuery} from 'gatsby';
 
-export function PageSeo({docset, title, description}) {
+export function PageSeo({docset, title, description, noindex}) {
   const {uri} = useContext(PathContext);
 
   const {
@@ -28,6 +28,7 @@ export function PageSeo({docset, title, description}) {
 
   return (
     <GatsbySeo
+      noindex={noindex}
       title={title}
       description={description}
       canonical={siteUrl + uri}
@@ -59,5 +60,6 @@ export function PageSeo({docset, title, description}) {
 PageSeo.propTypes = {
   title: PropTypes.string.isRequired,
   docset: PropTypes.string.isRequired,
-  description: PropTypes.string
+  description: PropTypes.string,
+  noindex: PropTypes.bool
 };

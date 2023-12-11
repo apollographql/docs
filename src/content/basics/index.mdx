@@ -1,6 +1,8 @@
 ---
 title: Apollo Docs
 toc: true
+subtitle: ' '
+description: Learn how Apollo GraphQL can help enterprise architects, API implementers, and client developers build, deploy, and manage a supergraph of unified microservices, data sources, and applications.
 ---
 
 import {ButtonGroup, VStack} from '@chakra-ui/react';
@@ -12,7 +14,13 @@ import {
   Odyssey
 } from '../../components/HomePage';
 import {DOCSET_ICONS} from '../../components/DocsetMenu';
-import {SiDiscourse, SiGithub, SiTwitter, SiYoutube} from 'react-icons/si';
+import {
+  SiDiscord,
+  SiDiscourse,
+  SiGithub,
+  SiTwitter,
+  SiYoutube
+} from 'react-icons/si';
 
 **Apollo GraphOS** is the developer platform for building a [**supergraph**](./intro/platform/): a unified network of your organization's data and services, all composed into a single distributed **GraphQL API**.
 
@@ -103,18 +111,27 @@ We love hearing from you! Here are a few ways you can connect with us and other 
 
 <ButtonGroup variant="ghost">
   <CommunityButton
+    aria-label="Community GitHub"
     href="https://github.com/apollographql"
     icon={<SiGithub />}
   />
   <CommunityButton
+    aria-label="Community YouTube"
     href="https://youtube.com/apollographql"
     icon={<SiYoutube />}
   />
   <CommunityButton
+    aria-label="Community Forums"
     href="https://community.apollographql.com"
     icon={<SiDiscourse />}
   />
   <CommunityButton
+    aria-label="Community Discord"
+    href="https://discord.gg/yFZJH2QYrK"
+    icon={<SiDiscord />}
+  />
+  <CommunityButton
+    aria-label="Community Twitter"
     href="https://twitter.com/apollographql"
     icon={<SiTwitter />}
   />

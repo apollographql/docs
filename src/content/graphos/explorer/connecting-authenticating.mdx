@@ -16,7 +16,7 @@ It's common for public endpoints to set [CORS policies](https://developer.mozill
 
 To do so, include the following header(s) in your server's responses:
 
-```bash
+```bash showLineNumbers=false
 Access-Control-Allow-Origin: https://studio.apollographql.com
 
 # Include this only if your server *also* authenticates via cookies.
@@ -50,12 +50,17 @@ If your server uses cookies to authenticate, you can configure your endpoint to 
 
 To set this up, your [cookie's value must contain `SameSite=None; Secure`](https://www.chromium.org/updates/same-site). Additionally, the following CORS headers must be present in your server's response to Studio:
 
-```bash
+```bash showLineNumbers=false
 Access-Control-Allow-Origin: https://studio.apollographql.com
 Access-Control-Allow-Credentials: true
 ```
 
 Once configured, requests sent from `https://studio.apollographql.com` include the cookies from your domain when you run queries with the Explorer. If you're logged in on your domain, requests from the Explorer will also be logged in. If you log out on your domain and the cookie is removed, requests from the Explorer will be logged out.
+
+#### Cookies for Safari users
+
+Safari `13.1` and later [blocks third-party cookies by default](https://webkit.org/blog/10218/full-third-party-cookie-blocking-and-more/). When using Explorer in Safari, it considers your server's endpoint to be "third-party" to GraphOS Studio.  Therefore, Safari users need to open **Settings > Privacy** in Safari and uncheck **Prevent cross-site tracking** to send Explorer requests with cookies.
+
 
 ### Environment variables
 
@@ -115,7 +120,7 @@ const secretToken = explorer.environment.get('token');
 
 ## Scripting
 
-Similar to tools like Postman, the Explorer can run custom scripts before executing each GraphQL operation. These JavaScript-based scripts often populate the values of [environment variables](#environment-variables) that are then injected into HTTP header values or GraphQL variables. This can be especially useful for managing authentication flows like OAuth, for example by refreshing an expired access token.
+Similar to tools like Postman, the Explorer can run custom scripts when executing each GraphQL operation. These JavaScript-based scripts often populate the values of [environment variables](#environment-variables) that are then injected into HTTP header values or GraphQL variables. This can be especially useful for managing authentication flows like OAuth, for example by refreshing an expired access token, or validating response data. For an example, see [Operation Scripts](#operation-scripts).
 
 ### Script types
 
@@ -123,7 +128,7 @@ You can define two different types of scripts:
 
 - [**Preflight scripts.**](#preflight-scripts) You can define a _single_ preflight script _per variant_ of a graph. This script runs before _every Explorer operation_ that's executed against the associated variant (unless a user individually [disables the script](#disabling-preflight-scripts)).
     - Preflight scripts are especially helpful for enabling organization-wide Explorer authentication against your graph.
-- [**Operation scripts.**](#operation-scripts) If you use [operation collections](./operation-collections/), you can define a separate script for each saved operation in a collection. This script runs before the corresponding operation is executed (as long as a user individually [enables the script](#enabling-operation-scripts)).
+- [**Operation scripts.**](#operation-scripts) If you use [operation collections](./operation-collections/), you can define a separate script for each saved operation in a collection. This script can then control everything that happens before, during, and after an operation is executed (as long as a user individually [enables the script](#enabling-operation-scripts)).
     - Operation scripts are especially helpful for debugging the behavior of individual operations when they're provided various values.
 
 > If an Explorer operation runs _both_ types of scripts, the preflight script runs _before_ the operation script.
@@ -146,7 +151,7 @@ You can define two different types of scripts:
 
 To create a preflight script:
 
-1. [Open Apollo Studio](https://studio.apollographql.com/) and then open the Explorer for the graph and variant you want to create a script for.
+1. [Open GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content) and then open the Explorer for the graph and variant you want to create a script for.
 
 2. Open the Explorer's Settings tab and scroll down to the **Preflight script** section:
 
@@ -391,3 +396,21 @@ This exposes the `crypto-js` package for use within your script. For available f
 </tr>
 </tbody>
 </table>
+
+### Examples
+
+#### Operation Scripts
+Here is a small example that runs an operation and sets an environment variable for use on future operations:
+
+```js
+const response = await explorer.runOperation({
+ scope: 'shared',
+ graphRef: 'SpaceX-pxxbxen@current',
+ collectionName: 'Mission Control',
+ operationName: 'Ships',
+})
+
+const firstShipID = response.result.data.ships[0].id
+
+explorer.environment.set('shipID', firstShipID)
+```

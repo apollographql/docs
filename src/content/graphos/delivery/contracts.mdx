@@ -1,11 +1,12 @@
 ---
 title: Contracts
-description: Deliver subsets of your enterprise supergraph
+subtitle: Deliver different subsets of your enterprise supergraph
+description: GraphOS contracts allow you to deliver subsets of your federated graph to consumers using the @tag directive.
 ---
 
-> Contracts are available only for [Enterprise plans](https://www.apollographql.com/pricing/).
+<EnterpriseFeature />
 
-Apollo Studio **contracts** enable you to deliver different subsets of your supergraph to different consumers. Each contract filters specific portions of your supergraph's schema into a different Studio variant:
+GraphOS **contracts** enable you to deliver different subsets of your supergraph to different consumers. Each contract filters specific portions of your supergraph's schema into a different GraphOS variant:
 
 ```mermaid
 graph LR;
@@ -73,7 +74,11 @@ This enables you to hide experimental types and fields that are still in develop
 
 Contract routers can safely connect to the same subgraph instances as any other router, because their clients can only interact with data that's represented in the contract schema. This does not affect internal routing (filtered fields can still be used in a `@requires` selection set).
 
-> Any `@tag`s that are present in a source variant's supergraph schema are _also_ present in a contract variant's supergraph schema.
+<Note>
+
+Any `@tag` present in a source variant's supergraph schema is _also_ present in a contract variant's supergraph schema.
+
+</Note>
 
 #### Contract documentation
 
@@ -81,7 +86,7 @@ In Studio, each contract variant has its own README, schema reference, and Explo
 
 ## Setup
 
-> ⚠️ The Apollo Studio steps below require an organization member with the **Org Admin** or **Graph Admin** role. [Learn about member roles.](../org/members/)
+The GraphOS Studio steps below require an organization member with the **Org Admin** or **Graph Admin** role. [Learn about member roles.](../org/members/)
 
 ### 1. Update your router and subgraphs
 
@@ -102,9 +107,9 @@ Older versions of the above libraries and tools don't fully support the required
 
 ### 2. (Fed1) Enable variant support for `@tag`
 
-> **This step is required for Federation 1 supergraphs only.** If you have a Federation 2 supergraph, proceed to the next step.
+**This step is required for Federation 1 supergraphs only.** If you have a Federation 2 supergraph, proceed to [the next step](#3-add-tags).
 
-A contract uses one of your graph's existing [variants](/graphos/graphs/#variants) (called the **source variant**) to generate its contract schema. If your source variant uses Federation 1, you need to enable its support for the `@tag` directive in Apollo Studio.
+A contract uses one of your graph's existing [variants](/graphos/graphs/#variants) (called the **source variant**) to generate its contract schema. If your source variant uses Federation 1, you need to enable its support for the `@tag` directive in GraphOS Studio.
 
 Open the Settings page for the variant you want to use as your source variant, then select the **This Variant** tab:
 
@@ -183,13 +188,17 @@ Each `@tag` has a string `name`. You tag types and fields with the _same_ `name`
 
 For in-depth details on valid `@tag` usage, see [Rules for `@tag`s and contracts](#rules-for-tags-and-contracts).
 
-> Whenever Studio composes your source variant's [supergraph schema](/federation/federated-types/overview), that schema retains all of the `@tag`s from your subgraph schemas (this is different from most other directives, which are removed by default).
+Whenever GraphOS composes your source variant's [supergraph schema](/federation/federated-types/overview), that schema retains all of the `@tag`s from your subgraph schemas. This is different from most other directives, which are removed by default.
 
 ### 4. Publish updated subgraph schemas
 
-After you're done adding tags, update your source variant by publishing your updated subgraph schemas to Apollo Studio.
+After you're done adding tags, update your source variant by publishing your updated subgraph schemas to GraphOS.
 
-> After publishing, if Studio doesn't reflect the the tags that you've added in your subgraph schemas, make sure you've [updated all required libraries and tools](#1-update-your-router-and-subgraphs). If you obtain your subgraph schemas via introspection, older subgraph libraries might strip the `@tag` directive.
+<Tip>
+
+After publishing, if Studio doesn't reflect the the tags that you've added in your subgraph schemas, make sure you've [updated all required libraries and tools](#1-update-your-router-and-subgraphs). If you obtain your subgraph schemas via introspection, older subgraph libraries might strip the `@tag` directive.|
+
+</Tip>
 
 Now you're ready to create your first contract!
 
@@ -220,7 +229,11 @@ In the first step of the dialog, provide the following:
 - A name for your new contract variant
 - The source variant to use
 
-> You can't change these values after the contract is created.
+<Note>
+
+You can't change these values after the contract is created.
+
+</Note>
 
 Then click **Continue**.
 
@@ -237,7 +250,7 @@ Next, you specify tag-based filters for your contract:
 
 The dialog detects all tag names that are used in your source variant's schema, and it populates its dropdown lists with those names. You can add any number of tag names to each list.
 
-> You can also add tag names that aren't yet present in your source variant's schema. If you later add tags with that name, the contract honors them.
+You can also add tag names that aren't yet present in your source variant's schema. If you later add tags with that name, the contract honors them.
 
 Your contract will filter types and fields from its source variant according to the following rules:
 
@@ -248,7 +261,11 @@ Your contract will filter types and fields from its source variant according to 
 - **If you enable the option to hide unreachable types**, the contract schema _excludes_ each unreachable object, interface, union, input, enum, and scalar _unless_ it's tagged with an _included_ tag.
   - A type is considered **unreachable** in a schema if there exists no path to that type from _either_ a [root operation type](https://spec.graphql.org/October2021/#sec-Root-Operation-Types) or an [executable-directive](https://spec.graphql.org/October2021/#ExecutableDirectiveLocation).
 
-> 💡 In Apollo Federation 2, if you want to exclude a type or field from your _source variant's_ API schema _and_ all of its contract schemas, you can use the `@inaccessible` directive instead of `@tag`. For details, see [Using `@inaccessible`](/federation/federated-types/sharing-types/#using-inaccessible).
+<Tip>
+
+In Apollo Federation 2, if you want to exclude a type or field from your _source variant's_ API schema _and_ all of its contract schemas, you can use the `@inaccessible` directive instead of `@tag`. For details, see [Using `@inaccessible`](/federation/federated-types/sharing-types/#using-inaccessible).
+
+</Tip>
 
 When you're finished adding tag names, click **Generate Preview**. Studio attempts to generate a contract schema based on the filters you provided and displays the result:
 
@@ -274,11 +291,11 @@ You can now review all of the details of your contract:
 
 If everything looks right, click **Create**. This kicks off the generation of your contract variant and its initial contract schema as a [launch](./launches).
 
-> Studio might encounter an error while generating your contract schema. For descriptions of these errors, see [Error types](#error-types).
+GraphOS might encounter an error while generating your contract schema. For descriptions of these errors, see [Error types](#error-types).
 
 ### 6. Use your new contract variant
 
-Congratulations! You've created a contract in Apollo Studio. You can now use your contract variant to provide a [contract router or contract documentation](#what-are-contracts-for) to your users.
+Congratulations! You've created your first GraphOS contract. You can now use your contract variant to provide a [contract router or contract documentation](#what-are-contracts-for) to your users.
 
 For example, you can complete the [managed federation setup](/federation/managed-federation/setup/) for a new router instance that uses your contract variant.
 
@@ -294,8 +311,7 @@ Contracts behave slightly differently depending on which version of Apollo Feder
 ### Contracts and Federation 2
 
 To create a contract variant that uses Federation 2, the contract's source variant must _also_ use Federation 2.
-
-> [Learn how to move an existing variant to Federation 2.](/federation/federation-2/moving-to-federation-2#step-2-configure-your-composition-method)
+[Learn how to move an existing variant to Federation 2.](/federation/federation-2/moving-to-federation-2#step-2-configure-your-composition-method)
 
 #### Moving an existing contract to Federation 2
 
@@ -320,7 +336,11 @@ Updates to your contract schema are automatically fetched by your managed [contr
 
 ## Editing a contract
 
-> You can't change an existing contract's name or source variant. Instead, you can create a _new_ contract (and delete the existing contract variant if you no longer need it).
+<Note>
+
+You can't change an existing contract's name or source variant. Instead, you can create a _new_ contract and delete the existing contract variant if you no longer need it.
+
+</Note>
 
 After you create a contract, you can edit its lists of included and excluded tags. From the Contracts list in your graph's Settings page, click **Edit Contract** where shown:
 
@@ -333,7 +353,7 @@ After you create a contract, you can edit its lists of included and excluded tag
 
 This opens a dialog similar to the one you used to create the contract.
 
-If you make any changes to the contract's included or excluded tags, Studio automatically runs [contract checks](#contract-checks) to determine whether those changes will affect any clients that user your contract variant.
+If you make any changes to the contract's included or excluded tags, GraphOS automatically runs [contract checks](#contract-checks) to determine whether those changes will affect any clients that user your contract variant.
 
 The result of these checks is shown in the Review Schema step of the contract edit dialog:
 
@@ -345,20 +365,24 @@ The result of these checks is shown in the Review Schema step of the contract ed
 
 ## Contract checks
 
-> ⚠️ **Important:** To run contract checks via `rover subgraph check`, you must [update the Rover CLI](/rover/getting-started/#installation-methods) to v0.8.2 or later.
->
-> - **If you use Rover v0.8.0 or v0.8.1,** contract checks _do_ run, but Rover ignores any contract check failures in [blocking downstream variants](#failing-contract-checks) you've set.
-> - **If you use a version prior to v0.8.0,** `rover subgraph check` does not run contract checks _at all_.
+<Note>
 
-If you run [schema checks](./schema-checks/) in Apollo Studio (which we recommend for all graphs), those checks include **contract checks** for any variant that acts as a source variant for contracts. Contract checks help your team identify when proposed changes to a source variant will negatively affect one or more downstream contracts.
+To run contract checks via `rover subgraph check`, you must [update the Rover CLI](/rover/getting-started/#installation-methods) to v0.8.2 or later.
 
-When you run schema checks on a source variant, contract checks execute alongside the other types of checks for that variant (composition checks and operation checks).
+- **If you use Rover v0.8.0 or v0.8.1,** contract checks _do_ run, but Rover ignores any contract check failures in [blocking downstream variants](#failing-contract-checks) you've set.
+- **If you use a version prior to v0.8.0,** `rover subgraph check` does not run contract checks _at all_.
 
-> Contract checks rely on the supergraph schema that's generated by composition checks, so they _don't_ execute if that composition _fails_.
+</Note>
+
+If you run [schema checks](./schema-checks/) in GraphOS Studio (which we recommend for all graphs), those checks include **contract checks** for any variant that acts as a source variant for contracts. Contract checks help your team identify when proposed changes to a source variant will negatively affect one or more downstream contracts.
+
+When you run schema checks on a source variant, contract checks execute alongside the other types of checks for that variant (build checks and operation checks).
+
+Contract checks rely on the supergraph schema that's generated by build checks, so they _don't_ execute if that composition fails.
 
 Contract checks do the following for **each** of a source variant's associated contracts:
 
-1. Use the source variant's proposed supergraph schema (generated by composition checks) to generate and validate an updated contract schema
+1. Use the source variant's proposed supergraph schema (generated by build checks) to generate and validate an updated contract schema
 2. Run operation checks against the updated contract schema
 
 On your graph's Checks page in Studio, contract checks are shown as **Downstream**:
@@ -400,7 +424,7 @@ You're done! From now on, whenever schema checks run for your source variant, th
 
 ## Error types
 
-Whenever Apollo Studio attempts to create or update your contract schema, it might encounter an error. Errors are identified by the step in the creation process where they occurred:
+Whenever GraphOS attempts to create or update your contract schema, it might encounter an error. Errors are identified by the step in the creation process where they occurred:
 
 | Error                                      | Description                                                                                                                        |
 | ------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------- |
@@ -410,15 +434,15 @@ Whenever Apollo Studio attempts to create or update your contract schema, it mig
 | `EMPTY_UNION_MASKING`                      | All of a union type's included types were excluded, and an error occurred while excluding the entire union.                        |
 | `INPUT_VALIDATION`                         | The contract is attempting to include and exclude the same tag.                                                                    |
 | `PARSING`                                  | After including and excluding fields, the resulting contract schema failed to parse.                                               |
-| `PARSING_TAG_DIRECTIVES`                   | Studio encountered an error while trying to obtain all uses of `@tag` from the source variant schema.                              |
+| `PARSING_TAG_DIRECTIVES`                   | GraphOS encountered an error while trying to obtain all uses of `@tag` from the source variant schema.                              |
 | `PARTIAL_INTERFACE_MASKING`                | An interface field's return type was excluded, and an error occurred while excluding that interface field.                         |
-| `SCHEMA_RETRIEVAL`                         | Studio encountered an error while retrieving the source variant's schema. It might not yet have a valid composed schema.           |
-| `TAG_INHERITING`                           | Studio encountered an error while attempting to add parent tags to fields.                                                         |
-| `TAG_MATCHING`                             | Studio encountered an error determining which types and fields should be inaccessible based on their tags.                         |
-| `TO_API_SCHEMA`                            | Studio encountered an error while attempting to generate an API schema from the contract variant's supergraph schema.              |
-| `TO_FILTER_SCHEMA`                         | Studio failed to generate and return a contract supergraph schema for an unknown reason.                                           |
+| `SCHEMA_RETRIEVAL`                         | GraphOS encountered an error while retrieving the source variant's schema. It might not yet have a valid composed schema.           |
+| `TAG_INHERITING`                           | GraphOS encountered an error while attempting to add parent tags to fields.                                                         |
+| `TAG_MATCHING`                             | GraphOS encountered an error determining which types and fields should be inaccessible based on their tags.                         |
+| `TO_API_SCHEMA`                            | GraphOS encountered an error while attempting to generate an API schema from the contract variant's supergraph schema.              |
+| `TO_FILTER_SCHEMA`                         | GraphOS failed to generate and return a contract supergraph schema for an unknown reason.                                           |
 | `UNKNOWN`                                  | An unknown error occurred.                                                                                                         |
-| `UNREACHABLE_TYPE_MASKING`                 | Studio encountered an error while attempting to exclude unreachable types in the resulting contract schema.                         |
+| `UNREACHABLE_TYPE_MASKING`                 | GraphOS encountered an error while attempting to exclude unreachable types in the resulting contract schema.                         |
 | `VERSION_CHECK`                            | The Federation version used is not supported by contracts.                                                                         |
 
 ## Rules for `@tag`s and contracts
@@ -453,7 +477,7 @@ type User {
 
 ### Dependent `@tag`s
 
-- Whenever you tag the definition of an object or interface type, Studio automatically considers that tag to be applied to _all fields_ of that type:
+- Whenever you tag the definition of an object or interface type, GraphOS automatically considers that tag to be applied to _all fields_ of that type:
 
     ```graphql
     type InternalUser @tag(name: "internal") {

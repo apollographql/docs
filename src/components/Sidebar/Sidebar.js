@@ -21,7 +21,13 @@ import {useKey} from 'react-use';
 
 export const PAGE_SIDEBAR_MARGIN = SIDEBAR_WIDTH + COLLAPSED_SIDEBAR_WIDTH;
 
-export function Sidebar({children, isHidden, hideSidebar}) {
+export function Sidebar({
+  children,
+  isHidden,
+  hideSidebar,
+  isLocked,
+  onLockToggle
+}) {
   const outerSidebarRef = useRef();
   const sidebarRef = useRef();
   const sidebarNavRef = useRef();
@@ -33,15 +39,20 @@ export function Sidebar({children, isHidden, hideSidebar}) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
+    // close the sidebar when the page URL or sidebar lock status changes
     setSidebarOpen(false);
-  }, [pathContext.uri]);
+  }, [pathContext.uri, isLocked]);
+
+  const openSidebar = useCallback(() => {
+    if (!isLocked) {
+      setSidebarOpen(true);
+    }
+  }, [isLocked]);
 
   const dismissSidebar = useCallback(() => {
-    if (sidebarOpen) {
-      setActiveDocset(null);
-      setSidebarOpen(false);
-    }
-  }, [sidebarOpen]);
+    setActiveDocset(null);
+    setSidebarOpen(false);
+  }, []);
 
   useKey('Escape', dismissSidebar, undefined, [dismissSidebar]);
 
@@ -105,17 +116,18 @@ export function Sidebar({children, isHidden, hideSidebar}) {
           activeDocset,
           setActiveDocset,
           sidebarOpen,
-          setSidebarOpen,
+          openSidebar,
           dismissSidebar,
           onKeyboardSelect: () => {
             setSidebarOpen(false);
             sidebarNavRef.current?.focusFirstLink();
-          }
+          },
+          isLocked
         }}
       >
         <LeftSidebarNav
-          w={SIDEBAR_WIDTH}
-          onMouseOver={() => setSidebarOpen(true)}
+          w={isLocked ? COLLAPSED_SIDEBAR_WIDTH : SIDEBAR_WIDTH}
+          onMouseOver={openSidebar}
         />
         <Box
           ref={sidebarRef}
@@ -124,12 +136,16 @@ export function Sidebar({children, isHidden, hideSidebar}) {
           flexShrink="0"
           borderRightWidth={1}
           bg="bg"
+          ml={isLocked && SIDEBAR_WIDTH - COLLAPSED_SIDEBAR_WIDTH}
           transform={
             sidebarOpen
               ? 'translateX(0)'
               : `translateX(-${SIDEBAR_WIDTH - COLLAPSED_SIDEBAR_WIDTH}px)`
           }
           shadow={sidebarOpen ? 'xl' : 'none'}
+          _dark={{
+            shadow: sidebarOpen ? 'dark-lg' : 'none'
+          }}
           transitionProperty="transform"
           transitionDuration="normal"
           transitionTimingFunction="ease-in-out"
@@ -152,6 +168,8 @@ export function Sidebar({children, isHidden, hideSidebar}) {
                 onVersionChange={version => {
                   setActiveDocset(version.slug);
                 }}
+                isLocked={isLocked}
+                onLockToggle={onLockToggle}
               />
             </PathContext.Provider>
           ) : (
@@ -166,5 +184,7 @@ export function Sidebar({children, isHidden, hideSidebar}) {
 Sidebar.propTypes = {
   children: PropTypes.node.isRequired,
   isHidden: PropTypes.bool,
-  hideSidebar: PropTypes.func
+  hideSidebar: PropTypes.func,
+  isLocked: PropTypes.bool,
+  onLockToggle: PropTypes.func
 };

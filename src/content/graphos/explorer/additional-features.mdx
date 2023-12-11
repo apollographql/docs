@@ -103,42 +103,6 @@ There are two display modes for query plans. You can switch between **Show plan 
   width="600"
 />
 
-## Subscription support
-
-> Note that supergraphs do _not_ currently support subscription operations. You can only execute subscriptions in the Explorer with a [monograph](../graphs/#monographs).
-
-The Explorer supports the following libraries/protocols for sending subscription operations over WebSocket:
-
-- [`graphql-ws`](https://github.com/enisdenjo/graphql-ws)
-  - This library uses the `graphql-transport-ws` protocol.
-- [`subscriptions-transport-ws`](https://github.com/apollographql/subscriptions-transport-ws)
-  - This library uses the `graphql-ws` protocol (not to be confused with the `graphql-ws` _library_ above).
-  - Most Apollo Server instances with subscriptions enabled use this library.
-
-To execute a subscription operation, first specify your subscriptions endpoint and implementation in the Explorer's connection settings:
-
-<img
-  className="screenshot"
-  src="../img/explorer-subscriptions-settings.jpg"
-  alt="Subscription settings in the Explorer"
-  width="500"
-/>
-
-When you execute a subscription, a Subscriptions panel appears in the bottom-right of the Response panel:
-
-<img
-  className="screenshot"
-  src="../img/explorer-subscriptions-panel.jpg"
-  alt="Subscriptions panel in the Explorer"
-  width="500"
-/>
-
-The dot next to `STATUS` indicates whether the Explorer is connected to your WebSocket endpoint (green if connected, red if disconnected). As long as you're connected _and_ listening for updates, any such updates appear in the panel as they're received.
-
-> If you can't connect, double-check that you've specified the correct subscriptions endpoint and implementation.
-
-You can click the `X` next to `Listening` to stop listening for updates (the updates you've already received remain in the panel). You can also click the `X` next to `Subscriptions` to close the panel entirely.
-
 ## Embedding
 
 If you've enabled [public access to a variant of your graph](../graphs/studio-features/#public-variants), you can embed the Explorer in a webpage that you can then provide to your graph's consumers. This enables those consumers to test out operations from your own website.
@@ -236,4 +200,4 @@ The Explorer is not currently available for download or on-prem hosting. However
 
 ### Do my Explorer operations pass through Apollo systems?
 
-No. Operations you run in the Explorer are sent directly from your browser to your GraphQL endpoint, _without_ passing through any Apollo systems along the way. Apollo never sees your request headers or response data. For more information, see [Apollo Studio data privacy and compliance](../data-privacy).
+No. Operations you run in the Explorer are sent directly from your browser to your GraphQL endpoint, _without_ passing through any Apollo systems along the way. Apollo never sees your request headers or response data. For more information, see [GraphOS Studio data privacy and compliance](../data-privacy).

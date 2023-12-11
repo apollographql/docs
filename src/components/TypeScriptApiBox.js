@@ -20,7 +20,7 @@ import {extend, partition} from 'lodash';
 import {graphql, useStaticQuery} from 'gatsby';
 
 function _allText(data) {
-  return [data.shortText, data.text].filter(Boolean).join('\n\n');
+  return data.summary.map(part => part.text).join('');
 }
 
 function _summary(rawData) {
@@ -65,7 +65,7 @@ function mdToReact(text) {
       components={{
         p: Text,
         a: PrimaryLink,
-        code: InlineCode
+        code: ({children}) => <InlineCode>{children}</InlineCode>
       }}
     >
       {sanitized}
@@ -115,7 +115,14 @@ export default function TypeScriptApiBox({name}) {
     return dataByKey;
   }, [content]);
 
-  const rawData = dataByKey[name];
+  let rawData;
+  const nameParts = name.split('.');
+
+  nameParts.forEach(part => {
+    rawData = rawData
+      ? rawData.children.find(child => child.name === part)
+      : dataByKey[part];
+  });
 
   if (!rawData) {
     // TODO: account for things that past versions may reference, but have
@@ -319,17 +326,33 @@ export default function TypeScriptApiBox({name}) {
     };
   }
 
+  const mapOverGroups = data => {
+    return data.groups.map(group => ({
+      name: group.title,
+      members: group.children.map(id => {
+        const child = data.children.find(child => child.id === id);
+        return {
+          ...child,
+          type: _type(child)
+        };
+      })
+    }));
+  };
+
   function templateArgs(rawData) {
     const parameters = _parameters(rawData, dataByKey);
     const split = partition(parameters, 'isOptions');
 
-    const groups = [];
+    // this initial map accounts for properties
+    const groups = rawData.groups ? mapOverGroups(rawData) : [];
+
     if (split[1].length > 0) {
       groups.push({
         name: 'Arguments',
         members: split[1]
       });
     }
+
     if (split[0].length > 0) {
       groups.push({
         name: 'Options',
@@ -356,6 +379,10 @@ export default function TypeScriptApiBox({name}) {
       } else {
         type = _type(rawData);
       }
+    }
+
+    if (rawData.type?.type === 'reflection') {
+      groups.push(...mapOverGroups(rawData.type.declaration));
     }
 
     return {

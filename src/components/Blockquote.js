@@ -1,7 +1,9 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import {Box} from '@chakra-ui/react';
+import {HighlightKeyTerms} from '@apollo/pedia';
 
-export default function Blockquote(props) {
+export default function Blockquote({children, ...props}) {
   return (
     <Box
       pl="4"
@@ -17,6 +19,12 @@ export default function Blockquote(props) {
         }
       }}
       {...props}
-    />
+    >
+      <HighlightKeyTerms>{children}</HighlightKeyTerms>
+    </Box>
   );
 }
+
+Blockquote.propTypes = {
+  children: PropTypes.node.isRequired
+};
