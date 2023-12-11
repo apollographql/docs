@@ -5,8 +5,8 @@ export const onRouteUpdate = ({location}) => {
   // Client-side redirects for links with anchors
   if (location.hash.length > 0) {
     const path = location.pathname + location.hash;
-    if (Object.keys(redirects).includes(path)) {
-      const redirectURL = location.origin + redirects[path];
+    if (path in redirects) {
+      const redirectURL = location.origin + redirects[path] + location.search;
       window.location.replace(redirectURL);
     }
   }
