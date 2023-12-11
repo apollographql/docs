@@ -367,7 +367,7 @@ explorer.environment.set("shipID", firstShipID);
 
 ### Authenticate using an authorization provider URL
 
-The following example uses the [`explorer.oauth2Request`](#exploreroauth2request) method to authenticate using an OAuth 2.0 provider's URL. View the [reference](#exploreroauth2request) for more details.
+The following example uses the [`explorer.oauth2Request`](#exploreroauth2request) function to authenticate using an OAuth 2.0 provider's URL. View the [function's reference](#exploreroauth2request) for more details.
 
 ```js
 const responseQueryParams = await explorer.oauth2Request(
@@ -383,11 +383,11 @@ const responseQueryParams = await explorer.oauth2Request(
   })
 ```
 
-See the following example for how you may
+See the following example for how you can use the response from a [`explorer.oauth2Request`](#exploreroauth2request) request to set an authorization environment variable.
 
 ### Set an authorization environment variable
 
-The following example uses the [`explorer.environment.set`](#explorerenvironmentset) method to set an authorization token based on the results of an authorization request to Okta with date based expiration.
+The following example uses the [`explorer.environment.set`](#explorerenvironmentset) function to set a date-based authorization token relying on the response of an Okta authorization request:
 
 ```js
 let futureDate = explorer.environment.get('futureDate');
