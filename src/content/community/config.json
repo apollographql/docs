@@ -1,0 +1,12 @@
+{
+  "title": "Community",
+  "description": "Get involved the Apollo Community",
+  "sidebar": {
+    "Get Involved": "/",
+    "Contributing Guide": "/contributing",
+    "Blog Post Contributions": "/blog-post-contributions",
+    "Apollo Code of Conduct": "/code-of-conduct",
+    "GraphQL Events": "/graphql-events",
+    "Streaming at Apollo": "/streaming-at-apollo"
+  }
+}

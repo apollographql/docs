@@ -3,7 +3,7 @@ const {
   createRemoteFileNode
 } = require('gatsby-source-filesystem');
 const {join} = require('path');
-const {v5} = require('uuid');
+const {kebabCase} = require('lodash');
 
 exports.sourceNodes = ({
   actions: {createNode},
@@ -71,34 +71,20 @@ exports.onCreateNode = async ({node, getNode, loadNodeContent, actions}) => {
   }
 };
 
-const getNavItems = items =>
-  // turn a sidebar configuration object to an array of nav items
-  Object.entries(items).map(([title, path]) =>
-    typeof path === 'string'
-      ? {title, path} // links are treated normally
-      : {
-          title,
-          // generate an id for each group, for use with the sidebar nav state
-          id: v5(JSON.stringify(path), v5.DNS),
-          // recurse over its children and turn them into nav items
-          children: getNavItems(path)
-        }
-  );
-
 exports.createPages = async ({actions, graphql}) => {
   const {data} = await graphql(`
     {
       pages: allFile(filter: {extension: {in: ["md", "mdx"]}}) {
         nodes {
           id
-          gitRemote {
-            full_name
-          }
           sourceInstanceName
           children {
             ... on Mdx {
               fields {
                 slug
+              }
+              frontmatter {
+                api_doc: recursive_api_doc(depth: 4)
               }
             }
             ... on MarkdownRemark {
@@ -109,59 +95,55 @@ exports.createPages = async ({actions, graphql}) => {
           }
         }
       }
-      configs: allFile(filter: {base: {eq: "config.json"}}) {
-        nodes {
-          fields {
-            content
-          }
-          gitRemote {
-            full_name
-          }
-          sourceInstanceName
+      tags: allMdx {
+        group(field: frontmatter___tags) {
+          name: fieldValue
         }
       }
     }
   `);
 
-  const configs = data.configs.nodes.reduce((acc, node) => {
-    // TODO: convert configs to YAML
-    const {title, version, sidebar, algoliaFilters, internal} = JSON.parse(
-      node.fields.content
-    );
-    return {
-      ...acc,
-      [node.sourceInstanceName]: {
-        docset: title,
-        currentVersion: version,
-        navItems: getNavItems(sidebar),
-        algoliaFilters,
-        internal
-      }
-    };
-  }, {});
-
-  data.pages.nodes.forEach(({id, gitRemote, sourceInstanceName, children}) => {
-    const [{fields}] = children;
-    const versions = data.configs.nodes
-      .filter(
-        node => gitRemote && node.gitRemote?.full_name === gitRemote.full_name
-      )
-      .map(node => {
-        const {version} = JSON.parse(node.fields.content);
-        return {
-          label: version,
-          slug: node.sourceInstanceName
-        };
-      });
+  data.pages.nodes.forEach(({id, sourceInstanceName, children}) => {
+    const [{fields,frontmatter}] = children;
 
     actions.createPage({
       path: fields.slug,
       component: require.resolve('./src/templates/page'),
       context: {
         id,
-        versions,
-        ...configs[sourceInstanceName]
+        basePath: sourceInstanceName,
+        api_doc: frontmatter?.api_doc || [],
       }
     });
   });
+
+  data.tags.group.forEach(tag => {
+    actions.createPage({
+      path: `/technotes/tags/${kebabCase(tag.name)}`,
+      component: require.resolve('./src/templates/tag'),
+      context: {
+        tag: tag.name,
+        basePath: 'technotes'
+      }
+    });
+  });
+};
+
+exports.createSchemaCustomization = ({actions: {createTypes}}) => {
+  const typeDefs = `
+    type MdxFrontmatter {
+      headingDepth: Int
+      minVersion: String
+      noIndex: Boolean
+      subtitle: String
+    }
+
+    type MarkdownRemarkFrontmatter {
+      headingDepth: Int
+      minVersion: String
+      noIndex: Boolean
+      subtitle: String
+    }
+  `;
+  createTypes(typeDefs);
 };

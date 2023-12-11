@@ -1,0 +1,101 @@
+---
+title: Does Apollo Router replace my API gateway?
+id: TN0037
+tags: [federation, router, gateway]
+---
+
+[Apollo Router](https://www.apollographql.com/docs/router) is a high-performant GraphQL gateway that supports [Apollo Federation](https://www.apollographql.com/docs/federation). It handles GraphQL requests that can then be resolved by many GraphQL subraphs underneath. When comparing Router to other API technologies in the market today, a natural first comparison to draw is to API gateways. Tools like Apigee, Kong, or your cloud provider offer capabilities to secure, manage, and monitor your API endpoints.
+These gateways usually live at the outermost edges of your companies infrastructure. Sometimes they are even required by your security team so that all inbound and outbound traffic flows through the same top layer of your tech stack.
+
+The key distinction of the Router is that is not based on URLs or REST endpoints; Apollo Router is a GraphQL-native solution to handle your clients API operations.
+
+## GraphQL native
+First, let's define what we mean by "GraphQL native". Apollo Router runs all the client operations against a [supergraph](/intro/platform/).
+This means that requests processed by the Router are not for any random service, but are restricted to what is defined and published by the [GraphQL subgraphs](/federation/building-supergraphs/subgraphs-overview) for a given supergraph schema.
+Subgraphs define the schema and capabilities they want to expose. A well-defined GraphQL schema does not just expose all the data available in a company, instead, a [demand-oriented schema](/technotes/TN0027-demand-oriented-schema-design) gives clients access to all the operations they need to execute, but without over exposing your data.
+Since subgraphs are also the ones that define their service capabilities, the Router can be the central location to enforce standardized rules or policies that are declared by subgraphs, for example, [a directive-based authN/Z plugin](https://www.apollographql.com/blog/platform/financial-services/directive-based-authorization-for-financial-services/).
+
+```graphql
+type Query {
+  bankAccounts: [BankAccount] @authenticated @hasRole(role: ADMIN)
+}
+```
+
+API gateways usually have no understanding of all the services underneath them or what their capabilities are. They may have configuration options and rules that can apply to a list of services, but these are blanket rules that must be configured at the gateway level, not at the service definition.
+If you wanted to apply a common rule across many services it would be up to the API gateway managers to configure, deploy, and apply that new rule to a set of services rather than the individual service teams.
+
+```yaml
+# Mock gateway rules
+gatewayConfig:
+    myCustomRule:
+        tags: [requiresAuth]
+        ruleToApply: validate-jwt-plugin
+    myOtherCustomRule:
+        URL: "/accounts"
+        ruleToApply: requires-admin-permissions-plugin
+```
+
+## Support for non-GraphQL APIs
+GraphQL is an innovative technology that give clients much more control over their operations and a common language for service teams to communicate. However, GraphQL usually is not the one and only API technology used by companies today.
+If you need to have a common gateway to secure REST endpoints and GraphQL endpoints, Apollo Router can be a complimentary tool that lives underneath this higher-level API gateway. You can configure company-wide policies at the outermost edge layer, and anything else that is better defined as a GraphQL-specific policy can be managed by the Router.
+In addition, using a [defense-in-depth](https://csrc.nist.gov/glossary/term/defense_in_depth) security strategy reduces your companies risk, so having both an API gateway and Router applying shared rules can lead to a more secure environment.
+
+```mermaid
+graph LR
+
+subgraph Clients
+  Client1
+  Client2
+  Client3
+end
+
+subgraph Partners
+  Partner1
+  Partner2
+end
+
+subgraph Edge
+  API-Gateway
+end
+
+style Edge height:100%;
+
+subgraph GraphQL
+  Router
+  Subgraph1
+  Subgraph2
+end
+
+subgraph Data Layer
+  REST1
+  REST2
+  gRPC1
+  DB1
+  DB2
+end
+
+Client1 --> API-Gateway
+Client2 --> API-Gateway
+Client3  --> API-Gateway
+Partner1 --> API-Gateway
+Partner2 --> API-Gateway
+API-Gateway --> Router
+API-Gateway --> REST1
+API-Gateway --> REST2
+Router --> Subgraph1
+Router --> Subgraph2
+Subgraph1 --> gRPC1
+Subgraph1 --> DB1
+Subgraph1 --> REST2
+Subgraph2 --> DB2
+```
+
+## When to consider Apollo Router
+If you are running a GraphQL API in production, and you want to be able to:
+
+* [Monitor your GraphQL operations](/graphos/metrics/field-usage) in a way that other telemetry tools don't support while [continuing support for existing APM tools](./TN0015-router-to-apm-via-opentelemetry/)
+* [Safely publish new schemas without introducing a breaking change](/graphos/delivery/schema-checks)
+* [Secure your GraphQL schema](https://www.apollographql.com/docs/router/configuration/authn-jwt)
+* [Extend the GraphQL runtime with custom features](https://www.apollographql.com/docs/router/customizations/overview)
+
+And do all of this with [minimal latency and scalable performance](https://www.apollographql.com/blog/announcement/backend/apollo-router-our-graphql-federation-runtime-in-rust) then consider adopting [GraphOS and Apollo Router](/graphos/) today!

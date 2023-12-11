@@ -1,0 +1,150 @@
+---
+title: Schema naming conventions
+id: TN0002
+description: Conventions for types, fields, and arguments
+tags: [schema-design]
+---
+
+<Tip>
+
+If you're an enterprise customer looking for more material on this topic, try the [Enterprise best practices: Schema design](https://www.apollographql.com/tutorials/schema-design-best-practices) course on Odyssey.
+
+Not an enterprise customer? [Learn about GraphOS for Enterprise.](/graphos/enterprise)
+</Tip>
+
+## Enforcing conventions
+
+Use GraphOS [schema linting](/graphos/delivery/schema-linter/) to catch naming violations. GraphOS schema linting can be done within [schema checks](/graphos/delivery/schema-checks) which can allow you to enforce this in your CI/CD pipelines, or it can be run using [Rover](/graphos/delivery/schema-linter#one-off-linting) for one-off requests locally.
+
+## High-level guidance
+
+- Regardless of your chosen conventions, be consistent across the entire schema.
+- Be specific with names—don't "land grab" names with broad applicability.
+- Avoid acronyms, initialisms, and abbreviations.
+
+### Casing
+
+Use `camelCase` for field names, argument names, and directive names:
+
+```graphql {2,5}
+type Query {
+  myCamelCaseFieldNames(myArgumentName: String): String
+}
+
+directive @myDirective on FIELD
+```
+
+Use `PascalCase` for type names:
+
+```graphql
+type MyType { ... }
+
+enum MyEnum { ... }
+
+interface MyInterface { ... }
+
+union MyUnion = ...
+
+scalar MyScalar
+```
+
+Use `SCREAMING_SNAKE_CASE` for enum values:
+
+```graphql {2,3}
+enum MyEnum {
+  VALUE_ONE
+  VALUE_TWO
+}
+```
+
+### Field names
+
+Avoid verb prefixes like `get` or `list` on query (read) fields:
+
+```graphql {6}
+type Query {
+  # ❌ incorrect
+  getProducts: [Product]
+
+  # ✅ correct
+  products: [Product]
+}
+```
+
+This creates consistency between root fields and nested fields:
+
+```graphql
+# ❌ incorrect
+query Products {
+  getProducts {
+    id
+    getReviews {
+      content
+    }
+  }
+}
+
+# ✅ correct
+query Products {
+  products {
+    id
+    reviews {
+      content
+    }
+  }
+}
+```
+
+Start mutation fields with a verb:
+
+```graphql {6}
+type Mutation {
+  # ❌ incorrect
+  customerAdd(input: AddCustomerInput): AddCustomerPayload!
+
+  # ✅ correct
+  addCustomer(input: AddCustomerInput): AddCustomerPayload!
+}
+```
+
+### Type names
+
+Use the suffix `Input` when naming input types:
+
+```graphql {1}
+input AddCustomerInput {
+  name: String!
+}
+```
+
+Use a consistent suffix like `Response` or `Payload` when naming output types returned from mutations:
+
+```graphql {5}
+type Mutation {
+  addCustomer(input: AddCustomerInput!): AddCustomerResponse!
+}
+
+type AddCustomerResponse {
+  success: Boolean!
+}
+```
+
+## Additional considerations
+
+### Namespacing
+
+When resolving naming conflicts between different domains, we recommend using one of the following:
+
+**PascalCase Prefix**
+
+```graphql
+type StoreCustomer { ... }
+type SiteCustomer { ... }
+```
+
+**Single_Underscore Prefix**
+
+```graphql
+type Store_Customer { ... }
+type Site_Customer { ... }
+```

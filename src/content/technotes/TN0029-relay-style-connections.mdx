@@ -1,0 +1,335 @@
+---
+title: Relay-style connections and pagination FAQ
+id: TN0029
+tags: [best-practices, schema-design]
+---
+
+[Relay](https://relay.dev) is an opinionated GraphQL client, and its associated [Connections specification](https://relay.dev/graphql/connections.htm) defines a pattern for expressing one-to-many relationships in a GraphQL schema:
+
+```graphql
+query MyPosts($cursor: String) {
+  viewer {
+    posts(first: 5, after: $cursor) {
+      edges {
+        node {
+          id
+          title
+          content
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+    }
+  }
+}
+```
+
+<ExpansionPanel title="View the GraphQL schema for the above operation">
+
+```graphql
+type Query {
+  viewer: User
+}
+
+type User {
+  id: ID!
+  posts(first: Int, after: String, last: Int, before: String): PostConnection!
+}
+
+"""
+This wrapper type contains the list of "edges" and
+pagination metadata.
+"""
+type PostConnection {
+  edges: [PostEdge!]!
+  pageInfo: PageInfo!
+}
+
+"""
+The "edge" wrapper contains metadata about the item in the
+list. By default it's just a cursor indicating the position
+of the item in the list, but additional metadata is allowed.
+"""
+type PostEdge {
+  """
+  The "node" is the actual item in the list.
+  """
+  node: Post
+  cursor: String!
+}
+
+type Post {
+  id: ID!
+  title: String
+  content: String
+}
+
+"""
+The specification includes the pagination metadata
+in a common type.
+"""
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+```
+
+</ExpansionPanel>
+
+It's worth noting that Facebook designed the Connections specification for their Newsfeed feature with these features in mind:
+
+- It uses cursor-based pagination.
+- It supports paging backward (with the `before` cursor) and forward (with the `after` cursor).
+- Each item in the list has a cursor you can use to jump to a specific page in the middle of the list.
+
+These features might not perfectly meet your requirements or the capabilities of your downstream data sources.
+
+## Do I have to use Relay-style connections?
+
+No, unless you're using the Relay client. But its popularity outside of the Relay ecosystem is worth taking advantage of:
+
+- Many developers are familiar with the connection pattern.
+- It encapsulates several schema design best practices.
+- It's designed to be future-proof and support gradual evolution of your GraphQL schema.
+
+## Do I even need a wrapper type for my lists?
+
+Consider the ["Zero, One, Infinity" rule](https://en.wikipedia.org/wiki/Zero_one_infinity_rule) — can you definitively assert that your list will never require pagination or other metadata about the relationship?
+
+Using a wrapper type for lists provides the following benefits:
+
+- **Avoid breaking changes.** You can initially return a wrapper type that _doesn't_ use pagination, and then add pagination later without breaking existing clients. If you return a list directly, you _can't_ add pagination metadata later.
+- **Represent entity relationships.** The `Connection` and `Edge` wrapper types support fields that model attributes _of the relationship between entities_ that don't belong in the entities themselves.
+
+    Consider this example of a many-to-many relationship between `Business` and `Customer`:
+
+   ```graphql
+   type Business {
+     id: ID
+     customers: CustomerConnection
+   }
+
+   type CustomerConnection {
+     edges: [CustomerEdge]
+     total: Int
+   }
+
+   type CustomerEdge {
+     node: Customer
+     type: CustomerType #highlight-line
+   }
+
+   enum CustomerType {
+     IN_STORE
+     ONLINE
+     MULTI_CHANNEL
+   }
+
+   type Customer {
+     id: ID
+     shopsAt: BusinessConnection # --snip --
+   }
+   ```
+
+   A specific `Customer` might shop at one business `IN_STORE` and another `ONLINE`. The `type` is an attribute of the _relationship_, not the business or customer itself. Without wrapper types, you don't have a place to put this data.
+
+## Do I have to implement the entire connection specification?
+
+No, you can use a subset of the specification. You can implement additional parts over time to reach full compliance with the specification (if necessary).
+
+If your downstream data sources don't support paging backward, you limit your implementation to forward pagination:
+
+<ExpansionPanel title="An example with only forward pagination">
+
+```graphql
+query MyPosts($cursor: String) {
+  viewer {
+    posts(first: 5, after: $cursor) {
+      edges {
+        node {
+          id
+          title
+          content
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+    }
+  }
+}
+```
+
+```graphql
+type Query {
+  viewer: User
+}
+
+type User {
+  id: ID!
+  posts(first: Int, after: String): PostConnection!
+}
+
+type PostConnection {
+  edges: [PostEdge!]!
+  pageInfo: PageInfo!
+}
+
+type PostEdge {
+  node: Post
+  cursor: String!
+}
+
+type Post {
+  id: ID!
+  title: String
+  content: String
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  endCursor: String
+}
+```
+
+</ExpansionPanel>
+
+If your downstream data sources don't support per-node cursors, you can drop the `edges` field and use `nodes`:
+
+<ExpansionPanel title="An example without edges">
+
+```graphql
+query MyPosts($cursor: String) {
+  viewer {
+    posts(first: 5, after: $cursor) {
+      nodes {
+        id
+        title
+        content
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+    }
+  }
+}
+```
+
+```graphql
+type Query {
+  viewer: User
+}
+
+type User {
+  id: ID!
+  posts(first: Int, after: String, last: Int, before: String): PostConnection!
+}
+
+type PostConnection {
+  nodes: [Post!]!
+  pageInfo: PageInfo!
+}
+
+type PostEdge {
+  node: Post
+  cursor: String!
+}
+
+type Post {
+  id: ID!
+  title: String
+  content: String
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+```
+
+</ExpansionPanel>
+
+## Are there other ways to design my schema for pagination?
+
+Yes. If your requirements or downstream capabilities don't fit the Relay-style connections spec, we recommend using a visibly different set of conventions so that it's clear to graph consumers that they shouldn't expect to use Relay connection patterns.
+
+Here's an example of pagination that uses page offsets and supports a UI for jumping to a specific page:
+
+<ExpansionPanel title="An alternative to Relay-style connections">
+
+```graphql
+query MyPosts($page: Int) {
+  viewer {
+    posts(page: $page) {
+      nodes {
+        id
+        title
+        content
+      }
+      totalPages
+    }
+  }
+}
+```
+
+```graphql
+type Query {
+  viewer: User
+}
+
+type User {
+  id: ID!
+  posts(page: Int): PostsPaginated!
+}
+
+"""
+This wrapper type uses a different suffix to distinguish
+it from Relay-style connection wrappers.
+"""
+type PostsPaginated {
+  """
+  Using `nodes` avoids the redundant
+  `{ posts { posts { id } } }` selection set.
+  """
+  nodes: [Post!]!
+
+  """
+  Adding pagination metadata directly to the
+  wrapper type works well.
+  """
+  totalPages: Int!
+}
+
+type Post {
+  id: ID!
+  title: String
+  content: String
+}
+```
+
+</ExpansionPanel>
+
+## Can I use Relay-style connections with Apollo Federation?
+
+Yes! You define the schema and resolvers for the connection relationship within a single subgraph, so federation has almost no ramifications on the pattern.
+
+The one exception is the `PageInfo` type, which commonly has a consistent definition for all connections. You must mark this type's definition as `@shareable` to define it in multiple subgraphs:
+
+```graphql
+type PageInfo @shareable {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+```

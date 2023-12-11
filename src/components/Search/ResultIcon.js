@@ -20,7 +20,7 @@ export default function ResultIcon({result}) {
     default:
   }
 
-  return DOCSET_ICONS.apollo;
+  return DOCSET_ICONS.default;
 }
 
 ResultIcon.propTypes = {

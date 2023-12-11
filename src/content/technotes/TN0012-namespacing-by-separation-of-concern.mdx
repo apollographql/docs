@@ -1,0 +1,139 @@
+---
+title: Namespacing by separation of concerns
+id: TN0012
+tags: [schema-design]
+---
+
+Most GraphQL APIs provide their capabilities as root-level fields of the `Query` and `Mutation` types, resulting in a flat structure. For example, the GitHub GraphQL API has approximately 200 of these root-level fields! Even with tools like the Apollo Explorer, navigating and understanding larger "flat" graphs can be difficult.
+
+To improve the logical organization of our graph's capabilities, we can define **namespaces** for our root-level operation fields. These are object types that in turn define query and mutation fields that are all related to a particular concern.
+
+For example, we can define all of the mutation fields related to `User` objects in a `UsersMutations` namespace object:
+
+```graphql
+type UsersMutations {
+  create(profile: UserProfileInput!): User!
+  block(id: ID!): User!
+}
+```
+
+We can then define a similar namespace for `Comment` mutations:
+
+```graphql
+type CommentsMutations {
+  create(comment: CommentInput!): Comment!
+  delete(id: ID!): Comment!
+}
+```
+
+Now, both our `User` and `Comment` types have an associated `create` mutation field, which is valid because each is defined within a separate namespace type.
+
+Finally, we can add our namespace types as the return values for root-level fields of the `Mutation` type:
+
+```graphql
+type Mutation {
+  users: UsersMutations!
+  comments: CommentsMutations!
+}
+```
+
+We can use the same pattern for _queries_ that involve `User` and `Comment` types:
+
+```graphql
+type UsersQueries {
+  all: [User!]!
+}
+
+type CommentsQueries {
+  byUser(user: ID!): [Comment!]!
+}
+
+# Add a single root-level namespace-type which wraps other queries
+type Query {
+  users: UsersQueries!
+  comments: CommentsQueries!
+}
+```
+
+With our namespaces defined, client operations now use a nested format, which provides context on which type is being interacted with:
+
+```graphql
+mutation CreateNewUser($userProfile: UserProfileInput!) {
+  users {
+    create(profile: $userProfile) {
+      id
+      firstName
+      lastName
+    }
+  }
+}
+
+query FetchAllUsers {
+  users {
+    all {
+      id
+      firstName
+      lastName
+    }
+  }
+}
+```
+
+> 💡 Note that you don’t need to repeat the text `user` in the field names of the `UsersQueries` type, because we already know all of these fields apply to `User` objects.
+
+## Namespaces for serial mutations
+
+Unlike all other fields in a GraphQL operation, the root-level fields of the `Mutation` type must be resolved _serially_ instead of in parallel. This can help prevent two mutation fields from interacting with the same data simultaneously, which might cause a race condition.
+
+```graphql
+mutation DoTwoThings {
+  one {
+    success
+  }
+  # The `two` field is not resolved until after `one` is resolved.
+  # It is not resolved at all if resolving `one` results in an error.
+  two {
+    success
+  }
+}
+```
+
+With namespaces, your mutation fields that actually modify data are no longer root-level fields (instead, your namespace objects are). Because of this, the mutation fields _are_ resolved in parallel. In many systems, this doesn't present an issue (for example, you probably want to use another mechanism in your mutation resolvers to ensure transactional consistency, such as a saga orchestrator).
+
+```graphql
+mutation DoTwoNestedThings(
+  $createInput: CreateReviewInput!
+  $deleteInput: DeleteReviewInput!
+) {
+  reviews {
+    create(input: $createInput) {
+      success
+    }
+    # Is resolved in parallel with `create`
+    delete(input: $deleteInput) {
+      success
+    }
+  }
+}
+```
+
+If you want to guarantee serial execution in a particular operation, you can use client-side aliases to create two root fields that are resolved serially:
+
+```graphql
+mutation DoTwoNestedThingsInSerial(
+  $createInput: CreateReviewInput!
+  $deleteInput: DeleteReviewInput!
+) {
+  a: reviews {
+    create(input: $createInput) {
+      success
+    }
+  }
+  # Is resolved serially after `a` is resolved
+  b: reviews {
+    delete(input: $deleteInput) {
+      success
+    }
+  }
+}
+```

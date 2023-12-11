@@ -1,0 +1,56 @@
+---
+title: Apollo launch stages
+description: For products, features, and open-source releases
+---
+
+## Product launch stages
+
+All launches of Apollo products, features, and open-source releases use two launch stages: **preview** and **general availability**.
+
+### Preview
+
+Product and feature **previews** are usually announced publicly and represent a near-complete version of associated functionality. However, previews are _not_ officially supported with any SLA, and breaking API changes are possible between incremental versions of a preview.
+
+**A preview might still contain bugs or undergo iteration.** You're encouraged to try previews in test environments to familiarize yourself with upcoming functionality before it reaches [general availability](#general-availability).
+
+### General availability
+
+A **generally available** product or feature has been deemed ready for use in a production environment and is officially supported by Apollo. Its documentation is considered sufficient to support widespread adoption.
+
+## Open-source pre-releases
+
+Apollo open-source projects might provide pre-releases for early access:
+
+### Alpha / Beta
+
+An **alpha** or **beta** is in volatile, active development. The version might not be feature-complete, and breaking API changes are possible between incremental versions of the alpha or beta.
+
+Alphas and betas help Apollo gather feedback and issues from community members and customers who are enthusiastic early adopters.
+
+### Release candidate (RC)
+
+A **release candidate** (RC) is considered potentially viable for general availability. Minor bugs might still be present, and documentation for the release might be incomplete.
+
+You're encouraged to test out RC versions to help Apollo identify any remaining issues.
+
+## Experimental features
+
+At Apollo, we believe in developing and iterating in the open. **Experimental features** are targeted at developers who want to adopt advanced, cutting-edge functionality. Experimental features might not be complete, they might have breaking changes at any time, and they might be removed from a product or an incremental version of an open-source release without notice.
+
+## Stages for discontinuing support
+
+When support is ending for a [generally available](#general-availability) Apollo product, feature, or open-source release, it first becomes [deprecated](#deprecated), then eventually [end-of-life](#end-of-life).
+
+### Deprecated
+
+A **deprecated** product, feature, or open-source release is still supported by Apollo. It continues to receive security patches and updates to address major regressions. An [end-of-life](#end-of-life) date is provided alongside the deprecation, after which support ends.
+
+**Avoid relying on deprecated releases whenever possible.** Consider upgrading to the latest generally available release to continue receiving new features and functionality.
+
+### End-of-life
+
+Products, features, and open-source releases that reach **end-of-life** are **no longer supported or maintained by Apollo**. They no longer receive updates, security patches, or remediation for regressions. There is no commitment from Apollo to release further versions and no guarantee that the most recent version will continue to work. End-of-life products and features are no longer generally available. 
+
+End-of-life releases published to a package registry aren't removed from that registry. This means you can still install end-of-life versions past the end-of-life date (though Apollo strongly recommends against this). 
+
+**Do not run end-of-life open-source releases in production.** Upgrade to the latest generally available release as soon as possible to ensure you continue receiving security patches, bug fixes, new features, and compatibility with GraphOS features.

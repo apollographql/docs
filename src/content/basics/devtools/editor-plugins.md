@@ -20,14 +20,14 @@ The extension enables you to:
 
 ## Getting started
 
-To get all of the benefits of the VS Code experience, it's best to link the schema that is being developed against **before** installing the extension. The best way to do that is by [registering a schema](https://www.apollographql.com/docs/studio/schema-registry/#registering-a-schema-manually) to the Apollo schema registry. Once that's done:
+To get all of the benefits of the VS Code experience, it's best to link the schema that is being developed against **before** installing the extension. The best way to do that is by [publishing a schema](/graphos/delivery/publishing-schemas/) to the Apollo schema registry. After that's done:
 
 1. Create an `apollo.config.js` file at the root of the project.
-2. Obtain an API key from Apollo Studio.
+2. Obtain a [Personal API key](/graphos/api-keys) from GraphOS Studio.
 
 ### Setting up an Apollo config
 
-In order for the VS Code plugin to know how to find the schema, it needs to be linked to either a published schema or a local one. To link a project to a published schema, edit the `apollo.config.js` file to look like this:
+For the VS Code plugin to know how to find the schema, it needs to be linked to either a published schema or a local one. To link a project to a published schema, edit the `apollo.config.js` file to look like this:
 
 ```js
 module.exports = {
@@ -37,21 +37,23 @@ module.exports = {
 };
 ```
 
-The `service` name here is the name of the graph you've created in [Apollo Studio](https://studio.apollographql.com).
+The `service` name here is the name of the graph you've created in [GraphOS Studio](https://studio.apollographql.com).
 
-### Setting up an API key
+### Setting up the `.env` file
 
-To authenticate with Apollo Studio to pull down your schema, create a file next to the `apollo.config.js` called `.env`. This should be an **untracked** file (i.e., don't commit it to Git). Go to your graph's Settings page in Apollo Studio to get the API key.
+To authenticate with GraphOS Studio to pull down your schema, create a `.env` file in the same directory as the `apollo.config.js` file. This should be an **untracked** file (i.e., don't commit it to Git).
+
+Then go to your [User Settings page](https://studio.apollographql.com/user-settings/api-keys?referrer=docs-content) in GraphOS Studio to create a new Personal API key.
 
 > **Note:** It is best practice to create a new API key for each member of the team and name the key so its easy to find and revoke if needed. This will be easier to manage in the future.
 
 After the key is found, add the following line to the `.env` file:
 
-```bash
+```bash showLineNumbers=false
 APOLLO_KEY=<enter copied key here>
 ```
 
-After this is done, VS Code can be reloaded and the Apollo integration will connect to Apollo Studio to provide autocomplete, validation, and more.
+After this is done, VS Code can be reloaded and the Apollo integration will connect to GraphOS Studio to provide autocomplete, validation, and more.
 
 ### Local schemas
 
@@ -120,9 +122,8 @@ Because of GraphQL's strongly-typed schema, editors not only know about which fi
 
 GraphQL's flexibility can make it difficult to predict the cost of an operation. Without insight into how expensive an operation is, developers can accidentally write queries that place strain on their graph API's underlying backends. Thanks to the Apollo platform's integration with VS Code and our trace warehouse, teams can avoid these performance issues altogether by instantly seeing the cost of a query right in their editor.
 
-To turn on tracing for your GraphQL server, please visit our [guide](https://www.apollographql.com/docs/references/setup-analytics/).
 
-The VS Code extension will show inline performance diagnostics when connected to a service with reported metrics in Apollo Studio. As operations are typed, any fields that take longer than 1ms to respond will be annoated to the right of the field inline! This gives team members a picture of how long the operation will take as more and more fields are added to operations or fragments.
+The VS Code extension will show inline performance diagnostics when connected to a service with reported metrics in GraphOS Studio. As operations are typed, any fields that take longer than 1ms to respond will be annoated to the right of the field inline! This gives team members a picture of how long the operation will take as more and more fields are added to operations or fragments.
 
 <img src="../img/editors/perf-annotation.png" width="80%" style="margin: 5%" alt="Performance annotation next to a field">
 
@@ -138,7 +139,7 @@ Navigating large codebases can be difficult, but the Apollo GraphQL extension ma
 
 ### Graph variant switching
 
-Apollo supports publishing multiple versions ([variants](https://www.apollographql.com/docs/studio/schema-registry/#registering-a-schema-to-a-variant)) of a schema. This is useful for developing on a future development schema and preparing your clients to conform to that schema. To switch between graph variants, open the Command Palette (`cmd + shift + p` on mac), search "Apollo" and choose the "Apollo: Select Schema Tag" option.
+Apollo supports publishing multiple versions ([variants](/graphos/graphs/#variants)) of a schema. This is useful for developing on a future development schema and preparing your clients to conform to that schema. To switch between graph variants, open the Command Palette (`cmd + shift + p` on mac), search "Apollo" and choose the "Apollo: Select Schema Tag" option.
 
 ## Troubleshooting
 
@@ -150,4 +151,4 @@ Sometimes errors will show up as a notification at the bottom of your editor. Ot
 
 <img src="../img/editors/stats.gif" width="80%" style="margin: 5%" alt="Clicking the status bar icon to open the output pane">
 
-If problems persist or the error messages are unhelpful, an [issue](https://github.com/apollographql/apollo-tooling/issues) can be opened on the `apollo-tooling` repository.
+If problems persist or the error messages are unhelpful, an [issue](https://github.com/apollographql/vscode-graphql/issues) can be opened on the `apollo-tooling` repository.

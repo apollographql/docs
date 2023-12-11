@@ -4,9 +4,10 @@ import React from 'react';
 import {Center, Spinner} from '@chakra-ui/react';
 import {gql, useQuery} from '@apollo/client';
 
-const GET_USER = gql`
-  query GetUser {
+const GET_MEMBERSHIPS = gql`
+  query GetMemberships {
     me {
+      id
       ... on User {
         memberships {
           account {
@@ -24,8 +25,12 @@ const GET_USER = gql`
 
 const APOLLO_ORGS = ['gh.apollographql', 'apollo-private', 'apollo'];
 
-export default function AuthCheck({children}) {
-  const {data, loading, error} = useQuery(GET_USER);
+export default function AuthCheck({
+  children,
+  // TODO: more granular message like "access denied" or "please log in"
+  fallback = <NotFound />
+}) {
+  const {data, loading, error} = useQuery(GET_MEMBERSHIPS);
 
   if (loading) {
     return (
@@ -39,18 +44,22 @@ export default function AuthCheck({children}) {
     return <div>{error.message}</div>;
   }
 
+  if (!data) {
+    return null;
+  }
+
   const hasAccess = data.me?.memberships.some(membership =>
     APOLLO_ORGS.includes(membership.account.id)
   );
 
   if (!hasAccess) {
-    // TODO: more granular message like "access denied" or "please log in"
-    return <NotFound />;
+    return fallback;
   }
 
   return children;
 }
 
 AuthCheck.propTypes = {
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
+  fallback: PropTypes.node
 };

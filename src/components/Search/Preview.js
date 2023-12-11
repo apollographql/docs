@@ -19,15 +19,22 @@ import {
 } from '@chakra-ui/react';
 import {FiChevronRight} from 'react-icons/fi';
 
+const DOCSET_TITLES = {
+  'apollo-client': 'React',
+  'apollo-ios': 'iOS',
+  'apollo-kotlin': 'Kotlin',
+  'apollo-server': 'Server',
+  'graphos(/[a-z-]+)?': 'GraphOS'
+};
+
 function getDocsetTitle(docset) {
-  switch (docset) {
-    case 'ios':
-      return 'iOS';
-    case 'android':
-      return 'Kotlin';
-    default:
-      return upperFirst(docset);
+  for (const pattern in DOCSET_TITLES) {
+    if (new RegExp(`^${pattern}$`).test(docset)) {
+      return DOCSET_TITLES[pattern];
+    }
   }
+
+  return upperFirst(docset);
 }
 
 export default function Preview({preview}) {
@@ -46,7 +53,6 @@ export default function Preview({preview}) {
     ? [...ancestors, {url, title: sectionTitle}]
     : ancestors;
 
-  const breadcrumbBg = useColorModeValue('gray.100', 'gray.800');
   const searchByAlgolia = useColorModeValue(
     searchByAlgoliaLight,
     searchByAlgoliaDark
@@ -81,7 +87,10 @@ export default function Preview({preview}) {
           px="2"
           rounded="sm"
           fontSize="sm"
-          bg={breadcrumbBg}
+          bg="gray.100"
+          _dark={{
+            bg: 'gray.800'
+          }}
           spacing="1"
           whiteSpace="nowrap"
           maxW="full"

@@ -34,10 +34,12 @@ function useLinkProps(href) {
   }
 
   const isExternal = isUrl(href);
-  if (isExternal || href.startsWith('#')) {
+  const isHash = href.startsWith('#');
+  const isFile = /\.[a-z]+$/.test(href);
+  if (isExternal || isHash || isFile) {
     return {
       href,
-      target: isExternal && '_blank'
+      target: isExternal || (isFile && !isHash) ? '_blank' : null
     };
   }
 

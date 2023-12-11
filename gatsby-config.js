@@ -1,11 +1,25 @@
 const {algoliaSettings} = require('apollo-algolia-transform');
+const {
+  remarkTypescript,
+  highlightPreservation,
+  isWrapped
+} = require('remark-typescript');
 const {query, transformer} = require('./algolia');
 const yaml = require('js-yaml');
 const fs = require('fs');
+const remoteSources = require('./sources/remote');
+const {join} = require('path');
+
+const isProduction = process.env.CONTEXT === 'production';
+
+const isLocalMode = process.env.DOCS_MODE === 'local';
+const isSingleDocset = isLocalMode || process.env.DOCS_LOCAL;
 
 const gatsbyRemarkPlugins = [
   '@fec/remark-a11y-emoji/gatsby',
-  'gatsby-remark-mermaid',
+  {
+    resolve: require.resolve('./plugins/remark-mermaid-cached')
+  },
   {
     resolve: 'gatsby-remark-copy-linked-files',
     options: {
@@ -23,44 +37,22 @@ const gatsbyRemarkPlugins = [
 const plugins = [
   'gatsby-plugin-svgr',
   '@chakra-ui/gatsby-plugin',
-  {
-    resolve: 'gatsby-plugin-sitemap',
-    options: {
-      query: `
-        {
-          site {
-            siteMetadata {
-              siteUrl
-            }
-          }
-          allSitePage {
-            nodes {
-              path
-              pageContext
-            }
-          }
-        }
-      `,
-      resolvePages: ({allSitePage}) =>
-        // filter out internal pages
-        allSitePage.nodes.filter(page => !page.pageContext.internal)
-    }
-  },
   'gatsby-plugin-combine-redirects', // local plugin
   'gatsby-plugin-loadable-components-ssr',
-  {
-    resolve: 'gatsby-plugin-check-links', // local plugin
-    options: {
-      ignore: ['/react/api/core/ApolloClient', '/react/v2/api/apollo-client']
-    }
-  },
+  // {
+  //   resolve: 'gatsby-plugin-check-links', // local plugin
+  //   options: {
+  //     ignore: ['/react/api/core/ApolloClient', '/react/v2/api/apollo-client']
+  //   }
+  // },
   {
     resolve: 'gatsby-plugin-manifest',
     options: {
       icon: 'src/assets/favicon.svg'
     }
   },
-  'gatsby-plugin-offline',
+  // 'gatsby-plugin-offline',
+  'gatsby-plugin-remove-serviceworker',
   {
     resolve: 'gatsby-plugin-apollo',
     options: {
@@ -105,9 +97,10 @@ const plugins = [
       gatsbyRemarkPlugins,
       remarkPlugins: [
         [
-          require('remark-typescript'),
+          remarkTypescript,
           {
-            wrapperComponent: 'MultiCodeBlock',
+            filter: isWrapped({wrapperComponent: 'MultiCodeBlock'}),
+            customTransformations: [highlightPreservation()],
             prettierOptions: {
               trailingComma: 'all',
               singleQuote: true
@@ -125,15 +118,25 @@ const plugins = [
     }
   },
   {
+    resolve: 'gatsby-plugin-apollo-client-api-doc',
+    options: {
+      file: isSingleDocset
+        ? join(__dirname, 'local/public/client.api.json')
+        : 'https://apollo-client-docs.netlify.app/client.api.json'
+    }
+  },
+  {
     resolve: 'gatsby-plugin-google-gtag',
     options: {
-      trackingIds: ['UA-74643563-13', 'G-0BGG5V2W2K']
+      // todo: remove ua property in the nearish future
+      trackingIds: ['UA-74643563-13', 'G-0BGG5V2W2K', 'G-3WEVC01XLB']
     }
   },
   {
     resolve: 'gatsby-plugin-google-tagmanager',
     options: {
-      id: 'GTM-M964NS9'
+      id: process.env.GTM_CONTAINER_ID,
+      includeInDevelopment: false
     }
   },
   {
@@ -155,61 +158,117 @@ const plugins = [
           transformer,
           settings: {
             ...algoliaSettings,
-            attributesForFaceting: ['categories', 'docset', 'type'],
-            // put docs for current version at top, then by page views and index
-            customRanking: [
-              'desc(isCurrentVersion)',
-              ...algoliaSettings.customRanking
-            ]
+            attributesForFaceting: ['categories', 'docset', 'type']
           }
         }
       ]
     }
+  },
+  {
+    resolve: '@colliercz/gatsby-transformer-gitinfo',
+    // Will match all .md* files, except README.md
+    options: {
+      include: /\.mdx?$/i,
+      ignore: /README/i
+    }
+  },
+  {
+    resolve: 'gatsby-plugin-apollo-onetrust',
+    options: {
+      autoBlockSrc: process.env.OT_AUTOBLOCK_SRC,
+      otSDKStubSrc: process.env.OT_SDKSTUB_SRC,
+      dataDomainScript: process.env.OT_DATA_DOMAIN_SCRIPT,
+      skip: !isProduction
+    }
   }
 ];
 
-if (process.env.DOCS_LOCAL) {
-  plugins.push(
-    'gatsby-plugin-local-docs', // local plugin
-    {
-      resolve: 'gatsby-source-filesystem',
-      options: {
-        name: '/',
-        path: 'local/source'
-      }
-    }
-  );
-} else {
-  const localSources = yaml.load(fs.readFileSync('sources/local.yml', 'utf8'));
-
-  plugins.push(
-    ...Object.entries(localSources).map(([name, path]) => ({
-      resolve: 'gatsby-source-filesystem',
-      options: {
-        name,
-        path
-      }
-    }))
-  );
-
-  if (process.env.DOCS_MODE !== 'local') {
-    const remoteSources = yaml.load(
-      fs.readFileSync('sources/remote.yml', 'utf8')
-    );
-    plugins.push(
-      ...Object.entries(remoteSources).map(([name, {remote, branch}]) => ({
-        resolve: '@theowenyoung/gatsby-source-git',
-        options: {
-          remote,
-          name,
-          branch,
-          rootDir: 'docs/source'
+if (process.env.CONTEXT === 'production') {
+  plugins.push({
+    resolve: 'gatsby-plugin-sitemap',
+    options: {
+      query: `
+        {
+          site {
+            siteMetadata {
+              siteUrl
+            }
+          }
+          allSitePage {
+            nodes {
+              path
+              pageContext
+            }
+          }
         }
-      }))
-    );
-  } else {
-    plugins.push('gatsby-plugin-local-docs');
+      `,
+      resolvePages: ({allSitePage}) =>
+        // filter out internal pages
+        allSitePage.nodes.filter(page => !page.pageContext.internal)
+    }
+  });
+}
+
+for (const name in remoteSources) {
+  const {remote, branch} = remoteSources[name];
+
+  // source the config file for each docset
+  const {pathname, username, password} = new URL(remote);
+  plugins.push({
+    resolve: 'gatsby-source-remote-file',
+    options: {
+      url: `https://raw.githubusercontent.com${pathname}/${branch}/docs/source/config.json`,
+      name: `${name}/config`,
+      auth: {
+        htaccess_user: username,
+        htaccess_pass: password
+      },
+      // so that deploy previews for other docsets don't fail
+      errorHandling: 'warn'
+    }
+  });
+
+  if (!isSingleDocset) {
+    // source the content for each docset, excluding the config file
+    plugins.push({
+      resolve: '@theowenyoung/gatsby-source-git',
+      options: {
+        remote,
+        name,
+        branch,
+        rootDir: 'docs/source',
+        patterns: '**/!(config.json)'
+      }
+    });
   }
+}
+
+const localSources = yaml.load(fs.readFileSync('sources/local.yml', 'utf8'));
+
+if (process.env.DOCS_LOCAL) {
+  localSources['/'] = 'local/source';
+}
+
+plugins.push(
+  ...Object.entries(localSources).map(([name, path]) => ({
+    resolve: 'gatsby-source-filesystem',
+    options: {
+      name,
+      path
+    }
+  }))
+);
+
+plugins.push({
+  resolve: 'gatsby-source-filesystem',
+  options: {
+    name: 'graphos/img',
+    path: 'src/content/graphos/img'
+  }
+});
+
+if (isSingleDocset) {
+  plugins.push('gatsby-plugin-local-docs');
 }
 
 module.exports = {

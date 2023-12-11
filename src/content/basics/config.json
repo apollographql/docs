@@ -1,35 +1,17 @@
 {
-  "title": "Docs Home",
+  "title": "Home",
   "sidebar": {
     "Home": "/",
-    "The Apollo platform": "/intro/platform",
-    "Why adopt GraphQL?": "/intro/benefits",
-    "Tutorials": {
-      "Lift-off series & certification": "https://www.apollographql.com/tutorials/lift-off-part1/",
-      "Full-stack quickstart": "https://www.apollographql.com/tutorials/fullstack-quickstart/introduction"
-    },
-    "Development Tools": {
-      "Rover CLI": "/rover/",
-      "Apollo extension for VS Code": "/devtools/editor-plugins",
-      "Configuring Apollo projects": "/devtools/apollo-config",
-      "The Apollo CLI (partially deprecated)": "/devtools/cli"
-    },
-    "Resources": {
-      "Principled GraphQL": "https://principledgraphql.com",
+    "What is GraphOS?": "/intro/platform",
+    "About GraphQL": {
+      "Why adopt GraphQL?": "/intro/benefits",
       "Glossary": "/resources/graphql-glossary",
-      "GraphQL FAQ": "/resources/faq",
-      "Elastic License v2 FAQ": "/resources/elastic-license-v2-faq",
-      "Release lifecycle": "/resources/release-stages"
+      "FAQ": "/resources/faq",
+      "Principled GraphQL": "https://principledgraphql.com"
     },
-    "Enterprise Guide": {
-      "Introduction": "/enterprise-guide/introduction",
-      "GraphQL consolidation": "/enterprise-guide/graphql-consolidation",
-      "Federated schema design": "/enterprise-guide/federated-schema-design",
-      "Graph administration": "/enterprise-guide/graph-administration",
-      "Graph security": "/enterprise-guide/graph-security",
-      "Change management": "/enterprise-guide/change-management",
-      "Federation case studies": "/enterprise-guide/federation-case-studies",
-      "Additional resources": "/enterprise-guide/additional-resources"
+    "Release Policies": {
+      "Product launch stages": "/resources/product-launch-stages",
+      "Elastic License v2 FAQ": "/resources/elastic-license-v2-faq"
     }
   }
 }

@@ -1,0 +1,61 @@
+---
+title: Debugging subgraph requests from Apollo Router or Gateway
+id: TN0039
+tags: [federation, gateway, router]
+---
+
+Both the [Apollo Router](/router) and [Apollo Gateway](/apollo-server/using-federation/apollo-gateway-setup) serve as an entrypoint into your [federated graph](/federation), and as your graph grows you may need to debug a problematic query for one reason or another. 
+
+It's possible to log the each request to your subgraphs in both the Gateway and Router, with code snippets to do so below. 
+
+## Apollo Router
+
+To debug your subgraph queries in an Apollo Router instance, we'll leverage [Rhai](/router/customizations/rhai) to log the necessary information out. An example Rhai script is below. 
+
+**Note that while it is possible to log out the variables, Apollo strongly recommends not doing so to avoid leaking sensitive information into your logs.**
+
+```rhai
+fn subgraph_service(service, subgraph) {
+  service.map_request(|request| {
+      log_info(`Subgraph: ${subgraph} Query: ${request.subgraph.body.query}`);
+  });
+}
+```
+
+The above uses an inline closure within the `map_request` function of the `subgraph_service` hook to log the subgraph-related information. 
+
+To enable query plans, you will need to run the Apollo Router with the `--dev` flag and leverage [Apollo Sandbox](https://studio.apollographql.com/sandbox) to [display your query plans](/graphos/explorer/additional-features/#query-plans-for-supergraphs). 
+
+As an alternative to using `--dev`, you can also enable query plans via the below configuration option, however we **strongly** discourage this as the feature may be removed or renamed at any time in the future.  
+
+```yaml
+plugins:
+  experimental.expose_query_plan: true
+```
+
+
+## Apollo Gateway 
+
+To debug queries to your subgraphs within an Apollo Gateway instance, we'll leverage a [`buildService` function](/apollo-server/using-federation/api/apollo-gateway/#configuring-the-subgraph-fetcher) to log the operation name and body. 
+
+**Note that while it is possible to log out the variables, Apollo strongly recommends not doing so to avoid leaking sensitive information into your logs.**
+
+```ts
+class DebugDataSource extends RemoteGraphQLDataSource {
+  willSendRequest({ request }: GraphQLDataSourceProcessOptions<Record<string, any>>): void | Promise<void> {
+      console.log(`Operation name: ${request.operationName}`);
+      console.log(`Query body: ${request.query}`);
+  }
+}
+const gateway = new ApolloGateway({
+  debug: true,
+  supergraphSdl,
+  buildService({ url }) {
+      return new DebugDataSource({ url })
+  },
+});
+```
+
+The above snippet will create a new class called `DebugDataSource` to log out the operation name and body using the `willSendRequest` hook which is called prior to execution. 
+
+Lastly, it also enables the `debug` setting on the Gateway configuration to print out query plans in the logs for further debugging if needed.

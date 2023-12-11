@@ -1,0 +1,147 @@
+---
+title: Graph Identities
+id: TN0031
+tags: [schema-design]
+---
+
+The purpose of this technote is to demonstrate queries/mutations for identifying an actor attempting to use the graph. These examples can be useful for inspiring how the actor identity may be described in a GraphQL Schema and includes multiple use-cases for both users and services.
+
+*Our use-case identifies authenticated users and services as well as anonymous users.*
+
+First we define interfaces for both query and mutation identity types.
+
+```graphql
+interface Identity {
+	"An ID we can use to identify the session."
+	id: ID!
+}
+
+interface MutableIdentity {
+	"An ID we can use to identify the session."
+	id: ID!
+}
+```
+
+Then we create concrete types of these interfaces for our authenticated and unauthenticated identities.
+
+```graphql
+type AnonymousIdentity implements Identity @key(fields: "id") {
+	"An ID we can use to identify the session."
+	id: ID!
+}
+
+type UserIdentity implements Identity @key(fields: "id") {
+	"An ID we can use to identify the session."
+	id: ID!
+	"A reference to the authenticated user entity."
+	user: User
+}
+
+type ServiceIdentity implements Identity @key(fields: "id") {
+	"An ID we can use to identify the session."
+	id: ID!
+	"A reference to the authenticated service entity."
+	service: Service
+}
+```
+
+As well as an authentication error response.
+
+```graphql
+type NotAuthenticatedError {
+	message: String
+}
+```
+
+Next, we will construct our query type and response unions. We have selected unions here so that we are able to return both identities and errors as response data.
+
+Nullability becomes important here; there is nuance around how nullability affects the way in which clients will need to handle failures.
+
+```graphql
+union AuthIdentity = UserIdentity | ServiceIdentity | NotAuthenticatedError
+union CurrentUser = UserIdentity | AnonymousIdentity
+
+type Query {
+	"A query which returns an authenticated user or service, or an anonymous identity."
+	session: Identity!
+	"A query which returns the currently authenticated identity or an error."
+	whoami: AuthIdentity!
+	"A query which returns the currently authenticated user identity, or an anonymous identity."
+	me: CurrentUser!
+}
+```
+
+<aside>
+⚠️ In the previous example ***none*** of the query response types are nullable, meaning the request will fail if the server is unable to provide some kind of Identity. Alternatively we could allow nullable responses which could be used to represent the anonymous or unauthenticated use-case.
+
+Additionally, by providing a NotAuthenticatedError as part of the response union, we can inform the client applications when to serve specific experiences to the user.
+
+</aside>
+
+Then by separating the mutation and query identities we are able to separate:
+* Actions that can be performed on identities.
+* Queries which can be performed on identities.
+
+```graphql
+type MutableAnonymousIdentity implements MutableIdentity @key(fields: "id") {
+	id: ID!
+	authenticateWithEmailAndPassword(credentials: EmailAndPasswordCredentials!): UserIdentity!
+}
+
+type MutableUserIdentity implements MutableIdentity @key(fields: "id") {
+	id: ID!
+	resetPassword(credentials: ResetPasswordCredentials!): UserIdentity!
+}
+
+type MutableServiceIdentity implements MutableIdentity @key(fields: "id") {
+	id: ID!
+	service: MutableService!
+}
+
+union MutableCurrentUser = MutableUserIdentity | NotAuthenticatedError
+
+type Mutation {
+	session: MutableIdentity!
+	me: MutableCurrentUser!
+}
+```
+
+Finally, operations using the previously defines schema would look like the following.
+
+```graphql
+query CurrentAuth {
+	session {
+		id
+	}
+	whoami {
+		id
+	}
+	me {
+		id
+	}
+}
+
+mutation Login($credentials: EmailAndPasswordCredentials!) {
+	session {
+		... on MutableAnonymousIdentity {
+			authenticateWithEmailAndPassword(credentials: $credentials) {
+				user {
+					...
+				}
+			}
+		}
+	}
+}
+
+mutation ResetPassword($credentials: ResetPasswordCredentials!) {
+	me {
+		... on MutableUserIdentity {
+			resetPassword(credentials: $credentials) {
+				user {
+					...
+				}
+			}
+		}
+	}
+}
+```

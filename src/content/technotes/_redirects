@@ -1,0 +1,48 @@
+# Adds redirects from the TN number to the correct tech note
+
+# Note that the first paramater is relative, but the second is static, meaning it is /docs/technotes/TN0001 -> /docs/technotes/TN0001-client-id-enforcement
+
+/TN0001 /docs/technotes/TN0001-client-id-enforcement
+/TN0002 /docs/technotes/TN0002-schema-naming-conventions
+/TN0003 /docs/technotes/TN0003-opentelemetry-traces-to-prometheus
+/TN0004 /docs/technotes/TN0004-router-authentication
+/TN0005 /docs/technotes/TN0005-overload-protection
+/TN0007 /docs/technotes/TN0007-testing-with-apollo-federation
+/docs/technotes/TN0007-testing-in-a-federated-architecture-unit-tests /docs/technotes/TN0007-testing-with-apollo-federation
+/TN0008 /docs/technotes/TN0008-production-readiness-checklist
+/TN0009 /docs/technotes/TN0009-gateway-performance
+/TN0010 /docs/technotes/TN0010-response-type-pattern
+/TN0011 /docs/technotes/TN0011-response-cache-eviction
+/TN0012 /docs/technotes/TN0012-namespacing-by-separation-of-concern
+/TN0013 /docs/technotes/TN0013-monolith-to-federation
+/TN0014 /docs/technotes/TN0014-contracts-patterns
+/TN0015 /docs/technotes/TN0015-router-to-apm-via-opentelemetry
+/TN0016 /docs/technotes/TN0016-router-resource-management
+/TN0017 /docs/technotes/TN0017-interfaces
+/TN0018 /docs/technotes/TN0018-aggregating-across-subgraphs
+/TN0019 /docs/technotes/TN0019-federation-n-plus-1
+/TN0020 /docs/technotes/TN0020-mocked-gateway-for-client-development
+/TN0021 /docs/technotes/TN0021-graph-security
+/TN0022 /docs/technotes/TN0022-graphql-adoption-patterns
+/TN0023 /docs/technotes/TN0023-nullability
+/TN0024 /docs/technotes/TN0024-deprecations
+/TN0025 /docs/technotes/TN0025-supergraph-stewardship
+/TN0026 /docs/technotes/TN0026-thinking-in-entities
+/TN0027 /docs/technotes/TN0027-demand-oriented-schema-design
+/TN0028 /docs/technotes/TN0028-change-management
+/TN0029 /docs/technotes/TN0029-relay-style-connections
+/TN0030 /docs/technotes/TN0030-optimizing-router-builds
+/TN0031 /docs/technotes/TN0031-graph-identities
+/TN0032 /docs/technotes/TN0032-sdui-basics
+/TN0033 /docs/technotes/TN0033-sdui-schema-design
+/TN0034 /docs/technotes/TN0034-react-context
+/TN0035 /docs/technotes/TN0035-load-testing-graphql
+/TN0036 /docs/technotes/TN0036-owner-pattern
+/TN0037 /docs/technotes/TN0037-api-gateways
+/TN0038 /docs/technotes/TN0038-updating-client-schema
+/TN0039 /docs/technotes/TN0039-debugging-subgraph-requests
+/TN0040 /docs/technotes/TN0040-federation-is-not-a-saga-orchestrator
+/TN0041 /docs/technotes/TN0041-errors-as-data-explained
+/TN0042 /docs/technotes/TN0042-sdui-client-design
+/TN0043 /docs/technotes/TN0043-using-graphql-for-abstraction
+/TN0044 /docs/technotes/TN0044-graphql-and-rest-together

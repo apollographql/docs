@@ -35,7 +35,7 @@ export function ExpansionPanelListItem({number, children}) {
           </Circle>
           {!isLast && <ExpansionPanelLine flexGrow="1" />}
         </Flex>
-        <Stack shouldWrapChildren spacing="4" pb={isLast ? 0 : 6}>
+        <Stack shouldWrapChildren minW="0" spacing="4" pb={isLast ? 0 : 6}>
           {children}
         </Stack>
       </Flex>
@@ -65,8 +65,12 @@ ExpansionPanelList.propTypes = {
   children: PropTypes.node.isRequired
 };
 
-export default function ExpansionPanel({children, title = 'Click to expand'}) {
-  const {isOpen, onToggle} = useDisclosure();
+export default function ExpansionPanel({
+  children,
+  title = 'Click to expand',
+  defaultIsOpen
+}) {
+  const {isOpen, onToggle} = useDisclosure({defaultIsOpen});
   return (
     <Box
       borderWidth="1px"
@@ -96,6 +100,7 @@ export default function ExpansionPanel({children, title = 'Click to expand'}) {
 }
 
 ExpansionPanel.propTypes = {
+  defaultIsOpen: PropTypes.bool,
   children: PropTypes.node.isRequired,
   title: PropTypes.string
 };

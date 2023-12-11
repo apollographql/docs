@@ -1,121 +1,262 @@
 import NavItems, {GA_EVENT_CATEGORY_SIDEBAR, NavContext} from './NavItems';
 import PropTypes from 'prop-types';
-import React, {useMemo} from 'react';
+import React, {forwardRef, useImperativeHandle, useMemo, useRef} from 'react';
 import useLocalStorage from 'react-use/lib/useLocalStorage';
+import {BiCollapseVertical, BiExpandVertical} from 'react-icons/bi';
 import {
-  Box,
   Button,
   Flex,
+  HStack,
   IconButton,
+  Menu,
+  MenuButton,
+  MenuItemOption,
+  MenuList,
+  MenuOptionGroup,
   Tooltip,
-  chakra,
-  useColorModeValue
+  chakra
 } from '@chakra-ui/react';
-import {BsChevronContract, BsChevronExpand} from 'react-icons/bs';
-import {FiChevronsLeft} from 'react-icons/fi';
+import {
+  FiChevronDown,
+  FiChevronLeft,
+  FiChevronsLeft,
+  FiLock,
+  FiUnlock
+} from 'react-icons/fi';
+import {PAGE_FOOTER_HEIGHT} from '../PageLayout';
 import {flattenNavItems} from '../../utils';
 
-export function SidebarNav({navItems, onHide, darkBg = 'gray.800', children}) {
-  const bg = useColorModeValue('white', darkBg);
+const SidebarButton = props => (
+  <IconButton size="sm" fontSize="lg" variant="ghost" {...props} />
+);
 
-  const navGroups = useMemo(
-    () => flattenNavItems(navItems).filter(item => item.children),
-    [navItems]
-  );
+const SidebarNav = forwardRef(
+  (
+    {
+      docset,
+      navItems,
+      versions,
+      currentVersion,
+      onVersionChange,
+      onGoBack,
+      hideSidebar,
+      isLocked,
+      onLockToggle
+    },
+    ref
+  ) => {
+    const navRef = useRef();
 
-  // set all nav items to open by default
-  const initialNavState = useMemo(
-    () =>
-      navGroups.reduce(
-        (acc, group) => ({
-          ...acc,
-          [group.id]: true
-        }),
-        {}
-      ),
-    [navGroups]
-  );
+    useImperativeHandle(ref, () => ({
+      focusFirstLink: () => {
+        navRef.current.querySelector('a')?.focus();
+      }
+    }));
 
-  // save nav state in storage
-  const [localNavState, setLocalNavState] = useLocalStorage('nav');
+    const navGroups = useMemo(
+      () => flattenNavItems(navItems).filter(item => item.children),
+      [navItems]
+    );
 
-  // combine initial and local nav states
-  const nav = useMemo(
-    () => ({
-      ...initialNavState,
-      ...localNavState
-    }),
-    [localNavState, initialNavState]
-  );
+    // set all nav items to open by default
+    const initialNavState = useMemo(
+      () =>
+        navGroups.reduce(
+          (acc, group) => ({
+            ...acc,
+            [group.id]: !group.isDefaultCollapsed
+          }),
+          {}
+        ),
+      [navGroups]
+    );
 
-  // compute expand/collapse all state from nav state
-  const isAllExpanded = useMemo(
-    () =>
-      // get an array of the state of all nav items that also exist in the list of
-      // valid nav group ids (above)
-      navGroups.every(group => nav[group.id]),
-    [navGroups, nav]
-  );
+    // save nav state in storage
+    const [localNavState, setLocalNavState] = useLocalStorage('nav');
 
-  return (
-    <>
-      <Box p="2" pl="0" pos="sticky" top="0" bg={bg} zIndex="1">
-        {children}
-        <Flex>
-          <Button
+    // combine initial and local nav states
+    const nav = useMemo(
+      () => ({
+        ...initialNavState,
+        ...localNavState
+      }),
+      [localNavState, initialNavState]
+    );
+
+    // compute expand/collapse all state from nav state
+    const isAllExpanded = useMemo(
+      () =>
+        // get an array of the state of all nav items that also exist in the list of
+        // valid nav group ids (above)
+        navGroups.every(group => nav[group.id]),
+      [navGroups, nav]
+    );
+
+    return (
+      <Flex
+        direction="column"
+        h="full"
+        overflow="auto"
+        overscrollBehavior="none"
+      >
+        <Flex align="center" p="4" pos="sticky" top="0" zIndex="1" bg="bg">
+          {onGoBack && (
+            <IconButton
+              ml="-2.5"
+              mr="1"
+              variant="ghost"
+              size="sm"
+              fontSize="xl"
+              icon={<FiChevronLeft />}
+              onClick={onGoBack}
+            />
+          )}
+          <chakra.h2
             mr="auto"
-            size="sm"
-            variant="ghost"
-            roundedRight="full"
-            roundedLeft="none"
-            isDisabled={!navGroups.length}
-            leftIcon={
-              isAllExpanded ? <BsChevronContract /> : <BsChevronExpand />
-            }
-            onClick={() => {
-              const expanded = !isAllExpanded;
-              setLocalNavState(
-                navGroups.reduce(
-                  (acc, group) => ({
-                    ...acc,
-                    [group.id]: expanded
-                  }),
-                  {}
-                )
-              );
-              window.gtag?.('event', 'Toggle all', {
-                event_category: GA_EVENT_CATEGORY_SIDEBAR,
-                event_label: expanded ? 'expand' : 'collapse'
-              });
-            }}
+            fontSize="xl"
+            fontWeight="semibold"
+            lineHeight={1.6}
           >
-            {isAllExpanded ? 'Collapse' : 'Expand'} all
-          </Button>
-          {onHide && (
-            <Tooltip label="Hide sidebar">
-              <IconButton
+            {docset}
+          </chakra.h2>
+          {versions?.length > 1 && (
+            <Menu>
+              <MenuButton
+                alignSelf="flex-start"
                 size="sm"
-                variant="ghost"
-                fontSize="md"
-                onClick={onHide}
-                icon={<FiChevronsLeft />}
-              />
-            </Tooltip>
+                ml="2"
+                variant="outline"
+                rightIcon={<FiChevronDown />}
+                as={Button}
+              >
+                {currentVersion}
+              </MenuButton>
+              <MenuList>
+                <MenuOptionGroup value={currentVersion}>
+                  {versions.map((version, index) => (
+                    <MenuItemOption
+                      key={index}
+                      value={version.label}
+                      onClick={event => {
+                        event.stopPropagation();
+                        onVersionChange?.(version);
+                      }}
+                    >
+                      {version.label}
+                    </MenuItemOption>
+                  ))}
+                </MenuOptionGroup>
+              </MenuList>
+            </Menu>
           )}
         </Flex>
-      </Box>
-      <NavContext.Provider value={{nav, setNav: setLocalNavState}}>
-        <chakra.nav pt="1" pr="2" pb="4">
-          <NavItems items={navItems} />
-        </chakra.nav>
-      </NavContext.Provider>
-    </>
-  );
-}
+        <NavContext.Provider
+          value={{
+            nav,
+            setNav: setLocalNavState
+          }}
+        >
+          <chakra.nav px="4" pb="3" ref={navRef}>
+            <NavItems items={navItems} />
+          </chakra.nav>
+        </NavContext.Provider>
+        <Flex
+          align="center"
+          mt="auto"
+          flexShrink={0}
+          pos="sticky"
+          bottom="0"
+          pl="4"
+          pr="2"
+          bg="bg"
+          borderTopWidth={1}
+          css={{
+            height: PAGE_FOOTER_HEIGHT
+          }}
+        >
+          <chakra.span fontWeight="semibold">Navigation controls</chakra.span>
+          <HStack spacing="1" ml="auto">
+            {navGroups.length > 0 && (
+              <Tooltip
+                label={`${
+                  isAllExpanded ? 'Collapse' : 'Expand'
+                } all categories`}
+              >
+                <div>
+                  <SidebarButton
+                    aria-label={`${
+                      isAllExpanded ? 'Collapse' : 'Expand'
+                    } all categories`}
+                    icon={
+                      isAllExpanded ? (
+                        <BiCollapseVertical />
+                      ) : (
+                        <BiExpandVertical />
+                      )
+                    }
+                    onClick={event => {
+                      event.stopPropagation();
+
+                      const expanded = !isAllExpanded;
+                      setLocalNavState(
+                        navGroups.reduce(
+                          (acc, group) => ({
+                            ...acc,
+                            [group.id]: expanded
+                          }),
+                          {}
+                        )
+                      );
+                      window.gtag?.('event', 'Toggle all', {
+                        event_category: GA_EVENT_CATEGORY_SIDEBAR,
+                        event_label: expanded ? 'expand' : 'collapse'
+                      });
+                    }}
+                  />
+                </div>
+              </Tooltip>
+            )}
+            {hideSidebar && (
+              <Tooltip label="Hide navigation">
+                <div>
+                  <SidebarButton
+                    aria-label="Hide navigation"
+                    onClick={hideSidebar}
+                    icon={<FiChevronsLeft />}
+                  />
+                </div>
+              </Tooltip>
+            )}
+            {onLockToggle && (
+              <Tooltip label={`${isLocked ? 'Unlock' : 'Lock'} sidebar`}>
+                <div>
+                  <SidebarButton
+                    aria-label={`${isLocked ? 'Unlock' : 'Lock'} sidebar`}
+                    icon={isLocked ? <FiLock /> : <FiUnlock />}
+                    onClick={onLockToggle}
+                  />
+                </div>
+              </Tooltip>
+            )}
+          </HStack>
+        </Flex>
+      </Flex>
+    );
+  }
+);
 
 SidebarNav.propTypes = {
-  children: PropTypes.node,
+  docset: PropTypes.string.isRequired,
   navItems: PropTypes.array.isRequired,
-  onHide: PropTypes.func,
-  darkBg: PropTypes.string
+  versions: PropTypes.array,
+  currentVersion: PropTypes.string,
+  onVersionChange: PropTypes.func,
+  onGoBack: PropTypes.func,
+  hideSidebar: PropTypes.func,
+  isLocked: PropTypes.bool,
+  onLockToggle: PropTypes.func
 };
+
+SidebarNav.displayName = 'SidebarNav';
+
+export default SidebarNav;

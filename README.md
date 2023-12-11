@@ -1,6 +1,6 @@
 # Apollo Docs
 
-This repo contains the code responsible for building the Apollo Docs site. It also houses the content for the Apollo Basics and Studio **docsets**. We also export shared utilities and components from the [`@apollo/chakra-helpers`](./packages/chakra-helpers) package in the `packages` directory.
+This repo contains the code responsible for building the Apollo Docs site. It also houses the content for the Apollo Basics and GraphOS **docsets**.
 
 > We use the word **docset** to describe an individual docs website. For example, "I just updated the Android docset".
 
@@ -18,20 +18,37 @@ The central piece of this repo, the docs infrastructure, is a [Gatsby](https://w
   - [Configuring a remote docset](#configuring-a-remote-docset)
   - [Managing versions](#managing-versions)
   - [Internal-only docsets](#internal-only-docsets)
+  - [Sidebar annotations](#sidebar-annotations)
+  - [Default sidebar category state](#default-sidebar-category-state)
   - [Redirect rules](#redirect-rules)
 - [Publish and preview](#publish-and-preview)
   - [Production deploys](#production-deploys)
   - [Deploy previews](#deploy-previews)
 - [Authoring](#authoring)
   - [Frontmatter](#frontmatter)
+    - [Configuring the table of contents](#configuring-the-table-of-contents)
+    - [Showing a version indicator](#showing-a-version-indicator)
   - [Linking](#linking)
   - [Code blocks](#code-blocks)
   - [Using MDX](#using-mdx)
+    - [Shared content](#shared-content)
+    - [Components](#components)
+      - [ButtonLink](#buttonlink)
+      - [ExpansionPanel](#expansionpanel)
+      - [MultiCodeBlock](#multicodeblock)
+      - [CodeColumns](#codecolumns)
+      - [YouTube](#youtube)
+      - [TypeScriptApiBox](#typescriptapibox)
+      - [MinVersion](#minversion)
+      - [Release stage components](#release-stage-components)
+      - [Plan components](#plan-components)
+      - [Admonitions](#admonitions)
 - [History](#history)
   - [Benefits](#benefits)
   - [Drawbacks](#drawbacks)
   - [Solution](#solution)
   - [Impact](#impact)
+    - [Netlify build stats (Feb 1 - Feb 24, 2022)](#netlify-build-stats-feb-1---feb-24-2022)
 - [Notable changes to authoring patterns](#notable-changes-to-authoring-patterns)
   - [No more component imports](#no-more-component-imports)
   - [Code block titles and line highlighting](#code-block-titles-and-line-highlighting)
@@ -39,33 +56,37 @@ The central piece of this repo, the docs infrastructure, is a [Gatsby](https://w
 
 ## Developing locally
 
-> This site uses [Volta](https://volta.sh) to ensure we're all using the same Node and NPM versions when running the site. Either install Volta before proceeding, or install [direnv](https://direnv.net) and Volta will be installed automatically when you `cd` into your local `docs` directory.
+[Volta](https://volta.sh) ensures we're all using the same Node and NPM versions when running the site. Either install Volta before proceeding, or install [direnv](https://direnv.net) to install Volta automatically when you `cd` into your local `docs` directory.
 
-First, install NPM dependencies.
+1. Install NPM dependencies:
 
-```sh
-npm i
-```
+    ```sh
+    npm i
+    ```
 
-If it's your first time running the docs site locally, you must link your local directory with Netlify. To do this, you must be logged in to the `netlify` CLI with an account that has access to our organization in Netlify. Apollo Staff can log into the account using the Netlify Single Sign-On (SSO) option and specifying the `apollo-main` identifier during the login process.
+    If it's your first time running the docs site locally, you must link your local directory with Netlify. To do this, you must be logged in to the `netlify` CLI with an account that has access to our organization in Netlify. Apollo Staff can log into the account using the Netlify Single Sign-On (SSO) option and specifying the `apollo-main` identifier during the login process.
 
-```sh
-npx netlify login
-```
+    ```sh
+    npx netlify login
+    ```
 
-Next, link your local environment with its corresponding Netlify site. Follow the prompts that appear in your terminal and link the site based on its git repository.
+2. Link your local environment with its corresponding Netlify site. Follow the prompts that appear in your terminal and link the site based on its git repository:
 
-```sh
-npx netlify link
-```
+    ```sh
+    # If netlify-cli is installed globally or as a dependency in the remote docset repo:
+    npx netlify link
 
-Finally, start the local development environment.
+    # Otherwise:
+    npx -p netlify-cli netlify link
+    ```
 
-```sh
-npm start
-```
+3. Start the local development environment:
 
-> ⌚ The first run may take a long time as it has to source a lot of content, but subsequent runs will be shorter since most of that data will have been cached.
+    ```sh
+    npm start
+    ```
+
+    > ⌚ The first run may take a long time as it has to source a lot of content, but subsequent runs will be shorter since most of that data will have been cached.
 
 ### Developing a single docset
 
@@ -90,7 +111,7 @@ Check out the [`package.json`](./package.json) to see how these scripts work!
 
 ## Faster startup
 
-The Studio and Apollo basics docs content lives in this repo. To spin up a development environment serving only these docsets, there's the `start:local` script. This will result in much faster startup time since we're not sourcing any remote data. Use this script if you're working on changes in either of those docsets or website UI changes.
+The GraphOS and Apollo basics docs content lives in this repo. To spin up a development environment serving only these docsets, there's the `start:local` script. This will result in much faster startup time since we're not sourcing any remote data. Use this script if you're working on changes in either of those docsets or website UI changes.
 
 ```sh
 npm run start:local
@@ -103,13 +124,13 @@ The docs content is written and maintained in the following places. Many of them
 ### Local
 
 - [Apollo Basics](./src/content/basics)
-- [Apollo Studio](./src/content/studio)
+- [Apollo GraphOS](./src/content/graphos)
 
 ### Remote
 
 - [Apollo Client (React)](https://github.com/apollographql/apollo-client)
 - [Apollo Server](https://github.com/apollographql/apollo-server)
-- [Apollo iOS](https://github.com/apollographql/apollo-ios)
+- [Apollo iOS](https://github.com/apollographql/apollo-ios-dev)
 - [Apollo Kotlin](https://github.com/apollographql/apollo-kotlin)
 - [Apollo Federation](https://github.com/apollographql/federation)
 - [Rover CLI](https://github.com/apollographql/rover)
@@ -127,6 +148,13 @@ The `config.json` file lives at the root of its docset's content directory, and 
 {
   "title": "Apollo Server",
   "version": "v3",
+  "versionBanner": {
+    "link": {
+      "to": "/v3-deprecation-page",
+      "content": "Check out the deprecation page",
+    },
+    "message": "Apollo Server v3 is no longer maintained."
+  },
   "algoliaFilters": ["docset:server", ["docset:react", "docset:federation"]],
   "sidebar": {
     "Introduction": "/",
@@ -140,19 +168,20 @@ The `config.json` file lives at the root of its docset's content directory, and 
 ```
 
 | Name           | Required? | Description                                                                                                                                                                                                                                                                                                       |
-| -------------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|----------------|-----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | title          | yes       | The title of the docset. It is used to construct page titles and shown in the header when the docset is selected.                                                                                                                                                                                                 |
 | sidebar        | yes       | A JSON object mapping sidebar nav labels to their paths. Use paths beginning with a slash, relative to the root of the content directory for internal links. Full URLs are transformed into external links that open in a new tab. These objects can be nested to define categories and subcategories in the nav. |
 | version        | no        | A string representing the version of the software that is being documented, i.e. "v3". This value is shown in the version dropdown if multiple versions of a docset are configured.                                                                                                                               |
 | algoliaFilters | no        | An array of filters that affect the ranking of search results when a search is made within a particular docset. This is passed to Algolia as an `optionalFilters` parameter, which you can learn more about [here](https://www.algolia.com/doc/api-reference/api-parameters/optionalFilters/).                    |
 | internal       | no        | Set to `true` if you want your docset to be [internal-only](#internal-only-docsets).                                                                                                                                                                                                                              |
+| versionBanner  | no        | A JSON object used to customize the `VersionBanner` link url and text.                                                                                                                                                                                                                                            |
 
 ### Adding a local docset
 
 To create a local docset, add a new directory to the `src/content` directory of this repo, and drop in an `index.md` file and a `config.json` file. Next, head over to the `sources/local.yml` file and add a line mapping the URL path that you want the docset to live at to the location of its content.
 
 ```yml
-studio: src/content/studio
+graphos: src/content/graphos
 ```
 
 Restart your local development environment and the new docset will be available to peruse and develop. 🚀
@@ -163,25 +192,36 @@ Remote docsets live within the `docs/source` directory of the **public** repo fo
 
 > Configured repos must be public so that we can pull down their files at build time without permission issues
 
-To add a remote docset to the website, add a record in the `sources/remote.yml` file. This record should map the URL path you want the docset to live at to the repo URL, called `remote`, and the name of the `branch` that content should be sourced from.
+To add a remote docset to the website, add a record in the `sources/remote.js` file. This record should map the URL path you want the docset to live at to the repo URL, called `remote`, and the name of the `branch` that content should be sourced from.
 
-```yml
-react:
-  remote: https://github.com/apollographql/apollo-client
-  branch: main
+```js
+// sources/remote.js
+module.exports = {
+  // ...other sources
+  react: {
+    remote: "https://github.com/apollographql/apollo-client",
+    branch: "main",
+  },
+};
 ```
 
 ### Managing versions
 
-This website presents multiple versions of docs for the same subject as options within a version dropdown in the main nav. It automatically treats multiple docsets with the same git remote URL as different versions of the same docs. So to add a new version, add a second entry to the `sources/remote.yml` file with your desired path (appending "/v2" in this case) and updated branch name.
+This website presents multiple versions of docs for the same subject as options within a version dropdown in the main nav. It automatically treats multiple docsets with the same git remote URL as different versions of the same docs. So to add a new version, add a second entry to the `sources/remote.js` file with your desired path (appending "/v2" in this case) and updated branch name.
 
-```yml
-react:
-  remote: https://github.com/apollographql/apollo-client
-  branch: main
-react/v2:
-  remote: https://github.com/apollographql/apollo-client
-  branch: version-2.6
+```js
+// sources/remote.js
+module.exports = {
+  // ...other sources
+  react: {
+    remote: "https://github.com/apollographql/apollo-client",
+    branch: "main",
+  },
+  "react/v2": {
+    remote: "https://github.com/apollographql/apollo-client",
+    branch: "version-2.6",
+  },
+};
 ```
 
 Next, these two docsets must specify the label that they want to appear for that version in the version dropdown. This is done by adding a `version` field to each version's `config.json`.
@@ -204,9 +244,40 @@ You can publish docsets that are viewable only by Apollo team members by setting
 }
 ```
 
-If a visitor to that page is logged in to Apollo Studio **and** is a member of one of our internal orgs, the page content will be rendered normally. If neither of those conditions are true, a 404 page will be shown. Internal-only pages are excluded from the sitemap and won't be indexed by Google.
+If a visitor to that page is logged in to GraphOS Studio **and** is a member of one of our internal orgs, the page content will be rendered normally. If neither of those conditions are true, a 404 page will be shown. Internal-only pages are excluded from the sitemap and won't be indexed by Google.
 
-It's important to note that you must sign in to and out of your account using Studio or Odyssey, as the docs don't currently have their own sign in form.
+It's important to note that you must sign in to and out of your account using Studio or Odyssey, as the docs don't currently have their own sign in form. For local development, sign in to the staging Studio.
+
+### Sidebar annotations
+
+If you would like an icon with a tooltip for any use case across the sidebar navigation items (preview tag, experimental tag, etc.), you can use an array for the path, where the first item is the URL path, and the second item is an array of tags.
+
+```json
+{
+  "Performance alerts": [
+    "/notifications/performance-alerts", // nav item path
+    ["experimental"] // array of tags
+  ],
+}
+```
+
+We currently support tags for `enterprise`, `preview` & `experimental`.
+
+### Default sidebar category state
+
+By default, all sidebar categories are shown as open on initial page load. You can affect the default open/closed state of any sidebar category by placing your category config within a tuple, similar to the technique above. The first element is the category configuration object, and the second element is a boolean. If the second element is `true`, that category will be collapsed by default.
+
+```json
+{
+  "Release Policies": [
+    {
+      "Product launch stages": "/resources/product-launch-stages",
+      "Elastic License v2 FAQ": "/resources/elastic-license-v2-faq"
+    },
+    true
+  ]
+}
+```
 
 ### Redirect rules
 
@@ -255,6 +326,8 @@ jobs:
 ```
 
 This workflow references [a shared workflow hosted in this repo](./.github/workflows/publish.yml), so any changes that affect the way the action works will likely take place in that file, and you won't need to make any changes to the workflow in your own repo.
+
+You will also need to configure the remote docset repo's access to the required organization secrets before you run the action. To do this, visit the "Action secrets" settings page in the Apollo GraphQL organization and update the `NETLIFY_AUTH_TOKEN` and `NETLIFY_SITE_ID` secrets to include the repo in the "Selected repositories" settings for each secret.
 
 ### Deploy previews
 
@@ -307,6 +380,38 @@ description: Configuring proxy settings for outgoing requests
 ---
 ```
 
+#### Configuring the table of contents
+
+We can configure which headings are shown in an individual page's table of contents by providing a `headingDepth` frontmatter property. By default, headings up to a depth of 3 (h1, h2, and h3) are shown.
+
+```md
+---
+headingDepth: 4 # show headings up to h4
+---
+```
+
+#### Showing a version indicator
+
+Show a tag at the top of the article that indicates the version of the software that that article applies to by using the `minVersion` frontmatter.
+
+```md
+---
+title: Fancy new feature
+minVersion: 3.8.1
+---
+```
+
+#### Prevent a page from being indexed by search engines
+
+You can add the [`noindex`](https://developers.google.com/search/docs/crawling-indexing/block-indexing) tag to a page by using the `noIndex` frontmatter.
+
+```md
+---
+title: Hidden preview feature
+noIndex: true
+---
+```
+
 ### Linking
 
 Links between docs articles should be written as relative paths. For example, if you wanted to link from the `schema/custom-scalars` article in the Apollo Server docs to the `getting-started` page at the root of the content directory, you would write:
@@ -349,7 +454,7 @@ _shared/configure-project.mdx_
 
 ```mdx
 1. Sign up for an Apollo account
-2. Create a graph in Apollo Studio
+2. Create a graph in GraphOS Studio
 3. Add environment variables to your project
 ```
 
@@ -401,7 +506,7 @@ This content will be hidden by default, but can be expanded if the user clicks o
 
 ##### MultiCodeBlock
 
-Wrap TypeScript code blocks in a `MultiCodeBlock` component to automatically transpile them into JavaScript. A language dropdown will be rendered in the top right corner of the code block for the user to switch between the two options. This feature works on code blocks tagged with `ts` or `tsx`.
+Wrap TypeScript code blocks in a `MultiCodeBlock` component to automatically transpile them into JavaScript. A languages will be rendered as tabs above the code block for the user to switch between the two options. This feature works on code blocks tagged with `ts` or `tsx`.
 
 You can also manually add multiple code blocks with different languages to the `MultiCodeBlock` to have them behave the same way.
 
@@ -444,7 +549,7 @@ const foo = 123;
 A YouTube player exported from MDX Embed. Check out all of the different props and options [on their docs](https://www.mdx-embed.com/?path=/docs/components-youtube--usage).
 
 ```mdx
-Check out this introduction to Apollo Studio:
+Check out this introduction to GraphOS Studio:
 
 <YouTube youTubeId="sarXMaz3OpY" />
 ```
@@ -459,6 +564,115 @@ This component is currently only used in the Apollo Client docset. It takes a pr
 <TypeScriptApiBox name="ApolloClient.constructor" />
 ```
 
+##### MinVersion
+
+Use this component to add a tag beside page headings indicating the version of the software that they apply to. This is meant to be used with headings, and using it in ways other than the method shown below will result in nothing happening.
+
+```mdx
+<MinVersion version="3.8.0">
+
+### Dark mode
+
+</MinVersion>
+```
+
+##### Release stage components
+
+You should use the `<PreviewFeature />` and `<ExperimentalFeature />` components to call out features or products that are in [preview](https://www.apollographql.com/docs/resources/product-launch-stages/#preview) or are [experimental](https://www.apollographql.com/docs/resources/product-launch-stages/#experimental-features). Use these components at the top of the page or relevant section.
+
+Both components take an optional `discordLink` prop through which you can provide the link to a relevant Discord channel. If there's isn't a relevant channel, you can omit the prop and it defaults to a generic link to Apollo Discord.
+
+```mdx
+
+# This Discord link brings folks to the channel about the @authorization directives.
+
+<PreviewFeature discordLink="https://discord.com/channels/1022972389463687228/1148623262104965120"/>
+
+```
+
+The components also take an optional `appendText` prop that adds text to the default text.
+
+```mdx
+
+<PreviewFeature appendText="This is some additional text appended to the end of the default text."/>
+
+```
+
+If necessary, you can nest markdown within the component to completely replace the text.
+
+
+```mdx
+
+<ExperimentalFeature>
+
+This _completely_ replaces the text within the component.
+
+</ExperimentalFeature>
+
+```
+
+##### Plan components
+
+Currently, the only plan component is `<EnterpriseFeature />`.
+Like the release stage components, this component should be put at the top of the relevant page or section.
+If a feature has both a release stage component and the `<EnterpriseFeature />`, the `<EnterpriseFeature />` should come first.
+
+Custom text for `<EnterpriseFeature />` can be provided by nesting Markdown within the component.
+
+By default, without any children, `<EnterpriseFeature />` renders this text:
+
+> **This feature is only available with a [**GraphOS Enterprise plan**](http://apollographql.com/graphos/enterprise/). If your organization doesn't currently have an Enterprise plan, you can test this functionality by signing up for a free [Enterprise trial](https://studio.apollographql.com/signup?type=enterprise-trial&referrer=docs-content).
+
+If you include custom text, it completely replaces this text. Please make sure to include links to the Enterprise plan docs and Enterprise trial accordingly.
+
+```mdx
+
+<EnterpriseFeature>
+
+This is some _custom markdown text_ that still includes a link to the [GraphOS Enterprise plan**](http://apollographql.com/graphos/enterprise/) and [Enterprise trial](https://studio.apollographql.com/signup?type=enterprise-trial&referrer=docs-content) docs.
+
+</EnterpriseFeature>
+
+```
+
+##### Admonitions
+
+Admonitions are designed to catch readers' attention and break the flow of the text. They’re helpful to make a piece of information stand out, but should be used wisely and sparingly. Use them only for information that shouldn’t be missed.
+
+We support the following admonition components: 
+* `<Caution>`
+* `<Note>`
+* `<Tip>`
+
+
+You can use `<Caution>`, `<Note>`, and `<Tip>` components directly in `.mdx` pages like so:
+
+```mdx
+<Caution>
+
+`<Caution>` admonitions generate anxiety. Never use them for anything other than highly important information which may cause serious issues if not acknowledged. Most of the time, prefer `<Note>`s.
+
+</Caution>
+
+<Note>
+
+`<Note>` admonitions are the most common. You can generally use them whenever you find yourself starting a sentence with "_Note_,..." or "_Keep in mind_...".
+
+Avoid using `<Note>`s directly one after another—condense notes if it makes sense.
+
+</Note>
+
+<Tip>
+
+Use `<Tip>` admonitions for any particularly helpful advice or suggestions. 
+
+</Tip>
+```
+
+The above code block renders like so:
+
+![Rendered admonitions](src/content/graphos/img/admonitions.jpg)
+
 ## History
 
 Previous to this system, we built our docs site by building each repo's docs individually using a [shared Gatsby theme](https://github.com/apollographql/gatsby-theme-apollo/). Each site would be deployed to Netlify and "stitched" together to make one continuous website using Netlify path rewrites like this:
@@ -468,7 +682,7 @@ Previous to this system, we built our docs site by building each repo's docs ind
 /docs/react/* https://apollo-client-docs.netlify.app/:splat 200!
 ```
 
-> All of our path rewriting happens in the [website router](https://github.com/apollographql/webiste-router) repo.
+> All of our path rewriting happens in the [website router](https://github.com/apollographql/website-router) repo.
 
 ### Benefits
 
@@ -503,7 +717,7 @@ Using the old infrastructure, we were spending a lot of time building our docs. 
 #### Netlify build stats (Feb 1 - Feb 24, 2022)
 
 | Site                          | Builds | Average time | Total time |
-| ----------------------------- | ------ | ------------ | ---------- |
+|-------------------------------|--------|--------------|------------|
 | apollo-federation-docs        | 424    | 4m 55s       | 2,084m     |
 | apollo-client-docs            | 237    | 8m 21s       | 1,979m     |
 | apollo-router-docs            | 437    | 2m 21s       | 1,027m     |

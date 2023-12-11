@@ -10,7 +10,6 @@ import {
   Link,
   SimpleGrid,
   Text,
-  useColorModeValue,
   useToken
 } from '@chakra-ui/react';
 import {FiArrowRight} from 'react-icons/fi';
@@ -18,8 +17,8 @@ import {Link as GatsbyLink} from 'gatsby';
 import {PrimaryLink} from './RelativeLink';
 
 export function Odyssey() {
-  const shade = useColorModeValue(50, 600);
-  const gradient = useToken('colors', [`blue.${shade}`, `indigo.${shade}`]);
+  const lightGradient = useToken('colors', ['blue.50', 'indigo.50']);
+  const darkGradient = useToken('colors', ['blue.600', 'indigo.600']);
   return (
     <Grid
       gap={{base: 6, lg: 10}}
@@ -27,16 +26,16 @@ export function Odyssey() {
       alignItems="center"
       rounded="lg"
       p="6"
-      bgImage={`linear-gradient(${['to right', ...gradient]})`}
+      bgImage={`linear-gradient(${['to right', ...lightGradient]})`}
+      _dark={{
+        bgImage: `linear-gradient(${['to right', ...darkGradient]})`
+      }}
     >
       <div>
-        <Heading as="h3" size="md" mb="2">
-          Looking for a guided, interactive experience?
-        </Heading>
         <Text fontSize="md">
-          Our learning platform, <strong>Odyssey</strong>, is the perfect place
-          to start your journey and learn GraphQL with videos and interactive
-          code challenges.
+          <strong>Welcome!</strong> 👋 Our learning platform, Odyssey, provides{' '}
+          <strong>interactive tutorials</strong> with videos and code challenges
+          to help you launch your journey with GraphQL and Apollo.
         </Text>
       </div>
       <div>
@@ -46,7 +45,7 @@ export function Odyssey() {
           colorScheme="indigo"
           rightIcon={<FiArrowRight />}
         >
-          Try Apollo Odyssey
+          Explore Tutorials
         </Button>
       </div>
     </Grid>

@@ -1,0 +1,105 @@
+---
+title: Federation is not a saga orchestrator
+id: TN0040
+tags: [federation]
+---
+
+Apollo Federation is a powerful system for orchestrating queries across a distributed system. For example, you can use Federation to:
+
+- Query data from multiple systems in parallel
+- Sequence calls to multiple systems when there are dependencies between them via [`@key` and `@requires` directives](/federation/entities-advanced)
+- Orchestrate any combination of parallel and sequential calls to multiple systems
+- Batch calls to a single system to [solve the infamous N+1 problem](/technotes/TN0019-federation-n-plus-1/)
+- Split a single call into multiple calls with different priorities [using `@defer`](/router/executing-operations/defer-support/)
+
+Federation applies these same orchestration capabilities to mutation fields (and their selection sets), but managing state changes across distributed systems typically involves additional requirements. Federation does _not_ provide common functionality for these requirements, such as compensating transactions or data propagation between sibling fields.
+
+You need to implement your own orchestration logic within a single field resolver to implement these requirements. This is due to the design of GraphQL itself.
+
+## Sequencing mutations in GraphQL
+
+The only difference between the root `Query` and `Mutation` types is that [mutation fields are executed serially instead of in parallel](https://spec.graphql.org/October2021/#sec-Normal-and-Serial-Execution). At first glance, this seems like a way to sequence a set of related mutations.
+
+```graphql
+mutation DoMultipleThings {
+  createAccount {
+    success
+    account {
+      id
+    }
+  }
+  validateAccount {
+    success
+  }
+  setAccountStatus {
+    success
+  }
+}
+```
+
+The GraphQL spec ensures that `validateAccount` and `setAccountStatus` will not execute if `createAccount` fails. At first glance, this seems like a way to transactionally execute a set of mutations, but it has some significant downsides:
+
+- We don't have a way to roll back the changes made by `createAccount` if one of `validateAccount` or `setAccountStatus` fails.
+- We don't have a way to propagate data between mutations. For example, if `Mutation.createAccount` returns a `Account` with an `id`, we can't use that `id` in `validateAccount` or `setAccountStatus`.
+- Clients have to contend with a number of failure scenarios by inspecting the `success` field of each mutation and determining the appropriate course of action.
+
+Even if all three of these mutations are implemented in the same service, it's difficult to implement the appropriate transactional semantics when run within the GraphQL execution engine. We should instead implement this operation as a single mutation resolver so that we can handle failures and rollbacks in one function.
+
+In this JavaScript example, we're implementing a simplistic ["saga"](https://microservices.io/patterns/data/saga.html) that orchestrates state changes across multiple systems.
+
+```js
+const resolvers = {
+  Mutation: {
+    async createAndValidateAccount() {
+      const account = createAccount();
+
+      try {
+        validate(account);
+        setAccountStatus(account, 'ACTIVE');
+      } catch (e) {
+        deleteAccount(account);
+        return {success: false};
+      }
+
+      return {success: true, account};
+    }
+  }
+};
+```
+
+By representing this operation in a single field, we can properly handle failure, rollback, and data propagation in one function. We also remove complex error management from our client applications and our schema more clearly expresses the client intent.
+
+## Distributed orchestration
+
+But what if the state changes occur in different services? Because GraphQL and Federation do not provide semantics for distributed transactions, we still need to implement orchestration logic within a single field.
+
+This requirement leads to a few challenging questions:
+
+- Which team or domain owns this mutation field?
+- In which subgraph service should we implement the resolver?
+- How does the resolver communicate with the data services?
+
+There are no universally correct answers to these questions. Your answers will depend on your organization, your product requirements, and the capabilities of your system.
+
+One potential strategy is to create one or more subgraphs specifically for orchestrating mutations. These subgraphs can communicate with data services using REST or RPC. Experience or product teams are often the most appropriate owners of these subgraphs.
+
+It's tempting to have the orchestrating subgraph resolvers call back to the Apollo Router to execute domain-specific mutations. This approach is feasible, but it requires careful attention to a number of details:
+
+- All calls should go through the Apollo Router, not directly to subgraphs, because it's responsible for tracking GraphQL usage (and [subgraphs should never accept traffic directly](/technotes/TN0021-graph-security/#only-allow-the-router-to-query-subgraphs-directly).)
+- The calls to domain-specific mutations no longer originate in client applications, so you must propagate client identity and other request metadata.
+- GraphOS will view these calls as separate operations.
+- If using cloud-native telemetry, you must ensure that the Apollo Router receives the trace context to correlate spans.
+- Be wary of circular dependencies. Consider using [contracts](/graphos/delivery/contracts/) to create variants that expose only the domain-specific mutations and eliminate the potential for loops in an operation.
+
+
+<Tip>
+
+Read more on [contracts usage patterns in this technote](/technotes/TN0014-contracts-patterns/).
+</Tip>
+
+<Tip>
+
+If you're an enterprise customer looking for more material on this topic, try the [Enterprise best practices: Contracts](https://www.apollographql.com/tutorials/contracts) course on Odyssey.
+
+Not an enterprise customer? [Learn about GraphOS for Enterprise.](/graphos/enterprise)
+</Tip>

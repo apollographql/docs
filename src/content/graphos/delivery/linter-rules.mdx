@@ -1,0 +1,627 @@
+---
+title: Schema linter rules
+subtitle: Reference
+description: Reference for GraphOS schema linting rules with examples
+---
+
+This reference lists the rules that you can enforce with [GraphOS schema linting](./schema-linter/), along with the code that GraphOS returns for each rule violation.
+
+## Naming rules
+
+These rules enforce naming conventions. Rules are categorized by the part(s) of your schema that they correspond to.
+
+### Fields
+
+#### `FIELD_NAMES_SHOULD_BE_CAMEL_CASE`
+
+Field names should always use `camelCase`.
+
+<p style="margin-bottom: 0">❌</p>
+
+```graphql title="schema.graphql"
+type User {
+  # highlight-start
+  FirstName: String! # PascalCase
+  # highlight-end
+}
+```
+
+<p style="margin-bottom: 0">✅</p>
+
+```graphql title="schema.graphql"
+type User {
+  # highlight-start
+  firstName: String # camelCase
+  # highlight-end
+}
+```
+
+<hr />
+
+#### `RESTY_FIELD_NAMES`
+
+A field's name should never start with any of the following verbs:
+
+- `get`
+- `list`
+- `post`
+- `put`
+- `patch`
+
+Most fields should not start with _any_ verb, with the exception of `Mutation` fields. For `Mutation` fields, use a verb that more specifically describes the action being performed (such as `create`, `delete`, or `edit`).
+
+<p style="margin-bottom: 0">❌</p>
+
+```graphql title="schema.graphql"
+type Query {
+  getUsers: [User!]! # highlight-line
+}
+```
+
+<p style="margin-bottom: 0">✅</p>
+
+```graphql title="schema.graphql"
+type Query {
+  users: [User!]! # highlight-line
+}
+```
+
+### Types
+
+These rules apply to _all_ types that appear in a GraphQL schema, including:
+
+- Objects
+- Interfaces
+- Inputs
+- Enums
+- Unions
+
+#### `TYPE_NAMES_SHOULD_BE_PASCAL_CASE`
+
+All type names should use `PascalCase`.
+
+<p style="margin-bottom: 0">❌</p>
+
+```graphql title="schema.graphql"
+# highlight-start
+type streamingService { # camelCase
+  # highlight-end
+  id: ID!
+}
+```
+
+<p style="margin-bottom: 0">✅</p>
+
+```graphql title="schema.graphql"
+# highlight-start
+type StreamingService { # PascalCase
+  # highlight-end
+  id: ID!
+}
+```
+
+<hr />
+
+#### `TYPE_PREFIX`
+
+Type names should never use the prefix `Type`.
+
+<p style="margin-bottom: 0">❌</p>
+
+```graphql title="schema.graphql"
+type TypeBook { # highlight-line
+  title: String!
+}
+```
+
+<p style="margin-bottom: 0">✅</p>
+
+```graphql title="schema.graphql"
+type Book { # highlight-line
+  title: String!
+}
+```
+
+<hr />
+
+#### `TYPE_SUFFIX`
+
+Type names should never use the suffix `Type`.
+
+<p style="margin-bottom: 0">❌</p>
+
+```graphql title="schema.graphql"
+type BookType { # highlight-line
+  title: String!
+}
+```
+
+<p style="margin-bottom: 0">✅</p>
+
+```graphql title="schema.graphql"
+type Book { # highlight-line
+  title: String!
+}
+```
+
+### Objects
+
+#### `OBJECT_PREFIX`
+
+An object type's name should never use the prefix `Object`.
+
+<p style="margin-bottom: 0">❌</p>
+
+```graphql title="schema.graphql"
+type ObjectBook { # highlight-line
+  title: String!
+}
+```
+
+<p style="margin-bottom: 0">✅</p>
+
+```graphql title="schema.graphql"
+type Book { # highlight-line
+  title: String!
+}
+```
+
+<hr />
+
+#### `OBJECT_SUFFIX`
+
+An object type's name should never use the suffix `Object`.
+
+<p style="margin-bottom: 0">❌</p>
+
+```graphql title="schema.graphql"
+type BookObject { # highlight-line
+  title: String!
+}
+```
+
+<p style="margin-bottom: 0">✅</p>
+
+```graphql title="schema.graphql"
+type Book { # highlight-line
+  title: String!
+}
+```
+
+### Interfaces
+
+#### `INTERFACE_PREFIX`
+
+An interface type's name should never use the prefix `Interface`.
+
+<p style="margin-bottom: 0">❌</p>
+
+```graphql title="schema.graphql"
+interface InterfaceBook { # highlight-line
+  title: String
+  author: String
+}
+```
+
+<p style="margin-bottom: 0">✅</p>
+
+```graphql title="schema.graphql"
+interface Book { # highlight-line
+  title: String
+  author: String
+}
+```
+
+<hr />
+
+#### `INTERFACE_SUFFIX`
+
+An interface type's name should never use the suffix `Interface`.
+
+<p style="margin-bottom: 0">❌</p>
+
+```graphql title="schema.graphql"
+interface BookInterface { # highlight-line
+  title: String
+  author: String
+}
+```
+
+<p style="margin-bottom: 0">✅</p>
+
+```graphql title="schema.graphql"
+interface Book { # highlight-line
+  title: String
+  author: String
+}
+```
+
+### Inputs & arguments
+
+#### `INPUT_ARGUMENT_NAMES_SHOULD_BE_CAMEL_CASE`
+
+A GraphQL argument's name should always use `camelCase`.
+
+<p style="margin-bottom: 0">❌</p>
+
+```graphql title="schema.graphql"
+type Mutation {
+  #highlight-start
+  createBlogPost(BlogPostContent: BlogPostContent!): Post # PascalCase
+  #highlight-end
+}
+```
+
+<p style="margin-bottom: 0">✅</p>
+
+```graphql title="schema.graphql"
+type Mutation {
+  #highlight-start
+  createBlogPost(blogPostContent: BlogPostContent!): Post # camelCase
+  #highlight-end
+}
+```
+
+<hr />
+
+#### `INPUT_TYPE_SUFFIX`
+
+An input type's name should always use the suffix `Input`.
+
+<p style="margin-bottom: 0">❌</p>
+
+```graphql title="schema.graphql"
+input BlogPostDetails { #highlight-line
+  title: String!
+  content: String!
+}
+```
+
+<p style="margin-bottom: 0">✅</p>
+
+```graphql title="schema.graphql"
+input BlogPostDetailsInput { #highlight-line
+  title: String!
+  content: String!
+}
+```
+
+### Enums
+
+#### `ENUM_VALUES_SHOULD_BE_SCREAMING_SNAKE_CASE`
+
+Enum values should always use `SCREAMING_SNAKE_CASE`.
+
+<p style="margin-bottom: 0">❌</p>
+
+```graphql title="schema.graphql"
+enum Amenity {
+  # highlight-start
+  public_park # snake_case
+  # highlight-end
+}
+```
+
+<p style="margin-bottom: 0">✅</p>
+
+```graphql title="schema.graphql"
+enum Amenity {
+  # highlight-start
+  PUBLIC_PARK # SCREAMING_SNAKE_CASE 😱
+  # highlight-end
+}
+```
+
+<hr />
+
+#### `ENUM_PREFIX`
+
+An enum type's name should never use the prefix `Enum`.
+
+<p style="margin-bottom: 0">❌</p>
+
+```graphql title="schema.graphql"
+enum EnumResidence { # highlight-line
+  HOUSE
+  APARTMENT
+  CONDO
+}
+```
+
+<p style="margin-bottom: 0">✅</p>
+
+```graphql title="schema.graphql"
+enum Residence { # highlight-line
+  HOUSE
+  APARTMENT
+  CONDO
+}
+```
+
+<hr />
+
+#### `ENUM_SUFFIX`
+
+An enum type's name should never use the suffix `Enum`.
+
+<p style="margin-bottom: 0">❌</p>
+
+```graphql title="schema.graphql"
+enum ResidenceEnum { # highlight-line
+  HOUSE
+  APARTMENT
+  CONDO
+}
+```
+
+<p style="margin-bottom: 0">✅</p>
+
+```graphql title="schema.graphql"
+enum Residence { # highlight-line
+  HOUSE
+  APARTMENT
+  CONDO
+}
+```
+
+<hr />
+
+#### `ENUM_USED_AS_INPUT_WITHOUT_SUFFIX`
+
+If an enum type is used as an input argument, its name _should_ use the suffix `Input`.
+
+<p style="margin-bottom: 0">❌</p>
+
+```graphql title="schema.graphql"
+enum Role { # highlight-line
+  EDITOR
+  VIEWER
+}
+
+type Query {
+  users(role: Role): [User!]! # highlight-line
+}
+```
+
+<p style="margin-bottom: 0">✅</p>
+
+```graphql title="schema.graphql"
+enum RoleInput { # highlight-line
+  EDITOR
+  VIEWER
+}
+
+type Query {
+  users(role: RoleInput): [User!]! # highlight-line
+}
+```
+
+<hr />
+
+#### `ENUM_USED_AS_OUTPUT_DESPITE_SUFFIX`
+
+If an enum is used as the return type of a _non_-input field, its name _should not_ use the suffix `Input`.
+
+<p style="margin-bottom: 0">❌</p>
+
+```graphql title="schema.graphql"
+enum RoleInput { # highlight-line
+  EDITOR
+  VIEWER
+}
+
+type Query {
+  userRole(userId: ID!): RoleInput # highlight-line
+}
+```
+
+<p style="margin-bottom: 0">✅</p>
+
+```graphql title="schema.graphql"
+enum Role { # highlight-line
+  EDITOR
+  VIEWER
+}
+
+type Query {
+  userRole(userId: ID!): Role # highlight-line
+}
+```
+
+### Directives
+
+#### `DIRECTIVE_NAMES_SHOULD_BE_CAMEL_CASE`
+
+Directive names should always use `camelCase`.
+
+<p style="margin-bottom: 0">❌</p>
+
+```graphql title="schema.graphql"
+directive @SpecialField on FIELD_DEFINITION # PascalCase
+```
+
+<p style="margin-bottom: 0">✅</p>
+
+```graphql title="schema.graphql"
+directive @specialField on FIELD_DEFINITION # camelCase
+```
+
+<hr />
+
+<MinVersion version="2.4">
+
+## Composition rules
+
+</MinVersion>
+
+<Note>
+
+Composition rules are only available for graphs on [federation version `2.4`](/federation/federation-versions/#v24) or later. You can update a graph's version from its **Settings** page in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content).
+
+</Note>
+
+These rules flag potential improvements to a supergraph schema [composed](/federation/federated-types/composition) of [subgraph](/federation/building-supergraphs/subgraphs-overview/) schemas.
+
+### Inconsistent elements
+
+<InconsistentCompositionRules />
+
+### Overridden and unused elements
+
+<OverriddenCompositionRules />
+
+### Directives
+
+<DirectiveCompositionRules />
+
+## Other rules
+
+These rules define conventions for the entire schema and directive usage outside of composition.
+
+### Schema
+
+These rules apply to the entire schema.
+
+#### `DOES_NOT_PARSE`
+
+The schema linter raises this violation if it attempts to read a malformed GraphQL schema. Check your schema for any syntax errors.
+
+<hr />
+
+#### `ALL_ELEMENTS_REQUIRE_DESCRIPTION`
+
+Each element in the schema must include a description.
+
+<p style="margin-bottom: 0">❌</p>
+
+```graphql title="schema.graphql"
+type User {
+  username: String!
+}
+```
+
+<p style="margin-bottom: 0">✅</p>
+
+```graphql title="schema.graphql"
+"Represents a user"
+type User {
+  "The user's username"
+  username: String!
+}
+```
+
+<hr />
+
+#### `DEFINED_TYPES_ARE_USED`
+
+Every type defined in a schema should be used at least once.
+
+Unused types commonly appear after you refactor other parts of your schema. You should remove unused types to prevent confusion.
+
+<p style="margin-bottom: 0">❌</p>
+
+```graphql title="schema.graphql"
+type SomeUnusedType { # Also fails the TYPE_SUFFIX rule!
+  name: String!
+}
+
+type AnActuallyUsedType {
+  name: String!
+}
+
+type Query {
+  hello: String!
+  title: AnActuallyUsedType
+}
+```
+
+<p style="margin-bottom: 0">✅</p>
+
+```graphql title="schema.graphql"
+type Book {
+  title: String!
+}
+
+type Query {
+  books: [Book!]!
+}
+```
+
+<hr />
+
+#### `QUERY_DOCUMENT_DECLARATION`
+
+A GraphQL schema should never include definitions of GraphQL _operations_ (such as queries and mutations).
+
+<p style="margin-bottom: 0">❌</p>
+
+```graphql title="schema.graphql"
+type Query {
+  users: [User!]!
+}
+
+#highlight-start
+query GetUsers {
+  # Don't define operations in a schema document
+  users {
+    id
+  }
+}
+#highlight-end
+```
+
+### Directives
+
+#### `CONTACT_DIRECTIVE_MISSING`
+
+A subgraph schema should always provide owner contact details via the `@contact` directive. [Learn more.](../graphs/federated-graphs#contact-info-for-subgraphs)
+
+<p style="margin-bottom: 0">✅</p>
+
+```graphql title="schema.graphql"
+directive @contact(
+  "Contact title of the subgraph owner"
+  name: String!
+  "URL where the subgraph's owner can be reached"
+  url: String
+  "Other relevant notes can be included here; supports markdown links"
+  description: String
+) on SCHEMA
+
+extend schema
+  @contact(
+    name: "Products Team"
+    url: "https://myteam.slack.com/archives/teams-chat-room-url"
+    description: "Send urgent issues to [#oncall](https://yourteam.slack.com/archives/oncall)."
+  )
+```
+
+<hr />
+
+#### `DEPRECATED_DIRECTIVE_MISSING_REASON`
+
+The `@deprecated` directive should always include a `reason` argument.
+
+<p style="margin-bottom: 0">❌</p>
+
+```graphql title="schema.graphql"
+type Product {
+  title: String @deprecated #highlight-line
+  name: String!
+}
+```
+
+<p style="margin-bottom: 0">✅</p>
+
+```graphql title="schema.graphql"
+type Product {
+  title: String @deprecated(reason: "Use Product.name instead") #highlight-line
+  name: String!
+}
+```
+
+<hr />
+
+#### `TAG_DIRECTIVE_USES_UNKNOWN_NAME`
+
+The `@tag` directive should always use an approved value for its `name` argument. You specify approved values in [GraphOS Studio](./schema-linter/#configuring-the-linter).

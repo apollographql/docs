@@ -1,0 +1,33 @@
+---
+title: Schema pipeline overview
+subtitle: Ensure streamlined schema development and delivery
+description: Efficiently develop and deploy changes to your GraphQL schema with the Apollo GraphOS suite of schema governance and delivery tools.
+---
+
+GraphOS provides schema pipeline tools to efficiently develop and deploy changes to your supergraph schema. These tools fall into two main categories:
+
+- **Schema governance** tools let you manage, validate, and enforce consistency standards in your supergraph schema to ensure reliability and compatibility across different services and teams.
+- **Schema delivery** tools let you integrate schema publication seamlessly into your DevOps workflows.
+
+## Schema governance
+
+GraphOS provides the following schema governance tools:
+
+- [Schema checks](./schema-checks) help identify breaking changes before you make them and help determine when a potentially dangerous change is, in fact, safe.
+- [Schema linting](./schema-linter) ensures consistent, well-formed schemas across all your services. Automated linting lowers maintenance overheads and improves developer productivity. Schema linting can run as part of schema checks in GraphOS Studio and as one-offs via the Rover CLI.
+
+## Schema delivery
+
+Schema delivery refers to the process of making your supergraph schema available to clients. You can publish schema changes [using the Rover CLI](./publishing-schemas) or [GraphOS Platform API](/graphos/platform-api). Using the Rover CLI command enables you to easily integrate publication into your continuous delivery pipeline.
+
+To incorporate other important aspects of your supergraph configuration, such as your router configuration or federation version, GraphOS uses the concept of [**launches**](./launches). Schema publications trigger launches, and you can monitor them from the **Launches** page in GraphOS Studio.
+
+<img className="screenshot" src="../img/launches-page.jpg" width="500" />
+
+### Contracts
+
+GraphOS [**contracts**](./contracts) are an enterprise feature that let you deliver _different_ subsets of your supergraph to different consumers. Contracts rely on `@tags` across various subgraph schemas to denote which types and fields are accessible to different consumers.
+
+## Client operation validation
+
+In addition to the governance and delivery tools for schema developers, Apollo provides a CLI command for app developers to confirm that GraphQL operations in a client application are compatible with the published schema. Refer to the [Validating client operations page](/rover/validating-client-operations) for more information.

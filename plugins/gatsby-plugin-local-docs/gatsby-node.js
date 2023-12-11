@@ -1,8 +1,7 @@
-exports.createSchemaCustomization = ({actions}) => {
+exports.createSchemaCustomization = ({actions: {createTypes}}) => {
   // add schema types that aren't automatically inferred when running against
   // a local docset from a different directory
-  const {createTypes} = actions;
-  const typeDefs = `
+  const typeDefs = /* GraphQL */ `
     type File implements Node {
       gitRemote: GitRemote
     }
@@ -15,13 +14,17 @@ exports.createSchemaCustomization = ({actions}) => {
       ref: String
     }
 
-    # this frontmatter is only used in the docs homepage
     type MdxFrontmatter {
-      toc: Boolean
+      toc: Boolean # this frontmatter is only used in the docs homepage
+      tags: [String] # this is only used by technotes
     }
 
     type MarkdownRemarkFrontmatter {
       description: String
+    }
+
+    type FileFields {
+      gitLogLatestDate: String
     }
   `;
   createTypes(typeDefs);

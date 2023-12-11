@@ -1,0 +1,72 @@
+---
+title: 'Mocking graph functionality to unblock client development'
+id: TN0020
+tags: [gateway, schema-design, federation]
+---
+
+As your organization builds out its supergraph, you might discover that your client teams are often waiting on subgraph owners to make agreed-upon changes to their schemas. During this time, you can **mock** parts of your supergraph as you develop both your clients and subgraphs, enabling teams to work in parallel without blocking each other.
+
+## First, agree on your schema
+
+To mock parts of your supergraph effectively, both client and backend teams need to agree on the structure of those parts as part of a larger [governance strategy](/enterprise-guide/graph-administration#governance) and approval process. Alignment between these teams on schema additions/removals/changes can help make your schema more useful and expressive.
+
+> We recommended that your backend and client teams align on your schema's structure ahead of time, even if you _don't_ use schema mocking. Doing so enables you to create an expressive schema that accelerates _all_ teams.
+
+### Creating a new schema
+
+If you're creating an entirely new graph and corresponding schema, it's important first to familiarize yourself with schema best practices, such as those described in [Apollo Odyssey](https://www.apollographql.com/tutorials), [Principled GraphQL](https://principledgraphql.com/), and the [Enterprise Guide](/enterprise-guide/introduction).
+
+For new schemas, we recommend using [this sample by GitHub user setchy](https://github.com/setchy/apollo-server-4-mocked-federation) to mock your new schema in its entirety. This provides your client teams with a local (or hosted) instance of the schema to query against and begin mocking UI components with the mocked data.
+
+To use this sample, you need to [publish your schema to Apollo GraphOS](/graphos/delivery/publishing-schemas/). For details on the benefits of publishing to GraphOS, [see below](#why-use-graphos-for-a-mocked-server).
+
+To get started with the sample, run the following:
+
+```bash showLineNumbers=false
+git clone https://github.com/setchy/apollo-server-4-mocked-federation
+cd apollo-server-4-mocked-federation
+npm install
+cp .env.template .env
+```
+
+Then, edit the `.env` file with the appropriate values from GraphOS Studio and run the following to start the server:
+
+```bash showLineNumbers=false
+npm run dev
+```
+
+The sample uses the `@graphql-tools/mock` package to power the mocks. You can customize the sample's behavior by following the instructions in the [package's documentation page](https://www.the-guild.dev/graphql/tools/docs/mocking).
+
+This gateway can then be used either locally (such as for local client development) or as a hosted gateway internally to be used by client developers.
+
+The data is mocked, however it doesn't require any work from server teams to support and will match the schema as it exists within GraphOS Studio. As we're using GraphOS Studio for the schema, schema changes will automatically be pulled ensuring client developers are working on the latest version.
+
+### Modifying an existing schema
+
+The process for making changes to an existing schema is similar to that for creating a new one, especially in terms of planning. As you add new features, it's important reach a design consensus early, especially for features that require extensive backend work (e.g., machine learning).
+
+To mock proposed changes (such as adding a new type/field), we recommend using [this sample created by Apollo's Solutions Architecture team](https://github.com/apollosolutions/apollo-faker-demo). This sample requires a preexisting GraphQL API to be running. It works by allowing for a "patched" or modified version of your subgraph to run locally with mocked data, while using the remote API for all other data.
+
+You'll need to [publish your schema to GraphOS](/graphos/delivery/publishing-schemas/) to use this sample. For details on the benefits of publishing to GraphOS, [see below](#why-use-graphos-for-a-mocked-server).
+
+To get started, run:
+
+```graphql
+mkdir mocked_gateway
+export APOLLO_KEY=key_from_studio #replace with the actual key from GraphOS Studio
+cd mocked_gateway
+touch proposed.graphql
+npx github:@apollosolutions/apollo-faker-demo --graphref <yourgraph>@<variant> --remote https://yourapi.com/graphql
+```
+
+Then, modify the `proposed.graphql` file with the proposed changes. There are configuration options available via the `@graphql-tools/mock` package, and you can set these options as documented in [the sample's README file, under step 5](https://github.com/apollosolutions/apollo-faker-demo#usage).
+
+## Why use GraphOS for a mocked server?
+
+Now that you have either a new schema or changes to an existing one, it's important to publish that schema to Apollo GraphOS for the following reasons:
+
+- GraphOS Studio provides a centralized view of your schema, along with a [mocked view of the schema](/graphos/explorer/additional-features/#mocked-responses).
+- By publishing to GraphOS, the samples referenced above can automatically update on changes, allowing for a deployed version of the samples to be referenced by all developers.
+- For client teams using code generation tools (especially those in Apollo's client libraries) it's possible to use GraphOS as a source of the schema, allowing for more straightforward development.
+
+We recommend using a variant of your new/existing production graph ID. If considering mocking for schema changes, this also ensures proposed changes aren't breaking using [schema checks](/graphos/delivery/schema-checks) against production traffic.

@@ -1,0 +1,96 @@
+---
+title: Overload protection
+id: TN0005
+tags: [server, router, sre]
+---
+
+A GraphQL server can implement **overload protection** to help it remain available while under high load. With overload protection, a server monitors its resource usage and begins shedding incoming traffic whenever that usage approaches a performance-degrading limit (such as running out of memory).
+
+As you add capabilities and users to your supergraph, you might introduce new usage patterns that add unexpectedly high load. Overload protection helps reduce the impact of these spikes while you optimize your supergraph to eliminate them entirely.
+
+## Example scenarios
+
+A common source of overload in a system is the [thundering herd problem](https://en.wikipedia.org/wiki/Thundering_herd_problem), where a large number of processes or clients attempt to access limited computer resources. Many scenarios can cause this, for example:
+
+- Pod failures in Kubernetes cause a smaller amount of pods to handle the same amount of traffic.
+- A marketing campaign or viral social media post drives high traffic to an application in a short period.
+- A newly deployed feature introduces more load on the graph than expected.
+
+A more graph-based problem is adding a entity relationship in the schema that causes a significant increase in traffic. For example in the [Star Wars schema](https://studio.apollographql.com/public/star-wars-swapi/home?variant=current), imagine if there was no link from `Person` to `Film`(though `PersonFilmsConnection`) and it was added today. Until the usage of that new connection in the schema flattens out, every deployment or event that causes traffic could cause a large amount of new load directly attributed to the change for the owner of the `Film` entity.
+
+## Implementing in Express
+
+Overload protection packages are available for most popular languages and server frameworks. For example, we'll look at using the [overload-protection](https://www.npmjs.com/package/overload-protection) package with the `@apollo/server` package. This drop-in package enables your server to return a 503 based any of the following:
+
+- The current event loop delay
+- The amount of bytes used by the heap
+- The amount of bytes used by Resident Set Size (RSS).
+
+To use `overload-protection`, you include it in your Express startup like so:
+
+```js
+import express from 'express';
+import protect from 'overload-protection';
+
+const app = express();
+protect('express');
+app.use(protect);
+```
+
+> Note: If you're currently using the `startStandaloneServer` function, you'll need to [swap to `expressMiddleware`](/apollo-server/api/standalone#swapping-to-expressmiddleware) before adding overload protection.
+
+If you're using `@apollo/server`'s Express integration (i.e.[`expressMiddleware`](/apollo-server/api/express-middleware)), you can add `overload-protection` via Express middleware by adding the highlighted lines to your server creation:
+
+```js title="index.js"
+import {ApolloServer} from '@apollo/server';
+import {expressMiddleware} from '@apollo/server/express4';
+import {ApolloServerPluginDrainHttpServer} from '@apollo/server/plugin/drainHttpServer';
+import express from 'express';
+import http from 'http';
+import cors from 'cors';
+import {typeDefs, resolvers} from './schema';
+// highlight-start
+import protect from 'overload-protection';
+protect('express');
+// highlight-end
+
+const app = express();
+app.use(protect); // highlight-line
+const httpServer = http.createServer(app);
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  plugins: [ApolloServerPluginDrainHttpServer({httpServer})]
+});
+
+// Note the top-level `await` calls below!
+await server.start();
+app.use('/graphql', cors(), express.json(), expressMiddleware(server));
+await new Promise(resolve => httpServer.listen({port: 4000}, resolve));
+console.log(`🚀 Server ready at http://localhost:4000/graphql`);
+```
+
+This approach also works if you're using the `@apollo/subgraph` library to create your subgraphs in a similar way.
+
+Overload protection is not specific to GraphQL, so it's best to handle it outside of Apollo software.
+
+## Protecting a supergraph
+
+When adding overload protection to a supergraph, a reasonable question is, "Do I add protection to my gateway/router or to my individual subgraphs?" The short answer is "both":
+
+- Protecting the router protects the availability of the supergraph as a whole.
+- Protecting a subgraph reduces the error rate for queries that request data from that subgraph.
+
+### Gateway/Router
+
+The main concern with the gateway is a buildup of requests that cause partial or cascading failures. If the gateway can't shed excessive load, its performance starts to degrade.
+
+A single request to the gateway usually transforms into multiple requests to subgraphs, which can increase load more than expected for complex queries. In such cases, overload protection in the gateway can save it from falling over entirely. This looks like a temporary dip in availability instead of a total outage.
+
+### Subgraphs
+
+A failure in a subgraph can cause a backup in the gateway. If this backup is due to load, overload protection helps short-circuit the return of an error. This relieves the pressure in both the gateway and the subgraph by allowing the gateway to return errors faster.
+
+## Additional Protections
+
+To further protect against overloading your graph and system, you should enable [limiting query depth](/technotes/TN0021-graph-security/#limit-query-depth) and [rate limiting](/technotes/TN0021-graph-security/#use-rate-limiting-as-needed).

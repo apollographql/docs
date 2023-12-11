@@ -1,4 +1,5 @@
 import {createContext} from 'react';
+import {gql, useQuery} from '@apollo/client';
 import {join, relative} from 'path';
 import {useColorModeValue} from '@chakra-ui/react';
 import {withPrefix} from 'gatsby';
@@ -21,12 +22,6 @@ export const flattenNavItems = items =>
     item.children ? [item, ...flattenNavItems(item.children)] : item
   );
 
-export function useTagColors() {
-  const bg = useColorModeValue('indigo.50', 'indigo.400');
-  const textColor = useColorModeValue('indigo.500', 'inherit');
-  return [bg, textColor];
-}
-
 export function useFieldTableStyles() {
   const teal = useColorModeValue('teal.600', 'teal.300');
   const requiredBg = useColorModeValue('blackAlpha.50', 'whiteAlpha.50');
@@ -35,7 +30,7 @@ export function useFieldTableStyles() {
       bg: requiredBg
     },
     td: {
-      ':not(:last-child)': {
+      ':first-child': {
         [['h5', 'h6']]: {
           mb: 1,
           fontSize: 'md',
@@ -53,7 +48,7 @@ export function useFieldTableStyles() {
           fontSize: 'inherit'
         }
       },
-      ':last-child': {
+      ':not(:first-child)': {
         lineHeight: 'base',
         fontSize: 'md',
         p: {
@@ -65,3 +60,21 @@ export function useFieldTableStyles() {
     }
   };
 }
+
+const GET_USER = gql`
+  query GetUser {
+    me {
+      id
+      name
+    }
+  }
+`;
+
+export const useUser = () => {
+  const {data, loading, error} = useQuery(GET_USER);
+  return {
+    user: data?.me,
+    loading,
+    error
+  };
+};

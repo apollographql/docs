@@ -1,0 +1,84 @@
+<md:EntityDescriptor entityID="fd76e619-6c0a-461c-912d-418278929d60" cacheDuration="PT1440M" ID="G_QyN8w_8N8A71STjaNU3VRjbQm" xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata">
+    <md:SPSSODescriptor AuthnRequestsSigned="true" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+        <md:KeyDescriptor use="signing">
+            <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+                <ds:X509Data>
+                    <ds:X509Certificate>
+                        MIIGZjCCBU6gAwIBAgIQOqymVmDZKjpMcsXkqsksHjANBgkqhkiG9w0BAQsFADCBjzELMAkGA1UE
+                        BhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEYMBYG
+                        A1UEChMPU2VjdGlnbyBMaW1pdGVkMTcwNQYDVQQDEy5TZWN0aWdvIFJTQSBEb21haW4gVmFsaWRh
+                        dGlvbiBTZWN1cmUgU2VydmVyIENBMB4XDTIzMDIxNDAwMDAwMFoXDTI0MDMwNjIzNTk1OVowKDEm
+                        MCQGA1UEAxMdc2lnbmluZy5zc28uYXBvbGxvZ3JhcGhxbC5jb20wggEiMA0GCSqGSIb3DQEBAQUA
+                        A4IBDwAwggEKAoIBAQClHgbHNYXxa3VCOZCmb+gOcJSuDhj61yhB499wkg7SULmcdb/3ewgb6xGR
+                        PQvrvyxEyaekKv9E5XaY5zFXlq9U7/qjxTkDskjkG+JjW15uLKvCUUlTH9o4zdW3I8XV3pzUsk1d
+                        Wl3oUGd7hwHdTXhuFzcNv0GgtLtcSMJOuZKFQ/4iDuysbTOEWLHA3zqF/ztiv3F5jADJbq1pNQK8
+                        6k9SH4wusmPzpLaqVUag45SPORCWlPCN1HdY1KWenECDTJmf8q+rlO/e0Z1z7DFVKvslZ5WMVz/Q
+                        OyHO06iBmqzb+9jVzltLMOPbcXvZtb9ozuVf7JDNxAKTOLBySXSt6TtvAgMBAAGjggMiMIIDHjAf
+                        BgNVHSMEGDAWgBSNjF7EVK2K4Xfpm/mbBeG4AY1h4TAdBgNVHQ4EFgQU6NzE/jgA1Ky4lh0kiETx
+                        jX4KH8kwDgYDVR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYwFAYIKwYBBQUHAwEG
+                        CCsGAQUFBwMCMEkGA1UdIARCMEAwNAYLKwYBBAGyMQECAgcwJTAjBggrBgEFBQcCARYXaHR0cHM6
+                        Ly9zZWN0aWdvLmNvbS9DUFMwCAYGZ4EMAQIBMIGEBggrBgEFBQcBAQR4MHYwTwYIKwYBBQUHMAKG
+                        Q2h0dHA6Ly9jcnQuc2VjdGlnby5jb20vU2VjdGlnb1JTQURvbWFpblZhbGlkYXRpb25TZWN1cmVT
+                        ZXJ2ZXJDQS5jcnQwIwYIKwYBBQUHMAGGF2h0dHA6Ly9vY3NwLnNlY3RpZ28uY29tMEsGA1UdEQRE
+                        MEKCHXNpZ25pbmcuc3NvLmFwb2xsb2dyYXBocWwuY29tgiF3d3cuc2lnbmluZy5zc28uYXBvbGxv
+                        Z3JhcGhxbC5jb20wggF+BgorBgEEAdZ5AgQCBIIBbgSCAWoBaAB2AHb/iD8KtvuVUcJhzPWHujS0
+                        pM27KdxoQgqf5mdMWjp0AAABhlAqcBoAAAQDAEcwRQIgRfc0EjN474V0JE+5/kSGRUymz2fUoCr1
+                        YXxvxFVy4NkCIQClSx1qTy29J2+a+zhqAVgZKy/W6EPdbTr1pI9J5yb26gB2ANq2v2s/tbYin5vC
+                        u1xr6HCRcWy7UYSFNL2kPTBI1/urAAABhlAqcCwAAAQDAEcwRQIgX266NS3lHl0es2sJnXwWvG/X
+                        xqui7i1jMr4jsph9XhoCIQCa+tshUeALhnVbcRoiNS2bLCBYp9/Uj5lqyk2DsYxq0QB2AO7N0GTV
+                        2xrOxVy3nbTNE6Iyh0Z8vOzew1FIWUZxH7WbAAABhlAqb/8AAAQDAEcwRQIgQStZxcKynwtaNQHu
+                        0Kx9DeJ58oFBe3HJ2f/oaLnEVxUCIQC3nnzi8H/UlWZ3ccojef3Q98GbaW61VYm/+4P9apTiGjAN
+                        BgkqhkiG9w0BAQsFAAOCAQEAS41Y7QFxJ332b0Fi/iUfuWt8uo16vwaxKd8mrqB4y3NDLfvo+bMp
+                        5o4euaN79sWR1rAf1Ldvhxg0g1sqeStaLgSOcr2U6aUmzY++tg4SdILmHol6F3MZiCWNFG6H44iv
+                        JhEzxVhKewsRC3KoB4oWkofHx/MFSI6QEYWEqIx4zvoLmFqvfT4yMgi/tSen+Sjqcs2pZUMM1+aq
+                        C9fhiImuevOpPuIEN3WXRk4rUJ0pQtZhyLiXU8yTTn4l3ClD3Y3lXCm7q3TR+XdKm0vpx+SHtN9Z
+                        rB1Au2IkTgAS4OgjJa8jAxFZtAMSbc+lgTbPmbKd2D1g9WvG/r0yWP1nQHIH7w==
+                    </ds:X509Certificate>
+                </ds:X509Data>
+            </ds:KeyInfo>
+        </md:KeyDescriptor>
+        <md:KeyDescriptor use="encryption">
+            <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+                <ds:X509Data>
+                    <ds:X509Certificate>
+                        MIIHGDCCBgCgAwIBAgIQA5rTwCc2Y0naCOknRkm47TANBgkqhkiG9w0BAQsFADBPMQswCQYDVQQG
+                        EwJVUzEVMBMGA1UEChMMRGlnaUNlcnQgSW5jMSkwJwYDVQQDEyBEaWdpQ2VydCBUTFMgUlNBIFNI
+                        QTI1NiAyMDIwIENBMTAeFw0yMzAxMzEwMDAwMDBaFw0yNDAxMzAyMzU5NTlaMIGHMQswCQYDVQQG
+                        EwJVUzERMA8GA1UECBMIQ29sb3JhZG8xDzANBgNVBAcTBkRlbnZlcjEiMCAGA1UEChMZUGluZyBJ
+                        ZGVudGl0eSBDb3Jwb3JhdGlvbjEwMC4GA1UEAxMnZW5jcnlwdGlvbi5zc28uY29ubmVjdC5waW5n
+                        aWRlbnRpdHkuY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0oYi8w6SPipSYzZ9
+                        npgUZ7J9TYsnYXoppFRa+37CYmLZ3V+Y7exwGOOrSdAV5xagN0eslVTFeHj49jG690Uu/Y4v+T5l
+                        sYIX1u8x/kd6PRA7mVa/zc0GhLvRCa1jz5fvFOYNWdbEenTYWMZYAvqSv7m9iBnZadyWgLEnv0kM
+                        nwQhWbCIJ6wLj9XW4Zc0OI+okqEMJHrAIf2cNmg3t/eWO2q6cV5gfGqRPuDG2gELaAI2lZotjrCz
+                        BTrdeIjkjfaNIx66ru9Q1gRRuK9Kpd2I8etZiJl1ANOAO5CZsvYRINFMrFy82D6R2DpuWKfOsDn9
+                        je+UkCS12TsHuzmXpryQJwIDAQABo4IDtTCCA7EwHwYDVR0jBBgwFoAUt2ui6qiqhIx56rTaD5iy
+                        xZV2ufQwHQYDVR0OBBYEFKOoVuKFysQRPQS0X1eb9P6d30osMF8GA1UdEQRYMFaCJ2VuY3J5cHRp
+                        b24uc3NvLmNvbm5lY3QucGluZ2lkZW50aXR5LmNvbYIrd3d3LmVuY3J5cHRpb24uc3NvLmNvbm5l
+                        Y3QucGluZ2lkZW50aXR5LmNvbTAOBgNVHQ8BAf8EBAMCBaAwHQYDVR0lBBYwFAYIKwYBBQUHAwEG
+                        CCsGAQUFBwMCMIGPBgNVHR8EgYcwgYQwQKA+oDyGOmh0dHA6Ly9jcmwzLmRpZ2ljZXJ0LmNvbS9E
+                        aWdpQ2VydFRMU1JTQVNIQTI1NjIwMjBDQTEtNC5jcmwwQKA+oDyGOmh0dHA6Ly9jcmw0LmRpZ2lj
+                        ZXJ0LmNvbS9EaWdpQ2VydFRMU1JTQVNIQTI1NjIwMjBDQTEtNC5jcmwwPgYDVR0gBDcwNTAzBgZn
+                        gQwBAgIwKTAnBggrBgEFBQcCARYbaHR0cDovL3d3dy5kaWdpY2VydC5jb20vQ1BTMH8GCCsGAQUF
+                        BwEBBHMwcTAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZGlnaWNlcnQuY29tMEkGCCsGAQUFBzAC
+                        hj1odHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20vRGlnaUNlcnRUTFNSU0FTSEEyNTYyMDIwQ0Ex
+                        LTEuY3J0MAkGA1UdEwQCMAAwggF/BgorBgEEAdZ5AgQCBIIBbwSCAWsBaQB2AO7N0GTV2xrOxVy3
+                        nbTNE6Iyh0Z8vOzew1FIWUZxH7WbAAABhgf/BCwAAAQDAEcwRQIgAYWjpn3U9YIewcsAJmbD7GUK
+                        BKQXeHXkgaDSdBrc0bgCIQCt0vRrK4I6DpwXFTXJFCU6q9YYlJrn8rOwsBAuUkCg/QB2AHPZnokb
+                        TJZ4oCB9R53mssYc0FFecRkqjGuAEHrBd3K1AAABhgf/BEQAAAQDAEcwRQIhAO/56mq4XCaz+oD3
+                        SZ5ab16HeGOUmHYYZ5Z+VVvcfqfCAiAwMc0owdTMqmflbVl9alUwNEqEpTGg1VEIwt4o41l2sgB3
+                        AEiw42vapkc0D+VqAvqdMOscUgHLVt0sgdm7v6s52IRzAAABhgf/BAcAAAQDAEgwRgIhAMElny3B
+                        jyI8/qUQOGi3dpl6IAERakVT22jHE62STRlbAiEAkdRBsKj+dGLXm3UW9Yly1IKA5KpCfsSyKXrT
+                        jL+njNYwDQYJKoZIhvcNAQELBQADggEBACvh5iDsn+j9JHFM5YnrZ+4bzySKopD37hzGRZsNi5sZ
+                        VHlsHKhV/CXlxVGVYtdQ1wc2ECqG8C3rpfLVCr1fYOHHplmppfT11lguzGMnzT01yG1CyMYKKNha
+                        aFb4/j647p80FikgCKTGaO0EVYaHjC1ZPuoIRldoVhJW8s35KqPyG0GoNsm728064MuG2eW41svb
+                        LlR9O1PEDRRscwm5yvvU7wX08tBIMf10gBEbIjRvNXg1r5kbkxqpxHFFsiR7f+TSSxctcaFl29zd
+                        Hyqu+PvS1f9N+xI0MoGKdE+SOW6orlw7t4gz0hFY/1FhgrZdijEQZ2g3IZZanxBTLJIlqXo=
+                    </ds:X509Certificate>
+                </ds:X509Data>
+            </ds:KeyInfo>
+        </md:KeyDescriptor>
+        <md:SingleLogoutService Location="https://sso.connect.pingidentity.com/sso/SLO.saml2" Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"/>
+        <md:SingleLogoutService Location="https://sso.connect.pingidentity.com/sso/SLO.saml2" Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"/>
+        <md:AssertionConsumerService isDefault="true" Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://sso.connect.pingidentity.com/sso/sp/ACS.saml2" index="0"/>
+    </md:SPSSODescriptor><md:ContactPerson contactType="administrative"/>
+</md:EntityDescriptor>

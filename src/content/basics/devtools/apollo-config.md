@@ -27,15 +27,15 @@ module.exports = {
 
 There are a few different ways you can link your client to a schema:
 
-1. Use the Apollo [schema registry](https://www.apollographql.com/docs/studio/schema-registry/)
+1. Use the Apollo [schema registry](/graphos/delivery/publishing-schemas/)
 2. With a remote endpoint (from a running server)
 3. With a local schema file
 
 #### Option 1: Use the Apollo schema registry
 
-To link your client to a schema through the Apollo schema registry, you'll need to have at least one version of your schema uploaded to the [registry](https://www.apollographql.com/docs/studio/schema-registry/).
+To link your client to a schema through the Apollo schema registry, you'll need to have at least one version of your schema published to the [registry](/graphos/delivery/publishing-schemas/).
 
-With Apollo Studio set up, you can point your client directly to your graph's schema by specifying your graph's name in your Apollo config, like so:
+With GraphOS Studio set up, you can point your client directly to your graph's schema by specifying your graph's name in your Apollo config, like so:
 
 ```js {3}
 module.exports = {
@@ -45,7 +45,7 @@ module.exports = {
 };
 ```
 
-> **Note:** you must have a [registered schema](https://www.apollographql.com/docs/studio/schema-registry/#registering-a-schema) for features like VS Code intellisense, which requires knowledge of your schema, to work properly.
+> **Note:** you must have a [published schema](/graphos/delivery/publishing-schemas/) for features like VS Code intellisense, which requires knowledge of your schema, to work properly.
 
 If you're tracking different versions of your schema in the registry using graph variants, you can link your client to a specific variant like so:
 

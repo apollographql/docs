@@ -1,5 +1,3 @@
-import Footer from '../components/Footer';
-import Header from '../components/Header';
 import React from 'react';
 import {Button, Flex, Heading, Text, chakra} from '@chakra-ui/react';
 import {FiChevronLeft} from 'react-icons/fi';
@@ -10,7 +8,6 @@ export default function NotFound() {
   return (
     <>
       <GatsbySeo title="Not found" />
-      <Header />
       <Flex
         textAlign="center"
         maxW="container.sm"
@@ -42,7 +39,6 @@ export default function NotFound() {
           Back to home
         </Button>
       </Flex>
-      <Footer />
     </>
   );
 }
