@@ -19,7 +19,7 @@ Every supergraph in GraphOS includes one or more **subgraphs**. These are the in
 
 You _individually_ publish each subgraph's schema to Apollo with `rover subgraph publish`:
 
-```bash title="Example command"
+```bash showLineNumbers=false title="Example command"
 rover subgraph publish --schema ./products.graphql --name products docs-example-graph@current --routing-url https://products.example.com
 ```
 
@@ -45,7 +45,7 @@ graph LR;
 
 3. Run the `rover subgraph publish` command and provide it your subgraph's schema in one of the ways shown:
 
-   ```bash
+   ```bash showLineNumbers=false
    # Provide a local .graphql file path
    rover subgraph publish my-graph@my-variant --name locations --routing-url https://flyby-locations-sub.herokuapp.com/ --schema ./schema.graphql
 
@@ -86,7 +86,7 @@ These instructions apply only to [monographs](../graphs/#monographs), which are 
 
 2. Run the `rover graph publish` command, providing your schema in one of the ways shown:
 
-   ```bash
+   ```bash showLineNumbers=false
    # Provide a local .graphql file path
    rover graph publish my-graph@my-variant --schema ./schema.graphql
 
