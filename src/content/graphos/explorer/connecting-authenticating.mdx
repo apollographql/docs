@@ -29,7 +29,7 @@ Access-Control-Allow-Credentials: true
 
 ## Authentication
 
-The Explorer provides features to help you authenticate via [request headers](#request-headers), [cookies](#cookies), and [scripts](./scripting).
+The Explorer provides features to help you authenticate via [request headers](#request-headers), [cookies](#cookies), and [scripts](#custom-scripts).
 
 > If your graph has authentication requirements that aren't covered by these options, please contact **support@apollographql.com** with questions or feedback.
 
@@ -114,3 +114,5 @@ If you create a [preflight or operation script](./scripting), that script can ac
 ```js
 const secretToken = explorer.environment.get('token');
 ```
+
+Check out the Explorer [scripting docs](./scripting) to learn how you can use preflight scripts for authentication purposes.
