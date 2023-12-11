@@ -1,0 +1,80 @@
+---
+title: Organizational strategies to support supergraph delivery
+id: TN0045
+description: How to best organize engineering teams when developing and delivering a supergraph
+tags: [federation, best-practices, organization]
+---
+
+When setting out to deliver a supergraph at scale, one of the biggest hurdles organizations face is often _not_ a lack of technical prowess, but rather adopting a supportive organizational structure. This tech note explores organizational structures to facilitate supergraph delivery at each stage.
+
+Before jumping into organizational structure, it's worth first reiterating the primary drivers of adopting a federated supergraph. This can help provide context for the proposed organizational strategies and how they fit into the bigger picture.
+
+## Benefits of federation
+
+Many companies have transitioned from monolith to microservices to enable teams to move quicker, have more autonomy, and to remove huge deployment overheads. Microservices do provide a way for teams to deploy independently of one another—however, they can also lead to increased silos, divergence of standards, occasionally the duplication of functionality, and often the need for BFFs.
+
+The beauty and power of a federated graph is that it provides an abstraction layer between backend microservices and the needs and implementation of the client. It's generated and composed automatically from individual contributions to subgraphs. The composition process ensures subgraph updates don't break standards, existing front-end journeys, or existing entities across the supergraph.
+
+Federation enables the schema to expose exactly the data in the format required by the client, allowing lightweight and ultimately more performant frontend applications irrespective of the backend implementation.
+
+With all this in mind, how do you best setup your teams to maintain autonomy and ownership while also ensuring best practices, consistency, governance, quality, and reuse? In other words—how do you decouple teams while avoiding silos?
+
+## Organizational strategies through delivery stages
+
+### Schema design and development
+
+Thoughtful schema design and subgraph development is critical to a successful supergraph implementation. In this phase, client requirements are the primary concern. Subgraph developers must truly understand client needs and be able to provide an efficient implementation for accessing the required data.
+
+This requirement often lends itself to **teams that work vertically within given domains or features**. Working vertically allow collaboration between frontend engineers, user researchers, and designers, while providing autonomy and ownership of supporting subgraphs.
+
+It's worth noting that there are situations where a GraphQL endpoint is being developed prior to clients needing to consume it. When you have public-facing GraphQL endpoints for future public consumption, the way in which data is likely to be consumed can still be considered. For instance, it's important that schemas are human-readable and well-documented.
+
+Ultimately, when organizing engineering teams to build out and implement each of the subgraphs that make up the overall supergraph, the goal is well-governed autonomous teams. This isn't to say that other engineers cannot contribute to other subgraphs. The power of a federated graph is enabling autonomy for subgraph development, but also consistency across the supergraph as a whole.
+
+You can promote cross-team collaboration through organizational structures like a **GraphQL guild** across teams, **embedded GraphQL experts** within engineering teams, as well as identifying and empowering a **supergraph product owner**.
+
+### Deployment with CI/CD
+
+The second critical element of delivering a supergraph at scale is comprehensive and efficient CI/CD. To ensure consistency across teams, it's important that there are adequate safeguards to prevent conflicting or breaking changes being pushed through to the supergraph.
+
+One of the most effective ways to achieve this is to adopt a central registry. A registry provides a single source of truth and the ability to run [schema checks](/graphos/delivery/schema-checks) that give immediate feedback on how the updated elements of the graph are actively being used in production.
+
+A central registry can also provide the ability for all teams to view the wider supergraph, manage access, view usage, create different variations (for example, variants and contracts) of the supergraph, and test new operations against each graph version.
+
+This kind of governance empowers engineers to:
+
+- make graph contributions knowing they aren't making breaking changes
+- have full view of current usage
+- align to best practice
+- avoid duplication of functionality and code across the graph
+
+### Graph infrastructure
+
+The natural next area for consideration is the infrastructure supporting the graph. It's important that there is intentional decision-making regarding the graph's infrastructure, either via a platform team or a collective. Infrastructure decisions include router deployment, CI integration, developer experience etc.
+
+This team or group should have a good understanding of the requirements of a supergraph. One crucial element is making sure that versions are well-managed, for example, ensuring that the correct federation version is being used and aligns with consistent versioning of the underlying frameworks being leveraged across subgraphs, such as Apollo Server, to enable and maintain specific features for subgraph teams.
+
+### Evangelism
+
+The final piece of the puzzle is evangelizing the graph, its use cases, and the overall value proposition of the supergraph. This applies both across engineering teams as well as the wider business.
+
+Firstly, it's **crucial that engineers are well-versed on the value of GraphQL itself**. They should be able to answer "Why GraphQL?" and "Why is the schema generated the way it is?"
+
+Detailed documentation of approaches and technical decisions can help. In addition, it's highly recommended to actively promote knowledge sharing within daily engineering practices through common techniques such as pair programming and mobbing to help ensure your teams are as proficient as possible.
+
+In addition to promoting GraphQL and federation within engineering teams, it's important to **ensure that the wider business, stakeholders and architects understand the value and the benefits of GraphQL**. Having a solid elevator pitch can help secure and extend the supergraph and its value to the business. See an example below:
+
+> The supergraph provides a reliable, robust abstraction layer between frontend and backend that enables governance and consistency that was previously unachievable with disparate microservices. It allows reuse and provides cost savings.
+
+## Conclusion
+
+A supportive organizational structure is critical to the supergraph's success in an enterprise. Below are the key takeaways for setting your teams up for success:
+
+- Grant teams autonomy over subgraph updates.
+- Implement robust CI/CD for quick feedback on subgraph changes.
+- Foster knowledge sharing via embedded GraphQL experts, cross-team guilds, and well-managed peer reviews.
+- Entrust a central team or collective with infrastructure, version management, and security.
+- Nurture knowledge sharing via pair programming, mobbing, playbacks, peer reviews, documentation etc.
+- Focus on evangelism to drive awareness and understanding across the organization.
+
+Every business is unique, but with empowered, autonomous teams and consistent tooling, your organization can achieve a successful supergraph implementation at scale.
