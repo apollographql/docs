@@ -365,6 +365,57 @@ const firstShipID = response.result.data.ships[0].id;
 explorer.environment.set("shipID", firstShipID);
 ```
 
+### Authenticate using an authorization provider URL
+
+The following example uses the [`explorer.oauth2Request`](#exploreroauth2request) method to authenticate using an OAuth 2.0 provider's URL. View the [reference](#exploreroauth2request) for more details.
+
+```js
+const responseQueryParams = await explorer.oauth2Request(
+  'http://yourauthprovider.com/authorize',
+  {  
+    client_id: "",
+    state: "",
+    scope: "openid",
+    response_type: "code",
+    code_challenge_method: "S256",
+    code_challenge: "",
+    code_verifier: "",
+  })
+```
+
+See the following example for how you may
+
+### Set an authorization environment variable
+
+The following example uses the [`explorer.environment.set`](#explorerenvironmentset) method to set an authorization token based on the results of an authorization request to Okta with date based expiration.
+
+```js
+let futureDate = explorer.environment.get('futureDate');
+const now = Date.now();
+if (!futureDate || now >= futureDate ) {
+
+  const authUrl = 'https://<customerdomain>.okta.com/oauth2/<customerid>/v1/authorize';
+  const qp = {  
+    client_id: <clientid>,
+    state: "abc",
+    scope: "openid",
+    response_type: "token",
+    code_challenge_method: "S256",
+    nonce: "nonce"
+  };
+
+  const result = await explorer.oauth2Request(authUrl, qp);
+  const token = result.access_token;
+
+  explorer.environment.set('Authorization', {token});
+
+  const nowDate = new Date();
+  futureDate = new Date(nowDate.getTime() + (1 * 55 * 1000));
+  explorer.environment.set('futureDate', futureDate.getTime());
+  
+}
+```
+
 ### Transform and log response data
 
 You can use a post-operation script to filter, map, or otherwise transform response data and log it. This can be helpful when a request returns numerous results in the response.
