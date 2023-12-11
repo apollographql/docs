@@ -65,6 +65,21 @@ module.exports = async (arg, options) => {
         encoding: 'utf-8'
       });
       console.log('Saved transformed Mermaid to cache', cacheFile);
+
+      parent.children[index].value =
+        '<div class="mermaid">' + parent.children[index].value + "</div>";
+      Object.assign(parent.children[index].data, {
+        hChildren: [
+          {
+            type: "element",
+            tagName: "div",
+            properties: {
+              class: "mermaid",
+            },
+            children: parent.children[index].data.hChildren,
+          },
+        ],
+      });
     }
 
     return transformed;
