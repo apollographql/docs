@@ -1,3 +1,56 @@
+
+These rules check for inconsistency in fields, types, arguments, etc. Inconsistency can cause issues for and often [break composition](https://www.apollographql.com/docs/federation/federated-types/composition).
+
+#### Compatibility
+
+In some cases, the rules also check the **compatibility** of types. Two types are compatible if one is a non-nullable version, a list version, a subtype, or a combination of any of these of the other.
+
+For example, the `price` fields in the subgraphs below are incompatible because they use different types (`Float` vs `String`):
+
+<CodeColumns>
+
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+type Product {
+  id: ID!
+  name: String
+  price: Float #highlight-line
+}
+```
+
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+type Product {
+  id: ID!
+  name: String
+  price: String #highlight-line
+}
+
+```
+
+</CodeColumns>
+
+These `price` fields in the example schemas below are inconsistent but comptatible since both `Float`s but one is nullable and the other is the non-nullable list version of a `Float`.
+
+<CodeColumns>
+
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+type Product {
+  id: ID!
+  name: String
+  price: Float #highlight-line
+}
+
+```
+
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+type Product {
+  id: ID!
+  name: String
+   price: [Float]! #highlight-line
+}
+```
+
+</CodeColumns>
+
 <RuleExpansionPanel
   title="INCONSISTENT_ARGUMENT_PRESENCE"
   whatItDoes="Checks that an optional argument of a field or directive definition is present in all subgraphs."
@@ -47,13 +100,15 @@ type Product {
 
 <RuleExpansionPanel
   title="INCONSISTENT_BUT_COMPATIBLE_ARGUMENT_TYPE"
-  whatItDoes="Checks that argument types (of a field, input field, or directive definition) have the exact same type in all subgraphs."
-  rationale="To-do"
+  whatItDoes="Checks that arguments (of a field, input field, or directive definition) have the exact same types in all subgraphs. This warning/error indicates the argument types are [compatible](#inconsistent-elements) but inconsistent."
+  rationale="Inconsistent types can lead to discrepancies in the way data is retrieved and processed. This can result in unexpected client behavior."
 >
 
-Two types are compatible if one is a non-nullable version, a list version, a subtype, or a combination of any of these of the other.
 <br/>
-The following example violates the rule:
+
+Because subgraph A's `price` field expects a non-nullable `Currency` argument type and subgraph B doesn't, the following example violates the rule:
+
+<br/>
 <br/>
 
 <CodeColumns>
@@ -140,11 +195,10 @@ enum Currency {
 
 <RuleExpansionPanel
   title="INCONSISTENT_BUT_COMPATIBLE_FIELD_TYPE"
-  whatItDoes="Checks that fields have the exact same types in all subgraphs."
-  rationale="To-do"
+  whatItDoes="Checks that fields have the exact same types in all subgraphs. This warning/error indicates the field types are [compatible](#inconsistent-elements) but inconsistent."
+  rationale="Inconsistent types can lead to discrepancies in the way data is retrieved and processed. This can result in unexpected client behavior."
 >
 
-Two types are compatible if one is a non-nullable version, a list version, a subtype, or a combination of any of these of the other.
 <br/>
 The following example violates the rule:
 <br/>
@@ -253,8 +307,8 @@ enum Currency {
 
 <RuleExpansionPanel
   title="INCONSISTENT_DEFAULT_VALUE_PRESENCE"
-  whatItDoes="Checks that argument definitions (of a field, input field, or directive definition) consistently include a default in all subgraphs that define the argument."
-  rationale="To-do"
+  whatItDoes="Checks that argument definitions (of a field, input field, or directive definition) consistently include—or consistently don't include—a default value in all subgraphs that define the argument."
+  rationale="Inconsistent defaults can lead to discrepancies in the way data is retrieved and processed. This can result in unexpected client behavior."
 >
 
 The following example violates the rule:
@@ -309,7 +363,7 @@ type Product {
 <RuleExpansionPanel
   title="INCONSISTENT_DESCRIPTION"
   whatItDoes="Checks that a type's description is consistent across subgraphs."
-  rationale="To-do"
+  rationale="Inconsistent type descriptions can lead to inconsistent expectations around type values. This can result in unexpected client behavior."
 >
 
 The following example violates the rule:
@@ -370,7 +424,7 @@ type Product {
 <RuleExpansionPanel
   title="INCONSISTENT_ENTITY"
   whatItDoes="Checks that an object is consistently declared as an entity (has a `@key`) in all subgraphs in which the object is defined."
-  rationale="To-do"
+  rationale="If an object is only declared as an entity in some subgraphs, the federated schema won't have complete information about that entity."
 >
 
 The following example violates the rule:
@@ -571,7 +625,7 @@ type Order {
 <RuleExpansionPanel
   title="INCONSISTENT_EXECUTABLE_DIRECTIVE_LOCATIONS"
   whatItDoes="Checks that an executable directive definition is declared with consistent locations across subgraphs."
-  rationale="To-do -- (The supergraph schema then uses the intersection of all locations in the supergraph.)"
+  rationale="When inconsistent locations are declared across subgraphs, the supergraph schema uses the intersection of those locations. To ensure all locations are accessible, declare them consistently. [Learn more.](https://www.apollographql.com/docs/federation/federated-types/composition#executable-directives)"
 >
 
 The following example violates the rule:
@@ -618,7 +672,7 @@ directive @log(
 <RuleExpansionPanel
   title="INCONSISTENT_EXECUTABLE_DIRECTIVE_PRESENCE"
   whatItDoes="Checks that an executable directive definition is declared in all subgraphs."
-  rationale="To-do"
+  rationale="An executable directive is composed into the supergraph schema only if it's defined in all subgraphs. [Learn more.](https://www.apollographql.com/docs/federation/federated-types/composition#executable-directives)"
 >
 
 The following example violates the rule:
@@ -710,8 +764,8 @@ directive @validateLength(
 
 <RuleExpansionPanel
   title="INCONSISTENT_INPUT_OBJECT_FIELD"
-  whatItDoes="Checks that a field of an input object type definition is define in all the subgraphs that declare the input object."
-  rationale="To-do"
+  whatItDoes="Checks that a field of an input object type definition is defined in all the subgraphs that declare the input object."
+  rationale="The supergraph schema includes only the input object type fields that all subgraphs define for the object. [Learn more.](https://www.apollographql.com/docs/federation/federated-types/composition#input-types-and-field-arguments)"
 >
 
 The following example violates the rule:
@@ -777,7 +831,7 @@ input OrderInput {
 <RuleExpansionPanel
   title="INCONSISTENT_INTERFACE_VALUE_TYPE_FIELD"
   whatItDoes="Checks that that a field of an interface 'value type' (has no `@key` in any subgraph) is defined in all the subgraphs that declare the type."
-  rationale="To-do"
+  rationale="If different subgraphs contribute different fields to an interface type, any object types that implement that interface must define all contributed fields from all subgraphs. Otherwise, composition fails. [Learn more.](https://www.apollographql.com/docs/federation/federated-types/composition#object-union-and-interface-types)"
 >
 
 The following example violates the rule:
@@ -852,8 +906,8 @@ type PhysicalProduct implements Product {
 
 <RuleExpansionPanel
   title="INCONSISTENT_NON_REPEATABLE_DIRECTIVE_ARGUMENTS"
-  whatItDoes="Checks if a non-repeatable directive is applied to a schema element in different subgraphs but with arguments that are different."
-  rationale="To-do"
+  whatItDoes="Checks if a non-repeatable directive is applied to a schema element across different subgraphs with differing arguments."
+  rationale="Inconsistent directive argument usage can lead to misunderstandings and potential issues in client applications."
 >
 
 The following example violates the rule:
@@ -911,8 +965,8 @@ type Query {
 
 <RuleExpansionPanel
   title="INCONSISTENT_OBJECT_VALUE_TYPE_FIELD"
-  whatItDoes="Checks that a field of an object 'value type' (has no `@key` in any subgraph) is defined in all subgraphs that declare the type."
-  rationale="To-do"
+  whatItDoes="Checks that the same fields are declared for all object 'value types' (has no `@key` in any subgraph) in all subgraphs that declare the type."
+  rationale="To-do—seems at odds with https://www.apollographql.com/docs/federation/federated-types/sharing-types#sharing-object-types"
 >
 
 The following example violates the rule:
@@ -967,7 +1021,7 @@ type Product {
 <RuleExpansionPanel
   title="INCONSISTENT_RUNTIME_TYPES_FOR_SHAREABLE_RETURN"
   whatItDoes="Checks that a `@shareable` field returns consistent sets of runtime types in all subgraphs in which it's defined."
-  rationale="To-do"
+  rationale="Each subgraph's resolver for a `@shareable` field field should behave identically. Otherwise, queries might return inconsistent results depending on which subgraph resolves the field. [Learn more.](https://www.apollographql.com/docs/federation/federated-types/sharing-types#using-shareable)"
 >
 
 The following example violates the rule:
@@ -1037,8 +1091,8 @@ type Details {
 
 <RuleExpansionPanel
   title="INCONSISTENT_TYPE_SYSTEM_DIRECTIVE_LOCATIONS"
-  whatItDoes="Checks that an executable directive definition is declared with consistent locations across subgraphs. (The supergraph schema then uses the intersection of all locations in the supergraph.)"
-  rationale="To-do"
+  whatItDoes="Checks that a type system directive definition is declared with consistent locations across subgraphs."
+  rationale="To ensure consistent expectations, it's best that all definitions declare the same locations. [Learn more.](https://www.apollographql.com/docs/federation/federated-types/composition#type-system-directives)"
 >
 
 The following example violates the rule:
@@ -1085,7 +1139,7 @@ directive @customDirective(
 <RuleExpansionPanel
   title="INCONSISTENT_TYPE_SYSTEM_DIRECTIVE_REPEATABLE"
   whatItDoes="Checks that a type system directive definition is marked `repeatable` in all subgraphs that declare the directive and will be repeatable in the supergraph."
-  rationale="To-do"
+  rationale="To ensure consistent expectations, directives should have consistent definitions across subgraphs, including whether they are `repeatable`. [Learn more.](https://www.apollographql.com/docs/federation/federated-types/composition#type-system-directives)"
 >
 
 The following example violates the rule:
@@ -1116,7 +1170,7 @@ directive @customDirective repeatable on OBJECT
 <RuleExpansionPanel
   title="INCONSISTENT_UNION_MEMBER"
   whatItDoes="Checks that a member of a union type definition is defined in all subgraphs that declare the union."
-  rationale="To-do"
+  rationale="When a union type definition has inconsistent members, the supergraph schema uses the union of all those members. Nevertheless, to ensure consistent expectations, it's best that all union type definitions declare the same member. [Learn more.](https://www.apollographql.com/docs/federation/federated-types/composition#object-union-and-interface-types)"
 >
 
 The following example violates the rule:
