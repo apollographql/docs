@@ -34,20 +34,24 @@ const redirects = {
     '/graphos/explorer/scripting#examples'
 };
 
-const prefixedRedirects = Object.fromEntries(
+const normalizeUrl = url => {
+  // Remove the trailing slash before the hash
+  return url.replace(/\/#/, '#');
+};
+
+const normalizedRedirects = Object.fromEntries(
   Object.entries(redirects).map(([from, to]) => [
-    withPrefix(from),
+    normalizeUrl(withPrefix(from)),
     withPrefix(to)
   ])
 );
 
 export const onRouteUpdate = ({location}) => {
-  // Client-side redirects for links with anchors
   if (location.hash.length > 0) {
-    const path = location.pathname + location.hash;
-    if (path in prefixedRedirects) {
+    const normalizedPath = normalizeUrl(location.pathname + location.hash);
+    if (normalizedPath in normalizedRedirects) {
       const redirectURL =
-        location.origin + prefixedRedirects[path] + location.search;
+        location.origin + normalizedRedirects[normalizedPath] + location.search;
       window.location.replace(redirectURL);
     }
   }
