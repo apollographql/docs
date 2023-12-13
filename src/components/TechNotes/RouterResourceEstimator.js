@@ -76,7 +76,7 @@ const RouterResourceEstimator = () => {
 
   return (
     <>
-      <Flex gap={10}>
+      <Flex gap={10} direction={{ base: "column-reverse", lg: "row" }}>
         <Stack flex={1} spacing={10} width={"100%"} maxW={"500px"}>
           <Heading as="h2">Parameters</Heading>
           // Request Rate per Second
@@ -248,38 +248,39 @@ const RouterResourceEstimator = () => {
         <Box flex={1}>
           <Stack position={"sticky"} top="100px" spacing={5} width={"100%"} maxW={"500px"}>
             <Heading as="h2">Results</Heading>
-            {requestRatePerSecond &&
-            peakRequestRatePerSecond &&
-            baselineSubgraphLatency &&
-            clientRequestSize &&
-            clientResponseSize &&
-            numberOfInstances &&
-            baseMemory &&
-            queryPlannerMemory ? (
-              <>
-                <Text>
-                  Based on the provided parameters and assumptions, for each Router instance you will likely require a
-                  minimum of <strong>{vBaselineSafe}</strong> vCPUs for average traffic and a minimum of{" "}
-                  <strong>{vPeakSafe}</strong> vCPUs for peak traffic.
-                </Text>
-                <Text>
-                  We also recommend <strong>{Math.ceil(M)}MB</strong> of memory per Router instance with a limit of{" "}
-                  <strong>{Math.ceil(Mpeak)}MB</strong> of memory.
-                </Text>
-                <Box>
-                  <Text>Kubernetes configuration for a single instance:</Text>
-                  <CodeBlock
-                    code={CONFIG_WITH_PLACEHOLDERS.replace("{{memory}}", Math.ceil(M))
-                      .replace("{{cpu}}", Math.ceil(vBaselineSafe / I) * 1000)
-                      .replace("{{memory_limit}}", Math.ceil(Mpeak))}
-                    showLineNumbers="true"
-                    language="yaml"
-                  ></CodeBlock>
-                </Box>
-              </>
-            ) : (
-              <>Please fill out Parameters.</>
+            {(!requestRatePerSecond ||
+              !peakRequestRatePerSecond ||
+              !baselineSubgraphLatency ||
+              !clientRequestSize ||
+              !clientResponseSize ||
+              !numberOfInstances ||
+              !baseMemory ||
+              !queryPlannerMemory) && (
+              <Text fontWeight={"bold"} color={"red"}>
+                Please fill out Parameters.
+              </Text>
             )}
+            <>
+              <Text>
+                Based on the provided parameters and assumptions, for each Router instance you will likely require a
+                minimum of <strong>{vBaselineSafe || "__"}</strong> vCPUs for average traffic and a minimum of{" "}
+                <strong>{vPeakSafe || "__"}</strong> vCPUs for peak traffic.
+              </Text>
+              <Text>
+                We also recommend <strong>{Math.ceil(M) || "__"}MB</strong> of memory per Router instance with a limit
+                of <strong>{Math.ceil(Mpeak) || "__"}MB</strong> of memory.
+              </Text>
+              <Box>
+                <Text>Kubernetes configuration for a single instance:</Text>
+                <CodeBlock
+                  code={CONFIG_WITH_PLACEHOLDERS.replace("{{memory}}", Math.ceil(M) || "__")
+                    .replace("{{cpu}}", Math.ceil(vBaselineSafe / I) * 1000 || "__")
+                    .replace("{{memory_limit}}", Math.ceil(Mpeak) || "__")}
+                  showLineNumbers="true"
+                  language="yaml"
+                ></CodeBlock>
+              </Box>
+            </>
           </Stack>
         </Box>
       </Flex>
