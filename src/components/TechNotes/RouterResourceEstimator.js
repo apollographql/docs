@@ -76,207 +76,213 @@ const RouterResourceEstimator = () => {
 
   return (
     <>
-      <Stack spacing={10} width={"100%"} maxW={"500px"}>
-        <Heading as="h2">Parameters</Heading>
-        // Request Rate per Second
-        <FormControl>
-          <Flex w="100%">
-            <FormLabel flex="1">Request Rate per Seconds</FormLabel>
-            <Box flex="1">
-              <InputGroup size="sm">
-                <NumberInput
-                  min={1}
-                  value={requestRatePerSecond}
-                  onChange={(value) => setRequestRatePerSecond(value)}
-                  w="100%"
-                >
-                  <NumberInputField placeholder={500} />
-                </NumberInput>
-                <InputRightAddon children="RPS" />
-              </InputGroup>
-              <FormHelperText>
-                Average number of requests per second (RPS) you expect the router to receive
-              </FormHelperText>
-            </Box>
-          </Flex>
-        </FormControl>
-        // Peak Request Rate per Second
-        <FormControl>
-          <Flex w="100%">
-            <FormLabel flex="1">Peak Request Rate per Seconds</FormLabel>
-            <Box flex="1">
-              <InputGroup size="sm">
-                <NumberInput
-                  min={1}
-                  value={peakRequestRatePerSecond}
-                  onChange={(value) => setPeakRequestRatePerSecond(value)}
-                  w="100%"
-                >
-                  <NumberInputField placeholder={1000} />
-                </NumberInput>
-                <InputRightAddon children="RPS" />
-              </InputGroup>
-              <FormHelperText>
-                The highest expected number of requests per second (RPS) you expect the router to receive
-              </FormHelperText>
-            </Box>
-          </Flex>
-        </FormControl>
-        // Baseline Subgraph Latency
-        <FormControl>
-          <Flex w="100%">
-            <FormLabel flex="1">Baseline Subgraph Latency</FormLabel>
-            <Box flex="1">
-              <InputGroup size="sm">
-                <NumberInput
-                  min={1}
-                  w="100%"
-                  value={baselineSubgraphLatency}
-                  onChange={(value) => setBaselineSubgraphLatency(value)}
-                >
-                  <NumberInputField placeholder={500} />
-                </NumberInput>
-                <InputRightAddon children="ms" />
-              </InputGroup>
-              <FormHelperText>
-                The baseline response time of a typical end-to-end response from your graph in milliseconds (ms)
-              </FormHelperText>
-            </Box>
-          </Flex>
-        </FormControl>
-        // Client Request Size
-        <FormControl>
-          <Flex w="100%">
-            <FormLabel flex="1">Client Request Size</FormLabel>
-            <Box flex="1">
-              <InputGroup size="sm">
-                <NumberInput
-                  precision={1}
-                  step={0.1}
-                  min={0.1}
-                  w="100%"
-                  value={clientRequestSize}
-                  onChange={(value) => setClientRequestSize(value)}
-                >
-                  <NumberInputField placeholder={0.1} />
-                </NumberInput>
-                <InputRightAddon children="MB" />
-              </InputGroup>
-              <FormHelperText>The size of a typical client request in Megabytes (MB)</FormHelperText>
-            </Box>
-          </Flex>
-        </FormControl>
-        // Client Response Size
-        <FormControl>
-          <Flex w="100%">
-            <FormLabel flex="1">Client Response Size</FormLabel>
-            <Box flex="1">
-              <InputGroup size="sm">
-                <NumberInput
-                  precision={1}
-                  step={0.1}
-                  min={0.1}
-                  w="100%"
-                  value={clientResponseSize}
-                  onChange={(value) => setClientResponseSize(value)}
-                >
-                  <NumberInputField placeholder={0.1} />
-                </NumberInput>
-                <InputRightAddon children="MB" />
-              </InputGroup>
-              <FormHelperText>The size of a typical client response in Megabytes (MB)</FormHelperText>
-            </Box>
-          </Flex>
-        </FormControl>
-        // Number of Instances
-        <FormControl>
-          <Flex w="100%">
-            <FormLabel flex="1">Number of Instances</FormLabel>
-            <Box flex="1">
-              <InputGroup size="sm">
-                <NumberInput
-                  min={1}
-                  w="100%"
-                  value={numberOfInstances}
-                  onChange={(value) => setNumberOfInstances(value)}
-                >
-                  <NumberInputField placeholder={3} />
-                </NumberInput>
-              </InputGroup>
-              <FormHelperText>Number of Router instances running in parallel</FormHelperText>
-            </Box>
-          </Flex>
-        </FormControl>
-        <Heading as="h2">Assumptions</Heading>
-        // Base Memory
-        <FormControl>
-          <Flex w="100%">
-            <FormLabel flex="1">Base Memory</FormLabel>
-            <Box flex="1">
-              <InputGroup size="sm">
-                <NumberInput min={1} w="100%" value={baseMemory} onChange={(value) => setBaseMemory(value)}>
-                  <NumberInputField placeholder={100} />
-                </NumberInput>
-                <InputRightAddon children="MB" />
-              </InputGroup>
-              <FormHelperText>The amount of memory a router is configured with in Megabytes (MB)</FormHelperText>
-            </Box>
-          </Flex>
-        </FormControl>
-        // Query Planner Memory
-        <FormControl>
-          <Flex w="100%">
-            <FormLabel flex="1">Query Planner Memory</FormLabel>
-            <Box flex="1">
-              <InputGroup size="sm">
-                <NumberInput
-                  min={1}
-                  w="100%"
-                  value={queryPlannerMemory}
-                  onChange={(value) => setQueryPlannerMemory(value)}
-                >
-                  <NumberInputField placeholder={20} />
-                </NumberInput>
-                <InputRightAddon children="MB" />
-              </InputGroup>
-              <FormHelperText>The amount of memory allocated to the query planner in Megabytes (MB)</FormHelperText>
-            </Box>
-          </Flex>
-        </FormControl>
-        <Heading as="h2">Results</Heading>
-        {requestRatePerSecond &&
-        peakRequestRatePerSecond &&
-        baselineSubgraphLatency &&
-        clientRequestSize &&
-        clientResponseSize &&
-        numberOfInstances &&
-        baseMemory &&
-        queryPlannerMemory ? (
-          <>
-            <Text>
-              Based on the provided parameters and assumptions, for each Router instance you will likely require a
-              minimum of <strong>{vBaselineSafe}</strong> vCPUs for average traffic and a minimum of{" "}
-              <strong>{vPeakSafe}</strong> vCPUs for peak traffic.
-            </Text>
-            <Text>
-              We also recommend <strong>{Math.ceil(M)}MB</strong> of memory per Router instance with a limit of{" "}
-              <strong>{Math.ceil(Mpeak)}MB</strong> of memory.
-            </Text>
-            <Box>
-              <Text>Kubernetes configuration for a single instance:</Text>
-              <CodeBlock
-                code={CONFIG_WITH_PLACEHOLDERS.replace("{{memory}}", Math.ceil(M))
-                  .replace("{{cpu}}", Math.ceil(vBaselineSafe / I) * 1000)
-                  .replace("{{memory_limit}}", Math.ceil(Mpeak))}
-                showLineNumbers="true"
-                language="yaml"
-              ></CodeBlock>
-            </Box>
-          </>
-        ) : (
-          <>Please fill out Parameters above.</>
-        )}
-      </Stack>
+      <Flex gap={10}>
+        <Stack flex={1} spacing={10} width={"100%"} maxW={"500px"}>
+          <Heading as="h2">Parameters</Heading>
+          // Request Rate per Second
+          <FormControl>
+            <Flex w="100%">
+              <FormLabel flex="1">Request Rate per Seconds</FormLabel>
+              <Box flex="1">
+                <InputGroup size="sm">
+                  <NumberInput
+                    min={1}
+                    value={requestRatePerSecond}
+                    onChange={(value) => setRequestRatePerSecond(value)}
+                    w="100%"
+                  >
+                    <NumberInputField placeholder={500} />
+                  </NumberInput>
+                  <InputRightAddon children="RPS" />
+                </InputGroup>
+                <FormHelperText>
+                  Average number of requests per second (RPS) you expect the router to receive
+                </FormHelperText>
+              </Box>
+            </Flex>
+          </FormControl>
+          // Peak Request Rate per Second
+          <FormControl>
+            <Flex w="100%">
+              <FormLabel flex="1">Peak Request Rate per Seconds</FormLabel>
+              <Box flex="1">
+                <InputGroup size="sm">
+                  <NumberInput
+                    min={1}
+                    value={peakRequestRatePerSecond}
+                    onChange={(value) => setPeakRequestRatePerSecond(value)}
+                    w="100%"
+                  >
+                    <NumberInputField placeholder={1000} />
+                  </NumberInput>
+                  <InputRightAddon children="RPS" />
+                </InputGroup>
+                <FormHelperText>
+                  The highest expected number of requests per second (RPS) you expect the router to receive
+                </FormHelperText>
+              </Box>
+            </Flex>
+          </FormControl>
+          // Baseline Subgraph Latency
+          <FormControl>
+            <Flex w="100%">
+              <FormLabel flex="1">Baseline Subgraph Latency</FormLabel>
+              <Box flex="1">
+                <InputGroup size="sm">
+                  <NumberInput
+                    min={1}
+                    w="100%"
+                    value={baselineSubgraphLatency}
+                    onChange={(value) => setBaselineSubgraphLatency(value)}
+                  >
+                    <NumberInputField placeholder={500} />
+                  </NumberInput>
+                  <InputRightAddon children="ms" />
+                </InputGroup>
+                <FormHelperText>
+                  The baseline response time of a typical end-to-end response from your graph in milliseconds (ms)
+                </FormHelperText>
+              </Box>
+            </Flex>
+          </FormControl>
+          // Client Request Size
+          <FormControl>
+            <Flex w="100%">
+              <FormLabel flex="1">Client Request Size</FormLabel>
+              <Box flex="1">
+                <InputGroup size="sm">
+                  <NumberInput
+                    precision={1}
+                    step={0.1}
+                    min={0.1}
+                    w="100%"
+                    value={clientRequestSize}
+                    onChange={(value) => setClientRequestSize(value)}
+                  >
+                    <NumberInputField placeholder={0.1} />
+                  </NumberInput>
+                  <InputRightAddon children="MB" />
+                </InputGroup>
+                <FormHelperText>The size of a typical client request in Megabytes (MB)</FormHelperText>
+              </Box>
+            </Flex>
+          </FormControl>
+          // Client Response Size
+          <FormControl>
+            <Flex w="100%">
+              <FormLabel flex="1">Client Response Size</FormLabel>
+              <Box flex="1">
+                <InputGroup size="sm">
+                  <NumberInput
+                    precision={1}
+                    step={0.1}
+                    min={0.1}
+                    w="100%"
+                    value={clientResponseSize}
+                    onChange={(value) => setClientResponseSize(value)}
+                  >
+                    <NumberInputField placeholder={0.1} />
+                  </NumberInput>
+                  <InputRightAddon children="MB" />
+                </InputGroup>
+                <FormHelperText>The size of a typical client response in Megabytes (MB)</FormHelperText>
+              </Box>
+            </Flex>
+          </FormControl>
+          // Number of Instances
+          <FormControl>
+            <Flex w="100%">
+              <FormLabel flex="1">Number of Instances</FormLabel>
+              <Box flex="1">
+                <InputGroup size="sm">
+                  <NumberInput
+                    min={1}
+                    w="100%"
+                    value={numberOfInstances}
+                    onChange={(value) => setNumberOfInstances(value)}
+                  >
+                    <NumberInputField placeholder={3} />
+                  </NumberInput>
+                </InputGroup>
+                <FormHelperText>Number of Router instances running in parallel</FormHelperText>
+              </Box>
+            </Flex>
+          </FormControl>
+          <Heading as="h2">Assumptions</Heading>
+          // Base Memory
+          <FormControl>
+            <Flex w="100%">
+              <FormLabel flex="1">Base Memory</FormLabel>
+              <Box flex="1">
+                <InputGroup size="sm">
+                  <NumberInput min={1} w="100%" value={baseMemory} onChange={(value) => setBaseMemory(value)}>
+                    <NumberInputField placeholder={100} />
+                  </NumberInput>
+                  <InputRightAddon children="MB" />
+                </InputGroup>
+                <FormHelperText>The amount of memory a router is configured with in Megabytes (MB)</FormHelperText>
+              </Box>
+            </Flex>
+          </FormControl>
+          // Query Planner Memory
+          <FormControl>
+            <Flex w="100%">
+              <FormLabel flex="1">Query Planner Memory</FormLabel>
+              <Box flex="1">
+                <InputGroup size="sm">
+                  <NumberInput
+                    min={1}
+                    w="100%"
+                    value={queryPlannerMemory}
+                    onChange={(value) => setQueryPlannerMemory(value)}
+                  >
+                    <NumberInputField placeholder={20} />
+                  </NumberInput>
+                  <InputRightAddon children="MB" />
+                </InputGroup>
+                <FormHelperText>The amount of memory allocated to the query planner in Megabytes (MB)</FormHelperText>
+              </Box>
+            </Flex>
+          </FormControl>
+        </Stack>
+        <Box flex={1}>
+          <Stack position={"sticky"} top="100px" spacing={5} width={"100%"} maxW={"500px"}>
+            <Heading as="h2">Results</Heading>
+            {requestRatePerSecond &&
+            peakRequestRatePerSecond &&
+            baselineSubgraphLatency &&
+            clientRequestSize &&
+            clientResponseSize &&
+            numberOfInstances &&
+            baseMemory &&
+            queryPlannerMemory ? (
+              <>
+                <Text>
+                  Based on the provided parameters and assumptions, for each Router instance you will likely require a
+                  minimum of <strong>{vBaselineSafe}</strong> vCPUs for average traffic and a minimum of{" "}
+                  <strong>{vPeakSafe}</strong> vCPUs for peak traffic.
+                </Text>
+                <Text>
+                  We also recommend <strong>{Math.ceil(M)}MB</strong> of memory per Router instance with a limit of{" "}
+                  <strong>{Math.ceil(Mpeak)}MB</strong> of memory.
+                </Text>
+                <Box>
+                  <Text>Kubernetes configuration for a single instance:</Text>
+                  <CodeBlock
+                    code={CONFIG_WITH_PLACEHOLDERS.replace("{{memory}}", Math.ceil(M))
+                      .replace("{{cpu}}", Math.ceil(vBaselineSafe / I) * 1000)
+                      .replace("{{memory_limit}}", Math.ceil(Mpeak))}
+                    showLineNumbers="true"
+                    language="yaml"
+                  ></CodeBlock>
+                </Box>
+              </>
+            ) : (
+              <>Please fill out Parameters.</>
+            )}
+          </Stack>
+        </Box>
+      </Flex>
     </>
   );
 };
