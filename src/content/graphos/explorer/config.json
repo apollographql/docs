@@ -21,7 +21,7 @@
     "Sandbox (no account required)": "/sandbox",
     "GraphQL subscription support": "/subscriptions-explorer",
     "Connecting and authenticating": "/connecting-authenticating",
-    "Preflight and operation scripts": "/scripting",
+    "Custom scripts": "/scripting",
     "Embedding": "/embed-explorer",
     "Operation collections": "/operation-collections",
     "Additional features": "/additional-features"

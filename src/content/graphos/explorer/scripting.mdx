@@ -1,24 +1,25 @@
 ---
-title: Preflight and operation scripts in the Explorer
-subtitle: Use custom scripts to manage auth flows and test response data
-description: Use preflight and operation scripts to manage authentication and validate GraphQL operations in the Apollo GraphOS Explorer.
+title: Custom scripts in the Explorer
+subtitle: Use preflight and postflight scripts to manage auth flows and test response data
+description: Use preflight and postflight scripts to manage authentication and validate GraphQL operations in the Apollo GraphOS Explorer.
 ---
 
-The GraphOS Explorer can run custom scripts when executing each GraphQL operation, similar to tools like Postman. These JavaScript-based scripts can populate the values of [environment variables](./connecting-authenticating/#environment-variables) that the Explorer then injects into HTTP header values or GraphQL variables. This can be useful for:
+The GraphOS Explorer can run custom scripts when executing each GraphQL operation, similar to tools like Postman. These JavaScript-based scripts can get and set the values of [environment variables](./connecting-authenticating/#environment-variables) that the Explorer can then inject into HTTP header values or GraphQL variables.
 
-- Managing authentication flows like OAuth, for example, by refreshing an expired access token
-- Validating workflows that depend on response data
+Preflight scripts are useful for managing authentication flows like OAuth, for example, by refreshing an expired access token. Postflight scripts are useful for validating workflows that depend on response data.
 
 ## Script types
 
-You can define two different types of scripts:
+The Explorer lets you define two different types of scripts:
 
-- [**Preflight scripts**](#preflight-scripts): You can define a single preflight script _per variant_ of a graph. This script runs before _every Explorer operation_ that's executed against the associated variant.
+- [**Preflight scripts**](#preflight-scripts): You can define a single preflight script _per variant_ of a graph. This script runs **before every Explorer operation that's executed against the associated variant**.
   - Preflight scripts are helpful for enabling organization-wide Explorer authentication to your graph.
 - [**Operation scripts**](#operation-scripts): If you use [operation collections](./operation-collections/), you can define one pre- and one post-operation script for each saved operation in a collection.
-  - Pre-operation scripts run before the operation executes.
-  - Post-operation scripts run after the operation executes.
+  - Pre-operation scripts run before the operation executes. **They act as _additional_, per-operation preflight scripts.**
+  - Post-operation scripts run after the operation executes. **They act as per-operation postflight scripts.**
   - Operation scripts are helpful for testing or debugging the behavior of individual operations or [operation chains](#chaining-operations).
+
+### Script execution order
 
 If you define and use all possible scripts for an operation, the order is as follows:
 
@@ -144,19 +145,20 @@ Only organization members [with edit access](../org/members/#role-permissions) t
 3. Create, test, and save your script.
 
    - For details on script creation, see steps 4 and 5 of [Add preflight scripts](#add-preflight-scripts).
-
-   - The operation script modal has a **Mocked Operation Response** area so you can test post-operation scripts. Scripts can access any JSON GraphQL response you add in the **Mocked Operation Response** via the [`explorer.response.body`](#explorerresponsebody) variable.
-
-   <img
-     class="screenshot"
-     src="../img/op-postflight-script-modal.png"
-     alt="Editing operation scripts in the Explorer"
-     width="600"
-   />
-
    - Click **Test script** to test your script before saving it.
 
 After you save an operation script, make sure to [turn it on](#turn-on-operation-scripts) so that it runs before or after its designated operation execution in the Explorer.
+
+### Mocking responses for post-operation scripts
+
+The operation script modal has a **Mocked Operation Response** area so you can test post-operation scripts before saving them. Scripts can access any JSON GraphQL response you add in the **Mocked Operation Response** via the [`explorer.response.body`](#explorerresponsebody) variable.
+
+<img
+  class="screenshot"
+  src="../img/op-postflight-script-modal.png"
+  alt="Editing operation scripts in the Explorer"
+  width="600"
+/>
 
 ### Turn on operation scripts
 
@@ -317,7 +319,7 @@ The body of the `POST` request that's sent to the configured GraphQL endpoint fo
 </td>
 <td>
 
-The JSON representation of the GraphQL operation response. Used in [post-operation scripts](#add-operation-scripts).
+The JSON representation of the GraphQL operation response. Used in [post-operation scripts](#mocking-responses-for-post-operation-scripts).
 
 </td>
 </tr>
