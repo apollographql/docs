@@ -81,7 +81,7 @@ const RouterResourceEstimator = () => {
           // Request Rate per Second
           <FormControl>
             <Flex w="100%">
-              <FormLabel flex="1">Request Rate per Seconds</FormLabel>
+              <FormLabel flex="1">Request Rate per Second</FormLabel>
               <Box flex="1">
                 <InputGroup size="sm">
                   <NumberInput
@@ -103,7 +103,7 @@ const RouterResourceEstimator = () => {
           // Peak Request Rate per Second
           <FormControl>
             <Flex w="100%">
-              <FormLabel flex="1">Peak Request Rate per Seconds</FormLabel>
+              <FormLabel flex="1">Peak Request Rate per Second</FormLabel>
               <Box flex="1">
                 <InputGroup size="sm">
                   <NumberInput

@@ -4,13 +4,9 @@ id: TN0045
 tags: [router]
 ---
 
-This would be some intro text talking about what this is for...
+The following tool is provided to help estimate what system resources you will need to allocate for Apollo Router running your production traffic. It will help you get a starting baseline that you can then tweak and iterate on.
 
-How to use this estimator:
-
-1. Enter average request rate and peak request rate
-2. Pick an appropriate number of instances (fewer for efficiency, more for safety)
-3. Test and iterate!
+To use this estimator, enter in your expected average `Request Rate per Second` and `Peak Request Rate per Second`. Then tweak the other parameters to match your expected production load. **Make sure to test and iterate.**
 
 import RouterResourceEstimator from "../../components/TechNotes/RouterResourceEstimator";
 
