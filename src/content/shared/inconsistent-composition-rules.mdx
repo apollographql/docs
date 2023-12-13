@@ -950,8 +950,8 @@ type Query {
 
 <RuleExpansionPanel
   title="INCONSISTENT_OBJECT_VALUE_TYPE_FIELD"
-  whatItDoes="Checks that the same fields are declared for all object [value type](https://www.apollographql.com/docs/federation/federated-types/sharing-types) (has no `@key` in any subgraph) in all subgraphs that declare the type."
-  rationale="To-do—seems at odds with https://www.apollographql.com/docs/federation/federated-types/sharing-types#sharing-object-types"
+  whatItDoes="Checks that object [value types](https://www.apollographql.com/docs/federation/federated-types/sharing-types) (has no `@key` in any subgraph) declare the same fields in all subgraphs that declare the type."
+  rationale="When an object value type includes differing fields across subgraphs, the supergraph schema includes the union of all fields. Depending on which subgraph executes the query, [omitted fields may be unresolvable](https://www.apollographql.com/docs/federation/federated-types/sharing-types#omitting-fields). You can include the same types as shown below or check out [Solutions for unresolvable fields](https://www.apollographql.com/docs/federation/federated-types/composition/#solutions-for-unresolvable-fields)."
 >
 
 The following example violates the rule:
@@ -960,16 +960,16 @@ The following example violates the rule:
 
 ```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
-  id: ID!
-  name: String
+  id: ID! @shareable 
+  name: String @shareable 
   price: Float #highlight-line
 }
 ```
 
 ```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
-  id: ID!
-  name: String
+  id: ID! @shareable 
+  name: String @shareable 
 }
 
 ```
@@ -983,7 +983,7 @@ Use instead:
 <CodeColumns>
 
 ```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false
-type Product {
+type Product @shareable {
   id: ID!
   name: String
   price: Float #highlight-line
@@ -991,7 +991,7 @@ type Product {
 ```
 
 ```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
-type Product {
+type Product @shareable {
   id: ID!
   name: String
   price: Float #highlight-line
