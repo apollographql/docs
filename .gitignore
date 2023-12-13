@@ -7,4 +7,5 @@ local
 .env
 .volta
 .idea
+.mermaid
 pnpm-lock.yaml

@@ -104,7 +104,7 @@ exports.createPages = async ({actions, graphql}) => {
   `);
 
   data.pages.nodes.forEach(({id, sourceInstanceName, children}) => {
-    const [{fields,frontmatter}] = children;
+    const [{fields, frontmatter}] = children;
 
     actions.createPage({
       path: fields.slug,
@@ -112,7 +112,7 @@ exports.createPages = async ({actions, graphql}) => {
       context: {
         id,
         basePath: sourceInstanceName,
-        api_doc: frontmatter?.api_doc || [],
+        api_doc: frontmatter?.api_doc || []
       }
     });
   });
