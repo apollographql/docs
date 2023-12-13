@@ -61,7 +61,7 @@ export const MarkdownInAdmonitions = ({children}) => {
         },
         a: RelativeLink,
         pre: MarkdownCodeBlock,
-        code: ({children}) => <InlineCode>{children}</InlineCode>
+        code: ({children}) => <InlineCode pt="10px">{children}</InlineCode>
       }}
     >
       {children}

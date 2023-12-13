@@ -19,7 +19,6 @@ These rules enforce naming conventions. Rules are categorized by the part(s) of 
 >
 
 The following example violates the rule:
-<br/>
 
 ```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 type User {
@@ -49,7 +48,6 @@ type User {
   rationale="Most fields should not start with any verb, with the exception of mutation fields. For mutation fields, it's best to use a verb that more specifically describes the action being performed, for example, `create`, `delete`, or `edit`.">
 
 The following example violates the rule:
-<br/>
 
 ```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 type Query {
@@ -86,7 +84,6 @@ These rules apply to _all_ types that appear in a GraphQL schema, including:
 >
 
 The following example violates the rule:
-<br/>
 
 ```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 # highlight-start
@@ -117,7 +114,6 @@ type StreamingService { # PascalCase
 >
 
 The following example violates the rule:
-<br/>
 
 ```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 type TypeBook { # highlight-line
@@ -144,7 +140,6 @@ type Book { # highlight-line
 >
 
 The following example violates the rule:
-<br/>
 
 ```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 type BookType { # highlight-line
@@ -174,7 +169,6 @@ type Book { # highlight-line
 >
 
 The following example violates the rule:
-<br/>
 
 ```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 type ObjectBook { # highlight-line
@@ -201,7 +195,6 @@ type Book { # highlight-line
 >
 
 The following example violates the rule:
-<br/>
 
 ```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 type BookObject { # highlight-line
@@ -231,7 +224,6 @@ type Book { # highlight-line
 >
 
 The following example violates the rule:
-<br/>
 
 ```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 interface InterfaceBook { # highlight-line
@@ -260,7 +252,6 @@ interface Book { # highlight-line
 >
 
 The following example violates the rule:
-<br/>
 
 ```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 interface BookInterface { # highlight-line
@@ -292,7 +283,6 @@ interface Book { # highlight-line
 >
 
 The following example violates the rule:
-<br/>
 
 ```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 type Mutation {
@@ -323,7 +313,6 @@ type Mutation {
 >
 
 The following example violates the rule:
-<br/>
 
 ```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 input BlogPostDetails { #highlight-line
@@ -354,7 +343,6 @@ input BlogPostDetailsInput { #highlight-line
 >
 
 The following example violates the rule:
-<br/>
 
 ```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 enum Amenity {
@@ -385,7 +373,6 @@ enum Amenity {
 >
 
 The following example violates the rule:
-<br/>
 
 ```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 enum EnumResidence { # highlight-line
@@ -416,7 +403,6 @@ enum Residence { # highlight-line
 >
 
 The following example violates the rule:
-<br/>
 
 ```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 enum ResidenceEnum { # highlight-line
@@ -447,7 +433,6 @@ enum Residence { # highlight-line
 >
 
 The following example violates the rule:
-<br/>
 
 ```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 enum Role { # highlight-line
@@ -484,7 +469,6 @@ type Query {
 >
 
 The following example violates the rule:
-<br/>
 
 ```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 enum RoleInput { # highlight-line
@@ -523,7 +507,6 @@ type Query {
 >
 
 The following example violates the rule:
-<br/>
 
 ```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 directive @SpecialField on FIELD_DEFINITION # PascalCase
@@ -551,7 +534,7 @@ Composition rules are only available for graphs on [federation version `2.4`](/f
 
 </Note>
 
-These rules flag potential improvements to a supergraph schema [composed](/federation/federated-types/composition) of [subgraph](/federation/building-supergraphs/subgraphs-overview/) schemas.
+Composition rules flag potential improvements to [subgraph](/federation/building-supergraphs/subgraphs-overview/) schemas used to [compose](/federation/federated-types/composition) a supergraph schema.
 
 ### Inconsistent elements
 
@@ -585,7 +568,6 @@ These rules apply to the entire schema.
 >
 
 The following example violates the rule:
-<br/>
 
 ```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 type User {
@@ -614,7 +596,6 @@ type User {
 >
 
 The following example violates the rule:
-<br/>
 
 ```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 type SomeUnusedType { # Also fails the TYPE_SUFFIX rule!
@@ -654,7 +635,6 @@ type Query {
 >
 
 The following example violates the rule:
-<br/>
 
 ```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 type Query {
@@ -707,11 +687,10 @@ extend schema
 <RuleExpansionPanel
   title="DEPRECATED_DIRECTIVE_MISSING_REASON"
   whatItDoes="Checks that the `@deprecated` directive always includes a `reason` argument."
-  rationale="The `reason` argument can help graph consumers understand which field to use instead. "
+  rationale="The `reason` argument can help graph consumers understand which field to use instead of the `@deprecated` one. "
 >
 
 The following example violates the rule:
-<br/>
 
 ```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 type Product {
@@ -736,7 +715,7 @@ type Product {
 <RuleExpansionPanel
   title="TAG_DIRECTIVE_USES_UNKNOWN_NAME"
   whatItDoes="Checks that the [`@tag`](/federation/federated-types/federated-directives/#tag) directive uses an approved value for its `name` argument. You specify approved values in [GraphOS Studio](./schema-linter/#configuring-the-linter)."
-  rationale="This directive is used most commonly with [GraphOS contracts](../contracts). Validating `@tag` names ensures contracts work as intended."
+  rationale="This directive is used most commonly with [GraphOS contracts](./contracts). Validating `@tag` names ensures contracts work as intended."
 >
 
 </RuleExpansionPanel>

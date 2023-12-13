@@ -1,11 +1,10 @@
 <RuleExpansionPanel
   title="OVERRIDE_DIRECTIVE_CAN_BE_REMOVED"
-  whatItDoes="Checks that a field with the `@override` directive no longer exists in a source subgraph."
-  rationale="If a field with the `@override` directive no longer exists in a source subgraph, the directive can be safely removed."
+  whatItDoes="Checks that a field with the [`@override`](https://www.apollographql.com/docs/federation/federated-types/federated-directives/#override) directive no longer exists in a source subgraph."
+  rationale="If a field with the [`@override`](https://www.apollographql.com/docs/federation/federated-types/federated-directives/#override) directive no longer exists in a source subgraph, the directive can be safely removed."
 >
 
 The following example violates the rule:
-<br/>
 
 ```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false {3}
 type Product @key(fields: "id") {
@@ -48,19 +47,18 @@ type Product @key(fields: "id") {
 >
 
 The following example violates the rule:
-<br/>
 
-```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false {4}
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false {3}
 type Product @key(fields: "id") {
   id: ID!
-  name: String!
   inStock: Boolean! @override(from: "Subgraph B")
 }
 ```
 
-```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false {4}
 type Product @key(fields: "id") {
   id: ID!
+  name: String!
   inStock: Boolean!
 }
 ```
@@ -73,13 +71,14 @@ Use instead:
 type Product @key(fields: "id") {
   id: ID!
   name: String!
+  inStock: Boolean!
 }
 ```
 
 ```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
 type Product @key(fields: "id") {
   id: ID!
-  inStock: Boolean!
+  name: String!
 }
 ```
 
@@ -88,11 +87,10 @@ type Product @key(fields: "id") {
 <RuleExpansionPanel
   title="UNUSED_ENUM_TYPE"
   whatItDoes="Checks if an enum type is defined but no field or argument in any subgraph references it."
-  rationale="If the enum is defined, it should likely be used or removed."
+  rationale="If the enum is defined, it should be used or removed."
 >
 
 The following example violates the rule:
-<br/>
 
 <CodeColumns>
 
@@ -124,7 +122,11 @@ Use instead:
 
 <CodeColumns>
 
-```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false {9}
+enum ProductStatus {
+  AVAILABLE
+  SOLD_OUT
+}
 
 type Product {
   id: ID!

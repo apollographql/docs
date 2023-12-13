@@ -86,7 +86,7 @@ export function ExpansionPanelListItem({number, children}) {
           </Circle>
           {!isLast && <ExpansionPanelLine flexGrow="1" />}
         </Flex>
-        <Stack shouldWrapChildren minW="0" spacing="4" pb={isLast ? 0 : 6}>
+        <Stack shouldWrapChildren minW="0" spacing="4" pb={isLast ? 2 : 6}>
           {children}
         </Stack>
       </Flex>
