@@ -63,8 +63,7 @@ const RouterResourceEstimator = () => {
   // Number of vCPUs needed
   const vBaseline = Math.max(Math.round(R / Rc), 1);
   // Number of vCPUs needed for peak traffic
-  const vPeak = Math.round(Rpeak / Rc);
-  console.log({ R, Rc, vBaseline, rounded: Math.round(R / Rc) });
+  const vPeak = Math.max(Math.round(Rpeak / Rc), 1);
   // Double it and add some room for telemetry
   const vBaselineSafe = vBaseline * 2.2;
   // Double it and add some room for telemetry
@@ -263,8 +262,8 @@ const RouterResourceEstimator = () => {
             <>
               <Text>
                 Based on the provided parameters and assumptions, for each Router instance you will likely require a
-                minimum of <strong>{vBaselineSafe || "__"}</strong> vCPUs for average traffic and a minimum of{" "}
-                <strong>{vPeakSafe || "__"}</strong> vCPUs for peak traffic.
+                minimum of <strong>{vBaselineSafe || "__"} vCPUs</strong> for average traffic and a minimum of{" "}
+                <strong>{vPeakSafe || "__"} vCPUs</strong> for peak traffic.
               </Text>
               <Text>
                 We also recommend <strong>{Math.ceil(M) || "__"}MB</strong> of memory per Router instance with a limit
