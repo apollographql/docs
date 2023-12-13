@@ -10,7 +10,7 @@ import Pagination from './Pagination';
 import Prism from 'prismjs';
 import PropTypes from 'prop-types';
 import React, {Fragment, createElement, useMemo} from 'react';
-import RelativeLink, {ButtonLink} from './RelativeLink';
+import RelativeLink, {ButtonLink, PrimaryLink} from './RelativeLink';
 import RuleExpansionPanel from './RuleExpansionPanel';
 import TableOfContents from './TableOfContents';
 import TrackableButton from './TrackableButton';
@@ -42,7 +42,6 @@ import {
 } from '@chakra-ui/react';
 import {Caution} from './Caution';
 import {CustomHeading} from './CustomHeading';
-import {DocBlock, DocPiece, FunctionDetails, InterfaceDetails} from './ApiDoc';
 import {
   EmbeddableExplorer,
   MarkdownCodeBlock,
@@ -75,6 +74,7 @@ import {YouTube} from './YouTube';
 import {join} from 'path';
 import {kebabCase} from 'lodash';
 import {rehype} from 'rehype';
+import {useApiDocContext} from './ApiDoc';
 import {useConfig} from '../utils/config';
 import {useFieldTableStyles} from '../utils';
 import {useMermaidStyles} from '../utils/mermaid';
@@ -209,12 +209,10 @@ const mdxComponents = {
   PreviewFeature,
   ApolloLogo,
   ApolloMark,
-  InterfaceDetails,
-  FunctionDetails,
-  DocBlock,
-  DocPiece,
   TrackableButton,
-  TrackableLink
+  TrackableLink,
+  useApiDocContext,
+  PrimaryLink
 };
 
 const {processSync} = rehype()
