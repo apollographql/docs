@@ -1,7 +1,7 @@
 ---
 title: Schema proposal configurations
 subtitle: Configure default reviewers, approval requirements, and more
-description: Fine-tune GraphQL the schema proposal process by configuring permissions, default reviewers, approval requirements, and schema checks with GraphOS.
+description: Fine-tune the GraphQL schema proposal process by configuring permissions, default reviewers, approval requirements, and schema checks with GraphOS.
 ---
 
 <GraphOSEnterpriseRequired />
@@ -12,11 +12,11 @@ description: Fine-tune GraphQL the schema proposal process by configuring permis
 - Which team members are [default reviewers](#default-reviewers) and whether [default reviewer approval is required](#require-default-reviewer-approval)
 - The [minimum number of approvals](#required-approvals) required for a proposal to achieve [**Approved** status](./schema-proposals#proposal-statuses)
 - Whether and how [schema checks incorporate proposals](#configure-schema-checks)
-- [Coming soon] Whether to mute [email notifications](#configure-notifications) from proposal activty
+- [Coming soon] Whether to [mute email notifications](#mute-notifications) from proposal activty
 
 <Note>
 
-Schema proposal configurations are on a **per-graph**&mdash;not per-organization nor per-proposal&mdash;basis. This includes [muting notifications](#mute-notifications), which are on a per-teammate, per-graph basis.
+Schema proposal configurations are on a **per-graph** basis&mdash;not per-organization or per-proposal. This includes [muting notifications](#mute-notifications), which are on a per-teammate, per-graph basis.
 
 </Note>
 
@@ -44,7 +44,7 @@ Permissions and other configurations are available on a graph's **Settings** pag
   alt="Schema proposals settings in Studio"
 />
 
-Refer to the table below for default and valid values.
+Refer to the [configuration reference table](#configuration-reference) below for default and valid values.
 
 ### Configuration reference
 
@@ -84,7 +84,7 @@ The _minimum_ [roles](../org/members/#organization-wide-member-roles) required t
 
 `Observers` is the least restrictive setting and `Admins` the most restrictive.
 
-The `Observers` default for creating proposals means all organization members except Consumers and Billing Admins can create proposals.
+The `Observers` default for creating proposals means all organization members except Consumers and Billing Managers can create proposals.
 The `Admins` default for editing proposals means only org and graph admins can edit proposals they didn't create.
 
 _Proposal authors can always edit their own proposals regardless of their role._
@@ -114,7 +114,7 @@ The team members automatically marked as reviewers once a proposal's status beco
 
 <td>
 
-Any member of your organization can be a default reviewer except for [billing admins](../org/members/#organization-wide-member-roles).
+Any member of your organization can be a default reviewer except for [billing managers](../org/members/#organization-wide-member-roles).
 
 </td>
 
@@ -164,7 +164,7 @@ Once you've added [**default reviewers**](#default-reviewers), you can require _
 
 ## Configure schema checks
 
-You can configure [schema checks](./schema-checks) to include a **Proposals** task that checks whether the changes a check is running on have matching and approved schema proposals.
+You can configure [schema checks](./schema-checks) to include a **Proposals** task that verifies whether the changes a check is running on have matching and approved schema proposals.
 
 <img
   src="../img/schema-proposals/proposal-check-settings.jpg"

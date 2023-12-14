@@ -1,21 +1,21 @@
 ---
 title: Schema proposals
-subtitle: Propose, review, and track schema changes before and after publication
+subtitle: Propose, review, and track changes to new and published schemas
 description: Use GraphOS's native GraphQL schema management process propose, review, and track schema changes before and after publication.
 ---
 
 <GraphOSEnterpriseRequired />
 
 As your supergraph schema grows in complexity, changing it can become increasingly difficult.
-The impacts of schema changes on [composition](/federation/federated-types/composition/) and client operations become harder to assess before publication.
-Once schema design changes are agreed upon, ensuring they are honored later in the subgraph development lifecycle can become another challenge.
+The ramifications of subgraph schema changes on [composition](/federation/federated-types/composition/) and client operations become harder to assess before publication.
+Even after schema design changes are agreed upon, ensuring that the design changes are implemented during subgraph development is another challenge.
 
-These challenges multiply when attempting to update multiple subgraph schemas simultaneously.
+These challenges multiply when updating multiple subgraph schemas simultaneously, and working between the [multiple roles within orgs and teams](../org/members/#organization-wide-member-roles).
 Schema development can stall without the clear cross-team communication needed to understand, verify, and track changes.
 
 ## Schema proposals for schema change management
 
-**Schema proposals** provide GraphOS-native schema change management.
+**Schema proposals** in GraphOS provide centralized schema change management of your supergraph to all roles in your org.
 The centralized proposal process fosters collaboration and strengthens schema governance:
 
 - Subgraph developers can propose changes in the context of the supergraph and use automated checks and reviewer feedback to validate them.
