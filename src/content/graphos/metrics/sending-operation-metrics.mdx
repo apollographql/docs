@@ -33,7 +33,7 @@ Both the Apollo Router and Apollo Server use the same mechanism to enable operat
 
 3. Use the obtained values to set the following environment variables in your environment _before_ starting up your router/server:
 
-   ```bash
+   ```bash showLineNumbers=false
    export APOLLO_KEY=<YOUR_GRAPH_API_KEY>
    export APOLLO_GRAPH_REF=<YOUR_GRAPH_REF>
    ```
@@ -200,7 +200,7 @@ Turning off field-level instrumentation for a particular request has the followi
 
 - The request does not contribute to the "executions" statistic on the Insights page in Studio.
 - The request does not contribute to field-level execution timing hints that can be displayed in the [GraphOS Studio Explorer](../explorer) and VS Code.
-- The request does not produce a trace that can be viewed in the [Traces section](/operations#resolver-level-traces) of the Insights page in Studio.
+- The request does not produce a trace that can be viewed in the [Traces section](./operations#resolver-level-traces) of the Insights page in Studio.
 
 These requests still contribute to most features of Studio, such as schema checks, the Insights page, and the "Request" metrics on the Insights page.
 

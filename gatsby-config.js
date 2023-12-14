@@ -17,7 +17,9 @@ const isSingleDocset = isLocalMode || process.env.DOCS_LOCAL;
 
 const gatsbyRemarkPlugins = [
   '@fec/remark-a11y-emoji/gatsby',
-  'gatsby-remark-mermaid',
+  {
+    resolve: require.resolve('./plugins/remark-mermaid-cached')
+  },
   {
     resolve: 'gatsby-remark-copy-linked-files',
     options: {

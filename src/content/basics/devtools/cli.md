@@ -14,7 +14,7 @@ The Apollo CLI is available as an [npm](https://www.npmjs.com/get-npm) package.
 
 If your project uses `npm`, we recommend installing the Apollo CLI locally by adding it to your project's `devDependencies`, like so:
 
-```bash
+```bash showLineNumbers=false
 npm install -D apollo
 ```
 
@@ -24,7 +24,7 @@ This helps make sure that all of your project's collaborators have the same vers
 
 You can install the CLI globally in your development environment with the following command:
 
-```bash
+```bash showLineNumbers=false
 npm install -g apollo
 ```
 

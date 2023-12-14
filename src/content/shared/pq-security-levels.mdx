@@ -44,7 +44,7 @@ persisted_queries:
 
 > **Note:** You can use audit mode with or without [automatic persisted queries](/router/configuration/in-memory-caching#caching-automatic-persisted-queries-apq) enabled.
 
-Unregistered operations appear in your [router's logs](/router/logging).
+Unregistered operations appear in your [router's logs](/router/configuration/telemetry/exporters/logging/overview).
 
 For example:
 
@@ -76,7 +76,7 @@ apq:
 > **Note:** To enable safelisting, you _must_ turn off [automatic persisted queries](/router/configuration/in-memory-caching#caching-automatic-persisted-queries-apq) (APQs). APQs let clients [register arbitrary operations at runtime](#differences-from-automatic-persisted-queries) while safelisting restricts operations to those that have been explicitly registered.
 
 To execute an operation, clients can provide its PQL-specified ID _or_ full operation string.
-The router rejects unregistered operations, and if `log_unknown` is true, those operations appear in your [router's logs](/router/logging).
+The router rejects unregistered operations, and if `log_unknown` is true, those operations appear in your [router's logs](/router/configuration/telemetry/exporters/logging/overview).
 
 > So you can monitor the operations your router rejects, it's best to keep `log_unknown` as `true` while adopting safelisting. Once you're confident that all your clients are properly configured, you can turn it off to reduce noise in your logs.
 

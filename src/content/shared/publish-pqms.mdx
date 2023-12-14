@@ -7,7 +7,7 @@ Ensure your Rover CLI version is `0.17.2` or later. Previous versions of Rover d
 
 After you [generate an operation manifest](/graphos/operations/persisted-queries#31-generate-persisted-query-manifests), you publish it to your PQL with the [Rover CLI](/rover/) like so:
 
-```bash title="Example command"
+```bash showLineNumbers=false title="Example command"
 rover persisted-queries publish my-graph@my-variant \
   --manifest ./persisted-query-manifest.json
 ```
@@ -35,7 +35,7 @@ You can send some test operations to test that you've successfully published you
 
 First, start your GraphOS-connected router:
 
-```bash
+```bash showLineNumbers=false
 APOLLO_KEY="..." APOLLO_GRAPH_REF="..." ./router --config ./router.yaml
 
 2023-05-11T15:32:30.684460Z  INFO Apollo Router v1.18.1 // (c) Apollo Graph, Inc. // Licensed as ELv2 (https://go.apollo.dev/elv2)
@@ -46,7 +46,7 @@ APOLLO_KEY="..." APOLLO_GRAPH_REF="..." ./router --config ./router.yaml
 
 Next, make a POST request with `curl`, like so:
 
-```bash
+```bash showLineNumbers=false
 curl http://localhost:4000 -X POST --json \
 '{"extensions":{"persistedQuery":{"version":1,"sha256Hash":"dc67510fb4289672bea757e862d6b00e83db5d3cbbcfb15260601b6f29bb2b8f"}}}'
 ```
