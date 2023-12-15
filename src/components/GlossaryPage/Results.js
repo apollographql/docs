@@ -14,8 +14,9 @@ import {
   Text
 } from '@chakra-ui/react';
 import {Highlight, useHits} from 'react-instantsearch';
+// import {LabelFilterButton} from './LabelFilterButton';
+import RelativeLink, {PrimaryLink} from '../RelativeLink';
 import {MarkdownCodeBlock} from '@apollo/chakra-helpers';
-import {PrimaryLink} from '../RelativeLink';
 
 const ClickableHeading = ({as, fontSize, fontWeight, id, children}) => {
   const handleCopyClick = () => {
@@ -60,12 +61,7 @@ ClickableHeading.propTypes = {
 const Results = () => {
   const {hits} = useHits();
 
-  const handleLabelClick = label => {
-    //To-do: Hook into search state and refine on the label
-    console.log(label);
-  };
-
-  const makeId = hit => hit.term.replace(/\s+/g, '-').toLowerCase();
+  const makeId = term => term.replace(/\s+/g, '-').toLowerCase();
 
   return (
     <Stack divider={<StackDivider borderColor="border" />} spacing={6}>
@@ -76,7 +72,7 @@ const Results = () => {
               as="h2"
               fontSize="xl"
               fontWeight="bold"
-              id={makeId(hit)}
+              id={makeId(hit.term)}
             >
               <Highlight attribute="term" hit={hit} />
             </ClickableHeading>
@@ -89,10 +85,10 @@ const Results = () => {
                   variant="solid"
                   colorScheme="indigo"
                   borderRadius="md"
-                  onClick={() => handleLabelClick(label)}
                 >
                   <TagLabel>{label}</TagLabel>
                 </Tag>
+                // <LabelFilterButton key={hit.objectID + label} label={label} />
               ))}
           </HStack>
           <Markdown
@@ -116,19 +112,18 @@ const Results = () => {
                 }:`}</strong>
               </Text>
             )}
-            {hit.relatedTerms &&
-              hit.relatedTerms.map(term => (
-                <Tag
-                  key={term}
-                  size="lg"
-                  variant="solid"
-                  colorScheme="teal"
-                  borderRadius="md"
-                  onClick={() => handleLabelClick(term)}
-                >
-                  <TagLabel>{term}</TagLabel>
-                </Tag>
-              ))}
+            {hit.relatedTerms && (
+              <>
+                {hit.relatedTerms.map((term, index) => (
+                  <React.Fragment key={`${hit.objectID}_${index}`}>
+                    <RelativeLink href={`#${makeId(term)}`}>
+                      {term}
+                    </RelativeLink>
+                    {index < hit.relatedTerms.length - 1 && ', '}
+                  </React.Fragment>
+                ))}
+              </>
+            )}
           </HStack>
         </Box>
       ))}

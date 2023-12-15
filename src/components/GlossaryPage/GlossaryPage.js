@@ -1,4 +1,4 @@
-import LabelsFilter from './LabelsFilter';
+import LabelsList from './LabelsList';
 import React, {useEffect, useState} from 'react';
 import Results from './Results';
 import Search from './Search';
@@ -56,7 +56,7 @@ export function GlossaryPage() {
               <Results />
             </GridItem>
             <GridItem>
-              <LabelsFilter />
+              <LabelsList />
             </GridItem>
           </Grid>
         </Flex>
