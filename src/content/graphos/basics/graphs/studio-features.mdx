@@ -1,8 +1,8 @@
 ---
-title: Managing graphs in Apollo Studio
+title: Managing graphs in GraphOS Studio
 ---
 
-This article describes Apollo Studio features for all [graph types](./#graph-types). For features specific to supergraphs, see also [Supergraph-specific Studio features](./federated-graphs/).
+This article describes GraphOS Studio features for all [graph types](./#graph-types). For features specific to supergraphs, see also [Supergraph-specific Studio features](./federated-graphs/).
 
 ## Creating graphs
 
@@ -12,13 +12,13 @@ This article describes Apollo Studio features for all [graph types](./#graph-typ
 
 ## Viewing graph details
 
-After selecting an organization in Apollo Studio, click on a particular graph variant to view its README, schema, data, and settings. All of a Studio organization's members can access the data and settings for every graph that belongs to that organization.
+After selecting an organization in GraphOS Studio, click on a particular graph variant to view its README, schema, data, and settings. All of a Studio organization's members can access the data and settings for every graph that belongs to that organization.
 
 > Enterprise accounts can set [member roles](../org/members/#organization-wide-member-roles) to configure fine-grained access for individual members of their organization.
 
 ### The README page
 
-When a user opens one of your graph's variants in Apollo Studio, its **README page** is shown:
+When a user opens one of your graph's variants in GraphOS Studio, its **README page** is shown:
 
 <img
   className="screenshot"
@@ -71,14 +71,14 @@ For a list of all supported shortcodes, click **Graph shortcodes** in the bottom
 
 ### Exploring your schema
 
-Apollo Studio provides helpful views for exploring your registered schema:
+GraphOS Studio provides helpful views for exploring your registered schema:
 
 * [The Explorer](#the-explorer), which helps you build new operations against your graph
 * [The Schema page](#the-schema-page), which enables you to filter your schema's type and field definitions (and also view your schema's raw SDL)
 
 #### The Explorer
 
-Apollo Studio provides a powerful **Explorer** IDE that helps you visualize your graph and run queries against it. It's available from your graph's Explorer tab in Studio.
+GraphOS Studio provides a powerful **Explorer** IDE that helps you visualize your graph and run queries against it. It's available from your graph's Explorer tab in Studio.
 
 > [Learn about the Explorer.](../explorer/)
 
@@ -253,7 +253,7 @@ The Changelog page in Studio displays a timeline of changes made to your graph's
   width="450"
 />
 
-**Only schema changes that you publish to Studio are included in this timeline**, which is one of the most important reasons to [include schema publishing in your continuous delivery pipeline](../delivery/#publishing-with-continuous-delivery).
+**Only schema changes that you publish to Studio are included in this timeline**, which is one of the most important reasons to [include schema publishing in your continuous delivery pipeline](../delivery/publishing-schemas/#publish-with-continuous-delivery).
 
 ## Managing access permissions
 
@@ -289,7 +289,7 @@ People outside your organization can't view any _other_ pages for a public varia
 
 You can toggle the switch back to **Off** to make the variant private again.
 
-After you make a variant public, you can click the variant's **PUBLIC** label at the top of Apollo Studio to get its public link:
+After you make a variant public, you can click the variant's **PUBLIC** label at the top of GraphOS Studio to get its public link:
 
 <img
   className="screenshot"
@@ -300,13 +300,11 @@ After you make a variant public, you can click the variant's **PUBLIC** label at
 
 ### Protected variants (Enterprise only)
 
-If you have an Enterprise plan, you can designate particular variants of a graph as **protected variants**. Making a variant protected specifically affects the ability of users with the [**Contributor** role](../org/members/#organization-wide-member-roles) to make certain changes to the variant:
+If you have a [GraphOS Enterprise plan](../enterprise/), you can designate particular variants of a graph as **protected variants**. A protected variant limits the capabilities of users with the [**Contributor** role](../org/members/#organization-wide-member-roles) to make certain changes to the variant:
 
 - **Contributor**s _cannot_ push schema updates to a protected variant.
-- **Contributor**s _cannot_ manage Explorer-related settings for a protected variant, like setting its URL.
-- Graph API Keys with the **Contributor** permission _cannot_ report usage metrics to your graph.
-
-These are the only operations (other than creating new protected variants and creating new graphs) that can be performed by **Contributor**s and not by **Observer**s, so one way of thinking of protected variants are that they are variants where **Contributor**s are treated as **Observer**s.
+- **Contributor**s _cannot_ manage Explorer-related settings for a protected variant, such as setting the variant's endpoint URL.
+- Graph API Keys with the **Contributor** role _cannot_ report usage metrics for a protected variant.
 
 **Graph Admin**s and **Org Admin**s can configure whether a variant is protected from the **This Variant** tab of the variant's Settings page.
 
@@ -314,9 +312,9 @@ These are the only operations (other than creating new protected variants and cr
 
 > For _external_ graph visibility, see [Public variants](#public-variants).
 
-By default, graphs are visible to all members of your organization. If you have an Enterprise plan, you can set a graph to instead be visible only to members you invite.
+By default, graphs are visible to all members of your organization. If you have a [GraphOS Enterprise plan](../enterprise/), you can set a graph to instead be visible only to members you invite.
 
-You can configure visibility and grant your organization's members explicit access to your graph from the Access tab of your graph's Settings page.
+You can configure visibility and grant your organization's members explicit access to your graph from the Permissions tab of your graph's Settings page.
 
 Note that **Org Admin**s can always see _all_ graphs in your organization.
 

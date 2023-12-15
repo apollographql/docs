@@ -1,6 +1,6 @@
 # Apollo Docs
 
-This repo contains the code responsible for building the Apollo Docs site. It also houses the content for the Apollo Basics and GraphOS **docsets**. We also export shared utilities and components from the [`@apollo/chakra-helpers`](./packages/chakra-helpers) package in the `packages` directory.
+This repo contains the code responsible for building the Apollo Docs site. It also houses the content for the Apollo Basics and GraphOS **docsets**.
 
 > We use the word **docset** to describe an individual docs website. For example, "I just updated the Android docset".
 
@@ -18,20 +18,37 @@ The central piece of this repo, the docs infrastructure, is a [Gatsby](https://w
   - [Configuring a remote docset](#configuring-a-remote-docset)
   - [Managing versions](#managing-versions)
   - [Internal-only docsets](#internal-only-docsets)
+  - [Sidebar annotations](#sidebar-annotations)
+  - [Default sidebar category state](#default-sidebar-category-state)
   - [Redirect rules](#redirect-rules)
 - [Publish and preview](#publish-and-preview)
   - [Production deploys](#production-deploys)
   - [Deploy previews](#deploy-previews)
 - [Authoring](#authoring)
   - [Frontmatter](#frontmatter)
+    - [Configuring the table of contents](#configuring-the-table-of-contents)
+    - [Showing a version indicator](#showing-a-version-indicator)
   - [Linking](#linking)
   - [Code blocks](#code-blocks)
   - [Using MDX](#using-mdx)
+    - [Shared content](#shared-content)
+    - [Components](#components)
+      - [ButtonLink](#buttonlink)
+      - [ExpansionPanel](#expansionpanel)
+      - [MultiCodeBlock](#multicodeblock)
+      - [CodeColumns](#codecolumns)
+      - [YouTube](#youtube)
+      - [TypeScriptApiBox](#typescriptapibox)
+      - [MinVersion](#minversion)
+      - [Release stage components](#release-stage-components)
+      - [Plan components](#plan-components)
+      - [Admonitions](#admonitions)
 - [History](#history)
   - [Benefits](#benefits)
   - [Drawbacks](#drawbacks)
   - [Solution](#solution)
   - [Impact](#impact)
+    - [Netlify build stats (Feb 1 - Feb 24, 2022)](#netlify-build-stats-feb-1---feb-24-2022)
 - [Notable changes to authoring patterns](#notable-changes-to-authoring-patterns)
   - [No more component imports](#no-more-component-imports)
   - [Code block titles and line highlighting](#code-block-titles-and-line-highlighting)
@@ -83,7 +100,6 @@ npm start -- ../apollo-client
 For your convenience, this repo also comes with special `start` NPM scripts for each docset, assuming you have this repo checked out in the same directory as the other OSS repos.
 
 - `npm run start:client`
-- `npm run start:customer-success`
 - `npm run start:server`
 - `npm run start:ios`
 - `npm run start:kotlin`
@@ -114,12 +130,11 @@ The docs content is written and maintained in the following places. Many of them
 
 - [Apollo Client (React)](https://github.com/apollographql/apollo-client)
 - [Apollo Server](https://github.com/apollographql/apollo-server)
-- [Apollo iOS](https://github.com/apollographql/apollo-ios)
+- [Apollo iOS](https://github.com/apollographql/apollo-ios-dev)
 - [Apollo Kotlin](https://github.com/apollographql/apollo-kotlin)
 - [Apollo Federation](https://github.com/apollographql/federation)
 - [Rover CLI](https://github.com/apollographql/rover)
 - [Apollo Router](https://github.com/apollographql/router)
-- [Customer Success (internal)](https://github.com/apollographql/customer-success)
 
 ## Docset configuration
 
@@ -229,7 +244,7 @@ You can publish docsets that are viewable only by Apollo team members by setting
 }
 ```
 
-If a visitor to that page is logged in to Apollo Studio **and** is a member of one of our internal orgs, the page content will be rendered normally. If neither of those conditions are true, a 404 page will be shown. Internal-only pages are excluded from the sitemap and won't be indexed by Google.
+If a visitor to that page is logged in to GraphOS Studio **and** is a member of one of our internal orgs, the page content will be rendered normally. If neither of those conditions are true, a 404 page will be shown. Internal-only pages are excluded from the sitemap and won't be indexed by Google.
 
 It's important to note that you must sign in to and out of your account using Studio or Odyssey, as the docs don't currently have their own sign in form. For local development, sign in to the staging Studio.
 
@@ -248,6 +263,22 @@ If you would like an icon with a tooltip for any use case across the sidebar nav
 
 We currently support tags for `enterprise`, `preview` & `experimental`.
 
+### Default sidebar category state
+
+By default, all sidebar categories are shown as open on initial page load. You can affect the default open/closed state of any sidebar category by placing your category config within a tuple, similar to the technique above. The first element is the category configuration object, and the second element is a boolean. If the second element is `true`, that category will be collapsed by default.
+
+```json
+{
+  "Release Policies": [
+    {
+      "Product launch stages": "/resources/product-launch-stages",
+      "Elastic License v2 FAQ": "/resources/elastic-license-v2-faq"
+    },
+    true
+  ]
+}
+```
+
 ### Redirect rules
 
 Redirects can continue to be written in the `_redirects` file in the `docs/source` directory of each docset. These redirects can be written in the [Netlify redirects syntax](https://docs.netlify.com/routing/redirects/#syntax-for-the-redirects-file), but come with one catch. The `from` path must be relative to the root of the particular docset that the redirect pertains to, but the `to` path must be relative to the root of the `apollographql.com` domain. That means that the path you want to redirect the user to must include the `/docs` path prefix to redirect to a page in the docs.
@@ -258,6 +289,10 @@ Redirects can continue to be written in the `_redirects` file in the `docs/sourc
 ```
 
 All of the redirects from each docset will be bundled together at build time, and deployed as one combined `_redirects` file deployed with the built docs site.
+
+#### Redirecting with anchors
+
+Netlify's `_redirects` file [doesn't handle redirecting URLs with `#`](https://answers.netlify.com/t/redirects-urls-containing-hashbangs/11157). Instead, we manually redirect URLs like this using custom logic in our `gatsby-config.js`. If you need to redirect from or to particular anchors tags, add the redirects to the `redirects` object in `gatsby-config.js`. For all other URLs, use the appropriate `_redirects` file.
 
 ## Publish and preview
 
@@ -359,6 +394,28 @@ headingDepth: 4 # show headings up to h4
 ---
 ```
 
+#### Showing a version indicator
+
+Show a tag at the top of the article that indicates the version of the software that that article applies to by using the `minVersion` frontmatter.
+
+```md
+---
+title: Fancy new feature
+minVersion: 3.8.1
+---
+```
+
+#### Prevent a page from being indexed by search engines
+
+You can add the [`noindex`](https://developers.google.com/search/docs/crawling-indexing/block-indexing) tag to a page by using the `noIndex` frontmatter.
+
+```md
+---
+title: Hidden preview feature
+noIndex: true
+---
+```
+
 ### Linking
 
 Links between docs articles should be written as relative paths. For example, if you wanted to link from the `schema/custom-scalars` article in the Apollo Server docs to the `getting-started` page at the root of the content directory, you would write:
@@ -401,7 +458,7 @@ _shared/configure-project.mdx_
 
 ```mdx
 1. Sign up for an Apollo account
-2. Create a graph in Apollo Studio
+2. Create a graph in GraphOS Studio
 3. Add environment variables to your project
 ```
 
@@ -496,7 +553,7 @@ const foo = 123;
 A YouTube player exported from MDX Embed. Check out all of the different props and options [on their docs](https://www.mdx-embed.com/?path=/docs/components-youtube--usage).
 
 ```mdx
-Check out this introduction to Apollo Studio:
+Check out this introduction to GraphOS Studio:
 
 <YouTube youTubeId="sarXMaz3OpY" />
 ```
@@ -510,6 +567,115 @@ This component is currently only used in the Apollo Client docset. It takes a pr
 
 <TypeScriptApiBox name="ApolloClient.constructor" />
 ```
+
+##### MinVersion
+
+Use this component to add a tag beside page headings indicating the version of the software that they apply to. This is meant to be used with headings, and using it in ways other than the method shown below will result in nothing happening.
+
+```mdx
+<MinVersion version="3.8.0">
+
+### Dark mode
+
+</MinVersion>
+```
+
+##### Release stage components
+
+You should use the `<PreviewFeature />` and `<ExperimentalFeature />` components to call out features or products that are in [preview](https://www.apollographql.com/docs/resources/product-launch-stages/#preview) or are [experimental](https://www.apollographql.com/docs/resources/product-launch-stages/#experimental-features). Use these components at the top of the page or relevant section.
+
+Both components take an optional `discordLink` prop through which you can provide the link to a relevant Discord channel. If there's isn't a relevant channel, you can omit the prop and it defaults to a generic link to Apollo Discord.
+
+```mdx
+
+# This Discord link brings folks to the channel about the @authorization directives.
+
+<PreviewFeature discordLink="https://discord.com/channels/1022972389463687228/1148623262104965120"/>
+
+```
+
+The components also take an optional `appendText` prop that adds text to the default text.
+
+```mdx
+
+<PreviewFeature appendText="This is some additional text appended to the end of the default text."/>
+
+```
+
+If necessary, you can nest markdown within the component to completely replace the text.
+
+
+```mdx
+
+<ExperimentalFeature>
+
+This _completely_ replaces the text within the component.
+
+</ExperimentalFeature>
+
+```
+
+##### Plan components
+
+Currently, the only plan component is `<EnterpriseFeature />`.
+Like the release stage components, this component should be put at the top of the relevant page or section.
+If a feature has both a release stage component and the `<EnterpriseFeature />`, the `<EnterpriseFeature />` should come first.
+
+Custom text for `<EnterpriseFeature />` can be provided by nesting Markdown within the component.
+
+By default, without any children, `<EnterpriseFeature />` renders this text:
+
+> **This feature is only available with a [**GraphOS Enterprise plan**](http://apollographql.com/graphos/enterprise/). If your organization doesn't currently have an Enterprise plan, you can test this functionality by signing up for a free [Enterprise trial](https://studio.apollographql.com/signup?type=enterprise-trial&referrer=docs-content).
+
+If you include custom text, it completely replaces this text. Please make sure to include links to the Enterprise plan docs and Enterprise trial accordingly.
+
+```mdx
+
+<EnterpriseFeature>
+
+This is some _custom markdown text_ that still includes a link to the [GraphOS Enterprise plan**](http://apollographql.com/graphos/enterprise/) and [Enterprise trial](https://studio.apollographql.com/signup?type=enterprise-trial&referrer=docs-content) docs.
+
+</EnterpriseFeature>
+
+```
+
+##### Admonitions
+
+Admonitions are designed to catch readers' attention and break the flow of the text. They’re helpful to make a piece of information stand out, but should be used wisely and sparingly. Use them only for information that shouldn’t be missed.
+
+We support the following admonition components: 
+* `<Caution>`
+* `<Note>`
+* `<Tip>`
+
+
+You can use `<Caution>`, `<Note>`, and `<Tip>` components directly in `.mdx` pages like so:
+
+```mdx
+<Caution>
+
+`<Caution>` admonitions generate anxiety. Never use them for anything other than highly important information which may cause serious issues if not acknowledged. Most of the time, prefer `<Note>`s.
+
+</Caution>
+
+<Note>
+
+`<Note>` admonitions are the most common. You can generally use them whenever you find yourself starting a sentence with "_Note_,..." or "_Keep in mind_...".
+
+Avoid using `<Note>`s directly one after another—condense notes if it makes sense.
+
+</Note>
+
+<Tip>
+
+Use `<Tip>` admonitions for any particularly helpful advice or suggestions. 
+
+</Tip>
+```
+
+The above code block renders like so:
+
+![Rendered admonitions](src/content/graphos/img/admonitions.jpg)
 
 ## History
 

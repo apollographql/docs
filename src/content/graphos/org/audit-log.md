@@ -3,11 +3,15 @@ title: Audit log of material GraphOS events
 description: Download a log of all material events that have occured in your organization
 ---
 
+> **This feature is available only with an [Enterprise plan](https://www.apollographql.com/pricing/).**
+>
+> If your organization _doesn't_ currently have an Enterprise plan, you can test out this functionality by signing up for a free [Enterprise trial](./plans/#enterprise-trials).
+
 Organizations with a GraphOS [Enterprise plan](http://apollographql.com/pricing) can export and download an audit log of all material events that have occurred in the organization over a given timeframe.
 
-The interface for requesting an export of auditable events is available under the **Audit** tab of your organization's homepage in Apollo Studio:
+The interface for requesting an export of auditable events is available under the **Audit** tab of your organization's homepage in GraphOS Studio:
 
-<img src="https://user-images.githubusercontent.com/5922187/127679934-e862077a-0ce0-4e3a-89db-ad9e621111ff.png" class="screenshot" alt="Apollo Studio audit log" />
+<img src="https://user-images.githubusercontent.com/5922187/127679934-e862077a-0ce0-4e3a-89db-ad9e621111ff.png" class="screenshot" alt="GraphOS Studio audit log" />
 
 > Audit log data is available from July 2021 onward.
 
@@ -17,7 +21,7 @@ The interface for requesting an export of auditable events is available under th
 
 When creating an audit log export, you specify a **time range**, along with optional filters to limit actions to a particular **user** or **graph**. The maximum time range that you can request audits for is 180 days, as definied by our retention policy.
 
-<img src="../img/audit-log-create.jpg" class="screenshot" alt="Apollo Studio Audit Log" width="400" />
+<img src="../img/audit-log-create.jpg" class="screenshot" alt="GraphOS Studio Audit Log" width="400" />
 
 > If you need to export a log with more complex filters and against archives, please email **support@apollographql.com**.
 

@@ -4,9 +4,17 @@ id: TN0015
 tags: [observability, router]
 ---
 
-> Self-hosting the Apollo Router is limited to Apollo Enterprise plans. Other plan types use [managed cloud routing with GraphOS](/graphos/routing/cloud/).
->
-> [Learn about Apollo plans.](https://www.apollographql.com/pricing/)
+<EnterpriseFeature
+  text={
+    'Self-hosting the Apollo Router is limited to [GraphOS Enterprise plans](/graphos/enterprise/). Other plan types use [managed cloud routing with GraphOS](/graphos/routing/cloud/). Check out the [pricing page](https://www.apollographql.com/pricing/) to learn more.'
+  }
+/>
+<Tip>
+
+If you're an enterprise customer looking for more material on this topic, try the [Enterprise best practices: Supergraph observability](https://www.apollographql.com/tutorials/supergraph-observability) course on Odyssey.
+
+Not an enterprise customer? [Learn about GraphOS for Enterprise.](/graphos/enterprise)
+</Tip>
 
 Application performance monitoring (APM) tools are critical for many organizations, and having direct insight into how your graph is performing is an important piece of overall observability into your systems' stability and performance. The Apollo Router and subgraphs aren't any different. While you may currently instrument your existing subgraphs with your APM's tooling, you may need to connect Apollo Router as well to get a clear view of your graph's health.
 
@@ -83,7 +91,7 @@ telemetry:
       endpoint: http://COLLECTOR_ADDRESS:4317
 ```
 
-For more information on configuration options, see the documentation on both [capturing metrics](/router/configuration/metrics#using-opentelemetry-collector) and [capturing traces](/router/configuration/tracing#opentelemetry-collector-via-otlp) using OpenTelemetry Collector.
+For more information on configuration options, see the documentation on both [capturing metrics](/router/configuration/telemetry/exporters/metrics/overview) and [capturing traces](/router/configuration/telemetry/exporters/tracing/overview) using OpenTelemetry Collector.
 
 ## Connecting directly
 

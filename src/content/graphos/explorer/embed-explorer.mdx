@@ -2,7 +2,7 @@
 title: Embedding the Explorer
 ---
 
-You can embed the [Apollo Studio Explorer](./) in a webpage that you can then provide to your graph's consumers. This enables those consumers to test out operations from your own website.
+You can embed the [GraphOS Studio Explorer](./) in a webpage that you can then provide to your graph's consumers. This enables those consumers to test out operations from your own website.
 
 For example, here's an embedded Explorer for an Apollo example graph. Try it out!
 
@@ -37,9 +37,7 @@ For more information, see the [landing page plugin API reference](/apollo-server
 
 ## Embedding on an arbitrary webpage
 
-1. <a href="https://studio.apollographql.com/" target="_blank">
-     Go to Apollo Studio
-   </a> and open the variant you want to use with the embedded Explorer.
+1. [Open GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content) and select the graph variant you want to use with the embedded Explorer.
 
 2. Go to the variant's Explorer page.
 
@@ -179,7 +177,7 @@ These are the top-level fields you can include in the options object you pass to
 
 **Required.** The graph ref for the variant you want to use the embedded Explorer with. Has the format `graph-id@variant-name`. This value is automatically populated in the Explorer's embed snippet.
 
-The Explorer fetches this variant's schema from Apollo Studio to populate its Documentation panel and enable code completion.
+The Explorer fetches this variant's schema from GraphOS Studio to populate its Documentation panel and enable code completion.
 
 If you omit this option, the Explorer _does_ still load, but it doesn't know which schema to fetch. This prevents the Explorer from providing critical features like documentation and code completion.
 
@@ -324,9 +322,11 @@ These are the fields you can include in the `initialState` option you pass to `n
 </td>
 <td>
 
-A URI-encoded operation to populate in the Explorer's editor on load.
+A URI-encoded operation to populate in the embedded Explorer's editor on load.
 
-If you omit this, the Explorer initially loads an example query based on your schema.
+If you omit this option, the Explorer initially loads an example query based on your schema.
+
+If you use one of the sharing methods described in [Setting a default operation](#setting-a-default-operation), the generated code snippet automatically sets this option with the details of the operation you used.
 
 If [`persistExplorerState`](#persistexplorerstate) is `true` _and_ you provide this option, the Explorer loads any of the user's tabs from `localStorage`, and it _also_ opens a _new_ tab with this operation.
 

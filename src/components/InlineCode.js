@@ -1,8 +1,7 @@
 import React from 'react';
-import {chakra, useColorModeValue} from '@chakra-ui/react';
+import {chakra} from '@chakra-ui/react';
 
 export default function InlineCode(props) {
-  const bgColor = useColorModeValue('gray.50', 'gray.700');
   return (
     <chakra.code
       fontFamily="mono"
@@ -11,7 +10,10 @@ export default function InlineCode(props) {
       py="0.5"
       rounded="sm"
       color="secondary"
-      bgColor={bgColor}
+      bgColor="gray.50"
+      _dark={{
+        bgColor: 'gray.700'
+      }}
       {...props}
     />
   );

@@ -1,8 +1,10 @@
 ---
-title: Daily reports from Apollo Studio
+title: Daily reports from GraphOS Studio
+subtitle: Learn how to act on daily summaries of your graph's activity
+description: Receive daily GraphQL activity summaries with Apollo GraphOS notifications. Analyze metrics to identify and resolve issues.
 ---
 
-You can [configure Apollo Studio](./notification-setup/) to send your team a daily summary of your graph's activity over the last 24 hours:
+You can [configure GraphOS](./notification-setup/) to send your team a daily summary of your graph's activity over the last 24 hours:
 
 <img src="../../img/integrations/slack-report.png" width="400" alt="Slack daily report" class="screenshot" />
 
@@ -10,7 +12,7 @@ When you configure daily reports, you can specify what time you want to receive 
 
 ## Setup
 
-See [Setting up Studio Notifications](./notification-setup).
+See [Setting up GraphOS Notifications](./notification-setup).
 
 ## Acting on report data
 

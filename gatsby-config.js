@@ -8,10 +8,18 @@ const {query, transformer} = require('./algolia');
 const yaml = require('js-yaml');
 const fs = require('fs');
 const remoteSources = require('./sources/remote');
+const {join} = require('path');
+
+const isProduction = process.env.CONTEXT === 'production';
+
+const isLocalMode = process.env.DOCS_MODE === 'local';
+const isSingleDocset = isLocalMode || process.env.DOCS_LOCAL;
 
 const gatsbyRemarkPlugins = [
   '@fec/remark-a11y-emoji/gatsby',
-  'gatsby-remark-mermaid',
+  {
+    resolve: require.resolve('./plugins/remark-mermaid-cached')
+  },
   {
     resolve: 'gatsby-remark-copy-linked-files',
     options: {
@@ -110,6 +118,14 @@ const plugins = [
     }
   },
   {
+    resolve: 'gatsby-plugin-apollo-client-api-doc',
+    options: {
+      file: isSingleDocset
+        ? join(__dirname, 'local/public/client.api.json')
+        : 'https://apollo-client-docs.netlify.app/client.api.json'
+    }
+  },
+  {
     resolve: 'gatsby-plugin-google-gtag',
     options: {
       // todo: remove ua property in the nearish future
@@ -155,6 +171,15 @@ const plugins = [
       include: /\.mdx?$/i,
       ignore: /README/i
     }
+  },
+  {
+    resolve: 'gatsby-plugin-apollo-onetrust',
+    options: {
+      autoBlockSrc: process.env.OT_AUTOBLOCK_SRC,
+      otSDKStubSrc: process.env.OT_SDKSTUB_SRC,
+      dataDomainScript: process.env.OT_DATA_DOMAIN_SCRIPT,
+      skip: !isProduction
+    }
   }
 ];
 
@@ -183,9 +208,6 @@ if (process.env.CONTEXT === 'production') {
     }
   });
 }
-
-const isLocalMode = process.env.DOCS_MODE === 'local';
-const isSingleDocset = isLocalMode || process.env.DOCS_LOCAL;
 
 for (const name in remoteSources) {
   const {remote, branch} = remoteSources[name];

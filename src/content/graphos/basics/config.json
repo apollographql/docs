@@ -6,10 +6,12 @@
       "docset:graphos/delivery",
       "docset:graphos/metrics",
       "docset:graphos/org",
-      "docset:graphos/explorer"
+      "docset:graphos/explorer",
+      "docset:graphos/enterprise"
     ],
     [
       "docset:rover",
+      "docset:router",
       "docset:federation"
     ]
   ],
@@ -17,38 +19,66 @@
     "Intro to GraphOS": "/",
     "Graphs and variants": "/graphs",
     "API keys": "/api-keys",
-    "Quickstart": {
-      "1. Create your supergraph": "/quickstart/cloud",
-      "2. Next steps": "/quickstart/next-steps"
+    "Get Started": {
+      "Cloud setup": "/quickstart/cloud",
+      "Self-hosted setup": [
+        "/quickstart/self-hosted",
+        [
+          "enterprise"
+        ]
+      ],
+      "Next steps": "/quickstart/next-steps"
     },
     "Building Subgraphs": {
       "Creating a new subgraph": "/graphs/creating-a-subgraph",
-      "Local development": "/graphs/local-development",
-      "Securing subgraphs": "/graphs/securing-a-subgraph"
+      "Local development": "/graphs/local-development"
     },
     "Graph Administration": {
       "Updating your graph": "/graphs/updating",
       "Managing graphs in Studio": "/graphs/studio-features",
       "Supergraph-specific Studio features": "/graphs/federated-graphs"
     },
-    "Routing": {
-      "Cloud routing overview": "/routing/cloud",
-      "Configuring cloud routing": "/routing/cloud-configuration",
-      "Self-hosted routing": [
-        "/routing/self-hosted",
-        [
-          "enterprise"
-        ]
-      ],
-      "Self-hosted setup": [
-        "/quickstart/self-hosted",
+    "Graph Security": {
+      "Securing subgraphs": "/graphs/securing-a-subgraph",
+      "Safelisting with persisted queries": [
+        "/operations/persisted-queries",
         [
           "enterprise"
         ]
       ]
     },
-    "Operation Performance": {
-      "Using @defer": "/routing/defer"
+    "Routing": {
+      "Overview": "/routing",
+      "Self-hosted routing": [
+        "/quickstart/self-hosted",
+        [
+          "enterprise"
+        ]
+      ],
+      "Cloud routing": {
+        "Overview": "/routing/cloud",
+        "Configuration": "/routing/cloud-configuration",
+        "Cloud Dedicated routing": {
+          "Overview": ["/routing/cloud-dedicated", [
+            "preview"
+          ]],
+          "AWS Lattice configuration": ["/routing/cloud-dedicated/lattice", [
+            "preview"
+          ]],
+          "AWS Lattice troubleshooting": ["/routing/cloud-dedicated/lattice-troubleshooting", [
+            "preview"
+          ]]
+        }
+      }
+    },
+    "Client Operations": {
+      "Using @defer": "/operations/defer",
+      "GraphQL subscriptions": [
+        "/operations/subscriptions",
+        [
+          "preview"
+        ]
+      ]
     },
     "GraphOS Interfaces": {
       "Studio UI": "https://studio.apollographql.com",

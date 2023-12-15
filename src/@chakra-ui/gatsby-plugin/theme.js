@@ -17,6 +17,13 @@ const theme = extendTheme({
     global: {
       strong: {
         fontWeight: 'strong'
+      },
+      body: {
+        bg: 'bg',
+        color: 'text'
+      },
+      '*': {
+        borderColor: 'border'
       }
     }
   },
@@ -31,6 +38,14 @@ const theme = extendTheme({
       bg: {
         default: 'white',
         _dark: 'gray.800'
+      },
+      text: {
+        default: 'gray.800',
+        _dark: 'whiteAlpha.900'
+      },
+      border: {
+        default: 'gray.200',
+        _dark: 'whiteAlpha.300'
       },
       primary: {
         default: 'indigo.500',

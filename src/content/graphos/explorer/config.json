@@ -6,17 +6,22 @@
       "docset:graphos/delivery",
       "docset:graphos/metrics",
       "docset:graphos/org",
-      "docset:graphos/explorer"
+      "docset:graphos/explorer",
+      "docset:graphos/enterprise"
     ],
     [
       "docset:rover",
-      "docset:federation"
+      "docset:federation",
+      "docset:router"
     ]
   ],
   "sidebar": {
+    "Launch Sandbox": "https://studio.apollographql.com/sandbox/explorer?referrer=docs-nav",
     "Overview": "/",
     "Sandbox (no account required)": "/sandbox",
+    "GraphQL subscription support": "/subscriptions-explorer",
     "Connecting and authenticating": "/connecting-authenticating",
+    "Custom scripts": "/scripting",
     "Embedding": "/embed-explorer",
     "Operation collections": "/operation-collections",
     "Additional features": "/additional-features"

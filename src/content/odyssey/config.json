@@ -11,7 +11,8 @@
     },
     "GraphOS": {
       "Getting started": "https://www.apollographql.com/tutorials/getting-started-with-graphos",
-      "Shipping your supergraph": "https://www.apollographql.com/tutorials/graphos-shipping-supergraph"
+      "Shipping your supergraph": "https://www.apollographql.com/tutorials/graphos-shipping-supergraph",
+      "Growing your supergraph": "https://www.apollographql.com/tutorials/graphos-growing-supergraph"
     },
     "Voyage (Adopting Federation)": {
       "Part 1: Federation from Day One": "https://www.apollographql.com/tutorials/voyage-part1",

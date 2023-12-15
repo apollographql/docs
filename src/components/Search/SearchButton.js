@@ -1,10 +1,8 @@
 import React from 'react';
-import {Box, useColorModeValue} from '@chakra-ui/react';
+import {Box} from '@chakra-ui/react';
 import {FiSearch} from 'react-icons/fi';
 
 export default function SearchButton(props) {
-  const bgColor = useColorModeValue('gray.50', 'gray.900');
-  const textColor = useColorModeValue('gray.400', 'gray.500');
   return (
     <Box
       d={{base: 'none', sm: 'flex'}}
@@ -16,7 +14,10 @@ export default function SearchButton(props) {
       w="full"
       as="button"
       rounded="md"
-      bg={bgColor}
+      bg="gray.50"
+      _dark={{
+        bg: 'gray.900'
+      }}
       _focus={{
         outline: 'none',
         shadow: 'outline'
@@ -24,7 +25,13 @@ export default function SearchButton(props) {
       {...props}
     >
       <FiSearch />
-      <Box ml="2" color={textColor}>
+      <Box
+        ml="2"
+        color="gray.400"
+        _dark={{
+          color: 'gray.500'
+        }}
+      >
         Search Apollo (Cmd+K or /)
       </Box>
     </Box>

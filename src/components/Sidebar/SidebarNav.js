@@ -2,7 +2,7 @@ import NavItems, {GA_EVENT_CATEGORY_SIDEBAR, NavContext} from './NavItems';
 import PropTypes from 'prop-types';
 import React, {forwardRef, useImperativeHandle, useMemo, useRef} from 'react';
 import useLocalStorage from 'react-use/lib/useLocalStorage';
-import {BsChevronContract, BsChevronExpand} from 'react-icons/bs';
+import {BiCollapseVertical, BiExpandVertical} from 'react-icons/bi';
 import {
   Button,
   Flex,
@@ -16,11 +16,18 @@ import {
   Tooltip,
   chakra
 } from '@chakra-ui/react';
-import {FiChevronDown, FiChevronLeft, FiChevronsLeft} from 'react-icons/fi';
+import {
+  FiChevronDown,
+  FiChevronLeft,
+  FiChevronsLeft,
+  FiLock,
+  FiUnlock
+} from 'react-icons/fi';
+import {PAGE_FOOTER_HEIGHT} from '../PageLayout';
 import {flattenNavItems} from '../../utils';
 
 const SidebarButton = props => (
-  <IconButton size="xs" fontSize="md" isRound {...props} />
+  <IconButton size="sm" fontSize="lg" variant="ghost" {...props} />
 );
 
 const SidebarNav = forwardRef(
@@ -32,7 +39,9 @@ const SidebarNav = forwardRef(
       currentVersion,
       onVersionChange,
       onGoBack,
-      hideSidebar
+      hideSidebar,
+      isLocked,
+      onLockToggle
     },
     ref
   ) => {
@@ -55,7 +64,7 @@ const SidebarNav = forwardRef(
         navGroups.reduce(
           (acc, group) => ({
             ...acc,
-            [group.id]: true
+            [group.id]: !group.isDefaultCollapsed
           }),
           {}
         ),
@@ -151,49 +160,86 @@ const SidebarNav = forwardRef(
             <NavItems items={navItems} />
           </chakra.nav>
         </NavContext.Provider>
-        <HStack mt="auto" p="1" pt={0} spacing="1" pos="sticky" bottom="0">
-          {hideSidebar && (
-            <Tooltip label="Hide sidebar">
-              <div>
-                <SidebarButton
-                  onClick={hideSidebar}
-                  icon={<FiChevronsLeft />}
-                />
-              </div>
-            </Tooltip>
-          )}
-          {navGroups.length > 0 && (
-            <Tooltip
-              label={`${isAllExpanded ? 'Collapse' : 'Expand'} all categories`}
-            >
-              <div>
-                <SidebarButton
-                  icon={
-                    isAllExpanded ? <BsChevronContract /> : <BsChevronExpand />
-                  }
-                  onClick={event => {
-                    event.stopPropagation();
-
-                    const expanded = !isAllExpanded;
-                    setLocalNavState(
-                      navGroups.reduce(
-                        (acc, group) => ({
-                          ...acc,
-                          [group.id]: expanded
-                        }),
-                        {}
+        <Flex
+          align="center"
+          mt="auto"
+          flexShrink={0}
+          pos="sticky"
+          bottom="0"
+          pl="4"
+          pr="2"
+          bg="bg"
+          borderTopWidth={1}
+          css={{
+            height: PAGE_FOOTER_HEIGHT
+          }}
+        >
+          <chakra.span fontWeight="semibold">Navigation controls</chakra.span>
+          <HStack spacing="1" ml="auto">
+            {navGroups.length > 0 && (
+              <Tooltip
+                label={`${
+                  isAllExpanded ? 'Collapse' : 'Expand'
+                } all categories`}
+              >
+                <div>
+                  <SidebarButton
+                    aria-label={`${
+                      isAllExpanded ? 'Collapse' : 'Expand'
+                    } all categories`}
+                    icon={
+                      isAllExpanded ? (
+                        <BiCollapseVertical />
+                      ) : (
+                        <BiExpandVertical />
                       )
-                    );
-                    window.gtag?.('event', 'Toggle all', {
-                      event_category: GA_EVENT_CATEGORY_SIDEBAR,
-                      event_label: expanded ? 'expand' : 'collapse'
-                    });
-                  }}
-                />
-              </div>
-            </Tooltip>
-          )}
-        </HStack>
+                    }
+                    onClick={event => {
+                      event.stopPropagation();
+
+                      const expanded = !isAllExpanded;
+                      setLocalNavState(
+                        navGroups.reduce(
+                          (acc, group) => ({
+                            ...acc,
+                            [group.id]: expanded
+                          }),
+                          {}
+                        )
+                      );
+                      window.gtag?.('event', 'Toggle all', {
+                        event_category: GA_EVENT_CATEGORY_SIDEBAR,
+                        event_label: expanded ? 'expand' : 'collapse'
+                      });
+                    }}
+                  />
+                </div>
+              </Tooltip>
+            )}
+            {hideSidebar && (
+              <Tooltip label="Hide navigation">
+                <div>
+                  <SidebarButton
+                    aria-label="Hide navigation"
+                    onClick={hideSidebar}
+                    icon={<FiChevronsLeft />}
+                  />
+                </div>
+              </Tooltip>
+            )}
+            {onLockToggle && (
+              <Tooltip label={`${isLocked ? 'Unlock' : 'Lock'} sidebar`}>
+                <div>
+                  <SidebarButton
+                    aria-label={`${isLocked ? 'Unlock' : 'Lock'} sidebar`}
+                    icon={isLocked ? <FiLock /> : <FiUnlock />}
+                    onClick={onLockToggle}
+                  />
+                </div>
+              </Tooltip>
+            )}
+          </HStack>
+        </Flex>
       </Flex>
     );
   }
@@ -206,7 +252,9 @@ SidebarNav.propTypes = {
   currentVersion: PropTypes.string,
   onVersionChange: PropTypes.func,
   onGoBack: PropTypes.func,
-  hideSidebar: PropTypes.func
+  hideSidebar: PropTypes.func,
+  isLocked: PropTypes.bool,
+  onLockToggle: PropTypes.func
 };
 
 SidebarNav.displayName = 'SidebarNav';

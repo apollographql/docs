@@ -1,66 +1,53 @@
 ---
 title: Production readiness checklist
 id: TN0008
-tags: [server, sre, client]
+tags: [sre, router, server, client]
 ---
 
-We recommend that you complete this checklist before your supergraph begins handling production traffic from clients.
+We recommend that you read through this checklist and idenitify critical features for your team before your supergraph begins handling production traffic.
 
-## In Apollo Studio
-
+## GraphOS Studio
 - Ensure that you've created multiple [variants](/graphos/graphs/#variants) to represent the different environments where your supergraph runs (production, staging, and so on).
-  - Optionally, [protect your production variant](/graphos/graphs/studio-features#protected-variants-enterprise-only) to avoid accidental changes while working in Apollo Studio.
-- Ensure that your [clients identify themselves](/graphos/metrics/client-awareness/) by name and version.
-  - If you're using an Apollo Client library, you can add a client name and version to the constructor.
-    - For example, the [React client uses the `name` and `version` attributes](/react/api/core/ApolloClient#name) in the constructor options.
-  - If you're using a third-party GraphQL client, set the `apollographql-client-name` and `apollographql-client-version` HTTP headers for each request to identify your client.
-  - For an example of enforcing client identification in your gateway, see [this technote for Client ID enforcement](/technotes/TN0001-client-id-enforcement/).
+- [Protect your production variant](/graphos/graphs/studio-features#protected-variants-enterprise-only) to avoid accidental changes while working in Studio.
 
-## Server-side
+## Apollo Router
+- Ensure that you've correctly configured [managed federation](/federation/managed-federation/setup/) and [GraphOS schema usage reporting](/router/configuration/telemetry/apollo-telemetry).
+- For security, [disable introspection](/router/configuration/overview/#introspection) for all production routers (by default Router disables introspection, but make sure you are not using `--dev` mode).
+  - You can continue to view and fetch your GraphQL schemas from GraphOS and run operations from [GraphOS Studio Explorer](/graphos/explorer).
+- Configure the [Router traffic shapping](/router/configuration/traffic-shaping) features:
+  - Set request and subgraph level timeouts and rate limits
+  - Deduplicate subgraph requests
+  - Communicate with subgraphs using APQ
+- Enable [operation limits](/router/configuration/operation-limits) to block large and malicous requests
+- Configure additional [tracing, metrics, and logging](/router/configuration/telemetry/overview) through OpenTelemetry or Prometheous
+- Enable the operation and query plan [distributed cache](/router/configuration/distributed-caching)
+- Optionally, enable any [other features](/router/enterprise-features/) deemed critical for your deployment of Apollo Router
 
-- For security, disable introspection for all production GraphQL servers.
-  - You can continue to view and fetch your GraphQL schemas from Apollo Studio.
-- Ensure that you've correctly configured [managed federation](/federation/managed-federation/setup/).
+## Subgraphs/Servers
+- For security, [disable introspection](/apollo-server/api/apollo-server/#introspection) for all production GraphQL subgraphs.
+  - You can continue to view and fetch your GraphQL schemas from GraphOS and run operations from [GraphOS Studio Explorer](/graphos/explorer).
 - Ensure that you've integrated [`rover subgraph check`](/rover/commands/subgraphs#subgraph-check) and [`rover subgraph publish`](/rover/commands/subgraphs#subgraph-publish) into your CI/CD pipeline.
-- If your [subgraph servers are listed as compatible with `ftv1`](/federation/building-supergraphs/supported-subgraphs/), ensure that you've enabled [federated traces](/federation/metrics/), and that you can view operation metrics as expected in Apollo Studio.
+- If your subgraph servers are listed as [compatible with `FEDERATED TRACING`](/federation/building-supergraphs/supported-subgraphs/), ensure that you've enabled [federated traces](/federation/metrics/), and that you can view operation metrics as expected in Apollo Studio.
   - Enable [fractional trace sampling via `fieldLevelInstrumentation`](/graphos/metrics/field-usage/#fractional-sampling) to reduce performance hits due to tracing.
-- Consider adding caching layers.
-  - Apollo Server and the Apollo Router both support [automatic persisted queries (APQ)](/apollo-server/performance/apq/) out of the box.
-    - If you're using an Apollo Client library, make sure to enable APQ support.
-    - If using Apollo Server, ensure that you use a [distributed caching system](/apollo-server/performance/cache-backends) for APQ in production to avoid cache inconsistency across server instances.
-    - Optionally use the [`@cacheControl` directive](/apollo-server/api/plugin/cache-control) to enable your CDN to cache APQ GET requests using the `Cache-Control` header.
-    - Additionally, you can configure your gateway can send APQ requests to your subgraphs.
-      - [See the example below.](#apollo-gateway-apq-example)
-  - Optionally add [full response caching](/apollo-server/performance/caching/) to improve performance.
-- Ensure that you've load-tested your graph.
+- Ensure that you've [load-tested your graph](/technotes/TN0035-load-testing-graphql/).
   - Test loads should be representative of your current traffic (both in terms of volume _and_ in terms of the actual operations you execute in the test).
   - To investigate performance issues, use Apollo Studio to identify which operations are performing slowly.
     - Look at resolver execution times to identify slow areas of execution.
     - Whenever possible, avoid making multiple calls to data sources within a single resolver.
     - Understand [query plan execution](/federation/query-plans) to help understand slow operations and optimize your supergraph to avoid them.
+- Consider adding caching layers.
+  - Apollo Server supports [automatic persisted queries (APQ)](/apollo-server/performance/apq/) out of the box.
+    - If using Apollo Server, ensure that you use a [distributed caching system](/apollo-server/performance/cache-backends) for APQ in production to avoid cache inconsistency across server instances.
+    - Optionally use the [`@cacheControl` directive](/apollo-server/api/plugin/cache-control) to enable your CDN to cache APQ GET requests using the `Cache-Control` header.
+  - Optionally add [full response caching](/apollo-server/performance/caching/) to improve performance.
 
-### Apollo Gateway APQ example
+## Clients
+- Ensure that your [clients identify themselves](/graphos/metrics/client-awareness/) by name and version.
+  - If you're using an Apollo Client library, you can add a client name and version to the constructor.
+  - For example, the [React client uses the `name` and `version` attributes](/react/api/core/ApolloClient#name) in the constructor options.
+  - If you're using a third-party GraphQL client, set the `apollographql-client-name` and `apollographql-client-version` HTTP headers for each request to identify your client.
+  - For an example of enforcing client identification in your gateway, see [this technote for Client ID enforcement](/technotes/TN0001-client-id-enforcement/).
+- Consider adding caching layers.
+  - Enable [Persisted Queries and/or Automatic Persisted Queries (APQ)](https://www.apollographql.com/docs/react/api/link/persisted-queries) support for request-size savings.
+  - Enable and configure the client side [normalized cache](/react/caching/overview)
 
-This example uses both the [`buildService`](/apollo-server/using-federation/api/apollo-gateway/#buildservice) option and the [`RemoteGraphQLDataSource`](/apollo-server/using-federation/api/apollo-gateway/#apq) class to enable APQ to each subgraph.
-
-```js
-import {ApolloServer} from '@apollo/server';
-import {startStandaloneServer} from '@apollo/server/standalone';
-import {ApolloGateway, RemoteGraphQLDataSource} from '@apollo/gateway';
-import {readFileSync} from 'fs';
-
-const gateway = new ApolloGateway({
-  supergraphSdl: readFileSync('./supergraph.graphql').toString(),
-  buildService: ({url}) => {
-    return new RemoteGraphQLDataSource({url, apq: true});
-  }
-});
-
-const server = new ApolloServer({
-  gateway
-});
-
-// Note the top-level await!
-const {url} = await startStandaloneServer(server);
-console.log(`🚀  Server ready at ${url}`);
-```

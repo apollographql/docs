@@ -55,7 +55,7 @@ generateCacheKey(requestContext, keyData) {
 
 An example key for the named operation “MyOpName”:
 
-```bash
+```bash showLineNumbers=false
 keyv:fqc:MyOpName:e7eed80930547ed4ab4ece81a18955967831ff4c40757eda9bf1f0de84e042f8
 ```
 
@@ -73,7 +73,7 @@ If you need to evict cache entries for local testing or debugging, it might suff
 
 Here’s an example of removing all keys in a Redis instance that match a given pattern:
 
-```bash
+```bash showLineNumbers=false
 redis-cli --raw KEYS "$PATTERN" | xargs redis-cli del
 ```
 
@@ -81,7 +81,7 @@ This command lists every key matching any glob-style "$PATTERN" and removes them
 
 Here’s an example using the operation name prefix pattern described above to remove all entries with unnamed operations:
 
-```bash
+```bash showLineNumbers=false
 redis-cli --raw KEYS "keyv:fqc:unnamed*" | xargs redis-cli del
 ```
 

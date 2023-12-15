@@ -9,7 +9,9 @@ import {
   Center,
   Flex,
   HStack,
+  Icon,
   IconButton,
+  Text,
   Tooltip,
   useColorMode,
   useColorModeValue
@@ -18,26 +20,28 @@ import {FiMoon, FiSun} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
 import {TbViewportNarrow, TbViewportWide} from 'react-icons/tb';
 import {usePageWidthContext} from '../PageWidthContext';
-import {useTagColors} from '../../utils';
 
-const EYEBROW_HEIGHT = 0; // 32;
+const EYEBROW_HEIGHT = 32; // 0;
 const HEADER_HEIGHT = 60;
 const HEADER_BORDER_WIDTH = 1;
 export const TOTAL_HEADER_HEIGHT =
-  EYEBROW_HEIGHT + HEADER_HEIGHT + HEADER_BORDER_WIDTH;
+  // EYEBROW_HEIGHT +
+  HEADER_HEIGHT + HEADER_BORDER_WIDTH;
 
 function Eyebrow({children}) {
-  const bg = useColorModeValue('indigo.50', 'indigo.800');
   const bgHover = useColorModeValue('indigo.100', 'indigo.700');
   return (
     <Center
-      bg={bg}
+      bg="indigo.50"
+      _dark={{
+        bg: 'indigo.800'
+      }}
       _hover={{bg: bgHover}}
       css={{height: EYEBROW_HEIGHT}}
       fontSize="sm"
       fontWeight="semibold"
       as="a"
-      href="https://summit.graphql.com/?utm_campaign=2023-03-21_GraphQLSummit&utm_medium=website&utm_source=apollo"
+      href="https://summit.graphql.com/?utm_campaign=2023-08-21_GraphQLSummit&utm_medium=website&utm_source=apollo"
       target="_blank"
       rel="noopener noreferrer"
       px="3"
@@ -52,17 +56,16 @@ Eyebrow.propTypes = {
 };
 
 export function Header({children, algoliaFilters}) {
-  const {toggleColorMode, colorMode} = useColorMode();
-  const [tagBg, tagTextColor] = useTagColors();
+  const {toggleColorMode} = useColorMode();
   const {pageWidth, togglePageWidth, showExpandButton} = usePageWidthContext();
 
   return (
     <Box pos="sticky" top="0" zIndex="2">
       {/* <Eyebrow>
         Join us for GraphQL Summit, October 10-12 in San Diego.{' '}
-        <chakra.span display={{base: 'none', md: 'inline'}}>
-          Early bird tickets now available!
-        </chakra.span>
+        <Text as="span" display={{base: 'none', md: 'inline'}}>
+          Use promo code ODYSSEY for $400 off your pass.
+        </Text>
       </Eyebrow> */}
       <Flex
         align="center"
@@ -97,9 +100,13 @@ export function Header({children, algoliaFilters}) {
               fontWeight="semibold"
               textTransform="uppercase"
               letterSpacing="widest"
-              bg={tagBg}
-              color={tagTextColor}
               rounded="sm"
+              bg="indigo.50"
+              color="indigo.500"
+              _dark={{
+                bg: 'indigo.400',
+                color: 'inherit'
+              }}
             >
               Docs
             </Box>
@@ -122,6 +129,7 @@ export function Header({children, algoliaFilters}) {
             }
           >
             <IconButton
+              aria-label="Toggle page width"
               fontSize="xl"
               variant="ghost"
               onClick={togglePageWidth}
@@ -137,16 +145,39 @@ export function Header({children, algoliaFilters}) {
         )}
         <Tooltip
           label={
-            colorMode === 'dark'
-              ? 'Switch to light mode'
-              : 'Switch to dark mode'
+            <Text>
+              <Text as="span" display="none" _dark={{display: 'inline'}}>
+                Switch to light mode
+              </Text>
+              <Text as="span" display="inline" _dark={{display: 'none'}}>
+                Switch to dark mode
+              </Text>
+            </Text>
           }
         >
           <IconButton
+            aria-label="Toggle color mode"
             fontSize="xl"
             variant="ghost"
             onClick={toggleColorMode}
-            icon={colorMode === 'dark' ? <FiSun /> : <FiMoon />}
+            icon={
+              <>
+                <Icon
+                  as={FiSun}
+                  display="none"
+                  _dark={{
+                    display: 'block'
+                  }}
+                />
+                <Icon
+                  as={FiMoon}
+                  display="block"
+                  _dark={{
+                    display: 'none'
+                  }}
+                />
+              </>
+            }
           />
         </Tooltip>
         <StudioButton />
@@ -154,8 +185,3 @@ export function Header({children, algoliaFilters}) {
     </Box>
   );
 }
-
-Header.propTypes = {
-  children: PropTypes.node,
-  algoliaFilters: PropTypes.array
-};

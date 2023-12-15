@@ -41,17 +41,18 @@ const headComponents = [
   />
 ];
 
-// if (process.env.CONTEXT === 'production') {
-//   headComponents.push(
-//     <script
-//       key="qualified-js"
-//       id="qualified-js"
-//       async
-//       src="https://js.qualified.com/qualified.js?token=mdpGqx2V2oJXA51Q"
-//     />
-//   );
-// }
+if (process.env.CONTEXT === 'production') {
+  headComponents.push(
+    <script
+      key="qualified-js"
+      id="qualified-js"
+      async
+      src="https://js.qualified.com/qualified.js?token=mdpGqx2V2oJXA51Q" // gitleaks:allow
+    />
+  );
+}
 
-export const onRenderBody = ({setHeadComponents}) => {
+export const onRenderBody = ({setHeadComponents, setHtmlAttributes}) => {
   setHeadComponents(headComponents);
+  setHtmlAttributes({lang: 'en'});
 };

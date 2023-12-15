@@ -1,0 +1,1095 @@
+#### `INCONSISTENT_ARGUMENT_PRESENCE`
+
+Indicates that an optional argument (of a field or directive definition) isn't present in all subgraphs and therefore won't be part of the supergraph.
+
+<p style="margin-bottom: 0">❌</p>
+
+```graphql title="Subgraph A"
+type Product {
+  id: ID!
+  name: String
+  price(currency: Currency): Float #highlight-line
+}
+```
+
+```graphql title="Subgraph B"
+type Product {
+  id: ID!
+  name: String
+  price(currency: Currency, taxIncluded: Boolean): Float #highlight-line
+}
+```
+
+<p style="margin-bottom: 0">✅</p>
+
+```graphql title="Subgraph A"
+type Product {
+  id: ID!
+  name: String
+  price(currency: Currency, taxIncluded: Boolean): Float #highlight-line
+}
+```
+
+```graphql title="Subgraph B"
+type Product {
+  id: ID!
+  name: String
+  price(currency: Currency, taxIncluded: Boolean): Float #highlight-line
+}
+```
+
+<hr/>
+
+#### `INCONSISTENT_BUT_COMPATIBLE_ARGUMENT_TYPE`
+
+Indicates that an argument type (of a field, input field, or directive definition) doesn't have the exact same type in all subgraphs, but that the types are compatible.
+
+Two types are compatible if one is:
+- a non-nullable version
+- a list version
+- a subtype
+- or a combination of any of these
+
+of the other.
+
+<p style="margin-bottom: 0">❌</p>
+
+<CodeColumns>
+
+```graphql title="Subgraph A"
+type Product {
+  id: ID!
+  name: String
+  price(currency: Currency!): Float #highlight-line
+}
+
+enum Currency {
+  USD
+  EUR
+  GBP
+  JPY
+  AUD
+  CAD
+}
+```
+
+```graphql title="Subgraph B"
+type Product {
+  id: ID!
+  name: String
+  price(currency: Currency): Float #highlight-line
+}
+
+enum Currency {
+  USD
+  EUR
+  GBP
+  JPY
+  AUD
+  CAD
+}
+```
+
+</CodeColumns>
+
+<p style="margin-bottom: 0">✅</p>
+
+<CodeColumns>
+
+```graphql title="Subgraph A"
+type Product {
+  id: ID!
+  name: String
+  price(currency: Currency!): Float #highlight-line
+}
+
+enum Currency {
+  USD
+  EUR
+  GBP
+  JPY
+  AUD
+  CAD
+}
+```
+
+```graphql title="Subgraph B"
+type Product {
+  id: ID!
+  name: String
+  price(currency: Currency!): Float #highlight-line
+}
+
+enum Currency {
+  USD
+  EUR
+  GBP
+  JPY
+  AUD
+  CAD
+}
+```
+
+</CodeColumns>
+
+<hr/>
+
+#### `INCONSISTENT_BUT_COMPATIBLE_FIELD_TYPE`
+
+Indicates that a field doesn't have the exact same types in all subgraphs, but that the types are compatible.
+
+Two types are compatible if one is:
+- a non-nullable version
+- a list version
+- a subtype
+- or a combination of any of these
+
+of the other.
+
+<p style="margin-bottom: 0">❌</p>
+
+<CodeColumns>
+
+```graphql title="Subgraph A"
+type Product {
+  id: ID!
+  name: String
+  price: Money #highlight-line
+}
+
+type Money {
+  amount: Float!
+  currency: Currency!
+}
+
+enum Currency {
+  USD
+  EUR
+  GBP
+  JPY
+  AUD
+  CAD
+}
+```
+
+```graphql title="Subgraph B"
+type Product {
+  id: ID!
+  name: String
+  price: Money! #highlight-line
+}
+
+type Money {
+  amount: Float!
+  currency: Currency!
+}
+
+enum Currency {
+  USD
+  EUR
+  GBP
+  JPY
+  AUD
+  CAD
+}
+```
+
+</CodeColumns>
+
+<p style="margin-bottom: 0">✅</p>
+
+<CodeColumns>
+
+```graphql title="Subgraph A"
+type Product {
+  id: ID!
+  name: String
+  price: Money! #highlight-line
+}
+
+type Money {
+  amount: Float!
+  currency: Currency!
+}
+
+enum Currency {
+  USD
+  EUR
+  GBP
+  JPY
+  AUD
+  CAD
+}
+```
+
+```graphql title="Subgraph B"
+type Product {
+  id: ID!
+  name: String
+  price: Money! #highlight-line
+}
+
+type Money {
+  amount: Float!
+  currency: Currency!
+}
+
+enum Currency {
+  USD
+  EUR
+  GBP
+  JPY
+  AUD
+  CAD
+}
+```
+
+</CodeColumns>
+
+<hr/>
+
+#### `INCONSISTENT_DEFAULT_VALUE_PRESENCE`
+
+Indicates that an argument definition (of a field, input field, or directive definition) has a default value in only some of the subgraphs that define the argument.
+
+<p style="margin-bottom: 0">❌</p>
+
+<CodeColumns>
+
+```graphql title="Subgraph A"
+type Product {
+  id: ID!
+  name: String
+  weight(kg: Float = 1.0): Float #highlight-line
+}
+```
+
+```graphql title="Subgraph B"
+type Product {
+  id: ID!
+  name: String
+  weight(kg: Float): Float #highlight-line
+}
+```
+
+</CodeColumns>
+
+<p style="margin-bottom: 0">✅</p>
+
+<CodeColumns>
+
+```graphql title="Subgraph A"
+type Product {
+  id: ID!
+  name: String
+  weight(kg: Float = 1.0): Float #highlight-line
+}
+```
+
+```graphql title="Subgraph B"
+type Product {
+  id: ID!
+  name: String
+  weight(kg: Float = 1.0): Float #highlight-line
+}
+```
+
+</CodeColumns>
+
+<hr/>
+
+#### `INCONSISTENT_DESCRIPTION`
+
+Indicates that an element has a description in more than one subgraph, and the descriptions aren't equal.
+
+<p style="margin-bottom: 0">❌</p>
+
+<CodeColumns>
+
+```graphql title="Subgraph A"
+"""
+A type representing a product.
+"""
+type Product {
+  id: ID!
+  name: String
+}
+```
+
+```graphql title="Subgraph B"
+"""
+An object representing a product.
+"""
+type Product {
+  id: ID!
+  name: String
+}
+```
+</CodeColumns>
+
+<p style="margin-bottom: 0">✅</p>
+
+<CodeColumns>
+
+```graphql title="Subgraph A"
+"""
+A type representing a product.
+"""
+type Product {
+  id: ID!
+  name: String
+}
+```
+
+```graphql title="Subgraph B"
+"""
+A type representing a product.
+"""
+type Product {
+  id: ID!
+  name: String
+}
+```
+</CodeColumns>
+
+<hr/>
+
+#### `INCONSISTENT_ENTITY`
+
+Indicates that an object is declared as an entity (has a `@key`) in only some of the subgraphs in which the object is defined.
+
+<p style="margin-bottom: 0">❌</p>
+
+<CodeColumns>
+
+```graphql title="Subgraph A"
+type Product @key(fields: "id") { #highlight-line
+  id: ID!
+  name: String
+}
+```
+
+```graphql title="Subgraph B"
+type Product { #highlight-line
+  id: ID!
+  stock: Int
+}
+```
+
+</CodeColumns>
+
+<p style="margin-bottom: 0">✅</p>
+
+<CodeColumns>
+
+```graphql title="Subgraph A"
+type Product @key(fields: "id") { #highlight-line
+  id: ID!
+  name: String
+}
+```
+
+```graphql title="Subgraph B"
+type Product @key(fields: "id") { #highlight-line
+  id: ID!
+  stock: Int
+}
+```
+
+</CodeColumns>
+
+<hr/>
+
+#### `INCONSISTENT_ENUM_VALUE_FOR_INPUT_ENUM`
+
+Indicates that a value of an enum type definition, that is only used as an input type, hasn't been merged into the supergraph because it's defined in only some of the subgraphs that declare the enum.
+
+<p style="margin-bottom: 0">❌</p>
+
+<CodeColumns>
+
+```graphql title="Subgraph A"
+enum ProductStatus {
+  AVAILABLE
+  SOLD_OUT
+  BACK_ORDER #highlight-line
+}
+
+input ProductInput {
+  name: String!
+  status: ProductStatus!
+}
+```
+
+```graphql title="Subgraph B"
+enum ProductStatus {
+  AVAILABLE
+  SOLD_OUT
+}
+
+input ProductInput {
+  name: String!
+  status: ProductStatus!
+}
+```
+
+</CodeColumns>
+
+<p style="margin-bottom: 0">✅</p>
+
+<CodeColumns>
+
+```graphql title="Subgraph A"
+enum ProductStatus {
+  AVAILABLE
+  SOLD_OUT
+  BACK_ORDER
+}
+
+input ProductInput {
+  name: String!
+  status: ProductStatus!
+}
+```
+
+```graphql title="Subgraph B"
+enum ProductStatus {
+  AVAILABLE
+  SOLD_OUT
+  BACK_ORDER
+}
+
+input ProductInput {
+  name: String!
+  status: ProductStatus!
+}
+```
+
+</CodeColumns>
+
+<hr/>
+
+#### `INCONSISTENT_ENUM_VALUE_FOR_OUTPUT_ENUM`
+
+Indicates that a value of an enum type definition, that is only used as an output type or is unused, _has_ been merged in the supergraph but is defined in only some of the subgraphs that declare the enum.
+
+<p style="margin-bottom: 0">❌</p>
+
+<CodeColumns>
+
+```graphql title="Subgraph A"
+enum OrderStatus {
+  CREATED
+  PROCESSING #highlight-line
+  COMPLETED
+}
+
+type Order {
+  name: String!
+  status: OrderStatus!
+}
+```
+
+```graphql title="Subgraph B"
+enum OrderStatus {
+  CREATED
+  COMPLETED
+}
+
+type Order {
+  name: String!
+  status: OrderStatus!
+}
+```
+
+</CodeColumns>
+
+<p style="margin-bottom: 0">✅</p>
+
+<CodeColumns>
+
+```graphql title="Subgraph A"
+enum OrderStatus {
+  CREATED
+  PROCESSING
+  COMPLETED
+}
+
+type Order {
+  name: String!
+  status: OrderStatus!
+}
+```
+
+```graphql title="Subgraph B"
+enum OrderStatus {
+  CREATED
+  PROCESSING
+  COMPLETED
+}
+
+type Order {
+  name: String!
+  status: OrderStatus!
+}
+```
+
+</CodeColumns>
+
+<hr/>
+
+#### `INCONSISTENT_EXECUTABLE_DIRECTIVE_LOCATIONS`
+
+Indicates that an executable directive definition is declared with inconsistent locations across subgraphs. (The supergraph schema then uses the intersection of all locations in the supergraph.)
+
+<p style="margin-bottom: 0">❌</p>
+
+<CodeColumns>
+
+```graphql title="Subgraph A"
+directive @log(
+  message: String!
+) on QUERY | FIELD  #highlight-line
+```
+
+```graphql title="Subgraph B"
+directive @log(
+  message: String!
+) on FIELD #highlight-line
+```
+
+</CodeColumns>
+
+<p style="margin-bottom: 0">✅</p>
+
+<CodeColumns>
+
+```graphql title="Subgraph A"
+directive @log(
+  message: String!
+) on QUERY | FIELD
+```
+
+```graphql title="Subgraph B"
+directive @log(
+  message: String!
+) on QUERY | FIELD
+```
+
+</CodeColumns>
+
+<hr/>
+
+#### `INCONSISTENT_EXECUTABLE_DIRECTIVE_PRESENCE`
+
+Indicates that an executable directive definition is declared in only some of the subgraphs.
+
+<p style="margin-bottom: 0">❌</p>
+
+<CodeColumns>
+
+```graphql title="Subgraph A"
+directive @modify(
+  field: String!
+) on FIELD
+```
+
+```graphql title="Subgraph B"
+# 🦗🦗🦗
+```
+
+</CodeColumns>
+
+<p style="margin-bottom: 0">✅</p>
+
+<CodeColumns>
+
+```graphql title="Subgraph A"
+directive @modify(
+  field: String!
+) on FIELD
+```
+
+```graphql title="Subgraph B"
+directive @modify(
+  field: String!
+) on FIELD
+```
+
+</CodeColumns>
+
+<hr/>
+
+#### `INCONSISTENT_EXECUTABLE_DIRECTIVE_REPEATABLE`
+
+Indicates that an executable directive definition is marked repeatable in only some of the subgraphs and won't be repeatable in the supergraph.
+
+<p style="margin-bottom: 0">❌</p>
+
+<CodeColumns>
+
+```graphql title="Subgraph A"
+directive @validateLength(
+  max: Int!
+) repeatable on FIELD
+```
+
+```graphql title="Subgraph B"
+directive @validateLength(
+  max: Int!
+) on FIELD
+
+```
+
+</CodeColumns>
+
+<p style="margin-bottom: 0">✅</p>
+
+<CodeColumns>
+
+```graphql title="Subgraph A"
+directive @validateLength(
+  max: Int!
+) repeatable on FIELD
+```
+
+```graphql title="Subgraph B"
+directive @validateLength(
+  max: Int!
+) repeatable on FIELD
+```
+
+</CodeColumns>
+
+<hr/>
+
+#### `INCONSISTENT_INPUT_OBJECT_FIELD`
+
+Indicates that a field of an input object type definition is only defined in some of the subgraphs that declare the input object.
+
+<p style="margin-bottom: 0">❌</p>
+
+<CodeColumns>
+
+```graphql title="Subgraph A"
+input ProductInput {
+  name: String
+  price: Float #highlight-line
+}
+
+input OrderInput {
+  product: ProductInput
+}
+```
+
+```graphql title="Subgraph B"
+input ProductInput {
+  name: String
+}
+
+input OrderInput {
+  product: ProductInput
+}
+```
+
+</CodeColumns>
+
+<p style="margin-bottom: 0">✅</p>
+
+<CodeColumns>
+
+```graphql title="Subgraph A"
+input ProductInput {
+  name: String
+  price: Float
+}
+
+input OrderInput {
+  product: ProductInput
+}
+```
+
+```graphql title="Subgraph B"
+input ProductInput {
+  name: String
+  price: Float
+}
+
+input OrderInput {
+  product: ProductInput
+}
+```
+
+</CodeColumns>
+
+<hr/>
+
+#### `INCONSISTENT_INTERFACE_VALUE_TYPE_FIELD`
+
+Indicates that a field of an interface "value type" (has no `@key` in any subgraph) isn't defined in all the subgraphs that declare the type.
+
+<p style="margin-bottom: 0">❌</p>
+
+```graphql title="Subgraph A"
+interface Product {
+  id: ID!
+  name: String
+  cost: Float #highlight-line
+}
+
+type DigitalProduct implements Product {
+  id: ID!
+  name: String
+  cost: Float
+  size: Int 
+}
+```
+
+```graphql title="Subgraph B"
+interface Product {
+  id: ID!
+  name: String
+  # cost is not defined in the interface
+}
+
+type PhysicalProduct implements Product {
+  id: ID!
+  name: String
+  cost: Float
+  weight: Float 
+}
+
+```
+
+<p style="margin-bottom: 0">✅</p>
+
+```graphql title="Subgraph A"
+interface Product {
+  id: ID!
+  name: String
+  cost: Float #highlight-line
+}
+
+type DigitalProduct implements Product {
+  id: ID!
+  name: String
+  cost: Float
+  size: Int 
+}
+```
+
+```graphql title="Subgraph B"
+interface Product {
+  id: ID!
+  name: String
+  cost: Float #highlight-line
+}
+
+type PhysicalProduct implements Product {
+  id: ID!
+  name: String
+  cost: Float
+  weight: Float 
+}
+```
+
+<hr/>
+
+#### `INCONSISTENT_NON_REPEATABLE_DIRECTIVE_ARGUMENTS`
+
+A non-repeatable directive is applied to a schema element in different subgraphs but with arguments that are different.
+
+<p style="margin-bottom: 0">❌</p>
+
+```graphql title="Subgraph A"
+type Product {
+  id: ID!
+  name: String
+}
+
+type Query {
+  allProducts: [Product] @customDirective(orderBy: "name") #highlight-line
+}
+```
+
+```graphql title="Subgraph B"
+type Product {
+  id: ID!
+  name: String
+}
+
+type Query {
+  allProducts: [Product] @customDirective(orderBy: "price") #highlight-line
+}
+```
+
+<p style="margin-bottom: 0">✅</p>
+
+```graphql title="Subgraph A"
+type Product {
+  id: ID!
+  name: String
+}
+
+type Query {
+  allProducts: [Product] @customDirective(orderBy: "name") #highlight-line
+}
+```
+
+```graphql title="Subgraph B"
+type Product {
+  id: ID!
+  name: String
+}
+
+type Query {
+  allProducts: [Product] @customDirective(orderBy: "name") #highlight-line
+}
+```
+
+<hr/>
+
+#### `INCONSISTENT_OBJECT_VALUE_TYPE_FIELD`
+
+Indicates that a field of an object "value type" (has no `@key` in any subgraph) isn't defined in all the subgraphs that declare the type.
+
+<p style="margin-bottom: 0">❌</p>
+
+<CodeColumns>
+
+```graphql title="Subgraph A"
+type Product {
+  id: ID!
+  name: String
+  price: Float #highlight-line
+}
+```
+
+```graphql title="Subgraph B"
+type Product {
+  id: ID!
+  name: String
+}
+
+```
+
+</CodeColumns>
+
+<p style="margin-bottom: 0">✅</p>
+
+<CodeColumns>
+
+```graphql title="Subgraph A"
+type Product {
+  id: ID!
+  name: String
+  price: Float #highlight-line
+}
+```
+
+```graphql title="Subgraph B"
+type Product {
+  id: ID!
+  name: String
+  price: Float #highlight-line
+}
+```
+
+</CodeColumns>
+
+<hr/>
+
+#### `INCONSISTENT_RUNTIME_TYPES_FOR_SHAREABLE_RETURN`
+
+Indicates that a @shareable field returns different sets of runtime types in the different subgraphs in which it's defined.
+
+<p style="margin-bottom: 0">❌</p>
+
+<CodeColumns>
+
+```graphql title="Subgraph A"
+type Product {
+  id: ID!
+  name: String
+  details: Details @shareable #highlight-line
+}
+
+type Details {
+  size: String #highlight-line
+}
+```
+
+```graphql title="Subgraph B"
+type Product {
+  id: ID!
+  name: String
+  details: Details @shareable #highlight-line
+}
+
+type Details {
+  weight: Float #highlight-line
+}
+```
+
+</CodeColumns>
+
+<p style="margin-bottom: 0">✅</p>
+
+<CodeColumns>
+
+```graphql title="Subgraph A"
+type Product {
+  id: ID!
+  name: String
+  details: Details @shareable #highlight-line
+}
+
+type Details {
+  size: String #highlight-line
+}
+```
+
+```graphql title="Subgraph B"
+type Product {
+  id: ID!
+  name: String
+  details: Details @shareable #highlight-line
+}
+
+type Details {
+  size: String #highlight-line
+}
+```
+
+</CodeColumns>
+
+<hr/>
+
+#### `INCONSISTENT_TYPE_SYSTEM_DIRECTIVE_LOCATIONS`
+
+Indicates that an executable directive definition is declared with inconsistent locations across subgraphs. (The supergraph schema then uses the intersection of all locations in the supergraph.)
+
+<p style="margin-bottom: 0">❌</p>
+
+<CodeColumns>
+
+```graphql title="Subgraph A"
+directive @customDirective(
+  message: String!
+) on OBJECT | FIELD_DEFINITION  #highlight-line
+```
+
+```graphql title="Subgraph B"
+directive @customDirective(
+  message: String!
+) on FIELD_DEFINITION #highlight-line
+```
+
+</CodeColumns>
+
+<p style="margin-bottom: 0">✅</p>
+
+<CodeColumns>
+
+```graphql title="Subgraph A"
+directive @customDirective(
+  message: String!
+) on OBJECT | FIELD_DEFINITION
+```
+
+```graphql title="Subgraph B"
+directive @customDirective(
+  message: String!
+) on OBJECT | FIELD_DEFINITION
+```
+
+</CodeColumns>
+
+<hr/>
+
+#### `INCONSISTENT_TYPE_SYSTEM_DIRECTIVE_REPEATABLE`
+
+Indicates that a type system directive definition is marked repeatable in only some of the subgraphs that declare the directive and will be repeatable in the supergraph.
+
+<p style="margin-bottom: 0">❌</p>
+
+```graphql title="Subgraph A"
+directive @customDirective on OBJECT
+```
+
+```graphql title="Subgraph B"
+directive @customDirective repeatable on OBJECT
+```
+
+<p style="margin-bottom: 0">✅</p>
+
+```graphql title="Subgraph A"
+directive @customDirective repeatable on OBJECT
+```
+
+```graphql title="Subgraph B"
+directive @customDirective repeatable on OBJECT
+```
+
+<hr/>
+
+#### `INCONSISTENT_UNION_MEMBER`
+
+Indicates that a member of a union type definition is only defined in some of the subgraphs that declare the union.
+
+<p style="margin-bottom: 0">❌</p>
+
+```graphql title="Subgraph A"
+type Product {
+  id: ID!
+  name: String
+}
+
+type Service {
+  id: ID!
+  description: String
+}
+
+union SearchResult = Product | Service #highlight-line
+```
+
+```graphql title="Subgraph B"
+type Product {
+  id: ID!
+  name: String
+}
+
+union SearchResult = Product #highlight-line
+```
+
+<p style="margin-bottom: 0">✅</p>
+
+```graphql title="Subgraph A"
+type Product {
+  id: ID!
+  name: String
+}
+
+type Service {
+  id: ID!
+  description: String
+}
+
+union SearchResult = Product | Service #highlight-line
+```
+
+```graphql title="Subgraph B"
+type Product {
+  id: ID!
+  name: String
+}
+
+type Service {
+  id: ID!
+  description: String
+}
+
+union SearchResult = Product | Service #highlight-line
+```
+
+<hr/>

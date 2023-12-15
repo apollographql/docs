@@ -6,14 +6,25 @@ const getNavItems = items => {
   const navItems = [];
   const entries = Object.entries(items);
 
-  for (const [title, path] of entries) {
-    if (Array.isArray(path) && Array.isArray(path[1])) {
-      navItems.push({
-        title,
-        path: path[0],
-        tags: path[1]
-      });
-      continue;
+  for (const entry of entries) {
+    const title = entry[0];
+    let path = entry[1];
+    let isDefaultCollapsed = false;
+
+    if (Array.isArray(path) && path.length === 2) {
+      const [value, options] = path;
+
+      if (typeof value === 'object') {
+        path = value;
+        isDefaultCollapsed = options;
+      } else if (Array.isArray(options)) {
+        navItems.push({
+          title,
+          path: value,
+          tags: options
+        });
+        continue;
+      }
     }
 
     if (typeof path === 'object') {
@@ -22,7 +33,8 @@ const getNavItems = items => {
         // generate an id for each group, for use with the sidebar nav state
         id: v5(JSON.stringify(path), v5.DNS),
         // recurse over its children and turn them into nav items
-        children: getNavItems(path)
+        children: getNavItems(path),
+        isDefaultCollapsed
       });
       continue;
     }

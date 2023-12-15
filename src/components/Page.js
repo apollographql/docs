@@ -1,3 +1,4 @@
+import * as sharedContent from '../content/shared';
 import Blockquote from './Blockquote';
 import CodeColumns from './CodeColumns';
 import ExpansionPanel, {
@@ -9,13 +10,17 @@ import Pagination from './Pagination';
 import Prism from 'prismjs';
 import PropTypes from 'prop-types';
 import React, {Fragment, createElement, useMemo} from 'react';
-import RelativeLink, {ButtonLink} from './RelativeLink';
+import RelativeLink, {ButtonLink, PrimaryLink} from './RelativeLink';
 import TableOfContents from './TableOfContents';
+import TrackableButton from './TrackableButton';
+import TrackableLink from './TrackableLink';
 import TypeScriptApiBox from './TypeScriptApiBox';
 import VersionBanner from './VersionBanner';
 import autolinkHeadings from 'rehype-autolink-headings';
 import rehypeReact from 'rehype-react';
 import useLocalStorage from 'react-use/lib/useLocalStorage';
+import {ReactComponent as ApolloLogo} from '@apollo/space-kit/logos/logo.svg';
+import {ReactComponent as ApolloMark} from '@apollo/space-kit/logos/mark.svg';
 import {
   Box,
   Button,
@@ -32,21 +37,27 @@ import {
   Thead,
   Tr,
   UnorderedList,
-  chakra,
-  useBreakpointValue
+  chakra
 } from '@chakra-ui/react';
+import {Caution} from './Caution';
+import {CustomHeading} from './CustomHeading';
 import {
   EmbeddableExplorer,
   MarkdownCodeBlock,
   MultiCodeBlock,
   MultiCodeBlockContext
 } from '@apollo/chakra-helpers';
+import {EnterpriseFeature} from './EnterpriseFeature';
+import {ExperimentalFeature} from './ExperimentalFeature';
 import {FeedbackButton} from './FeedbackButton';
 import {FiGithub, FiMessageCircle} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
 import {Global} from '@emotion/react';
+import {HighlightKeyTerms} from '@apollo/pedia';
 import {MDXProvider} from '@mdx-js/react';
 import {MDXRenderer} from 'gatsby-plugin-mdx';
+import {MinVersion} from './MinVersion';
+import {Note} from './Note';
 import {
   PAGE_FOOTER_HEIGHT,
   PAGE_PADDING_BOTTOM,
@@ -54,11 +65,15 @@ import {
   PageContent,
   PageSeo
 } from './PageLayout';
+import {PreviewFeature} from './PreviewFeature';
+import {SiDiscord} from 'react-icons/si';
 import {TOTAL_HEADER_HEIGHT} from './Header';
+import {Tip} from './Tip';
 import {YouTube} from './YouTube';
 import {join} from 'path';
 import {kebabCase} from 'lodash';
 import {rehype} from 'rehype';
+import {useApiDocContext} from './ApiDoc';
 import {useConfig} from '../utils/config';
 import {useFieldTableStyles} from '../utils';
 import {useMermaidStyles} from '../utils/mermaid';
@@ -79,7 +94,7 @@ import 'prismjs/components/prism-swift';
 import 'prismjs/components/prism-tsx';
 import 'prismjs/components/prism-typescript';
 import 'prismjs/components/prism-yaml';
-import {SiDiscord} from 'react-icons/si';
+import {ResponsiveGridStyles} from './ApiDoc/ResponsiveGrid';
 
 // use JS syntax highlighting for rhai codeblocks
 Prism.languages.rhai = Prism.languages.javascript;
@@ -98,12 +113,12 @@ const NESTED_LIST_STYLES = {
 };
 
 const components = {
-  h1: props => <Heading as="h1" size="2xl" {...props} />,
-  h2: props => <Heading as="h2" size="xl" {...props} />,
-  h3: props => <Heading as="h3" size="lg" {...props} />,
-  h4: props => <Heading as="h4" size="md" {...props} />,
-  h5: props => <Heading as="h5" size="sm" {...props} />,
-  h6: props => <Heading as="h6" size="xs" {...props} />,
+  h1: props => <CustomHeading as="h1" size="2xl" {...props} />,
+  h2: props => <CustomHeading as="h2" size="xl" {...props} />,
+  h3: props => <CustomHeading as="h3" size="lg" {...props} />,
+  h4: props => <CustomHeading as="h4" size="md" {...props} />,
+  h5: props => <CustomHeading as="h5" size="sm" {...props} />,
+  h6: props => <CustomHeading as="h6" size="xs" {...props} />,
   ul: props => (
     <UnorderedList
       spacing={LIST_SPACING}
@@ -119,7 +134,7 @@ const components = {
   ol: props => (
     <OrderedList spacing={LIST_SPACING} sx={NESTED_LIST_STYLES} {...props} />
   ),
-  li: props => (
+  li: ({children, ...props}) => (
     <ListItem
       sx={{
         '>': {
@@ -129,9 +144,17 @@ const components = {
         }
       }}
       {...props}
-    />
+    >
+      <HighlightKeyTerms>{children}</HighlightKeyTerms>
+    </ListItem>
   ),
-  p: Text,
+  p: ({children}) => {
+    return (
+      <Text>
+        <HighlightKeyTerms>{children}</HighlightKeyTerms>
+      </Text>
+    );
+  },
   a: RelativeLink,
   pre: MarkdownCodeBlock,
   table: props => (
@@ -162,18 +185,32 @@ const components = {
 
 const mdxComponents = {
   ...components,
+  ...sharedContent,
   inlineCode: InlineCode,
   Button, // TODO: consider making pages import this from @chakra-ui/react
+  Caution,
   ExpansionPanel,
   ExpansionPanelList,
   ExpansionPanelListItem,
   MultiCodeBlock,
+  Note,
   YouTube,
   CodeColumns,
   TypeScriptApiBox,
   TypescriptApiBox: TypeScriptApiBox,
   EmbeddableExplorer,
-  ButtonLink
+  ButtonLink,
+  Tip,
+  MinVersion,
+  EnterpriseFeature,
+  ExperimentalFeature,
+  PreviewFeature,
+  ApolloLogo,
+  ApolloMark,
+  TrackableButton,
+  TrackableLink,
+  useApiDocContext,
+  PrimaryLink
 };
 
 const {processSync} = rehype()
@@ -198,7 +235,18 @@ export default function Page({file}) {
     file;
 
   const {frontmatter, headings} = childMdx || childMarkdownRemark;
-  const {title, description, toc, tags, headingDepth} = frontmatter;
+  const {
+    title,
+    subtitle,
+    description,
+    toc,
+    tags,
+    headingDepth,
+    minVersion,
+    noIndex
+  } = frontmatter;
+
+  const publishedSubtitle = subtitle ? subtitle : description;
 
   const {docset, versions, currentVersion, navItems, versionBanner} =
     useConfig(basePath);
@@ -207,11 +255,6 @@ export default function Page({file}) {
     () => versions.find(version => !version.slug.includes('/')),
     [versions]
   );
-
-  const editText = useBreakpointValue({
-    base: 'Edit',
-    lg: 'Edit on GitHub'
-  });
 
   const editOnGitHub = useMemo(() => {
     const repo = `https://github.com/${
@@ -223,23 +266,59 @@ export default function Page({file}) {
     if (gitRemote) {
       repoPath.push('docs', 'source');
     } else {
-      repoPath.push('src', 'content', basePath === '/' ? 'basics' : basePath);
+      repoPath.push('src', 'content');
+
+      if (basePath === '/') {
+        repoPath.push('basics');
+      } else {
+        repoPath.push(basePath);
+
+        const graphOSBasicsContent = [
+          'graphs',
+          'operations',
+          'quickstart',
+          'routing',
+          'api-keys',
+          'data-privacy',
+          'platform-api',
+          'sub-processors',
+          'index'
+        ];
+
+        // Check to see if the current page is within the GraphOS Basics section
+        if (
+          basePath === 'graphos' &&
+          graphOSBasicsContent.some(content => relativePath.startsWith(content))
+        ) {
+          // The additional `basics` segment added to the repo path as it is not in the url
+          repoPath.push('basics');
+        }
+      }
     }
 
     repoPath.push(relativePath);
 
     return (
       <Button
+        aria-label="Edit on GitHub"
         as="a"
         href={`${repo}/${join(...repoPath)}`}
         variant="link"
+        _dark={{
+          color: 'gray.200'
+        }}
         size="lg"
         leftIcon={<FiGithub />}
       >
-        {editText}
+        <Text as="span" display={{base: 'none', lg: 'inline'}}>
+          Edit on GitHub
+        </Text>
+        <Text as="span" display={{base: 'inline', lg: 'none'}}>
+          Edit
+        </Text>
       </Button>
     );
-  }, [gitRemote, basePath, relativePath, editText]);
+  }, [gitRemote, basePath, relativePath]);
 
   return (
     <>
@@ -251,7 +330,13 @@ export default function Page({file}) {
           }
         }}
       />
-      <PageSeo title={title} description={description} docset={docset} />
+      <ResponsiveGridStyles />
+      <PageSeo
+        noindex={noIndex === true}
+        title={title}
+        description={description}
+        docset={docset}
+      />
       {versionBanner ? (
         <VersionBanner
           versionLabels={[]}
@@ -294,7 +379,10 @@ export default function Page({file}) {
           },
           'img.screenshot': {
             shadow: 'md',
-            rounded: 'md'
+            rounded: 'md',
+            _dark: {
+              shadow: 'dark-lg'
+            }
           },
           table: {
             td: {
@@ -338,17 +426,18 @@ export default function Page({file}) {
             scrollMarginTop: SCROLL_MARGIN_TOP
           }
         }}
+        minVersion={minVersion}
         title={title}
         subtitle={
           <>
-            {description && (
+            {publishedSubtitle && (
               <chakra.h2
                 fontSize={{base: 'xl', md: '2xl'}}
                 lineHeight="normal"
                 mt={{base: 2, md: 3}}
                 fontWeight="normal"
               >
-                {description}
+                {publishedSubtitle}
               </chakra.h2>
             )}
             {tags?.length && (
@@ -423,19 +512,27 @@ export default function Page({file}) {
         <FeedbackButton title={title} />
         {editOnGitHub}
         <Button
+          aria-label="Ask a question on our forums"
           as="a"
           href="https://community.apollographql.com/"
           variant="link"
           size="lg"
+          _dark={{
+            color: 'gray.200'
+          }}
           leftIcon={<FiMessageCircle />}
         >
           Forums
         </Button>
         <Button
+          aria-label="Join our Discord server"
           as="a"
           href="https://discord.gg/yFZJH2QYrK"
           variant="link"
           size="lg"
+          _dark={{
+            color: 'gray.200'
+          }}
           onClick={() => window.gtag?.('event', 'discord_join_docs')}
           leftIcon={<SiDiscord />}
         >

@@ -20,7 +20,7 @@ Creating a good reproduction really helps contributors investigate and resolve y
 
 A good starting point for building reproductions are the "hello world" examples on the [developer home page](http://dev.apollodata.com):
 
-  - [React Version](https://github.com/apollostack/frontpage-react-app)
+  - [React Version](https://github.com/apollographql/react-apollo-error-template)
   - [Angular 2 Version](https://github.com/apollostack/frontpage-angular2-app)
 
 ### Suggesting features
