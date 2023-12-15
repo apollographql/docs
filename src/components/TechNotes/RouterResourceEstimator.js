@@ -121,7 +121,7 @@ const RouterResourceEstimator = () => {
                   <InputRightAddon children="RPS" />
                 </InputGroup>
                 <FormHelperText>
-                  The highest expected number of requests per second (RPS) you
+                  The highest estimated number of requests per second (RPS) you
                   expect the router to receive
                 </FormHelperText>
               </Box>
