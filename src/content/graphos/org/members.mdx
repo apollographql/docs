@@ -66,12 +66,22 @@ When **Contributor**s in an organization create a new graph, they are automatica
 | Push schemas to a graph                          |     ✓     |      ✓      | Non-[protected](../graphs/studio-features/#protected-variants-enterprise-only) variants only |                       |          |
 | Manage Explorer settings (URL, etc)              |     ✓     |      ✓      | Non-[protected](../graphs/studio-features/#protected-variants-enterprise-only) variants only |                       |          |
 | See the schemas of subgraphs in federated graphs |     ✓     |      ✓      |                                              ✓                                               |           ✓           |          |
-| View graph usage metrics and traces\*            |     ✓     |      ✓      |                                              ✓                                               |           ✓           |          |
+| View graph usage metrics and traces <sup>1</sup> |     ✓     |      ✓      |                                              ✓                                               |           ✓           |          |
 | Edit variant READMEs                             |     ✓     |      ✓      |                                              ✓                                               |    Documenter only    |          |
 | Query graphs with the Explorer                   |     ✓     |      ✓      |                                              ✓                                               |           ✓           |    ✓     |
 | View graph schemas and changelogs                |     ✓     |      ✓      |                                              ✓                                               |           ✓           |    ✓     |
 
-> \*Currently, graph usage metrics and traces are not displayed to **Consumer**s via the Studio web app, but they are not blocked at the API layer. We intend to remove this capability from **Consumer**s, but for the time being you should understand that **Consumer**s are not fully prevented from accessing these metrics and traces.
+<blockquote>
+
+<sup>1</sup> Currently, graph usage metrics and traces are not displayed to <strong>
+  Consumer
+</strong>
+s via the Studio web app, but they are not blocked at the API layer. We intend to
+remove this capability from <strong>Consumer</strong>s, but for the time being
+you should understand that <strong>Consumer</strong>s are not fully prevented from
+accessing these metrics and traces.
+
+</blockquote>
 
 ### Schema checks permissions
 
