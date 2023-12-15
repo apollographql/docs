@@ -2,17 +2,45 @@ import LabelsList from './LabelsList';
 import React, {useEffect, useState} from 'react';
 import Results from './Results';
 import Search from './Search';
-import {Box, Flex, Grid, GridItem} from '@chakra-ui/react';
+import {Box, Flex, Grid, GridItem, Link, Text} from '@chakra-ui/react';
 import {ClearFilters} from './ClearFilters';
 
 import algoliasearch from 'algoliasearch/lite';
-import {Configure, InstantSearch} from 'react-instantsearch';
+import {Configure, InstantSearch, useInstantSearch} from 'react-instantsearch';
 
 const appId = process.env.ALGOLIA_APP_ID;
 const apiKey = process.env.ALGOLIA_SEARCH_KEY;
 const algoliaIndexName = 'apollopedia';
 
 const searchClient = algoliasearch(appId, apiKey);
+
+function NoResultsBoundary({children, fallback}) {
+  const {results} = useInstantSearch();
+
+  // The `__isArtificial` flag makes sure not to display the No Results message
+  // when no hits have been returned.
+  if (!results.__isArtificial && results.nbHits === 0) {
+    return (
+      <>
+        {fallback}
+        <div hidden>{children}</div>
+      </>
+    );
+  }
+
+  return children;
+}
+
+function NoResults() {
+  return (
+    <Box m="2em">
+      <Text>
+        Looks like we don&apos;t have the term you&apos;re looking for. Please
+        submit a <Link>glossary request</Link>.
+      </Text>
+    </Box>
+  );
+}
 
 export function GlossaryPage() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -53,7 +81,9 @@ export function GlossaryPage() {
               <ClearFilters />
             </GridItem>
             <GridItem>
-              <Results />
+              <NoResultsBoundary fallback={<NoResults />}>
+                <Results />
+              </NoResultsBoundary>
             </GridItem>
             <GridItem>
               <LabelsList />

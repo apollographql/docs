@@ -14,7 +14,7 @@ function LabelsFilter() {
 
   return (
     <Box>
-      <Text fontWeight="bold">Filter by labels:</Text>
+      {items.length > 0 && <Text fontWeight="bold">Filter by labels:</Text>}
       <Stack spacing="2">
         {items.map(item => (
           <Checkbox
