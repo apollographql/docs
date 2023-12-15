@@ -23,7 +23,7 @@ The extension enables you to:
 To get all of the benefits of the VS Code experience, it's best to link the schema that is being developed against **before** installing the extension. The best way to do that is by [publishing a schema](/graphos/delivery/publishing-schemas/) to the Apollo schema registry. After that's done:
 
 1. Create an `apollo.config.js` file at the root of the project.
-2. Obtain a [Personal API key](/graphos/api-keys) from Apollo Studio.
+2. Obtain a [Personal API key](/graphos/api-keys) from GraphOS Studio.
 
 ### Setting up an Apollo config
 
@@ -37,23 +37,23 @@ module.exports = {
 };
 ```
 
-The `service` name here is the name of the graph you've created in [Apollo Studio](https://studio.apollographql.com).
+The `service` name here is the name of the graph you've created in [GraphOS Studio](https://studio.apollographql.com).
 
 ### Setting up the `.env` file
 
-To authenticate with Apollo Studio to pull down your schema, create a `.env` file in the same directory as the `apollo.config.js` file. This should be an **untracked** file (i.e., don't commit it to Git).
+To authenticate with GraphOS Studio to pull down your schema, create a `.env` file in the same directory as the `apollo.config.js` file. This should be an **untracked** file (i.e., don't commit it to Git).
 
-Then go to your [User Settings page](https://studio.apollographql.com/user-settings/api-keys) in Apollo Studio to create a new Personal API key.
+Then go to your [User Settings page](https://studio.apollographql.com/user-settings/api-keys?referrer=docs-content) in GraphOS Studio to create a new Personal API key.
 
 > **Note:** It is best practice to create a new API key for each member of the team and name the key so its easy to find and revoke if needed. This will be easier to manage in the future.
 
 After the key is found, add the following line to the `.env` file:
 
-```bash
+```bash showLineNumbers=false
 APOLLO_KEY=<enter copied key here>
 ```
 
-After this is done, VS Code can be reloaded and the Apollo integration will connect to Apollo Studio to provide autocomplete, validation, and more.
+After this is done, VS Code can be reloaded and the Apollo integration will connect to GraphOS Studio to provide autocomplete, validation, and more.
 
 ### Local schemas
 
@@ -123,7 +123,7 @@ Because of GraphQL's strongly-typed schema, editors not only know about which fi
 GraphQL's flexibility can make it difficult to predict the cost of an operation. Without insight into how expensive an operation is, developers can accidentally write queries that place strain on their graph API's underlying backends. Thanks to the Apollo platform's integration with VS Code and our trace warehouse, teams can avoid these performance issues altogether by instantly seeing the cost of a query right in their editor.
 
 
-The VS Code extension will show inline performance diagnostics when connected to a service with reported metrics in Apollo Studio. As operations are typed, any fields that take longer than 1ms to respond will be annoated to the right of the field inline! This gives team members a picture of how long the operation will take as more and more fields are added to operations or fragments.
+The VS Code extension will show inline performance diagnostics when connected to a service with reported metrics in GraphOS Studio. As operations are typed, any fields that take longer than 1ms to respond will be annoated to the right of the field inline! This gives team members a picture of how long the operation will take as more and more fields are added to operations or fragments.
 
 <img src="../img/editors/perf-annotation.png" width="80%" style="margin: 5%" alt="Performance annotation next to a field">
 

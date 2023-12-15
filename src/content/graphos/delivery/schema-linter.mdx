@@ -25,12 +25,9 @@ GraphOS schema linting only analyzes parts of your modified schema that differ f
 ## Configuring the linter
 
 The GraphOS schema linter uses a [predefined collection of rules](./linter-rules/) to identify issues with proposed schema changes.
-The predefined collection includes [schema composition](/federation/federated-types/composition) rules.
+The predefined collection includes [schema composition](/federation/federated-types/composition) rules. The **graph-wide linter defaults** you define apply to all variants of a particular graph.
 
-- **Currently,** you can define **graph-wide linter defaults** that apply to all variants of a particular graph.
-- **In a future release,** you'll also be able to configure how _individual_ variants of your graph treat violations of each linter rule.
-
-**Navigate to your linter's configuration:**
+To navigate to your linter configuration:
 
 1. In [GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content), go to your graph's **Checks** page.
 2. Click **Configuration** in the upper right to open the checks configuration page.
@@ -43,23 +40,19 @@ The predefined collection includes [schema composition](/federation/federated-ty
       width="700"
     />
 
-4. **To configure graph-wide linter defaults** for _all_ of your variants, click the **This Graph** tab.
-
-    - **In a future release,** you'll be able to configure variant-specific behavior from the **This Variant** tab.
-
 This page organizes linter options into the following categories:
 
 - **General Linter Configuration** provides high-level options, including disabling the linter entirely.
 - **Approved @tag names** enables you to specify approved values for the `name` argument of the `@tag` directive. This directive is used most commonly with [GraphOS contracts](./contracts/).
   - If you don't use the `@tag` directive, you can ignore this category.
-  - Using a _non_-approved value for `name` raises the `TAG_DIRECTIVE_USES_UNKNOWN_NAME` violation.
-- **Linter Rules** enables you to [set the severity level](#setting-severity-levels) for violations of each rule.
+  - Using a _non_-approved value for `name` raises the [`TAG_DIRECTIVE_USES_UNKNOWN_NAME`](./linter-rules#tag_directive_uses_unknown_name) violation.
+- **Rule Severity Configuration** enables you to [set the severity level](#setting-severity-levels) for violations of each rule.
 
-If you're viewing configuration for a single variant, each category displays a **Use Graph Settings** toggle in the upper right. If this toggle is enabled, the variant uses whatever graph-wide defaults are set for that category. At this time, the **Use Graph Settings** toggle is _always_ enabled for _all_ variants.
+If you view this configuration for a single variant, each category displays a **Use Graph Settings** toggle in the upper right. If this toggle is enabled, the variant uses whatever graph-wide defaults are set for that category. At this time, the **Use Graph Settings** toggle is always enabled for all variants.
 
 ### Setting severity levels
 
-The **Linter Rules** category of your linter configuration displays all predefined rules and the current **severity** level for each:
+The **Rules Severity Configuration** category of your linter configuration displays all predefined rules and the current **severity** level for each:
 
 <img
     src="../img/linter-rules-list.jpg"
@@ -74,6 +67,8 @@ Click a rule's severity to set it to any of the following:
     - This in turn causes the _entire schema checks run_ to fail, which is useful for failing builds in CI.
 - **Warn.** Violations of this rule are flagged in checks reports, but they _don't_ cause the associated linter check to fail.
 - **Ignore.** Violations of this rule are ignored entirely.
+
+For information on specific rules, see the [reference list of rules](./linter-rules).
 
 ## Running the linter
 
@@ -112,7 +107,7 @@ The Rover CLI provides `subgraph lint` and `graph lint` commands for running the
 
 The `rover subgraph lint` and `rover graph lint` commands validate all [linter rules](./linter-rules) _except_ for [composition rules](./linter-rules#composition-rules). Use [`rover subgraph check`](/rover/commands/subgraphs#subgraph-check) or [`rover supergraph compose`](/rover/commands/supergraphs#supergraph-compose) to validate composition rules locally.
 
-```bash title="Example command"
+```bash showLineNumbers=false title="Example command"
 rover subgraph lint --name products --schema ./products-schema.graphql my-graph@my-variant
 ```
 

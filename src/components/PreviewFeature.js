@@ -3,8 +3,12 @@ import React from 'react';
 import {Box, Center, Flex, Link, Text, chakra} from '@chakra-ui/react';
 import {IoPartlySunnyOutline} from 'react-icons/io5';
 
+import {MarkdownInAdmonitions} from './MarkdownInAdmonitions';
+
 export const PreviewFeature = ({
-  discordLink = 'https://discord.gg/yFZJH2QYrK'
+  discordLink = 'https://discord.gg/yFZJH2QYrK',
+  appendText = '',
+  children
 }) => {
   return (
     <Box
@@ -28,23 +32,33 @@ export const PreviewFeature = ({
           </Center>
         </chakra.span>
         <Text pl="1">
-          <b>
-            This feature is currently in{' '}
-            <Link
-              color={'primary'}
-              href="https://www.apollographql.com/docs/resources/product-launch-stages#preview"
-            >
-              preview
-            </Link>
-            .
-          </b>{' '}
-          Your questions and feedback are highly valued{'—'}don&apos;t hesitate
-          to get in touch with your Apollo contact or on the official
-          <Link color={'primary'} href={discordLink}>
-            {' '}
-            Apollo GraphQL Discord
-          </Link>
-          .
+          {children ? (
+            children
+          ) : (
+            <>
+              <b>
+                This feature is currently in{' '}
+                <Link
+                  color={'primary'}
+                  href="https://www.apollographql.com/docs/resources/product-launch-stages#preview"
+                >
+                  preview
+                </Link>
+                .
+              </b>{' '}
+              Your questions and feedback are highly valued{'—'}don&apos;t
+              hesitate to get in touch with your Apollo contact or on the
+              official
+              <Link color={'primary'} href={discordLink}>
+                {' '}
+                Apollo GraphQL Discord
+              </Link>
+              .{' '}
+              {appendText.length > 0 && (
+                <MarkdownInAdmonitions>{appendText}</MarkdownInAdmonitions>
+              )}
+            </>
+          )}
         </Text>
       </Flex>
     </Box>
@@ -52,5 +66,7 @@ export const PreviewFeature = ({
 };
 
 PreviewFeature.propTypes = {
-  discordLink: PropTypes.node.isRequired
+  discordLink: PropTypes.string,
+  appendText: PropTypes.node,
+  children: PropTypes.node
 };

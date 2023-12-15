@@ -4,13 +4,18 @@ id: TN0004
 tags: [server, router, auth]
 ---
 
-> Self-hosting the Apollo Router is limited to Apollo Enterprise plans. Other plan types use [managed cloud routing with GraphOS](/graphos/routing/cloud/).
->
-> [Learn about Apollo plans.](https://www.apollographql.com/pricing/)
+<EnterpriseFeature
+  text={
+    'Self-hosting the Apollo Router is limited to [GraphOS Enterprise plans](/graphos/enterprise/). Other plan types use [managed cloud routing with GraphOS](/graphos/routing/cloud/). Check out the [pricing page](https://www.apollographql.com/pricing/) to learn more.'
+  }
+/>
 
-> If you're an enterprise customer looking for more material on this topic, try the [Enterprise best practices: Router extensibility](https://www.apollographql.com/tutorials/router-extensibility) course on Odyssey.
->
-> Not an enterprise customer? [Learn about GraphOS for Enterprise.](/graphos/enterprise)
+<Tip>
+
+If you're an enterprise customer looking for more material on this topic, try the [Enterprise best practices: Router extensibility](https://www.apollographql.com/tutorials/router-extensibility) course on Odyssey.
+
+Not an enterprise customer? [Learn about GraphOS for Enterprise.](/graphos/enterprise)
+</Tip>
 
 When using the Apollo Router as the entry point to your federated supergraph, you have a few options for authenticating incoming client requests:
 
@@ -19,15 +24,19 @@ When using the Apollo Router as the entry point to your federated supergraph, yo
 - [Use the JWT Authentication plugin](#use-the-jwt-authentication-plugin) to your supergraph.
 - [Use a coprocessor](#use-a-coprocessor).
 
-
 In fact, we recommend you [combine all three strategies](#combining-authentication-strategies) to create a more robust authentication system!
 
 ## Use Authorization Directives
-In addition to the the approaches outlined below, you can use [authorization directives](/router/configuration/authorization/) to enforce authorization at the router layer. 
+
+In addition to the the approaches outlined below, you can use [authorization directives](/router/configuration/authorization/) to enforce authorization at the router layer.
 This allows you to authorize requests prior to them hitting your subgraphs saving on bandwidth and processing time.
 
-<EnterpriseFeature text={`This is an [Enterprise feature](/router/enterprise-features) of the Apollo Router. It requires an organization with a [GraphOS Enterprise plan](https://www.apollographql.com/pricing/).`} />
+<EnterpriseFeature>
 
+This is an [Enterprise feature](/router/enterprise-features) of the Apollo Router.
+It requires an organization with a [GraphOS Enterprise plan](https://www.apollographql.com/pricing/).
+
+</EnterpriseFeature>
 
 ```mermaid
 sequenceDiagram
@@ -60,6 +69,7 @@ Pros:
 - Declarative approach that can be adopted and maintained by each subgraph while enforced centrally
 
 Cons
+
 - Schema updates will need to be made to each subgraph to opt into this authorization model
 
 ## Authenticate in subgraphs
@@ -97,8 +107,12 @@ headers:
 
 As of Apollo Router v1.13, you can use the [JWT Authentication plugin](/router/configuration/authn-jwt) to validate JWT-based authentication tokens in your supergraph.
 
-<EnterpriseFeature text={`This is an [Enterprise feature](/router/enterprise-features) of the Apollo Router. It requires an organization with a [GraphOS Enterprise plan](https://www.apollographql.com/pricing/).`} />
+<EnterpriseFeature>
 
+This is an [Enterprise feature](/router/enterprise-features) of the Apollo Router.
+It requires an organization with a [GraphOS Enterprise plan](https://www.apollographql.com/pricing/).
+
+</EnterpriseFeature>
 
 ```mermaid
 sequenceDiagram
@@ -131,8 +145,12 @@ Cons:
 
 If you have a custom authentication strategy, you can use a [coprocessor](/router/customizations/coprocessor) to implement it.
 
-<EnterpriseFeature text={`This is an [Enterprise feature](/router/enterprise-features) of the Apollo Router. It requires an organization with a [GraphOS Enterprise plan](https://www.apollographql.com/pricing/).`} />
+<EnterpriseFeature>
 
+This is an [Enterprise feature](/router/enterprise-features) of the Apollo Router.
+It requires an organization with a [GraphOS Enterprise plan](https://www.apollographql.com/pricing/).
+
+</EnterpriseFeature>
 
 ```mermaid
 sequenceDiagram
@@ -189,7 +207,6 @@ Pros:
 Cons:
 
 - The initial lift of implementing a coprocessor is non-trivial, but once it's in place you can leverage it for any number of router customizations.
-
 
 ## Combining authentication strategies
 

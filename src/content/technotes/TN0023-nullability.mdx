@@ -4,6 +4,13 @@ id: TN0023
 tags: [schema-design, federation]
 ---
 
+<Tip>
+
+If you're an enterprise customer looking for more material on this topic, try the [Enterprise best practices: Schema design](https://www.apollographql.com/tutorials/schema-design-best-practices) course on Odyssey.
+
+Not an enterprise customer? [Learn about GraphOS for Enterprise.](/graphos/enterprise)
+</Tip>
+
 ## Make intentional choices about nullability
 
 All fields in GraphQL are nullable by default and it's often best to err on the side of embracing that default behavior as new fields are initially added to a schema. However, where warranted, non-null fields and arguments (denoted with a trailing `!`) are an important mechanism that can help improve the expressiveness and predictability of a schema. Non-null fields can also be a win for clients because they will know exactly where to expect values to be returned when handling query responses. Non-null fields and arguments do, of course, come with trade-offs, and it's important to weigh the implications of each choice you make about nullability for every type, field, and argument in a schema.

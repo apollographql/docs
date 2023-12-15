@@ -244,7 +244,7 @@ You can publish docsets that are viewable only by Apollo team members by setting
 }
 ```
 
-If a visitor to that page is logged in to Apollo Studio **and** is a member of one of our internal orgs, the page content will be rendered normally. If neither of those conditions are true, a 404 page will be shown. Internal-only pages are excluded from the sitemap and won't be indexed by Google.
+If a visitor to that page is logged in to GraphOS Studio **and** is a member of one of our internal orgs, the page content will be rendered normally. If neither of those conditions are true, a 404 page will be shown. Internal-only pages are excluded from the sitemap and won't be indexed by Google.
 
 It's important to note that you must sign in to and out of your account using Studio or Odyssey, as the docs don't currently have their own sign in form. For local development, sign in to the staging Studio.
 
@@ -289,6 +289,10 @@ Redirects can continue to be written in the `_redirects` file in the `docs/sourc
 ```
 
 All of the redirects from each docset will be bundled together at build time, and deployed as one combined `_redirects` file deployed with the built docs site.
+
+#### Redirecting with anchors
+
+Netlify's `_redirects` file [doesn't handle redirecting URLs with `#`](https://answers.netlify.com/t/redirects-urls-containing-hashbangs/11157). Instead, we manually redirect URLs like this using custom logic in our `gatsby-config.js`. If you need to redirect from or to particular anchors tags, add the redirects to the `redirects` object in `gatsby-config.js`. For all other URLs, use the appropriate `_redirects` file.
 
 ## Publish and preview
 
@@ -454,7 +458,7 @@ _shared/configure-project.mdx_
 
 ```mdx
 1. Sign up for an Apollo account
-2. Create a graph in Apollo Studio
+2. Create a graph in GraphOS Studio
 3. Add environment variables to your project
 ```
 
@@ -549,7 +553,7 @@ const foo = 123;
 A YouTube player exported from MDX Embed. Check out all of the different props and options [on their docs](https://www.mdx-embed.com/?path=/docs/components-youtube--usage).
 
 ```mdx
-Check out this introduction to Apollo Studio:
+Check out this introduction to GraphOS Studio:
 
 <YouTube youTubeId="sarXMaz3OpY" />
 ```
@@ -590,23 +594,48 @@ Both components take an optional `discordLink` prop through which you can provid
 
 ```
 
+The components also take an optional `appendText` prop that adds text to the default text.
+
+```mdx
+
+<PreviewFeature appendText="This is some additional text appended to the end of the default text."/>
+
+```
+
+If necessary, you can nest markdown within the component to completely replace the text.
+
+
+```mdx
+
+<ExperimentalFeature>
+
+This _completely_ replaces the text within the component.
+
+</ExperimentalFeature>
+
+```
+
 ##### Plan components
 
 Currently, the only plan component is `<EnterpriseFeature />`.
 Like the release stage components, this component should be put at the top of the relevant page or section.
 If a feature has both a release stage component and the `<EnterpriseFeature />`, the `<EnterpriseFeature />` should come first.
 
-Custom text for `<EnterpriseFeature />` can be provided with the `text` prop.
+Custom text for `<EnterpriseFeature />` can be provided by nesting Markdown within the component.
 
-By default, without the `text` prop, `<EnterpriseFeature />` renders this text:
+By default, without any children, `<EnterpriseFeature />` renders this text:
 
-> **This feature is only available with a [**GraphOS Enterprise plan**](http://apollographql.com/graphos/enterprise/). If your organization doesn't currently have an Enterprise plan, you can test this functionality by signing up for a free [Enterprise trial](https://www.apollographql.com/docs/graphos/enterprise/#enterprise-trial).
+> **This feature is only available with a [**GraphOS Enterprise plan**](http://apollographql.com/graphos/enterprise/). If your organization doesn't currently have an Enterprise plan, you can test this functionality by signing up for a free [Enterprise trial](https://studio.apollographql.com/signup?type=enterprise-trial&referrer=docs-content).
 
-If you need to include custom text, it completely replaces this text. Please make sure to include links to the Enterprise plan and Enterprise trial docs accordingly.
+If you include custom text, it completely replaces this text. Please make sure to include links to the Enterprise plan docs and Enterprise trial accordingly.
 
 ```mdx
 
-<EnterpriseFeature text={`This is some _custom markdown text_ that still includes a link to the [GraphOS Enterprise plan**](http://apollographql.com/graphos/enterprise/) and [Enterprise trial](https://www.apollographql.com/docs/graphos/enterprise/#enterprise-trial) docs.`} />
+<EnterpriseFeature>
+
+This is some _custom markdown text_ that still includes a link to the [GraphOS Enterprise plan**](http://apollographql.com/graphos/enterprise/) and [Enterprise trial](https://studio.apollographql.com/signup?type=enterprise-trial&referrer=docs-content) docs.
+
+</EnterpriseFeature>
 
 ```
 

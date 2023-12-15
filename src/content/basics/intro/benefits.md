@@ -86,7 +86,7 @@ Thanks to GraphQL's [strong typing](https://graphql.org/learn/schema) and built-
 
 Apollo provides a cloud-hosted collection of tools that help you build your graph, measure its performance, and grow it safely. These tools are together known as [**Apollo GraphOS**](/graphos/).
 
-After registering your schema with GraphOS, you can use the **Apollo Studio Explorer** to inspect all of its types and fields. You can also build and run queries against your running server:
+After registering your schema with GraphOS, you can use the **GraphOS Studio Explorer** to inspect all of its types and fields. You can also build and run queries against your running server:
 
 <img src="../img/explorer-tab.jpg" alt="Studio Explorer tab" class="screenshot" />
 
@@ -135,7 +135,7 @@ Your [GraphQL schema](/apollo-server/schema/schema/) defines which types and fie
 
 Depending on your schema and your resolver definitions, your server might inadvertently support GraphQL operations that execute very slowly, or even max out your server's resources.
 
-Consequently, it's important to design your schema such that it supports the operations your clients need, _without_ supporting unnecessary operations that affect performance. It's also helpful to set up [trace reporting](/graphos/metrics/#resolver-level-traces) for your GraphQL server, enabling you to identify and improve slow operations.
+Consequently, it's important to design your schema such that it supports the operations your clients need, _without_ supporting unnecessary operations that affect performance. It's also helpful to set up [trace reporting](/graphos/metrics/operations/#resolver-level-traces) for your GraphQL server, enabling you to identify and improve slow operations.
 
 [Learn about query-driven schema design](/apollo-server/schema/schema/#query-driven-schema-design)
 
