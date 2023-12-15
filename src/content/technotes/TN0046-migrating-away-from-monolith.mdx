@@ -1,5 +1,5 @@
 ---
-title: Monolith to Federation - First steps
+title: Migrating from monolitic to federated architecture
 id: TN0046
 description: Using the strangulation pattern to remove the monolith
 tags: [federation, transformation, organization]
@@ -7,23 +7,24 @@ tags: [federation, transformation, organization]
 
 ## Introduction
 
-Many organizations have a monolith they want to move away from in favor of adopting a federated architecture. This endeavor often appears exceedingly complex and challenging to comprehend, let alone undertake. At Apollo, we have observed numerous patterns of migration from monolithic structures. In this technote, we will explore the most successful pattern, one that offers iterative and progressive feedback, enabling businesses to confidently invest in this transformative change.
+Many organizations aim to transition from a monolithic architecture to a [federated one](/federation). This process can seem challenging, but at Apollo, we've observed numerous successful migrations away from monoliths.
 
-## The digital transformation
+This tech note explores one of the most successful migration patterns: **the strangulation pattern**. This approach allows for iterative and progressive changes, providing businesses with the confidence to invest in transformative changes.
 
-The pattern under consideration is the strangulation pattern. It involves logically dissecting the Monolith into segments and migrating the relevant portions incrementally. By adopting this approach, you can achieve your objective of transitioning away from the monolithic system while simultaneously demonstrating gradual progress to the business, as mentioned earlier.
+## Migration steps
 
-The initial and frequently most challenging question to address is: how should the Monolith be divided? The majority of companies, if not all, opt to separate their systems based on distinct domains. To illustrate this process, we will examine a typical e-commerce application and explore some of its associated domains.
+The strangulation pattern involves logically dissecting the monolith and migrating each part incrementally. This approach enables a smooth transition away from a monolithic system while demonstrating gradual progress to your organization.
+
+### Divide the monolith into distinct domains
+
+The initial challenge is determining how to divide the monolith. Most companies choose to separate systems based on distinct domains. As an example, a typical e-commerce application often has domains such as:
 
 - Product
 - Inventory
 - Cart
 - Order
 - Payment
-- Customer account
-- Marketing
-
-Using the domains discussed above we can see how we could view a monolith in segments relating to specific domains - in figure below
+- Customer Account
 
 <img
   style="display: block; margin: 0 auto"
@@ -32,7 +33,7 @@ Using the domains discussed above we can see how we could view a monolith in seg
   width="550"
 />
 
-If we look at the simplified and typical monolith setup, you can see how clients fetch data and how tightly bound clients are, to the system. To move past this, we use Federation as the critical enabler.
+The simplified monolith setup illustrates how clients fetch data and their tight integration with the system.
 
 <img
   src="./images/moving-away-from-the-monolith/2-typical-monolith-setup.jpg"
@@ -40,8 +41,11 @@ If we look at the simplified and typical monolith setup, you can see how clients
   width="550"
 />
 
-The key technical aspect to manage here is bringing about productive change as fast as possible, wasting as little time and money during the digital transformation.
-The basic approach is to decouple the existing clients from the monolith and onto an established contract - which here - is afforded by the Federation layer. We are now actively removing risk of back end change from the client, thus allowing the org to go ahead with the transformation.
+To overcome this, you can leverage [federated architecture](/federation).
+
+### Decouple clients
+
+The approach involves decoupling existing clients from the monolith onto an established contract provided by the federation layer, thus mitigating the risk of back-end changes affecting clients.
 
 <img
   src="./images/moving-away-from-the-monolith/3-first-steps.jpg"
@@ -49,8 +53,17 @@ The basic approach is to decouple the existing clients from the monolith and ont
   width="550"
 />
 
-The API Gateway here will now allow us to fetch a (previously monolith) data response from the new Federation architecture, via configuring existing routes. Record lessons here and apply them going forward to the next subgraph.
-Note: some client work _may_ be required here to bind use queries you have newly created or improved. Normally
+The API Gateway facilitates fetching data responses from the newly federated architecture by reconfiguring existing routes.
+
+<Note>
+
+Some client work may be needed to adapt to new or improved queries.
+
+</Note>
+
+### Incrementally migrate further domains
+
+Once one subgraph is proven and tested, the pattern is established to add further subgraphs, progressively enhancing functionality in the Federation stack. It's crucial to keep the monolith as a data source initially, creating a contract that de-risks the migration and ensures reliable data service.
 
 <img
   src="./images/moving-away-from-the-monolith/4-additional-subgraphs.jpg"
@@ -58,9 +71,7 @@ Note: some client work _may_ be required here to bind use queries you have newly
   width="550"
 />
 
-Upon proving and testing one subgraph and integrating into clients the pattern is now established to add further subgraphs, which transparently starts adding more functionality to our Federation stack.
-It is exceptionally important to note that this pattern keeps the monolith in play purely as a data source, because there must be a constant in play. Changing everything introduces change across and activating nearly every team, which will become impossible to manage. Creating a contract in this pattern de-risks the migration hugely because the org can be 100% certain they can serve the same data reliably, and not introduce further delay finding new data source.
-However, it is not important to connect to the monolith _if_ you have the new API endpoints already available. If this is the case, you can bypass the monolith immediately as a datasource and connect where ever you like.
+With the strangulation pattern, the supergraph eventually handles all traffic for each client.
 
 <img
   src="./images/moving-away-from-the-monolith/5-penultamate-state.jpg"
@@ -68,9 +79,7 @@ However, it is not important to connect to the monolith _if_ you have the new AP
   width="550"
 />
 
-Using the strangulation pattern, we will arrive at a point where all traffic is now for each client is actually being facaded by the supergraph itself.
-
-We are now officially in a decoupled state, whereby the client has no idea where the data is coming from, _fundamentally_ freeing the org to start the decommissioning phase of this pattern; shutting down the monolith section by section.
+This marks the decoupled state, allowing the organization to begin the decommissioning phase by shutting down the monolith section by section.
 
 <img
   style="display: block; margin: 0 auto"
@@ -79,7 +88,7 @@ We are now officially in a decoupled state, whereby the client has no idea where
   width="550"
 />
 
-The diagram above demonstrates two domains which were previously served by the monolith, now being served by the newly created microservices. It is critical to note, this pattern actively hides implementational details away from the client, yet fulfils the agreed data response, due to the fact there is now a contract involved in the shape of our new supergraph.
+The diagram shows newly created microservices serving domains previously handled by the monolith. This pattern hides implementation details from the client while fulfilling the agreed data response through the supergraph contract.
 
 <img
   src="./images/moving-away-from-the-monolith/7-monolith-removed.jpg"
@@ -87,9 +96,8 @@ The diagram above demonstrates two domains which were previously served by the m
   width="550"
 />
 
-The end state of the transformation is achieved once all the domains in the monolith have been migrated, thus allowing the org to successfully rid themselves of the monolith.
+The transformation is complete when all monolith domains have migrated, allowing the organization to successfully eliminate the monolith.
 
 ## Conclusion
 
-Although moving away from deeply entrenched monolith can seem like an impossible task. Using very simple steps as described in this pattern and also compartmentalising away any un-required complexity - what seems an impossible task, can be achieved in a manageable fashion.
-Leverage the supergraph contract to decouple your systems and allow you to migrate away from the monolith, without impacting your clients.
+While moving away from a deeply entrenched monolith may seem daunting, taking the strangulation pattern approach makes the task more manageable. You can use the supergraph to decouple systems, facilitating a seamless migration away from the monolith without impacting clients.
