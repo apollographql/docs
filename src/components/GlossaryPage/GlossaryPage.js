@@ -3,6 +3,7 @@ import React, {useEffect, useState} from 'react';
 import Results from './Results';
 import Search from './Search';
 import {Box, Flex, Grid, GridItem} from '@chakra-ui/react';
+import {ClearFilters} from './ClearFilters';
 
 import algoliasearch from 'algoliasearch/lite';
 import {Configure, InstantSearch} from 'react-instantsearch';
@@ -43,9 +44,14 @@ export function GlossaryPage() {
     <Box>
       <InstantSearch searchClient={searchClient} indexName={algoliaIndexName}>
         <Configure hitsPerPage={150} />
-        <Search />
         <Flex justify="center" p="4">
           <Grid templateColumns="3fr 1fr" gap="6">
+            <GridItem>
+              <Search />
+            </GridItem>
+            <GridItem>
+              <ClearFilters />
+            </GridItem>
             <GridItem>
               <Results />
             </GridItem>
