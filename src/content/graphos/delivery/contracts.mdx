@@ -1,6 +1,6 @@
 ---
 title: Contract overview
-subtitle: Use contracts to deliver different subsets of your supergraph to different consumers
+subtitle: Deliver different subsets of your supergraph to different consumers
 description: Use Apollo GraphOS contracts to tailor access to your federated GraphQL supergraph for different consumers.
 ---
 
@@ -28,7 +28,7 @@ Each contract can include different fields and types from each subgraph.
 
 Contracts offer these benefits:
 
-- **Selective data access**: Supergraphs often contain a wide range of data, including experimental data or information that's irrelevant to specific audiences. Contracts declaratively grant access to specific parts of the supergraph, so graph consumers only access the relevant data.
+- **Selective data access**: Supergraphs often contain a wide range of data, including information that's irrelevant to specific audiences. Contracts declaratively grant access to specific subsets of the supergraph, so graph consumers only access relevant data.
 
 - **Data security and privacy**: Contracts bolster data security and privacy by enabling the exclusion of confidential data from certain consumers. This ensures that only authorized parties can access sensitive data.
 
@@ -43,17 +43,17 @@ graph LR;
   subgraph "Source variant";
   api("Complete<br/>supergraph schema<br/>▉");
   end
-  subgraph "Contract variant B"
+  subgraph "Contract variant"
   contractB("Contract <br/>schema B<br/>▟")
   end
-  subgraph "Contract variant A"
+  subgraph "Contract variant"
   contractA("Contract <br/>schema A<br/>▛");
   end
   api -."Filter schema<br/>according to contract A".->contractA
   api -."Filter schema<br/>according to contract B".->contractB
 ```
 
-Contracts are created by adding `@tag` directives to your subgraph schemas. `@tag`s declare which types and fields to _exclude_ from specific contract variants.
+Contracts are created by adding `@tag` directives to your subgraph schemas. `@tag`s declare which types and fields to include or exclude from specific contract variants.
 
 ```graphql {4} title="Source variant subgraph schema"
 type Product {
@@ -63,11 +63,11 @@ type Product {
 }
 ```
 
-```graphql title="Contract variant API schema"
+```graphql {4} title="Contract variant API schema"
 type Product {
   id: ID!
   name: String!
-  # codename field is filtered out
+  # codename field is filtered out of this contract variant
 }
 ```
 
@@ -96,7 +96,7 @@ graph BT;
   class adminapp,userapp secondary;
 ```
 
-This enables you to hide experimental types and fields still in development or limit a particular audience's access to only the portions of your graph they need.
+This enables you to hide experimental types and fields still in development or limit a particular audience's access to only the portions of the graph they need.
 
 Contract routers can safely connect to the same subgraph instances as any other router because their clients can only interact with data represented in the contract schema. This does not affect internal routing. For example, filtered fields can still be used in a [`@requires`](/federation/federated-types/federated-directives/#requires) selection set.
 
@@ -119,12 +119,12 @@ Contracts behave slightly differently depending on which version of Apollo Feder
 - Input types or their fields
 - Arguments of object fields or interface fields
 
-### Contracts and Federation 2
+## Contracts and Federation 2
 
 To create a contract variant that uses Federation 2, the contract's source variant must _also_ use Federation 2.
 [Learn how to move an existing variant to Federation 2.](/federation/federation-2/moving-to-federation-2#step-2-configure-your-composition-method)
 
-#### Moving an existing contract to Federation 2
+### Moving an existing contract to Federation 2
 
 If a Federation 1 source variant already has one or more associated contracts, it isn't possible to move that variant or its contract variants to Federation 2. Instead, you need to **delete and recreate** your contract variants with the following steps:
 
@@ -142,7 +142,7 @@ If a Federation 1 source variant already has one or more associated contracts, i
 
 <Tip>
 
-- If you're an enterprise customer looking for more material on this topic, try the [Enterprise best practices: Contracts](https://www.apollographql.com/tutorials/contracts) course on Odyssey.
+- If you're an enterprise customer looking for more material on this topic, take the [Enterprise best practices: Contracts](https://www.apollographql.com/tutorials/contracts) course on Odyssey.
 
 - Learn about [contract usage patterns](/technotes/TN0014-contracts-patterns/) in the Tech Notes.
 
