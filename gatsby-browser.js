@@ -31,7 +31,40 @@ const redirects = {
   '/graphos/explorer/connecting-authenticating#examples':
     '/graphos/explorer/scripting#examples',
   '/graphos/explorer/connecting-authenticating#operation-scripts-1':
-    '/graphos/explorer/scripting#examples'
+    '/graphos/explorer/scripting#examples',
+  '/graphos/delivery/contracts/#setup': '/graphos/delivery/contract-setup',
+  '/graphos/delivery/contracts/#automatic-updates':
+    '/graphos/delivery/contract-setup#automatic-updates',
+  '/graphos/delivery/contracts/#editing-a-contract':
+    '/graphos/delivery/contract-setup#edit-contracts',
+  '/graphos/delivery/contracts/#contract-checks':
+    '/graphos/delivery/contract-setup#contract-checks',
+  '/graphos/delivery/contracts/#failing-contract-checks':
+    '/graphos/delivery/contract-setup#failing-contract-checks',
+  '/graphos/delivery/contracts/#1-update-your-router-and-subgraphs':
+    '/graphos/delivery/contract-setup#update-your-router-and-subgraphs',
+  '/graphos/delivery/contracts/#2-fed1-enable-variant-support-for-tag':
+    '/graphos/delivery/contract-setup#fed1-only-enable-variant-support-for-tag',
+  '/graphos/delivery/contracts/#3-add-tags':
+    '/graphos/delivery/contract-setup#1-add-tags-to-subgraph-schemas',
+  '/graphos/delivery/contracts/#4-publish-updated-subgraph-schemas':
+    '/graphos/delivery/contract-setup#2-publish-updated-subgraph-schemass',
+  '/graphos/delivery/contracts/#5-create-a-contract':
+    '/graphos/delivery/contract-setup#3-create-a-contract',
+  '/graphos/delivery/contracts/#6-use-your-new-contract-variant':
+    '/graphos/delivery/contract-setup#using-contract-variants',
+  '/graphos/delivery/contracts/#rules-for-tags-and-contracts':
+    '/graphos/delivery/contract-reference#rules-for-tags-and-contracts',
+  '/graphos/delivery/contracts/#valid-tag-locations':
+    '/graphos/delivery/contract-reference#valid-tag-locations',
+  '/graphos/delivery/contracts/#valid-tag-names':
+    '/graphos/delivery/contract-reference#valid-tag-names',
+  '/graphos/delivery/contracts/#dependent-tags':
+    '/graphos/delivery/contract-reference#dependent-tags',
+  '/graphos/delivery/contracts/#special-cases-for-filtering':
+    '/graphos/delivery/contract-reference#special-cases-for-filtering',
+  '/graphos/delivery/contracts/#error-types':
+    '/graphos/delivery/contract-reference#errors'
 };
 
 const normalizeUrl = url => {
