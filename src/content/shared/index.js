@@ -18,4 +18,5 @@ export {default as PublishPQMs} from './publish-pqms.mdx';
 export {default as RegisterCLI} from './register-cli.mdx';
 export {default as RegisterFederatedCLI} from './register-federated-cli.mdx';
 export {default as SetApolloVCSCommit} from './set-apollo-vcs-commit.mdx';
+export {default as StudioPages} from './studio-pages.mdx';
 export {default as TopLevelAwait} from './top-level-await.mdx';
