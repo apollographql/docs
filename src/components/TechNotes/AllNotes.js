@@ -1,8 +1,8 @@
-import React, {useMemo, useState} from 'react';
-import {Heading} from '@chakra-ui/react';
-import {NotesList} from './NotesList';
-import {TagList} from './TagList';
-import {graphql, useStaticQuery} from 'gatsby';
+import React, { useMemo, useState } from "react";
+import { Heading } from "@chakra-ui/react";
+import { NotesList } from "./NotesList";
+import { TagList } from "./TagList";
+import { graphql, useStaticQuery } from "gatsby";
 
 export function AllNotes() {
   const data = useStaticQuery(
@@ -39,17 +39,13 @@ export function AllNotes() {
     if (!currentTag) {
       return data.notes.nodes;
     } else {
-      return data.notes.nodes.filter(note =>
-        note.childMdx.frontmatter.tags.includes(currentTag)
-      );
+      return data.notes.nodes.filter((note) => note.childMdx.frontmatter.tags.includes(currentTag));
     }
   }, [currentTag, data.notes.nodes]);
 
   return (
     <>
-      <Heading>
-        {currentTag ? `Notes tagged “${currentTag}”` : 'All notes'}
-      </Heading>
+      <Heading>{currentTag ? `Notes tagged “${currentTag}”` : "All notes"}</Heading>
       <TagList selected={currentTag} onClick={setCurrentTag} />
       <NotesList notes={notes} />
     </>

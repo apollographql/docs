@@ -1,0 +1,109 @@
+rhai_scripts:
+  - name: "Client ID Enforcement"
+    description: "Enforce consumers provide client identification headers."
+    tags: [validation, headers]
+    more: "/technotes/TN0001-client-id-enforcement/"
+    code_file_name: client-id.rhai
+    content: |
+      fn supergraph_service(service) {
+        const request_callback = Fn("process_request");
+        service.map_request(request_callback);
+      }
+
+      fn process_request(request) {
+        log_info("processing request");
+        let valid_clients = ["1", "2"];
+        let valid_client_names = ["apollo-client"];
+
+        if ("apollographql-client-version" in request.headers && "apollographql-client-name" in request.headers) {
+          let client_header = request.headers["apollographql-client-version"];
+          let name_header = request.headers["apollographql-client-name"];
+        
+          if !valid_clients.contains(client_header) {
+            log_error("Invalid client ID provided");
+            throw #{
+              status: 401,
+              message: "Invalid client ID provided"
+            };
+          }
+          if !valid_client_names.contains(name_header) {
+            log_error("Invalid client name provided");
+            throw #{
+              status: 401,
+              message: "Invalid client name provided"
+            };
+          }
+        }
+        else {
+          log_error("No client headers set");
+          throw #{
+            status: 401,
+            message: "No client headers set"
+          };
+        }    
+      }
+  - name: "Convert Cookies to Headers"
+    description: "This example converts cookies into headers for transmission to subgraphs."
+    tags: [headers]
+    more: "/router/customizations/rhai#converting-cookies-to-headers"
+    code_file_name: cookies-to-headers.rhai
+    content: |
+      // Call map_request with our service and pass in a string with the name
+      // of the function to callback
+      fn subgraph_service(service, subgraph) {
+          // Choose how to treat each subgraph using the "subgraph" parameter.
+          // In this case we are doing the same thing for all subgraphs
+          // and logging out details for each.
+          print(`registering request callback for: ${subgraph}`); // print() is the same as using log_info()
+          const request_callback = Fn("process_request");
+          service.map_request(request_callback);
+      }
+
+      // This will convert all cookie pairs into headers.
+      // If you only wish to convert certain cookies, you
+      // can add logic to modify the processing.
+      fn process_request(request) {
+          print("adding cookies as headers");
+
+          // Find our cookies
+          let cookies = request.headers["cookie"].split(';');
+          for cookie in cookies {
+              // Split our cookies into name and value
+              let k_v = cookie.split('=', 2);
+              if k_v.len() == 2 {
+                  // trim off any whitespace
+                  k_v[0].trim();
+                  k_v[1].trim();
+                  // update our headers
+                  // Note: we must update subgraph.headers, since we are
+                  // setting a header in our subgraph request
+                  request.subgraph.headers[k_v[0]] = k_v[1];
+              }
+          }
+      }
+  - name: "Suppress Subgraph Errors"
+    description: "Suppresses errors from subgraphs."
+    tags: [errors]
+    code_file_name: suppress-subgraph-errors.rhai
+    content: |
+      let subgraph_errors = [];
+
+      fn supergraph_service(service){
+        service.map_response(|response|{
+          response.body.errors = response.body.errors.filter(|error|{
+            let e = json::encode(error);
+            if (subgraph_errors.contains(e)){
+              return false;
+            };
+            return true;
+          });
+        })
+      }
+
+      fn subgraph_service(service,subgraph){
+        service.map_response(|response|{
+          subgraph_errors += response.body.errors.map(|error|{
+            json::encode(error)
+          });
+        })
+      }
