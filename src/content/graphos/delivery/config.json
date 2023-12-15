@@ -29,12 +29,27 @@
     "Schema delivery": {
       "Publishing schemas": "/publishing-schemas",
       "Launches": "/launches",
-      "Contracts": [
-        "/contracts",
-        [
-          "enterprise"
+      "Contracts":
+      {
+        "Overview": [
+          "/contracts",
+          [
+            "enterprise"
+          ]
+        ],
+        "Creating and using contracts": [
+          "/contract-setup",
+          [
+            "enterprise"
+          ]
+        ],
+        "Reference": [
+          "/contract-reference",
+          [
+            "enterprise"
+          ]
         ]
-      ]
+      }
     }
   }
 }
