@@ -1,3 +1,4 @@
+import InlineCode from '../InlineCode';
 import Markdown from 'react-markdown';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -70,10 +71,10 @@ const Results = () => {
     <Stack divider={<StackDivider borderColor="border" />} spacing={6}>
       {hits.map(hit => (
         <Box key={hit.objectID} mt="2">
-          <HStack mt="2" pb="2">
+          <HStack mt="2" pb="4">
             <ClickableHeading
               as="h2"
-              fontSize="lg"
+              fontSize="xl"
               fontWeight="bold"
               id={makeId(hit)}
             >
@@ -84,7 +85,7 @@ const Results = () => {
               hit.labels.map(label => (
                 <Tag
                   key={label}
-                  size="sm"
+                  size="md"
                   variant="solid"
                   colorScheme="indigo"
                   borderRadius="md"
@@ -98,11 +99,37 @@ const Results = () => {
             components={{
               p: Text,
               a: PrimaryLink,
-              pre: MarkdownCodeBlock
+              pre: MarkdownCodeBlock,
+              code: InlineCode
             }}
           >
-            {hit.definition}
+            {hit.learnMore
+              ? hit.definition.concat(` [Learn more.](${hit.learnMore})`)
+              : hit.definition}
           </Markdown>
+
+          <HStack mt="2" pb="2">
+            {hit.relatedTerms && (
+              <Text>
+                <strong>{`Related term definition${
+                  hit.relatedTerms.length > 1 ? 's' : ''
+                }:`}</strong>
+              </Text>
+            )}
+            {hit.relatedTerms &&
+              hit.relatedTerms.map(term => (
+                <Tag
+                  key={term}
+                  size="lg"
+                  variant="solid"
+                  colorScheme="teal"
+                  borderRadius="md"
+                  onClick={() => handleLabelClick(term)}
+                >
+                  <TagLabel>{term}</TagLabel>
+                </Tag>
+              ))}
+          </HStack>
         </Box>
       ))}
     </Stack>
