@@ -62,7 +62,13 @@ To overcome this, you can leverage [federated architecture](/federation).
 
 ### Decouple clients
 
-Migration involves decoupling clients from the monolith onto a federated graph. With federation, clients can interact with the federated graph as if it were a monolith. This mitigates the risk of back-end changes affecting clients.
+Migration involves decoupling clients from the monolith onto a federated graph. With federation, clients can interact with the federated graph as if it were a monolith. This mitigates the risk of back-end changes affecting clients. The API Gateway facilitates fetching data responses from the newly federated architecture by reconfiguring existing routes.
+
+<Note>
+
+In federated architecture, the individual GraphQL APIs are called **subgraphs**. [Learn more.](/federation/#next-steps)
+
+</Note>
 
 ```mermaid
 flowchart LR
@@ -70,7 +76,7 @@ ClientA("Client A")
 ClientB("Client B")
 Gateway[["API Gateway"]]
 Router[["Router"]]
-SugbraphA("Subgraph")
+SubgraphA("Subgraph")
 Gateway<-->Router
 Router<-->SubgraphA
 SubgraphA<-->Product
@@ -93,11 +99,15 @@ Gateway --- Payment
 Gateway --- CustomerAccount
 ```
 
-The API Gateway facilitates fetching data responses from the newly federated architecture by reconfiguring existing routes.
+<Tip>
+
+Learn more about [how the Apollo Router works with API gateways](/technotes/TN0037-api-gateways/).
+
+</Tip>
 
 ### Incrementally migrate further domains
 
-Once one subgraph is successfully implemented, the pattern is established to add further subgraphs, progressively enhancing functionality into the federated architecture. It's crucial to keep the monolith as a data source initially to de-risk the migration and ensure reliable data service.
+Once one subgraph is successfully implemented, the pattern is established to add further subgraphs, progressively adding functionality to the federated architecture. It's crucial to keep the monolith as a data source initially to de-risk the migration and ensure reliable data service.
 
 ```mermaid
 flowchart LR
