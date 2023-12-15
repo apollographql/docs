@@ -6,6 +6,8 @@ import {
   HStack,
   Heading,
   Link,
+  Stack,
+  StackDivider,
   Tag,
   TagLabel,
   Text
@@ -65,24 +67,19 @@ const Results = () => {
   const makeId = hit => hit.term.replace(/\s+/g, '-').toLowerCase();
 
   return (
-    <Box mt="6">
+    <Stack divider={<StackDivider borderColor="border" />} spacing={6}>
       {hits.map(hit => (
-        <Box
-          key={hit.objectID}
-          borderBottom="1px"
-          borderColor="gray.200"
-          mb="4"
-          pb="4"
-        >
-          <ClickableHeading
-            as="h4"
-            fontSize="lg"
-            fontWeight="bold"
-            id={makeId(hit)}
-          >
-            <Highlight attribute="term" hit={hit} />
-          </ClickableHeading>
-          <HStack mt="2">
+        <Box key={hit.objectID} mt="2">
+          <HStack mt="2" pb="2">
+            <ClickableHeading
+              as="h2"
+              fontSize="lg"
+              fontWeight="bold"
+              id={makeId(hit)}
+            >
+              <Highlight attribute="term" hit={hit} />
+            </ClickableHeading>
+
             {hit.labels &&
               hit.labels.map(label => (
                 <Tag
@@ -108,7 +105,7 @@ const Results = () => {
           </Markdown>
         </Box>
       ))}
-    </Box>
+    </Stack>
   );
 };
 
