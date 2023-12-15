@@ -1,19 +1,20 @@
-import React, { useState } from "react";
+import React, {useState} from 'react';
 import {
+  Box,
+  Flex,
   FormControl,
-  FormLabel,
   FormHelperText,
+  FormLabel,
+  Heading,
   InputGroup,
+  InputRightAddon,
   NumberInput,
   NumberInputField,
-  InputRightAddon,
   Stack,
-  Flex,
-  Box,
-  Heading,
-  Text,
-} from "@chakra-ui/react";
-import { CodeBlock } from "@apollo/chakra-helpers";
+  Text
+} from '@chakra-ui/react';
+import {CodeBlock} from '@apollo/chakra-helpers';
+import {Tip} from '../Tip';
 
 const CONFIG_WITH_PLACEHOLDERS = `
 resources:
@@ -26,14 +27,14 @@ resources:
 `.trim();
 
 const RouterResourceEstimator = () => {
-  const [requestRatePerSecond, setRequestRatePerSecond] = useState("");
-  const [peakRequestRatePerSecond, setPeakRequestRatePerSecond] = useState("");
-  const [baselineSubgraphLatency, setBaselineSubgraphLatency] = useState("100");
-  const [clientRequestSize, setClientRequestSize] = useState("0.1");
-  const [clientResponseSize, setClientResponseSize] = useState("0.1");
-  const [numberOfInstances, setNumberOfInstances] = useState("3");
-  const [baseMemory, setBaseMemory] = useState("100");
-  const [queryPlannerMemory, setQueryPlannerMemory] = useState("20");
+  const [requestRatePerSecond, setRequestRatePerSecond] = useState('');
+  const [peakRequestRatePerSecond, setPeakRequestRatePerSecond] = useState('');
+  const [baselineSubgraphLatency, setBaselineSubgraphLatency] = useState('100');
+  const [clientRequestSize, setClientRequestSize] = useState('0.1');
+  const [clientResponseSize, setClientResponseSize] = useState('0.1');
+  const [numberOfInstances, setNumberOfInstances] = useState('3');
+  const [baseMemory, setBaseMemory] = useState('100');
+  const [queryPlannerMemory, setQueryPlannerMemory] = useState('20');
 
   // Math: Variables and Calculations
   const R = parseFloat(requestRatePerSecond);
@@ -75,9 +76,11 @@ const RouterResourceEstimator = () => {
 
   return (
     <>
-      <Flex gap={10} direction={{ base: "column-reverse", lg: "row" }}>
-        <Stack flex={1} spacing={10} width={"100%"} maxW={"500px"}>
-          <Heading as="h2">Parameters</Heading>
+      <Flex gap={10} direction={{base: 'column-reverse', lg: 'row'}}>
+        <Stack flex={1} spacing={10} width={'100%'} maxW={'500px'}>
+          <Heading as="h3" size="lg">
+            Parameters
+          </Heading>
           // Request Rate per Second
           <FormControl>
             <Flex w="100%">
@@ -87,7 +90,7 @@ const RouterResourceEstimator = () => {
                   <NumberInput
                     min={1}
                     value={requestRatePerSecond}
-                    onChange={(value) => setRequestRatePerSecond(value)}
+                    onChange={value => setRequestRatePerSecond(value)}
                     w="100%"
                   >
                     <NumberInputField placeholder={500} />
@@ -95,7 +98,8 @@ const RouterResourceEstimator = () => {
                   <InputRightAddon children="RPS" />
                 </InputGroup>
                 <FormHelperText>
-                  Average number of requests per second (RPS) you expect the router to receive
+                  Average number of requests per second (RPS) you expect the
+                  router to receive
                 </FormHelperText>
               </Box>
             </Flex>
@@ -109,7 +113,7 @@ const RouterResourceEstimator = () => {
                   <NumberInput
                     min={1}
                     value={peakRequestRatePerSecond}
-                    onChange={(value) => setPeakRequestRatePerSecond(value)}
+                    onChange={value => setPeakRequestRatePerSecond(value)}
                     w="100%"
                   >
                     <NumberInputField placeholder={1000} />
@@ -117,7 +121,8 @@ const RouterResourceEstimator = () => {
                   <InputRightAddon children="RPS" />
                 </InputGroup>
                 <FormHelperText>
-                  The highest expected number of requests per second (RPS) you expect the router to receive
+                  The highest expected number of requests per second (RPS) you
+                  expect the router to receive
                 </FormHelperText>
               </Box>
             </Flex>
@@ -132,14 +137,15 @@ const RouterResourceEstimator = () => {
                     min={1}
                     w="100%"
                     value={baselineSubgraphLatency}
-                    onChange={(value) => setBaselineSubgraphLatency(value)}
+                    onChange={value => setBaselineSubgraphLatency(value)}
                   >
                     <NumberInputField placeholder={500} />
                   </NumberInput>
                   <InputRightAddon children="ms" />
                 </InputGroup>
                 <FormHelperText>
-                  The baseline response time of a typical end-to-end response from your graph in milliseconds (ms)
+                  The baseline response time of a typical end-to-end response
+                  from your graph in milliseconds (ms)
                 </FormHelperText>
               </Box>
             </Flex>
@@ -156,13 +162,15 @@ const RouterResourceEstimator = () => {
                     min={0.1}
                     w="100%"
                     value={clientRequestSize}
-                    onChange={(value) => setClientRequestSize(value)}
+                    onChange={value => setClientRequestSize(value)}
                   >
                     <NumberInputField placeholder={0.1} />
                   </NumberInput>
                   <InputRightAddon children="MB" />
                 </InputGroup>
-                <FormHelperText>The size of a typical client request in Megabytes (MB)</FormHelperText>
+                <FormHelperText>
+                  The size of a typical client request in Megabytes (MB)
+                </FormHelperText>
               </Box>
             </Flex>
           </FormControl>
@@ -178,13 +186,15 @@ const RouterResourceEstimator = () => {
                     min={0.1}
                     w="100%"
                     value={clientResponseSize}
-                    onChange={(value) => setClientResponseSize(value)}
+                    onChange={value => setClientResponseSize(value)}
                   >
                     <NumberInputField placeholder={0.1} />
                   </NumberInput>
                   <InputRightAddon children="MB" />
                 </InputGroup>
-                <FormHelperText>The size of a typical client response in Megabytes (MB)</FormHelperText>
+                <FormHelperText>
+                  The size of a typical client response in Megabytes (MB)
+                </FormHelperText>
               </Box>
             </Flex>
           </FormControl>
@@ -198,12 +208,14 @@ const RouterResourceEstimator = () => {
                     min={1}
                     w="100%"
                     value={numberOfInstances}
-                    onChange={(value) => setNumberOfInstances(value)}
+                    onChange={value => setNumberOfInstances(value)}
                   >
                     <NumberInputField placeholder={3} />
                   </NumberInput>
                 </InputGroup>
-                <FormHelperText>Number of Router instances running in parallel</FormHelperText>
+                <FormHelperText>
+                  Number of router instances running in parallel
+                </FormHelperText>
               </Box>
             </Flex>
           </FormControl>
@@ -214,12 +226,20 @@ const RouterResourceEstimator = () => {
               <FormLabel flex="1">Base Memory</FormLabel>
               <Box flex="1">
                 <InputGroup size="sm">
-                  <NumberInput min={1} w="100%" value={baseMemory} onChange={(value) => setBaseMemory(value)}>
+                  <NumberInput
+                    min={1}
+                    w="100%"
+                    value={baseMemory}
+                    onChange={value => setBaseMemory(value)}
+                  >
                     <NumberInputField placeholder={100} />
                   </NumberInput>
                   <InputRightAddon children="MB" />
                 </InputGroup>
-                <FormHelperText>The amount of memory a router is configured with in Megabytes (MB)</FormHelperText>
+                <FormHelperText>
+                  The amount of memory a router is configured with in Megabytes
+                  (MB)
+                </FormHelperText>
               </Box>
             </Flex>
           </FormControl>
@@ -233,20 +253,31 @@ const RouterResourceEstimator = () => {
                     min={1}
                     w="100%"
                     value={queryPlannerMemory}
-                    onChange={(value) => setQueryPlannerMemory(value)}
+                    onChange={value => setQueryPlannerMemory(value)}
                   >
                     <NumberInputField placeholder={20} />
                   </NumberInput>
                   <InputRightAddon children="MB" />
                 </InputGroup>
-                <FormHelperText>The amount of memory allocated to the query planner in Megabytes (MB)</FormHelperText>
+                <FormHelperText>
+                  The amount of memory allocated to the query planner in
+                  Megabytes (MB)
+                </FormHelperText>
               </Box>
             </Flex>
           </FormControl>
         </Stack>
         <Box flex={1}>
-          <Stack position={"sticky"} top="100px" spacing={5} width={"100%"} maxW={"500px"}>
-            <Heading as="h2">Results</Heading>
+          <Stack
+            position={'sticky'}
+            top="100px"
+            spacing={5}
+            width={'100%'}
+            maxW={'500px'}
+          >
+            <Heading as="h3" size="lg">
+              Results
+            </Heading>
             {(!requestRatePerSecond ||
               !peakRequestRatePerSecond ||
               !baselineSubgraphLatency ||
@@ -255,26 +286,37 @@ const RouterResourceEstimator = () => {
               !numberOfInstances ||
               !baseMemory ||
               !queryPlannerMemory) && (
-              <Text fontWeight={"bold"} color={"red"}>
-                Please fill out Parameters.
-              </Text>
+              <Tip>Enter parameters to see results.</Tip>
             )}
             <>
               <Text>
-                Based on the provided parameters and assumptions, for each Router instance you will likely require a
-                minimum of <strong>{vBaselineSafe || "__"} vCPUs</strong> for average traffic and a minimum of{" "}
-                <strong>{vPeakSafe || "__"} vCPUs</strong> for peak traffic.
+                Based on the provided parameters and assumptions, each router
+                instance likely requires a minimum of{' '}
+                <strong>{vBaselineSafe || '__'} vCPUs</strong> for average
+                traffic and a minimum of{' '}
+                <strong>{vPeakSafe || '__'} vCPUs</strong> for peak traffic.
               </Text>
               <Text>
-                We also recommend <strong>{Math.ceil(M) || "__"}MB</strong> of memory per Router instance with a limit
-                of <strong>{Math.ceil(Mpeak) || "__"}MB</strong> of memory.
+                We also recommend <strong>{Math.ceil(M) || '__'}MB</strong> of
+                memory per router instance with a limit of{' '}
+                <strong>{Math.ceil(Mpeak) || '__'}MB</strong> of memory.
               </Text>
               <Box>
-                <Text>Kubernetes configuration for a single instance:</Text>
+                <br />
+                <Heading as="h4" size="md">
+                  Kubernetes configuration for a single instance:
+                </Heading>
+                <br />
                 <CodeBlock
-                  code={CONFIG_WITH_PLACEHOLDERS.replace("{{memory}}", Math.ceil(M) || "__")
-                    .replace("{{cpu}}", Math.ceil(vBaselineSafe / I) * 1000 || "__")
-                    .replace("{{memory_limit}}", Math.ceil(Mpeak) || "__")}
+                  code={CONFIG_WITH_PLACEHOLDERS.replace(
+                    '{{memory}}',
+                    Math.ceil(M) || '__'
+                  )
+                    .replace(
+                      '{{cpu}}',
+                      Math.ceil(vBaselineSafe / I) * 1000 || '__'
+                    )
+                    .replace('{{memory_limit}}', Math.ceil(Mpeak) || '__')}
                   showLineNumbers="true"
                   language="yaml"
                 ></CodeBlock>
