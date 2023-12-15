@@ -1,7 +1,7 @@
 ---
 title: Migrating from monolitic to federated architecture
 id: TN0046
-description: Using the strangulation pattern to remove the monolith
+description: Using the strangler pattern to remove the monolith
 tags: [federation, transformation, organization]
 ---
 
@@ -9,11 +9,11 @@ tags: [federation, transformation, organization]
 
 Many organizations aim to transition from a monolithic architecture to a [federated one](/federation). This process can seem challenging, but at Apollo, we've observed numerous successful migrations away from monoliths.
 
-This tech note explores one of the most successful migration patterns: **the strangulation pattern**. This approach allows for iterative and progressive changes, providing businesses with the confidence to invest in transformative changes.
+This tech note explores one of the most successful migration patterns: **the strangler pattern**. This approach allows for iterative and progressive changes, providing businesses with the confidence to invest in transformative changes.
 
 ## Migration steps
 
-The strangulation pattern involves logically dissecting the monolith and migrating each part incrementally. This approach enables a smooth transition away from a monolithic system while demonstrating gradual progress to your organization.
+The strangler pattern involves logically dissecting the monolith and migrating each part incrementally. This approach enables a smooth transition away from a monolith while demonstrating gradual progress to your organization.
 
 ### Divide the monolith into distinct domains
 
@@ -26,20 +26,44 @@ The initial challenge is determining how to divide the monolith. Most companies 
 - Payment
 - Customer Account
 
-<img
-  style="display: block; margin: 0 auto"
-  src="./images/moving-away-from-the-monolith/1-the-monolith.jpg"
-  alt="Abstract image of monolith"
-  width="550"
-/>
+```mermaid
+flowchart TB
+  subgraph Monolith
+  direction LR
+  Product["Product"];
+  Inventory["Inventory"];
+  Cart["Cart"];
+  Order["Order"];
+  Payment["Payment"];
+  CustomerAccount["Customer Account"];
+  end
+```
 
-The simplified monolith setup illustrates how clients fetch data and their tight integration with the system.
+The simplified monolith setup illustrates how clients fetch data and the tight integration within the system.
 
-<img
-  src="./images/moving-away-from-the-monolith/2-typical-monolith-setup.jpg"
-  alt="Diagram of a simplified and typical monolith setup"
-  width="550"
-/>
+```mermaid
+flowchart LR
+ClientA("Client A")
+ClientB("Client B")
+Gateway[["API Gateway"]]
+ClientA <--> Gateway
+ClientB <--> Gateway
+subgraph Monolith
+direction LR
+Product["Product"];
+Inventory["Inventory"];
+Cart["Cart"];
+Order["Order"];
+Payment["Payment"];
+CustomerAccount["Customer Account"];
+end
+Gateway --- Product
+Gateway --- Inventory
+Gateway --- Cart
+Gateway --- Order
+Gateway --- Payment
+Gateway --- CustomerAccount
+```
 
 To overcome this, you can leverage [federated architecture](/federation).
 
@@ -47,57 +71,191 @@ To overcome this, you can leverage [federated architecture](/federation).
 
 The approach involves decoupling existing clients from the monolith onto an established contract provided by the federation layer, thus mitigating the risk of back-end changes affecting clients.
 
-<img
-  src="./images/moving-away-from-the-monolith/3-first-steps.jpg"
-  alt="Diagram of taking the first steps"
-  width="550"
-/>
+```mermaid
+flowchart LR
+ClientA("Client A")
+ClientB("Client B")
+Gateway[["API Gateway"]]
+Router[["Router"]]
+SugbraphA("Subgraph")
+Gateway<-->Router
+Router<-->SubgraphA
+SubgraphA<-->Product
+ClientA <--> Gateway
+ClientB <--> Gateway
+subgraph Monolith
+direction LR
+Product["Product"];
+Inventory["Inventory"];
+Cart["Cart"];
+Order["Order"];
+Payment["Payment"];
+CustomerAccount["Customer Account"];
+end
+
+Gateway --- Inventory
+Gateway --- Cart
+Gateway --- Order
+Gateway --- Payment
+Gateway --- CustomerAccount
+```
 
 The API Gateway facilitates fetching data responses from the newly federated architecture by reconfiguring existing routes.
 
-<Note>
-
-Some client work may be needed to adapt to new or improved queries.
-
-</Note>
-
 ### Incrementally migrate further domains
 
-Once one subgraph is proven and tested, the pattern is established to add further subgraphs, progressively enhancing functionality in the Federation stack. It's crucial to keep the monolith as a data source initially, creating a contract that de-risks the migration and ensures reliable data service.
+Once one subgraph is proven and tested, the pattern is established to add further subgraphs, progressively enhancing functionality into the federated architecture. It's crucial to keep the monolith as a data source initially to de-risk the migration and ensure reliable data service.
 
-<img
-  src="./images/moving-away-from-the-monolith/4-additional-subgraphs.jpg"
-  alt="Diagram of the critical secons subgraph"
-  width="550"
-/>
+```mermaid
+flowchart LR
+ClientA("Client A")
+ClientB("Client B")
+Gateway[["API Gateway"]]
+Router[["Router"]]
+SubgraphA("Subgraph")
+SubgraphB("Subgraph")
+Gateway<-->Router
+Router<-->SubgraphA
+Router<-->SubgraphB
+SubgraphA<-->Product
+SubgraphB<-->Inventory
+ClientA <--> Gateway
+ClientB <--> Gateway
+subgraph Monolith
+direction LR
+Product["Product"];
+Inventory["Inventory"];
+Cart["Cart"];
+Order["Order"];
+Payment["Payment"];
+CustomerAccount["Customer Account"];
+end
 
-With the strangulation pattern, the supergraph eventually handles all traffic for each client.
+Gateway --- Cart
+Gateway --- Order
+Gateway --- Payment
+Gateway --- CustomerAccount
+```
 
-<img
-  src="./images/moving-away-from-the-monolith/5-penultamate-state.jpg"
-  alt="Diagram of the penultimate state of system"
-  width="550"
-/>
+The new federated architecture eventually handles all traffic for each client.
 
-This marks the decoupled state, allowing the organization to begin the decommissioning phase by shutting down the monolith section by section.
+```mermaid
+flowchart LR
+ClientA("Client A")
+ClientB("Client B")
+Gateway[["API Gateway"]]
+Router[["Router"]]
+SubgraphA("Subgraph")
+SubgraphB("Subgraph")
+SubgraphC("Subgraph")
+SubgraphD("Subgraph")
+SubgraphE("Subgraph")
+SubgraphF("Subgraph")
+Gateway<-->Router
+Router<-->SubgraphA
+Router<-->SubgraphB
+Router<-->SubgraphC
+Router<-->SubgraphD
+Router<-->SubgraphE
+Router<-->SubgraphF
+SubgraphA<-->Product
+SubgraphB<-->Inventory
+SubgraphC<-->Cart
+SubgraphD<-->Order
+SubgraphE<-->Payment
+SubgraphF<-->CustomerAccount
+ClientA <--> Gateway
+ClientB <--> Gateway
+subgraph Monolith
+direction LR
+Product["Product"];
+Inventory["Inventory"];
+Cart["Cart"];
+Order["Order"];
+Payment["Payment"];
+CustomerAccount["Customer Account"];
+end
+```
 
-<img
-  style="display: block; margin: 0 auto"
-  src="./images/moving-away-from-the-monolith/6-shutting-down-monolith-sections.jpg"
-  alt="Diagram of the start of removing the monolith"
-  width="550"
-/>
+This marks the decoupled state, allowing the organization to begin the decommissioning phase by shutting down the monolith domain by domain.
+
+```mermaid
+flowchart LR
+ClientA("Client A")
+ClientB("Client B")
+Gateway[["API Gateway"]]
+Router[["Router"]]
+SubgraphA("Subgraph")
+SubgraphB("Subgraph")
+SubgraphC("Subgraph")
+SubgraphD("Subgraph")
+SubgraphE("Subgraph")
+SubgraphF("Subgraph")
+Gateway<-->Router
+Router<-->SubgraphA
+Router<-->SubgraphB
+Router<-->SubgraphC
+Router<-->SubgraphD
+Router<-->SubgraphE
+Router<-->SubgraphF
+Product(("Product <br/> Microservice"));
+Inventory(("Inventory <br/> Microservice"));
+SubgraphA<-->Product
+SubgraphB<-->Inventory
+SubgraphC<-->Cart
+SubgraphD<-->Order
+SubgraphE<-->Payment
+SubgraphF<-->CustomerAccount
+ClientA <--> Gateway
+ClientB <--> Gateway
+subgraph Monolith
+direction LR
+Cart["Cart"];
+Order["Order"];
+Payment["Payment"];
+CustomerAccount["Customer Account"];
+end
+```
 
 The diagram shows newly created microservices serving domains previously handled by the monolith. This pattern hides implementation details from the client while fulfilling the agreed data response through the supergraph contract.
 
-<img
-  src="./images/moving-away-from-the-monolith/7-monolith-removed.jpg"
-  alt="Diagram of the monolith now removed"
-  width="550"
-/>
+```mermaid
+flowchart LR
+ClientA("Client A")
+ClientB("Client B")
+Gateway[["API Gateway"]]
+Router[["Router"]]
+SubgraphA("Subgraph")
+SubgraphB("Subgraph")
+SubgraphC("Subgraph")
+SubgraphD("Subgraph")
+SubgraphE("Subgraph")
+SubgraphF("Subgraph")
+Gateway<-->Router
+Router<-->SubgraphA
+Router<-->SubgraphB
+Router<-->SubgraphC
+Router<-->SubgraphD
+Router<-->SubgraphE
+Router<-->SubgraphF
+ClientA <--> Gateway
+ClientB <--> Gateway
+Product(("Product <br/> Microservice"));
+Inventory(("Inventory <br/> Microservice"));
+Cart(("Cart <br/> Microservice"));
+Order(("Order <br/> Microservice"));
+Payment(("Payment <br/> Microservice"));
+CustomerAccount(("Customer Account <br/> Microservice"));
+SubgraphA<-->Product
+SubgraphB<-->Inventory
+SubgraphC<-->Cart
+SubgraphD<-->Order
+SubgraphE<-->Payment
+SubgraphF<-->CustomerAccount
+```
 
 The transformation is complete when all monolith domains have migrated, allowing the organization to successfully eliminate the monolith.
 
 ## Conclusion
 
-While moving away from a deeply entrenched monolith may seem daunting, taking the strangulation pattern approach makes the task more manageable. You can use the supergraph to decouple systems, facilitating a seamless migration away from the monolith without impacting clients.
+While moving away from a deeply entrenched monolith may seem daunting, taking the strangler pattern approach makes the task more manageable. You can use the supergraph to decouple systems, facilitating a seamless migration away from the monolith without impacting clients.
