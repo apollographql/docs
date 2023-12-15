@@ -1,60 +1,59 @@
 ---
 title: Contract overview
-subtitle: Use contracts to deliver different subsets of your enterprise supergraph
-description: GraphOS contracts allow you to deliver subsets of your federated graph to consumers using the @tag directive.
+subtitle: Use contracts to deliver different subsets of your supergraph to different consumers
+description: Use Apollo GraphOS contracts to tailor access to your federated GraphQL supergraph for different consumers.
 ---
 
 <EnterpriseFeature />
 
-A unified supergraph provides a single source of truth for your organization's data. That data, however, likely has different consumers with different needs and permissions. GraphOS **contracts** enable you to deliver different subsets of your supergraph to different consumers. Each subset includes different fields and types from each subgraphs.
+A unified supergraph provides a single source of truth for your organization's data. That data likely has different consumers with different needs and permissions. GraphOS **contracts** enable you to deliver different subsets of your supergraph to different consumers.
 
 ```mermaid
 graph LR;
-  subgraph Super["Unifed graph"];
-    serviceA["Users subgraph<br/>▉"];
-    serviceB["Products subgraph<br/>▉"];
-    serviceC["Reviews subgraph<br/>▉"];
-  end;
-  subgraph Contract["Contract subset"];
-    serviceA2["Users subgraph<br/>▛"];
-    serviceB2["Products subgraph<br/>▛"];
-    serviceC2["Reviews subgraph<br/>▛"];
-  end;
-  serviceB -."Filtered subset <br/> according to contract".->serviceB2
+
+    serviceA("Complete<br/>supergraph schema<br/>▉");
+
+    serviceB2("Contract <br/>schema B<br/>▟");
+
+
+    serviceA2("Contract <br/>schema A<br/>▛");
+
+  serviceA -."Filter schema <br/>according to contract A".->serviceA2
+  serviceA -."Filter schema <br/>according to contract B".->serviceB2
 ```
 
-Contracts automate publishing supergraph subsets for specific audiences. They decentralize your supergraph's metadata via centralized filtering.
+Each contract can include different fields and types from each subgraph.
 
 ## Benefits of contracts
 
 Contracts offer these benefits:
 
-- **Selective data access**: Supergraphs often contain a wide range of data, including experimental or irrelevant (to specific audiences) information. Contracts declaritively grant access to specific parts of the supergraph so consumers only access the data that is relevant to them.
+- **Selective data access**: Supergraphs often contain a wide range of data, including experimental data or information that's irrelevant to specific audiences. Contracts declaratively grant access to specific parts of the supergraph, so graph consumers only access the relevant data.
 
-- **Data security and privacy**: Contracts bolster data security and privacy by enabling the exclusion of sensitive or confidential data from certain consumers. This ensures that only authorized parties have access to specific data.
+- **Data security and privacy**: Contracts bolster data security and privacy by enabling the exclusion of confidential data from certain consumers. This ensures that only authorized parties can access sensitive data.
 
-- **Documentation and guidance**: Contracts provide [documentation](#contract-documentation) to external client developers. By generating contract-specific documentation, developers can better understand and more easily interact with the data they are authorized to access.
+- **Documentation and guidance**: Contracts provide [documentation](#contract-documentation) to client developers. Contract-specific documentation helps developers better understand and more easily interact with the data they are authorized to access.
 
 ## How contracts work
 
-Each contract filters specific portions of your supergraph's schema into a different GraphOS variant:
+Each contract filters specific portions of your supergraph's schema into a **different GraphOS [variant](/graphos/graphs/federated-graphs/#supergraph-variants)**:
 
 ```mermaid
 graph LR;
   subgraph "Source variant";
-  api("Supergraph<br/>schema<br/>▉");
+  api("Complete<br/>supergraph schema<br/>▉");
   end
   subgraph "Contract variant B"
-  contractB("Contract schema B<br/>▟")
+  contractB("Contract <br/>schema B<br/>▟")
   end
   subgraph "Contract variant A"
-  contractA("Contract schema A<br/>▛");
+  contractA("Contract <br/>schema A<br/>▛");
   end
   api -."Filter schema<br/>according to contract A".->contractA
   api -."Filter schema<br/>according to contract B".->contractB
 ```
 
-Contracts are created by adding `@tag` directives to your subgraph schemas. `@tag`s declare which types and fields to exclude from specific contract variants.
+Contracts are created by adding `@tag` directives to your subgraph schemas. `@tag`s declare which types and fields to _exclude_ from specific contract variants.
 
 ```graphql {4} title="Source variant subgraph schema"
 type Product {
@@ -76,7 +75,7 @@ In the above example, a contract excludes types and fields marked with the `inte
 
 ## How to use contracts
 
-You usually create a contract to support a **contract router** or **contract documentation** or both.
+You usually create a contract to support a **contract router**, **contract documentation**, or both.
 
 ### Contract routers
 
@@ -89,7 +88,7 @@ graph BT;
   subgraph " ";
     standardgateway(["Standard router<br/>▉"]);
     contractgateway(["Contract router<br/>▟"]);
-    subgraphs[["(All subgraphs)"]];
+    subgraphs[["Supergraph<br/>(all subgraphs)"]];
   end;
   userapp -.- contractgateway;
   adminapp -.- standardgateway;
@@ -97,13 +96,13 @@ graph BT;
   class adminapp,userapp secondary;
 ```
 
-This enables you to hide experimental types and fields that are still in development, or to limit a particular audience's access to only the portions of your graph that they need.
+This enables you to hide experimental types and fields still in development or limit a particular audience's access to only the portions of your graph they need.
 
-Contract routers can safely connect to the same subgraph instances as any other router, because their clients can only interact with data that's represented in the contract schema. This does not affect internal routing. For example, filtered fields can still be used in a [`@requires`](/federation/federated-types/federated-directives/#requires) selection set.
+Contract routers can safely connect to the same subgraph instances as any other router because their clients can only interact with data represented in the contract schema. This does not affect internal routing. For example, filtered fields can still be used in a [`@requires`](/federation/federated-types/federated-directives/#requires) selection set.
 
 <Note>
 
-Any `@tag` present in a source variant's supergraph schema is _also_ present in a contract variant's supergraph schema.
+Any `@tag` in a source variant's supergraph schema is _also_ present in a contract variant's supergraph schema.
 
 </Note>
 
