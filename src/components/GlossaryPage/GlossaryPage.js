@@ -71,12 +71,14 @@ export function GlossaryPage() {
     fetchData();
   }, [searchTerm]);
 
-  // Check if there is an anchor in the URL and scroll to it
-  const fragment = window.location.hash.substring(1);
-  if (fragment) {
-    const headingElement = document.getElementById(fragment);
-    if (headingElement) {
-      headingElement.scrollIntoView({behavior: 'smooth'});
+  if (typeof window !== 'undefined') {
+    // Check if there is an anchor in the URL and scroll to it
+    const fragment = window.location.hash.substring(1);
+    if (fragment) {
+      const headingElement = document.getElementById(fragment);
+      if (headingElement) {
+        headingElement.scrollIntoView({behavior: 'smooth'});
+      }
     }
   }
 
