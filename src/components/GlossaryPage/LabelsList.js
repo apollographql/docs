@@ -5,7 +5,7 @@ import {useRefinementList} from 'react-instantsearch';
 function LabelsFilter() {
   const {items, refine} = useRefinementList({
     attribute: 'labels',
-    sortBy: ['name:asc']
+    sortBy: ['count:desc']
   });
 
   const handleCheckboxChange = value => {
