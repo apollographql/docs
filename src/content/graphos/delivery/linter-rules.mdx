@@ -4,7 +4,7 @@ subtitle: Reference
 description: Reference for GraphOS schema linting rules with examples
 ---
 
-This reference lists the rules that you can enforce with [GraphOS schema linting](./schema-linter/), along with the code that GraphOS returns for each rule violation.
+This reference lists the rules that you can enforce with [GraphOS schema linting](./schema-linter), along with the code that GraphOS returns for each rule violation.
 
 ## Naming rules
 
@@ -399,7 +399,8 @@ enum Residence { # highlight-line
 <RuleExpansionPanel
   title="ENUM_SUFFIX"
   whatItDoes="Checks that enum type names don't use the suffix `Enum`."
-  rationale="Avoid using the redundant `Enum` suffix to shorten your schema definitions and improve readability.""
+  rationale="Avoid using the redundant `Enum` suffix to shorten your schema definitions and improve readability."
+>
 
 The following example violates the rule:
 
