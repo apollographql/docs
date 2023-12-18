@@ -26,6 +26,29 @@
       "Overview": "/schema-linter",
       "Linter rules": "/linter-rules"
     },
+    "Schema proposals": {
+      "Overview": ["/schema-proposals",
+      [
+        "enterprise"
+      ]],
+      "Configure proposals":[ "/configure-proposals",
+      [
+        "enterprise"
+      ]],
+
+      "Propose changes":[ "/propose-changes",
+      [
+        "enterprise"
+      ]],
+      "Review proposals":[ "/review-proposals",
+      [
+        "enterprise"
+      ]],
+      "Implement proposals":[ "/implement-proposals",
+      [
+        "enterprise"
+      ]]
+    },
     "Schema delivery": {
       "Publish schemas": "/publishing-schemas",
       "Launches": "/launches",
@@ -49,30 +72,6 @@
             "enterprise"
           ]
         ]
-      ]
-    },
-    "Schema proposals": {
-      "Overview": ["/schema-proposals",
-      [
-        "enterprise"
-      ]],
-      "Configure proposals":[ "/configure-proposals",
-      [
-        "enterprise"
-      ]],
-
-      "Propose changes":[ "/propose-changes",
-      [
-        "enterprise"
-      ]],
-      "Review proposals":[ "/review-proposals",
-      [
-        "enterprise"
-      ]],
-      "Implement proposals":[ "/implement-proposals",
-      [
-        "enterprise"
-      ]]
       }
     }
   }
