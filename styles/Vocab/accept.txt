@@ -1,6 +1,0 @@
-config
-[Dd]enormaliz(?:ed|ation|e|es)?
-(?i)enums?
-[Ss]ubgraphs?
-[Ss]upergraphs?
-nullable
