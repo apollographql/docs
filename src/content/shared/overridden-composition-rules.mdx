@@ -1,89 +1,100 @@
-#### `OVERRIDE_DIRECTIVE_CAN_BE_REMOVED`
+<RuleExpansionPanel
+  title="OVERRIDE_DIRECTIVE_CAN_BE_REMOVED"
+  whatItDoes="Checks that a field with the [`@override`](https://www.apollographql.com/docs/federation/federated-types/federated-directives/#override) directive no longer exists in a source subgraph."
+  rationale="If a field with the [`@override`](https://www.apollographql.com/docs/federation/federated-types/federated-directives/#override) directive no longer exists in a source subgraph, the directive can be safely removed."
+>
 
-Indicates a field with the @override directive no longer exists in a source subgraph, so the directive can be safely removed.
+The following example violates the rule:
 
-<p style="margin-bottom: 0">❌</p>
-
-```graphql title="Subgraph A"
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false {3}
 type Product @key(fields: "id") {
   id: ID!
   inStock: Boolean! @override(from: "Subgraph B")
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false
 type Product @key(fields: "id") {
   id: ID!
   name: String!
 }
 ```
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
-```graphql title="Subgraph A"
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false {3}
 type Product @key(fields: "id") {
   id: ID!
   inStock: Boolean!
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
 type Product @key(fields: "id") {
   id: ID!
   name: String!
 }
 ```
 
-<hr/>
+</RuleExpansionPanel>
 
-#### `OVERRIDDEN_FIELD_CAN_BE_REMOVED`
+<RuleExpansionPanel
+  title="OVERRIDDEN_FIELD_CAN_BE_REMOVED"
+  whatItDoes="Checks if a field has been overridden by another subgraph."
+  rationale="You should consider removing overriden fields to avoid confusion."
+>
 
-Indicates that a field has been overridden by another subgraph. You should consider removing the overriden field to avoid confusion.
+The following example violates the rule:
 
-<p style="margin-bottom: 0">❌</p>
-
-```graphql title="Subgraph A"
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false {3}
 type Product @key(fields: "id") {
   id: ID!
-  name: String!
   inStock: Boolean! @override(from: "Subgraph B")
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false {4}
 type Product @key(fields: "id") {
   id: ID!
+  name: String!
   inStock: Boolean!
 }
 ```
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
-```graphql title="Subgraph A"
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false
+type Product @key(fields: "id") {
+  id: ID!
+  name: String!
+  inStock: Boolean!
+}
+```
+
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
 type Product @key(fields: "id") {
   id: ID!
   name: String!
 }
 ```
 
-```graphql title="Subgraph B"
-type Product @key(fields: "id") {
-  id: ID!
-  inStock: Boolean!
-}
-```
+</RuleExpansionPanel>
 
-<hr/>
+<RuleExpansionPanel
+  title="UNUSED_ENUM_TYPE"
+  whatItDoes="Checks if an enum type is defined but no field or argument in any subgraph references it."
+  rationale="If the enum is defined, it should be used or removed."
+>
 
-#### `UNUSED_ENUM_TYPE`
-
-Indicates that an enum type is defined in some subgraphs but is unused (no field/argument references it). All values from subgraphs defining that enum will be included in the supergraph.
-
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false
 enum ProductStatus {
   AVAILABLE
   SOLD_OUT
@@ -95,7 +106,7 @@ type Product {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false  {4}
 type Order {
   id: ID!
   product: Product
@@ -105,11 +116,17 @@ type Order {
 
 </CodeColumns>
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false {9}
+enum ProductStatus {
+  AVAILABLE
+  SOLD_OUT
+}
 
 type Product {
   id: ID!
@@ -118,7 +135,7 @@ type Product {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false {4}
 
 type Order {
   id: ID!
@@ -128,4 +145,4 @@ type Order {
 ```
 </CodeColumns>
 
-<hr/>
+</RuleExpansionPanel>
