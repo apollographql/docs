@@ -2,8 +2,9 @@ import LabelsList from './LabelsList';
 import React, {useEffect, useState} from 'react';
 import Results from './Results';
 import Search from './Search';
-import {Box, Flex, Grid, GridItem, Link, Text} from '@chakra-ui/react';
+import {Box, Flex, Grid, GridItem, Text} from '@chakra-ui/react';
 import {ClearFilters} from './ClearFilters';
+import {PrimaryLink} from '../RelativeLink';
 
 import algoliasearch from 'algoliasearch/lite';
 import {Configure, InstantSearch, useInstantSearch} from 'react-instantsearch';
@@ -33,10 +34,18 @@ function NoResultsBoundary({children, fallback}) {
 
 function NoResults() {
   return (
-    <Box m="2em">
+    <Box m="2em" textAlign="center">
       <Text>
-        Looks like we don&apos;t have the term you&apos;re looking for. Please
-        submit a <Link>glossary request</Link>.
+        Looks like the glossary doesn&apos;t have the term you&apos;re looking
+        for. 🤔
+      </Text>
+      <br />
+      <Text>
+        Please submit a{' '}
+        <PrimaryLink href="https://forms.gle/qoTHxX9ut9bTYdQD6">
+          glossary request
+        </PrimaryLink>
+        .
       </Text>
     </Box>
   );
@@ -72,8 +81,8 @@ export function GlossaryPage() {
     <Box>
       <InstantSearch searchClient={searchClient} indexName={algoliaIndexName}>
         <Configure hitsPerPage={150} />
-        <Flex justify="center" p="4">
-          <Grid templateColumns="3fr 1fr" gap="6">
+        <Flex justify="flex-start" p="4" maxW="full">
+          <Grid templateColumns="3fr 1fr" gap="6" width="100%">
             <GridItem>
               <Search />
             </GridItem>
