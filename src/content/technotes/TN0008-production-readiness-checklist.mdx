@@ -11,7 +11,7 @@ We recommend that you read through this checklist and idenitify critical feature
 - [Protect your production variant](/graphos/graphs/studio-features#protected-variants-enterprise-only) to avoid accidental changes while working in Studio.
 
 ## Apollo Router
-- Ensure that you've correctly configured [managed federation](/federation/managed-federation/setup/) and [GraphOS schema usage reporting](/router/configuration/apollo-telemetry).
+- Ensure that you've correctly configured [managed federation](/federation/managed-federation/setup/) and [GraphOS schema usage reporting](/router/configuration/telemetry/apollo-telemetry).
 - For security, [disable introspection](/router/configuration/overview/#introspection) for all production routers (by default Router disables introspection, but make sure you are not using `--dev` mode).
   - You can continue to view and fetch your GraphQL schemas from GraphOS and run operations from [GraphOS Studio Explorer](/graphos/explorer).
 - Configure the [Router traffic shapping](/router/configuration/traffic-shaping) features:
@@ -19,7 +19,7 @@ We recommend that you read through this checklist and idenitify critical feature
   - Deduplicate subgraph requests
   - Communicate with subgraphs using APQ
 - Enable [operation limits](/router/configuration/operation-limits) to block large and malicous requests
-- Configure additional [tracing, metrics, and logging](/router/configuration/tracing) through OpenTelemetry or Prometheous
+- Configure additional [tracing, metrics, and logging](/router/configuration/telemetry/overview) through OpenTelemetry or Prometheous
 - Enable the operation and query plan [distributed cache](/router/configuration/distributed-caching)
 - Optionally, enable any [other features](/router/enterprise-features/) deemed critical for your deployment of Apollo Router
 
@@ -29,17 +29,17 @@ We recommend that you read through this checklist and idenitify critical feature
 - Ensure that you've integrated [`rover subgraph check`](/rover/commands/subgraphs#subgraph-check) and [`rover subgraph publish`](/rover/commands/subgraphs#subgraph-publish) into your CI/CD pipeline.
 - If your subgraph servers are listed as [compatible with `FEDERATED TRACING`](/federation/building-supergraphs/supported-subgraphs/), ensure that you've enabled [federated traces](/federation/metrics/), and that you can view operation metrics as expected in Apollo Studio.
   - Enable [fractional trace sampling via `fieldLevelInstrumentation`](/graphos/metrics/field-usage/#fractional-sampling) to reduce performance hits due to tracing.
-- Consider adding caching layers.
-  - Apollo Server supports [automatic persisted queries (APQ)](/apollo-server/performance/apq/) out of the box.
-    - If using Apollo Server, ensure that you use a [distributed caching system](/apollo-server/performance/cache-backends) for APQ in production to avoid cache inconsistency across server instances.
-    - Optionally use the [`@cacheControl` directive](/apollo-server/api/plugin/cache-control) to enable your CDN to cache APQ GET requests using the `Cache-Control` header.
-  - Optionally add [full response caching](/apollo-server/performance/caching/) to improve performance.
 - Ensure that you've [load-tested your graph](/technotes/TN0035-load-testing-graphql/).
   - Test loads should be representative of your current traffic (both in terms of volume _and_ in terms of the actual operations you execute in the test).
   - To investigate performance issues, use Apollo Studio to identify which operations are performing slowly.
     - Look at resolver execution times to identify slow areas of execution.
     - Whenever possible, avoid making multiple calls to data sources within a single resolver.
     - Understand [query plan execution](/federation/query-plans) to help understand slow operations and optimize your supergraph to avoid them.
+- Consider adding caching layers.
+  - Apollo Server supports [automatic persisted queries (APQ)](/apollo-server/performance/apq/) out of the box.
+    - If using Apollo Server, ensure that you use a [distributed caching system](/apollo-server/performance/cache-backends) for APQ in production to avoid cache inconsistency across server instances.
+    - Optionally use the [`@cacheControl` directive](/apollo-server/api/plugin/cache-control) to enable your CDN to cache APQ GET requests using the `Cache-Control` header.
+  - Optionally add [full response caching](/apollo-server/performance/caching/) to improve performance.
 
 ## Clients
 - Ensure that your [clients identify themselves](/graphos/metrics/client-awareness/) by name and version.

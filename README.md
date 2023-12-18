@@ -290,6 +290,10 @@ Redirects can continue to be written in the `_redirects` file in the `docs/sourc
 
 All of the redirects from each docset will be bundled together at build time, and deployed as one combined `_redirects` file deployed with the built docs site.
 
+#### Redirecting with anchors
+
+Netlify's `_redirects` file [doesn't handle redirecting URLs with `#`](https://answers.netlify.com/t/redirects-urls-containing-hashbangs/11157). Instead, we manually redirect URLs like this using custom logic in our `gatsby-config.js`. If you need to redirect from or to particular anchors tags, add the redirects to the `redirects` object in `gatsby-config.js`. For all other URLs, use the appropriate `_redirects` file.
+
 ## Publish and preview
 
 This website gets rebuilt and deployed to Netlify every time something is committed to its default branch. Deploy previews are automatically created for new PRs.
