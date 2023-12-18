@@ -54,7 +54,7 @@ type Product {
 <RuleExpansionPanel
   title="INCONSISTENT_ARGUMENT_PRESENCE"
   whatItDoes="Checks that an argument of a field or directive definition is present in all subgraphs."
-  rationale="The supergraph schema only includes arguments that are exactly the same for all subgraphs that define it its field or directive. [Learn more.](https://www.apollographql.com/docs/federation/federated-types/composition#input-types-and-field-arguments)"
+  rationale="The supergraph schema only includes arguments that are exactly the same for all subgraphs that define its field or directive. [Learn more.](https://www.apollographql.com/docs/federation/federated-types/composition#input-types-and-field-arguments)"
 >
 
 The following example violates the rule:
@@ -100,7 +100,7 @@ type Product {
 <RuleExpansionPanel
   title="INCONSISTENT_BUT_COMPATIBLE_ARGUMENT_TYPE"
   whatItDoes="Checks that arguments (of a field, input field, or directive definition) have the exact same types in all subgraphs. This warning/error indicates the argument types are [compatible](#compatibility) but inconsistent."
-  rationale="The supergraph schema only includes arguments that are exactly the same for all subgraphs that define it its field or directive. [Learn more.](https://www.apollographql.com/docs/federation/federated-types/composition#input-types-and-field-arguments)"
+  rationale="The supergraph schema only includes arguments that are exactly the same for all subgraphs that define its field or directive. [Learn more.](https://www.apollographql.com/docs/federation/federated-types/composition#input-types-and-field-arguments)"
 >
 
 <br/>
@@ -1005,7 +1005,7 @@ type Product @shareable {
 <RuleExpansionPanel
   title="INCONSISTENT_RUNTIME_TYPES_FOR_SHAREABLE_RETURN"
   whatItDoes="Checks that a `@shareable` field returns consistent sets of runtime types in all subgraphs in which it's defined."
-  rationale="Each subgraph's resolver for a `@shareable` field field should behave identically. Otherwise, queries might return inconsistent results depending on which subgraph resolves the field. [Learn more.](https://www.apollographql.com/docs/federation/federated-types/sharing-types#using-shareable)"
+  rationale="Each subgraph's resolver for a `@shareable` field should behave identically. Otherwise, requests might return inconsistent results depending on which subgraph resolves the field. [Learn more.](https://www.apollographql.com/docs/federation/federated-types/sharing-types#using-shareable)"
 >
 
 The following example violates the rule:
