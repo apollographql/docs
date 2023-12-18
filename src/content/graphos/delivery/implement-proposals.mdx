@@ -8,35 +8,9 @@ description: Pull GraphQL schema changes from schema proposals using Rover, vali
 
 This article describes actions in the **Proposal implementation** and **publication** stages of the [schema proposal process](./schema-proposals#proposal-process).
 
-```mermaid
-graph LR
-    subgraph Approved ["Proposal implementation"]
-    direction LR
-    ApprovedStatus((Approved <br/> status))
-    Fetch["Fetch proposal and <br> implement locally"]
-    Push["Run checks on <br> local changes"]
-    Check[["GraphOS <br/> schema checks"]]
-    ApprovedStatus --> Fetch --> Push --> Check
-    end
-    class ApprovedStatus secondary;
-    class ApprovedStatus CircleSize50;
-    class Check tertiary;
-```
+<SchemaProposalImplementationMermaid />
 
-```mermaid
-graph LR
-    subgraph Implemented ["Proposal publication"]
-    direction LR
-    Checks[["Schema checks <br/> pass"]]
-    Publish["Publish schema <br/> to GraphOS"]
-    Monitor[["GraphOS matches <br/> changes to proposals"]]
-    ImplementedStatus((Implemented <br/> status))
-    Checks --> Publish --> Monitor --> ImplementedStatus
-    end
-    class ImplementedStatus secondary;
-    class ImplementedStatus CircleSize50;
-    class Checks,Monitor tertiary;
-```
+<SchemaProposalPublicationMermaid />
 
 Once a schema proposal is **Approved**, its changes need to be implemented.
 For those implementing the changes, [pulling the approved schema changes](#pull-subgraphs-schemas-with-rover) into their IDE is a great starting point.

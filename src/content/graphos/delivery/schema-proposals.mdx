@@ -40,7 +40,7 @@ Managing schema changes _directly in GraphOS Studio_ provides the following bene
 
 Schema proposals are [created](./propose-changes), [reviewed](./review-proposals), and [approved](./review-proposals#approved-reviews) in GraphOS Studio. After approval, the proposal is implemented &mdash;including resolver and any other supporting code changes&mdash; before being published back to GraphOS. You can [configure schema checks](./schema-checks/#proposals-checks) to ensure your organization only publishes changes that are part of an approved proposal.
 
-Before describing the details of this proposal process, it's helpful to understand the statuses a proposal progresses through.
+Before describing the details of this proposal process, it's helpful to understand proposal statuses.
 
 ### Proposal statuses
 
@@ -131,63 +131,13 @@ A proposal doesn't have to progress linearly from **Draft** to **Implemented**. 
 
 Schema proposal statuses enable the following end-to-end schema change management process:
 
-```mermaid
-graph LR
-    subgraph Draft ["Proposal creation"]
-    direction LR
-    Creation["Start proposal"]
-    DraftStatus(("Draft status"))
-    Edit["Edit subgraphs, lint, <br/> save, and check changes"]
-    Request["Request reviews"]
-    Creation -->  DraftStatus --> Edit --> Request
-    end
-    class DraftStatus secondary;
-    class DraftStatus CircleSize50;
-```
+<SchemaProposalCreationMermaid />
 
-```mermaid
-graph LR
-    subgraph Open4Feedback ["Proposal review"]
-    direction LR
-    Feedback((Open for <br/>feedback <br/> status))
-    Feedback1["Receive feedback "]
-    Feedback2["Address feedback "]
-    Approvals["Receive<br/>minimum approvals"]
-    Feedback --> Feedback1 --> Feedback2 --> Approvals
-    end
-    class Feedback secondary;
-    class Feedback CircleSize50;
-```
+<SchemaProposalReviewMermaid />
 
-```mermaid
-graph LR
-    subgraph Approved ["Proposal implementation"]
-    direction LR
-    ApprovedStatus((Approved <br/> status))
-    Fetch["Fetch proposal and <br> implement locally"]
-    Push["Run checks on <br> local changes"]
-    Check[["GraphOS <br/> schema checks"]]
-    ApprovedStatus --> Fetch --> Push --> Check
-    end
-    class ApprovedStatus secondary;
-    class ApprovedStatus CircleSize50;
-    class Check tertiary;
-```
+<SchemaProposalImplementationMermaid />
 
-```mermaid
-graph LR
-    subgraph Implemented ["Proposal publication"]
-    direction LR
-    Checks[["Schema checks <br/> pass"]]
-    Publish["Publish schema <br/> to GraphOS"]
-    Monitor[["GraphOS matches <br/> changes to proposals"]]
-    ImplementedStatus((Implemented <br/> status))
-    Checks --> Publish --> Monitor --> ImplementedStatus
-    end
-    class ImplementedStatus secondary;
-    class ImplementedStatus CircleSize50;
-    class Checks,Monitor tertiary;
-```
+<SchemaProposalPublicationMermaid />
 
 ##### Legend
 

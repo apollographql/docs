@@ -37,6 +37,10 @@ module.exports = {
         PublishPQMs: 'readonly',
         RegisterCLI: 'readonly',
         RegisterFederatedCLI: 'readonly',
+        SchemaProposalCreationMermaid: 'readonly',
+        SchemaProposalReviewMermaid: 'readonly',
+        SchemaProposalImplementationMermaid: 'readonly',
+        SchemaProposalPublicationMermaid: 'readonly',
         SetApolloVCSCommit: 'readonly',
         StudioPages: 'readonly',
         TopLevelAwait: 'readonly'

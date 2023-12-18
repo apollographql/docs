@@ -8,19 +8,7 @@ description: Propose GraphQL schema changes in GraphOS Studio. Edit and lint sch
 
 This article describes actions in the **Proposal creation** stage of the [schema proposal process](./schema-proposals#proposal-process).
 
-```mermaid
-graph LR
-    subgraph Draft ["Proposal creation"]
-    direction LR
-    Creation["Start proposal"]
-    DraftStatus(("Draft status"))
-    Edit["Edit subgraphs, lint, <br/> save, and check changes"]
-    Request["Request reviews"]
-    Creation -->  DraftStatus --> Edit --> Request
-    end
-    class DraftStatus secondary;
-    class DraftStatus CircleSize50;
-```
+<SchemaProposalCreationMermaid />
 
 ## Start a proposal
 
