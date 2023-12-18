@@ -31,25 +31,47 @@
     },
     "Building Subgraphs": {
       "Creating a new subgraph": "/graphs/creating-a-subgraph",
-      "Local development": "/graphs/local-development",
-      "Securing subgraphs": "/graphs/securing-a-subgraph"
+      "Local development": "/graphs/local-development"
     },
     "Graph Administration": {
       "Updating your graph": "/graphs/updating",
       "Managing graphs in Studio": "/graphs/studio-features",
       "Supergraph-specific Studio features": "/graphs/federated-graphs"
     },
-    "Routing": {
-      "Cloud routing overview": "/routing/cloud",
-      "Configuring cloud routing": "/routing/cloud-configuration",
-      "Self-hosted routing": [
-        "/routing/self-hosted",
+    "Graph Security": {
+      "Securing subgraphs": "/graphs/securing-a-subgraph",
+      "Safelisting with persisted queries": [
+        "/operations/persisted-queries",
         [
           "enterprise"
         ]
       ]
     },
-    "Operation Performance": {
+    "Routing": {
+      "Overview": "/routing",
+      "Self-hosted routing": [
+        "/quickstart/self-hosted",
+        [
+          "enterprise"
+        ]
+      ],
+      "Cloud routing": {
+        "Overview": "/routing/cloud",
+        "Configuration": "/routing/cloud-configuration",
+        "Cloud Dedicated routing": {
+          "Overview": ["/routing/cloud-dedicated", [
+            "preview"
+          ]],
+          "AWS Lattice configuration": ["/routing/cloud-dedicated/lattice", [
+            "preview"
+          ]],
+          "AWS Lattice troubleshooting": ["/routing/cloud-dedicated/lattice-troubleshooting", [
+            "preview"
+          ]]
+        }
+      }
+    },
+    "Client Operations": {
       "Using @defer": "/operations/defer",
       "GraphQL subscriptions": [
         "/operations/subscriptions",

@@ -4,6 +4,7 @@
   "sidebar": {
     "Home": "/",
     "Tags": {
+      "architecture-patterns": "/tags/architecture-patterns",
       "auth": "/tags/auth",
       "caching": "/tags/caching",
       "client": "/tags/client",

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {Box, Divider, Flex, Heading} from '@chakra-ui/react';
+import {Box, Divider, Flex, Heading, Tag} from '@chakra-ui/react';
 import {DOCS_PAGE_WIDTH_VAR, usePageWidthContext} from '../PageWidthContext';
 import {PAGE_PADDING_BOTTOM, PAGE_PADDING_TOP} from './PageLayout';
 
@@ -10,6 +10,7 @@ export function PageContent({
   children,
   pagination,
   aside,
+  minVersion,
   ...props
 }) {
   const {pageRefCallback} = usePageWidthContext();
@@ -27,6 +28,7 @@ export function PageContent({
       }}
     >
       <Box flexGrow="1" w="0">
+        {minVersion && <Tag mb="2">Since {minVersion}</Tag>}
         <Heading as="h1" size="2xl">
           {title}
         </Heading>
@@ -47,5 +49,6 @@ PageContent.propTypes = {
   title: PropTypes.string.isRequired,
   subtitle: PropTypes.node,
   pagination: PropTypes.element,
-  aside: PropTypes.element
+  aside: PropTypes.element,
+  minVersion: PropTypes.string
 };

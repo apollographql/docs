@@ -5,7 +5,10 @@ description: Steps for migrating from a GraphQL monolith to multiple subgraphs w
 tags: [federation, server]
 ---
 
-> For a complete, step-by-step tutorial, check out [Voyage II: Federating the monolith](https://www.apollographql.com/tutorials/voyage-part2).
+<Tip>
+
+For a complete, step-by-step tutorial, check out [Voyage II: Federating the monolith](https://www.apollographql.com/tutorials/voyage-part2).
+</Tip>
 
 As with any monolithic service, teams can struggle to change and maintain their GraphQL API as it grows larger and receives contributions from more developers.
 
@@ -19,8 +22,8 @@ Here are the steps we recommend to convert a monolithic GraphQL API into a feder
 
 Start the process by making a "federated graph of one". Your existing monolith can act as a subgraph without any schema changes.
 
-1. If you're not already publishing your schema to Apollo Studio, create a new graph in your Studio organization. Choose "Supergraph" for your graph architecture.
-1. Publish your monolith schema to Apollo Studio as a subgraph with the following command (modify your `--routing-url` and `--schema` path as needed):
+1. If you're not already publishing your schema to GraphOS Studio, create a new graph in your Studio organization. Choose "Supergraph" for your graph architecture.
+1. Publish your monolith schema to GraphOS Studio as a subgraph with the following command (modify your `--routing-url` and `--schema` path as needed):
 
    ```sh
    rover subgraph publish --name monolith \
@@ -30,13 +33,15 @@ Start the process by making a "federated graph of one". Your existing monolith c
    ```
 
 1. Deploy an instance of the [Apollo Router](/router/) to your environment.
-   > Self-hosting the Apollo Router is limited to Apollo Enterprise plans. Other plan types use [managed cloud routing with GraphOS](/graphos/routing/cloud/).
-   >
-   > [Learn about Apollo plans.](https://www.apollographql.com/pricing/)
-1. Set up [header propagation](/router/configuration/header-propagation/) so that the monolith receives any necessary headers from the router.
-1. Set up internal routing rules to redirect client requests to the Apollo Router instead of your monolith.
-1. Enable usage metrics reporting to Apollo Studio.
-1. Add [subgraph checks](/graphos/delivery/schema-checks/) to your monolith's CI pipeline.
+  <EnterpriseFeature
+    text={
+      'Self-hosting the Apollo Router is limited to [GraphOS Enterprise plans](/graphos/enterprise/). Other plan types use [managed cloud routing with GraphOS](/graphos/routing/cloud/). Check out the [pricing page](https://www.apollographql.com/pricing/) to learn more.'
+    }
+  />
+2. Set up [header propagation](/router/configuration/header-propagation/) so that the monolith receives any necessary headers from the router.
+3. Set up internal routing rules to redirect client requests to the Apollo Router instead of your monolith.
+4. Enable usage metrics reporting to GraphOS Studio.
+5. Add [subgraph checks](/graphos/delivery/schema-checks/) to your monolith's CI pipeline.
 
 At this point, client requests go to your new Apollo Router instead of the monolith, but it's serving the same schema so clients won't know the difference.
 

@@ -1,6 +1,7 @@
 ---
 title: GraphQL Glossary
-description: Familiarize yourself with common GraphQL terms
+subtitle: Familiarize yourself with common GraphQL terms
+description: Glossary of common GraphQL terminology
 ---
 
 As you explore the GraphQL ecosystem, you might encounter some unfamiliar terms and phrases along the way. To help you on your journey, we've defined some of the most common GraphQL vocabulary here in this handy cheat sheet.
@@ -98,7 +99,7 @@ GraphQL includes some built-in directives (such as `@deprecated`), and you can a
 
 ## Docstring
 
-Provides the description of a type, field, or argument. Docstrings automatically appear in many common GraphQL tools, including the Apollo Studio Explorer.
+Provides the description of a type, field, or argument. Docstrings automatically appear in many common GraphQL tools, including the GraphOS Studio Explorer.
 
 ```graphql
 """

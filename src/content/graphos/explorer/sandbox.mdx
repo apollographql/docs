@@ -5,7 +5,7 @@ description: Use Studio tools without an Apollo account
 
 **Apollo Sandbox** is a special mode of GraphOS Studio that helps with local development. Sandbox loads a running GraphQL server's schema via introspection, instead of fetching published schemas from the Apollo registry.
 
-Sandbox provides access to the following Apollo Studio features:
+Sandbox provides access to the following GraphOS Studio features:
 
 - [The Explorer](./)
 - Schema reference
@@ -100,7 +100,7 @@ You can run subgraph checks on supergraphs. If you're using Sandbox with a subgr
   width="500"
 />
 
-When you click **Run a check**, Sandbox first performs a composition check using your local subgraph schema and the published schemas of your other subgraphs. If composition succeeds, Sandbox then performs operation checks as usual and displays the results of all checks. If composition fails, Sandbox does not perform operation checks and displays the composition error.
+When you click **Run a check**, Sandbox first performs a build check using your local subgraph schema and the published schemas of your other subgraphs. If composition succeeds, Sandbox then performs operation checks as usual and displays the results of all checks. If composition fails, Sandbox does not perform operation checks and displays the composition error.
 
 <img
   class="screenshot"
@@ -138,7 +138,7 @@ The following URL parameters are supported:
 
 For example, the following URL sets all supported parameters:
 
-```text title="Example URL"
+```text title="Example URL"  showLineNumbers=false
 https://studio.apollographql.com/sandbox/explorer?endpoint=http://localhost:4200&document=query hello($name: String!) { hello(name: $name)}&variables={"name": "Sandbox User"}&headers={"Cache-Control": "no-cache"}
 ```
 

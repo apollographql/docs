@@ -5,7 +5,7 @@ description: Require client details and operation names to help monitor schema u
 tags: [server, observability, router]
 ---
 
-As part of Apollo Studio metrics reporting, servers can [tag reported operations with the requesting client's name and version](/graphos/metrics/client-awareness). This helps graph maintainers understand which clients are using which fields in the schema.
+As part of GraphOS Studio metrics reporting, servers can [tag reported operations with the requesting client's name and version](/graphos/metrics/client-awareness). This helps graph maintainers understand which clients are using which fields in the schema.
 
 Clients can (and should) also [name their GraphQL operations](/react/data/operation-best-practices/#name-all-operations), which provides more context around how and where data is being used.
 
@@ -57,11 +57,21 @@ fn process_request(request) {
 }
 ```
 
+<Tip>
+
+If you're an enterprise customer looking for more material on this topic, try the [Enterprise best practices: Router extensibility](https://www.apollographql.com/tutorials/router-extensibility) course on Odyssey.
+
+Not an enterprise customer? [Learn about GraphOS for Enterprise.](/graphos/enterprise)
+</Tip>
+
 ## Enforcing in Apollo Server
 
 If you're using Apollo Server for your gateway, you can require client metadata in every incoming request with a [custom plugin](/apollo-server/integrations/plugins/):
 
-> The header names used below are the default headers sent by Apollo Client, but you can change them to whatever names your client uses. Additionally, these changes should be reflected in the [usage reporting plugin](/apollo-server/api/plugin/usage-reporting/#generateclientinfo).
+<Tip>
+
+The header names used below are the default headers sent by Apollo Client, but you can change them to whatever names your client uses. Additionally, these changes must be reflected in the [usage reporting plugin](/apollo-server/api/plugin/usage-reporting/#generateclientinfo) in order to report client headers to GraphOS. For an example, see [using custom client id headers](/apollo-server/monitoring/metrics#using-custom-headers).
+</Tip>
 
 <MultiCodeBlock>
 

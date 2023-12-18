@@ -111,6 +111,12 @@ export function useMermaidStyles() {
         tspan: {
           fill: 'currentColor'
         }
+      },
+      [['.label foreignObject', '.cluster-label foreignObject']]: {
+        overflow: 'visible'
+      },
+      '*': {
+        fontFamily: 'trebuchet ms,verdana,arial,sans-serif'
       }
     };
     return important(styles);

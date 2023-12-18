@@ -81,7 +81,7 @@ This documentation also includes getting-started content for each platform compo
 
 - [Apollo Client](/react/get-started/)
 - [Apollo Server](/apollo-server/getting-started/)
-- [Apollo Studio](/graphos/)
+- [GraphOS Studio](/graphos/)
 
 For an introduction to core GraphQL concepts, check out [graphql.org](https://graphql.org).
 
@@ -115,7 +115,7 @@ You understand how GraphQL works and the benefits it offers. You're trying to cr
 
 ### Which language should I use for my GraphQL server?
 
-There are GraphQL server tools available for most popular languages, but we recommend using [Apollo Server](https://www.apollographql.com/server) (Node.js) because of the ecosystem of tools developed for GraphQL in JavaScript. Node servers can also be run nearly anywhere, including on the edge.
+There are GraphQL server tools available for most popular languages, but we recommend using [Apollo Server](/apollo-server/) (Node.js) because of the ecosystem of tools developed for GraphQL in JavaScript. Node servers can also be run nearly anywhere, including on the edge.
 
 ### How do I wrap existing APIs?
 
@@ -135,7 +135,7 @@ As with any service, it's important to track errors and their causes. Many kinds
 
 GraphQL is resilient to some of these errors. Because the schema is strongly typed, you can restrict what types of data users can provide as input, along with what types your resolvers can return. This type system catches many errors and requires no manual checks.
 
-For errors not prevented by the type system, it's helpful to know what exact queries were made, and with what variables. [Apollo Studio](/graphos/) is a tool that does exactly this. It can help discover and reproduce errors by showing the exact conditions in which the error occurred.
+For errors not prevented by the type system, it's helpful to know what exact queries were made, and with what variables. [GraphOS Studio](/graphos/) is a tool that does exactly this. It can help discover and reproduce errors by showing the exact conditions in which the error occurred.
 
 ## 3. Moving a feature to GraphQL
 
@@ -175,9 +175,9 @@ Partial query caching can be achieved by caching the responses from underlying s
 
 Many apps and sites are powered almost completely by an API such as a GraphQL schema, so it's important to make sure the API is healthy at all times. Indicators of an unhealthy service include long response times, high resource usage, and unusual traffic patterns.
 
-[Apollo Studio](https://studio.apollographql.com) is a great tool to track many of these things. It allows close inspection of fields to make it easy to see both total response times as well as how long each field took to execute.
+[GraphOS Studio](https://studio.apollographql.com) is a great tool to track many of these things. It allows close inspection of fields to make it easy to see both total response times as well as how long each field took to execute.
 
-Apollo Studio also has some integrations to make monitoring easier. The [Slack integration](/graphos/metrics/notifications/notification-setup/) delivers daily reports to give teams a quick overview of the health of their schema. The enterprise [Datadog integration](/graphos/metrics/datadog-integration/) works with existing Datadog accounts to help teams track schema performance.
+GraphOS Studio also has some integrations to make monitoring easier. The [Slack integration](/graphos/metrics/notifications/notification-setup/) delivers daily reports to give teams a quick overview of the health of their schema. The enterprise [Datadog integration](/graphos/metrics/datadog-integration/) works with existing Datadog accounts to help teams track schema performance.
 
 ## 4. Moving a product to GraphQL
 

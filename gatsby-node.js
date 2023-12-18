@@ -83,6 +83,9 @@ exports.createPages = async ({actions, graphql}) => {
               fields {
                 slug
               }
+              frontmatter {
+                api_doc: recursive_api_doc(depth: 4)
+              }
             }
             ... on MarkdownRemark {
               fields {
@@ -101,14 +104,15 @@ exports.createPages = async ({actions, graphql}) => {
   `);
 
   data.pages.nodes.forEach(({id, sourceInstanceName, children}) => {
-    const [{fields}] = children;
+    const [{fields, frontmatter}] = children;
 
     actions.createPage({
       path: fields.slug,
       component: require.resolve('./src/templates/page'),
       context: {
         id,
-        basePath: sourceInstanceName
+        basePath: sourceInstanceName,
+        api_doc: frontmatter?.api_doc || []
       }
     });
   });
@@ -129,10 +133,16 @@ exports.createSchemaCustomization = ({actions: {createTypes}}) => {
   const typeDefs = `
     type MdxFrontmatter {
       headingDepth: Int
+      minVersion: String
+      noIndex: Boolean
+      subtitle: String
     }
 
     type MarkdownRemarkFrontmatter {
       headingDepth: Int
+      minVersion: String
+      noIndex: Boolean
+      subtitle: String
     }
   `;
   createTypes(typeDefs);
