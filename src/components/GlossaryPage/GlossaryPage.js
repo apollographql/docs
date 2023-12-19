@@ -10,11 +10,8 @@ import algoliasearch from 'algoliasearch/lite';
 import {Configure, InstantSearch, useInstantSearch} from 'react-instantsearch';
 
 const appId = process.env.ALGOLIA_APP_ID;
-const apiKey = 'a6299c4459c18bfb42e0f8e723bcd96a';
-// const apiKey = process.env.ALGOLIA_EXTERNAL_APOLLOPEDIA_SEARCH_KEY;
+const apiKey = process.env.GATSBY_ALGOLIA_EXTERNAL_APOLLOPEDIA_SEARCH_KEY;
 const algoliaIndexName = 'apollopedia';
-
-console.log(apiKey);
 
 const searchClient = algoliasearch(appId, apiKey);
 
