@@ -15,6 +15,9 @@ import {
   Text
 } from '@chakra-ui/react';
 import {Highlight, useHits} from 'react-instantsearch';
+// import {LabelFilterButton} from './LabelFilterButton';
+import EditOnGitHub from './EditOnGitHub';
+import RelativeLink, {PrimaryLink} from '../RelativeLink';
 import {MarkdownCodeBlock} from '@apollo/chakra-helpers';
 import {useUser} from '../../utils';
 
@@ -101,13 +104,11 @@ const Results = () => {
           >
             {hit.definition}
           </Markdown>
-
           {hit.learnMore && (
             <Text my="4">
               <PrimaryLink href={hit.learnMore}>Learn more. ➜</PrimaryLink>
             </Text>
           )}
-
           <HStack mt="2" pb="2">
             {hit.relatedTerms && (
               <Text>
@@ -129,14 +130,6 @@ const Results = () => {
               </>
             )}
           </HStack>
-          {isApollonaut && hit.businessContext && (
-            <Box py="2">
-              <Text>
-                💼 <strong>Business context</strong> (internal only)
-              </Text>
-              <Text>{hit.businessContext}</Text>
-            </Box>
-          )}
           {isApollonaut && hit.usageInstructions && (
             <Box>
               <Text>
@@ -169,6 +162,19 @@ const Results = () => {
               >
                 {`_${hit.exampleUsage}_`}
               </Markdown>
+            </Box>
+          )}
+          {isApollonaut && hit.businessContext && (
+            <Box py="2">
+              <Text>
+                💼 <strong>Business context</strong> (internal only)
+              </Text>
+              <Text>{hit.businessContext}</Text>
+            </Box>
+          )}
+          {isApollonaut && (
+            <Box pt="4" textAlign="right">
+              <EditOnGitHub term={hit.term} />
             </Box>
           )}
         </Box>
