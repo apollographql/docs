@@ -88,7 +88,6 @@ const Results = () => {
                 >
                   <TagLabel>{label}</TagLabel>
                 </Tag>
-                // <LabelFilterButton key={hit.objectID + label} label={label} />
               ))}
           </HStack>
           <Markdown
@@ -99,10 +98,17 @@ const Results = () => {
               code: InlineCode
             }}
           >
-            {hit.learnMore
+            {/* {hit.learnMore
               ? hit.definition.concat(` [Learn more.](${hit.learnMore})`)
-              : hit.definition}
+              : hit.definition} */}
+            {hit.definition}
           </Markdown>
+
+          {hit.learnMore && (
+            <Text my="4">
+              <PrimaryLink href={hit.learnMore}>Learn more.</PrimaryLink>
+            </Text>
+          )}
 
           <HStack mt="2" pb="2">
             {hit.relatedTerms && (
