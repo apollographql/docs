@@ -1,5 +1,6 @@
 import React from 'react';
-import {Box, Checkbox, Stack, Text} from '@chakra-ui/react';
+import {Box, Checkbox, Flex, Stack, Text} from '@chakra-ui/react';
+import {ClearFilters} from './ClearFilters';
 import {useRefinementList} from 'react-instantsearch';
 
 function LabelsFilter() {
@@ -13,8 +14,13 @@ function LabelsFilter() {
   };
 
   return (
-    <Box>
-      {items.length > 0 && <Text fontWeight="bold">Filter by labels:</Text>}
+    <Box pb="4">
+      {items.length > 0 && (
+        <Flex alignItems="center" pb="2">
+          <Text fontWeight="bold">Filter by labels</Text>
+          <ClearFilters />
+        </Flex>
+      )}
       <Stack spacing="2">
         {items.map(item => (
           <Checkbox

@@ -8,10 +8,14 @@ export const ClearFilters = props => {
     <Button
       onClick={() => refine()}
       disabled={!canRefine}
-      colorScheme="teal"
-      variant="outline"
+      visibility={canRefine ? 'visible' : 'hidden'}
+      colorScheme="indigo"
+      variant="link"
+      fontWeight="bold"
+      _hover={{textDecoration: 'underline'}} // Add underline on hover
+      ml="4"
     >
-      Clear filters
+      Clear
     </Button>
   );
 };

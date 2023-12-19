@@ -2,8 +2,7 @@ import LabelsList from './LabelsList';
 import React, {useEffect, useState} from 'react';
 import Results from './Results';
 import Search from './Search';
-import {Box, Flex, Grid, GridItem, Text} from '@chakra-ui/react';
-import {ClearFilters} from './ClearFilters';
+import {Box, Flex, Text} from '@chakra-ui/react';
 import {PrimaryLink} from '../RelativeLink';
 
 import algoliasearch from 'algoliasearch/lite';
@@ -104,22 +103,19 @@ export function GlossaryPage() {
       >
         <Configure hitsPerPage={150} />
         <Flex justify="flex-start" p="4" maxW="full">
-          <Grid templateColumns="3fr 1fr" gap="6" width="100%">
-            <GridItem>
+          {/* First column */}
+          <Flex flexDirection="column" mr="6" flex="3">
+            <Box pb="4">
               <Search />
-            </GridItem>
-            <GridItem>
-              <ClearFilters />
-            </GridItem>
-            <GridItem>
-              <NoResultsBoundary fallback={<NoResults />}>
-                <Results />
-              </NoResultsBoundary>
-            </GridItem>
-            <GridItem>
-              <LabelsList />
-            </GridItem>
-          </Grid>
+            </Box>
+            <NoResultsBoundary fallback={<NoResults />}>
+              <Results />
+            </NoResultsBoundary>
+          </Flex>
+          {/* Second column */}
+          <Flex flexDirection="column" flex="1">
+            <LabelsList />
+          </Flex>
         </Flex>
       </InstantSearch>
     </Box>

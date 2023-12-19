@@ -82,8 +82,8 @@ const Results = () => {
                 <Tag
                   key={label}
                   size="md"
-                  variant="solid"
                   colorScheme="indigo"
+                  variant="outline"
                   borderRadius="md"
                 >
                   <TagLabel>{label}</TagLabel>
