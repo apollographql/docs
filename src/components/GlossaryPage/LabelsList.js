@@ -1,5 +1,13 @@
 import React from 'react';
-import {Box, Checkbox, Flex, Stack, Text} from '@chakra-ui/react';
+import {
+  Box,
+  Checkbox,
+  Flex,
+  Stack,
+  Tag,
+  TagLabel,
+  Text
+} from '@chakra-ui/react';
 import {ClearFilters} from './ClearFilters';
 import {useRefinementList} from 'react-instantsearch';
 
@@ -28,7 +36,18 @@ function LabelsFilter() {
             isChecked={item.isRefined}
             onChange={() => handleCheckboxChange(item.label)}
           >
-            {item.label} ({item.count})
+            <Tag
+              key={item.label}
+              size="md"
+              colorScheme="indigo"
+              variant="outline"
+              borderRadius="md"
+            >
+              <TagLabel>{item.label}</TagLabel>
+            </Tag>
+            <Text ml="1" as="span">
+              ({item.count})
+            </Text>
           </Checkbox>
         ))}
       </Stack>
