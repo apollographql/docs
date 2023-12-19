@@ -4,15 +4,10 @@ import Results from './Results';
 import Search from './Search';
 import {Box, Flex, Text} from '@chakra-ui/react';
 import {PrimaryLink} from '../RelativeLink';
+import {useUser} from '../../utils';
 
 import algoliasearch from 'algoliasearch/lite';
 import {Configure, InstantSearch, useInstantSearch} from 'react-instantsearch';
-
-const appId = process.env.ALGOLIA_APP_ID;
-const apiKey = process.env.GATSBY_ALGOLIA_EXTERNAL_APOLLOPEDIA_SEARCH_KEY;
-const algoliaIndexName = 'apollopedia';
-
-const searchClient = algoliasearch(appId, apiKey);
 
 function NoResultsBoundary({children, fallback}) {
   const {results} = useInstantSearch();
@@ -70,6 +65,16 @@ function HashScroll() {
 }
 
 export function GlossaryPage() {
+  const {user} = useUser();
+  const isApollonaut = user?.name.includes('@apollographql.com');
+
+  const appId = process.env.ALGOLIA_APP_ID;
+  const apiKey = isApollonaut
+    ? process.env.GATSBY_ALGOLIA_EXTERNAL_APOLLOPEDIA_SEARCH_KEY
+    : process.env.GATSBY_ALGOLIA_EXTERNAL_APOLLOPEDIA_SEARCH_KEY;
+  const algoliaIndexName = 'apollopedia';
+
+  const searchClient = algoliasearch(appId, apiKey);
   return (
     <Box>
       <InstantSearch searchClient={searchClient} indexName={algoliaIndexName}>

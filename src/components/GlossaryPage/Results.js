@@ -16,6 +16,7 @@ import {
 } from '@chakra-ui/react';
 import {Highlight, useHits} from 'react-instantsearch';
 import {MarkdownCodeBlock} from '@apollo/chakra-helpers';
+import {useUser} from '../../utils';
 
 const ClickableHeading = ({as, fontSize, fontWeight, id, children}) => {
   const handleCopyClick = () => {
@@ -59,8 +60,9 @@ ClickableHeading.propTypes = {
 
 const Results = () => {
   const {hits} = useHits();
-
   const makeId = term => term.replace(/\s+/g, '-').toLowerCase();
+  const {user} = useUser();
+  const isApollonaut = user?.name.includes('@apollographql.com');
 
   return (
     <Stack divider={<StackDivider borderColor="border" />} spacing={6}>
@@ -127,6 +129,48 @@ const Results = () => {
               </>
             )}
           </HStack>
+          {isApollonaut && hit.businessContext && (
+            <Box py="2">
+              <Text>
+                💼 <strong>Business context</strong> (internal only)
+              </Text>
+              <Text>{hit.businessContext}</Text>
+            </Box>
+          )}
+          {isApollonaut && hit.usageInstructions && (
+            <Box>
+              <Text>
+                📝 <strong>Usage instructions</strong> (internal only)
+              </Text>
+              <Markdown
+                components={{
+                  p: Text,
+                  a: PrimaryLink,
+                  pre: MarkdownCodeBlock,
+                  code: InlineCode
+                }}
+              >
+                {hit.usageInstructions}
+              </Markdown>
+            </Box>
+          )}
+          {isApollonaut && hit.exampleUsage && (
+            <Box>
+              <Text>
+                <strong>Example usage</strong> (internal only)
+              </Text>
+              <Markdown
+                components={{
+                  p: Text,
+                  a: PrimaryLink,
+                  pre: MarkdownCodeBlock,
+                  code: InlineCode
+                }}
+              >
+                {`_${hit.exampleUsage}_`}
+              </Markdown>
+            </Box>
+          )}
         </Box>
       ))}
     </Stack>
