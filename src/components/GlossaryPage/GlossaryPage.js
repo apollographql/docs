@@ -15,6 +15,23 @@ const algoliaIndexName = 'apollopedia';
 
 const searchClient = algoliasearch(appId, apiKey);
 
+const scrollToHash = hash => {
+  const headingElement = document.getElementById(hash);
+  if (headingElement) {
+    headingElement.scrollIntoView({behavior: 'smooth'});
+  }
+};
+
+const onStateChange = ({uiState, setUiState}) => {
+  setUiState(uiState);
+  let hash;
+  if (typeof window !== 'undefined') {
+    hash = window.location.hash.substring(1);
+  }
+  if (hash && uiState.apollopedia.refinementList === undefined)
+    scrollToHash(hash);
+};
+
 function NoResultsBoundary({children, fallback}) {
   const {results} = useInstantSearch();
 
@@ -55,33 +72,36 @@ export function GlossaryPage() {
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    // Fetch data from Algolia index based on the search term
-    // and update the component state with the search results.
-
     const fetchData = async () => {
       const index = searchClient.initIndex(algoliaIndexName);
-
-      const {hits} = await index.search(searchTerm);
-      console.log(hits);
+      const {hits} = await index.search(searchTerm, {hitsPerPage: 150});
+      return hits;
     };
 
-    fetchData();
-  }, [searchTerm]);
-
-  if (typeof window !== 'undefined') {
-    // Check if there is an anchor in the URL and scroll to it
-    const fragment = window.location.hash.substring(1);
-    if (fragment) {
-      const headingElement = document.getElementById(fragment);
-      if (headingElement) {
-        headingElement.scrollIntoView({behavior: 'smooth'});
+    const fetchDataAndScroll = async () => {
+      const hits = await fetchData();
+      const hitHashes = hits.map(hit =>
+        hit.term.replace(/\s+/g, '-').toLowerCase()
+      );
+      let hash;
+      if (typeof window !== 'undefined') {
+        hash = window.location.hash.substring(1);
       }
-    }
-  }
+      if (hash && hitHashes.includes(hash)) {
+        scrollToHash(hash);
+      }
+    };
+
+    fetchDataAndScroll();
+  }, [searchTerm]);
 
   return (
     <Box>
-      <InstantSearch searchClient={searchClient} indexName={algoliaIndexName}>
+      <InstantSearch
+        searchClient={searchClient}
+        indexName={algoliaIndexName}
+        onStateChange={onStateChange}
+      >
         <Configure hitsPerPage={150} />
         <Flex justify="flex-start" p="4" maxW="full">
           <Grid templateColumns="3fr 1fr" gap="6" width="100%">
