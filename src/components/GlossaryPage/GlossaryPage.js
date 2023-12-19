@@ -14,23 +14,6 @@ const algoliaIndexName = 'apollopedia';
 
 const searchClient = algoliasearch(appId, apiKey);
 
-const scrollToHash = hash => {
-  const headingElement = document.getElementById(hash);
-  if (headingElement) {
-    headingElement.scrollIntoView({behavior: 'smooth'});
-  }
-};
-
-const onStateChange = ({uiState, setUiState}) => {
-  setUiState(uiState);
-  let hash;
-  if (typeof window !== 'undefined') {
-    hash = window.location.hash.substring(1);
-  }
-  if (hash && uiState.apollopedia.refinementList === undefined)
-    scrollToHash(hash);
-};
-
 function NoResultsBoundary({children, fallback}) {
   const {results} = useInstantSearch();
 
@@ -67,43 +50,26 @@ function NoResults() {
   );
 }
 
-export function GlossaryPage() {
-  const [searchTerm, setSearchTerm] = useState('');
+function HashScroll() {
+  const {status, results} = useInstantSearch();
+  const [hasScrolled, setHasScrolled] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const index = searchClient.initIndex(algoliaIndexName);
-      const {hits} = await index.search(searchTerm, {hitsPerPage: 150});
-      return hits;
-    };
+    if (status === 'idle' && results.hits.length > 0 && !hasScrolled) {
+      document.querySelector(window.location.hash)?.scrollIntoView();
+      setHasScrolled(true);
+    }
+  }, [status, results, hasScrolled]);
+  return null;
+}
 
-    const fetchDataAndScroll = async () => {
-      const hits = await fetchData();
-      const hitHashes = hits.map(hit =>
-        hit.term.replace(/\s+/g, '-').toLowerCase()
-      );
-      let hash;
-      if (typeof window !== 'undefined') {
-        hash = window.location.hash.substring(1);
-      }
-      if (hash && hitHashes.includes(hash)) {
-        scrollToHash(hash);
-      }
-    };
-
-    fetchDataAndScroll();
-  }, [searchTerm]);
-
+export function GlossaryPage() {
   return (
     <Box>
-      <InstantSearch
-        searchClient={searchClient}
-        indexName={algoliaIndexName}
-        onStateChange={onStateChange}
-      >
+      <InstantSearch searchClient={searchClient} indexName={algoliaIndexName}>
+        <HashScroll />
         <Configure hitsPerPage={150} />
         <Flex justify="flex-start" p="4" maxW="full">
-          {/* First column */}
           <Flex flexDirection="column" mr="6" flex="3">
             <Box pb="4">
               <Search />
@@ -112,7 +78,6 @@ export function GlossaryPage() {
               <Results />
             </NoResultsBoundary>
           </Flex>
-          {/* Second column */}
           <Flex flexDirection="column" flex="1">
             <LabelsList />
           </Flex>
