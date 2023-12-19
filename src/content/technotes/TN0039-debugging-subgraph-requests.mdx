@@ -6,11 +6,19 @@ tags: [federation, gateway, router]
 
 Both the [Apollo Router](/router) and [Apollo Gateway](/apollo-server/using-federation/apollo-gateway-setup) serve as an entrypoint into your [federated graph](/federation), and as your graph grows you may need to debug a problematic query for one reason or another. 
 
-It's possible to log the each request to your subgraphs in both the Gateway and Router, with code snippets to do so below. 
+Each client request goes through a process called [Query Planning](/graphos/explorer/additional-features/#query-plans-for-supergraphs) which generates the subgraph requests that will be executed. It's possible to log the out the query plan in both the Gateway and Router.
 
-## Apollo Router
+## Outputting query plans with headers
+With [the Apollo Router](/router/) `v0.16.0+` and [`@apollo/gateway`](/apollo-server/using-federation/api/apollo-gateway/) `v2.5.4+`, you can pass the following headers to return the query plans in the GraphQL response extensions:
 
-To debug your subgraph queries in an Apollo Router instance, we'll leverage [Rhai](/router/customizations/rhai) to log the necessary information out. An example Rhai script is below. 
+* Including the `Apollo-Query-Plan-Experimental` header returns the query plan in the response extensions
+* Additionally including the `Apollo-Query-Plan-Experimental-Format` header with one of the supported options changes the output format:
+  * A value of `prettified` returns a human-readable string  of the query plan
+  * A value of `internal` returns a JSON representation of the query plan
+
+## Log Apollo Router subgraph calls
+
+If instead you want to debug your subgraph HTTP requests in an Apollo Router instance, we'll leverage [Rhai](/router/customizations/rhai) to log the necessary information out. An example Rhai script is below. 
 
 **Note that while it is possible to log out the variables, Apollo strongly recommends not doing so to avoid leaking sensitive information into your logs.**
 
@@ -34,7 +42,7 @@ plugins:
 ```
 
 
-## Apollo Gateway 
+## Log Apollo Gateway subgraph calls
 
 To debug queries to your subgraphs within an Apollo Gateway instance, we'll leverage a [`buildService` function](/apollo-server/using-federation/api/apollo-gateway/#configuring-the-subgraph-fetcher) to log the operation name and body. 
 
