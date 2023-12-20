@@ -70,8 +70,18 @@ export function GlossaryPage() {
 
   const appId = process.env.ALGOLIA_APP_ID;
   const apiKey = isApollonaut
-    ? process.env.GATSBY_ALGOLIA_EXTERNAL_APOLLOPEDIA_SEARCH_KEY
+    ? process.env.ALGOLIA_SEARCH_KEY
     : process.env.GATSBY_ALGOLIA_EXTERNAL_APOLLOPEDIA_SEARCH_KEY;
+
+  const attributesToRetrieve = isApollonaut
+    ? ['*']
+    : [
+        '*',
+        '-internalOnly',
+        '-usageInstructions',
+        '-exampleUsage',
+        '-businessContext'
+      ];
   const algoliaIndexName = 'apollopedia';
 
   const searchClient = algoliasearch(appId, apiKey);
@@ -79,7 +89,10 @@ export function GlossaryPage() {
     <Box>
       <InstantSearch searchClient={searchClient} indexName={algoliaIndexName}>
         <HashScroll />
-        <Configure hitsPerPage={150} />
+        <Configure
+          hitsPerPage={150}
+          attributesToRetrieve={attributesToRetrieve}
+        />
         <Flex justify="flex-start" p="4" maxW="full">
           <Flex flexDirection="column" mr="6" flex="3">
             <Box pb="4">

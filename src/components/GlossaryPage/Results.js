@@ -1,3 +1,4 @@
+import EditOnGitHub from './EditOnGitHub';
 import InlineCode from '../InlineCode';
 import Markdown from 'react-markdown';
 import PropTypes from 'prop-types';
@@ -15,9 +16,6 @@ import {
   Text
 } from '@chakra-ui/react';
 import {Highlight, useHits} from 'react-instantsearch';
-// import {LabelFilterButton} from './LabelFilterButton';
-import EditOnGitHub from './EditOnGitHub';
-import RelativeLink, {PrimaryLink} from '../RelativeLink';
 import {MarkdownCodeBlock} from '@apollo/chakra-helpers';
 import {useUser} from '../../utils';
 
@@ -174,7 +172,7 @@ const Results = () => {
           )}
           {isApollonaut && (
             <Box pt="4" textAlign="right">
-              <EditOnGitHub term={hit.term} />
+              <EditOnGitHub term={hit.objectID} />
             </Box>
           )}
         </Box>
