@@ -2,6 +2,7 @@ import InlineCode from '../InlineCode';
 import Markdown from 'react-markdown';
 import PropTypes from 'prop-types';
 import React from 'react';
+import RelativeLink, {PrimaryLink} from '../RelativeLink';
 import {
   Box,
   HStack,
@@ -14,8 +15,6 @@ import {
   Text
 } from '@chakra-ui/react';
 import {Highlight, useHits} from 'react-instantsearch';
-// import {LabelFilterButton} from './LabelFilterButton';
-import RelativeLink, {PrimaryLink} from '../RelativeLink';
 import {MarkdownCodeBlock} from '@apollo/chakra-helpers';
 
 const ClickableHeading = ({as, fontSize, fontWeight, id, children}) => {
@@ -32,7 +31,7 @@ const ClickableHeading = ({as, fontSize, fontWeight, id, children}) => {
       // Scroll to the heading
       const headingElement = document.getElementById(id);
       if (headingElement) {
-        headingElement.scrollIntoView({behavior: 'smooth'});
+        headingElement.scrollIntoView();
       }
     }
   };
@@ -51,11 +50,11 @@ const ClickableHeading = ({as, fontSize, fontWeight, id, children}) => {
 };
 
 ClickableHeading.propTypes = {
-  as: PropTypes.string, // Component type for the heading (e.g., 'h1', 'h2', etc.)
-  fontSize: PropTypes.string, // Font size of the heading
-  fontWeight: PropTypes.string, // Font weight of the heading
-  id: PropTypes.string.isRequired, // ID for the heading (required)
-  children: PropTypes.node.isRequired // Content of the heading (React node, required)
+  as: PropTypes.string,
+  fontSize: PropTypes.string,
+  fontWeight: PropTypes.string,
+  id: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired
 };
 
 const Results = () => {
@@ -98,15 +97,12 @@ const Results = () => {
               code: InlineCode
             }}
           >
-            {/* {hit.learnMore
-              ? hit.definition.concat(` [Learn more.](${hit.learnMore})`)
-              : hit.definition} */}
             {hit.definition}
           </Markdown>
 
           {hit.learnMore && (
             <Text my="4">
-              <PrimaryLink href={hit.learnMore}>Learn more.</PrimaryLink>
+              <PrimaryLink href={hit.learnMore}>Learn more. ➜</PrimaryLink>
             </Text>
           )}
 

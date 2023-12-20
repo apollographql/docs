@@ -12,7 +12,7 @@ export const ClearFilters = props => {
       colorScheme="indigo"
       variant="link"
       fontWeight="bold"
-      _hover={{textDecoration: 'underline'}} // Add underline on hover
+      _hover={{textDecoration: 'underline'}}
       ml="4"
     >
       Clear

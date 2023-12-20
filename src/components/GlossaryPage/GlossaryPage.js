@@ -55,7 +55,13 @@ function HashScroll() {
   const [hasScrolled, setHasScrolled] = useState(false);
 
   useEffect(() => {
-    if (status === 'idle' && results.hits.length > 0 && !hasScrolled) {
+    if (
+      status === 'idle' &&
+      results.hits.length > 0 &&
+      !hasScrolled &&
+      typeof window !== 'undefined' &&
+      window.location.hash
+    ) {
       document.querySelector(window.location.hash)?.scrollIntoView();
       setHasScrolled(true);
     }
