@@ -43,6 +43,13 @@ import {
 import {Caution} from './Caution';
 import {CustomHeading} from './CustomHeading';
 import {
+  DocBlock,
+  DocPiece,
+  FunctionDetails,
+  InterfaceDetails,
+  useApiDocContext
+} from './ApiDoc';
+import {
   EmbeddableExplorer,
   MarkdownCodeBlock,
   MultiCodeBlock,
@@ -74,7 +81,6 @@ import {YouTube} from './YouTube';
 import {join} from 'path';
 import {kebabCase} from 'lodash';
 import {rehype} from 'rehype';
-import {useApiDocContext} from './ApiDoc';
 import {useConfig} from '../utils/config';
 import {useFieldTableStyles} from '../utils';
 import {useMermaidStyles} from '../utils/mermaid';
