@@ -1,4 +1,8 @@
-import Panel, {DOCS_INDEX, QUERY_SUGGESTIONS_INDEX} from './Panel';
+import Panel, {
+  APOLLOPEDIA_INDEX,
+  DOCS_INDEX,
+  QUERY_SUGGESTIONS_INDEX
+} from './Panel';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
 import algoliasearch from 'algoliasearch/lite';
@@ -12,6 +16,7 @@ import {getAlgoliaResults} from '@algolia/autocomplete-preset-algolia';
 
 const SOURCES = {
   [DOCS_INDEX]: 'Documentation',
+  [APOLLOPEDIA_INDEX]: 'Apollopedia',
   blog: 'Blog',
   odyssey: 'Odyssey',
   [QUERY_SUGGESTIONS_INDEX]: "Can't find what you're looking for?"
@@ -33,6 +38,8 @@ function getEventName(index) {
       return 'Suggestion selected from Autocomplete';
     case DOCS_INDEX:
       return 'Article selected from docs index';
+    case APOLLOPEDIA_INDEX:
+      return 'Apollopedia term selected from Apollopedia index';
     default:
       return 'Article selected from Autocomplete';
   }
