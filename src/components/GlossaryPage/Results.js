@@ -5,6 +5,7 @@ import React from 'react';
 import RelativeLink, {PrimaryLink} from '../RelativeLink';
 import {
   Box,
+  Button,
   HStack,
   Heading,
   Link,
@@ -14,6 +15,7 @@ import {
   TagLabel,
   Text
 } from '@chakra-ui/react';
+import {FiArrowRight} from 'react-icons/fi';
 import {Highlight, useHits} from 'react-instantsearch';
 import {MarkdownCodeBlock} from '@apollo/chakra-helpers';
 
@@ -99,13 +101,6 @@ const Results = () => {
           >
             {hit.definition}
           </Markdown>
-
-          {hit.learnMore && (
-            <Text my="4">
-              <PrimaryLink href={hit.learnMore}>Learn more. ➜</PrimaryLink>
-            </Text>
-          )}
-
           <HStack mt="2" pb="2">
             {hit.relatedTerms && (
               <Text>
@@ -127,6 +122,21 @@ const Results = () => {
               </>
             )}
           </HStack>
+          {hit.learnMore && (
+            <Button
+              my="4"
+              colorScheme="indigo"
+              _dark={{
+                color: 'indigo.200'
+              }}
+              variant="ghost"
+              rightIcon={<FiArrowRight />}
+              as="a"
+              href={hit.learnMore}
+            >
+              Learn more
+            </Button>
+          )}
         </Box>
       ))}
     </Stack>
