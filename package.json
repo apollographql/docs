@@ -46,7 +46,7 @@
     "algoliasearch": "^4.12.1",
     "apollo-algolia-transform": "^1.0.38",
     "framer-motion": "^4.1.17",
-    "gatsby": "4.25.4",
+    "gatsby": "4.25.7",
     "gatsby-plugin-algolia": "^0.24.0",
     "gatsby-plugin-apollo": "^4.0.2",
     "gatsby-plugin-apollo-onetrust": "git+https://github.com/apollographql/gatsby-plugin-apollo-onetrust.git#main",
