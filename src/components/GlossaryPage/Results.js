@@ -132,31 +132,6 @@ const Results = () => {
               </HStack>
             </Box>
           )}
-          <Flex justify="space-between">
-            {hit.learnMore && (
-              <Button
-                aria-label={
-                  hit.learnMoreText
-                    ? hit.learnMoreText
-                    : 'Learn more about this term'
-                }
-                my="4"
-                colorScheme="indigo"
-                _dark={{
-                  color: 'indigo.200'
-                }}
-                variant="ghost"
-                rightIcon={<FiArrowRight />}
-                as="a"
-                href={hit.learnMore}
-              >
-                {hit.learnMoreText
-                  ? hit.learnMoreText
-                  : 'Learn more about this term'}
-              </Button>
-            )}
-            {isApollonaut && <EditOnGitHub term={hit.objectID} />}
-          </Flex>
           {isApollonaut &&
             (hit.usageInstructions ||
               hit.businessContext ||
@@ -225,6 +200,35 @@ const Results = () => {
                 )}
               </Box>
             )}
+          {hit.learnMore ? (
+            <Flex justify="space-between">
+              <Button
+                aria-label={
+                  hit.learnMoreText
+                    ? hit.learnMoreText
+                    : 'Learn more about this term'
+                }
+                my="4"
+                colorScheme="indigo"
+                _dark={{
+                  color: 'indigo.200'
+                }}
+                variant="ghost"
+                rightIcon={<FiArrowRight />}
+                as="a"
+                href={hit.learnMore}
+              >
+                {hit.learnMoreText
+                  ? hit.learnMoreText
+                  : 'Learn more about this term'}
+              </Button>
+              {isApollonaut && <EditOnGitHub term={hit.objectID} />}
+            </Flex>
+          ) : (
+            <Box display="flex" justifyContent="flex-end">
+              {isApollonaut && <EditOnGitHub term={hit.objectID} />}
+            </Box>
+          )}
         </Box>
       ))}
     </Stack>
