@@ -4,7 +4,7 @@ subtitle: Reference
 description: Reference for GraphOS schema linting rules with examples
 ---
 
-This reference lists the rules that you can enforce with [GraphOS schema linting](./schema-linter/), along with the code that GraphOS returns for each rule violation.
+This reference lists the rules that you can enforce with [GraphOS schema linting](./schema-linter), along with the code that GraphOS returns for each rule violation.
 
 ## Naming rules
 
@@ -12,13 +12,15 @@ These rules enforce naming conventions. Rules are categorized by the part(s) of 
 
 ### Fields
 
-#### `FIELD_NAMES_SHOULD_BE_CAMEL_CASE`
+<RuleExpansionPanel
+  title="FIELD_NAMES_SHOULD_BE_CAMEL_CASE"
+  whatItDoes="Checks that all field names use `camelCase`."
+  rationale="`camelCase` is a convention for field names in GraphQL."
+>
 
-Field names should always use `camelCase`.
+The following example violates the rule:
 
-<p style="margin-bottom: 0">❌</p>
-
-```graphql title="schema.graphql"
+```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 type User {
   # highlight-start
   FirstName: String! # PascalCase
@@ -26,9 +28,11 @@ type User {
 }
 ```
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 type User {
   # highlight-start
   firstName: String # camelCase
@@ -36,35 +40,32 @@ type User {
 }
 ```
 
-<hr />
+</RuleExpansionPanel>
 
-#### `RESTY_FIELD_NAMES`
+<RuleExpansionPanel
+  title="RESTY_FIELD_NAMES"
+  whatItDoes="Checks that a field's name doesn't start with any of the following verbs: `get`, `list`, `post`, `put`, `patch`."
+  rationale="Fields should not start with a verb, except for mutations. For mutation fields, it's best to use a verb that describes the specific action being performed, for example, `create`, `delete`, or `edit`.">
 
-A field's name should never start with any of the following verbs:
+The following example violates the rule:
 
-- `get`
-- `list`
-- `post`
-- `put`
-- `patch`
-
-Most fields should not start with _any_ verb, with the exception of `Mutation` fields. For `Mutation` fields, use a verb that more specifically describes the action being performed (such as `create`, `delete`, or `edit`).
-
-<p style="margin-bottom: 0">❌</p>
-
-```graphql title="schema.graphql"
+```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 type Query {
   getUsers: [User!]! # highlight-line
 }
 ```
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 type Query {
   users: [User!]! # highlight-line
 }
 ```
+
+</RuleExpansionPanel>
 
 ### Types
 
@@ -76,13 +77,15 @@ These rules apply to _all_ types that appear in a GraphQL schema, including:
 - Enums
 - Unions
 
-#### `TYPE_NAMES_SHOULD_BE_PASCAL_CASE`
+<RuleExpansionPanel
+  title="TYPE_NAMES_SHOULD_BE_PASCAL_CASE"
+  whatItDoes="Checks that all type names use `PascalCase`."
+  rationale="`PascalCase` is a convention for type names in GraphQL."
+>
 
-All type names should use `PascalCase`.
+The following example violates the rule:
 
-<p style="margin-bottom: 0">❌</p>
-
-```graphql title="schema.graphql"
+```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 # highlight-start
 type streamingService { # camelCase
   # highlight-end
@@ -90,9 +93,11 @@ type streamingService { # camelCase
 }
 ```
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 # highlight-start
 type StreamingService { # PascalCase
   # highlight-end
@@ -100,151 +105,186 @@ type StreamingService { # PascalCase
 }
 ```
 
-<hr />
+</RuleExpansionPanel>
 
-#### `TYPE_PREFIX`
+<RuleExpansionPanel
+  title="TYPE_PREFIX"
+  whatItDoes="Checks that type names don't start with the prefix `Type`."
+  rationale="Avoid using the redundant `Type` prefix to shorten your schema definitions and improve readability."
+>
 
-Type names should never use the prefix `Type`.
+The following example violates the rule:
 
-<p style="margin-bottom: 0">❌</p>
-
-```graphql title="schema.graphql"
+```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 type TypeBook { # highlight-line
   title: String!
 }
 ```
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 type Book { # highlight-line
   title: String!
 }
 ```
 
-<hr />
+</RuleExpansionPanel>
 
-#### `TYPE_SUFFIX`
+<RuleExpansionPanel
+  title="TYPE_SUFFIX"
+  whatItDoes="Checks that type names don't use the suffix `Type`."
+  rationale="Avoid using the redundant `Type` suffix to shorten your schema definitions and improve readability."
+>
 
-Type names should never use the suffix `Type`.
+The following example violates the rule:
 
-<p style="margin-bottom: 0">❌</p>
-
-```graphql title="schema.graphql"
+```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 type BookType { # highlight-line
   title: String!
 }
 ```
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 type Book { # highlight-line
   title: String!
 }
 ```
 
+</RuleExpansionPanel>
+
+
 ### Objects
 
-#### `OBJECT_PREFIX`
+<RuleExpansionPanel
+  title="OBJECT_PREFIX"
+  whatItDoes="Checks that object type names don't start with the prefix `Object`."
+  rationale="Avoid using the redundant `Object` prefix to shorten your schema definitions and improve readability."
+>
 
-An object type's name should never use the prefix `Object`.
+The following example violates the rule:
 
-<p style="margin-bottom: 0">❌</p>
-
-```graphql title="schema.graphql"
+```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 type ObjectBook { # highlight-line
   title: String!
 }
 ```
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 type Book { # highlight-line
   title: String!
 }
 ```
 
-<hr />
+</RuleExpansionPanel>
 
-#### `OBJECT_SUFFIX`
+<RuleExpansionPanel
+  title="OBJECT_SUFFIX"
+  whatItDoes="Checks that object type names don't use the suffix `Object`."
+  rationale="Avoid using the redundant `Object` suffix to shorten your schema definitions and improve readability."
+>
 
-An object type's name should never use the suffix `Object`.
+The following example violates the rule:
 
-<p style="margin-bottom: 0">❌</p>
-
-```graphql title="schema.graphql"
+```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 type BookObject { # highlight-line
   title: String!
 }
 ```
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 type Book { # highlight-line
   title: String!
 }
 ```
 
+</RuleExpansionPanel>
+
+
 ### Interfaces
 
-#### `INTERFACE_PREFIX`
+<RuleExpansionPanel
+  title="INTERFACE_PREFIX"
+  whatItDoes="Checks that interface type names don't start with the prefix `Interface`."
+  rationale="Avoid using the redundant `Interface` prefix to shorten your schema definitions and improve readability."
+>
 
-An interface type's name should never use the prefix `Interface`.
+The following example violates the rule:
 
-<p style="margin-bottom: 0">❌</p>
-
-```graphql title="schema.graphql"
+```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 interface InterfaceBook { # highlight-line
   title: String
   author: String
 }
 ```
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 interface Book { # highlight-line
   title: String
   author: String
 }
 ```
 
-<hr />
+</RuleExpansionPanel>
 
-#### `INTERFACE_SUFFIX`
+<RuleExpansionPanel
+  title="INTERFACE_SUFFIX"
+  whatItDoes="Checks that interface type names don't use the suffix `Interface`."
+  rationale="Avoid using the redundant `Interface` suffix to shorten your schema definitions and improve readability."
+>
 
-An interface type's name should never use the suffix `Interface`.
+The following example violates the rule:
 
-<p style="margin-bottom: 0">❌</p>
-
-```graphql title="schema.graphql"
+```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 interface BookInterface { # highlight-line
   title: String
   author: String
 }
 ```
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 interface Book { # highlight-line
   title: String
   author: String
 }
 ```
 
-### Inputs & arguments
+</RuleExpansionPanel>
 
-#### `INPUT_ARGUMENT_NAMES_SHOULD_BE_CAMEL_CASE`
 
-A GraphQL argument's name should always use `camelCase`.
+### Inputs and arguments
 
-<p style="margin-bottom: 0">❌</p>
+<RuleExpansionPanel
+  title="INPUT_ARGUMENT_NAMES_SHOULD_BE_CAMEL_CASE"
+  whatItDoes="Checks that argument names use `camelCase`."
+  rationale="`camelCase` is a convention for argument names in GraphQL."
+>
 
-```graphql title="schema.graphql"
+The following example violates the rule:
+
+```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 type Mutation {
   #highlight-start
   createBlogPost(BlogPostContent: BlogPostContent!): Post # PascalCase
@@ -252,9 +292,11 @@ type Mutation {
 }
 ```
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 type Mutation {
   #highlight-start
   createBlogPost(blogPostContent: BlogPostContent!): Post # camelCase
@@ -262,39 +304,47 @@ type Mutation {
 }
 ```
 
-<hr />
+</RuleExpansionPanel>
 
-#### `INPUT_TYPE_SUFFIX`
+<RuleExpansionPanel
+  title="INPUT_TYPE_SUFFIX"
+  whatItDoes="Checks that input type names use the suffix `Input`."
+  rationale='Ending input type names with `Input` distinguishes input types from "output" types like objects.'
+>
 
-An input type's name should always use the suffix `Input`.
+The following example violates the rule:
 
-<p style="margin-bottom: 0">❌</p>
-
-```graphql title="schema.graphql"
+```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 input BlogPostDetails { #highlight-line
   title: String!
   content: String!
 }
 ```
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 input BlogPostDetailsInput { #highlight-line
   title: String!
   content: String!
 }
 ```
 
+</RuleExpansionPanel>
+
 ### Enums
 
-#### `ENUM_VALUES_SHOULD_BE_SCREAMING_SNAKE_CASE`
+<RuleExpansionPanel
+  title="ENUM_VALUES_SHOULD_BE_SCREAMING_SNAKE_CASE"
+  whatItDoes="Checks that enum values use `SCREAMING_SNAKE_CASE`."
+  rationale="`SCREAMING_SNAKE_CASE` is a convention for enum values in GraphQL."
+>
 
-Enum values should always use `SCREAMING_SNAKE_CASE`.
+The following example violates the rule:
 
-<p style="margin-bottom: 0">❌</p>
-
-```graphql title="schema.graphql"
+```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 enum Amenity {
   # highlight-start
   public_park # snake_case
@@ -302,9 +352,11 @@ enum Amenity {
 }
 ```
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 enum Amenity {
   # highlight-start
   PUBLIC_PARK # SCREAMING_SNAKE_CASE 😱
@@ -312,15 +364,17 @@ enum Amenity {
 }
 ```
 
-<hr />
+</RuleExpansionPanel>
 
-#### `ENUM_PREFIX`
+<RuleExpansionPanel
+  title="ENUM_PREFIX"
+  whatItDoes="Checks that enum type names don't start with the prefix `Enum`."
+  rationale="Avoid using the redundant `Enum` prefix to shorten your schema definitions and improve readability."
+>
 
-An enum type's name should never use the prefix `Enum`.
+The following example violates the rule:
 
-<p style="margin-bottom: 0">❌</p>
-
-```graphql title="schema.graphql"
+```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 enum EnumResidence { # highlight-line
   HOUSE
   APARTMENT
@@ -328,9 +382,11 @@ enum EnumResidence { # highlight-line
 }
 ```
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 enum Residence { # highlight-line
   HOUSE
   APARTMENT
@@ -338,15 +394,17 @@ enum Residence { # highlight-line
 }
 ```
 
-<hr />
+</RuleExpansionPanel>
 
-#### `ENUM_SUFFIX`
+<RuleExpansionPanel
+  title="ENUM_SUFFIX"
+  whatItDoes="Checks that enum type names don't use the suffix `Enum`."
+  rationale="Avoid using the redundant `Enum` suffix to shorten your schema definitions and improve readability."
+>
 
-An enum type's name should never use the suffix `Enum`.
+The following example violates the rule:
 
-<p style="margin-bottom: 0">❌</p>
-
-```graphql title="schema.graphql"
+```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 enum ResidenceEnum { # highlight-line
   HOUSE
   APARTMENT
@@ -354,9 +412,11 @@ enum ResidenceEnum { # highlight-line
 }
 ```
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 enum Residence { # highlight-line
   HOUSE
   APARTMENT
@@ -364,15 +424,17 @@ enum Residence { # highlight-line
 }
 ```
 
-<hr />
+</RuleExpansionPanel>
 
-#### `ENUM_USED_AS_INPUT_WITHOUT_SUFFIX`
+<RuleExpansionPanel
+  title="ENUM_USED_AS_INPUT_WITHOUT_SUFFIX"
+  whatItDoes="If an enum type is used as an input argument, checks that its name uses the suffix `Input`."
+  rationale='Ending input arguments with `Input` distinguishes inputs from "output" types like objects.'
+>
 
-If an enum type is used as an input argument, its name _should_ use the suffix `Input`.
+The following example violates the rule:
 
-<p style="margin-bottom: 0">❌</p>
-
-```graphql title="schema.graphql"
+```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 enum Role { # highlight-line
   EDITOR
   VIEWER
@@ -383,9 +445,11 @@ type Query {
 }
 ```
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 enum RoleInput { # highlight-line
   EDITOR
   VIEWER
@@ -396,15 +460,17 @@ type Query {
 }
 ```
 
-<hr />
+</RuleExpansionPanel>
 
-#### `ENUM_USED_AS_OUTPUT_DESPITE_SUFFIX`
+<RuleExpansionPanel
+  title="ENUM_USED_AS_OUTPUT_DESPITE_SUFFIX"
+  whatItDoes="If an enum is used as the return type of a _non_-input field, checks that its name doesn't use the suffix `Input`."
+  rationale="Including the suffix `Input` on an output type is misleading."
+>
 
-If an enum is used as the return type of a _non_-input field, its name _should not_ use the suffix `Input`.
+The following example violates the rule:
 
-<p style="margin-bottom: 0">❌</p>
-
-```graphql title="schema.graphql"
+```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 enum RoleInput { # highlight-line
   EDITOR
   VIEWER
@@ -415,9 +481,11 @@ type Query {
 }
 ```
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 enum Role { # highlight-line
   EDITOR
   VIEWER
@@ -428,25 +496,31 @@ type Query {
 }
 ```
 
+</RuleExpansionPanel>
+
 ### Directives
 
-#### `DIRECTIVE_NAMES_SHOULD_BE_CAMEL_CASE`
+<RuleExpansionPanel
+  title="DIRECTIVE_NAMES_SHOULD_BE_CAMEL_CASE"
+  whatItDoes="Checks that directive names use `camelCase`."
+  rationale="`camelCase` is a convention for directive names in GraphQL."
+>
 
-Directive names should always use `camelCase`.
+The following example violates the rule:
 
-<p style="margin-bottom: 0">❌</p>
-
-```graphql title="schema.graphql"
+```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 directive @SpecialField on FIELD_DEFINITION # PascalCase
 ```
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 directive @specialField on FIELD_DEFINITION # camelCase
 ```
 
-<hr />
+</RuleExpansionPanel>
 
 <MinVersion version="2.4">
 
@@ -460,7 +534,7 @@ Composition rules are only available for graphs on [federation version `2.4`](/f
 
 </Note>
 
-These rules flag potential improvements to a supergraph schema [composed](/federation/federated-types/composition) of [subgraph](/federation/building-supergraphs/subgraphs-overview/) schemas.
+Composition rules flag potential improvements to [subgraph](/federation/building-supergraphs/subgraphs-overview/) schemas used to [compose](/federation/federated-types/composition) a supergraph schema.
 
 ### Inconsistent elements
 
@@ -482,45 +556,48 @@ These rules define conventions for the entire schema and directive usage outside
 
 These rules apply to the entire schema.
 
-#### `DOES_NOT_PARSE`
+<RuleExpansionPanel
+  title="DOES_NOT_PARSE"
+  whatItDoes="Checks for malformed GraphQL schemas. To resolve, check your schema for syntax errors."
+/>
 
-The schema linter raises this violation if it attempts to read a malformed GraphQL schema. Check your schema for any syntax errors.
+<RuleExpansionPanel
+  title="ALL_ELEMENTS_REQUIRE_DESCRIPTION"
+  whatItDoes="Checks that each element in the schema includes a [description](/apollo-server/schema/schema/#descriptions-docstrings)."
+  rationale="Descriptions document your GraphQL schema so consumers of your graph can easily discover fields and learn how to use them. See [examples](/apollo-server/schema/schema/#descriptions-docstrings)."
+>
 
-<hr />
+The following example violates the rule:
 
-#### `ALL_ELEMENTS_REQUIRE_DESCRIPTION`
-
-Each element in the schema must include a description.
-
-<p style="margin-bottom: 0">❌</p>
-
-```graphql title="schema.graphql"
+```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 type User {
   username: String!
 }
 ```
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 "Represents a user"
 type User {
-  "The user's username"
-  username: String!
+ "A username must be [8-64] characters."
+ username: String!
 }
 ```
 
-<hr />
+</RuleExpansionPanel>
 
-#### `DEFINED_TYPES_ARE_USED`
+<RuleExpansionPanel
+  title="DEFINED_TYPES_ARE_USED"
+  whatItDoes="Checks that every type defined in a schema is be used at least once."
+  rationale="Unused types waste resources and should be immediately removed once they've been refactored out of a schema."
+>
 
-Every type defined in a schema should be used at least once.
+The following example violates the rule:
 
-Unused types commonly appear after you refactor other parts of your schema. You should remove unused types to prevent confusion.
-
-<p style="margin-bottom: 0">❌</p>
-
-```graphql title="schema.graphql"
+```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 type SomeUnusedType { # Also fails the TYPE_SUFFIX rule!
   name: String!
 }
@@ -535,9 +612,11 @@ type Query {
 }
 ```
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 type Book {
   title: String!
 }
@@ -547,15 +626,17 @@ type Query {
 }
 ```
 
-<hr />
+</RuleExpansionPanel>
 
-#### `QUERY_DOCUMENT_DECLARATION`
+<RuleExpansionPanel
+  title="QUERY_DOCUMENT_DECLARATION"
+  whatItDoes="Checks that schemas don't define operations, such as queries and mutations."
+  rationale="Operations should be defined on the client side, not within schemas. Schemas define types, fields, and their relationships. Operations specify what data to fetch or change. Since what to fetch or change is a client concern, this separation allows for a clean and modular architecture, making it easier to manage and evolve the API over time."
+>
 
-A GraphQL schema should never include definitions of GraphQL _operations_ (such as queries and mutations).
+The following example violates the rule:
 
-<p style="margin-bottom: 0">❌</p>
-
-```graphql title="schema.graphql"
+```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 type Query {
   users: [User!]!
 }
@@ -570,15 +651,20 @@ query GetUsers {
 #highlight-end
 ```
 
+</RuleExpansionPanel>
+
 ### Directives
 
-#### `CONTACT_DIRECTIVE_MISSING`
+<RuleExpansionPanel
+  title="CONTACT_DIRECTIVE_MISSING"
+  whatItDoes="Checks that subgraph schemas always provide owner contact details via the `@contact` directive."
+  rationale="You can use the `@contact` directive to add your team's contact info to a subgraph schema. This info is displayed in GraphOS Studio, which helps other teams know who to contact for assistance with the subgraph. [Learn more](../graphs/federated-graphs#contact-info-for-subgraphs)."
+>
 
-A subgraph schema should always provide owner contact details via the `@contact` directive. [Learn more.](../graphs/federated-graphs#contact-info-for-subgraphs)
+This example shows correct `@contact` directive usage:
+<br/>
 
-<p style="margin-bottom: 0">✅</p>
-
-```graphql title="schema.graphql"
+```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 directive @contact(
   "Contact title of the subgraph owner"
   name: String!
@@ -596,32 +682,40 @@ extend schema
   )
 ```
 
-<hr />
+</RuleExpansionPanel>
 
-#### `DEPRECATED_DIRECTIVE_MISSING_REASON`
+<RuleExpansionPanel
+  title="DEPRECATED_DIRECTIVE_MISSING_REASON"
+  whatItDoes="Checks that the `@deprecated` directive always includes a `reason` argument."
+  rationale="The `reason` argument can help graph consumers understand which field to use instead of the `@deprecated` one. "
+>
 
-The `@deprecated` directive should always include a `reason` argument.
+The following example violates the rule:
 
-<p style="margin-bottom: 0">❌</p>
-
-```graphql title="schema.graphql"
+```graphql title="❌ schema.graphql" disableCopy=true showLineNumbers=false
 type Product {
   title: String @deprecated #highlight-line
   name: String!
 }
 ```
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
-```graphql title="schema.graphql"
+```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 type Product {
   title: String @deprecated(reason: "Use Product.name instead") #highlight-line
   name: String!
 }
 ```
 
-<hr />
+</RuleExpansionPanel>
 
-#### `TAG_DIRECTIVE_USES_UNKNOWN_NAME`
+<RuleExpansionPanel
+  title="TAG_DIRECTIVE_USES_UNKNOWN_NAME"
+  whatItDoes="Checks that the [`@tag`](/federation/federated-types/federated-directives/#tag) directive uses an approved value for its `name` argument. You specify approved values in [GraphOS Studio](./schema-linter/#configuring-the-linter)."
+  rationale="This directive is used most commonly with [GraphOS contracts](./contracts). Validating `@tag` names ensures contracts work as intended."
+>
 
-The `@tag` directive should always use an approved value for its `name` argument. You specify approved values in [GraphOS Studio](./schema-linter/#configuring-the-linter).
+</RuleExpansionPanel>

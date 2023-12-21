@@ -11,6 +11,7 @@ import Prism from 'prismjs';
 import PropTypes from 'prop-types';
 import React, {Fragment, createElement, useMemo} from 'react';
 import RelativeLink, {ButtonLink, PrimaryLink} from './RelativeLink';
+import RuleExpansionPanel from './RuleExpansionPanel';
 import TableOfContents from './TableOfContents';
 import TrackableButton from './TrackableButton';
 import TrackableLink from './TrackableLink';
@@ -165,7 +166,7 @@ const components = {
   pre: MarkdownCodeBlock,
   table: props => (
     <Box
-      rounded="md"
+      borderRadius={props.unround ? 0 : 4}
       borderWidth={1}
       overflow="auto"
       sx={{table: {borderWidth: 0}}}
@@ -205,6 +206,7 @@ const mdxComponents = {
   TypeScriptApiBox,
   TypescriptApiBox: TypeScriptApiBox,
   EmbeddableExplorer,
+  RuleExpansionPanel,
   ButtonLink,
   Tip,
   MinVersion,
