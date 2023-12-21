@@ -22,6 +22,14 @@ import {Highlight, useHits} from 'react-instantsearch';
 import {MarkdownCodeBlock} from '@apollo/chakra-helpers';
 import {useUser} from '../../utils';
 
+const PaddedMarkdownCodeBlock = ({children}) => {
+  return (
+    <Box py="4">
+      <MarkdownCodeBlock>{children}</MarkdownCodeBlock>
+    </Box>
+  );
+};
+
 const ClickableHeading = ({as, fontSize, fontWeight, id, children}) => {
   const handleCopyClick = () => {
     if (id) {
@@ -99,7 +107,7 @@ const Results = () => {
             components={{
               p: Text,
               a: PrimaryLink,
-              pre: MarkdownCodeBlock,
+              pre: PaddedMarkdownCodeBlock,
               code: InlineCode
             }}
           >
@@ -125,7 +133,6 @@ const Results = () => {
             </Box>
           )}
           <Flex justify="space-between">
-            {isApollonaut && <EditOnGitHub term={hit.objectID} />}
             {hit.learnMore && (
               <Button
                 aria-label={
@@ -148,6 +155,7 @@ const Results = () => {
                   : 'Learn more about this term'}
               </Button>
             )}
+            {isApollonaut && <EditOnGitHub term={hit.objectID} />}
           </Flex>
           {isApollonaut &&
             (hit.usageInstructions ||
@@ -189,7 +197,6 @@ const Results = () => {
                         components={{
                           p: Text,
                           a: PrimaryLink,
-                          pre: MarkdownCodeBlock,
                           code: InlineCode
                         }}
                       >
@@ -208,7 +215,6 @@ const Results = () => {
                         components={{
                           p: Text,
                           a: PrimaryLink,
-                          pre: MarkdownCodeBlock,
                           code: InlineCode
                         }}
                       >
