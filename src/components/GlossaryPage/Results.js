@@ -87,6 +87,7 @@ const Results = () => {
               fontWeight="bold"
               id={makeId(hit.term)}
             >
+              {hit.internalOnly && <span>🔒 </span>}
               <Highlight attribute="term" hit={hit} />
             </ClickableHeading>
 
@@ -152,7 +153,7 @@ const Results = () => {
                 }}
               >
                 <Heading as="h4" fontSize="xl" fontWeight="bold" pb="2">
-                  Internal information
+                  Internal information 🔒
                 </Heading>
                 {isApollonaut && hit.businessContext && (
                   <>
