@@ -6,6 +6,7 @@ import React from 'react';
 import RelativeLink, {PrimaryLink} from '../RelativeLink';
 import {
   Box,
+  Divider,
   HStack,
   Heading,
   Link,
@@ -72,7 +73,7 @@ const Results = () => {
           <HStack mt="2" pb="4">
             <ClickableHeading
               as="h2"
-              fontSize="xl"
+              fontSize="2xl"
               fontWeight="bold"
               id={makeId(hit.term)}
             >
@@ -107,7 +108,7 @@ const Results = () => {
               <PrimaryLink href={hit.learnMore}>Learn more. ➜</PrimaryLink>
             </Text>
           )}
-          <HStack mt="2" pb="2">
+          <HStack my="2" pb="2">
             {hit.relatedTerms && (
               <Text>
                 <strong>{`Related term definition${
@@ -128,48 +129,76 @@ const Results = () => {
               </>
             )}
           </HStack>
-          {isApollonaut && hit.usageInstructions && (
-            <Box>
-              <Text>
-                📝 <strong>Usage instructions</strong> (internal only)
-              </Text>
-              <Markdown
-                components={{
-                  p: Text,
-                  a: PrimaryLink,
-                  pre: MarkdownCodeBlock,
-                  code: InlineCode
+          {isApollonaut &&
+            (hit.usageInstructions ||
+              hit.businessContext ||
+              hit.exampleUsage) && (
+              <Box
+                pl="4"
+                py="1"
+                borderLeftWidth="2px"
+                borderColor="primary"
+                fontSize="md"
+                sx={{
+                  '>': {
+                    ':not(:last-child)': {
+                      mb: 2
+                    }
+                  }
                 }}
               >
-                {hit.usageInstructions}
-              </Markdown>
-            </Box>
-          )}
-          {isApollonaut && hit.exampleUsage && (
-            <Box>
-              <Text>
-                <strong>Example usage</strong> (internal only)
-              </Text>
-              <Markdown
-                components={{
-                  p: Text,
-                  a: PrimaryLink,
-                  pre: MarkdownCodeBlock,
-                  code: InlineCode
-                }}
-              >
-                {`_${hit.exampleUsage}_`}
-              </Markdown>
-            </Box>
-          )}
-          {isApollonaut && hit.businessContext && (
-            <Box py="2">
-              <Text>
-                💼 <strong>Business context</strong> (internal only)
-              </Text>
-              <Text>{hit.businessContext}</Text>
-            </Box>
-          )}
+                <Heading as="h4" fontSize="xl" fontWeight="bold" pb="2">
+                  Internal information
+                </Heading>
+                {isApollonaut && hit.businessContext && (
+                  <>
+                    <Text>
+                      <strong>Business context</strong>
+                    </Text>
+                    <Text>{hit.businessContext}</Text>
+                  </>
+                )}
+                {isApollonaut && hit.usageInstructions && (
+                  <>
+                    <Text>
+                      <strong>Usage instructions</strong>
+                    </Text>
+                    <Box>
+                      <Markdown
+                        components={{
+                          p: Text,
+                          a: PrimaryLink,
+                          pre: MarkdownCodeBlock,
+                          code: InlineCode
+                        }}
+                      >
+                        {hit.usageInstructions}
+                      </Markdown>
+                    </Box>
+                  </>
+                )}
+                {isApollonaut && hit.exampleUsage && (
+                  <>
+                    <Text>
+                      <strong>Example usage</strong>
+                    </Text>
+                    <Box>
+                      <Markdown
+                        components={{
+                          p: Text,
+                          a: PrimaryLink,
+                          pre: MarkdownCodeBlock,
+                          code: InlineCode
+                        }}
+                      >
+                        {`_${hit.exampleUsage}_`}
+                      </Markdown>
+                    </Box>
+                  </>
+                )}
+              </Box>
+            )}
+
           {isApollonaut && (
             <Box pt="4" textAlign="right">
               <EditOnGitHub term={hit.objectID} />
