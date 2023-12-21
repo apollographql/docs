@@ -9,6 +9,7 @@ For example, here's an embedded Explorer for an Apollo example graph. Try it out
 <EmbeddableExplorer />
 
 ## Embedding on the Apollo Server landing page
+
 In Apollo Server [v3.8.0](https://github.com/apollographql/apollo-server/blob/main/CHANGELOG.md#v380) and later, you can use a built-in plugin to embed the Explorer directly on your server's landing page.
 
 You use the `ApolloServerPluginLandingPageLocalDefault` plugin to configure the landing page in your local development environment, and you use `ApolloServerPluginLandingPageProductionDefault` for production environments:
@@ -16,20 +17,20 @@ You use the `ApolloServerPluginLandingPageLocalDefault` plugin to configure the 
 ```js
 import {
   ApolloServerPluginLandingPageLocalDefault,
-  ApolloServerPluginLandingPageProductionDefault 
-} from '@apollo/server/plugin/landingPage/default';
+  ApolloServerPluginLandingPageProductionDefault,
+} from "@apollo/server/plugin/landingPage/default";
 
 let plugins = [];
-if (process.env.NODE_ENV === 'production') {
-  plugins = [ApolloServerPluginLandingPageProductionDefault({ embed: true, graphRef: 'myGraph@prod' })]
+if (process.env.NODE_ENV === "production") {
+  plugins = [ApolloServerPluginLandingPageProductionDefault({ embed: true, graphRef: "myGraph@prod" })];
 } else {
-  plugins = [ApolloServerPluginLandingPageLocalDefault({ embed: true })]
+  plugins = [ApolloServerPluginLandingPageLocalDefault({ embed: true })];
 }
 
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  plugins
+  plugins,
 });
 ```
 
@@ -45,24 +46,23 @@ For more information, see the [landing page plugin API reference](/apollo-server
 
    The following dialog appears:
 
-   <img
-     class="screenshot"
-     src="../img/embed-explorer-modal.jpg"
-     alt="Explorer embed dialog"
-     width="600"
-   />
+   <img class="screenshot" src="../img/embed-explorer-modal.jpg" alt="Explorer embed dialog" width="600" />
 
 4. Use the options on the left side of the dialog to customize the embedded Explorer's appearance and behavior to your liking.
 
 5. Still in the dialog, use the tabs above the code snippet to select the snippet for your use case:
 
-    - Use **React** for React apps where you can `npm install` the `@apollo/explorer` package. You will need to install the optional dependency `use-deep-compare-effect` to use the React package.
-    - Use **JavaScript** for non-React JavaScript apps where you can `npm install` the `@apollo/explorer` package.
-    - Use **Built file on CDN** to use Apollo's CDN-hosted embedded Explorer.
+   - Use **React** for React apps where you can `npm install` the `@apollo/explorer` package. You will need to install the optional dependency `use-deep-compare-effect` to use the React package.
+   - Use **JavaScript** for non-React JavaScript apps where you can `npm install` the `@apollo/explorer` package.
+   - Use **Built file on CDN** to use Apollo's CDN-hosted embedded Explorer.
 
 6. Click **Copy** to copy the snippet, then paste it into your code.
 
-> For descriptions of options shown in the dialog (along with advanced options that _aren't_ shown), [see below](#options).
+<Note>
+
+For descriptions of options shown in the dialog (along with advanced options that _aren't_ shown), [see below](#options).
+
+</Note>
 
 ### Setting a default operation
 
@@ -78,23 +78,13 @@ To prepopulate a default operation, use one of the following methods:
 
 Open the **•••** menu next to an operation and click **Embed this operation**:
 
-<img
-  class="screenshot"
-  src="../img/explorer-embed-definition-menu.jpg"
-  alt="Explorer embed link"
-  width="300"
-/>
+<img class="screenshot" src="../img/explorer-embed-definition-menu.jpg" alt="Explorer embed link" width="300" />
 
 #### Option 2
 
 Open the share dropdown in the Explorer and select **Share as embed**:
 
-<img
-  class="screenshot"
-  src="../img/explorer-embed-share-dropdown.jpg"
-  alt="Explorer embed dropdown"
-  width="300"
-/>
+<img class="screenshot" src="../img/explorer-embed-share-dropdown.jpg" alt="Explorer embed dropdown" width="300" />
 
 ### Authorization
 
@@ -102,15 +92,9 @@ Open the share dropdown in the Explorer and select **Share as embed**:
 
 **If you're embedding a private variant,** the embedded Explorer first asks users to authenticate by signing in to Studio. Authenticated users are then asked to authorize their Studio account to be used on the embedding webpage:
 
-<img
-  class="screenshot"
-  src="../img/embed-authorize.jpg"
-  alt="Explorer authorization screen"
-  width="400"
-/>
+<img class="screenshot" src="../img/embed-authorize.jpg" alt="Explorer authorization screen" width="400" />
 
 After authorizing, users can access the embedded Explorer, which includes schema navigation and visible operation collections.
-
 
 ## Options
 
@@ -206,10 +190,7 @@ The endpoint URL of the variant you want to use the embedded Explorer with. This
 
 ##### `autoInviteOptions`
 
-`{
-    accountId: string;
-    inviteToken: string;
- }`
+`{ accountId: string; inviteToken: string; }`
 
 </td>
 <td>
@@ -276,6 +257,7 @@ If you pass the `handleRequest` option, this option is ignored.
 Read more about the `fetch` API and credentials [here](https://developer.mozilla.org/en-US/docs/Web/API/fetch#credentials).
 
 This config option is **deprecated** in favor of configuring the **Include cookies** setting for your variant in the _non_-embedded Explorer.
+
 </td>
 </tr>
 
@@ -391,7 +373,7 @@ Example:
 ```jsx
 initialState: {
   headers: {
-    authorization: 'Bearer abc123';
+    authorization: "Bearer abc123";
   }
 }
 ```

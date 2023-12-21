@@ -9,6 +9,7 @@ tags: [schema-design, federation]
 If you're an enterprise customer looking for more material on this topic, try the [Enterprise best practices: Schema design](https://www.apollographql.com/tutorials/schema-design-best-practices) course on Odyssey.
 
 Not an enterprise customer? [Learn about GraphOS for Enterprise.](/graphos/enterprise)
+
 </Tip>
 
 GraphQL interfaces enable schema fields to return one of multiple object types, all of which must _implement_ that interface. To implement an interface, an object type must define all fields that are included in that interface (otherwise, the schema is invalid):
@@ -108,30 +109,37 @@ query OwnersAndPets {
 }
 ```
 
-> If `Pet` were a _union_ instead of an interface (`union Pet = Cat | Dog`), then _all_ requested fields would need to be included in conditional fragments. It wouldn't be possible to include the `name` field outside of a fragment, even though the two types both happen to define that field.
+<Note>
+
+If `Pet` were a _union_ instead of an interface (`union Pet = Cat | Dog`), then _all_ requested fields would need to be included in conditional fragments. It wouldn't be possible to include the `name` field outside of a fragment, even though the two types both happen to define that field.
+
+</Note>
 
 If your API adds additional possible types to the abstract type, clients must change their operations to select data from those new types. Although this isn't a _breaking_ change, this situation warrants some defensive programming.
 
 ```ts
 // Trigger a TypeScript error if a new type is introduced but
 // we haven't added a switch case for it.
-const assertUnknown = (x: never) =>
-  console.log(`Unknown Pet type: ${(x as any).__typename}`);
+const assertUnknown = (x: never) => console.log(`Unknown Pet type: ${(x as any).__typename}`);
 
 switch (pet.__typename) {
-  case 'Cat':
+  case "Cat":
     console.log(`Cat meows ${pet.meowVolume}`);
     break;
-  case 'Dog':
+  case "Dog":
     console.log(`Dog barks ${pet.barkVolume}`);
     break;
   default:
     assertUnknown(pet);
-    console.log('Fallback behavior');
+    console.log("Fallback behavior");
 }
 ```
 
-> When using graphql-code-generator, accessing known interface fields like `Pet.name` will trigger a TypeScript error. See [issue 8538](https://github.com/dotansimha/graphql-code-generator/issues/8538) for more discussion.
+<Note>
+
+When using graphql-code-generator, accessing known interface fields like `Pet.name` will trigger a TypeScript error. See [issue 8538](https://github.com/dotansimha/graphql-code-generator/issues/8538) for more discussion.
+
+</Note>
 
 ```kotlin
 // `when` must be used as an expression to require exhaustivity

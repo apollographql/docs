@@ -17,7 +17,11 @@ One of the most important ways to protect a GraphQL API against would-be attacke
 
 GraphQL's built-in [introspection query](https://graphql.org/learn/introspection/) is the fastest way for bad actors to learn about your schema. To prevent this, disable introspection in your production supergraph, and also limit access to any staging environments where introspection _is_ enabled.
 
-> When using the Apollo Router, introspection is turned off by default.
+<Note>
+
+When using the Apollo Router, introspection is turned off by default.
+
+</Note>
 
 [This video about GraphQL API abuse](https://youtu.be/NPDp7GHmMa0) provides a deep dive into how introspection can facilitate API exploitation and why it's also important to layer additional measures on top of disabled introspection to limit discoverability.
 
@@ -27,7 +31,11 @@ Many GraphQL servers improve their developer experience by providing detailed er
 
 For example, by default an Apollo-Server-based subgraph provides the `exception.stacktrace` property under the `errors` key in a response. This value is useful while developing and debugging your server, but you should _not_ expose stack trace details to public-facing clients.
 
-> The Apollo Router omits all error data by default.
+<Note>
+
+The Apollo Router omits all error data by default.
+
+</Note>
 
 You might want to _selectively_ expose error details to clients in your production environment. You can do this with a combination of the Apollo Router's [`include_subgraph_errors` option](/router/configuration/subgraph-error-inclusion) and [Rhai scripts for response manipulation](https://www.apollographql.com/docs/router/customizations/rhai).
 
@@ -148,8 +156,9 @@ Enforcing authentication and authorization in the router protects your underlyin
 Hardening access to your supergraph at the router also adds another layer of security when implementing zero-trust and defense-in-depth strategies. The router centralizes authentication and authorization logic, which downstream services can reinforce with their own checks.
 
 To enforce authentication and authorization in the Apollo Router:
-* [Enable JSON Web Token (JWT) authentication](/router/configuration/authn-jwt/).
-* Control access to fields and types with [authorization directives](/router/configuration/authorization).
+
+- [Enable JSON Web Token (JWT) authentication](/router/configuration/authn-jwt/).
+- Control access to fields and types with [authorization directives](/router/configuration/authorization).
 
 ### Batched requests
 

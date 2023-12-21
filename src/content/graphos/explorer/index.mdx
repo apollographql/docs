@@ -9,17 +9,17 @@ The GraphOS Studio Explorer is a powerful web IDE for creating, running, and man
 
 The Explorer is free for all GraphOS organizations. It supports all GraphQL operation types (`Query`, `Mutation`, and [`Subscription`](./subscriptions-explorer/)).
 
-> The Explorer is also available in a [sandbox mode](./sandbox/) that doesn't require an Apollo account.
+<Tip>
+
+The Explorer is also available in a [sandbox mode](./sandbox/) that doesn't require an Apollo account.
+
+</Tip>
 
 ## Setup
 
 To get started with the Explorer, [create a graph](../quickstart/cloud/#2-create-your-first-supergraph) in GraphOS Studio and then navigate to that graph's Explorer page:
 
-<img
-  src="../img/explorer-new-graph.jpg"
-  className="screenshot"
-  alt="The default Explorer view for a new supergraph"
-/>
+<img src="../img/explorer-new-graph.jpg" className="screenshot" alt="The default Explorer view for a new supergraph" />
 
 ## Building a query
 
@@ -67,7 +67,11 @@ If you know exactly which type and which field you're looking for, you can separ
 
 After you identify a type-field pair, the Explorer lists all of the _paths_ to that field that start at your schema's entry points (`Query`, `Mutation` and `Subscription`). These paths are ordered by depth.
 
-> Finding the path to a field is particularly important with GraphQL, because you can only query a field if that field's position within your query is valid.
+<Note>
+
+Finding the path to a field is particularly important with GraphQL, because you can only query a field if that field's position within your query is valid.
+
+</Note>
 
 After you select which path you want, the Explorer opens that path in its Documentation tab. You can then click the **⊕** button to add that path to your query.
 

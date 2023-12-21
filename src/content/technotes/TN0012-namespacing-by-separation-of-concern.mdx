@@ -79,7 +79,11 @@ query FetchAllUsers {
 }
 ```
 
-> 💡 Note that you don’t need to repeat the text `user` in the field names of the `UsersQueries` type, because we already know all of these fields apply to `User` objects.
+<Note>
+
+You don’t need to repeat the text `user` in the field names of the `UsersQueries` type, because we already know all of these fields apply to `User` objects.
+
+</Note>
 
 ## Namespaces for serial mutations
 
@@ -101,10 +105,7 @@ mutation DoTwoThings {
 With namespaces, your mutation fields that actually modify data are no longer root-level fields (instead, your namespace objects are). Because of this, the mutation fields _are_ resolved in parallel. In many systems, this doesn't present an issue (for example, you probably want to use another mechanism in your mutation resolvers to ensure transactional consistency, such as a saga orchestrator).
 
 ```graphql
-mutation DoTwoNestedThings(
-  $createInput: CreateReviewInput!
-  $deleteInput: DeleteReviewInput!
-) {
+mutation DoTwoNestedThings($createInput: CreateReviewInput!, $deleteInput: DeleteReviewInput!) {
   reviews {
     create(input: $createInput) {
       success
@@ -120,10 +121,7 @@ mutation DoTwoNestedThings(
 If you want to guarantee serial execution in a particular operation, you can use client-side aliases to create two root fields that are resolved serially:
 
 ```graphql
-mutation DoTwoNestedThingsInSerial(
-  $createInput: CreateReviewInput!
-  $deleteInput: DeleteReviewInput!
-) {
+mutation DoTwoNestedThingsInSerial($createInput: CreateReviewInput!, $deleteInput: DeleteReviewInput!) {
   a: reviews {
     create(input: $createInput) {
       success

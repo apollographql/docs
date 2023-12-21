@@ -30,7 +30,11 @@ These components _each_ target support for a particular version of [Apollo Feder
 
 **To avoid runtime or composition errors,** your supergraph's components should _always_ maintain the following relationship between their targeted Apollo Federation versions:
 
-> (**Router** fed. version) ≥ (**Build Pipeline** fed. version) ≥ (**Subgraph** fed. version)
+<Note>
+
+(**Router** fed. version) ≥ (**Build Pipeline** fed. version) ≥ (**Subgraph** fed. version)
+
+</Note>
 
 To maintain this relationship, always update these supergraph components in order from **left to right**:
 
@@ -51,12 +55,7 @@ The method you use to update your router depends on which type of supergraph you
 
   - You can see which Apollo Router version you're running from the **Cloud Router** section of your variant's Settings page in [Studio](https://studio.apollographql.com/?referrer=docs-content):
 
-  <img
-    src="../../img/router-status.jpg"
-    class="screenshot"
-    width="200"
-    alt="Router status for cloud supergraph"
-  />
+  <img src="../../img/router-status.jpg" class="screenshot" width="200" alt="Router status for cloud supergraph" />
 
 For details on each Apollo Router version's corresponding Apollo _Federation_ version, see [this article](/router/federation-version-support#support-table).
 
@@ -64,9 +63,13 @@ For details on each Apollo Router version's corresponding Apollo _Federation_ ve
 
 Whenever you make an operational change to your graph (such as [publishing changes to a subgraph schema](../delivery/publishing-schemas/#publish-subgraph-schemas)), GraphOS initiates a **build** that composes your graph's new _supergraph_ schema. From [GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content), you can configure which version of Apollo Federation the build pipeline uses to perform this composition.
 
-> GraphOS enables you to choose between _minor_ versions of Federation (such as `2.1`). Each option automatically uses the latest supported _patch_ release of that minor version (such as `2.1.4`).
->
-> Although patch release updates are automatic, you must _manually_ move a graph's build pipeline to a different _minor_ release.
+<Note>
+
+GraphOS enables you to choose between _minor_ versions of Federation (such as `2.1`). Each option automatically uses the latest supported _patch_ release of that minor version (such as `2.1.4`).
+
+Although patch release updates are automatic, you must _manually_ move a graph's build pipeline to a different _minor_ release.
+
+</Note>
 
 1. Go to your variant's Settings page, then find the **General > Build Configuration** section.
 
@@ -94,7 +97,11 @@ GraphOS immediately initiates a new build using the selected Federation version,
 
 If you host your own Apollo Router instance, you can use the [Rover CLI](/rover/) to compose its supergraph schema via [the `rover supergraph compose` command](/rover/commands/supergraphs#composing-a-supergraph-schema).
 
-> ⚠️ **Performing composition with Rover is not recommended.** Instead, perform composition via the [GraphOS build pipeline](#2-update-your-build-pipeline) to help ensure a consistent schema delivery process across all of your graph's environments.
+<Caution>
+
+**Performing composition with Rover is not recommended.** Instead, perform composition via the [GraphOS build pipeline](#2-update-your-build-pipeline) to help ensure a consistent schema delivery process across all of your graph's environments.
+
+</Caution>
 
 If you _do_ perform composition with `rover supergraph compose`, the command uses the _exact_ version of composition you specify via the `federation_version` key in the YAML configuration file you pass:
 
@@ -110,15 +117,23 @@ subgraphs:
 
 This value **must** target a _specific patch release_ (`2.3.1`, `2.3.2`, etc.), and it must start with an equals sign (`=`).
 
-> ⚠️ **Important:** If you _don't_ provide a value for `federation_version`, Rover prints a warning and chooses a composition version according to [this logic](/rover/commands/supergraphs#automatic-updates). **This is dangerous!** Rover might use a newer composition version than what your router supports, resulting in a supergraph schema that causes the router to fail on startup.
->
-> [Learn more about setting a Rover composition version](/rover/commands/supergraphs#setting-a-composition-version).
+<Caution>
+
+**Important:** If you _don't_ provide a value for `federation_version`, Rover prints a warning and chooses a composition version according to [this logic](/rover/commands/supergraphs#automatic-updates). **This is dangerous!** Rover might use a newer composition version than what your router supports, resulting in a supergraph schema that causes the router to fail on startup.
+
+[Learn more about setting a Rover composition version](/rover/commands/supergraphs#setting-a-composition-version).
+
+</Caution>
 
 ## 3. Update subgraph schemas (as needed)
 
 After both your [router](#1-update-your-router) _and_ your [build pipeline](#2-update-your-build-pipeline) support a particular minimum version of Apollo Federation, your subgraphs can use features that were first introduced in that version.
 
-> You _don't need_ to update any subgraph schema that _doesn't_ use newly introduced Apollo Federation features. Different subgraph schemas can target different Federation versions as needed. Ultimately, your [build pipeline](#2-update-your-build-pipeline) determines which version of composition is actually used to create the supergraph schema.
+<Note>
+
+You _don't need_ to update any subgraph schema that _doesn't_ use newly introduced Apollo Federation features. Different subgraph schemas can target different Federation versions as needed. Ultimately, your [build pipeline](#2-update-your-build-pipeline) determines which version of composition is actually used to create the supergraph schema.
+
+</Note>
 
 As an example, the [`@interfaceObject` directive](/federation/federated-types/federated-directives#interfaceobject) was first introduced in Federation 2.3. To start using this directive in a subgraph, do the following:
 
@@ -129,10 +144,7 @@ As an example, the [`@interfaceObject` directive](/federation/federated-types/fe
 
    ```graphql
    extend schema
-     @link(
-       url: "https://specs.apollo.dev/federation/v2.3"
-       import: ["@key", "@shareable", "@interfaceObject"]
-     )
+     @link(url: "https://specs.apollo.dev/federation/v2.3", import: ["@key", "@shareable", "@interfaceObject"])
    ```
 
    Notice that the `url` argument targets `v2.3` of the Apollo Federation spec, and `@interfaceObject` is included in the `import` list.

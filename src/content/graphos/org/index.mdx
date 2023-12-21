@@ -4,7 +4,11 @@ title: Organizations in GraphOS
 
 All data in GraphOS (graphs, schemas, metrics, etc.) is associated with a particular **organization**. Every organization has one or more [members](./members/) who manage it and can access its associated data.
 
-> Enterprise organizations have access to fine-grained access controls via additional [member roles](./members/#organization-wide-member-roles).
+<Tip>
+
+Enterprise organizations have access to fine-grained access controls via additional [member roles](./members/#organization-wide-member-roles).
+
+</Tip>
 
 ## Creating an organization
 
@@ -12,12 +16,7 @@ You create your first organization as part of the [account creation process](../
 
 You can create additional organizations by clicking **Create a new organization** at the bottom of your organization dropdown in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content):
 
-<img
-  src="../img/organization-list.jpg"
-  class="screenshot"
-  alt="Studio organization list"
-  width="300"
-/>
+<img src="../img/organization-list.jpg" class="screenshot" alt="Studio organization list" width="300" />
 
 A single organization can include any number of [graphs](../graphs/), so a single company rarely needs more than one or two organizations.
 
@@ -25,19 +24,18 @@ A single organization can include any number of [graphs](../graphs/), so a singl
 
 Click the organization dropdown at the top of the page in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content) to view the list of all organizations you belong to:
 
-<img
-  src="../img/organization-list.jpg"
-  class="screenshot"
-  alt="Studio organization list"
-  width="300"
-/>
+<img src="../img/organization-list.jpg" class="screenshot" alt="Studio organization list" width="300" />
 
 - Click on an organization to view its associated graphs and metrics.
 - Each organization has a **Graphs** list, a **Members** management page, and a **Settings** page.
 
 ## Deleting an organization
 
-> ⚠️ **This action can't be undone!**
+<Caution>
+
+**This action can't be undone!**
+
+</Caution>
 
 You can delete an organization at any time. Doing so removes all traces of the organization from GraphOS.
 

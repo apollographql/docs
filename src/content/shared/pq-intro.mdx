@@ -14,7 +14,11 @@ flowchart LR
   iosClient --> pql
 ```
 
-> Clients can register any kind of operation to a PQL, including queries, mutations, and subscriptions.
+<Note>
+
+Clients can register any kind of operation to a PQL, including queries, mutations, and subscriptions.
+
+</Note>
 
 At _runtime_, the [Apollo Router](/router/) checks incoming requests against the PQL, which can act as operation safelist, depending on your [router configuration](#2-router-configuration).
 

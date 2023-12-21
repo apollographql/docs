@@ -21,12 +21,12 @@ With [the Apollo Router](/router/) `v0.16.0+` and [`@apollo/gateway`](/apollo-se
 
 If, instead, you want to debug your subgraph HTTP requests in an Apollo Router instance, you can use [Rhai scripts](/router/customizations/rhai) to log the necessary information out. An example Rhai script is shown below.
 
-<Note>
+<Caution>
 
 While it's possible to log out the variables, Apollo strongly recommends not
 doing so to avoid leaking sensitive information into your logs.
 
-</Note>
+</Caution>
 
 ```rhai
 fn subgraph_service(service, subgraph) {
@@ -51,20 +51,16 @@ plugins:
 
 To debug queries to your subgraphs within an `@apollo/gateway` instance, you can use a [`buildService` function](/apollo-server/using-federation/api/apollo-gateway/#configuring-the-subgraph-fetcher) to log the operation name and body.
 
-<Note>
+<Caution>
 
 While it's possible to log out the variables, Apollo strongly recommends not
 doing so to avoid leaking sensitive information into your logs.
 
-</Note>
+</Caution>
 
 ```ts
 class DebugDataSource extends RemoteGraphQLDataSource {
-  willSendRequest({
-    request
-  }: GraphQLDataSourceProcessOptions<
-    Record<string, any>
-  >): void | Promise<void> {
+  willSendRequest({ request }: GraphQLDataSourceProcessOptions<Record<string, any>>): void | Promise<void> {
     console.log(`Operation name: ${request.operationName}`);
     console.log(`Query body: ${request.query}`);
   }
@@ -72,9 +68,9 @@ class DebugDataSource extends RemoteGraphQLDataSource {
 const gateway = new ApolloGateway({
   debug: true,
   supergraphSdl,
-  buildService({url}) {
-    return new DebugDataSource({url});
-  }
+  buildService({ url }) {
+    return new DebugDataSource({ url });
+  },
 });
 ```
 

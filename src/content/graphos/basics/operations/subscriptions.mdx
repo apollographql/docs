@@ -32,7 +32,11 @@ type Subscription {
 
 Clients can then execute subscriptions on your cloud router, which executes them on your subgraphs.
 
-> ⚠️ **Important:** To use subscriptions with your cloud supergraph, you must first complete certain [prerequisites](#prerequisites).
+<Caution>
+
+**Important:** To use subscriptions with your cloud supergraph, you must first complete certain [prerequisites](#prerequisites).
+
+</Caution>
 
 ## What are subscriptions for?
 
@@ -71,14 +75,14 @@ flowchart LR;
 
 1. A client executes a GraphQL subscription operation against your cloud router _over HTTP:_
 
-    ```graphql title="Example subscription"
-    subscription OnStockPricesChanged {
-      stockPricesChanged {
-        symbol
-        price
-      }
-    }
-    ```
+   ```graphql title="Example subscription"
+   subscription OnStockPricesChanged {
+     stockPricesChanged {
+       symbol
+       price
+     }
+   }
+   ```
 
    - **The client does _not_ use a WebSocket protocol!** Instead, it receives updates via [multipart HTTP responses](/router/executing-operations/subscription-multipart-protocol/).
    - By using HTTP for subscriptions, clients can execute _all_ GraphQL operation types over HTTP instead of using two different protocols.
@@ -91,7 +95,11 @@ flowchart LR;
 3. The subgraph periodically sends new data to your router. Whenever it does, the router returns that data to the client in an additional HTTP response part.
    - A subscription can include federated entity fields that are defined in _other_ subgraphs. If it does, the router _first_ fetches those fields by querying the corresponding subgraphs (such as **Portfolios** in the diagram above). These queries use HTTP as usual.
 
-> [Walk through an example.](#example-execution)
+<Tip>
+
+[Walk through an example.](#example-execution)
+
+</Tip>
 
 ## Prerequisites
 
@@ -100,25 +108,28 @@ flowchart LR;
 1. Make sure you've [created a cloud supergraph](../quickstart/cloud) and connected your GraphQL API to it!
 
 2. [Update your supergraph's build pipeline](../graphs/updating#2-update-your-build-pipeline) to use Apollo Federation 2.4 or later.
-    - Previous versions of Apollo Federation don't support subscription operations.
+   - Previous versions of Apollo Federation don't support subscription operations.
 3. If your subgraph schemas specify an Apollo Federation version, modify them to use Apollo Federation 2.4 or later:
-    ```graphql title="stocks.graphql"
-    extend schema
-    @link(url: "https://specs.apollo.dev/federation/v2.4", #highlight-line
-          import: ["@key", "@shareable"])
 
-    type Subscription {
-      stockPricesChanged: [Stock!]!
-    }
-    ```
+   ```graphql title="stocks.graphql"
+   extend schema
+     @link(
+       url: "https://specs.apollo.dev/federation/v2.4" #highlight-line
+       import: ["@key", "@shareable"]
+     )
 
-    - You can _skip_ modifying subgraph schemas that don't define any `Subscription` fields.
+   type Subscription {
+     stockPricesChanged: [Stock!]!
+   }
+   ```
+
+   - You can _skip_ modifying subgraph schemas that don't define any `Subscription` fields.
 
 4. In each subgraph with subscriptions, make sure the subgraph uses the [`graphql-transport-ws`](https://github.com/enisdenjo/graphql-ws/blob/master/PROTOCOL.md) WebSocket protocol for subscriptions.
 
 5. In each subgraph with subscriptions, make sure the subgraph hosts its subscriptions WebSocket endpoint at the path `/ws`.
 
-    - If your WebSocket endpoint is currently hosted at a different path, you can add `/ws` as an _additional_ path instead of removing the original path. This is helpful if legacy clients will continue executing subscriptions on your subgraph directly using the original path.
+   - If your WebSocket endpoint is currently hosted at a different path, you can add `/ws` as an _additional_ path instead of removing the original path. This is helpful if legacy clients will continue executing subscriptions on your subgraph directly using the original path.
 
 6. Deploy your updated subgraphs.
 
@@ -159,9 +170,13 @@ type Review {
 
 A client can execute the following subscription against our router:
 
-> ⚠️ **Remember, clients execute subscriptions against your router [over HTTP!](#how-it-works)**
->
-> Apollo Client for [Web](/react/data/subscriptions#http), [Kotlin](/kotlin/essentials/subscriptions#configuring-http-subscriptions), and [iOS](/ios/fetching/subscriptions#http) all support HTTP-based subscriptions.
+<Caution>
+
+**Remember, clients execute subscriptions against your router [over HTTP!](#how-it-works)**
+
+Apollo Client for [Web](/react/data/subscriptions#http), [Kotlin](/kotlin/essentials/subscriptions#configuring-http-subscriptions), and [iOS](/ios/fetching/subscriptions#http) all support HTTP-based subscriptions.
+
+</Caution>
 
 ```graphql
 subscription OnProductPriceChanged {
@@ -250,6 +265,10 @@ content-type: application/json
 --graphql--
 ```
 
-> This example subscription only emits three events and then directly closes the connection.
->
-> For more information on this multipart HTTP subscription protocol, see [this article](/router/executing-operations/subscription-multipart-protocol/).
+<Note>
+
+This example subscription only emits three events and then directly closes the connection.
+
+For more information on this multipart HTTP subscription protocol, see [this article](/router/executing-operations/subscription-multipart-protocol/).
+
+</Note>

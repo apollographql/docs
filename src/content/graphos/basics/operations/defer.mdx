@@ -18,9 +18,13 @@ Both [cloud supergraphs](../graphs/#cloud-supergraphs) and [self-hosted supergra
 
 ## How do I defer fields in a query?
 
-> ⚠️ **Deferring query fields requires a defer-compatible client library.** These libraries support receiving query data incrementally via multipart HTTP responses.
->
-> Defer support is currently available in Apollo Client for [Web](/react/data/defer) and [Kotlin (experimental)](/kotlin/fetching/defer).
+<Caution>
+
+**Deferring query fields requires a defer-compatible client library.** These libraries support receiving query data incrementally via multipart HTTP responses.
+
+Defer support is currently available in Apollo Client for [Web](/react/data/defer) and [Kotlin (experimental)](/kotlin/fetching/defer).
+
+</Caution>
 
 If you're using a defer-compatible client, you apply the `@defer` directive to fragments in your queries to specify which fields you want to defer:
 
@@ -31,8 +35,9 @@ query GetTopProductsAndReviews {
     name
     # highlight-start
     # You always apply @defer to a fragment, not to individual fields
-    ... @defer { 
-      reviews { #highlight-line
+    ... @defer {
+      reviews {
+        #highlight-line
         score
       }
     }
@@ -100,7 +105,6 @@ type Product @key(fields: "id") {
   reviews: [Review!]!
 }
 
-
 type Review {
   score: Int!
 }
@@ -130,7 +134,11 @@ query GetProductsAndDeferReviews {
 
 To handle this query, the router first resolves and returns a list of `Product` objects with their IDs and names. Later, the router completes the response by returning review scores for each of those products.
 
-> It doesn't matter _which_ subgraph defines a particular entity field! Queries can defer entity fields that are defined across any number of different subgraphs.
+<Note>
+
+It doesn't matter _which_ subgraph defines a particular entity field! Queries can defer entity fields that are defined across any number of different subgraphs.
+
+</Note>
 
 ### Defining entities in your subgraphs
 
