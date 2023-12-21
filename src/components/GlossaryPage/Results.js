@@ -106,8 +106,8 @@ const Results = () => {
             {hit.definition}
           </Markdown>
           {hit.relatedTerms && (
-            <Box py="4">
-              <HStack my="2" pb="2">
+            <Box py="2">
+              <HStack>
                 <Text>
                   <strong>{`Related term definition${
                     hit.relatedTerms.length > 1 ? 's' : ''
@@ -128,17 +128,24 @@ const Results = () => {
             {isApollonaut && <EditOnGitHub term={hit.objectID} />}
             {hit.learnMore && (
               <Button
+                aria-label={
+                  hit.learnMoreText
+                    ? hit.learnMoreText
+                    : 'Learn more about this term'
+                }
                 my="4"
                 colorScheme="indigo"
-                // _dark={{
-                //   color: 'indigo.200'
-                // }}
+                _dark={{
+                  color: 'indigo.200'
+                }}
                 variant="ghost"
                 rightIcon={<FiArrowRight />}
                 as="a"
                 href={hit.learnMore}
               >
-                Learn more about this term
+                {hit.learnMoreText
+                  ? hit.learnMoreText
+                  : 'Learn more about this term'}
               </Button>
             )}
           </Flex>

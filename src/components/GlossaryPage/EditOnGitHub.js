@@ -10,9 +10,9 @@ const EditOnGitHub = term => {
       aria-label="Edit on GitHub"
       my="4"
       colorScheme="indigo"
-      // _dark={{
-      //   color: 'indigo.200'
-      // }}
+      _dark={{
+        color: 'indigo.200'
+      }}
       variant="ghost"
       leftIcon={<FiGithub />}
       as="a"
