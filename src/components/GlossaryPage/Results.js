@@ -7,6 +7,7 @@ import RelativeLink, {PrimaryLink} from '../RelativeLink';
 import {
   Box,
   Button,
+  Flex,
   HStack,
   Heading,
   Link,
@@ -104,31 +105,14 @@ const Results = () => {
           >
             {hit.definition}
           </Markdown>
-          {hit.learnMore && (
-            <Button
-              my="4"
-              colorScheme="indigo"
-              _dark={{
-                color: 'indigo.200'
-              }}
-              variant="ghost"
-              rightIcon={<FiArrowRight />}
-              as="a"
-              href={hit.learnMore}
-            >
-              Learn more
-            </Button>
-          )}
-          <HStack my="2" pb="2">
-            {hit.relatedTerms && (
-              <Text>
-                <strong>{`Related term definition${
-                  hit.relatedTerms.length > 1 ? 's' : ''
-                }:`}</strong>
-              </Text>
-            )}
-            {hit.relatedTerms && (
-              <>
+          {hit.relatedTerms && (
+            <Box py="4">
+              <HStack my="2" pb="2">
+                <Text>
+                  <strong>{`Related term definition${
+                    hit.relatedTerms.length > 1 ? 's' : ''
+                  }:`}</strong>
+                </Text>
                 {hit.relatedTerms.map((term, index) => (
                   <React.Fragment key={`${hit.objectID}_${index}`}>
                     <RelativeLink href={`#${makeId(term)}`}>
@@ -137,9 +121,27 @@ const Results = () => {
                     {index < hit.relatedTerms.length - 1 && ', '}
                   </React.Fragment>
                 ))}
-              </>
+              </HStack>
+            </Box>
+          )}
+          <Flex justify="space-between">
+            {isApollonaut && <EditOnGitHub term={hit.objectID} />}
+            {hit.learnMore && (
+              <Button
+                my="4"
+                colorScheme="indigo"
+                // _dark={{
+                //   color: 'indigo.200'
+                // }}
+                variant="ghost"
+                rightIcon={<FiArrowRight />}
+                as="a"
+                href={hit.learnMore}
+              >
+                Learn more about this term
+              </Button>
             )}
-          </HStack>
+          </Flex>
           {isApollonaut &&
             (hit.usageInstructions ||
               hit.businessContext ||
@@ -147,6 +149,7 @@ const Results = () => {
               <Box
                 pl="4"
                 py="1"
+                my="4"
                 borderLeftWidth="2px"
                 borderColor="primary"
                 fontSize="md"
@@ -174,7 +177,7 @@ const Results = () => {
                     <Text>
                       <strong>Usage instructions</strong>
                     </Text>
-                    <Box>
+                    <Box pb="4">
                       <Markdown
                         components={{
                           p: Text,
@@ -209,12 +212,6 @@ const Results = () => {
                 )}
               </Box>
             )}
-
-          {isApollonaut && (
-            <Box pt="4" textAlign="right">
-              <EditOnGitHub term={hit.objectID} />
-            </Box>
-          )}
         </Box>
       ))}
     </Stack>
