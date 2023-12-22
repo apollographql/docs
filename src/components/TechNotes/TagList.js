@@ -1,11 +1,11 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import {Button, Wrap, WrapItem} from '@chakra-ui/react';
-import {graphql, useStaticQuery} from 'gatsby';
+import PropTypes from "prop-types";
+import React from "react";
+import { Button, Wrap, WrapItem } from "@chakra-ui/react";
+import { graphql, useStaticQuery } from "gatsby";
 
-export function TagList({onClick, selected}) {
+export function TagList({ onClick }) {
   const {
-    allMdx: {group}
+    allMdx: { group },
   } = useStaticQuery(
     graphql`
       query AllTags {
@@ -23,15 +23,9 @@ export function TagList({onClick, selected}) {
     <Wrap>
       {group
         .sort((a, b) => a.tag.localeCompare(b.tag))
-        .map(group => (
+        .map((group) => (
           <WrapItem key={group.tag}>
-            <Button
-              size="sm"
-              onClick={() =>
-                group.tag === selected ? onClick() : onClick(group.tag)
-              }
-              isActive={group.tag === selected}
-            >
+            <Button size="sm" onClick={() => onClick(group.tag)}>
               {group.tag} ({group.totalCount})
             </Button>
           </WrapItem>
@@ -42,5 +36,5 @@ export function TagList({onClick, selected}) {
 
 TagList.propTypes = {
   selected: PropTypes.string,
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired,
 };

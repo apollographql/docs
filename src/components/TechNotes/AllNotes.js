@@ -1,8 +1,8 @@
-import React, {useMemo, useState} from 'react';
-import {Heading} from '@chakra-ui/react';
-import {NotesList} from './NotesList';
-import {TagList} from './TagList';
-import {graphql, useStaticQuery} from 'gatsby';
+import React, { useMemo, useState } from "react";
+import { NotesList } from "./NotesList";
+import { TagList } from "./TagList";
+import { graphql, useStaticQuery } from "gatsby";
+import { FormControl, FormLabel, InputGroup, Input, InputLeftAddon, Flex, Box, Heading } from "@chakra-ui/react";
 
 export function AllNotes() {
   const data = useStaticQuery(
@@ -24,8 +24,12 @@ export function AllNotes() {
               }
               frontmatter {
                 title
+                summary
+                published
                 tags
               }
+              rawBody
+              timeToRead
             }
           }
         }
@@ -33,25 +37,39 @@ export function AllNotes() {
     `
   );
 
-  const [currentTag, setCurrentTag] = useState();
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const notes = useMemo(() => {
-    if (!currentTag) {
-      return data.notes.nodes;
-    } else {
-      return data.notes.nodes.filter(note =>
-        note.childMdx.frontmatter.tags.includes(currentTag)
-      );
-    }
-  }, [currentTag, data.notes.nodes]);
+  const filteredNotes = useMemo(
+    () =>
+      data.notes.nodes === ""
+        ? data.notes.nodes
+        : data.notes.nodes.filter(
+            (note) =>
+              note.childMdx.frontmatter.title?.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1 ||
+              note.childMdx.frontmatter.summary?.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1 ||
+              note.childMdx.rawBody?.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1 ||
+              note.childMdx.frontmatter?.tags?.some((tag) => `#${tag}` === searchQuery.toLowerCase())
+          ),
+    [data.notes.nodes, searchQuery]
+  );
 
   return (
     <>
-      <Heading>
-        {currentTag ? `Notes tagged “${currentTag}”` : 'All notes'}
-      </Heading>
-      <TagList selected={currentTag} onClick={setCurrentTag} />
-      <NotesList notes={notes} />
+      <Heading>All notes</Heading>
+      <FormControl>
+        <Flex w="100%">
+          <Box flex="1">
+            <InputGroup size="sm">
+              <InputLeftAddon>
+                <FormLabel m="0">Search</FormLabel>
+              </InputLeftAddon>
+              <Input placeholder="Query..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+            </InputGroup>
+          </Box>
+        </Flex>
+      </FormControl>
+      <TagList onClick={(tag) => setSearchQuery(`#${tag}`)} />
+      <NotesList notes={filteredNotes} setSearchQuery={setSearchQuery} />
     </>
   );
 }

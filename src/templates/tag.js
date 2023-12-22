@@ -1,15 +1,15 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import {NotesList} from '../components/TechNotes';
-import {PageContent, PageSeo} from '../components/PageLayout';
-import {PageWidthProvider} from '../components/PageWidthContext';
-import {graphql} from 'gatsby';
+import PropTypes from "prop-types";
+import React from "react";
+import { NotesList } from "../components/TechNotes";
+import { PageContent, PageSeo } from "../components/PageLayout";
+import { PageWidthProvider } from "../components/PageWidthContext";
+import { graphql } from "gatsby";
 
 export const pageQuery = graphql`
   query AllTechNotesWithTag($tag: String) {
     notes: allFile(
-      filter: {childMdx: {frontmatter: {tags: {in: [$tag]}}}}
-      sort: {fields: childMdx___frontmatter___title, order: ASC}
+      filter: { childMdx: { frontmatter: { tags: { in: [$tag] } } } }
+      sort: { fields: childMdx___frontmatter___title, order: ASC }
       limit: 2000
     ) {
       nodes {
@@ -23,7 +23,11 @@ export const pageQuery = graphql`
           }
           frontmatter {
             title
+            summary
+            tags
           }
+          rawBody
+          timeToRead
         }
       }
     }
@@ -32,10 +36,10 @@ export const pageQuery = graphql`
 
 Tags.propTypes = {
   data: PropTypes.object.isRequired,
-  pageContext: PropTypes.object.isRequired
+  pageContext: PropTypes.object.isRequired,
 };
 
-export default function Tags({pageContext, data}) {
+export default function Tags({ pageContext, data }) {
   const title = `Tagged with “${pageContext.tag}”`;
   return (
     <PageWidthProvider>

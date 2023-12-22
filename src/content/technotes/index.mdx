@@ -1,12 +1,19 @@
 ---
 title: Apollo Tech Notes
+toc: false
 ---
 
-This documentation set provides technical articles on specialized topics for Apollo tools and libraries.
+This documentation set provides technical articles on tospecializedpics for Apollo tools and libraries.
 
 Select a tag to view a list of articles on the corresponding topic.
 
-import {AllNotes} from '../../components/TechNotes';
+import { AllNotes, RecentlyUpdatedNotes, RecentlyAddedNotes } from "../../components/TechNotes";
+import { SimpleGrid } from "@chakra-ui/react";
+
+<SimpleGrid spacing="4" minChildWidth="250px" {...props}>
+  <RecentlyAddedNotes />
+  <RecentlyUpdatedNotes />
+</SimpleGrid>
 
 <AllNotes />
 
