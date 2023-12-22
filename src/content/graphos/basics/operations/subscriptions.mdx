@@ -32,11 +32,11 @@ type Subscription {
 
 Clients can then execute subscriptions on your cloud router, which executes them on your subgraphs.
 
-<Caution>
+<Note>
 
-**Important:** To use subscriptions with your cloud supergraph, you must first complete certain [prerequisites](#prerequisites).
+To use subscriptions with your cloud supergraph, you must first complete certain [prerequisites](#prerequisites).
 
-</Caution>
+</Note>
 
 ## What are subscriptions for?
 
@@ -170,13 +170,13 @@ type Review {
 
 A client can execute the following subscription against our router:
 
-<Caution>
+<Note>
 
 **Remember, clients execute subscriptions against your router [over HTTP!](#how-it-works)**
 
 Apollo Client for [Web](/react/data/subscriptions#http), [Kotlin](/kotlin/essentials/subscriptions#configuring-http-subscriptions), and [iOS](/ios/fetching/subscriptions#http) all support HTTP-based subscriptions.
 
-</Caution>
+</Note>
 
 ```graphql
 subscription OnProductPriceChanged {

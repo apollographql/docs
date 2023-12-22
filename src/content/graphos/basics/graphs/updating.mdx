@@ -97,11 +97,11 @@ GraphOS immediately initiates a new build using the selected Federation version,
 
 If you host your own Apollo Router instance, you can use the [Rover CLI](/rover/) to compose its supergraph schema via [the `rover supergraph compose` command](/rover/commands/supergraphs#composing-a-supergraph-schema).
 
-<Caution>
+<Note>
 
 **Performing composition with Rover is not recommended.** Instead, perform composition via the [GraphOS build pipeline](#2-update-your-build-pipeline) to help ensure a consistent schema delivery process across all of your graph's environments.
 
-</Caution>
+</Note>
 
 If you _do_ perform composition with `rover supergraph compose`, the command uses the _exact_ version of composition you specify via the `federation_version` key in the YAML configuration file you pass:
 
@@ -119,7 +119,7 @@ This value **must** target a _specific patch release_ (`2.3.1`, `2.3.2`, etc.), 
 
 <Caution>
 
-**Important:** If you _don't_ provide a value for `federation_version`, Rover prints a warning and chooses a composition version according to [this logic](/rover/commands/supergraphs#automatic-updates). **This is dangerous!** Rover might use a newer composition version than what your router supports, resulting in a supergraph schema that causes the router to fail on startup.
+If you _don't_ provide a value for `federation_version`, Rover prints a warning and chooses a composition version according to [this logic](/rover/commands/supergraphs#automatic-updates). This could potentially cause failures.  Rover might use a newer composition version than what your router supports, resulting in a supergraph schema that causes the router to fail on startup.
 
 [Learn more about setting a Rover composition version](/rover/commands/supergraphs#setting-a-composition-version).
 

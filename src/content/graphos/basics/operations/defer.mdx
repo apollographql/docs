@@ -18,13 +18,13 @@ Both [cloud supergraphs](../graphs/#cloud-supergraphs) and [self-hosted supergra
 
 ## How do I defer fields in a query?
 
-<Caution>
+<Note>
 
 **Deferring query fields requires a defer-compatible client library.** These libraries support receiving query data incrementally via multipart HTTP responses.
 
 Defer support is currently available in Apollo Client for [Web](/react/data/defer) and [Kotlin (experimental)](/kotlin/fetching/defer).
 
-</Caution>
+</Note>
 
 If you're using a defer-compatible client, you apply the `@defer` directive to fragments in your queries to specify which fields you want to defer:
 
@@ -37,7 +37,6 @@ query GetTopProductsAndReviews {
     # You always apply @defer to a fragment, not to individual fields
     ... @defer {
       reviews {
-        #highlight-line
         score
       }
     }

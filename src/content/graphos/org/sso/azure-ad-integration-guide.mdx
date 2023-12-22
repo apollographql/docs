@@ -24,7 +24,6 @@ These steps use PingOne's email invite method, because in some cases Apollo's de
    - Under **Supported account types**, select which Microsoft account types will have access.
    - Leave **Redirect URI** empty. You'll provide this information later.
 
-   {" "}
 
    <img src="../../img/sso/azure-app-registration.gif" alt="Azure App Registration" class="screenshot" />
 
@@ -81,7 +80,6 @@ These steps use PingOne's email invite method, because in some cases Apollo's de
    3. For **Scope**, select the OAuth scopes to include in authentication requests.
    4. Click **Next**.
 
-   {" "}
 
    <img src="../../img/sso/azure-pingone-connection.gif" alt="Azure PingOne connection" class="screenshot" />{" "}
 
@@ -91,7 +89,6 @@ These steps use PingOne's email invite method, because in some cases Apollo's de
    - Select **Redirect URIs > Add a platform > Web** and enter the Redirect URI you copied from PingOne. Select **Configure** to save changes.
    - Back on the PingOne configuration wizard, select **Next** after copying and pasting the URI.
 
-   {" "}
 
    <img src="../../img/sso/azure-pingone-redirect-uri.gif" alt="Azure PingOne redirect URI" class="screenshot" />{" "}
 
@@ -111,7 +108,11 @@ After you successfully configure the identity bridge between Azure AD and PingOn
 
 1. Select **Meteor Development Group - GraphOS Studio** under **Complete your Application Configuration**.
 
-   > ⚠️ If the **Add OIDC Application** wizard doesn’t automatically pop-up, select the **SAML** tab and then select the **OIDC** tab.
+   <Note>
+   
+   If the **Add OIDC Application** wizard doesn’t automatically pop-up, select the **SAML** tab and then select the **OIDC** tab.
+   
+   </Note>
 
    <img src="../../img/sso/azure-oidc-application.gif" alt="PingOne OIDC application" class="screenshot" />
 
