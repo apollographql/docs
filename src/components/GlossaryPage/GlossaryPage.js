@@ -3,6 +3,7 @@ import React, {useEffect, useState} from 'react';
 import Results from './Results';
 import Search from './Search';
 import {Box, Flex, Text} from '@chakra-ui/react';
+import {Note} from '../Note';
 import {PrimaryLink} from '../RelativeLink';
 import {useUser} from '../../utils';
 
@@ -86,27 +87,36 @@ export function GlossaryPage() {
 
   const searchClient = algoliasearch(appId, apiKey);
   return (
-    <Box>
-      <InstantSearch searchClient={searchClient} indexName={algoliaIndexName}>
-        <HashScroll />
-        <Configure
-          hitsPerPage={150}
-          attributesToRetrieve={attributesToRetrieve}
-        />
-        <Flex justify="flex-start" p="4" maxW="full">
-          <Flex flexDirection="column" mr="6" flex="3">
-            <Box pb="4">
-              <Search />
-            </Box>
-            <NoResultsBoundary fallback={<NoResults />}>
-              <Results />
-            </NoResultsBoundary>
+    <>
+      {isApollonaut && (
+        <Note>
+          The 🔒 in front of a term denotes it&apos;s only visible to logged in
+          Apollonauts. The same applies for the{' '}
+          <strong>Internal information 🔒</strong>.
+        </Note>
+      )}
+      <Box>
+        <InstantSearch searchClient={searchClient} indexName={algoliaIndexName}>
+          <HashScroll />
+          <Configure
+            hitsPerPage={150}
+            attributesToRetrieve={attributesToRetrieve}
+          />
+          <Flex justify="flex-start" p="4" maxW="full">
+            <Flex flexDirection="column" mr="6" flex="3">
+              <Box pb="4">
+                <Search />
+              </Box>
+              <NoResultsBoundary fallback={<NoResults />}>
+                <Results />
+              </NoResultsBoundary>
+            </Flex>
+            <Flex flexDirection="column" flex="1">
+              <LabelsList />
+            </Flex>
           </Flex>
-          <Flex flexDirection="column" flex="1">
-            <LabelsList />
-          </Flex>
-        </Flex>
-      </InstantSearch>
-    </Box>
+        </InstantSearch>
+      </Box>
+    </>
   );
 }
