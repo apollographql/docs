@@ -1,25 +1,20 @@
 import React from 'react';
-import {Button} from '@chakra-ui/react';
 import {FiGithub} from 'react-icons/fi';
+import {PrimaryLink} from '../RelativeLink';
 
 const EditOnGitHub = term => {
   const url = `https://github.com/apollographql/dxe/blob/main/packages/apollopedia/terms/${term.term}.md`;
 
   return (
-    <Button
+    <PrimaryLink
       aria-label="Edit on GitHub"
       my="4"
-      colorScheme="indigo"
-      _dark={{
-        color: 'indigo.200'
-      }}
-      variant="ghost"
-      leftIcon={<FiGithub />}
       as="a"
       href={url}
+      style={{display: 'flex', alignItems: 'center'}}
     >
-      Edit on GitHub
-    </Button>
+      <FiGithub style={{marginRight: '0.5rem'}} /> Edit on GitHub
+    </PrimaryLink>
   );
 };
 

@@ -6,7 +6,6 @@ import React from 'react';
 import RelativeLink, {PrimaryLink} from '../RelativeLink';
 import {
   Box,
-  Button,
   Flex,
   HStack,
   Heading,
@@ -90,7 +89,6 @@ const Results = () => {
               {hit.internalOnly && <span>🔒 </span>}
               <Highlight attribute="term" hit={hit} />
             </ClickableHeading>
-
             {hit.labels &&
               hit.labels.map(label => (
                 <Tag
@@ -202,33 +200,22 @@ const Results = () => {
               </Box>
             )}
           {hit.learnMore ? (
-            <Flex justify="space-between">
-              <Button
-                aria-label={
-                  hit.learnMoreText
-                    ? hit.learnMoreText
-                    : 'Learn more about this term'
-                }
+            <Flex gap={10}>
+              <PrimaryLink
                 my="4"
-                colorScheme="indigo"
-                _dark={{
-                  color: 'indigo.200'
-                }}
-                variant="ghost"
-                rightIcon={<FiArrowRight />}
                 as="a"
                 href={hit.learnMore}
+                style={{display: 'flex', alignItems: 'center'}}
               >
                 {hit.learnMoreText
                   ? hit.learnMoreText
                   : 'Learn more about this term'}
-              </Button>
+                <FiArrowRight style={{marginLeft: '0.5rem'}} />
+              </PrimaryLink>
               {isApollonaut && <EditOnGitHub term={hit.objectID} />}
             </Flex>
           ) : (
-            <Box display="flex" justifyContent="flex-end">
-              {isApollonaut && <EditOnGitHub term={hit.objectID} />}
-            </Box>
+            <Box>{isApollonaut && <EditOnGitHub term={hit.objectID} />}</Box>
           )}
         </Box>
       ))}
