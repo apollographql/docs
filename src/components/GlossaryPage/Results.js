@@ -76,9 +76,9 @@ const Results = () => {
   const isApollonaut = user?.name.includes('@apollographql.com');
 
   return (
-    <Stack divider={<StackDivider borderColor="border" />} spacing={6}>
+    <Stack divider={<StackDivider borderColor="border" />} spacing={1}>
       {hits.map(hit => (
-        <Box key={hit.objectID} mt="2">
+        <Box key={hit.objectID} mt="6">
           <HStack mt="2" pb="4">
             <ClickableHeading
               as="h2"
