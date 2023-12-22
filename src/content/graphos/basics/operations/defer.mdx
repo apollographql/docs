@@ -11,7 +11,7 @@ sequenceDiagram
   Note over Router: Resolves non-deferred<br/>fields
   Router->>Client: Returns data for<br/>non-deferred fields
   Note over Router: Resolves deferred<br/>fields
-  Router->>Client: Returns data for<br/> deferred fields
+  Router->>Client: Returns data for<br/>deferred fields
 ```
 
 Both [cloud supergraphs](../graphs/#cloud-supergraphs) and [self-hosted supergraphs](../graphs/#self-hosted-supergraphs) support deferring fields with the router. Additionally, this feature is compatible with all [supported subgraph libraries](/federation/building-supergraphs/supported-subgraphs), because the logic resides entirely within the router!

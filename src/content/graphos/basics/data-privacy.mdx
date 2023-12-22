@@ -109,7 +109,11 @@ You can configure Apollo Server 4 to provide _additional_ error details (such as
 
 ##### Apollo Server 2 and 3
 
-> Note that Apollo Server versions 2 and 3 are [deprecated](/apollo-server/previous-versions/).
+<Note>
+
+Note that Apollo Server versions 2 and 3 are [deprecated](/apollo-server/previous-versions/).
+
+</Note>
 
 By default, Apollo Server versions 2 and 3 report _all_ error details to GraphOS, including messages and extensions.
 
@@ -123,7 +127,7 @@ The Apollo Router and Apollo Server both report a normalized string representati
 
 If you're using the Apollo Router, your subgraphs can include operation trace data in each of their responses to the router. This data includes timing information for each resolver that contributed to the operation.
 
-> To check which subgraph libraries support federated traces, consult the `FEDERATED TRACING` entry in [this table](/federation/building-supergraphs/supported-subgraphs).
+To check which subgraph libraries support federated traces, consult the `FEDERATED TRACING` entry in [this table](/federation/building-supergraphs/supported-subgraphs).
 
 You can configure the Apollo Router to include this trace data in its reports to GraphOS ([learn how](/router/configuration/telemetry/apollo-telemetry#enabling-field-level-instrumentation)). By doing so, you can visualize the performance of your operations in GraphOS Studio, [broken down by resolver](./metrics/#resolver-level-traces).
 
@@ -163,7 +167,11 @@ of the following HTTP headers, even if they're sent:
 
 You can, however, configure reporting options for all other HTTP headers.
 
-> **Important:** If you perform authorization in a header other than those listed above (such as `X-My-API-Key`), **do not send that header to GraphOS**.
+<Note>
+
+If you perform authorization in a header other than those listed above (such as `X-My-API-Key`), **do not send that header to GraphOS**.
+
+</Note>
 
 #### Apollo Server 2.7.0 and later
 
@@ -261,7 +269,11 @@ In your email, please include the following:
 - An approximate timestamp of when that data was reported to Apollo
 - The ID of the graph that the data is associated with
 
-> **Important:** Currently, data deletion is performed across _all variants_ of an affected graph. Per-variant deletion is not available.
+<Note>
+
+Currently, data deletion is performed across _all variants_ of an affected graph. Per-variant deletion is not available.
+
+</Note>
 
 You can also request that members of your organization be removed from marketing outreach. To do so, provide the email addresses of those members in your email.
 
