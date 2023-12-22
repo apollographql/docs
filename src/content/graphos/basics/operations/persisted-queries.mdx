@@ -33,19 +33,17 @@ APQ has a few limitations compared to registered persisted queries.
       <td>
         🌟 Registered persisted queries share the same performance enhancement mechanism as APQs. Additionally, they
         benefit from query plan <a href="/router/configuration/in-memory-caching/#cache-warm-up">cache warm-ups</a>,
-        which are active by default from version{" "}
+        which are active by default from version
         <a href="https://github.com/apollographql/router/releases/tag/v1.31.0">1.31.0</a> of the router.
       </td>
     </tr>
     <tr>
       <td>Build- vs. runtime registration</td>
       <td>
-        {" "}
         Operations are registered at <b>runtime</b>. One of your router instances must receive any given operation string
         from a client at least once to <a href="/router/configuration/distributed-caching">cache it</a>.
       </td>
       <td>
-        {" "}
         Clients contribute to the PQL at <b>build-time</b>. Your router fetches its PQL from GraphOS on startup and polls
         for updates, meaning clients can always execute operations using their PQL-specified ID.
       </td>
@@ -142,16 +140,14 @@ Implementation also requires collaboration among these parties. These are the ma
   <tbody>
     <tr>
       <td>
-        {" "}
-        <a href="#1-pql-creation-and-linking">1. PQL creation and linking</a>{" "}
+        <a href="#1-pql-creation-and-linking">1. PQL creation and linking</a>
       </td>
       <td>Create and apply a PQL to graph variants. </td>
       <td>Platform team</td>
     </tr>
     <tr>
       <td>
-        {" "}
-        <a href="#2-router-configuration">2. Router configuration</a>{" "}
+        <a href="#2-router-configuration">2. Router configuration</a>
       </td>
       <td>
         Update your router's <a href="/router/configuration/overview/#yaml-config-file">YAML config file</a> to enable
@@ -161,15 +157,14 @@ Implementation also requires collaboration among these parties. These are the ma
     </tr>
     <tr>
       <td>
-        {" "}
-        <a href="#3-operation-registration">3. Operation registration</a>{" "}
+        <a href="#3-operation-registration">3. Operation registration</a>
       </td>
       <td>Generate and publish a persisted queries manifest (PQM) to the PQL from your client's CI/CD pipeline.</td>
       <td>App developers</td>
     </tr>
     <tr>
       <td>
-        <a href="#4-client-updates">4. Client updates (Optional) </a>{" "}
+        <a href="#4-client-updates">4. Client updates (Optional) </a>
       </td>
       <td>
         Update clients to use operation IDs rather than full operation strings.
@@ -213,15 +208,14 @@ You can also access a graph's PQLs from its settings page.
    - If you haven't created any PQLs yet, click **Create a Persisted Query List**.
    - If you already have at least one PQL, click **New List** in the upper right.
 
-The following dialog appears:
+    The following dialog appears:
 
-
-<img
-  className="screenshot"
-  alt="The first step of the PQL creation dialog in GraphOS studio"
-  src="../../img/pql-dialog-create.jpg"
-  width="450"
-/>
+    <img
+      className="screenshot"
+      alt="The first step of the PQL creation dialog in GraphOS studio"
+      src="../../img/pql-dialog-create.jpg"
+      width="450"
+    />
 
 3. Provide a name and (optional) description for your PQL, then click **Create**.
 
@@ -548,11 +542,11 @@ Although you can't undo operation deletions directly via the Studio UI, you can 
 
 ## Manifest format
 
-<blockquote>
+<Note>
 
 You only need to read this section if you're building your own tooling to [generate persisted query manifests](#31-generate-persisted-query-manifests).
 
-</blockquote>
+</Note>
 
 A persisted query manifest has the following minimal structure:
 

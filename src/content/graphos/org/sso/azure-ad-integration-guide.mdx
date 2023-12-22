@@ -35,7 +35,7 @@ These steps use PingOne's email invite method, because in some cases Apollo's de
 2. Still in the **Overview** section, select **Endpoints** from the top menu.
 3. Copy and paste the **OpenID Connect metadata document** URL into the same local text file:
 
-   <img src="../../img/sso/azure-client-id-endpoint.gif" alt="Azure endpoint URL and client ID" class="screenshot" />{" "}
+   <img src="../../img/sso/azure-client-id-endpoint.gif" alt="Azure endpoint URL and client ID" class="screenshot" />
 
 ## 3. Create a client secret
 
@@ -43,7 +43,7 @@ These steps use PingOne's email invite method, because in some cases Apollo's de
 
 2. Copy and paste the secret's **Value** field to the same text file you created earlier:
 
-   <img src="../../img/sso/azure-client-secret.gif" alt="Azure client secret" class="screenshot" />{" "}
+   <img src="../../img/sso/azure-client-secret.gif" alt="Azure client secret" class="screenshot" />
 
 ## 4. Configure API permissions
 
@@ -60,7 +60,7 @@ These steps use PingOne's email invite method, because in some cases Apollo's de
      src="../../img/sso/azure-configure-api-permissions.gif"
      alt="Azure configure API permissions"
      class="screenshot"
-   />{" "}
+   />
 
 3. From the **Manifest** section of your app registration, find the `groupMembershipClaims` property. Change its value from `null` to either `All` or `SecurityGroup`.
    - This ensures that the group membership claim is included in the access token during SSO.
@@ -81,7 +81,7 @@ These steps use PingOne's email invite method, because in some cases Apollo's de
    4. Click **Next**.
 
 
-   <img src="../../img/sso/azure-pingone-connection.gif" alt="Azure PingOne connection" class="screenshot" />{" "}
+   <img src="../../img/sso/azure-pingone-connection.gif" alt="Azure PingOne connection" class="screenshot" />
 
 5. In Step 2 of the wizard, copy the **PingOne Redirect URI** and paste it on the Azure AD app registration.
 
@@ -90,7 +90,7 @@ These steps use PingOne's email invite method, because in some cases Apollo's de
    - Back on the PingOne configuration wizard, select **Next** after copying and pasting the URI.
 
 
-   <img src="../../img/sso/azure-pingone-redirect-uri.gif" alt="Azure PingOne redirect URI" class="screenshot" />{" "}
+   <img src="../../img/sso/azure-pingone-redirect-uri.gif" alt="Azure PingOne redirect URI" class="screenshot" />
 
 6. In Step 3 of the wizard, configure the **Map Attributes** section by mapping the incoming attributes or claims from Azure AD to PingOne. You can leave this with the default Attribute Mapping.
 
