@@ -6,11 +6,19 @@ title: Additional Explorer features
 
 ### Dark mode
 
-> Toggle between light and dark mode from the Explorer's Settings tab.
+<Tip>
+
+Toggle between light and dark mode from the Explorer's Settings tab.
+
+</Tip>
 
 ### Table layout for response data
 
-> Toggle between table and JSON layout from the top of the Explorer's Response panel.
+<Tip>
+
+Toggle between table and JSON layout from the top of the Explorer's Response panel.
+
+</Tip>
 
 You can view an operation's response as JSON or as a table. Table layout is especially useful when your response includes an array, or when you want to share a query's results with someone who isn't familiar with JSON.
 
@@ -18,13 +26,21 @@ When looking at arrays of data in table mode, you can click the header of any co
 
 ### Inline/Extract fragments
 
-> Right-click any fragment name to inline that fragment in queries where it is used. Right-click any selection of fields to extract those fields into a fragment.
+<Tip>
+
+Right-click any fragment name to inline that fragment in queries where it is used. Right-click any selection of fields to extract those fields into a fragment.
+
+</Tip>
 
 While editing your operations, you can now inline and extract your fragments with one click. This is useful when trying to select the same fields in multiple places using fragments, or when trying too inline fragments into a single operation to be used somewhere else.
 
 ### Inline/Extract variables
 
-> Click the "**...**" menu next to an operation in the editor to select a notation for variables.
+<Tip>
+
+Click the "**...**" menu next to an operation in the editor to select a notation for variables.
+
+</Tip>
 
 While editing your operations, you can toggle between inline or extracted notation for variables. This is useful when you want to switch notations to copy and paste something, or when you're drafting a query in the editor and want to move it to your code.
 
@@ -58,12 +74,7 @@ query ($id: ID!) {
 
 The Explorer supports file upload for servers that support the [GraphQL multipart request spec](https://github.com/jaydenseric/graphql-multipart-request-spec). To run an operation that requires files as input, click **+ Add files** in the Explorer's **Variables** tab:
 
-<img
-  className="screenshot"
-  src="../img/explorer-file-upload.jpg"
-  alt="File upload in the Explorer"
-  width="500"
-/>
+<img className="screenshot" src="../img/explorer-file-upload.jpg" alt="File upload in the Explorer" width="500" />
 
 You can then set the name of the variable and select the files you want to upload. Note that if your operation supports providing _multiple_ files via a single variable, you need to select the toggle for that variable to enable the multi-file protocol.
 
@@ -81,18 +92,21 @@ You can pause introspection polling at any time. To do so, open the Explorer Set
 
 If you're working with a supergraph in Studio, the Explorer dynamically calculates example query plans for your operations in the right-hand panel (click **Response** and select **Query Plan Preview** from the dropdown):
 
-<img
-  className="screenshot"
-  src="../img/explorer-query-plan.jpg"
-  alt="Query plan in the Explorer"
-  width="300"
-/>
+<img className="screenshot" src="../img/explorer-query-plan.jpg" alt="Query plan in the Explorer" width="300" />
 
-> If you don't see the **Query Plan Preview** option, make sure you're using the full version of the Explorer, _not_ Apollo Sandbox. Also make sure you're using the Explorer with a supergraph.
+<Tip>
+
+If you don't see the **Query Plan Preview** option, make sure you're using the full version of the Explorer, _not_ Apollo Sandbox. Also make sure you're using the Explorer with a supergraph.
+
+</Tip>
 
 As you edit an operation, the Explorer recalculates its example query plan accordingly.
 
-> **⚠️ The Explorer might not use the exact same query planning logic as your router!** The example query plan helps you reason about your operations, but it is _not_ intended as a source of truth.
+<Note>
+
+** The Explorer might not use the exact same query planning logic as your router!** The example query plan helps you reason about your operations, but it is _not_ intended as a source of truth.
+
+</Note>
 
 There are two display modes for query plans. You can switch between **Show plan as text** and **Show plan as chart** by clicking the icons next to **Query Plan Preview**:
 
@@ -113,7 +127,11 @@ See [Embedding the Explorer](./embed-explorer).
 
 ### Operation history
 
-> View your operation history from the Explorer's **Run history** tab.
+<Tip>
+
+View your operation history from the Explorer's **Run history** tab.
+
+</Tip>
 
 The Explorer saves the history of your recently run operations (and the variable values for those operations) to your browser's local storage. Access your history to retain and recover previous work without cluttering your editor.
 
@@ -127,17 +145,21 @@ If you are looking at your data [in the table layout](#table-layout-for-response
 
 ### Tracing
 
-> Enable **Inlined traces** from the Explorer's Settings tab.
+<Tip>
+
+Enable **Inlined traces** from the Explorer's Settings tab.
+
+</Tip>
 
 If you're using Apollo Server, you can see traces from your responses inlined in the Explorer by adding the `ApolloServerPluginInlineTrace` plugin to your server's configuration:
 
 ```ts
-import {ApolloServerPluginInlineTrace} from '@apollo/server/plugin/inlineTrace';
+import { ApolloServerPluginInlineTrace } from "@apollo/server/plugin/inlineTrace";
 
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  plugins: [ApolloServerPluginInlineTrace()]
+  plugins: [ApolloServerPluginInlineTrace()],
 });
 ```
 
@@ -145,7 +167,11 @@ Turning on the inlined traces feature in the Explorer's settings tells the Explo
 
 ### Mocked responses
 
-> Enable **Mock responses** from the Explorer's Settings tab.
+<Tip>
+
+Enable **Mock responses** from the Explorer's Settings tab.
+
+</Tip>
 
 This feature naively mocks operation responses based on your schema's types, instead of sending your operations over the wire to your endpoint.
 
@@ -153,7 +179,11 @@ Mocked responses are helpful if you want to get a feel for the shape of a query'
 
 ### Response hints
 
-> Enable **Use response hints** from the Explorer's Settings tab.
+<Tip>
+
+Enable **Use response hints** from the Explorer's Settings tab.
+
+</Tip>
 
 As you build your query, the Explorer runs partial queries under the hood and shows their results in-line. This is helpful when you want to get a sense of the data you'll get back in your full operation response. It can also help you retrieve a quick answer to a query without needing to click the Run button.
 
@@ -161,9 +191,17 @@ The Explorer does not show response hints for mutations (this requires running p
 
 ### Default headers
 
-> Set **Default Headers** from the Explorer's Settings tab.
+<Tip>
 
-> **WARNING:** Do not use **default headers** to provide sensitive information, such as an access token. Instead, use [environment variables](./connecting-authenticating/#environment-variables)
+Set **Default Headers** from the Explorer's Settings tab.
+
+</Tip>
+
+<Caution>
+
+Do not use **default headers** to provide sensitive information, such as an access token. Instead, use [environment variables](./connecting-authenticating/#environment-variables)
+
+</Caution>
 
 You can specify default headers that are applied to _every_ Explorer request executed by _every_ user in your organization. This can be useful if you want to provide a consistent identifier to your server for requests coming from the Explorer.
 

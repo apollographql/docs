@@ -15,7 +15,11 @@ To execute a GraphQL subscription operation in the GraphOS Studio Explorer, firs
   width="500"
 />
 
-> Remember that the path _and protocol_ of your subscriptions URL might differ from those of your _primary_ endpoint.
+<Note>
+
+Remember that the path _and protocol_ of your subscriptions URL might differ from those of your _primary_ endpoint.
+
+</Note>
 
 <ExpansionPanel title="Which 'implementation' do I choose?">
 
@@ -27,6 +31,7 @@ To execute a GraphQL subscription operation in the GraphOS Studio Explorer, firs
 />
 
 - **If you're subscribing to a subgraph or a standalone GraphQL server,** choose whichever WebSocket subprotocol the server uses.
+
   - If you aren't sure which subprotocol the server uses, choose **Autodetect** and the Explorer will attempt to determine the correct subprotocol.
 
 - **If you're subscribing to the Apollo Router,** choose **Multipart subscriptions**. This is the HTTP-based protocol that the router uses.
@@ -55,7 +60,7 @@ When you run the subscription, a **Subscriptions** panel appears in the bottom r
 />
 
 - The most recently received payload is displayed at the top of the panel.
-- The dot next to `STATUS` indicates whether the Explorer is connected to your subscriptions endpoint (green if connected, red if disconnected). 
+- The dot next to `STATUS` indicates whether the Explorer is connected to your subscriptions endpoint (green if connected, red if disconnected).
 - Click the `X` next to `Listening` to stop listening for updates. The updates you've already received remain in the panel.
 - Click the `X` next to `Subscriptions` to close the panel entirely.
 

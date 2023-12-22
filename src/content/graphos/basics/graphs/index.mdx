@@ -46,14 +46,13 @@ Description
 
 A supergraph consisting of:
 
-* A GraphOS-hosted **router**
-* One or more **subgraphs** hosted in your infrastructure
+- A GraphOS-hosted **router**
+- One or more **subgraphs** hosted in your infrastructure
 
 **Recommended** for all organizations getting started with GraphOS.
 
 </td>
 </tr>
-
 
 <tr>
 <td>
@@ -67,8 +66,8 @@ A supergraph consisting of:
 
 A supergraph consisting of:
 
-* A **router** hosted in your infrastructure
-* One or more **subgraphs** hosted in your infrastructure
+- A **router** hosted in your infrastructure
+- One or more **subgraphs** hosted in your infrastructure
 
 Recommended for enterprise organizations that require full customization of their router, usually for advanced performance or data compliance reasons.
 
@@ -96,7 +95,11 @@ Recommended for enterprise organizations that require full customization of thei
 
 ### Cloud supergraphs
 
-> Cloud supergraphs require an Apollo organization on the **Serverless** (free or paid) or **Dedicated** plan. [Learn more about plans.](../org/plans/#current-plans)
+<Note>
+
+Cloud supergraphs require an Apollo organization on the **Serverless** (free or paid) or **Dedicated** plan. [Learn more about plans.](../org/plans/#current-plans)
+
+</Note>
 
 **Cloud supergraphs** are recommended for every organization that's getting started with GraphOS. For every variant of a cloud supergraph, GraphOS provisions and manages a **router** that acts as the variant's public endpoint. Application clients communicate with this endpoint instead of communicating directly with your GraphQL server(s):
 
@@ -116,7 +119,11 @@ flowchart LR;
 
 The router automatically reports certain operation metrics to GraphOS, so you don't need to configure this reporting in your GraphQL servers.
 
-> [Learn more about cloud routing.](../routing/cloud/)
+<Tip>
+
+[Learn more about cloud routing.](../routing/cloud/)
+
+</Tip>
 
 Cloud supergraphs use an architecture called [Apollo Federation](/federation/). With federation, you can distribute your supergraph's capabilities across _multiple_ GraphQL services, which are known as **subgraphs**. The router executes client operations across multiple subgraphs as needed:
 
@@ -137,13 +144,19 @@ flowchart LR;
 
 Even if your API currently uses only _one_ GraphQL server, a cloud supergraph helps you add more subgraphs later as your organization grows.
 
-> [Get started with a cloud supergraph.](../quickstart/cloud/)
+<Tip>
+
+[Get started with a cloud supergraph.](../quickstart/cloud/)
+
+</Tip>
 
 ### Self-hosted supergraphs
 
-> **Self-hosted supergraphs are an [Enterprise feature](/graphos/enterprise/)** for organizations with advanced performance or compliance requirements.
->
-> If your organization _doesn't_ currently have an Enterprise plan, you can test out this functionality by signing up for a free [Enterprise trial](https://studio.apollographql.com/signup?type=enterprise-trial&referrer=docs-content).
+<EnterpriseFeature>
+
+**Self-hosted supergraphs are an [Enterprise feature](/graphos/enterprise/)** for organizations with advanced performance or compliance requirements. If your organization _doesn't_ currently have an Enterprise plan, you can test out this functionality by signing up for a free [Enterprise trial](https://studio.apollographql.com/signup?type=enterprise-trial&referrer=docs-content).
+
+</EnterpriseFeature>
 
 With a self-hosted supergraph, GraphOS does _not_ provision a router for your supergraph. Instead, you host your supergraph's router in your own infrastructure:
 
@@ -162,15 +175,27 @@ flowchart LR;
 
 Your self-hosted router is an instance of [the Apollo Router](/router/) (cloud supergraphs use the Apollo Router under the hood).
 
-> [See the Apollo Router docs.](/router/)
+<Tip>
+
+[See the Apollo Router docs.](/router/)
+
+</Tip>
 
 Self-hosted supergraphs provide full control over your router, but they also require handling its deployment and management. Before you adopt this graph type, make sure you have the necessary team structure to properly manage an additional service in your infrastructure.
 
-> [Get started with a self-hosted supergraph.](../quickstart/self-hosted/)
+<Tip>
+
+[Get started with a self-hosted supergraph.](../quickstart/self-hosted/)
+
+</Tip>
 
 ### Monographs
 
-> Monographs require an Apollo organization on the **Enterprise** plan. [Learn more about plans.](../org/plans/)
+<EnterpriseFeature>
+
+Monographs require an Apollo organization on the **Enterprise** plan. [Learn more about plans.](../org/plans/)
+
+</EnterpriseFeature>
 
 A **monograph** is a graph that consists of a single GraphQL server with _no_ router:
 
@@ -184,9 +209,13 @@ flowchart LR;
   class clients secondary;
 ```
 
-> ⚠️ **We strongly recommend _against_ monographs!** A monograph introduces significant technical _and_ logistical scaling issues as more teams contribute to your graph and its schema.
->
-> Additionally, the router provides essential GraphOS functionality beyond support for multiple subgraphs. It also enables powerful features like [`@defer` support](/router/executing-operations/defer-support/) and straightforward [metrics reporting](../metrics/).
+<Caution>
+
+**We strongly recommend _against_ monographs!** A monograph introduces significant technical _and_ logistical scaling issues as more teams contribute to your graph and its schema.
+
+Additionally, the router provides essential GraphOS functionality beyond support for multiple subgraphs. It also enables powerful features like [`@defer` support](/router/executing-operations/defer-support/) and straightforward [metrics reporting](../metrics/).
+
+</Caution>
 
 ## Creating graphs
 
@@ -200,28 +229,18 @@ flowchart LR;
 
 2. Click **New Graph** in the top right. Studio displays the following dialog:
 
-    <img
-      className="screenshot"
-      src="../../img/graph-creation.jpg"
-      width="350"
-      style="margin-bottom: 20px;"
-    />
+   <img className="screenshot" src="../../img/graph-creation.jpg" width="350" style="margin-bottom: 20px;" />
 
 3. Specify an organization and title for your graph.
 
 4. Specify your **Graph Architecture**:
 
-    * To create a self-hosted supergraph, leave this as **Supergraph (default)**.
-    * To create a monograph, switch this to **Monolith**.
+   - To create a self-hosted supergraph, leave this as **Supergraph (default)**.
+   - To create a monograph, switch this to **Monolith**.
 
 5. Click **Next**. A dialog like the following appears (the details differ depending on which **Graph Architecture** you're using):
 
-    <img
-     src="../../img/register-schema-dialog.jpg"
-     class="screenshot"
-     alt="Schema registration options"
-     width="500"
-    />
+   <img src="../../img/register-schema-dialog.jpg" class="screenshot" alt="Schema registration options" width="500" />
 
 6. **If you're creating a self-hosted supergraph,** select the version of Apollo Federation you're using from the **Supergraph Pipeline Track** dropdown.
 
@@ -235,12 +254,7 @@ To distinguish between instances of the same graph running in different environm
 
 Each of your graph's variants is shown in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content):
 
-<img
-  src="../../img/graph-variants.jpg"
-  className="screenshot"
-  alt="Schema Changelog tab"
-  width="400"
-/>
+<img src="../../img/graph-variants.jpg" className="screenshot" alt="Schema Changelog tab" width="400" />
 
 ### Creating a variant
 
