@@ -20,7 +20,7 @@ export function TagList({ onClick }) {
   );
 
   return (
-    <Wrap>
+    <Wrap mb={6}>
       {group
         .sort((a, b) => a.tag.localeCompare(b.tag))
         .map((group) => (

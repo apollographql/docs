@@ -55,8 +55,8 @@ export function AllNotes() {
 
   return (
     <>
-      <Heading>All notes</Heading>
-      <FormControl>
+      <Heading mb={6}>All notes</Heading>
+      <FormControl mb={4}>
         <Flex w="100%">
           <Box flex="1">
             <InputGroup size="sm">

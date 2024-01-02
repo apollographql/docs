@@ -10,7 +10,7 @@ export function RecentlyAddedNotes() {
         notes: allFile(
           filter: {childMdx: {slug: {regex: "/^TN\\d{4}/"}, frontmatter: { published: {ne: null}}}}
           sort: {fields: childMdx___frontmatter___published, order: DESC}
-          limit: 5
+          limit: 3
         ) {
           nodes {
             fields {
@@ -38,7 +38,9 @@ export function RecentlyAddedNotes() {
 
   return (
     <div>
-      <Heading mb={6}>Recently added notes</Heading>
+      <Heading size="lg" mb={6}>
+        Recently added notes
+      </Heading>
       <NotesList notes={data.notes.nodes} skinnyMode />
     </div>
   );
