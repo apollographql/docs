@@ -28,6 +28,16 @@ const theme = extendTheme({
         bg: 'bg',
         color: 'text'
       },
+      code: {
+        fontSize: 'sm',
+        color: {
+          light: 'indigo.700',
+          dark: 'indigo.300'
+        }
+      },
+      pre: {
+        fontSize: 'sm'
+      },
       '*': {
         borderColor: 'border'
       }
