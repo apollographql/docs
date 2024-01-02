@@ -38,7 +38,7 @@ export function RecentlyUpdatedNotes() {
 
   return (
     <div>
-      <Heading size="lg" mb={6}>
+      <Heading size="md" mb={6}>
         Recently updated notes
       </Heading>
       <NotesList notes={data.notes.nodes} skinnyMode />
