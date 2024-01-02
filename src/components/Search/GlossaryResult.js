@@ -8,10 +8,23 @@ import {BsJournals} from 'react-icons/bs';
 import {MarkdownCodeBlock} from '@apollo/chakra-helpers';
 import {PrimaryLink} from '../RelativeLink';
 
-export default function GlossaryResult({item}) {
-  console.log(item);
+const DefinitionText = ({children}) => {
   return (
-    <Box key="Apollopedia" borderBottomWidth="1px" flexGrow="1" ml="2" p="2">
+    <Box
+      py="2"
+      color="gray.500"
+      _dark={{
+        color: 'gray.400'
+      }}
+    >
+      <Text>{children}</Text>
+    </Box>
+  );
+};
+
+export default function GlossaryResult({item}) {
+  return (
+    <Box key="Apollopedia" borderBottomWidth="1px">
       <Flex align="center" p="2" pr="0">
         <Heading size="sm">Glossary</Heading>
         <Box borderBottomWidth="1px" flexGrow="1" ml="2" />
@@ -26,7 +39,7 @@ export default function GlossaryResult({item}) {
           </Box>
           <Markdown
             components={{
-              p: Text,
+              p: DefinitionText,
               a: PrimaryLink,
               pre: MarkdownCodeBlock,
               code: InlineCode
@@ -36,7 +49,6 @@ export default function GlossaryResult({item}) {
           </Markdown>
           <PrimaryLink
             aria-label="See term in glossary"
-            mt="4"
             as="a"
             href={`https://www.apollographql.com/docs/resources/graphql-glossary#${item.term
               .replace(/\s+/g, '-')
