@@ -112,12 +112,12 @@ const Results = () => {
           >
             {hit.definition}
           </Markdown>
-          {hit.relatedTerms && (
+          {Boolean(hit.relatedTerms?.length) && (
             <Box py="2">
               <HStack>
                 <Text>
                   <strong>{`Related term definition${
-                    hit.relatedTerms.length > 1 ? 's' : ''
+                    hit.relatedTerms.length !== 1 ? 's' : ''
                   }:`}</strong>
                 </Text>
                 {hit.relatedTerms.map((term, index) => (
@@ -153,7 +153,7 @@ const Results = () => {
                 <Heading as="h4" fontSize="xl" fontWeight="bold" pb="2">
                   Internal information 🔒
                 </Heading>
-                {isApollonaut && hit.businessContext && (
+                {hit.businessContext && (
                   <>
                     <Text>
                       <strong>Business context</strong>
@@ -161,7 +161,7 @@ const Results = () => {
                     <Text>{hit.businessContext}</Text>
                   </>
                 )}
-                {isApollonaut && hit.usageInstructions && (
+                {hit.usageInstructions && (
                   <>
                     <Text>
                       <strong>Usage instructions</strong>
@@ -179,7 +179,7 @@ const Results = () => {
                     </Box>
                   </>
                 )}
-                {isApollonaut && hit.exampleUsage && (
+                {hit.exampleUsage && (
                   <>
                     <Text>
                       <strong>Example usage</strong>
