@@ -3,16 +3,12 @@ import React, {useEffect, useState} from 'react';
 import Results from './Results';
 import Search from './Search';
 import {Box, Flex, Text} from '@chakra-ui/react';
+import {Note} from '../Note';
 import {PrimaryLink} from '../RelativeLink';
+import {useUser} from '../../utils';
 
 import algoliasearch from 'algoliasearch/lite';
 import {Configure, InstantSearch, useInstantSearch} from 'react-instantsearch';
-
-const appId = process.env.ALGOLIA_APP_ID;
-const apiKey = process.env.GATSBY_ALGOLIA_EXTERNAL_APOLLOPEDIA_SEARCH_KEY;
-const algoliaIndexName = 'apollopedia';
-
-const searchClient = algoliasearch(appId, apiKey);
 
 function NoResultsBoundary({children, fallback}) {
   const {results} = useInstantSearch();
@@ -70,25 +66,57 @@ function HashScroll() {
 }
 
 export function GlossaryPage() {
+  const {user} = useUser();
+  const isApollonaut = user?.name.includes('@apollographql.com');
+
+  const appId = process.env.ALGOLIA_APP_ID;
+  const apiKey = isApollonaut
+    ? process.env.ALGOLIA_SEARCH_KEY
+    : process.env.GATSBY_ALGOLIA_EXTERNAL_APOLLOPEDIA_SEARCH_KEY;
+
+  const attributesToRetrieve = isApollonaut
+    ? ['*']
+    : [
+        '*',
+        '-internalOnly',
+        '-usageInstructions',
+        '-exampleUsage',
+        '-businessContext'
+      ];
+  const algoliaIndexName = 'apollopedia';
+
+  const searchClient = algoliasearch(appId, apiKey);
   return (
-    <Box>
-      <InstantSearch searchClient={searchClient} indexName={algoliaIndexName}>
-        <HashScroll />
-        <Configure hitsPerPage={150} />
-        <Flex justify="flex-start" p="4" maxW="full">
-          <Flex flexDirection="column" mr="6" flex="3">
-            <Box pb="4">
-              <Search />
-            </Box>
-            <NoResultsBoundary fallback={<NoResults />}>
-              <Results />
-            </NoResultsBoundary>
+    <>
+      {isApollonaut && (
+        <Note>
+          The 🔒 in front of a term denotes it&apos;s only visible to logged in
+          Apollonauts. The same applies for the{' '}
+          <strong>Internal information 🔒</strong>.
+        </Note>
+      )}
+      <Box>
+        <InstantSearch searchClient={searchClient} indexName={algoliaIndexName}>
+          <HashScroll />
+          <Configure
+            hitsPerPage={150}
+            attributesToRetrieve={attributesToRetrieve}
+          />
+          <Flex justify="flex-start" p="4" maxW="full">
+            <Flex flexDirection="column" mr="6" flex="3">
+              <Box pb="4">
+                <Search />
+              </Box>
+              <NoResultsBoundary fallback={<NoResults />}>
+                <Results />
+              </NoResultsBoundary>
+            </Flex>
+            <Flex flexDirection="column" flex="1">
+              <LabelsList />
+            </Flex>
           </Flex>
-          <Flex flexDirection="column" flex="1">
-            <LabelsList />
-          </Flex>
-        </Flex>
-      </InstantSearch>
-    </Box>
+        </InstantSearch>
+      </Box>
+    </>
   );
 }
