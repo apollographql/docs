@@ -33,6 +33,7 @@ export default function Panel({sources, autocomplete, autocompleteState}) {
       collection.items.length > 0 &&
       collection.source.sourceId === 'apollopedia'
   )[0]?.items;
+  console.log(apollopediaResults);
   return (
     <Box>
       {autocompleteState.query.length > 2 && apollopediaResults?.length > 0 && (
@@ -53,7 +54,9 @@ export default function Panel({sources, autocomplete, autocompleteState}) {
             </Box>
             <Box lineHeight="shorter" w="0" flexGrow="1">
               <Box fontSize="lg">
-                <Highlight value={apollopediaResults[0].term} />
+                <Highlight
+                  value={apollopediaResults[0]._highlightResult.term.value}
+                />
               </Box>
               <Markdown
                 components={{
