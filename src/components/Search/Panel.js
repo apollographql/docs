@@ -26,12 +26,15 @@ export default function Panel({sources, autocomplete, autocompleteState}) {
       collection.items.length > 0 &&
       collection.source.sourceId === 'apollopedia'
   )[0]?.items;
-  console.log(apollopediaResults);
+  const filteredApollopediaResults = apollopediaResults?.filter(
+    item => !item.internalOnly && item._rankingInfo?.nbTypos === 0
+  );
   return (
     <Box>
-      {autocompleteState.query.length > 2 && apollopediaResults?.length > 0 && (
-        <GlossaryResult item={apollopediaResults[0]} />
-      )}
+      {autocompleteState.query.length > 2 &&
+        filteredApollopediaResults?.length > 0 && (
+          <GlossaryResult item={filteredApollopediaResults[0]} />
+        )}
       <SimpleGrid h="md" columns={columns} {...autocomplete.getPanelProps()}>
         <Box ref={scrollArea} overflow="auto" pb="4">
           {autocompleteState.collections

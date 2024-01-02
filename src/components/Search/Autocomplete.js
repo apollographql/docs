@@ -23,7 +23,7 @@ const SOURCES = {
 };
 
 const appId = process.env.ALGOLIA_APP_ID;
-const apiKey = process.env.ALGOLIA_SEARCH_KEY;
+const apiKey = process.env.GATSBY_ALGOLIA_RANKING_INFO_KEY;
 
 const searchClient = algoliasearch(appId, apiKey);
 insightsClient('init', {
