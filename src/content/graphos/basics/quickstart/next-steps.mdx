@@ -5,7 +5,11 @@ description: Get the most out of GraphOS
 
 After you [create a supergraph](./cloud/) with GraphOS Studio, read below to learn about some of the next steps you should take to get the most out of it and the entire GraphOS platform.
 
-> For the most part, you can perform these next steps in any order. But you should definitely start by [installing the Rover CLI](#first-install-the-rover-cli).
+<Note>
+
+You should always start by  [installing the Rover CLI](#first-install-the-rover-cli). Otherwise, you can perform the steps described on this page in any order.
+
+</Note>
 
 ## First, install the Rover CLI!
 
@@ -85,7 +89,11 @@ If your supergraph runs in multiple environments, you sould create a different v
 
 Supergraphs use an architecture called **Apollo Federation**. Federation is at its most powerful when your subgraphs _share_ responsibility for some of your schema's types, instead of defining mutually exclusive types and fields.
 
-> [Learn the fundamentals of federation.](/federation/#how-it-works)
+<Tip>
+
+[Learn the fundamentals of federation.](/federation/#how-it-works)
+
+</Tip>
 
 To take full advantage of federation features, each of your subgraphs needs to use a GraphQL server library that conforms to the **Apollo Federation subgraph specification**. Fortunately, many popular server libraries do!
 
@@ -130,7 +138,11 @@ flowchart LR;
 
 How you choose to configure this access control depends on your GraphQL server library and your particular infrastructure.
 
-> Make sure any _existing_ clients that communicate directly with your API are updated to communicate with your router _before_ you begin rejecting direct requests!
+<Caution>
+
+Make sure any _existing_ clients that communicate directly with your API are updated to communicate with your router _before_ you begin rejecting direct requests!
+
+</Caution>
 
 For more information, see [Securing your subgraphs](/federation/building-supergraphs/subgraphs-overview#securing-your-subgraphs).
 
@@ -150,12 +162,7 @@ If you've created a Studio organization to collaborate with your team, invite yo
 
 A supergraph variant's **Clients** page enables you to view operation metrics, segmented by your different clients:
 
-<img
-  src="../../img/client-awareness/overview.jpg"
-  className="screenshot"
-  alt="Client awareness overview"
-  width="400"
-/>
+<img src="../../img/client-awareness/overview.jpg" className="screenshot" alt="Client awareness overview" width="400" />
 
 To get the most out of this feature, each of your client applications should set values for the following HTTP headers in each request they send to your router:
 

@@ -6,7 +6,11 @@ tags: [schema-design, server-driven-ui]
 
 Server-driven UI (SDUI) is an architectural pattern that aims to reduce client-side logic and provide consistency across client platforms (web, iOS, Android, etc.) by returning product information from an API instead of domain data. This approach is geared toward use cases where collaboration between front-end and back-end teams is possible, and there is a strong desire to build a cohesive experience across multiple teams and organizations.
 
-> For advanced patterns and schema types, see [more SDUI topics](/technotes/tags/server-driven-ui).
+<Tip>
+
+For advanced patterns and schema types, see [more SDUI topics](/technotes/tags/server-driven-ui).
+
+</Tip>
 
 ## Architectural goals
 
@@ -22,13 +26,13 @@ SDUI is not a framework or library you can install. It's a design pattern you ca
 
 ### Start with UI designs
 
-Start with your UI designs instead of looking at data models or API responses.  Take a [demand-driven schema design approach](/technotes/TN0027-demand-oriented-schema-design/) to write your preferred query from the client's perspective. The demand-driven concept can apply to any client, but UI applications should **have a direct connection from the API response to items on the screen**.
+Start with your UI designs instead of looking at data models or API responses. Take a [demand-driven schema design approach](/technotes/TN0027-demand-oriented-schema-design/) to write your preferred query from the client's perspective. The demand-driven concept can apply to any client, but UI applications should **have a direct connection from the API response to items on the screen**.
 
 If you find yourself describing steps to go from API to views, that's a warning sign that you'll have to duplicate that logic across clients.
 
 ### Reduce logic in existing client code
 
-Identify and reduce any logic in your existing client code. Some may think of "logic" as only business rules in the backend. However, if you've ever had to update conditionals or switch statements for a new feature, or to update how a feature works, you can consider these frontend portions as "logic," too. Any other places that accept your API response and then transform, concatenate, or use helper functions are additional warning signs for logic. 
+Identify and reduce any logic in your existing client code. Some may think of "logic" as only business rules in the backend. However, if you've ever had to update conditionals or switch statements for a new feature, or to update how a feature works, you can consider these frontend portions as "logic," too. Any other places that accept your API response and then transform, concatenate, or use helper functions are additional warning signs for logic.
 
 If you had to change this type of logic in one client, you probably had to change it in others. You can reduce this redundancy by moving the logic to your API.
 

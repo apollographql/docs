@@ -12,15 +12,23 @@ This article helps you get started building a new subgraph that you can then add
 
 The fastest way to create a new subgraph is to start with one of the templates provided by the [Rover CLI](/rover/commands/template). The `rover template` command generates the skeleton of a new subgraph for you, so you can immediately begin defining your schema and implementing your resolvers.
 
-> If your installed version of Rover doesn't include the `template` command (or if you don't have Rover installed at all), [install the latest version.](/rover/getting-started/)
+<Tip>
+
+If your installed version of Rover doesn't include the `template` command (or if you don't have Rover installed at all), [install the latest version.](/rover/getting-started/)
+
+</Tip>
 
 You start by running `rover template use`, providing it the ID of your chosen template. For example, the following command creates a new directory called `my-subgraph` that contains the boilerplate code for a subgraph written in TypeScript using the Apollo Server library:
 
-```bash showLineNumbers=false 
+```bash showLineNumbers=false
 rover template use "my-subgraph" --template="subgraph-typescript-apollo-server"
 ```
 
-> To see the full list of available templates, see the [Rover template docs](/rover/commands/template)
+<Tip>
+
+To see the full list of available templates, see the [Rover template docs](/rover/commands/template)
+
+</Tip>
 
 After generating the boilerplate code, you can start filling in your business logic. The generated code includes example resolvers for `Query` and `Mutation`, along with some [entity types](/federation/entities/) to use as your starting point. All templates also come with example GitHub Actions workflows to help with [publishing your schema in CI/CD](../delivery/publishing-schemas/#publish-with-continuous-delivery).
 
@@ -44,4 +52,8 @@ When you're ready to add a new subgraph to your existing GraphOS supergraph, do 
 
 After you publish your subgraph's schema for the first time, GraphOS recognizes it as part of your supergraph, and you can start querying for data from _all_ of your subgraphs!
 
-> ⚠️ Make sure you [secure your subgraph](./securing-a-subgraph) so that only GraphOS can query it.
+<Caution>
+
+Make sure you [secure your subgraph](./securing-a-subgraph) so that only GraphOS can query it.
+
+</Caution>
