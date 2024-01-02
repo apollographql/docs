@@ -11,11 +11,6 @@ import { AllNotes, RecentlyUpdatedNotes, RecentlyAddedNotes } from "../../compon
 import { SimpleGrid, Heading } from "@chakra-ui/react";
 
 <SimpleGrid spacing="4" minChildWidth="250px" {...props}>
-  <RecentlyAddedNotes />
-  <RecentlyUpdatedNotes />
-</SimpleGrid>
-
-<SimpleGrid spacing="4" minChildWidth="250px" {...props}>
 <div>
 
 <Heading mb={2} size="lg">
@@ -34,6 +29,11 @@ If you find an issue with a tech note, feel free to use the **Edit on GitHub** b
 If you have an idea for a new tech note, please [create a new GitHub issue](https://github.com/apollographql/docs/issues) with the suggested changes or topic that you would like covered.
 
 </div>
+</SimpleGrid>
+
+<SimpleGrid spacing="4" minChildWidth="250px" {...props}>
+  <RecentlyAddedNotes />
+  <RecentlyUpdatedNotes />
 </SimpleGrid>
 
 <AllNotes />
