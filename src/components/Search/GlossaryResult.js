@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {Box, Flex, Heading, Icon, Text} from '@chakra-ui/react';
 import {BsJournals} from 'react-icons/bs';
-import {MarkdownCodeBlock} from '@apollo/chakra-helpers';
 import {PrimaryLink} from '../RelativeLink';
 
 const DefinitionText = ({children}) => {
@@ -41,11 +40,12 @@ export default function GlossaryResult({item}) {
             components={{
               p: DefinitionText,
               a: PrimaryLink,
-              pre: MarkdownCodeBlock,
               code: InlineCode
             }}
           >
-            {item.definition}
+            {item.definitionWithoutExample
+              ? item.definitionWithoutExample
+              : item.definition}
           </Markdown>
           <PrimaryLink
             aria-label="See term in glossary"
@@ -55,7 +55,9 @@ export default function GlossaryResult({item}) {
               .toLowerCase()}`}
             style={{display: 'flex', alignItems: 'center'}}
           >
-            See term in glossary ⏎
+            {item.definitionWithoutExample
+              ? 'See an example in the glossary ⏎'
+              : 'See term in glossary ⏎'}
           </PrimaryLink>
         </Box>
       </Flex>
