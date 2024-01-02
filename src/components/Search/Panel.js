@@ -10,12 +10,14 @@ import {
   Button,
   Flex,
   Heading,
+  Icon,
   SimpleGrid,
   Text,
   Wrap,
   WrapItem,
   useBreakpointValue
 } from '@chakra-ui/react';
+import {BsJournals} from 'react-icons/bs';
 import {MarkdownCodeBlock} from '@apollo/chakra-helpers';
 import {PrimaryLink} from '../RelativeLink';
 
@@ -33,7 +35,7 @@ export default function Panel({sources, autocomplete, autocompleteState}) {
   )[0]?.items;
   return (
     <Box>
-      {autocompleteState.query && apollopediaResults?.length > 0 && (
+      {autocompleteState.query.length > 2 && apollopediaResults?.length > 0 && (
         <Box
           key="Apollopedia"
           borderBottomWidth="1px"
@@ -45,21 +47,37 @@ export default function Panel({sources, autocomplete, autocompleteState}) {
             <Heading size="sm">Glossary</Heading>
             <Box borderBottomWidth="1px" flexGrow="1" ml="2" />
           </Flex>
-          <Text pl="4">
-            <Highlight value={apollopediaResults[0].term} />
-          </Text>
-          <Box px="4">
-            <Markdown
-              components={{
-                p: Text,
-                a: PrimaryLink,
-                pre: MarkdownCodeBlock,
-                code: InlineCode
-              }}
-            >
-              {apollopediaResults[0].definition}
-            </Markdown>
-          </Box>
+          <Flex p="2">
+            <Box mr="3" fontSize="xl" color="primary" flexShrink="0">
+              <Icon as={BsJournals} />
+            </Box>
+            <Box lineHeight="shorter" w="0" flexGrow="1">
+              <Box fontSize="lg">
+                <Highlight value={apollopediaResults[0].term} />
+              </Box>
+              <Markdown
+                components={{
+                  p: Text,
+                  a: PrimaryLink,
+                  pre: MarkdownCodeBlock,
+                  code: InlineCode
+                }}
+              >
+                {apollopediaResults[0].definition}
+              </Markdown>
+              <PrimaryLink
+                aria-label="See term in glossary"
+                mt="4"
+                as="a"
+                href={`https://www.apollographql.com/docs/resources/graphql-glossary#${apollopediaResults[0].term
+                  .replace(/\s+/g, '-')
+                  .toLowerCase()}`}
+                style={{display: 'flex', alignItems: 'center'}}
+              >
+                See term in glossary ⏎
+              </PrimaryLink>
+            </Box>
+          </Flex>
         </Box>
       )}
       <SimpleGrid h="md" columns={columns} {...autocomplete.getPanelProps()}>
