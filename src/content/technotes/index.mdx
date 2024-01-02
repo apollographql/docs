@@ -15,12 +15,21 @@ import { SimpleGrid } from "@chakra-ui/react";
   <RecentlyUpdatedNotes />
 </SimpleGrid>
 
-<AllNotes />
+<SimpleGrid spacing="4" minChildWidth="250px" {...props}>
+<div>
 
 ## Reporting issues
 
 If you find an issue with a tech note, feel free to use the **Edit on GitHub** button to create a new PR with the suggested changes. Otherwise, you can view the source and create a GitHub issue on the [apollographql/docs](https://github.com/apollographql/docs) repo.
 
+</div>
+<div>
+
 ## Adding new tech notes
 
 If you have an idea for a new tech note, please [create a new GitHub issue](https://github.com/apollographql/docs/issues) with the suggested changes or topic that you would like covered.
+
+</div>
+</SimpleGrid>
+
+<AllNotes />
