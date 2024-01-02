@@ -1,3 +1,6 @@
+import Highlight from './Highlight';
+import InlineCode from '../InlineCode';
+import Markdown from 'react-markdown';
 import Preview from './Preview';
 import PropTypes from 'prop-types';
 import React, {useRef} from 'react';
@@ -13,6 +16,8 @@ import {
   WrapItem,
   useBreakpointValue
 } from '@chakra-ui/react';
+import {MarkdownCodeBlock} from '@apollo/chakra-helpers';
+import {PrimaryLink} from '../RelativeLink';
 
 export const DOCS_INDEX = 'docs';
 export const QUERY_SUGGESTIONS_INDEX = 'docs_query_suggestions';
@@ -36,11 +41,25 @@ export default function Panel({sources, autocomplete, autocompleteState}) {
           ml="2"
           p="2"
         >
-          <Heading size="sm">Glossary</Heading>
-          <Text>
-            <strong>{apollopediaResults[0].term}</strong>
+          <Flex align="center" p="2" pr="0">
+            <Heading size="sm">Glossary</Heading>
+            <Box borderBottomWidth="1px" flexGrow="1" ml="2" />
+          </Flex>
+          <Text pl="4">
+            <Highlight value={apollopediaResults[0].term} />
           </Text>
-          <Text px="4">{apollopediaResults[0].definition}</Text>
+          <Box px="4">
+            <Markdown
+              components={{
+                p: Text,
+                a: PrimaryLink,
+                pre: MarkdownCodeBlock,
+                code: InlineCode
+              }}
+            >
+              {apollopediaResults[0].definition}
+            </Markdown>
+          </Box>
         </Box>
       )}
       <SimpleGrid h="md" columns={columns} {...autocomplete.getPanelProps()}>
