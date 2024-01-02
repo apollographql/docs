@@ -1,13 +1,19 @@
-import {colors} from '@apollo/space-kit/colors';
-import {
-  components,
-  createColorPalette,
-  createGrayPalette,
-  fonts
-} from '@apollo/chakra-helpers';
+import {components} from '@apollo/chakra-helpers';
 import {extendTheme} from '@chakra-ui/react';
+import {colors as newBrandColors} from '@apollo/brand';
 
-const {grey, silver, indigo, teal, blilet, midnight, yellow, orange} = colors;
+const {gray, navy, blue, yellow, orange, red, green, purple, silver, black} =
+  newBrandColors.primitives;
+
+const indigo = {
+  ...navy,
+  600: navy[500],
+  700: navy[500],
+  800: navy[500],
+  900: black[100]
+};
+
+const {bg, button, border, text} = newBrandColors.tokens;
 
 const theme = extendTheme({
   config: {
@@ -36,33 +42,39 @@ const theme = extendTheme({
     },
     colors: {
       bg: {
-        default: 'white',
-        _dark: 'gray.800'
+        default: bg.primary.base,
+        _dark: black[100]
       },
       text: {
-        default: 'gray.800',
-        _dark: 'whiteAlpha.900'
+        default: text.primary.base,
+        _dark: text.primary.dark
       },
       border: {
-        default: 'gray.200',
-        _dark: 'whiteAlpha.300'
+        default: border.primary.base,
+        _dark: indigo[400]
       },
       primary: {
-        default: 'indigo.500',
-        _dark: 'indigo.200'
+        default: button.primary.base,
+        _dark: button.primary.dark
       },
       secondary: {
-        default: 'pink.600',
-        _dark: 'pink.300'
+        default: button.secondary.base,
+        _dark: button.secondary.dark
       },
       tertiary: {
-        default: 'teal.600',
-        _dark: 'teal.300'
+        default: 'blue.400',
+        _dark: 'indigo.100'
       }
     }
   },
   components: {
     ...components,
+    Text: {
+      baseStyle: {
+        lineHeight: '1.8rem',
+        fontSize: 'md'
+      }
+    },
     Table: {
       baseStyle: {
         table: {
@@ -77,14 +89,34 @@ const theme = extendTheme({
       }
     }
   },
-  fonts,
+  fontSizes: {
+    xs: '0.75rem',
+    sm: '0.9rem',
+    md: '1rem',
+    lg: '1.1rem',
+    xl: '1.2rem',
+    '2xl': '1.3rem',
+    '3xl': '1.7rem',
+    '4xl': '2.1rem',
+    '5xl': '2.8rem',
+    '6xl': '4rem'
+  },
+  fonts: {
+    heading: "aeonik, 'aeonik', sans-serif",
+    body: "Inter, 'Inter var', sans-serif",
+    mono: "Fira Code, 'Fira Code Retina', monospace"
+  },
   colors: {
-    gray: createGrayPalette(silver, grey, midnight),
-    indigo: createColorPalette(indigo),
-    teal: createColorPalette(teal),
-    blue: createColorPalette(blilet),
-    yellow: createColorPalette(yellow),
-    orange: createColorPalette(orange)
+    silver,
+    gray,
+    indigo,
+    blue,
+    yellow,
+    orange,
+    purple,
+    red,
+    green,
+    black
   }
 });
 

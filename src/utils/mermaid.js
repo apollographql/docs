@@ -4,10 +4,10 @@ import {useMemo} from 'react';
 
 export function useMermaidStyles() {
   const [primary, secondary, tertiary, fill, background] = useToken('colors', [
-    useColorModeValue('indigo.500', 'indigo.300'),
-    useColorModeValue('pink.700', 'pink.200'),
-    useColorModeValue('teal.700', 'teal.200'),
-    useColorModeValue('gray.50', 'gray.700'),
+    useColorModeValue('green.700', 'green.300'),
+    useColorModeValue('yellow.500', 'yellow.300'),
+    useColorModeValue('orange.700', 'orange.300'),
+    useColorModeValue('blue.50', 'indigo.600'),
     'bg'
   ]);
 
@@ -103,6 +103,9 @@ export function useMermaidStyles() {
       [['.marker', '#arrowhead path']]: {
         stroke: 'currentColor',
         fill: 'currentColor'
+      },
+      '.cluster-label': {
+        lineHeight: '1.6em'
       },
       '.arrowheadPath': {
         fill: 'currentColor'

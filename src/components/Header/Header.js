@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Search from '../Search';
 import StudioButton from './StudioButton';
-import {ReactComponent as ApolloLogo} from '@apollo/space-kit/logos/logo.svg';
-import {ReactComponent as ApolloMark} from '@apollo/space-kit/logos/mark.svg';
+import {ReactComponent as ApolloLogo} from '@apollo/brand/logos/logotype.svg';
+import {ReactComponent as ApolloMark} from '@apollo/brand/logos/symbol.svg';
 import {
   Box,
   Center,
@@ -96,15 +96,18 @@ export function Header({children, algoliaFilters}) {
             <Box
               ml="1.5"
               px="1.5"
-              fontSize="sm"
+              fontSize="xs"
               fontWeight="semibold"
               textTransform="uppercase"
               letterSpacing="widest"
               rounded="sm"
-              bg="indigo.50"
-              color="indigo.500"
+              borderWidth="1px"
+              borderColor="gray.400"
+              borderRadius="sm"
+              color="indigo.600"
               _dark={{
-                bg: 'indigo.400',
+                bg: 'bg',
+                borderColor: 'indigo.400',
                 color: 'inherit'
               }}
             >
