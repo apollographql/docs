@@ -1,16 +1,20 @@
 ---
 title: Production readiness checklist
+summary: We recommend that you read through this checklist and identify critical features for your team before your supergraph begins handling production traffic.
+published: 2022-07-11
 id: TN0008
 tags: [sre, router, server, client]
 ---
 
-We recommend that you read through this checklist and idenitify critical features for your team before your supergraph begins handling production traffic.
+We recommend that you read through this checklist and identify critical features for your team before your supergraph begins handling production traffic.
 
 ## GraphOS Studio
+
 - Ensure that you've created multiple [variants](/graphos/graphs/#variants) to represent the different environments where your supergraph runs (production, staging, and so on).
 - [Protect your production variant](/graphos/graphs/studio-features#protected-variants-enterprise-only) to avoid accidental changes while working in Studio.
 
 ## Apollo Router
+
 - Ensure that you've correctly configured [managed federation](/federation/managed-federation/setup/) and [GraphOS schema usage reporting](/router/configuration/telemetry/apollo-telemetry).
 - For security, [disable introspection](/router/configuration/overview/#introspection) for all production routers (by default Router disables introspection, but make sure you are not using `--dev` mode).
   - You can continue to view and fetch your GraphQL schemas from GraphOS and run operations from [GraphOS Studio Explorer](/graphos/explorer).
@@ -24,6 +28,7 @@ We recommend that you read through this checklist and idenitify critical feature
 - Optionally, enable any [other features](/router/enterprise-features/) deemed critical for your deployment of Apollo Router
 
 ## Subgraphs/Servers
+
 - For security, [disable introspection](/apollo-server/api/apollo-server/#introspection) for all production GraphQL subgraphs.
   - You can continue to view and fetch your GraphQL schemas from GraphOS and run operations from [GraphOS Studio Explorer](/graphos/explorer).
 - Ensure that you've integrated [`rover subgraph check`](/rover/commands/subgraphs#subgraph-check) and [`rover subgraph publish`](/rover/commands/subgraphs#subgraph-publish) into your CI/CD pipeline.
@@ -42,6 +47,7 @@ We recommend that you read through this checklist and idenitify critical feature
   - Optionally add [full response caching](/apollo-server/performance/caching/) to improve performance.
 
 ## Clients
+
 - Ensure that your [clients identify themselves](/graphos/metrics/client-awareness/) by name and version.
   - If you're using an Apollo Client library, you can add a client name and version to the constructor.
   - For example, the [React client uses the `name` and `version` attributes](/react/api/core/ApolloClient#name) in the constructor options.
@@ -50,4 +56,3 @@ We recommend that you read through this checklist and idenitify critical feature
 - Consider adding caching layers.
   - Enable [Persisted Queries and/or Automatic Persisted Queries (APQ)](https://www.apollographql.com/docs/react/api/link/persisted-queries) support for request-size savings.
   - Enable and configure the client side [normalized cache](/react/caching/overview)
-
