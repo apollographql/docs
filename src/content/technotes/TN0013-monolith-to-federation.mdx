@@ -1,13 +1,15 @@
 ---
 title: Moving a GraphQL monolith to Apollo Federation
+summary: Steps for migrating from a GraphQL monolith to multiple subgraphs with Apollo Federation
+published: 2022-09-06
 id: TN0013
-description: Steps for migrating from a GraphQL monolith to multiple subgraphs with Apollo Federation
 tags: [federation, server]
 ---
 
 <Tip>
 
 For a complete, step-by-step tutorial, check out [Voyage II: Federating the monolith](https://www.apollographql.com/tutorials/voyage-part2).
+
 </Tip>
 
 As with any monolithic service, teams can struggle to change and maintain their GraphQL API as it grows larger and receives contributions from more developers.
@@ -33,15 +35,15 @@ Start the process by making a "federated graph of one". Your existing monolith c
    ```
 
 1. Deploy an instance of the [Apollo Router](/router/) to your environment.
-  <EnterpriseFeature
-    text={
-      'Self-hosting the Apollo Router is limited to [GraphOS Enterprise plans](/graphos/enterprise/). Other plan types use [managed cloud routing with GraphOS](/graphos/routing/cloud/). Check out the [pricing page](https://www.apollographql.com/pricing/) to learn more.'
-    }
-  />
-2. Set up [header propagation](/router/configuration/header-propagation/) so that the monolith receives any necessary headers from the router.
-3. Set up internal routing rules to redirect client requests to the Apollo Router instead of your monolith.
-4. Enable usage metrics reporting to GraphOS Studio.
-5. Add [subgraph checks](/graphos/delivery/schema-checks/) to your monolith's CI pipeline.
+   <EnterpriseFeature
+     text={
+       "Self-hosting the Apollo Router is limited to [GraphOS Enterprise plans](/graphos/enterprise/). Other plan types use [managed cloud routing with GraphOS](/graphos/routing/cloud/). Check out the [pricing page](https://www.apollographql.com/pricing/) to learn more."
+     }
+   />
+1. Set up [header propagation](/router/configuration/header-propagation/) so that the monolith receives any necessary headers from the router.
+1. Set up internal routing rules to redirect client requests to the Apollo Router instead of your monolith.
+1. Enable usage metrics reporting to GraphOS Studio.
+1. Add [subgraph checks](/graphos/delivery/schema-checks/) to your monolith's CI pipeline.
 
 At this point, client requests go to your new Apollo Router instead of the monolith, but it's serving the same schema so clients won't know the difference.
 
@@ -248,11 +250,7 @@ The most important functionality to add is defining your entities (by adding `@k
 Start with an empty subgraph to quickly set up your deployment and continuous integration pipelines. You can use this stub subgraph schema, which won't affect the client-facing schema:
 
 ```graphql
-extend schema
-  @link(
-    url: "https://specs.apollo.dev/federation/v2.0"
-    import: ["@shareable", "@inaccessible"]
-  )
+extend schema @link(url: "https://specs.apollo.dev/federation/v2.0", import: ["@shareable", "@inaccessible"])
 
 type Query {
   _todo: String @shareable @inaccessible
