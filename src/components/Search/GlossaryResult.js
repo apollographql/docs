@@ -26,11 +26,11 @@ function stripCodeExample(definition) {
   const hasCodeBlocks = /```[\s\S]*?```/g.test(definition);
 
   if (hasCodeBlocks) {
-    // Remove sentences with "the following example"
-    definition = definition.replace(/.*?following example.*?(\n|$)/g, '');
-
     // Remove sentences starting with "For example:"
     definition = definition.replace(/For example.*?(\n|$)/g, '');
+
+    // Remove sentences with "the following example"
+    definition = definition.replace(/.*?following example.*?(\n|$)/g, '');
 
     // Remove sentences with the phrase "shown below"
     definition = definition.replace(/.*?shown below.*?(\n|$)/g, '');
@@ -38,8 +38,8 @@ function stripCodeExample(definition) {
     // Remove sentences with the phrase "example below"
     definition = definition.replace(/.*?example below.*?(\n|$)/g, '');
 
-    // Remove all code blocks
-    definition = definition.replace(/```[\s\S]*?```/g, '');
+    // Remove all codeblocks and text appearing after the code block ends
+    definition = definition.replace(/```[\s\S]*?```([\s\S]*|$)/g, '');
   }
 
   return definition;
