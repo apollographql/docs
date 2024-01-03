@@ -23,7 +23,7 @@ const DefinitionText = ({children}) => {
 
 export default function GlossaryResult({item}) {
   return (
-    <Box key="Apollopedia" borderBottomWidth="1px">
+    <Box key="Apollopedia" borderBottomWidth="1px" pb="16px">
       <Flex align="center" p="2" pr="0">
         <Heading size="sm">Glossary</Heading>
         <Box borderBottomWidth="1px" flexGrow="1" ml="2" />
@@ -48,16 +48,17 @@ export default function GlossaryResult({item}) {
               : item.definition}
           </Markdown>
           <PrimaryLink
-            aria-label="See term in glossary"
+            aria-label="Go to the glossary"
             as="a"
             href={`https://www.apollographql.com/docs/resources/graphql-glossary#${item.term
               .replace(/\s+/g, '-')
               .toLowerCase()}`}
+            mt="12px"
             style={{display: 'flex', alignItems: 'center'}}
           >
             {item.definitionWithoutExample
-              ? 'See an example in the glossary ⏎'
-              : 'See term in glossary ⏎'}
+              ? 'Explore an example in the glossary ⏎'
+              : 'Go to the glossary ⏎'}
           </PrimaryLink>
         </Box>
       </Flex>
