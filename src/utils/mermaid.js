@@ -7,7 +7,7 @@ export function useMermaidStyles() {
     useColorModeValue('green.700', 'green.300'),
     useColorModeValue('yellow.500', 'yellow.300'),
     useColorModeValue('orange.700', 'orange.300'),
-    useColorModeValue('blue.50', 'indigo.600'),
+    useColorModeValue('blue.50', 'indigo.500'),
     'bg'
   ]);
 
