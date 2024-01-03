@@ -21,6 +21,30 @@ const DefinitionText = ({children}) => {
   );
 };
 
+function stripCodeExample(definition) {
+  // Check if there are any code blocks
+  const hasCodeBlocks = /```[\s\S]*?```/g.test(definition);
+
+  if (hasCodeBlocks) {
+    // Remove sentences with "the following example"
+    definition = definition.replace(/.*?following example.*?(\n|$)/g, '');
+
+    // Remove sentences starting with "For example:"
+    definition = definition.replace(/For example.*?(\n|$)/g, '');
+
+    // Remove sentences with the phrase "shown below"
+    definition = definition.replace(/.*?shown below.*?(\n|$)/g, '');
+
+    // Remove sentences with the phrase "example below"
+    definition = definition.replace(/.*?example below.*?(\n|$)/g, '');
+
+    // Remove all code blocks
+    definition = definition.replace(/```[\s\S]*?```/g, '');
+  }
+
+  return definition;
+}
+
 export default function GlossaryResult({item}) {
   return (
     <Box key="Apollopedia" borderBottomWidth="1px" pb="16px">
@@ -43,9 +67,7 @@ export default function GlossaryResult({item}) {
               code: InlineCode
             }}
           >
-            {item.definitionWithoutExample
-              ? item.definitionWithoutExample
-              : item.definition}
+            {stripCodeExample(item.definition)}
           </Markdown>
           <PrimaryLink
             aria-label="Go to the glossary"
@@ -56,9 +78,9 @@ export default function GlossaryResult({item}) {
             mt="12px"
             style={{display: 'flex', alignItems: 'center'}}
           >
-            {item.definitionWithoutExample
-              ? 'Explore an example in the glossary ⏎'
-              : 'Go to the glossary ⏎'}
+            {item.definition === stripCodeExample(item.definition)
+              ? 'Go to the glossary ⏎'
+              : 'Explore an example in the glossary ⏎'}
           </PrimaryLink>
         </Box>
       </Flex>
