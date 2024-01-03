@@ -74,6 +74,14 @@ This does not apply cloud routers on the Dedicated plan.
 - Apollo will notify you via email whenever a Serverless variant is approaching this 60-day limit.
 - To prevent deletion, execute at least one GraphQL operation on the variant's router before the 60-day limit.
 
+## Out of memory errors
+
+Serverless cloud routers have limited underlying compute resources, so there is a limit to the types of workloads they can handle. It is not possible to scale Serverless: it offers a fixed amount of throughput capacity.
+
+You may exceed available machine memory with complex schemas. For example, Serverless does not support schemas with over 1,000 input types. Additionally, complex queries that return too much data or query too many subgraphs simulatenously may fail.
+
+Upgrade to Cloud Dedicated for control over scaling and performance. You can [contact us](mailto:cloud@apollographql.com) for a free trial.
+
 ## Cloud routing FAQ
 
 #### What happens if my cloud router goes down?
