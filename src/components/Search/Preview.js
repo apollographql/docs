@@ -62,13 +62,11 @@ export default function Preview({preview}) {
     <Flex
       borderLeftWidth="1px"
       direction="column"
-      align="center"
-      textAlign="center"
       py="10"
       px="5"
       pos="relative"
     >
-      <Flex mb="5" align="center">
+      <Flex mb="5">
         <Box fontSize="2xl" color="primary">
           <ResultIcon result={preview} />
         </Box>
