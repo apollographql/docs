@@ -5,7 +5,7 @@
     "What is GraphOS?": "/intro/platform",
     "About GraphQL": {
       "Why adopt GraphQL?": "/intro/benefits",
-      "Glossary": "/resources/graphql-glossary",
+      "Glossary": "/resources/glossary",
       "FAQ": "/resources/faq",
       "Principled GraphQL": "https://principledgraphql.com"
     },
