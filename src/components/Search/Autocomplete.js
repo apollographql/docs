@@ -97,6 +97,8 @@ export default function Autocomplete({onClose, optionalFilters}) {
                       clickAnalytics: true,
                       hitsPerPage: !index
                         ? 8
+                        : indexName === APOLLOPEDIA_INDEX
+                        ? 10
                         : indexName === QUERY_SUGGESTIONS_INDEX
                         ? 4
                         : 2,

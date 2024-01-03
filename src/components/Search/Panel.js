@@ -26,9 +26,9 @@ export default function Panel({sources, autocomplete, autocompleteState}) {
       collection.items.length > 0 &&
       collection.source.sourceId === 'apollopedia'
   )[0]?.items;
-  const filteredApollopediaResults = apollopediaResults?.filter(
-    item => !item.internalOnly && item._rankingInfo?.nbTypos === 0
-  );
+  const filteredApollopediaResults = apollopediaResults
+    ?.filter(item => !item.internalOnly && item._rankingInfo?.nbTypos === 0)
+    .sort((a, b) => a.term.length - b.term.length);
   return (
     <Box>
       {autocompleteState.query.length > 2 &&
