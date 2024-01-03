@@ -59,64 +59,65 @@ export default function Preview({preview}) {
   );
 
   return (
-    <Flex
-      borderLeftWidth="1px"
-      direction="column"
-      py="10"
-      px="5"
-      pos="relative"
-    >
-      <Flex mb="5">
-        <Box fontSize="2xl" color="primary">
-          <ResultIcon result={preview} />
-        </Box>
-        <chakra.span ml="2">
-          {docset ? `${getDocsetTitle(docset)} docs` : upperFirst(type)}
-        </chakra.span>
+    <Flex borderLeftWidth="1px" direction="column" pos="relative">
+      <Flex align="center" p="2">
+        <Heading size="sm">Content preview</Heading>
+        <Box borderBottomWidth="1px" flexGrow="1" ml="2" />
       </Flex>
-      <Heading size="lg" mb="2">
-        <Link href={url}>{title}</Link>
-      </Heading>
-      {allAncestors.length > 0 && (
-        <HStack
-          as="nav"
-          aria-label="Breadcrumb"
-          mb="2"
-          px="2"
-          rounded="sm"
-          fontSize="sm"
-          bg="gray.100"
-          _dark={{
-            bg: 'gray.800'
-          }}
-          spacing="1"
-          whiteSpace="nowrap"
-          maxW="full"
-        >
-          {allAncestors.map((ancestor, index) => (
-            <Fragment key={index}>
-              {index > 0 && <Box as={FiChevronRight} flexShrink="0" />}
-              <Link isTruncated href={ancestor.url} title={ancestor.title}>
-                {ancestor.title}
-              </Link>
-            </Fragment>
-          ))}
-        </HStack>
-      )}
-      {_snippetResult?.text && (
-        <Text>
-          <Highlight value={_snippetResult.text.value} />
-        </Text>
-      )}
-      {categories && (
-        <HStack mt="4">
-          {categories.map((category, index) => (
-            <Tag variant="outline" colorScheme="indigo" key={index}>
-              {category}
-            </Tag>
-          ))}
-        </HStack>
-      )}
+      <Box px="5">
+        <Flex my="5">
+          <Box fontSize="2xl" color="primary">
+            <ResultIcon result={preview} />
+          </Box>
+          <chakra.span ml="2">
+            {docset ? `${getDocsetTitle(docset)} docs` : upperFirst(type)}
+          </chakra.span>
+        </Flex>
+
+        <Heading size="md" mb="2">
+          <Link href={url}>{title}</Link>
+        </Heading>
+        {allAncestors.length > 0 && (
+          <HStack
+            as="nav"
+            aria-label="Breadcrumb"
+            mb="2"
+            px="2"
+            rounded="sm"
+            fontSize="sm"
+            bg="gray.100"
+            _dark={{
+              bg: 'gray.800'
+            }}
+            spacing="1"
+            whiteSpace="nowrap"
+            maxW="full"
+          >
+            {allAncestors.map((ancestor, index) => (
+              <Fragment key={index}>
+                {index > 0 && <Box as={FiChevronRight} flexShrink="0" />}
+                <Link isTruncated href={ancestor.url} title={ancestor.title}>
+                  {ancestor.title}
+                </Link>
+              </Fragment>
+            ))}
+          </HStack>
+        )}
+        {_snippetResult?.text && (
+          <Text>
+            <Highlight value={_snippetResult.text.value} />
+          </Text>
+        )}
+        {categories && (
+          <HStack mt="4">
+            {categories.map((category, index) => (
+              <Tag variant="outline" colorScheme="indigo" key={index}>
+                {category}
+              </Tag>
+            ))}
+          </HStack>
+        )}
+      </Box>
       <Img
         h="4"
         pos="absolute"
