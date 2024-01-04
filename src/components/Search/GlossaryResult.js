@@ -36,12 +36,15 @@ function stripCodeExample(definition) {
       definition = beforeCodeBlock.replace(/(\n|^)\s*$/, '');
     }
 
-    // Remove sentences containing "example" or "shown below"
+    // Remove the last sentence if it contains "example" or "shown below"
     const sentences = definition.split('.').map(sentence => sentence.trim());
-    const filteredSentences = sentences.filter(
-      sentence =>
-        !sentence.includes('example') && !sentence.includes('shown below')
-    );
+    const filteredSentences = sentences
+      .filter(sentence => sentence !== '')
+      .filter(
+        (sentence, i, arr) =>
+          i !== arr.length - 1 ||
+          (!sentence.includes('example') && !sentence.includes('shown below'))
+      );
 
     definition = filteredSentences.join('. ').trim();
     if (!definition.endsWith('.')) {
