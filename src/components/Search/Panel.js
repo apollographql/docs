@@ -20,7 +20,12 @@ export default function Panel({sources, autocomplete, autocompleteState}) {
   const scrollArea = useRef();
   const columns = useBreakpointValue({md: 2});
   return (
-    <SimpleGrid h="md" columns={columns} {...autocomplete.getPanelProps()}>
+    <SimpleGrid
+      h="md"
+      columns={columns}
+      {...autocomplete.getPanelProps()}
+      bg="bg"
+    >
       <Box ref={scrollArea} overflow="auto" pb="4">
         {autocompleteState.collections
           .filter(collection => collection.items.length > 0)

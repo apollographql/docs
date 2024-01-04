@@ -7,7 +7,7 @@ import {isAbsolute, resolve} from 'path';
 
 export const PrimaryLink = props => (
   <Link
-    color="primary"
+    color="tertiary"
     sx={{
       code: {
         color: 'inherit'

@@ -17,8 +17,8 @@ import {Link as GatsbyLink} from 'gatsby';
 import {PrimaryLink} from './RelativeLink';
 
 export function Odyssey() {
-  const lightGradient = useToken('colors', ['blue.50', 'indigo.50']);
-  const darkGradient = useToken('colors', ['blue.600', 'indigo.600']);
+  const lightGradient = useToken('colors', ['blue.100', 'indigo.300']);
+  const darkGradient = useToken('colors', ['indigo.400', 'indigo.500']);
   return (
     <Grid
       gap={{base: 6, lg: 10}}

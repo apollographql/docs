@@ -16,7 +16,7 @@ export default function SearchButton(props) {
       rounded="md"
       bg="gray.50"
       _dark={{
-        bg: 'gray.900'
+        bg: 'black.200'
       }}
       _focus={{
         outline: 'none',
@@ -27,7 +27,7 @@ export default function SearchButton(props) {
       <FiSearch />
       <Box
         ml="2"
-        color="gray.400"
+        color="gray.500"
         _dark={{
           color: 'gray.500'
         }}
