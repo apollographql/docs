@@ -80,14 +80,8 @@ function NavButton({isActive, depth, children, tags, ...props}) {
       data-depth={depth}
       sx={
         isActive && {
-          bg: 'purple.500',
-          color: 'white',
-          _hover: {
-            bg: 'purple.600'
-          },
-          _active: {
-            bg: 'purple.700'
-          }
+          bg: 'primary',
+          color: '#FDFDFD'
         }
       }
       {...props}

@@ -35,52 +35,56 @@ export default function Panel({sources, autocomplete, autocompleteState}) {
         filteredApollopediaResults?.length > 0 && (
           <GlossaryResult item={filteredApollopediaResults[0]} />
         )}
-      <SimpleGrid h="md" columns={columns} {...autocomplete.getPanelProps()}>
+      <SimpleGrid
+        h="md"
+        columns={columns}
+        {...autocomplete.getPanelProps()}
+        bg="bg"
+      >
         <Box ref={scrollArea} overflow="auto" pb="4">
           {autocompleteState.collections
             .filter(collection => collection.items.length > 0)
             .map((collection, index) => {
               const {source, items} = collection;
-              if (source.sourceId !== 'apollopedia')
-                return (
-                  <div key={index}>
-                    <Flex align="center" p="2" pr="0">
-                      <Heading size="sm">{sources[source.sourceId]}</Heading>
-                      <Box borderBottomWidth="1px" flexGrow="1" ml="2" />
-                    </Flex>
-                    {source.sourceId === QUERY_SUGGESTIONS_INDEX ? (
-                      <Wrap px="2">
-                        {items.map(item => (
-                          <WrapItem key={item.objectID}>
-                            <Button
-                              variant="outline"
-                              onClick={() => {
-                                autocomplete.setQuery(item.query);
-                                autocomplete.refresh();
-                                scrollArea.current.scrollTo({top: 0});
-                              }}
-                            >
-                              {item.query}
-                            </Button>
-                          </WrapItem>
-                        ))}
-                      </Wrap>
-                    ) : (
-                      <ul {...autocomplete.getListProps()}>
-                        {items.map(item => (
-                          <Result
-                            key={item.objectID}
-                            item={item}
-                            {...autocomplete.getItemProps({
-                              item,
-                              source
-                            })}
-                          />
-                        ))}
-                      </ul>
-                    )}
-                  </div>
-                );
+              return (
+                <div key={index}>
+                  <Flex align="center" p="2" pr="0">
+                    <Heading size="sm">{sources[source.sourceId]}</Heading>
+                    <Box borderBottomWidth="1px" flexGrow="1" ml="2" />
+                  </Flex>
+                  {source.sourceId === QUERY_SUGGESTIONS_INDEX ? (
+                    <Wrap px="2">
+                      {items.map(item => (
+                        <WrapItem key={item.objectID}>
+                          <Button
+                            variant="outline"
+                            onClick={() => {
+                              autocomplete.setQuery(item.query);
+                              autocomplete.refresh();
+                              scrollArea.current.scrollTo({top: 0});
+                            }}
+                          >
+                            {item.query}
+                          </Button>
+                        </WrapItem>
+                      ))}
+                    </Wrap>
+                  ) : (
+                    <ul {...autocomplete.getListProps()}>
+                      {items.map(item => (
+                        <Result
+                          key={item.objectID}
+                          item={item}
+                          {...autocomplete.getItemProps({
+                            item,
+                            source
+                          })}
+                        />
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              );
             })}
         </Box>
         {columns === 2 && autocompleteState.context.preview && (

@@ -26,12 +26,9 @@ export function LeftSidebarNav(props) {
 
   return (
     <Box
-      color="white"
+      color="text"
       fontWeight="semibold"
-      bgColor="gray.800"
-      _dark={{
-        bgColor: 'gray.900'
-      }}
+      bgColor="bg"
       flexShrink="0"
       overflowY="auto"
       overflowX="hidden"
@@ -44,7 +41,7 @@ export function LeftSidebarNav(props) {
         divider={
           <StackDivider
             css={{width: !sidebarOpen && COLLAPSED_SIDEBAR_WIDTH - 32}}
-            borderColor="whiteAlpha.300"
+            borderColor="border"
           />
         }
       >
