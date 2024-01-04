@@ -40,6 +40,9 @@ function LabelsFilter() {
               key={item.label}
               size="md"
               colorScheme="indigo"
+              _dark={{
+                color: 'indigo.100'
+              }}
               variant="outline"
               borderRadius="md"
             >

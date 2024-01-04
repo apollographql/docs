@@ -29,7 +29,7 @@ export default function SearchButton(props) {
         ml="2"
         color="gray.500"
         _dark={{
-          color: 'gray.500'
+          color: 'gray.400'
         }}
       >
         Search Apollo (Cmd+K or /)
