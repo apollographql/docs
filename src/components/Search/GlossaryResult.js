@@ -82,7 +82,7 @@ export default function GlossaryResult({item}) {
           <PrimaryLink
             aria-label="Go to the glossary"
             as="a"
-            href={`https://www.apollographql.com/docs/resources/graphql-glossary#${item.term
+            href={`https://www.apollographql.com/docs/resources/glossary#${item.term
               .replace(/\s+/g, '-')
               .toLowerCase()}`}
             mt="12px"
