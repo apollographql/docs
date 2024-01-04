@@ -118,6 +118,7 @@ export default function Autocomplete({onClose, optionalFilters}) {
         <Input
           borderWidth="0"
           focusBorderColor="transparent"
+          bg="bg"
           roundedBottom={autocompleteState.isOpen ? 'none' : undefined}
           {...autocomplete.getInputProps({
             type: null,

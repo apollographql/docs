@@ -8,7 +8,7 @@ export default function HomePage() {
       px="10"
       bg="indigo.200"
       _dark={{
-        bg: 'indigo.600'
+        bg: 'indigo.500'
       }}
     >
       <Heading mb="2" size="3xl">
