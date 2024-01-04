@@ -33,8 +33,6 @@ function getDocsetTitle(docset) {
       return DOCSET_TITLES[pattern];
     }
   }
-  console.log('Docset', docset);
-
   return upperFirst(docset);
 }
 
@@ -71,7 +69,11 @@ export default function Preview({preview}) {
             <ResultIcon result={preview} />
           </Box>
           <chakra.span ml="2">
-            {docset ? `${getDocsetTitle(docset)} docs` : upperFirst(type)}
+            {!docset
+              ? upperFirst(type)
+              : docset === 'technotes'
+              ? 'Tech notes'
+              : `${getDocsetTitle(docset)} docs`}
           </chakra.span>
         </Flex>
 
