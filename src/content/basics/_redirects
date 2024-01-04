@@ -63,3 +63,6 @@
 /enterprise-guide/change-management /docs/technotes/TN0028-change-management
 /enterprise-guide/federation-case-studies https://www.apollographql.com/customers
 /enterprise-guide/additional-resources /docs/
+
+# Update glossary URL
+/resources/graphql-glossary /resources/glossary
