@@ -370,7 +370,7 @@ export default function Page({file}) {
             code: {
               bg: 'none',
               p: 0,
-              color: 'secondary',
+              color: 'tertiary',
               whiteSpace: 'normal'
             }
           },

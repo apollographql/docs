@@ -31,7 +31,13 @@ const theme = extendTheme({
         color: 'text'
       },
       code: {
-        fontSize: 'sm'
+        fontSize: 'sm',
+        color: 'blue.400',
+        bgColor: 'silver.400',
+        _dark: {
+          color: 'indigo.100',
+          bgColor: 'black.200'
+        }
       },
       pre: {
         fontSize: 'sm'
@@ -71,7 +77,7 @@ const theme = extendTheme({
         _dark: button.primary.dark
       },
       secondary: {
-        default: button.secondary.base,
+        default: text.secondary.base,
         _dark: button.secondary.dark
       },
       tertiary: {
