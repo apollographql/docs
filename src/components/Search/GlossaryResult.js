@@ -22,24 +22,31 @@ const DefinitionText = ({children}) => {
 };
 
 function stripCodeExample(definition) {
-  // Check if there are any code blocks
   const hasCodeBlocks = /```[\s\S]*?```/g.test(definition);
 
   if (hasCodeBlocks) {
-    // Remove sentences starting with "For example:"
-    definition = definition.replace(/For example.*?(\n|$)/g, '');
+    // Find the index of the first occurrence of the code block
+    const codeBlockIndex = definition.indexOf('```');
 
-    // Remove sentences with "the following example"
-    definition = definition.replace(/.*?following example.*?(\n|$)/g, '');
+    if (codeBlockIndex !== -1) {
+      // Capture the text before the code block
+      const beforeCodeBlock = definition.substring(0, codeBlockIndex);
 
-    // Remove sentences with the phrase "shown below"
-    definition = definition.replace(/.*?shown below.*?(\n|$)/g, '');
+      // Remove everything after the code block
+      definition = beforeCodeBlock.replace(/(\n|^)\s*$/, '');
+    }
 
-    // Remove sentences with the phrase "example below"
-    definition = definition.replace(/.*?example below.*?(\n|$)/g, '');
+    // Remove sentences containing "example" or "shown below"
+    const sentences = definition.split('.').map(sentence => sentence.trim());
+    const filteredSentences = sentences.filter(
+      sentence =>
+        !sentence.includes('example') && !sentence.includes('shown below')
+    );
 
-    // Remove all codeblocks and text appearing after the code block ends
-    definition = definition.replace(/```[\s\S]*?```([\s\S]*|$)/g, '');
+    definition = filteredSentences.join('. ').trim();
+    if (!definition.endsWith('.')) {
+      definition = definition += '.';
+    }
   }
 
   return definition;
