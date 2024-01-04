@@ -21,7 +21,7 @@ import {FiChevronRight} from 'react-icons/fi';
 
 const DOCSET_TITLES = {
   'apollo-client': 'React',
-  'apollo-ios': 'iOS',
+  'apollo-ios-dev': 'iOS',
   'apollo-kotlin': 'Kotlin',
   'apollo-server': 'Server',
   'graphos(/[a-z-]+)?': 'GraphOS'
@@ -33,6 +33,7 @@ function getDocsetTitle(docset) {
       return DOCSET_TITLES[pattern];
     }
   }
+  console.log('Docset', docset);
 
   return upperFirst(docset);
 }
