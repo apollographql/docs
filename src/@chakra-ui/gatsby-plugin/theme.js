@@ -36,7 +36,11 @@ const theme = extendTheme({
       pre: {
         fontSize: 'sm'
       },
-
+      mark: {
+        bg: 'transparent',
+        color: 'inherit',
+        textDecor: 'underline'
+      },
       '*': {
         borderColor: 'border'
       }
