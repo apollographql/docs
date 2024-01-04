@@ -65,7 +65,7 @@ const plugins = [
     options: {
       titleTemplate: '%s - Apollo GraphQL Docs',
       openGraph: {
-        type: 'website',
+        type: 'website'
         site_name: 'Apollo Docs'
       },
       twitter: {
@@ -149,9 +149,11 @@ const plugins = [
     resolve: 'gatsby-plugin-algolia',
     options: {
       appId: process.env.ALGOLIA_APP_ID,
-      apiKey: process.env.ALGOLIA_WRITE_KEY,
-      skipIndexing: process.env.CONTEXT !== 'production',
-      indexName: 'docs',
+      apiKey: isProduction
+        ? process.env.ALGOLIA_WRITE_KEY
+        : process.env.GATSBY_STAGING_DOCS_ALGOLIA_KEY,
+      // skipIndexing: process.env.CONTEXT !== 'production',
+      indexName: isProduction ? 'docs' : 'staging_docs',
       queries: [
         {
           query,
