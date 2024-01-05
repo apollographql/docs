@@ -1,3 +1,4 @@
+import CustomHighlight from '../Search/Highlight';
 import EditOnGitHub from './EditOnGitHub';
 import InlineCode from '../InlineCode';
 import Markdown from 'react-markdown';
@@ -89,8 +90,8 @@ const Results = () => {
               {hit.internalOnly && <span>🔒 </span>}
               <Highlight attribute="term" hit={hit} />
             </ClickableHeading>
-            {hit.labels &&
-              hit.labels.map(label => (
+            {hit._highlightResult.labels &&
+              hit._highlightResult.labels.map(label => (
                 <Tag
                   key={label}
                   size="md"
@@ -101,7 +102,9 @@ const Results = () => {
                   variant="outline"
                   borderRadius="md"
                 >
-                  <TagLabel>{label}</TagLabel>
+                  <TagLabel>
+                    <CustomHighlight value={label.value} />
+                  </TagLabel>
                 </Tag>
               ))}
           </HStack>
