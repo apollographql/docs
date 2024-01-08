@@ -2,15 +2,74 @@ import React, { useMemo, useState } from "react";
 import { NotesList } from "./NotesList";
 import { TagList } from "./TagList";
 import { graphql, useStaticQuery } from "gatsby";
-import { FormControl, FormLabel, InputGroup, Input, InputLeftAddon, Flex, Box, Heading } from "@chakra-ui/react";
+import { Flex, Heading, Link } from "@chakra-ui/react";
+import { PrimaryLink } from "../RelativeLink";
+
+const SORT_OPTIONS = {
+  RECENTLY_UPDATED: "Recently updated",
+  RECENTLY_ADDED: "Recently added",
+  ALPHABETICAL: "Alphabetical",
+};
 
 export function AllNotes() {
   const data = useStaticQuery(
     graphql`
-      query AllTechNotesAlphabetical {
-        notes: allFile(
+      query AllTechNotes {
+        notesRecentlyUpdated: allFile(
+          filter: {childMdx: {slug: {regex: "/^TN\\d{4}/"}}}
+          sort: {fields: fields___gitLogLatestDate, order: DESC}
+          limit: 2000
+        ) {
+          nodes {
+            fields {
+              gitLogLatestDate
+            }
+            childMdx {
+              id
+              fields {
+                slug
+              }
+              frontmatter {
+                title
+                summary
+                published
+                tags
+              }
+              rawBody
+              timeToRead
+            }
+          }
+        }
+
+        notesAlphabetical: allFile(
           filter: {childMdx: {slug: {regex: "/^TN\\d{4}/"}}}
           sort: {fields: childMdx___frontmatter___title, order: ASC}
+          limit: 2000
+        ) {
+          nodes {
+            fields {
+              gitLogLatestDate
+            }
+            childMdx {
+              id
+              fields {
+                slug
+              }
+              frontmatter {
+                title
+                summary
+                published
+                tags
+              }
+              rawBody
+              timeToRead
+            }
+          }
+        }
+
+        notesRecentlyAdded: allFile(
+          filter: {childMdx: {slug: {regex: "/^TN\\d{4}/"}}}
+          sort: {fields: childMdx___frontmatter___published, order: DESC}
           limit: 2000
         ) {
           nodes {
@@ -37,39 +96,46 @@ export function AllNotes() {
     `
   );
 
-  const [searchQuery, setSearchQuery] = useState("");
+  const [currentTag, setCurrentTag] = useState();
+  const [sort, setSort] = useState(SORT_OPTIONS.RECENTLY_UPDATED);
 
-  const filteredNotes = useMemo(
-    () =>
-      data.notes.nodes === ""
-        ? data.notes.nodes
-        : data.notes.nodes.filter(
-            (note) =>
-              note.childMdx.frontmatter.title?.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1 ||
-              note.childMdx.frontmatter.summary?.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1 ||
-              note.childMdx.rawBody?.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1 ||
-              note.childMdx.frontmatter?.tags?.some((tag) => `#${tag}` === searchQuery.toLowerCase())
-          ),
-    [data.notes.nodes, searchQuery]
-  );
+  const rawNotes = useMemo(() => {
+    switch (sort) {
+      case SORT_OPTIONS.RECENTLY_ADDED:
+        return data.notesRecentlyAdded;
+      case SORT_OPTIONS.RECENTLY_UPDATED:
+        return data.notesRecentlyUpdated;
+      case SORT_OPTIONS.ALPHABETICAL:
+        return data.notesAlphabetical;
+    }
+  }, [sort]);
+
+  const notes = useMemo(() => {
+    if (!currentTag) {
+      return rawNotes.nodes;
+    } else {
+      return rawNotes.nodes.filter((note) => note.childMdx.frontmatter.tags.includes(currentTag));
+    }
+  }, [currentTag, rawNotes]);
 
   return (
     <>
-      <Heading mb={6}>All notes</Heading>
-      <FormControl mb={4}>
-        <Flex w="100%">
-          <Box flex="1">
-            <InputGroup size="sm">
-              <InputLeftAddon>
-                <FormLabel m="0">Search</FormLabel>
-              </InputLeftAddon>
-              <Input placeholder="Query..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
-            </InputGroup>
-          </Box>
-        </Flex>
-      </FormControl>
-      <TagList onClick={(tag) => setSearchQuery(`#${tag}`)} />
-      <NotesList notes={filteredNotes} setSearchQuery={setSearchQuery} />
+      <Heading mb={2}>{currentTag ? `Notes tagged “${currentTag}”` : "All notes"}</Heading>
+      <TagList selected={currentTag} onClick={setCurrentTag} />
+
+      <Flex fontSize="sm" gap={4} justify={"right"} mb={2}>
+        Sort By:
+        {Object.keys(SORT_OPTIONS).map((sortOptionId) =>
+          SORT_OPTIONS[sortOptionId] === sort ? (
+            <strong>{SORT_OPTIONS[sortOptionId]}</strong>
+          ) : (
+            <PrimaryLink as={Link} onClick={() => setSort(SORT_OPTIONS[sortOptionId])}>
+              {SORT_OPTIONS[sortOptionId]}
+            </PrimaryLink>
+          )
+        )}
+      </Flex>
+      <NotesList notes={notes} setCurrentTag={setCurrentTag} />
     </>
   );
 }

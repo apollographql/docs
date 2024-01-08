@@ -3,7 +3,7 @@ import React from "react";
 import { Button, Wrap, WrapItem } from "@chakra-ui/react";
 import { graphql, useStaticQuery } from "gatsby";
 
-export function TagList({ onClick }) {
+export function TagList({ onClick, selected }) {
   const {
     allMdx: { group },
   } = useStaticQuery(
@@ -25,7 +25,11 @@ export function TagList({ onClick }) {
         .sort((a, b) => a.tag.localeCompare(b.tag))
         .map((group) => (
           <WrapItem key={group.tag}>
-            <Button size="sm" onClick={() => onClick(group.tag)}>
+            <Button
+              size="sm"
+              onClick={() => (group.tag === selected ? onClick() : onClick(group.tag))}
+              isActive={group.tag === selected}
+            >
               {group.tag} ({group.totalCount})
             </Button>
           </WrapItem>

@@ -4,9 +4,11 @@ toc: false
 ---
 
 import { AllNotes, RecentlyUpdatedNotes, RecentlyAddedNotes } from "../../components/TechNotes";
-import { Heading, Box, Flex } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 
 This documentation set provides technical articles on specialized topics for Apollo tools and libraries.
+
+Select a tag to view a list of articles on the corresponding topic.
 
 <Flex gap="4" direction={{base: 'column-reverse', lg: 'row'}}>
 <Box flex={2}>
@@ -21,17 +23,13 @@ This documentation set provides technical articles on specialized topics for Apo
 <RecentlyAddedNotes />
 <RecentlyUpdatedNotes />
 
-<Heading mt={8} mb={2} size="md">
-  Reporting issues
-</Heading>
+</Box>
+</Flex>
+
+## Reporting issues
 
 If you find an issue with a tech note, feel free to use the **Edit on GitHub** button to create a new PR with the suggested changes. Otherwise, you can view the source and create a GitHub issue on the [apollographql/docs](https://github.com/apollographql/docs) repo.
 
-<Heading mt={8} mb={2} size="md">
-  Adding new tech notes
-</Heading>
+## Adding new tech notes
 
 If you have an idea for a new tech note, please [create a new GitHub issue](https://github.com/apollographql/docs/issues) with the suggested changes or topic that you would like covered.
-
-</Box>
-</Flex>

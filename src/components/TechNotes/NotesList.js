@@ -14,7 +14,7 @@ const getBrowserCompatibleDate = (note) => {
   return moment(simpleDate).format("YYYY-MM-DD");
 };
 
-export function NotesList({ notes, setSearchQuery, skinnyMode }) {
+export function NotesList({ notes, setCurrentTag, skinnyMode }) {
   return (
     <>
       {notes.map((note) => (
@@ -34,9 +34,9 @@ export function NotesList({ notes, setSearchQuery, skinnyMode }) {
                   <Tag
                     key={index}
                     size="sm"
-                    cursor={setSearchQuery ? "pointer" : "inherit"}
+                    cursor={setCurrentTag ? "pointer" : "inherit"}
                     whiteSpace={"nowrap"}
-                    onClick={() => setSearchQuery && setSearchQuery(`#${tag}`)}
+                    onClick={() => setCurrentTag && setCurrentTag(tag)}
                   >
                     {tag}
                   </Tag>
