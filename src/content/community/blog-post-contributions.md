@@ -29,7 +29,7 @@ Here are some tips for writing awesome content that helps the community.
 
 Types of blog posts we love to read:
 
-- “How to” guides, recipes, or tutorials on how to address problems you’ve solved with Apollo (here's an example, "[Apollo Client [React] — How to Query on Click](https://blog.apollographql.com/apollo-client-react-how-to-query-on-click-c1d4fecf9b66)")
+- “How to” guides, recipes, or tutorials on how to address problems you’ve solved with Apollo (here's an example, "[Apollo Client [React] — How to Query on Click](https://www.apollographql.com/blog/apollo-client/how-to-query-on-click/)")
 - Stories about how Apollo helped you overcome different challenges on work and personal projects
 - Something cool you built with Apollo
 - Showcasing a tool, fix, or other content you or someone else has contributed to Apollo’s open source community
