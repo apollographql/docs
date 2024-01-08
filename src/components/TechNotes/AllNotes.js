@@ -1,21 +1,51 @@
 import React, { useMemo, useState } from "react";
 import { NotesList } from "./NotesList";
+import { NotesList2 } from "./NotesList2";
 import { TagList } from "./TagList";
 import { graphql, useStaticQuery } from "gatsby";
-import { Flex, Heading, Link } from "@chakra-ui/react";
+import { Flex, Heading, Link, Box } from "@chakra-ui/react";
 import { PrimaryLink } from "../RelativeLink";
 
-const SORT_OPTIONS = {
-  RECENTLY_UPDATED: "Recently updated",
-  RECENTLY_ADDED: "Recently added",
-  ALPHABETICAL: "Alphabetical",
+export const SORT_OPTIONS = {
+  UPDATED_ASC: "UPDATED_ASC",
+  UPDATED_DESC: "UPDATED_DESC",
+  PUBLISHED_ASC: "PUBLISHED_ASC",
+  PUBLISHED_DESC: "PUBLISHED_DESC",
+  ALPHABETICAL_ASC: "ALPHABETICAL_ASC",
+  ALPHABETICAL_DESC: "ALPHABETICAL_DESC",
 };
 
-export function AllNotes() {
+export function AllNotes({ useVariant }) {
   const data = useStaticQuery(
     graphql`
       query AllTechNotes {
-        notesRecentlyUpdated: allFile(
+        notesUpdatedAsc: allFile(
+          filter: {childMdx: {slug: {regex: "/^TN\\d{4}/"}}}
+          sort: {fields: fields___gitLogLatestDate, order: ASC}
+          limit: 2000
+        ) {
+          nodes {
+            fields {
+              gitLogLatestDate
+            }
+            childMdx {
+              id
+              fields {
+                slug
+              }
+              frontmatter {
+                title
+                summary
+                published
+                tags
+              }
+              rawBody
+              timeToRead
+            }
+          }
+        }
+
+        notesUpdatedDesc: allFile(
           filter: {childMdx: {slug: {regex: "/^TN\\d{4}/"}}}
           sort: {fields: fields___gitLogLatestDate, order: DESC}
           limit: 2000
@@ -41,7 +71,7 @@ export function AllNotes() {
           }
         }
 
-        notesAlphabetical: allFile(
+        notesAlphabeticalAsc: allFile(
           filter: {childMdx: {slug: {regex: "/^TN\\d{4}/"}}}
           sort: {fields: childMdx___frontmatter___title, order: ASC}
           limit: 2000
@@ -67,7 +97,59 @@ export function AllNotes() {
           }
         }
 
-        notesRecentlyAdded: allFile(
+        notesAlphabeticalDesc: allFile(
+          filter: {childMdx: {slug: {regex: "/^TN\\d{4}/"}}}
+          sort: {fields: childMdx___frontmatter___title, order: DESC}
+          limit: 2000
+        ) {
+          nodes {
+            fields {
+              gitLogLatestDate
+            }
+            childMdx {
+              id
+              fields {
+                slug
+              }
+              frontmatter {
+                title
+                summary
+                published
+                tags
+              }
+              rawBody
+              timeToRead
+            }
+          }
+        }
+
+        notesPublishedAsc: allFile(
+          filter: {childMdx: {slug: {regex: "/^TN\\d{4}/"}}}
+          sort: {fields: childMdx___frontmatter___published, order: ASC}
+          limit: 2000
+        ) {
+          nodes {
+            fields {
+              gitLogLatestDate
+            }
+            childMdx {
+              id
+              fields {
+                slug
+              }
+              frontmatter {
+                title
+                summary
+                published
+                tags
+              }
+              rawBody
+              timeToRead
+            }
+          }
+        }
+
+        notesPublishedDesc: allFile(
           filter: {childMdx: {slug: {regex: "/^TN\\d{4}/"}}}
           sort: {fields: childMdx___frontmatter___published, order: DESC}
           limit: 2000
@@ -97,16 +179,22 @@ export function AllNotes() {
   );
 
   const [currentTag, setCurrentTag] = useState();
-  const [sort, setSort] = useState(SORT_OPTIONS.RECENTLY_UPDATED);
+  const [sort, setSort] = useState(SORT_OPTIONS.UPDATED_DESC);
 
   const rawNotes = useMemo(() => {
     switch (sort) {
-      case SORT_OPTIONS.RECENTLY_ADDED:
-        return data.notesRecentlyAdded;
-      case SORT_OPTIONS.RECENTLY_UPDATED:
-        return data.notesRecentlyUpdated;
-      case SORT_OPTIONS.ALPHABETICAL:
-        return data.notesAlphabetical;
+      case SORT_OPTIONS.UPDATED_ASC:
+        return data.notesUpdatedAsc;
+      case SORT_OPTIONS.UPDATED_DESC:
+        return data.notesUpdatedDesc;
+      case SORT_OPTIONS.PUBLISHED_ASC:
+        return data.notesPublishedAsc;
+      case SORT_OPTIONS.PUBLISHED_DESC:
+        return data.notesPublishedDesc;
+      case SORT_OPTIONS.ALPHABETICAL_ASC:
+        return data.notesAlphabeticalAsc;
+      case SORT_OPTIONS.ALPHABETICAL_DESC:
+        return data.notesAlphabeticalDesc;
     }
   }, [sort]);
 
@@ -122,20 +210,11 @@ export function AllNotes() {
     <>
       <Heading mb={2}>{currentTag ? `Notes tagged “${currentTag}”` : "All notes"}</Heading>
       <TagList selected={currentTag} onClick={setCurrentTag} />
-
-      <Flex fontSize="sm" gap={4} justify={"right"} mb={2}>
-        Sort By:
-        {Object.keys(SORT_OPTIONS).map((sortOptionId) =>
-          SORT_OPTIONS[sortOptionId] === sort ? (
-            <strong>{SORT_OPTIONS[sortOptionId]}</strong>
-          ) : (
-            <PrimaryLink as={Link} onClick={() => setSort(SORT_OPTIONS[sortOptionId])}>
-              {SORT_OPTIONS[sortOptionId]}
-            </PrimaryLink>
-          )
-        )}
-      </Flex>
-      <NotesList notes={notes} setCurrentTag={setCurrentTag} />
+      {useVariant ? (
+        <NotesList2 notes={notes} setCurrentTag={setCurrentTag} sort={sort} setSort={setSort} />
+      ) : (
+        <NotesList notes={notes} setCurrentTag={setCurrentTag} />
+      )}
     </>
   );
 }
