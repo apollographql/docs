@@ -35,7 +35,7 @@ export function AllNotes({ useVariant }) {
               }
               frontmatter {
                 title
-                summary
+                description
                 published
                 tags
               }
@@ -61,7 +61,7 @@ export function AllNotes({ useVariant }) {
               }
               frontmatter {
                 title
-                summary
+                description
                 published
                 tags
               }
@@ -87,7 +87,7 @@ export function AllNotes({ useVariant }) {
               }
               frontmatter {
                 title
-                summary
+                description
                 published
                 tags
               }
@@ -113,7 +113,7 @@ export function AllNotes({ useVariant }) {
               }
               frontmatter {
                 title
-                summary
+                description
                 published
                 tags
               }
@@ -139,7 +139,7 @@ export function AllNotes({ useVariant }) {
               }
               frontmatter {
                 title
-                summary
+                description
                 published
                 tags
               }
@@ -165,7 +165,7 @@ export function AllNotes({ useVariant }) {
               }
               frontmatter {
                 title
-                summary
+                description
                 published
                 tags
               }

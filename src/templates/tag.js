@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { NotesList } from "../components/TechNotes";
+import { NotesList2 } from "../components/TechNotes";
 import { PageContent, PageSeo } from "../components/PageLayout";
 import { PageWidthProvider } from "../components/PageWidthContext";
 import { graphql } from "gatsby";
@@ -23,7 +23,7 @@ export const pageQuery = graphql`
           }
           frontmatter {
             title
-            summary
+            description
             tags
           }
           rawBody
@@ -45,7 +45,7 @@ export default function Tags({ pageContext, data }) {
     <PageWidthProvider>
       <PageSeo docset={pageContext.docset} title={title} />
       <PageContent title={title}>
-        <NotesList notes={data.notes.nodes} />
+        <NotesList2 notes={data.notes.nodes} />
       </PageContent>
     </PageWidthProvider>
   );

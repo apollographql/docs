@@ -111,7 +111,7 @@ export function NotesList2({ notes, setCurrentTag, sort, setSort }) {
                   </Flex>
 
                   <Text mb="4" fontSize="md" noOfLines={3}>
-                    {note.childMdx.frontmatter.summary}
+                    {note.childMdx.frontmatter.description}
                   </Text>
                 </Td>
                 <Td fontSize={"sm"} whiteSpace={"nowrap"}>
