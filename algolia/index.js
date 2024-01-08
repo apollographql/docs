@@ -1,6 +1,6 @@
 const {
-  // MetricsFetcher,
-  // METRICS,
+  MetricsFetcher,
+  METRICS,
   createRecords,
   getMdxHeading,
   getChildrenText
@@ -46,11 +46,11 @@ async function transformer({data}) {
     };
   }, {});
 
-  // let allGAData = {};
-  // if (process.env.NODE_ENV !== 'test') {
-  //   const metricsFetcher = new MetricsFetcher({viewId: '163147389'});
-  //   allGAData = await metricsFetcher.fetchAll();
-  // }
+  let allGAData = {};
+  if (process.env.NODE_ENV !== 'test') {
+    const metricsFetcher = new MetricsFetcher({viewId: '163147389'});
+    allGAData = await metricsFetcher.fetchAll();
+  }
 
   const allPages = allMarkdownRemark.nodes.concat(allMdx.nodes);
   const records = allPages
@@ -106,7 +106,7 @@ async function transformer({data}) {
           type: 'docs',
           docset,
           slug,
-          // pageviews: allGAData[url]?.[METRICS.uniquePageViews] || 0,
+          pageviews: allGAData[url]?.[METRICS.uniquePageViews] || 0,
           categories
         }
       });
