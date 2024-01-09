@@ -58,6 +58,7 @@
       "Cloud routing": {
         "Overview": "/routing/cloud",
         "Configuration": "/routing/cloud-configuration",
+        "Migration to cloud": "/routing/cloud-migration",
         "Cloud Dedicated routing": {
           "Overview": ["/routing/cloud-dedicated", [
             "preview"
