@@ -135,6 +135,7 @@ export function Sidebar({
           w={SIDEBAR_WIDTH}
           flexShrink="0"
           borderRightWidth={1}
+          borderLeftWidth={1}
           bg="bg"
           ml={isLocked && SIDEBAR_WIDTH - COLLAPSED_SIDEBAR_WIDTH}
           transform={

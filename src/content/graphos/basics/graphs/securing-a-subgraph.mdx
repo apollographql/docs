@@ -7,7 +7,11 @@ To keep your supergraph secure, it's important that your individual subgraphs ar
 
 This article describes steps for securing your subgraphs when using a [cloud supergraph](/graphos/routing/cloud).
 
-> As with all changes, we recommend first performing these steps for a _non-production_ variant of your supergraph.
+<Tip>
+
+As with all changes, we recommend first performing these steps for a _non-production_ variant of your supergraph.
+
+</Tip>
 
 ## 1. Generate a shared secret
 
@@ -25,7 +29,11 @@ Here are some shell commands that generate a suitably random secret if you have 
 
 Your cloud supergraph's router needs to know the shared secret so it can include it in all requests to the corresponding subgraph. You add the secret in the **Cloud Routing** section of your graph variant's Settings page.
 
-> For details, see [Managing secrets](/graphos/routing/cloud-configuration#managing-secrets).
+<Tip>
+
+For details, see [Managing secrets](/graphos/routing/cloud-configuration#managing-secrets).
+
+</Tip>
 
 After you define the secret, you can inject its value into your router's configuration as an environment variable, as shown below. We recommend setting the value in a header named `Router-Authorization` (and again, create a separate secret _for each subgraph_):
 
@@ -35,13 +43,13 @@ headers:
     products:
       request:
         - insert:
-            name: 'Router-Authorization'
-            value: '${env.PRODUCTS_SUBGRAPH_SECRET}'
+            name: "Router-Authorization"
+            value: "${env.PRODUCTS_SUBGRAPH_SECRET}"
     users:
       request:
         - insert:
-            name: 'Router-Authorization'
-            value: '${env.USERS_SUBGRAPH_SECRET}'
+            name: "Router-Authorization"
+            value: "${env.USERS_SUBGRAPH_SECRET}"
 ```
 
 ## 3. Configure the subgraph to require the secret
@@ -53,9 +61,13 @@ The exact steps you take to require the shared secret in your subgraph depend on
 
 Most cloud providers include a mechanism for saving secrets that are then made available to your application as environment variables. Your subgraph should read the secret from an environment variable and reject any incoming requests that _don't_ include that secret in the specified header.
 
-> All subgraph templates [provided by the Rover CLI](/graphos/graphs/creating-a-subgraph#starting-from-a-template) include this functionality out of the box. To use it, set the value of the `ROUTER_SECRET` environment variable.
->
-> If you have an existing subgraph that wasn't created from a template, you can check a similar template's source code for an example.
+<Note>
+
+All subgraph templates [provided by the Rover CLI](/graphos/graphs/creating-a-subgraph#starting-from-a-template) include this functionality out of the box. To use it, set the value of the `ROUTER_SECRET` environment variable.
+
+If you have an existing subgraph that wasn't created from a template, you can check a similar template's source code for an example.
+
+</Note>
 
 ## 4. Test the configuration
 

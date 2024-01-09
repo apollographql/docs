@@ -2,6 +2,7 @@
 
 This repo contains the code responsible for building the Apollo Docs site. It also houses the content for the Apollo Basics and GraphOS **docsets**.
 
+> [!TIP]
 > We use the word **docset** to describe an individual docs website. For example, "I just updated the Android docset".
 
 The central piece of this repo, the docs infrastructure, is a [Gatsby](https://www.gatsbyjs.com/) website that sources MDX and Markdown files from the [remote git repos](#remote) of Apollo's tools. It pulls in all of this data and outputs a single static site. To learn more about this approach and why we built this, check out [this section](#history).
@@ -60,33 +61,34 @@ The central piece of this repo, the docs infrastructure, is a [Gatsby](https://w
 
 1. Install NPM dependencies:
 
-    ```sh
-    npm i
-    ```
+   ```sh
+   npm i
+   ```
 
-    If it's your first time running the docs site locally, you must link your local directory with Netlify. To do this, you must be logged in to the `netlify` CLI with an account that has access to our organization in Netlify. Apollo Staff can log into the account using the Netlify Single Sign-On (SSO) option and specifying the `apollo-main` identifier during the login process.
+   If it's your first time running the docs site locally, you must link your local directory with Netlify. To do this, you must be logged in to the `netlify` CLI with an account that has access to our organization in Netlify. Apollo Staff can log into the account using the Netlify Single Sign-On (SSO) option and specifying the `apollo-main` identifier during the login process.
 
-    ```sh
-    npx netlify login
-    ```
+   ```sh
+   npx netlify login
+   ```
 
 2. Link your local environment with its corresponding Netlify site. Follow the prompts that appear in your terminal and link the site based on its git repository:
 
-    ```sh
-    # If netlify-cli is installed globally or as a dependency in the remote docset repo:
-    npx netlify link
+   ```sh
+   # If netlify-cli is installed globally or as a dependency in the remote docset repo:
+   npx netlify link
 
-    # Otherwise:
-    npx -p netlify-cli netlify link
-    ```
+   # Otherwise:
+   npx -p netlify-cli netlify link
+   ```
 
 3. Start the local development environment:
 
-    ```sh
-    npm start
-    ```
+   ```sh
+   npm start
+   ```
 
-    > ⌚ The first run may take a long time as it has to source a lot of content, but subsequent runs will be shorter since most of that data will have been cached.
+> [!NOTE]
+> ⌚ The first run may take a long time as it has to source a lot of content, but subsequent runs will be shorter since most of that data will have been cached.
 
 ### Developing a single docset
 
@@ -151,7 +153,7 @@ The `config.json` file lives at the root of its docset's content directory, and 
   "versionBanner": {
     "link": {
       "to": "/v3-deprecation-page",
-      "content": "Check out the deprecation page",
+      "content": "Check out the deprecation page"
     },
     "message": "Apollo Server v3 is no longer maintained."
   },
@@ -168,7 +170,7 @@ The `config.json` file lives at the root of its docset's content directory, and 
 ```
 
 | Name           | Required? | Description                                                                                                                                                                                                                                                                                                       |
-|----------------|-----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| -------------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | title          | yes       | The title of the docset. It is used to construct page titles and shown in the header when the docset is selected.                                                                                                                                                                                                 |
 | sidebar        | yes       | A JSON object mapping sidebar nav labels to their paths. Use paths beginning with a slash, relative to the root of the content directory for internal links. Full URLs are transformed into external links that open in a new tab. These objects can be nested to define categories and subcategories in the nav. |
 | version        | no        | A string representing the version of the software that is being documented, i.e. "v3". This value is shown in the version dropdown if multiple versions of a docset are configured.                                                                                                                               |
@@ -190,6 +192,7 @@ Restart your local development environment and the new docset will be available 
 
 Remote docsets live within the `docs/source` directory of the **public** repo for the library that is being documented. The `docs/source` directory must contain some Markdown/MDX files and a `config.json` file.
 
+> [!IMPORTANT]
 > Configured repos must be public so that we can pull down their files at build time without permission issues
 
 To add a remote docset to the website, add a record in the `sources/remote.js` file. This record should map the URL path you want the docset to live at to the repo URL, called `remote`, and the name of the `branch` that content should be sourced from.
@@ -257,7 +260,7 @@ If you would like an icon with a tooltip for any use case across the sidebar nav
   "Performance alerts": [
     "/notifications/performance-alerts", // nav item path
     ["experimental"] // array of tags
-  ],
+  ]
 }
 ```
 
@@ -448,6 +451,7 @@ sidebar:
 
 [MDX](https://mdxjs.com/) is just like Markdown except you can import and render React components within it. MDX files use the `.mdx` extension, and you may be familiar with them if you've worked in any of our docsets before.
 
+> [!NOTE]
 > Gatsby does not currently support MDX v2 ([MDX v2 only uses ESM](https://mdxjs.com/migrating/v2/#esm), which [Gatsby does not yet support](https://github.com/gatsbyjs/gatsby/discussions/31599)), so make sure that the MDX syntax you are using when authoring in an `.mdx` file is compatible with MDX v1.
 
 #### Shared content
@@ -587,32 +591,25 @@ You should use the `<PreviewFeature />` and `<ExperimentalFeature />` components
 Both components take an optional `discordLink` prop through which you can provide the link to a relevant Discord channel. If there's isn't a relevant channel, you can omit the prop and it defaults to a generic link to Apollo Discord.
 
 ```mdx
-
 # This Discord link brings folks to the channel about the @authorization directives.
 
-<PreviewFeature discordLink="https://discord.com/channels/1022972389463687228/1148623262104965120"/>
-
+<PreviewFeature discordLink="https://discord.com/channels/1022972389463687228/1148623262104965120" />
 ```
 
 The components also take an optional `appendText` prop that adds text to the default text.
 
 ```mdx
-
-<PreviewFeature appendText="This is some additional text appended to the end of the default text."/>
-
+<PreviewFeature appendText="This is some additional text appended to the end of the default text." />
 ```
 
 If necessary, you can nest markdown within the component to completely replace the text.
 
-
 ```mdx
-
 <ExperimentalFeature>
 
 This _completely_ replaces the text within the component.
 
 </ExperimentalFeature>
-
 ```
 
 ##### Plan components
@@ -625,29 +622,27 @@ Custom text for `<EnterpriseFeature />` can be provided by nesting Markdown with
 
 By default, without any children, `<EnterpriseFeature />` renders this text:
 
-> **This feature is only available with a [**GraphOS Enterprise plan**](http://apollographql.com/graphos/enterprise/). If your organization doesn't currently have an Enterprise plan, you can test this functionality by signing up for a free [Enterprise trial](https://studio.apollographql.com/signup?type=enterprise-trial&referrer=docs-content).
+> **This feature is only available with a [**GraphOS Enterprise plan\*\*](http://apollographql.com/graphos/enterprise/). If your organization doesn't currently have an Enterprise plan, you can test this functionality by signing up for a free [Enterprise trial](https://studio.apollographql.com/signup?type=enterprise-trial&referrer=docs-content).
 
 If you include custom text, it completely replaces this text. Please make sure to include links to the Enterprise plan docs and Enterprise trial accordingly.
 
 ```mdx
-
 <EnterpriseFeature>
 
-This is some _custom markdown text_ that still includes a link to the [GraphOS Enterprise plan**](http://apollographql.com/graphos/enterprise/) and [Enterprise trial](https://studio.apollographql.com/signup?type=enterprise-trial&referrer=docs-content) docs.
+This is some _custom markdown text_ that still includes a link to the [GraphOS Enterprise plan\*\*](http://apollographql.com/graphos/enterprise/) and [Enterprise trial](https://studio.apollographql.com/signup?type=enterprise-trial&referrer=docs-content) docs.
 
 </EnterpriseFeature>
-
 ```
 
 ##### Admonitions
 
 Admonitions are designed to catch readers' attention and break the flow of the text. They’re helpful to make a piece of information stand out, but should be used wisely and sparingly. Use them only for information that shouldn’t be missed.
 
-We support the following admonition components: 
-* `<Caution>`
-* `<Note>`
-* `<Tip>`
+We support the following admonition components:
 
+- `<Caution>`
+- `<Note>`
+- `<Tip>`
 
 You can use `<Caution>`, `<Note>`, and `<Tip>` components directly in `.mdx` pages like so:
 
@@ -668,7 +663,7 @@ Avoid using `<Note>`s directly one after another—condense notes if it makes se
 
 <Tip>
 
-Use `<Tip>` admonitions for any particularly helpful advice or suggestions. 
+Use `<Tip>` admonitions for any particularly helpful advice or suggestions.
 
 </Tip>
 ```
@@ -686,6 +681,7 @@ Previous to this system, we built our docs site by building each repo's docs ind
 /docs/react/* https://apollo-client-docs.netlify.app/:splat 200!
 ```
 
+> [!NOTE]
 > All of our path rewriting happens in the [website router](https://github.com/apollographql/website-router) repo.
 
 ### Benefits
@@ -721,7 +717,7 @@ Using the old infrastructure, we were spending a lot of time building our docs. 
 #### Netlify build stats (Feb 1 - Feb 24, 2022)
 
 | Site                          | Builds | Average time | Total time |
-|-------------------------------|--------|--------------|------------|
+| ----------------------------- | ------ | ------------ | ---------- |
 | apollo-federation-docs        | 424    | 4m 55s       | 2,084m     |
 | apollo-client-docs            | 237    | 8m 21s       | 1,979m     |
 | apollo-router-docs            | 437    | 2m 21s       | 1,027m     |

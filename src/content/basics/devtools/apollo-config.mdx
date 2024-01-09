@@ -40,20 +40,24 @@ With GraphOS Studio set up, you can point your client directly to your graph's s
 ```js {3}
 module.exports = {
   client: {
-    service: "my-apollo-service", // the name of your graph in Studio
-  },
+    service: 'my-apollo-service' // the name of your graph in Studio
+  }
 };
 ```
 
-> **Note:** you must have a [published schema](/graphos/delivery/publishing-schemas/) for features like VS Code intellisense, which requires knowledge of your schema, to work properly.
+<Note>
+
+You must have a [published schema](/graphos/delivery/publishing-schemas/) for features like VS Code intellisense, which requires knowledge of your schema, to work properly.
+
+</Note>
 
 If you're tracking different versions of your schema in the registry using graph variants, you can link your client to a specific variant like so:
 
 ```js {3}
 module.exports = {
   client: {
-    service: "my-apollo-service@staging", // "staging" is the graph variant we're using
-  },
+    service: 'my-apollo-service@staging' // "staging" is the graph variant we're using
+  }
 };
 ```
 
@@ -67,16 +71,16 @@ Remote endpoints can be used to pull down a schema from a running service. This 
 module.exports = {
   client: {
     service: {
-      name: "github",
-      url: "https://api.github.com/graphql",
+      name: 'github',
+      url: 'https://api.github.com/graphql',
       // optional headers
       headers: {
-        authorization: "Bearer lkjfalkfjadkfjeopknavadf",
+        authorization: 'Bearer lkjfalkfjadkfjeopknavadf'
       },
       // optional disable SSL validation check
-      skipSSLValidation: true,
-    },
-  },
+      skipSSLValidation: true
+    }
+  }
 };
 ```
 
@@ -88,10 +92,10 @@ In some cases you may have a locally generated file with your schema that you wa
 module.exports = {
   client: {
     service: {
-      name: "my-service-name",
-      localSchemaFile: "./path/to/schema.graphql",
-    },
-  },
+      name: 'my-service-name',
+      localSchemaFile: './path/to/schema.graphql'
+    }
+  }
 };
 ```
 
@@ -155,7 +159,11 @@ module.exports = {
 };
 ```
 
-> **Note:** For consistency, we recommend that you keep this option consistent with how your `ApolloClient` is configured.
+<Tip>
+
+For consistency, we recommend that you keep this option consistent with how your `ApolloClient` is configured.
+
+</Tip>
 
 ### `client.clientOnlyDirectives`, `client.clientSchemaDirectives`
 
@@ -205,14 +213,14 @@ Remote endpoints can be used to pull down a schema from a running service. This 
 module.exports = {
   service: {
     endpoint: {
-      url: "https://api.github.com/graphql", // defaults to http://localhost:4000
+      url: 'https://api.github.com/graphql', // defaults to http://localhost:4000
       headers: {
         // optional
-        authorization: "Bearer lkjfalkfjadkfjeopknavadf",
+        authorization: 'Bearer lkjfalkfjadkfjeopknavadf'
       },
-      skipSSLValidation: true, // optional, disables SSL validation check
-    },
-  },
+      skipSSLValidation: true // optional, disables SSL validation check
+    }
+  }
 };
 ```
 
@@ -223,7 +231,7 @@ In some cases you may have a locally generated file with your schema that you wa
 ```js
 module.exports = {
   service: {
-    localSchemaFile: "./path/to/schema.graphql",
-  },
+    localSchemaFile: './path/to/schema.graphql'
+  }
 };
 ```

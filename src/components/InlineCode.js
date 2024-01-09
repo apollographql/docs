@@ -9,10 +9,11 @@ export default function InlineCode(props) {
       px="1"
       py="0.5"
       rounded="sm"
-      color="secondary"
-      bgColor="gray.50"
+      color="blue.400"
+      bgColor="silver.400"
       _dark={{
-        bgColor: 'gray.700'
+        color: 'indigo.100',
+        bgColor: 'black.200'
       }}
       {...props}
     />

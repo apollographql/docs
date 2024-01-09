@@ -11,6 +11,7 @@ import Prism from 'prismjs';
 import PropTypes from 'prop-types';
 import React, {Fragment, createElement, useMemo} from 'react';
 import RelativeLink, {ButtonLink, PrimaryLink} from './RelativeLink';
+import RuleExpansionPanel from './RuleExpansionPanel';
 import TableOfContents from './TableOfContents';
 import TrackableButton from './TrackableButton';
 import TrackableLink from './TrackableLink';
@@ -41,6 +42,13 @@ import {
 } from '@chakra-ui/react';
 import {Caution} from './Caution';
 import {CustomHeading} from './CustomHeading';
+import {
+  DocBlock,
+  DocPiece,
+  FunctionDetails,
+  InterfaceDetails,
+  useApiDocContext
+} from './ApiDoc';
 import {
   EmbeddableExplorer,
   MarkdownCodeBlock,
@@ -73,7 +81,6 @@ import {YouTube} from './YouTube';
 import {join} from 'path';
 import {kebabCase} from 'lodash';
 import {rehype} from 'rehype';
-import {useApiDocContext} from './ApiDoc';
 import {useConfig} from '../utils/config';
 import {useFieldTableStyles} from '../utils';
 import {useMermaidStyles} from '../utils/mermaid';
@@ -159,7 +166,7 @@ const components = {
   pre: MarkdownCodeBlock,
   table: props => (
     <Box
-      rounded="md"
+      borderRadius={props.unround ? 0 : 4}
       borderWidth={1}
       overflow="auto"
       sx={{table: {borderWidth: 0}}}
@@ -199,6 +206,7 @@ const mdxComponents = {
   TypeScriptApiBox,
   TypescriptApiBox: TypeScriptApiBox,
   EmbeddableExplorer,
+  RuleExpansionPanel,
   ButtonLink,
   Tip,
   MinVersion,
@@ -362,7 +370,7 @@ export default function Page({file}) {
             code: {
               bg: 'none',
               p: 0,
-              color: 'secondary',
+              color: 'tertiary',
               whiteSpace: 'normal'
             }
           },

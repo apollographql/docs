@@ -29,29 +29,33 @@ Overload protection packages are available for most popular languages and server
 To use `overload-protection`, you include it in your Express startup like so:
 
 ```js
-import express from 'express';
-import protect from 'overload-protection';
+import express from "express";
+import protect from "overload-protection";
 
 const app = express();
-protect('express');
+protect("express");
 app.use(protect);
 ```
 
-> Note: If you're currently using the `startStandaloneServer` function, you'll need to [swap to `expressMiddleware`](/apollo-server/api/standalone#swapping-to-expressmiddleware) before adding overload protection.
+<Note>
+
+If you're currently using the `startStandaloneServer` function, you'll need to [swap to `expressMiddleware`](/apollo-server/api/standalone#swapping-to-expressmiddleware) before adding overload protection.
+
+</Note>
 
 If you're using `@apollo/server`'s Express integration (i.e.[`expressMiddleware`](/apollo-server/api/express-middleware)), you can add `overload-protection` via Express middleware by adding the highlighted lines to your server creation:
 
 ```js title="index.js"
-import {ApolloServer} from '@apollo/server';
-import {expressMiddleware} from '@apollo/server/express4';
-import {ApolloServerPluginDrainHttpServer} from '@apollo/server/plugin/drainHttpServer';
-import express from 'express';
-import http from 'http';
-import cors from 'cors';
-import {typeDefs, resolvers} from './schema';
+import { ApolloServer } from "@apollo/server";
+import { expressMiddleware } from "@apollo/server/express4";
+import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
+import express from "express";
+import http from "http";
+import cors from "cors";
+import { typeDefs, resolvers } from "./schema";
 // highlight-start
-import protect from 'overload-protection';
-protect('express');
+import protect from "overload-protection";
+protect("express");
 // highlight-end
 
 const app = express();
@@ -60,13 +64,13 @@ const httpServer = http.createServer(app);
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  plugins: [ApolloServerPluginDrainHttpServer({httpServer})]
+  plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
 });
 
 // Note the top-level `await` calls below!
 await server.start();
-app.use('/graphql', cors(), express.json(), expressMiddleware(server));
-await new Promise(resolve => httpServer.listen({port: 4000}, resolve));
+app.use("/graphql", cors(), express.json(), expressMiddleware(server));
+await new Promise((resolve) => httpServer.listen({ port: 4000 }, resolve));
 console.log(`🚀 Server ready at http://localhost:4000/graphql`);
 ```
 

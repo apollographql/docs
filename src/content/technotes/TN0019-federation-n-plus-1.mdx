@@ -123,8 +123,8 @@ const resolvers = {
   Product: {
     __resolveReference(productRepresentation) {
       return fetchProductByID(productRepresentation.id);
-    }
-  }
+    },
+  },
 };
 ```
 
@@ -139,8 +139,8 @@ const resolvers = {
   Product: {
     __resolveReference(product, context) {
       return context.dataloaders.products(product.id);
-    }
-  }
+    },
+  },
 };
 ```
 

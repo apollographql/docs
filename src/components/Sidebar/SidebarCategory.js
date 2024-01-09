@@ -118,7 +118,7 @@ export const SidebarCategoryLink = ({icon, docset, ...props}) => {
         _after={{
           content: isActivePath && '""',
           width: '4',
-          bg: 'purple.500',
+          bg: 'primary',
           position: 'absolute',
           left: '100%',
           top: 0,
@@ -127,12 +127,9 @@ export const SidebarCategoryLink = ({icon, docset, ...props}) => {
         borderRadius="md"
         borderRightRadius={isActivePath ? 0 : undefined}
         bg={
-          isActivePath
-            ? 'purple.500'
-            : isActiveMenu
-            ? 'whiteAlpha.300'
-            : 'inherit'
+          isActivePath ? 'primary' : isActiveMenu ? 'whiteAlpha.300' : 'inherit'
         }
+        color={isActivePath ? 'white' : 'inherit'}
         tabIndex="0"
         {...props}
       >

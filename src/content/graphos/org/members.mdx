@@ -24,7 +24,11 @@ Only members with the **Org Admin** role can assign roles to other members. You 
 
 You can override a member's organization-wide role for individual graphs. For example, if a member has the **Observer** role in your organization, you can assign them the **Contributor** role for a graph that they need extra access to.
 
-> A member's graph-specific role must have _more_ permissions than their organization-wide role.
+<Note>
+
+A member's graph-specific role must have _more_ permissions than their organization-wide role.
+
+</Note>
 
 Members with the **Graph Admin** or **Org Admin** role can assign graph-specific roles from the Permissions tab of the graph's Settings page.
 
@@ -68,7 +72,11 @@ When **Contributor**s in an organization create a new graph, they are automatica
 | View graph schemas and changelogs                                           |     ✓     |      ✓      |                                              ✓                                               |           ✓           |    ✓     |
 | Query graphs with the Explorer                                              |     ✓     |      ✓      |                                              ✓                                               |           ✓           |    ✓     |
 
-> Currently, graph usage metrics and traces are not displayed to **Consumer**s via the Studio web app, but they are not blocked at the API layer. We intend to remove this capability from **Consumer**s, but for the time being you should understand that **Consumer**s are not fully prevented from accessing these metrics and traces.
+<Note>
+
+Currently, graph usage metrics and traces are not displayed to **Consumer**s via the Studio web app, but they are not blocked at the API layer. We intend to remove this capability from **Consumer**s, but for the time being you should understand that **Consumer**s are not fully prevented from accessing these metrics and traces.
+
+</Note>
 
 ### Billing managers
 
@@ -92,24 +100,30 @@ Otherwise, a graph API key is equivalent in privileges to a user with the same r
 
 A few operations aren't listed in the table above because they are _only_ supported by graph API keys, not personal API keys for users in the graph's organization. These are primarily operations that are performed by your GraphQL server, such as usage reporting (traces and performance metrics).
 
-> Before January 2021, graph keys did not have roles. Keys created before that date (shown as **Legacy Admin** keys) can perform the following operations:
->
-> - Create new variants
-> - Run schema checks
-> - View and manage graph API keys
-> - Push schemas to a graph
-> - See the schemas of subgraphs in federated graphs
-> - View graph schemas and changelogs
-> - Modify schema checks configuration
+<Note>
+
+Before January 2021, graph keys did not have roles. Keys created before that date (shown as **Legacy Admin** keys) can perform the following operations:
+
+- Create new variants
+- Run schema checks
+- View and manage graph API keys
+- Push schemas to a graph
+- See the schemas of subgraphs in federated graphs
+- View graph schemas and changelogs
+- Modify schema checks configuration
+
+</Note>
 
 ## Inviting members
 
 **Org Admin**s can invite individual members by email address from your organization's Members tab in [GraphOS Studio](https://studio.apollographql.com). Organization admins can also create a persistent **invite link** from the organization's Settings tab, which can be used to invite any number of members. Using either method, an org admin can specify which role a new member receives.
 
-> ⚠️ **Notes**
->
-> - If your organization uses an identity provider (IdP) for single sign-on (SSO), you should configure access in your IdP rather than via invitations. For example, with Okta, you need to [assign](./sso/okta-integration-guide#assign-users-in-okta) members to your GraphOS Studio integration to give them access. If you've configured a member to have access in your IdP, they can access GraphOS Studio without an invitation link.
-> - **Do not share invite links publicly.** Anyone with the link can join your organization. If an invite link becomes compromised, an admin can replace or disable it from the Settings tab.
+<Note>
+
+- If your organization uses an identity provider (IdP) for single sign-on (SSO), you should configure access in your IdP rather than via invitations. For example, with Okta, you need to [assign](./sso/okta-integration-guide#assign-users-in-okta) members to your GraphOS Studio integration to give them access. If you've configured a member to have access in your IdP, they can access GraphOS Studio without an invitation link.
+- **Do not share invite links publicly.** Anyone with the link can join your organization. If an invite link becomes compromised, an admin can replace or disable it from the Settings tab.
+
+</Note>
 
 ## Removing members
 
