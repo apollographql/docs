@@ -1,5 +1,7 @@
 ---
 title: Sending Apollo Router traces and metrics to APM tools using OpenTelemetry
+description: Application performance monitoring (APM) tools are critical for many organizations, and having direct insight into how your graph is performing is an important piece of overall observability into your systems' stability and performance.
+published: 2022-10-27
 id: TN0015
 tags: [observability, router]
 ---
@@ -87,8 +89,8 @@ telemetry:
       endpoint: http://COLLECTOR_ADDRESS:4317
   tracing:
     trace_config:
-      service_name: 'router'
-      service_namespace: 'apollo'
+      service_name: "router"
+      service_namespace: "apollo"
     otlp:
       endpoint: http://COLLECTOR_ADDRESS:4317
 ```
@@ -112,16 +114,16 @@ telemetry:
       endpoint: https://otlp.nr-data.net
       grpc:
         metadata:
-          'api-key': ['${env.NEW_RELIC_LICENSE_KEY}']
+          "api-key": ["${env.NEW_RELIC_LICENSE_KEY}"]
   tracing:
     trace_config:
-      service_name: 'router'
-      service_namespace: 'apollo'
+      service_name: "router"
+      service_namespace: "apollo"
     otlp:
       endpoint: https://otlp.nr-data.net
       grpc:
         metadata:
-          'api-key': ['${env.NEW_RELIC_LICENSE_KEY}']
+          "api-key": ["${env.NEW_RELIC_LICENSE_KEY}"]
 ```
 
 This uses the `NEW_RELIC_LICENSE_KEY` environment variable for passing the key using the router's [variable expansion feature](/router/configuration/overview#variable-expansion) to avoid including sensitive tokens in the configuration.
