@@ -58,7 +58,12 @@ const algoliaInsightsPlugin = createAlgoliaInsightsPlugin({
 
 function updateURL(query) {
   const urlParams = new URLSearchParams(window.location.search);
-  urlParams.set('search', query);
+
+  if (query) {
+    urlParams.set('search', query);
+  } else {
+    urlParams.delete('search');
+  }
 
   // Update the browser URL
   window.history.replaceState(
@@ -68,7 +73,7 @@ function updateURL(query) {
   );
 }
 
-export default function Autocomplete({onClose, optionalFilters}) {
+export default function Autocomplete({isOpen, onClose, optionalFilters}) {
   const [autocompleteState, setAutocompleteState] = useState({});
   const previousActiveItemId = usePreviousDistinct(
     autocompleteState.activeItemId
@@ -93,11 +98,13 @@ export default function Autocomplete({onClose, optionalFilters}) {
         plugins: [algoliaInsightsPlugin],
         initialState: {
           // This uses the `search` query parameter as the initial query
-          query: new URL(window.location).searchParams.get('search')
+          query: new URL(window.location).searchParams.get('search'),
+          // Open if search query parameter exists
+          isOpen: isOpen ? isOpen : false
         },
         onStateChange: ({state}) => {
           setAutocompleteState(state);
-          if (state.query?.length > 0) updateURL(state.query);
+          updateURL(state.query);
         },
         getSources: () =>
           Object.keys(SOURCES).map((indexName, index) => ({
@@ -134,7 +141,7 @@ export default function Autocomplete({onClose, optionalFilters}) {
             }
           }))
       }),
-    [optionalFilters]
+    [optionalFilters, isOpen]
   );
 
   return (
@@ -169,6 +176,8 @@ export default function Autocomplete({onClose, optionalFilters}) {
 }
 
 Autocomplete.propTypes = {
+  isOpen: PropTypes.bool,
+  onOpen: PropTypes.func,
   onClose: PropTypes.func.isRequired,
   optionalFilters: PropTypes.array
 };

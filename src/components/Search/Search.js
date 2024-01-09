@@ -12,10 +12,14 @@ import {
   useDisclosure
 } from '@chakra-ui/react';
 
-const Autocomplete = loadable(() => import('./Autocomplete'));
+const AutocompleteWithQuery = loadable(() => import('./AutocompleteWithQuery'));
 
 export function Search({algoliaFilters}) {
   const {isOpen, onOpen, onClose} = useDisclosure();
+  // const hasSearchQuery = Boolean(
+  //   new URL(window.location).searchParams.get('search')
+  // );
+  // const isOpen = hasSearchQuery;
   useKey(
     event =>
       event.key === '/' ||
@@ -56,7 +60,10 @@ export function Search({algoliaFilters}) {
         <ModalOverlay />
         <ModalContent overflow="hidden" mx={[4, 6, 8]}>
           {/* TODO: consider using context to avoid passing down site config */}
-          <Autocomplete onClose={onClose} optionalFilters={algoliaFilters} />
+          <AutocompleteWithQuery
+            onClose={onClose}
+            optionalFilters={algoliaFilters}
+          />
         </ModalContent>
       </Modal>
     </>
