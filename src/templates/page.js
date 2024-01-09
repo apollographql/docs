@@ -83,6 +83,7 @@ export const pageQuery = graphql`
       ...Method
       ...PropertySignature
       ...MethodSignature
+      ...Enum
       ... on ApiDocBase {
         references {
           text
@@ -197,5 +198,11 @@ fragment FunctionParameter on ApiDocFunctionParameter {
   type
   optional
   comment
+}
+
+fragment Enum on ApiDocEnum {
+  members {
+    ...Ref
+  }
 }
 `;

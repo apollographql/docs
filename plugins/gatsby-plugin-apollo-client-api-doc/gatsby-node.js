@@ -80,6 +80,16 @@ exports.createResolvers = ({createResolvers}) => {
           })
       }
     },
+    ApiDocEnum: {
+      members: {
+        type: '[ApiDocEnumMember!]',
+        resolve: (source, args, context) =>
+          context.nodeModel.getNodesByIds({
+            ids: source.children,
+            type: 'ApiDocEnumMember'
+          })
+      }
+    },
     MdxFrontmatter: {
       recursive_api_doc: {
         type: '[String!]!',
@@ -129,7 +139,7 @@ exports.createResolvers = ({createResolvers}) => {
 /** @type {import("gatsby").GatsbyNode['createSchemaCustomization']} */
 exports.createSchemaCustomization = ({actions}) => {
   actions.createTypes(`
-      union ApiDoc = ApiDocInterface | ApiDocPropertySignature | ApiDocMethodSignature | ApiDocFunction | ApiDocClass | ApiDocMethod | ApiDocProperty | ApiDocTypeAlias | ApiDocConstructor
+      union ApiDoc = ApiDocInterface | ApiDocPropertySignature | ApiDocMethodSignature | ApiDocFunction | ApiDocClass | ApiDocMethod | ApiDocProperty | ApiDocTypeAlias | ApiDocConstructor | ApiDocEnum | ApiDocEnumMember
       union InterfaceMember = ApiDocPropertySignature | ApiDocMethodSignature
 
       interface ApiDocBase {
@@ -236,6 +246,38 @@ exports.createSchemaCustomization = ({actions}) => {
         parameters: [ApiDocFunctionParameter]
       }
 
+      type ApiDocEnum implements Node & ApiDocBase {
+        id: ID!
+        parent: Node
+        children: [Node!]!
+        internal: Internal!
+        kind: String
+        canonicalReference: String
+        displayName: String
+        file: String
+        type: String
+        excerpt: String
+        references: [ApiDocReference]
+        comment: ApiDocTypeDoc
+        releaseTag: String
+      }
+
+      type ApiDocEnumMember implements Node & ApiDocBase {
+        id: ID!
+        parent: Node
+        children: [Node!]!
+        internal: Internal!
+        kind: String
+        canonicalReference: String
+        displayName: String
+        file: String
+        type: String
+        excerpt: String
+        references: [ApiDocReference]
+        comment: ApiDocTypeDoc
+        releaseTag: String
+      }
+
       type ApiDocClass implements Node & ApiDocBase {
         id: ID!
         parent: Node
@@ -335,6 +377,7 @@ exports.createSchemaCustomization = ({actions}) => {
         summary: String
         deprecated: String
         remarks: String
+        since: String
         examples: [String!]
       }
     `);

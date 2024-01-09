@@ -32,7 +32,9 @@ function handleMember(
     item instanceof model.ApiProperty ||
     item instanceof model.ApiConstructor ||
     item instanceof model.ApiMethodSignature ||
-    item instanceof model.ApiTypeAlias
+    item instanceof model.ApiTypeAlias ||
+    item instanceof model.ApiEnum ||
+    item instanceof model.ApiEnumMember
   ) {
     createGatsbyNode({
       gatsbyApi,
@@ -210,14 +212,33 @@ function processDocComment(
   if (!docComment) return;
   return {
     comment: docComment?.emitAsTsdoc(),
-    summary: renderDocNode(docComment?.summarySection),
-    deprecated: renderDocNode(docComment?.deprecatedBlock),
-    remarks: renderDocNode(docComment?.remarksBlock),
+    summary: cleanDoc(renderDocNode(docComment?.summarySection)),
+    deprecated: cleanDoc(
+      renderDocNode(docComment?.deprecatedBlock),
+      '@deprecated'
+    ),
+    remarks: cleanDoc(renderDocNode(docComment?.remarksBlock), '@remarks'),
+    since: cleanDoc(
+      renderDocNode(
+        docComment.customBlocks.find(v => v.blockTag.tagName === '@since')
+      ),
+      '@since'
+    ),
     examples: docComment?.customBlocks
       .filter(v => v.blockTag.tagName === '@example')
       .map(renderDocNode)
-      .map(example => example.replace(/^\s*@example/g, ''))
+      .map(example => cleanDoc(example, '@example'))
   };
+}
+
+function cleanDoc(
+  /** @type {string} */ docString,
+  /** @type {undefined|string} */ removeTag
+) {
+  if (removeTag) {
+    return docString.replace(new RegExp(`^\\s*${removeTag}`, 'g'), '').trim();
+  }
+  return docString.trim();
 }
 
 /**
