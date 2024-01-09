@@ -69,9 +69,11 @@ ClickableHeading.propTypes = {
   children: PropTypes.node.isRequired
 };
 
+export const makeGlossaryTermId = term =>
+  term.replace(/\s+/g, '-').replace(/@/g, '').replace(/\//g, '').toLowerCase();
+
 const Results = () => {
   const {hits} = useHits();
-  const makeId = term => term.replace(/\s+/g, '-').toLowerCase();
   const {user} = useUser();
   const isApollonaut = user?.name.includes('@apollographql.com');
 
@@ -84,7 +86,7 @@ const Results = () => {
               as="h2"
               fontSize="2xl"
               fontWeight="bold"
-              id={makeId(hit.term)}
+              id={makeGlossaryTermId(hit.term)}
             >
               {hit.internalOnly && <span>🔒 </span>}
               <Highlight attribute="term" hit={hit} />
@@ -125,7 +127,7 @@ const Results = () => {
                 </Text>
                 {hit.relatedTerms.map((term, index) => (
                   <React.Fragment key={`${hit.objectID}_${index}`}>
-                    <RelativeLink href={`#${makeId(term)}`}>
+                    <RelativeLink href={`#${makeGlossaryTermId(term)}`}>
                       {term}
                     </RelativeLink>
                     {index < hit.relatedTerms.length - 1 && ', '}
