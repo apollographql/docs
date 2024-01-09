@@ -3,13 +3,24 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
 const AutocompleteWithQuery = ({onClose, optionalFilters}) => {
-  const [isOpen, setIsOpen] = useState(false);
+  // Read the URL parameters and set isOpen based on the search query
+  const initialQuery = new URL(window.location).searchParams.get('search');
+  const [isOpen, setIsOpen] = useState(Boolean(initialQuery));
 
   useEffect(() => {
-    // Read the URL parameters and set isOpen based on the search query
-    const initialQuery = new URL(window.location).searchParams.get('search');
-    setIsOpen(Boolean(initialQuery));
-  }, []);
+    const handleUrlChange = () => {
+      const newQuery = new URL(window.location).searchParams.get('search');
+      setIsOpen(Boolean(newQuery));
+    };
+
+    // Attach event listener for URL changes
+    window.addEventListener('popstate', handleUrlChange);
+
+    // Cleanup function
+    return () => {
+      window.removeEventListener('popstate', handleUrlChange);
+    };
+  }, []); // Run this effect only once during component mount
 
   return (
     <Autocomplete
