@@ -31,7 +31,7 @@ export default function Panel({sources, autocomplete, autocompleteState}) {
     .sort((a, b) => a.term.length - b.term.length);
   return (
     <Box>
-      {autocompleteState.query.length > 2 &&
+      {autocompleteState.query?.length > 2 &&
         filteredApollopediaResults?.length > 0 && (
           <GlossaryResult item={filteredApollopediaResults[0]} />
         )}

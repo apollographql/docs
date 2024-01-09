@@ -56,6 +56,18 @@ const algoliaInsightsPlugin = createAlgoliaInsightsPlugin({
   }
 });
 
+function updateURL(query) {
+  const urlParams = new URLSearchParams(window.location.search);
+  urlParams.set('search', query);
+
+  // Update the browser URL
+  window.history.replaceState(
+    {},
+    '',
+    `${window.location.pathname}?${urlParams.toString()}`
+  );
+}
+
 export default function Autocomplete({onClose, optionalFilters}) {
   const [autocompleteState, setAutocompleteState] = useState({});
   const previousActiveItemId = usePreviousDistinct(
@@ -79,7 +91,14 @@ export default function Autocomplete({onClose, optionalFilters}) {
         openOnFocus: true,
         autoFocus: true,
         plugins: [algoliaInsightsPlugin],
-        onStateChange: ({state}) => setAutocompleteState(state),
+        initialState: {
+          // This uses the `search` query parameter as the initial query
+          query: new URL(window.location).searchParams.get('search')
+        },
+        onStateChange: ({state}) => {
+          setAutocompleteState(state);
+          if (state.query?.length > 0) updateURL(state.query);
+        },
         getSources: () =>
           Object.keys(SOURCES).map((indexName, index) => ({
             sourceId: indexName,
