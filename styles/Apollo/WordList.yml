@@ -1,7 +1,7 @@
 extends: substitution
 message: "Use '%s' instead of '%s'."
 link: "https://docs.google.com/document/d/1jZhBYPgoZsxe5UEMD3oaGHISoxo6DFR7oJxNij0i6X8/edit#heading=h.2r6oe67u29eb"
-level: warning
+level: error
 ignorecase: false
 action:
   name: replace
@@ -13,15 +13,14 @@ swap:
   "enterprise plan": Enterprise plan
   "free plan": Free plan
   'front\-end': frontend
-  Graphql: GraphQL
-  'graph[Qq][Ll]': GraphQL
-  '[gG]raph\-QL': GraphQL
+  '[gG]raph\-[qQ][lL]': GraphQL
   "home page": homepage
   ios: iOS
   '[Jj]avascript': JavaScript
   'leverag(?:ed|e|es)': use
-  'Node(JS)?': Node.js
+  Node: Node.js
+  NodeJS: Node.js
   towards: toward
   '[Tt]ypescript': TypeScript
   '[Uu]rl': URL
-  'utiliz(?:ed|ation|e|es)'': use
+  'utiliz(?:ed|ation|e|es)': use
