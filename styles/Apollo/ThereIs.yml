@@ -1,6 +1,6 @@
 extends: existence
-message: "Don't start a sentence with '%s'."
+message: "Avoid starting a sentence with '%s'."
 ignorecase: false
-level: error
+level: warning
 raw:
   - '(?:[;-]\s)There\s(is|are)|\bThere\s(is|are)\b'
