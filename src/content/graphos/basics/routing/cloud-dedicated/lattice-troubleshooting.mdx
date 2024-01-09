@@ -57,6 +57,19 @@ Once you've identißfied and resolved the underlying issue, we recommend you dis
 
 If you encounter an error or not listed below and need assistance, don't hesitate to <TrackableLink href="mailto:cloud@apollographql.com" eventName="content_contact_cloud">get in touch</TrackableLink>. We're here to help.
 
+### Overriding `host` headers
+AWS Lattice relies on the `host` header to properly secure and route requests. It is not possible to modify this header on Cloud Dedicated. Instead, consider using a header like `x-host`. You can rewrite an incoming `host` header as `x-host` with router config (see below).
+
+```yaml title="router.yaml"
+# ...other configuration...
+headers:
+  all: # Header rules for all subgraphs
+    request:
+      - propagate:
+        named: 'host'
+        rename: 'x-host'
+```
+
 ### Service in resource share doesn't appear in private subgraphs
 
 Cloud Dedicated does not automatically scan your resource shares for new Lattice services. If you add a service, you can manually trigger a scan by going to your Apollo Organization settings page and clicking the **Rescan subgraphs** button.
