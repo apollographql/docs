@@ -3,5 +3,5 @@
     font-style: normal;
     font-weight: 400;
     font-display: swap;
-    src: url("./static/fonts/aeonik/Aeonik-Regular.woff2") format("woff2");
+    src: url("/fonts/aeonik/Aeonik-Regular.woff2") format("woff2");
 }
