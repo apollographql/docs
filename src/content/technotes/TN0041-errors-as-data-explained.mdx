@@ -1,5 +1,7 @@
 ---
 title: Errors as Data explained
+description: Union types in GraphQL are an excellent way to represent multiple types of data in a single field. This can be extremely useful when dealing with different types of responses, such as success and error cases.
+published: 2023-06-22
 id: TN0041
 tags: [schema-design]
 ---
@@ -9,6 +11,7 @@ tags: [schema-design]
 If you're an enterprise customer looking for more material on this topic, try the [Enterprise best practices: Schema design](https://www.apollographql.com/tutorials/schema-design-best-practices) course on Odyssey.
 
 Not an enterprise customer? [Learn about GraphOS for Enterprise.](/graphos/enterprise)
+
 </Tip>
 
 Union types in GraphQL are an excellent way to represent multiple types of data in a single field. This can be extremely useful when dealing with different types of responses, such as success and error cases. By leveraging union types, developers can create a flexible and expressive API that handles different scenarios elegantly and efficiently.
@@ -55,7 +58,7 @@ type Product {
 }
 
 interface CheckoutError {
-	message: String!
+  message: String!
 }
 
 type InsufficientStockError implements CheckoutError {

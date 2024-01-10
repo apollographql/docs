@@ -1,5 +1,7 @@
 ---
 title: Does Apollo Router replace my API gateway?
+description: The key distinction of the Router is that is not based on URLs or REST endpoints; Apollo Router is a GraphQL-native solution to handle your clients API operations.
+published: 2023-03-31
 id: TN0037
 tags: [federation, router, gateway]
 ---
@@ -10,6 +12,7 @@ These gateways usually live at the outermost edges of your companies infrastruct
 The key distinction of the Router is that is not based on URLs or REST endpoints; Apollo Router is a GraphQL-native solution to handle your clients API operations.
 
 ## GraphQL native
+
 First, let's define what we mean by "GraphQL native". Apollo Router runs all the client operations against a [supergraph](/intro/platform/).
 This means that requests processed by the Router are not for any random service, but are restricted to what is defined and published by the [GraphQL subgraphs](/federation/building-supergraphs/subgraphs-overview) for a given supergraph schema.
 Subgraphs define the schema and capabilities they want to expose. A well-defined GraphQL schema does not just expose all the data available in a company, instead, a [demand-oriented schema](/technotes/TN0027-demand-oriented-schema-design) gives clients access to all the operations they need to execute, but without over exposing your data.
@@ -27,15 +30,16 @@ If you wanted to apply a common rule across many services it would be up to the 
 ```yaml
 # Mock gateway rules
 gatewayConfig:
-    myCustomRule:
-        tags: [requiresAuth]
-        ruleToApply: validate-jwt-plugin
-    myOtherCustomRule:
-        URL: "/accounts"
-        ruleToApply: requires-admin-permissions-plugin
+  myCustomRule:
+    tags: [requiresAuth]
+    ruleToApply: validate-jwt-plugin
+  myOtherCustomRule:
+    URL: "/accounts"
+    ruleToApply: requires-admin-permissions-plugin
 ```
 
 ## Support for non-GraphQL APIs
+
 GraphQL is an innovative technology that give clients much more control over their operations and a common language for service teams to communicate. However, GraphQL usually is not the one and only API technology used by companies today.
 If you need to have a common gateway to secure REST endpoints and GraphQL endpoints, Apollo Router can be a complimentary tool that lives underneath this higher-level API gateway. You can configure company-wide policies at the outermost edge layer, and anything else that is better defined as a GraphQL-specific policy can be managed by the Router.
 In addition, using a [defense-in-depth](https://csrc.nist.gov/glossary/term/defense_in_depth) security strategy reduces your companies risk, so having both an API gateway and Router applying shared rules can lead to a more secure environment.
@@ -91,11 +95,12 @@ Subgraph2 --> DB2
 ```
 
 ## When to consider Apollo Router
+
 If you are running a GraphQL API in production, and you want to be able to:
 
-* [Monitor your GraphQL operations](/graphos/metrics/field-usage) in a way that other telemetry tools don't support while [continuing support for existing APM tools](./TN0015-router-to-apm-via-opentelemetry/)
-* [Safely publish new schemas without introducing a breaking change](/graphos/delivery/schema-checks)
-* [Secure your GraphQL schema](https://www.apollographql.com/docs/router/configuration/authn-jwt)
-* [Extend the GraphQL runtime with custom features](https://www.apollographql.com/docs/router/customizations/overview)
+- [Monitor your GraphQL operations](/graphos/metrics/field-usage) in a way that other telemetry tools don't support while [continuing support for existing APM tools](./TN0015-router-to-apm-via-opentelemetry/)
+- [Safely publish new schemas without introducing a breaking change](/graphos/delivery/schema-checks)
+- [Secure your GraphQL schema](https://www.apollographql.com/docs/router/configuration/authn-jwt)
+- [Extend the GraphQL runtime with custom features](https://www.apollographql.com/docs/router/customizations/overview)
 
 And do all of this with [minimal latency and scalable performance](https://www.apollographql.com/blog/announcement/backend/apollo-router-our-graphql-federation-runtime-in-rust) then consider adopting [GraphOS and Apollo Router](/graphos/) today!
