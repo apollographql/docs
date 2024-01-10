@@ -16,11 +16,11 @@ Breaking up the monolith into smaller GraphQL APIs might be the right strategy f
 
 Here are the steps we recommend to convert a monolithic GraphQL API into a federated GraphQL API.
 
-## Planning & preparation
+## Planning and preparation
 
-### 1. Put the Apollo Router in front of your existing API
+### 1. Put a router in front of your existing API
 
-Start the process by making a "federated graph of one". Your existing monolith can act as a subgraph without any schema changes.
+Start the process by making a "federated graph of one." Your existing monolith can act as a subgraph without any schema changes.
 
 1. If you're not already publishing your schema to GraphOS Studio, create a new graph in your Studio organization. Choose "Supergraph" for your graph architecture.
 1. Publish your monolith schema to GraphOS Studio as a subgraph with the following command (modify your `--routing-url` and `--schema` path as needed):

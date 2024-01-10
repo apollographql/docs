@@ -4,7 +4,7 @@ id: TN0031
 tags: [schema-design]
 ---
 
-The purpose of this technote is to demonstrate queries/mutations for identifying an actor attempting to use the graph. These examples can be useful for inspiring how the actor identity may be described in a GraphQL Schema and includes multiple use-cases for both users and services.
+The purpose of this tech note is to demonstrate queries/mutations for identifying an actor attempting to use the graph. These examples can be useful for inspiring how the actor identity may be described in a GraphQL Schema and includes multiple use-cases for both users and services.
 
 _Our use-case identifies authenticated users and services as well as anonymous users._
 
@@ -87,7 +87,9 @@ Then by separating the mutation and query identities we are able to separate:
 ```graphql
 type MutableAnonymousIdentity implements MutableIdentity @key(fields: "id") {
   id: ID!
-  authenticateWithEmailAndPassword(credentials: EmailAndPasswordCredentials!): UserIdentity!
+  authenticateWithEmailAndPassword(
+    credentials: EmailAndPasswordCredentials!
+  ): UserIdentity!
 }
 
 type MutableUserIdentity implements MutableIdentity @key(fields: "id") {

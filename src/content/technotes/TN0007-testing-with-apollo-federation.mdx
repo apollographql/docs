@@ -22,7 +22,7 @@ Testing in GraphQL may seem like it can involve more steps, but that is because 
 
 ## Unit testing
 
-We recommend creating unit tests for each of your subgraph server resolvers. Resolvers are the code that gets called for each type or field in your schema, which creates a natural boundy to test in isolation. When doing so, we recommend mocking as much data as possible using a package like [`@faker-js/faker`](https://www.npmjs.com/package/@faker-js/faker). This package generates realistic fake data for mocking inputs and outputs.
+We recommend creating unit tests for each of your subgraph server resolvers. Resolvers are the code that gets called for each type or field in your schema, which creates a natural boundary to test in isolation. When doing so, we recommend mocking as much data as possible using a package like [`@faker-js/faker`](https://www.npmjs.com/package/@faker-js/faker). This package generates realistic fake data for mocking inputs and outputs.
 
 Using `@faker-js/faker` to mock a return value in `jest` looks something like the following:
 
@@ -44,7 +44,7 @@ const mockedFunction = jest.fn().mockReturnValue(testUser);
 
 ### Reference resolvers in unit tests
 
-The `__resolveReference` function (also known as a [reference resolver](/federation/entities/#2-define-a-reference-resolver)) enables different subgraphs to resolve the fields of a federated entity. They are also just functions, making them a good boundry to unit test with mocks. Reference resolvers are vital to the successful execution of federated operations, so they are important to validate.
+The `__resolveReference` function (also known as a [reference resolver](/federation/entities/#2-define-a-reference-resolver)) enables different subgraphs to resolve the fields of a federated entity. They are also just functions, making them a good boundary to unit test with mocks. Reference resolvers are vital to the successful execution of federated operations, so they are important to validate.
 
 ## Integration testing
 
@@ -85,7 +85,7 @@ To see more examples on how to test these operations, see [`Query._entities`](/f
 
 Follow these best practices when creating end-to-end tests for your supergraph:
 
-- Run all your subgraphs and Router in a test environment with either mocked or test data
+- Run all your subgraphs and router in a test environment with either mocked or test data
 - Use example operations that are actually executed against your supergraph.
   - You can view the details of recent operations in GraphOS Studio.
   - Avoid boilerplate or randomly generated operations, because these don't reflect actual traffic.
@@ -101,7 +101,7 @@ Composition testing is specific to a federated architecture. It involves testing
 
 ## Component and operation testing
 
-Fortunately, clients are not actually aware of when they are using a Federated GraphQL API vs a non-Federated one so the testing best practices remain the same. Our schema can provide a convenient layer to [mock our data fetching](https://www.apollographql.com/docs/react/development-testing/client-schema-mocking/), or for indivual components you can mock the specific client providers that inject or fetch your GraphQL data:
+Fortunately, clients are not actually aware of when they are using a Federated GraphQL API versus a non-Federated one so the testing best practices remain the same. Our schema can provide a convenient layer to [mock our data fetching](https://www.apollographql.com/docs/react/development-testing/client-schema-mocking/), or for individual components you can mock the specific client providers that inject or fetch your GraphQL data:
 
 - [Apollo Client React `MockProvider`](https://www.apollographql.com/docs/react/development-testing/testing/)
 - [Apollo Client iOS Test Mocks](https://www.apollographql.com/docs/ios/testing/test-mocks)

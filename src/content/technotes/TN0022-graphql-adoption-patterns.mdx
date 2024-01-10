@@ -6,7 +6,7 @@ tags: [federation]
 
 ## How GraphQL gains traction
 
-When developers begin to experiment with GraphQL, they often begin with a foundational architecture where a client application queries a single GraphQL server. In turn, the server distributes those requests to backing data sources and returns the data in the client’s desired shape:
+When developers begin to experiment with GraphQL, they often begin with a foundational architecture where a client application queries a single GraphQL server. In turn, the server distributes those requests to backing data sources and returns the data in the client's desired shape:
 
 <img
   src="./images/enterprise-guide/basic-graphql-server.jpg"
@@ -50,7 +50,7 @@ The monolith pattern can take one of two forms:
 
 - A single team owns a GraphQL API that is accessed by multiple client teams. This single team usually defines a set of standards for the graph and champions its adoption throughout the organization.
 
-As with GraphQL-based BFFs, maintaining a single, monolithic GraphQL API can help set the stage for effective consolidation of an organization’s GraphQL-focused efforts.
+As with GraphQL-based BFFs, maintaining a single, monolithic GraphQL API can help set the stage for effective consolidation of an organization's GraphQL-focused efforts.
 
 For either monolithic scenario, its high-level architecture looks like this:
 
@@ -76,7 +76,7 @@ An example of this architecture might look like this:
 
 After taking stock of who uses GraphQL and how in your company, patterns implemented by various teams can provide insight into what kinds of problems they initially tried to solve. Similarly, these choices can help highlight which GraphQL pain points the teams currently face in their tech stacks.
 
-### Client-only graphQL
+### Client-only GraphQL
 
 Teams that opt for client-only GraphQL approaches are motivated to improve their client development experience by layering GraphQL on top of REST endpoints or other legacy APIs that they have to work with. And although improving developer experience is a win, beneath this abstraction the client application still incurs performance costs as it maintains responsibility for making multiple requests to various services to gather all the data required to render a view.
 
@@ -90,7 +90,7 @@ However, there's an inherent tradeoff in building and maintaining BFFs. When eve
 
 The challenges that emerge from shared BFFs are intensified with monolithic GraphQL servers that have shared ownership. Portions of a graph might be designed to suit only the needs of a particular client team, while _other_ clients must find workarounds or create overlapping types for their own use. At the same time, standardization becomes an issue because the shape of the graph evolves myopically on a client-by-client or a feature-by-feature basis.
 
-Even in scenarios where a dedicated server team maintains ownership of the graph, challenges quickly arise when more than one graph definition is required for a single product in order to support the needs of multiple clients. A server team might also find itself burdened with the task of building and maintaining the necessary tooling to evolve the schema over time to meet new product needs without breaking compatibility for any clients that are actively consuming data from the graph.
+Even in scenarios where a dedicated server team maintains ownership of the graph, challenges quickly arise when more than one graph definition is required for a single product to support the needs of multiple clients. A server team might also find itself burdened with the task of building and maintaining the necessary tooling to evolve the schema over time to meet new product needs without breaking compatibility for any clients that are actively consuming data from the graph.
 
 ### Multiple overlapping graphs
 

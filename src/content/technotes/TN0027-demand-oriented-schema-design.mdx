@@ -9,6 +9,7 @@ tags: [federation, schema-design]
 If you're an enterprise customer looking for more material on this topic, try the [Enterprise best practices: Schema design](https://www.apollographql.com/tutorials/schema-design-best-practices) course on Odyssey.
 
 Not an enterprise customer? [Learn about GraphOS for Enterprise.](/graphos/enterprise)
+
 </Tip>
 
 ## Design schemas in a demand-oriented, abstract way
@@ -74,7 +75,7 @@ The revised `Mutation` fields better describe what is happening from a client's 
 
 As a final, related point on hiding implementation details in the schema, we should also avoid exposing fields in a schema that clients don't have any reason to use. If a schema is intentionally and iteratively developed based on the aggregation of product functions and client use cases, then this issue can easily be avoided.
 
-However, when tools are used to auto-generate a GraphQL schema based on backing data sources, then you will almost invariably end up with fields in your schema that clients don't need but may develop unintended use cases for in the future, which will make your schema harder to evolve over the longer term. This is why, at Apollo, we generally discourage the use of schema auto-generation tools—they lead you in precisely the opposite direction of taking a client-first approach to schema design.
+However, when tools are used to autogenerate a GraphQL schema based on backing data sources, then you will almost invariably end up with fields in your schema that clients don't need but may develop unintended use cases for in the future, which will make your schema harder to evolve over the longer term. This is why, at Apollo, we generally discourage the use of schema autogeneration tools—they lead you in precisely the opposite direction of taking a client-first approach to schema design.
 
 ## Prioritize schema expressiveness
 
@@ -82,13 +83,17 @@ A good GraphQL schema will convey meaning about the underlying nodes in a graph,
 
 ### Standardize naming and formatting conventions
 
+<!-- vale Vale.Spelling = NO -->
+
 > _There are only two hard things in Computer Science: cache invalidation and naming things._
 >
 > — Phil Karlton
 
+<!-- vale Vale.Spelling = NO -->
+
 Arguably, the "naming things" aspect of this observation grows even more challenging when trying to name things consistently across a distributed GraphQL architecture supported by many teams! (The same goes for caching, but we'll cover that topic separately later on.)
 
-Being consistent about how you name things may go without saying, but it’s even more important when composing schemas from multiple subgraphs into a single federated GraphQL API. The [One Graph principle](https://principledgraphql.com/integrity/#1-one-graph) that drives federation is meant to help improve consistency for clients, and that consistency should include naming conventions. For example, having a `users` query defined in one service and a `getProducts` query defined in another doesn't provide a consistent or predictable experience for graph consumers. Similar to fields, type naming and name-spacing conventions should also be standardized across the graph.
+Being consistent about how you name things may go without saying, but it's even more important when composing schemas from multiple subgraphs into a single federated GraphQL API. The [One Graph principle](https://principledgraphql.com/integrity/#1-one-graph) that drives federation is meant to help improve consistency for clients, and that consistency should include naming conventions. For example, having a `users` query defined in one service and a `getProducts` query defined in another doesn't provide a consistent or predictable experience for graph consumers. Similar to fields, type naming and name-spacing conventions should also be standardized across the graph.
 
 Additionally, when a company already has multiple GraphQL APIs in use that will be rolled into the federated graph, the names of the types within those existing schemas may collide. In these instances, a decision must be made about whether those colliding types should become an entity within the graph or a value type, or if some kind of name-spaced approach is warranted.
 
@@ -137,7 +142,7 @@ extend type Query {
 
 A well-documented schema isn't just a nicety in GraphQL. The imperative to document the various aspects of a schema is codified in the [GraphQL specification](https://spec.graphql.org/June2018/#sec-Descriptions). The specification states that documentation is a "first-class feature of GraphQL type systems" and goes further to say that all types, fields, arguments, and other definitions that can be described should include a description unless they are self-descriptive.
 
-So while in many regards a well-designed, expressive schema will be self-documenting, using the SDL-supported description syntax to fully describe how the types, fields, and arguments in an API behave will provide an extra measure of transparency for graph consumers. For example:
+While in many regards a well-designed, expressive schema will be self-documenting, using the SDL-supported description syntax to fully describe how the types, fields, and arguments in an API behave will provide an extra measure of transparency for graph consumers. For example:
 
 ```graphql
 extend type Query {
