@@ -708,16 +708,11 @@ The most common adjustments will be for spell and case checking. You can add ter
 
 ### Locally disabling rules
 
-<<<<<<< HEAD
 In some cases, you may need to intentionally ignore a rule. For example, you may need to turn off the [`Apollo.Headings`](styles/Apollo/Headings.yml) rule that checks that headings use sentence case to exceptionally capitalize a word.
-=======
-In some cases, you may need to intentionally ignore a rule. For example, you may need to turn off the [`Google.Headings`](styles/Google/Headings.yml) rule that checks that headings use sentence case to exceptionally capitalize a word.
->>>>>>> main
 
 In these cases, you can locally disable the rule for a portion of text by surrounding it with comments like this:
 
 ```
-<<<<<<< HEAD
 <!-- vale Apollo.Headings = NO -->
 
 ### This header needs an Uppercase word
@@ -727,17 +722,6 @@ In these cases, you can locally disable the rule for a portion of text by surrou
 ```
 
 Replace `Apollo.Headings` with the name of the rule you need to turn off.
-=======
-<!-- vale Google.Headings = NO -->
-
-### This header needs an Uppercase word
-
-<!-- vale Google.Headings = YES -->
-
-```
-
-Replace `Google.Headings` with the name of the rule you need to turn off.
->>>>>>> main
 
 ## History
 
