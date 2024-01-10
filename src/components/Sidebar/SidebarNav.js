@@ -174,7 +174,9 @@ const SidebarNav = forwardRef(
             height: PAGE_FOOTER_HEIGHT
           }}
         >
-          <chakra.span fontWeight="semibold">Navigation controls</chakra.span>
+          <chakra.span fontWeight="semibold" fontSize="sm">
+            Navigation controls
+          </chakra.span>
           <HStack spacing="1" ml="auto">
             {navGroups.length > 0 && (
               <Tooltip

@@ -1,3 +1,4 @@
+import './src/fonts.css';
 import {withPrefix} from 'gatsby';
 export {wrapPageElement} from './gatsby-ssr';
 

@@ -59,6 +59,18 @@ A router deployment might fail due to a platform incident or schema composition 
 
 </Note>
 
+## Router version updates
+
+With cloud routing, GraphOS runs a fully managed fleet of Apollo Routers for you. Apollo manages the version of Apollo Router that is deployed and ensures that newly released versions are deployed to cloud routers within 30 days of release. Some minor and patch versions may be skipped.
+
+Router releases go through rigorous testing before deployment on GraphOS Cloud. During the deployment of new versions, an Apollo engineer actively oversees the process and rolls back any cloud routers that fail to boot up. While some edge cases may arise—for example, a query planner update could result in slightly degraded performance—router updates should not disrupt your supergraphs.
+
+<Note>
+
+Opting out of router updates to cloud routers is currently not possible. Advanced version management will be available in [Cloud Dedicated](./cloud-dedicated) in 2024.
+
+</Note>
+
 ## Automatic deletion of unused routers
 
 <Note>
@@ -73,6 +85,14 @@ This does not apply cloud routers on the Dedicated plan.
 
 - Apollo will notify you via email whenever a Serverless variant is approaching this 60-day limit.
 - To prevent deletion, execute at least one GraphQL operation on the variant's router before the 60-day limit.
+
+## Out of memory errors
+
+You may receive out of memory errors when using cloud routers on the [Serverless plan](./#router-comparison). Since the Serverless plan offers limited underlying compute resources, Serverless cloud routing offers a fixed amount of throughput capacity.
+
+Complex schemas may exceed available machine memory for Serverless cloud routers. For example, Serverless cloud routers don't support schemas with over 1,000 input types. Additionally, complex queries that return too much data or query too many subgraphs simultaneously may fail.
+
+You can upgrade to [Cloud Dedicated](./cloud-dedicated) for control over scaling and performance. <TrackableLink href="mailto:cloud@apollographql.com" eventName="content_contact_cloud">Get in touch</TrackableLink> for a free trial.
 
 ## Cloud routing FAQ
 

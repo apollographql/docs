@@ -77,6 +77,7 @@ import {PreviewFeature} from './PreviewFeature';
 import {SiDiscord} from 'react-icons/si';
 import {TOTAL_HEADER_HEIGHT} from './Header';
 import {Tip} from './Tip';
+import {WistiaEmbed} from './WistiaEmbed';
 import {YouTube} from './YouTube';
 import {join} from 'path';
 import {kebabCase} from 'lodash';
@@ -202,6 +203,7 @@ const mdxComponents = {
   MultiCodeBlock,
   Note,
   YouTube,
+  WistiaEmbed,
   CodeColumns,
   TypeScriptApiBox,
   TypescriptApiBox: TypeScriptApiBox,
@@ -370,7 +372,7 @@ export default function Page({file}) {
             code: {
               bg: 'none',
               p: 0,
-              color: 'secondary',
+              color: 'tertiary',
               whiteSpace: 'normal'
             }
           },

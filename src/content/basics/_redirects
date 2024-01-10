@@ -27,7 +27,7 @@
 /guides/access-control.html /docs/apollo-server/features/authentication
 
 # File uploads no longer have a home, but the blog post is the same content.
-/guides/file-uploads.html https://blog.apollographql.com/file-uploads-with-apollo-server-2-0-5db2f3f60675
+/guides/file-uploads.html https://www.apollographql.com/blog/graphql/file-uploads/with-apollo-server-2-0/
 
 # Move our Apollo config docs to the References section
 /platform/apollo-config.html /docs/devtools/apollo-config
@@ -63,3 +63,6 @@
 /enterprise-guide/change-management /docs/technotes/TN0028-change-management
 /enterprise-guide/federation-case-studies https://www.apollographql.com/customers
 /enterprise-guide/additional-resources /docs/
+
+# Update glossary URL
+/resources/graphql-glossary /docs/resources/glossary
