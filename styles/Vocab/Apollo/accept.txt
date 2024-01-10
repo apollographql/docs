@@ -2,6 +2,7 @@
 API'?s
 APQs?
 ARNs?
+async
 backoff
 config
 Datadog
