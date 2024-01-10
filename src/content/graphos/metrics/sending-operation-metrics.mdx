@@ -81,7 +81,7 @@ Many server runtimes already support emitting tracing information as a [GraphQL 
 
 #### Operation signing
 
-For GraphOS Studio to correctly group GraphQL queries, your reporting agent should define a function to generate an [operation signature](./operation-signatures) for each distinct operation. This can be challenging because two structurally different operations can be functionally equivalent. For instance, all of the following queries request the same information:
+For GraphOS Studio to correctly group GraphQL queries, your reporting agent should define a function to generate an [operation signature](./operation-signatures) for each distinct operation. This can be challenging because two structurally different operations can be functionally equivalent. For instance, all the following queries request the same information:
 
 ```graphql
 query AuthorForPost($foo: String!) {
@@ -155,7 +155,7 @@ We recommend implementing retries with backoff when you encounter `5xx` response
 
 #### Implementing additional reporting features
 
-The reference TypeScript implementation includes several features that you might want to include in your implementation. All of these features are implemented in the usage reporting plugin itself and are documented in [the plugin's API reference](/apollo-server/api/plugin/usage-reporting/).
+The reference TypeScript implementation includes several features that you might want to include in your implementation. All these features are implemented in the usage reporting plugin itself and are documented in [the plugin's API reference](/apollo-server/api/plugin/usage-reporting/).
 
 For example, you can restrict which information is sent to GraphOS, particularly to avoid reporting personal data. Because personal data most commonly appears in variables and headers, the TypeScript agent offers options to `sendVariablesValues` and `sendHeaders`.
 

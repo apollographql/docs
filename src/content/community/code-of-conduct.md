@@ -2,9 +2,9 @@
 title: Apollo Code of Conduct
 ---
 
-### Apollo Code of Conduct
+### Apollo code of conduct
 
-If you see a Code of Conduct violation, follow these steps:
+If you see a code of conduct violation, follow these steps:
 
 - Let the person know that what they did is not appropriate and ask them to stop and/or edit their message(s) if online.
 - That person should immediately stop the behavior and correct the issue.
@@ -13,15 +13,15 @@ If you see a Code of Conduct violation, follow these steps:
 - When reporting, please include any relevant details, links, screenshots, context, or other information that may be used to better understand and resolve the situation.
 - The Admin team will prioritize the well-being and comfort of those affected negatively by the violation over the comfort of the violator. This may include the violator being removed from online or in-person spaces until those affected say they would feel safe with the person returning.
 
-### Our Goal
+### Our goal
 
 This community is dedicated to providing a harassment-free experience for everyone. We do not tolerate harassment of participants in any form.
 
-### Applicability and Scope
+### Applicability and scope
 
-This code of conduct applies to all of this community's spaces, including public channels, private channels and direct messages, both online and off. Anyone who violates this code of conduct may be sanctioned or expelled from these spaces at the discretion of the administrators.
+This code of conduct applies to all this community's spaces, including public channels, private channels and direct messages, both online and off. Anyone who violates this code of conduct may be sanctioned or expelled from these spaces at the discretion of the administrators.
 
-### Toward a Welcoming and Safe Environment
+### Toward a welcoming and safe environment
 
 We hope to create an environment in which diverse individuals can collaborate and interact in a positive and affirming way. Examples of behavior that contributes to creating this sort of environment include:
 
@@ -29,9 +29,9 @@ We hope to create an environment in which diverse individuals can collaborate an
 - Being respectful of differing viewpoints and experiences
 - Gracefully accepting constructive criticism
 - Focusing on what is best for the overall community
-- Showing empathy towards other community members
+- Showing empathy toward other community members
 
-### Anti-Harassment Statement
+### Anti-harassment statement
 
 This community will not tolerate harassment of any kind. Examples of harassment include:
 
@@ -39,9 +39,9 @@ This community will not tolerate harassment of any kind. Examples of harassment 
 - Unwelcome comments regarding a person's lifestyle choices and practices, including those related to food, health, parenting, relationships, drugs, and employment.
 - Deliberate misgendering, using inappropriate pronouns, or use of "dead" or rejected names.
 - Gratuitous or off-topic sexual images or behavior in spaces where they're not appropriate.
-- Physical contact and simulated physical contact (eg, textual descriptions like "hug" or "backrub") without consent or after a request to stop.
+- Physical contact and simulated physical contact (for example, textual descriptions like "hug" or "back rub") without consent or after a request to stop.
 - Threats of violence.
-- Incitement of violence towards any individual or group, including encouraging a person to commit suicide or to engage in self-harm.
+- Incitement of violence toward any individual or group, including encouraging a person to commit suicide or to engage in self-harm.
 - Deliberate intimidation.
 - Stalking or following - online or in the physical world.
 - Harassing photography or recording, including logging online activity for harassment purposes.
@@ -51,7 +51,7 @@ This community will not tolerate harassment of any kind. Examples of harassment 
 - Continued one-on-one communication after requests to cease.
 - Deliberate "outing" of any aspect of a person's identity without their consent except as necessary to protect vulnerable people from intentional abuse.
 - Publication of non-harassing private communication.
-- Jokes that resemble the above, such as "hipster racism", still count as harassment even if meant satirically or ironically.
+- Jokes that resemble the above, such as "hipster racism," still count as harassment even if meant satirically or ironically.
 
 If you have questions or concerns about these issues please feel free to message an admin or ask for an opportunity to explore the issue with a moderator and volunteers.
 
@@ -61,11 +61,11 @@ If you are being harassed by a member of our community, notice that someone else
 
 The admin team will respond to any complaint as promptly as possible we can. If you do not get a timely response (for example, if no admins are currently online) then please put your personal safety and well-being first, and consider logging out and/or contacting the admins by email at [codeofconduct@graphql.com](mailto:codeofconduct@graphql.com).
 
-This code of conduct applies to our community's spaces, but if you are being harassed by a member of our community outside our spaces, we still want to know about it. We will take all good-faith reports of harassment by our members, especially the administrators, seriously. This includes harassment outside our spaces and harassment that took place at any point in time. The abuse team reserves the right to exclude people from the community based on their past behavior, including behavior outside of our spaces and behavior towards people who are not in this community.
+This code of conduct applies to our community's spaces, but if you are being harassed by a member of our community outside our spaces, we still want to know about it. We will take all good-faith reports of harassment by our members, especially the administrators, seriously. This includes harassment outside our spaces and harassment that took place at any point in time. The abuse team reserves the right to exclude people from the community based on their past behavior, including behavior outside of our spaces and behavior toward people who are not in this community.
 
 In order to protect volunteers from abuse and burnout, we reserve the right to reject any report we believe to have been made in bad faith. Reports intended to silence legitimate criticism may be deleted without response.
 
-### Enforcement Process
+### Enforcement process
 
 Every code of conduct violation report will be treated with seriousness and care. If a member's immediate safety and security is threatened, an individual admin may take any action that they deem appropriate, up to and including temporarily banning the offender from the community. In less urgent situations, at least two admins will discuss the offense and mutually arrive at a suitable response, which will be shared with the offender privately. Whatever the resolution that they decide upon, the decision of the admins involved in a violation case will be considered final.
 
@@ -91,4 +91,8 @@ This CoC also includes material adapted from the LGBTQ in Tech community code of
 
 ### License
 
+<!-- vale Vale.Spelling = NO -->
+
 Community Covenant by Coraline Ada Ehmke is licensed under a Creative Commons Attribution 4.0 International License (http://creativecommons.org/licenses/by/4.0/). Based on a work at http://community-covenant.net/.
+
+<!-- vale Vale.Spelling = YES -->

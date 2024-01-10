@@ -39,4 +39,4 @@ interface ResponseShape {
 
 - The value of `schemaURL` is a short-lived (24-hour) URL that enables you to fetch the published schema _without_ authenticating (such as with an API key). The URL expires at the time indicated by `schemaURLExpiresAt`.
 
-- The value of `variantID` is in the format `graphID@variantName` (e.g., `mygraph@staging`).
+- The value of `variantID` is in the format `graphID@variantName` (for example, `mygraph@staging`).

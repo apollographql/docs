@@ -73,7 +73,7 @@ Once configured, requests sent from `https://studio.apollographql.com` include t
 
 #### Cookies for Safari users
 
-Safari `13.1` and later [blocks third-party cookies by default](https://webkit.org/blog/10218/full-third-party-cookie-blocking-and-more/). When using Explorer in Safari, it considers your server's endpoint to be "third-party" to GraphOS Studio. Therefore, Safari users need to open **Settings > Privacy** in Safari and uncheck **Prevent cross-site tracking** to send Explorer requests with cookies.
+Safari `13.1` and later [blocks third-party cookies by default](https://webkit.org/blog/10218/full-third-party-cookie-blocking-and-more/). When using Explorer in Safari, it considers your server's endpoint to be "third-party" to GraphOS Studio. Therefore, Safari users need to open **Settings > Privacy** in Safari and deselect **Prevent cross-site tracking** to send Explorer requests with cookies.
 
 ### Environment variables
 
@@ -128,7 +128,7 @@ Inject an environment variable into a GraphQL variable value by surrounding the 
 If you create a [preflight or operation script](./scripting), that script can access an environment variable's value like so:
 
 ```js
-const secretToken = explorer.environment.get("token");
+const secretToken = explorer.environment.get('token');
 ```
 
 Check out the Explorer [scripting docs](./scripting) to learn how you can use preflight scripts for authentication purposes.

@@ -53,7 +53,7 @@ The stewardship group should proactively establish performance best practices th
 
 ### Graph usage
 
-It's a best practice for [clients to identify themselves by name and version](/technotes/TN0001-client-id-enforcement/) before querying data from the graph, and clients should also assign names to all of the operations they send to the API. Ideally, these operation names are defined using a shared naming scheme, so it will be the role of the graph stewardship group to set, communicate, and enforce these naming standards.
+It's a best practice for [clients to identify themselves by name and version](/technotes/TN0001-client-id-enforcement/) before querying data from the graph, and clients should also assign names to all the operations they send to the API. Ideally, these operation names are defined using a shared naming scheme, so it will be the role of the graph stewardship group to set, communicate, and enforce these naming standards.
 
 Additionally, the stewardship group may wish to set standards for using query variables instead of literals as operation arguments. This measure will help minimize operation cardinality and take advantage of some of GraphOS Studio's reporting optimizations in the gateway. And to guard against potentially abusive operations, the stewardship group may also put appropriate mechanisms in place to limit query depth, breadth, and overall cost.
 

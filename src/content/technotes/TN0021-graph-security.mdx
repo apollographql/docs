@@ -15,7 +15,7 @@ One of the most important ways to protect a GraphQL API against would-be attacke
 
 ### Turn off introspection in production
 
-GraphQL's built-in [introspection query](https://graphql.org/learn/introspection/) is the fastest way for bad actors to learn about your schema. To prevent this, disable introspection in your production supergraph, and also limit access to any staging environments where introspection _is_ enabled.
+GraphQL's built-in [introspection query](https://graphql.org/learn/introspection/) is the fastest way for bad actors to learn about your schema. To prevent this, turn off introspection in your production supergraph, and also limit access to any staging environments where introspection _is_ enabled.
 
 <Note>
 

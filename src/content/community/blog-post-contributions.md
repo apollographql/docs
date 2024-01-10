@@ -19,7 +19,7 @@ If we've accepted your post, we'll work with you to turn your idea into a draft 
 
 #### Posts not accepted
 
-If we didn't accept your post, no worries! We'll provide you with feedback or other ways that we can turn your post into something that will be useful to the community. Either way, we'll help you!
+If we didn't accept your post, no worries. We'll provide you with feedback or other ways that we can turn your post into something that will be useful to the community. Either way, we'll help you!
 
 ## Content guidelines
 
@@ -29,7 +29,7 @@ Here are some tips for writing awesome content that helps the community.
 
 Types of blog posts we love to read:
 
-- “How to” guides, recipes, or tutorials on how to address problems you’ve solved with Apollo (here's an example, "[Apollo Client [React] — How to Query on Click](https://www.apollographql.com/blog/apollo-client/how-to-query-on-click/)")
+- “How to” guides, recipes, or tutorials on how to address problems you’ve solved with Apollo (here's an example, "[Apollo Client [React] - How to Query on Click](https://www.apollographql.com/blog/apollo-client/how-to-query-on-click/)")
 - Stories about how Apollo helped you overcome different challenges on work and personal projects
 - Something cool you built with Apollo
 - Showcasing a tool, fix, or other content you or someone else has contributed to Apollo’s open source community
@@ -44,7 +44,7 @@ We're open to all kinds of topics as long as it relates to Apollo in some way. W
 - React.js
 - Authentication & authorization
 - Error handling
-- Front-end development
+- Frontend development
 - Server-side development
 - Scaling GraphQL
 - Schema design

@@ -106,7 +106,7 @@ These steps use PingOne's email invite method, because in some cases Apollo's de
 
 8. Click **Save** to finish connecting Azure AD to PingOne.
 
-## 6. Configure the OIDC Application
+## 6. Configure the OIDC application
 
 After you successfully configure the identity bridge between Azure AD and PingOne, you need to configure and enable Apollo as an OIDC application. The configuration for this application should already be initialized, and you can access it via the **Complete your Application Configuration** reminder under **Applications** in the PingOne admin console.
 
@@ -121,7 +121,7 @@ After you successfully configure the identity bridge between Azure AD and PingOn
    <img src="../../img/sso/azure-oidc-application.gif" alt="PingOne OIDC application" class="screenshot" />
 
 2. In Step 1 of the **Add OIDC Application** wizard, configure the application name, description, category, and icon (optional).
-3. Click **Next** for Steps 2-5 (these are configured by default).
+3. Click **Next** for Steps 2–5 (these are configured by default).
 4. In Step 6 of the wizard (**Attribute Mapping**), you _must_ map `email` to `email` and `sub` to `preferred_username`. You can optionally map more attributes for given name, family name, and others.
 5. In Step 7 of the wizard (**Group Access**), select whichever groups should receive SSO access to Apollo.
 6. Click **Done** to complete the configuration.

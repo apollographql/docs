@@ -22,7 +22,7 @@ We will continue to actively maintain the MIT-licensed 0.x Apollo Federation pac
 
 ## What license applies to me if I'm using the new Apollo Federation 2 packages?
 
-ELv2 applies to the source code and any distribution (e.g., on npmjs.com) of Apollo Federation v2 including its libraries, Apollo Gateway beginning with version 2.x releases, and all versions of the Apollo Router.
+ELv2 applies to the source code and any distribution (for example, on npmjs.com) of Apollo Federation v2 including its libraries, Apollo Gateway beginning with version 2.x releases, and all versions of the Apollo Router.
 
 ## I'm a maintainer of a subgraph framework, library, or platform that supports Apollo Federation. How does ELv2 affect me?
 
@@ -58,7 +58,7 @@ There are no changes for contributors under ELv2. Thank you for your contributio
 
 ## Will Apollo continue to provide open-source software?
 
-Absolutely! Open-source software is at the heart of what we do. We're grateful for the Apollo community and all of your contributions. We are committed to developing our MIT-licensed projects you know and love, including Rover, Apollo Client, and Apollo Server, as well as pioneering new open-source graph technology. Relicensing Apollo Federation 2 to ELv2 helps us honor that commitment. It prevents bad actors from harming our community and protects our ability to build open-source software for years to come.
+Absolutely! Open-source software is at the heart of what we do. We're grateful for the Apollo community and all your contributions. We are committed to developing our MIT-licensed projects you know and love, including Rover, Apollo Client, and Apollo Server, as well as pioneering new open-source graph technology. Relicensing Apollo Federation 2 to ELv2 helps us honor that commitment. It prevents bad actors from harming our community and protects our ability to build open-source software for years to come.
 
 ## What does "You may not remove or obscure any licensing, copyright, or other notices" mean?
 

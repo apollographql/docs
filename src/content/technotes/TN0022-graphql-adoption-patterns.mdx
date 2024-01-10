@@ -30,7 +30,7 @@ To illustrate this approach, a client-only GraphQL architecture might look like 
 
 ### Pattern 2: Backend for frontend
 
-GraphQL is often adopted by teams implementing the Backend for Frontend (BFF) pattern. BFFs attempt to solve the problem of requiring different clients (for example, web and iOS) to interact with a monolithic, general-purpose API. Alternatively, BFFs can save client applications from making requests to multiple backend services to obtain all of the data required to render a particular user interface view.
+GraphQL is often adopted by teams implementing the Backend for Frontend (BFF) pattern. BFFs attempt to solve the problem of requiring different clients (for example, web and iOS) to interact with a monolithic, general-purpose API. Alternatively, BFFs can save client applications from making requests to multiple backend services to obtain all the data required to render a particular user interface view.
 
 As a solution, BFFs add a new layer where each client has a dedicated BFF service that directly receives the client's requests and is tightly coupled to that user experience. For teams creating BFF services, GraphQL can be a natural fit for building out this intermediary, client-focused layer, and adopting this pattern can be an important first step toward consolidating a graph.
 
@@ -78,7 +78,7 @@ After taking stock of who uses GraphQL and how in your company, patterns impleme
 
 ### Client-only graphQL
 
-Teams that opt for client-only GraphQL approaches are motivated to improve their client development experience by layering GraphQL on top of REST endpoints or other legacy APIs that they have to work with. And although improving developer experience is a win, beneath this abstraction the client application still incurs performance costs as it maintains responsibility for making multiple requests to various services to gather all of the data required to render a view.
+Teams that opt for client-only GraphQL approaches are motivated to improve their client development experience by layering GraphQL on top of REST endpoints or other legacy APIs that they have to work with. And although improving developer experience is a win, beneath this abstraction the client application still incurs performance costs as it maintains responsibility for making multiple requests to various services to gather all the data required to render a view.
 
 ### BFFs
 
@@ -98,7 +98,7 @@ Finally, when multiple graphs exist within an enterprise it often indicates that
 
 ## Inconsistency: The common shortcoming
 
-All of the patterns [described above](#how-graphql-gains-traction) have a shared shortcoming: their implementations result in a **lack of consistency.** A more productive way forward for teams searching for better efficiency and understandability from their GraphQL-based architectures typically have two requirements:
+All patterns [described above](#how-graphql-gains-traction) have a shared shortcoming: their implementations result in a **lack of consistency.** A more productive way forward for teams searching for better efficiency and understandability from their GraphQL-based architectures typically have two requirements:
 
 - **Consumers should be able to expect consistency in how they fetch data.** A single endpoint should be exposed to client applications and, regardless of what underlying services supply the data, clients should be able to use consistent workflows to consume the data.
 

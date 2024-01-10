@@ -16,7 +16,7 @@ The Apollo Router is a high-throughput, low-latency Apollo Federation GraphQL ga
 
 Inline tracing (also known as federated tracing or `ftv1`) provides helpful field-level latency information in GraphOS Studio, however it comes at a cost: trace information can be expensive to calculate, and it's attached to subgraph responses, increasing payload size.
 
-In Apollo Server 3.6 and later, you can set the `fieldLevelInstrumentation` option to disable inline tracing entirely, or limit tracing to a representative sample of all requests.
+In Apollo Server 3.6 and later, you can set the `fieldLevelInstrumentation` option to turn off inline tracing entirely, or limit tracing to a representative sample of all requests.
 
 - During load testing, we recommend disabling tracing entirely.
 - For normal production traffic, we recommend setting a low sample rate such as `0.01` (one percent of requests).
@@ -97,7 +97,7 @@ If CPU throttling becomes a problem, consider removing the limits on your gatewa
 
 ## Check query plans
 
-Query plans (the steps the Gateway takes to resolve an operation from multiple subgraphs) are almost always reasonable approximations of the original operation. They're also highly cacheable so they don't incur much of a performance penalty. But it's worth looking at them to make sure they're of an appropriate size and complexity. Fragment and abstract type usage may cause undesirable query plans in very specific cases.
+Query plans (the steps the Gateway takes to resolve an operation from multiple subgraphs) are almost always reasonable approximations of the original operation. They're also highly cacheable so they don't incur much of a performance penalty. But it's worth looking at them to make sure they're of an appropriate size and complexity. Fragment and abstract type usage may cause undesirable query plans in specific cases.
 
 ```js
 const gateway = new ApolloGateway({
