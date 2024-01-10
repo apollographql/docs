@@ -674,11 +674,11 @@ The above code block renders like so:
 
 ## Content linting
 
-The docs repository automatically lints pull requests via a [GitHub action]() that uses [Vale](https://vale.sh/). Vale checks `.md` an `.mdx` files against [style rules](https://vale.sh/docs/topics/styles/) imported from Google, Microsoft, and other developer documentation style guides. It also includes custom Apollo style rules. Most rules are self-explanatory or include links to resources to help understand what to fix.
+The docs repository automatically lints pull requests via a [GitHub action](.github/workflows/content-lint.yml) that uses [Vale](https://vale.sh/), an open-source content linter. Vale checks `.md` an `.mdx` files against [style rules](https://vale.sh/docs/topics/styles/) imported from Google, Microsoft, and other developer documentation style guides. It also includes custom Apollo style rules. Most rules are self-explanatory or include links to resources to help understand what to fix.
 
 #### Running Vale locally
 
-Vale automatically runs when you open a pull request, but you can run it locally to fix issues before pushing them up.
+Vale automatically runs on modified lines when you open a pull request, but you can run it locally to fix issues before pushing them up.
 
 To install:
 
@@ -696,7 +696,7 @@ vale <path/to/file-or-directory>
 
 As we refine and evolve our style guidelines, you may see the need to add, update, or delete style rules. See Vale's [styles documentation](https://vale.sh/docs/topics/styles/) for guidance and feel free to submit a PR.
 
-The most common adjustments will be for spell and case checking. You can add terms to recognize in the [`accept.txt`](styles/Vocab/Apollo/accept.txt) file and terms with suggested substitutions in [`/styles/Apollo/Wordlist.yml`](styles/Apollo/WordList.yml).
+The most common adjustments will be for spell and case checking. You can add terms to recognize in the [`accept.txt`](styles/config/vocabularies/Docs/accept.txt) file and terms with suggested substitutions in [`/styles/Apollo/Wordlist.yml`](styles/Apollo/WordList.yml).
 
 ### Locally disabling rules
 
