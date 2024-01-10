@@ -2,7 +2,7 @@
 title: Apollo FAQ on Licensing under Elastic License v2 (ELv2)
 ---
 
-Our source code for Apollo Federation (including Gateway and Federation libraries starting with the v2.x versions, and all versions of the Router), the Rover composition add-on, and Workbench will be licensed under the [Elastic License v2](https://www.elastic.co/licensing/elastic-license) (ELv2). Previous versions of the Gateway and Federation libraries (0.x) remain MIT-licensed.
+Our source code for Apollo Federation (including Gateway and Federation libraries starting with the v2.x versions, and all versions of the Apollo Router), the Rover composition add-on, and Workbench will be licensed under the [Elastic License v2](https://www.elastic.co/licensing/elastic-license) (ELv2). Previous versions of the Gateway and Federation libraries (0.x) remain MIT-licensed.
 
 We chose ELv2 because of its permissiveness and simplicity. We're following the well-paved path of other great infrastructure projects like Elasticsearch and MongoDB that have implemented similar source code licenses to preserve their communities. Our community and customers still have no-charge and open access to use, modify, redistribute, and collaborate on the code. ELv2 also protects our continued investment in developing freely available libraries and developer tools by restricting cloud service providers from offering Apollo Federation as a service.
 
@@ -15,6 +15,8 @@ The [Elastic License v2](https://www.elastic.co/licensing/elastic-license) appli
 1. You may not remove or obscure any licensing, copyright, or other notices.
 
 Please reach out to us at [license@apollographql.com](mailto:license@apollographql.com) if you're unsure whether your use case falls outside these limitations.
+
+<!-- vale Apollo.Headings = NO -->
 
 ## I'm using the MIT-licensed 0.x version of the Apollo Federation gateway and libraries in my project. How does ELv2 affect me?
 
@@ -38,7 +40,7 @@ You may freely use Apollo Federation, including Apollo Gateway, Apollo Router an
 
 ## I'm customizing the Apollo Federation libraries, Apollo Gateway or Apollo Router inside my application. How does ELv2 affect me?
 
-You can make any modifications to the Apollo Federation packages (such as the Router, Gateway, or query planner), subject to only the three limitations summarized above. If you want to share those modifications with us, please see our [contributing guide](https://www.apollographql.com/docs/community/contributing/). If you have any questions, please reach out to us at [license@apollographql.com](mailto:license@apollographql.com).
+You can make any modifications to the Apollo Federation packages (such as the router, gateway, or query planner), subject to only the three limitations summarized above. If you want to share those modifications with us, please see our [contributing guide](https://www.apollographql.com/docs/community/contributing/). If you have any questions, please reach out to us at [license@apollographql.com](mailto:license@apollographql.com).
 
 ### Can I extend or modify the Gateway or Router by creating plugins?
 
@@ -64,24 +66,26 @@ Absolutely! Open-source software is at the heart of what we do. We're grateful f
 
 This limitation is intended to protect our software and brand by preventing folks from removing notice of the license, copyrights, or trademarks (such as the terms Apollo Federation and in-product logos). These notices communicate the license terms when redistributing the products. Open-source licenses such as MIT and Apache also require retention of copyright and permission notices in software copies, so this concept is not unique to ELv2.
 
-## Can you share examples that explain "providing the software to third parties as a hosted or managed service"?
+## What are some examples of providing the software to third parties as a hosted or managed service?
 
-### Using Apollo Federation to serve all traffic to my SaaS product.
+### Using Apollo Federation to serve all traffic to my SaaS product
 
 Yes, permitted.
 
-### Running a Gateway or Router that includes proprietary code, such as a plugin.
+### Running a Gateway or Router that includes proprietary code, such as a plugin
 
 Yes, permitted. There is no requirement to distribute or open-source your code.
 
-### Distributing a modified Gateway or Router that includes proprietary code as a product, like a console.
+### Distributing a modified Gateway or Router that includes proprietary code as a product, like a console
 
 Yes, permitted. Unlike GPL or SSPL, ELv2 is not copyleft. Your code remains closed.
 
-### Providing a public graph API in my SaaS product to third parties.
+### Providing a public graph API in my SaaS product to third parties
 
 Yes, permitted because you do not provide the software to third parties as a hosted or managed service, where the service provides users with access to any substantial set of the features or functionality of the software.
 
-### Providing Apollo Federation as a service, where customers have direct access to substantial portions of Apollo Federation, including Apollo Gateway, Apollo Router or Federation libraries.
+### Providing Apollo Federation as a service, where customers have direct access to substantial portions of Apollo Federation, including Apollo Gateway, Apollo Router or Federation libraries
 
 This use is not permitted under the new license. If you have questions about your specific scenario, please reach out to us at [license@apollographql.com](mailto:license@apollographql.com).
+
+<!-- vale Apollo.Headings = YES -->

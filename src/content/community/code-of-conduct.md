@@ -8,7 +8,7 @@ If you see a code of conduct violation, follow these steps:
 
 - Let the person know that what they did is not appropriate and ask them to stop and/or edit their message(s) if online.
 - That person should immediately stop the behavior and correct the issue.
-- If this doesn’t happen, or if you’re uncomfortable speaking up, contact organizers by emailing [codeofconduct@graphql.com](mailto:codeofconduct@graphql.com).
+- If this doesn't happen, or if you're uncomfortable speaking up, contact organizers by emailing [codeofconduct@graphql.com](mailto:codeofconduct@graphql.com).
 - As soon as available, an organizer will respond, identify themselves, and take further action (see below), starting with a warning, then temporary deactivation, then long-term deactivation.
 - When reporting, please include any relevant details, links, screenshots, context, or other information that may be used to better understand and resolve the situation.
 - The Admin team will prioritize the well-being and comfort of those affected negatively by the violation over the comfort of the violator. This may include the violator being removed from online or in-person spaces until those affected say they would feel safe with the person returning.
@@ -71,11 +71,11 @@ Every code of conduct violation report will be treated with seriousness and care
 
 We will respect confidentiality requests for the purpose of protecting victims of abuse. At our discretion, we may publicly name a person about whom we've received harassment complaints, or privately warn third parties about them, if we believe that doing so will increase the safety of our members or the general public. We will not name harassment victims without their affirmative consent.
 
-Apollo prioritizes marginalized people’s safety over privileged people’s comfort. The administrators will not act on complaints regarding:
+Apollo prioritizes marginalized people's safety over privileged people's comfort. The administrators will not act on complaints regarding:
 
 - “Reverse”-isms, including “reverse racism,” “reverse sexism,” and “cisphobia”
-- Reasonable communication of boundaries, such as “leave me alone,” “go away,” or “I’m not discussing this with you.”
-- Communicating in a “tone” you don’t find congenial
+- Reasonable communication of boundaries, such as “leave me alone,” “go away,” or “I'm not discussing this with you.”
+- Communicating in a “tone” you don't find congenial
 - Criticizing racist, sexist, cissexist, or otherwise oppressive behavior or assumptions
 - The examples listed above are not against the Code of Conduct.
 

@@ -14,7 +14,7 @@ The Apollo [VS Code extension](https://marketplace.visualstudio.com/items?itemNa
 
 The extension enables you to:
 
-- Add [syntax highlighting](#syntax-highlighting) for GraphQL files and gql templates inside JavaScript files
+- Add [syntax highlighting](#syntax-highlighting) for GraphQL files and `gql` templates inside JavaScript files
 - Get instant feedback and [intelligent autocomplete](#intelligent-autocomplete) for fields, arguments, types, and variables as you write queries
 - Manage client side schema alongside remote schema
 - See [performance information](#performance-insights) inline with your query definitions
@@ -122,7 +122,7 @@ Once configured, editors have full knowledge of the schema clients are running o
   src="../img/editors/autocomplete.gif"
   width="80%"
   style="margin: 5%"
-  alt="vscode completing a field when typing"
+  alt="VS Code completing a field when typing"
 />
 
 ### Inline errors and warnings
@@ -138,7 +138,7 @@ Editors can use local or published schemas to validate operations before running
 
 ### Inline field type information
 
-Because of GraphQL's strongly-typed schema, editors not only know about which fields and arguments are valid, but also what types are expected. Hover over any type in a valid GraphQL operation to see what type that field returns and whether or not it can be null.
+Because of GraphQL's strongly typed schema, editors not only know about which fields and arguments are valid, but also what types are expected. Hover over any type in a valid GraphQL operation to see what type that field returns and whether or not it can be null.
 
 <img
   src="../img/editors/type-info.png"
@@ -151,7 +151,7 @@ Because of GraphQL's strongly-typed schema, editors not only know about which fi
 
 GraphQL's flexibility can make it difficult to predict the cost of an operation. Without insight into how expensive an operation is, developers can accidentally write queries that place strain on their graph API's underlying backends. Thanks to the Apollo platform's integration with VS Code and our trace warehouse, teams can avoid these performance issues altogether by instantly seeing the cost of a query right in their editor.
 
-The VS Code extension will show inline performance diagnostics when connected to a service with reported metrics in GraphOS Studio. As operations are typed, any fields that take longer than 1ms to respond will be annoated to the right of the field inline! This gives team members a picture of how long the operation will take as more and more fields are added to operations or fragments.
+The VS Code extension will show inline performance diagnostics when connected to a service with reported metrics in GraphOS Studio. As operations are typed, any fields that take longer than 1 ms to respond will be annotated to the right of the field inline! This gives team members a picture of how long the operation will take as more and more fields are added to operations or fragments.
 
 <img
   src="../img/editors/perf-annotation.png"

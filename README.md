@@ -636,7 +636,7 @@ This is some _custom markdown text_ that still includes a link to the [GraphOS E
 
 ##### Admonitions
 
-Admonitions are designed to catch readers' attention and break the flow of the text. They’re helpful to make a piece of information stand out, but should be used wisely and sparingly. Use them only for information that shouldn’t be missed.
+Admonitions are designed to catch readers' attention and break the flow of the text. They're helpful to make a piece of information stand out, but should be used wisely and sparingly. Use them only for information that shouldn't be missed.
 
 We support the following admonition components:
 
@@ -700,20 +700,20 @@ The most common adjustments will be for spell and case checking. You can add ter
 
 ### Locally disabling rules
 
-In some cases, you may need to intentionally ignore a rule. For example, you may need to turn off the [`Google.Headings`](styles/Google/Headings.yml) rule that checks that headings use sentence case to exceptionally capitalize a word.
+In some cases, you may need to intentionally ignore a rule. For example, you may need to turn off the [`Apollo.Headings`](styles/Apollo/Headings.yml) rule that checks that headings use sentence case to exceptionally capitalize a word.
 
 In these cases, you can locally disable the rule for a portion of text by surrounding it with comments like this:
 
 ```
-<!-- vale Google.Headings = NO -->
+<!-- vale Apollo.Headings = NO -->
 
 ### This header needs an Uppercase word
 
-<!-- vale Google.Headings = YES -->
+<!-- vale Apollo.Headings = YES -->
 
 ```
 
-Replace `Google.Headings` with the name of the rule you need to turn off.
+Replace `Apollo.Headings` with the name of the rule you need to turn off.
 
 ## History
 

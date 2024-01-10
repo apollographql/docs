@@ -54,7 +54,7 @@ These steps use PingOne's email invite method, because in some cases Apollo's de
 1. From the **API permissions** section of your app registration, check whether `User.Read` is listed by default. If isn't, add it manually:
 
    1. Select **+ Add a permission > Microsoft Graph > Application permissions**.
-   2. Search for `Group`, expand, and select **Group.Read.All**.
+   2. Search for `Group`, expand, and select `Group.Read.All`.
    3. **Save** your changes.
    4. If `User.Read` was not auto created, repeat this process for `User.Read`.
 
@@ -100,7 +100,7 @@ These steps use PingOne's email invite method, because in some cases Apollo's de
 
 7. In Step 4 of the wizard, choose whether or not to synchronize your user groups from Azure AD to your PingOne user groups.
 
-   - The permissions **User.Read** and **Group.Read.All** are required for synchronization to be successful.
+   - The permissions `User.Read` and `Group.Read.All` are required for synchronization to be successful.
    - Any PingOne user groups that do not exist in your Azure provider will be replaced by the Azure groups.
    - Each of your Azure group members are automatically added to the corresponding PingOne groups when the user initially signs on (SSO) to PingOne. This is PingOne's just-in-time user provisioning.
 
@@ -114,14 +114,14 @@ After you successfully configure the identity bridge between Azure AD and PingOn
 
    <Note>
    
-   If the **Add OIDC Application** wizard doesn’t automatically pop-up, select the **SAML** tab and then select the **OIDC** tab.
+   If the **Add OIDC Application** wizard doesn't automatically pop-up, select the **SAML** tab and then select the **OIDC** tab.
    
    </Note>
 
    <img src="../../img/sso/azure-oidc-application.gif" alt="PingOne OIDC application" class="screenshot" />
 
 2. In Step 1 of the **Add OIDC Application** wizard, configure the application name, description, category, and icon (optional).
-3. Click **Next** for Steps 2–5 (these are configured by default).
+3. Click **Next** for Steps 2-5 (these are configured by default).
 4. In Step 6 of the wizard (**Attribute Mapping**), you _must_ map `email` to `email` and `sub` to `preferred_username`. You can optionally map more attributes for given name, family name, and others.
 5. In Step 7 of the wizard (**Group Access**), select whichever groups should receive SSO access to Apollo.
 6. Click **Done** to complete the configuration.

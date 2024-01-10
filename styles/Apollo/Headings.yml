@@ -17,7 +17,6 @@ exceptions:
   - Apollo Server
   - AWS
   - Azure
-  - Azure AD
   - Bookmark Apps?
   - CI(/CD)?
   - CLI
@@ -29,10 +28,12 @@ exceptions:
   - Docker
   - Emmet
   - "[Ee]nterprise"
+  - Elastic License v2
   - Explorer
   - Express
   - FAQ
   - Federation (1|2)
+  - Fractional sampling
   - GDPR
   - GitHub
   - GraphOS
@@ -53,7 +54,7 @@ exceptions:
   - PingOne
   - PRs?
   - REPL
-  - "[Rr]eporting"
+  - "[Rr]eport(ing)?"
   - Rover
   - SAF
   - Safari

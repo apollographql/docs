@@ -28,6 +28,7 @@ config
 [Cc]utover
 Datadog
 DataLoaders?
+dba
 [Dd]eclaratively
 [Dd]eduplicat(e|ed|ation|ing)
 [Dd]enormaliz(?:ed|ation|e|es)?
@@ -54,6 +55,7 @@ JWTs?
 [Kk]aniko
 lodash
 Marketo
+Memcached?
 middleware
 misgender(ing)?
 [Nn]amespac(e|es|ing)
@@ -89,6 +91,7 @@ preprod
 protobuf
 READMEs?
 Recurly
+[Rr]elicensing
 [Rr]escan
 repo
 Rhai
@@ -112,12 +115,15 @@ Shopify
 timeframe
 [Tt]ooltip
 typings
+[Uu]ntracked
 [Uu]ntrusted
 URI(s)?
 Uplink
 [Vv]alidator
+Vue
 walkthrough
 [Ww]ebhook
 YAML
 Zendesk
 Zipkin
+95th
