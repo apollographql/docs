@@ -674,11 +674,11 @@ The above code block renders like so:
 
 ## Content linting
 
-The docs repository automatically lints pull requests via a [GitHub action](.github/workflows/content-lint.yml) that uses [Vale](https://vale.sh/), an open-source content linter. Vale checks `.md` an `.mdx` files against [style rules](https://vale.sh/docs/topics/styles/) imported from Google, Microsoft, and other developer documentation style guides. It also includes custom Apollo style rules. Most rules are self-explanatory or include links to resources to help understand what to fix.
+The docs repository automatically lints pull requests via a [GitHub action](.github/workflows/content-lint.yml) that uses [Vale](https://vale.sh/), an open-source content linter. Vale checks `.md` and `.mdx` files against [style rules](https://vale.sh/docs/topics/styles/) imported from Google, Microsoft, and other developer documentation style guides. It also includes custom Apollo style rules. All styles are in the [`styles` directory](styles). Most rules are self-explanatory or include links to resources to help understand what to fix.
 
 #### Running Vale locally
 
-Vale automatically runs on modified lines when you open a pull request, but you can run it locally to fix issues before pushing them up.
+You can run Vale locally to catch and fix issues during local development.
 
 To install:
 
