@@ -23,7 +23,7 @@ export default function TableOfContents({
       ].map(heading => {
         const link = heading.querySelector('a');
         return {
-          value: heading.title || link.innerText || heading.innerText,
+          value: heading.title || link?.innerText || heading.innerText,
           depth: parseInt(heading.tagName[1]),
           id: heading.id
         };
