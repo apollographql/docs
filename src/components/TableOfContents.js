@@ -12,18 +12,34 @@ export default function TableOfContents({
 }) {
   const [activeId, setActiveId] = useState(null);
   const scrollDisabled = useRef(false);
+  const [pageHeadings, setPageHeadings] = useState(headings);
+  useEffect(() => {
+    setPageHeadings(
+      [
+        ...document
+          .querySelector('main')
+          .querySelectorAll('h2[id],h3[id],h4[id],h5[id],h6[id]')
+          .values()
+      ].map(heading => ({
+        value: heading.title || heading.innerText,
+        depth: parseInt(heading.tagName[1]),
+        id: heading.id
+      }))
+    );
+  }, []);
+
   const toc = useMemo(() => {
     const slugger = new GithubSlugger();
-    return headings
+    return pageHeadings
       .filter(
         heading =>
           heading.depth >= MIN_HEADING_DEPTH && heading.depth <= headingDepth
       )
       .map(heading => ({
-        ...heading,
-        id: slugger.slug(heading.value)
+        id: slugger.slug(heading.value),
+        ...heading
       }));
-  }, [headings, headingDepth]);
+  }, [pageHeadings, headingDepth]);
 
   useEffect(() => {
     function handleScroll(event) {
