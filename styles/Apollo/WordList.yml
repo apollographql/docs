@@ -17,6 +17,7 @@ swap:
   "(?:WiFi|wifi)": Wi-Fi
   '[.]+apk': APK
   '3-D': 3D
+  "all of": all
   "apollo Gateway": "@apollo/gateway"
   "apollo Studio": GraphOS Studio
   "back-end": backend
@@ -26,6 +27,7 @@ swap:
   "Container Engine": Kubernetes Engine
   "content type": media type
   "curated roles": predefined roles
+  "data are": data is
   "day": day
   "deviation": deviation
   "dialog": dialog

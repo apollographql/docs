@@ -674,11 +674,19 @@ The above code block renders like so:
 
 ## Content linting
 
+<<<<<<< HEAD
 The docs repository automatically lints pull requests via a [GitHub action](.github/workflows/content-lint.yml) that uses [Vale](https://vale.sh/), an open-source content linter. Vale checks `.md` an `.mdx` files against [style rules](https://vale.sh/docs/topics/styles/) imported from Google, Microsoft, and other developer documentation style guides. It also includes custom Apollo style rules. Most rules are self-explanatory or include links to resources to help understand what to fix.
 
 #### Running Vale locally
 
 Vale automatically runs on modified lines when you open a pull request, but you can run it locally to fix issues before pushing them up.
+=======
+The docs repository automatically lints pull requests via a [GitHub action](.github/workflows/content-lint.yml) that uses [Vale](https://vale.sh/), an open-source content linter. Vale checks `.md` and `.mdx` files against [style rules](https://vale.sh/docs/topics/styles/) imported from Google, Microsoft, and other developer documentation style guides. It also includes custom Apollo style rules. All styles are in the [`styles` directory](styles). Most rules are self-explanatory or include links to resources to help understand what to fix.
+
+#### Running Vale locally
+
+You can run Vale locally to catch and fix issues during local development.
+>>>>>>> main
 
 To install:
 
@@ -700,11 +708,16 @@ The most common adjustments will be for spell and case checking. You can add ter
 
 ### Locally disabling rules
 
+<<<<<<< HEAD
 In some cases, you may need to intentionally ignore a rule. For example, you may need to turn off the [`Apollo.Headings`](styles/Apollo/Headings.yml) rule that checks that headings use sentence case to exceptionally capitalize a word.
+=======
+In some cases, you may need to intentionally ignore a rule. For example, you may need to turn off the [`Google.Headings`](styles/Google/Headings.yml) rule that checks that headings use sentence case to exceptionally capitalize a word.
+>>>>>>> main
 
 In these cases, you can locally disable the rule for a portion of text by surrounding it with comments like this:
 
 ```
+<<<<<<< HEAD
 <!-- vale Apollo.Headings = NO -->
 
 ### This header needs an Uppercase word
@@ -714,6 +727,17 @@ In these cases, you can locally disable the rule for a portion of text by surrou
 ```
 
 Replace `Apollo.Headings` with the name of the rule you need to turn off.
+=======
+<!-- vale Google.Headings = NO -->
+
+### This header needs an Uppercase word
+
+<!-- vale Google.Headings = YES -->
+
+```
+
+Replace `Google.Headings` with the name of the rule you need to turn off.
+>>>>>>> main
 
 ## History
 
