@@ -1,10 +1,8 @@
 import React, { useMemo, useState } from "react";
 import { NotesList } from "./NotesList";
-import { NotesList2 } from "./NotesList2";
 import { TagList } from "./TagList";
 import { graphql, useStaticQuery } from "gatsby";
-import { Flex, Heading, Link, Box } from "@chakra-ui/react";
-import { PrimaryLink } from "../RelativeLink";
+import { Heading } from "@chakra-ui/react";
 
 export const SORT_OPTIONS = {
   UPDATED_ASC: "UPDATED_ASC",
@@ -15,7 +13,7 @@ export const SORT_OPTIONS = {
   ALPHABETICAL_DESC: "ALPHABETICAL_DESC",
 };
 
-export function AllNotes({ useVariant }) {
+export function AllNotes() {
   const data = useStaticQuery(
     graphql`
       query AllTechNotes {
@@ -210,11 +208,7 @@ export function AllNotes({ useVariant }) {
     <>
       <Heading mb={2}>{currentTag ? `Notes tagged “${currentTag}”` : "All notes"}</Heading>
       <TagList selected={currentTag} onClick={setCurrentTag} />
-      {useVariant ? (
-        <NotesList2 notes={notes} setCurrentTag={setCurrentTag} sort={sort} setSort={setSort} />
-      ) : (
-        <NotesList notes={notes} setCurrentTag={setCurrentTag} />
-      )}
+      <NotesList notes={notes} setCurrentTag={setCurrentTag} sort={sort} setSort={setSort} />
     </>
   );
 }
