@@ -111,6 +111,7 @@ fragment Base on ApiDocBase {
     deprecated
     remarks
     examples
+    since
   }
 }
 
