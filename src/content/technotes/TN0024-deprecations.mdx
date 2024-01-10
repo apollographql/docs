@@ -1,5 +1,7 @@
 ---
 title: Schema deprecations
+description: Your graph governance group should outline a company-wide field rollover strategy to gracefully handle type and field deprecations throughout the unified graph.
+published: 2023-01-09
 id: TN0024
 tags: [schema-design]
 ---
@@ -9,6 +11,7 @@ tags: [schema-design]
 If you're an enterprise customer looking for more material on this topic, try the [Enterprise best practices: Schema design](https://www.apollographql.com/tutorials/schema-design-best-practices) course on Odyssey.
 
 Not an enterprise customer? [Learn about GraphOS for Enterprise.](/graphos/enterprise)
+
 </Tip>
 
 ## Leverage SDL and tooling to manage deprecations
@@ -26,10 +29,8 @@ extend type Query {
   """
   Fetch a simple list of products with an offset
   """
-  topProducts(
-    "How many products to retrieve per page."
-    first: Int = 5
-  ): [Product] @deprecated(reason: "Use `products` instead.")
+  topProducts("How many products to retrieve per page." first: Int = 5): [Product]
+    @deprecated(reason: "Use `products` instead.")
 
   """
   Fetch a paginated list of products based on a filter type.
