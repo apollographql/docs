@@ -20,11 +20,14 @@ export default function TableOfContents({
           .querySelector('main')
           .querySelectorAll('h2[id],h3[id],h4[id],h5[id],h6[id]')
           .values()
-      ].map(heading => ({
-        value: heading.title || heading.innerText,
-        depth: parseInt(heading.tagName[1]),
-        id: heading.id
-      }))
+      ].map(heading => {
+        const link = heading.querySelector('a');
+        return {
+          value: heading.title || link.innerText || heading.innerText,
+          depth: parseInt(heading.tagName[1]),
+          id: heading.id
+        };
+      })
     );
   }, []);
 
