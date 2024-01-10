@@ -122,6 +122,7 @@ fragment Interface on ApiDocInterface {
     comment
   }
   childrenIncomplete
+  childrenIncompleteDetails
   properties {
     ...Ref
   }
@@ -163,6 +164,7 @@ fragment Class on ApiDocClass {
     ...Ref
   }
   childrenIncomplete
+  childrenIncompleteDetails
   properties {
     ...Ref
   }

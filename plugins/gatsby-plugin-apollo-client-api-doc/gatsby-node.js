@@ -162,6 +162,7 @@ exports.createSchemaCustomization = ({actions}) => {
         parent: Node
         children: [Node!]!
         childrenIncomplete: Boolean
+        childrenIncompleteDetails: String
         internal: Internal!
         kind: String
         canonicalReference: String
@@ -283,6 +284,7 @@ exports.createSchemaCustomization = ({actions}) => {
         parent: Node
         children: [Node!]!
         childrenIncomplete: Boolean
+        childrenIncompleteDetails: String
         internal: Internal!
         kind: String
         canonicalReference: String

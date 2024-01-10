@@ -80,8 +80,15 @@ function extractChildren(
     const extracted = item.findMembersWithInheritance();
     if (extracted.maybeIncompleteResult) {
       return {
-        children: item.members.map(getId),
-        childrenIncomplete: true
+        children: Array.from(
+          new Set(
+            extracted.items.map(getId).concat(item.members.map(getId))
+          ).values()
+        ),
+        childrenIncomplete: true,
+        childrenIncompleteDetails: extracted.messages
+          .map(m => m.text)
+          .join('\n')
       };
     } else {
       return {
