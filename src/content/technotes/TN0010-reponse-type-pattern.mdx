@@ -18,7 +18,7 @@ This response type pattern is useful for mutations because they can result in ma
 
 For example, let's say we have an e-commerce graph. When executing a `checkout` mutation, it's valid for that mutation to fail if a purchased item is out of stock or the buyer has insufficient funds.
 
-If we define a set of `ErrorResponse` types in our schema, front-end developers can provide customized experiences based on the type of failure that occurred:
+If we define a set of `ErrorResponse` types in our schema, frontend developers can provide customized experiences based on the type of failure that occurred:
 
 ```graphql
 interface MutationResponse {

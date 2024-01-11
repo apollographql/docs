@@ -20,7 +20,7 @@ All fields in GraphQL are nullable by default and it's often best to err on the 
 
 ## Plan for backward compatibility
 
-Null values can happen for multiple reasons like authentication failures, database error and/or network errors. Where possible, client teams should be included in conversations about nullability in schema design. This will help them prepare for handling null field values in way that doesn't detract from the experience of the end user in the front-end interface. Null can also be a valid non-error value. In these cases, indicating it in the field description will help the client teams make informed decisions.
+Null values can happen for multiple reasons like authentication failures, database error and/or network errors. Where possible, client teams should be included in conversations about nullability in schema design. This will help them prepare for handling null field values in way that doesn't detract from the experience of the end user in the frontend interface. Null can also be a valid non-error value. In these cases, indicating it in the field description will help the client teams make informed decisions.
 
 While it's important to make informed decisions about nullability when initially designing a service's schema, you will inevitably be faced with making a breaking change of this nature as a schema naturally evolves. When this happens, GraphOS's [field usage data](/graphos/metrics/field-usage) can give you insight into how those fields are used currently in different operations and across different clients. This visibility will help you identify issues proactively and allow you to communicate these changes to impacted clients in advance so they can avoid unexpected errors.
 

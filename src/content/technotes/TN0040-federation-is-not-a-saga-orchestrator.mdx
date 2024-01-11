@@ -73,7 +73,7 @@ By representing this operation in a single field, we can properly handle failure
 
 ## Distributed orchestration
 
-But what if the state changes occur in different services? Because GraphQL and Federation do not provide semantics for distributed transactions, we still need to implement orchestration logic within a single field.
+What if the state changes occur in different services? Because GraphQL and Federation do not provide semantics for distributed transactions, we still need to implement orchestration logic within a single field.
 
 This requirement leads to a few challenging questions:
 
@@ -95,7 +95,7 @@ It's tempting to have the orchestrating subgraph resolvers call back to the Apol
 
 <Tip>
 
-Read more on [contracts usage patterns in this technote](/technotes/TN0014-contracts-patterns/).
+Read more on [contracts usage patterns in this tech note](/technotes/TN0014-contracts-patterns/).
 
 </Tip>
 

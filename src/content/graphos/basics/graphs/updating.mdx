@@ -55,7 +55,12 @@ The method you use to update your router depends on which type of supergraph you
 
   - You can see which Apollo Router version you're running from the **Cloud Router** section of your variant's Settings page in [Studio](https://studio.apollographql.com/?referrer=docs-content):
 
-  <img src="../../img/router-status.jpg" class="screenshot" width="200" alt="Router status for cloud supergraph" />
+  <img
+    src="../../img/router-status.jpg"
+    class="screenshot"
+    width="200"
+    alt="Router status for cloud supergraph"
+  />
 
 For details on each Apollo Router version's corresponding Apollo _Federation_ version, see [this article](/router/federation-version-support#support-table).
 
@@ -99,7 +104,7 @@ If you host your own Apollo Router instance, you can use the [Rover CLI](/rover/
 
 <Note>
 
-**Performing composition with Rover is not recommended.** Instead, perform composition via the [GraphOS build pipeline](#2-update-your-build-pipeline) to help ensure a consistent schema delivery process across all of your graph's environments.
+**Performing composition with Rover is not recommended.** Instead, perform composition via the [GraphOS build pipeline](#2-update-your-build-pipeline) to help ensure a consistent schema delivery process across all your graph's environments.
 
 </Note>
 
@@ -119,7 +124,7 @@ This value **must** target a _specific patch release_ (`2.3.1`, `2.3.2`, etc.), 
 
 <Caution>
 
-If you _don't_ provide a value for `federation_version`, Rover prints a warning and chooses a composition version according to [this logic](/rover/commands/supergraphs#automatic-updates). This could potentially cause failures.  Rover might use a newer composition version than what your router supports, resulting in a supergraph schema that causes the router to fail on startup.
+If you _don't_ provide a value for `federation_version`, Rover prints a warning and chooses a composition version according to [this logic](/rover/commands/supergraphs#automatic-updates). This could potentially cause failures. Rover might use a newer composition version than what your router supports, resulting in a supergraph schema that causes the router to fail on startup.
 
 [Learn more about setting a Rover composition version](/rover/commands/supergraphs#setting-a-composition-version).
 
@@ -144,7 +149,10 @@ As an example, the [`@interfaceObject` directive](/federation/federated-types/fe
 
    ```graphql
    extend schema
-     @link(url: "https://specs.apollo.dev/federation/v2.3", import: ["@key", "@shareable", "@interfaceObject"])
+     @link(
+       url: "https://specs.apollo.dev/federation/v2.3"
+       import: ["@key", "@shareable", "@interfaceObject"]
+     )
    ```
 
    Notice that the `url` argument targets `v2.3` of the Apollo Federation spec, and `@interfaceObject` is included in the `import` list.

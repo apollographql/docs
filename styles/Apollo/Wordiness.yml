@@ -65,12 +65,14 @@ swap:
   fall down: fall
   fell down: fell
   for the duration of: during
+  functionality: capability|feature
   gather together: gather
   has the ability to: can
   has the capacity to: can
   has the opportunity to: could
   hold a meeting: meet
   if this is not the case: if not
+  "ingest": import|load
   in a careful manner: carefully
   in a thoughtful manner: thoughtfully
   in a timely manner: timely
@@ -88,6 +90,7 @@ swap:
   in the neighborhood of: roughly
   in the vicinity of: close to
   it would appear that: apparently
+  "leverag(?:ed|e|es)": use
   lift up: lift
   made reference to: referred to
   make reference to: refer to
@@ -117,6 +120,7 @@ swap:
   under the provisions of: under
   until such time as: until
   used for fuel purposes: used for fuel
+  'utiliz(?:ed|ation|e|es)': use
   whether or not: whether
   with regard to: regarding
   with the exception of: except for

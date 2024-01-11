@@ -8,7 +8,7 @@ tags: [federation]
 
 In this tech note, learn CI/CD best practices and examples for using graph variants for multiple deployment environments.
 
-In a typical deployment architecture, organizations set up multiple environments&mdash;such as development, pre-prod, and prod&mdash;with each having a separate Kubernetes (k8s) cluster and database. They create separate CI/CD jobs for each environment or configure them to behave differently based on environment-specific variables. They use in GraphOS a dedicated graph variant for each environment, with each variant representing a specific copy of the graph for that environment.
+In a typical deployment architecture, organizations set up multiple environments&mdash;such as development, pre-prod, and prod&mdash;with each having a separate Kubernetes cluster and database. They create separate CI/CD jobs for each environment or configure them to behave differently based on environment-specific variables. They use in GraphOS a dedicated graph variant for each environment, with each variant representing a specific copy of the graph for that environment.
 
 The setup for a typical deployment architecture begins with code and schemas in source control. A CI/CD system both deploys code to a target deployment environment and publishes schemas to GraphOS, which then provides the schemas to a deployment environment:
 
@@ -27,7 +27,7 @@ flowchart LR
 
 <Tip>
 
-The purpose of publishing your subgraph schemas to GraphOS is so that they can be composed into a Supergraph which is consumed by the Router. Each Router will be configured to consume a specific variant via a fixed graph reference. As a result, it's important that graph references/variant names are fixed, such as aligning them with each environment as demonstrated in this tech note.
+The purpose of publishing your subgraph schemas to GraphOS is so that they can be composed into a Supergraph which is consumed by the router. Each Router will be configured to consume a specific variant via a fixed graph reference. As a result, it's important that graph references/variant names are fixed, such as aligning them with each environment as demonstrated in this tech note.
 
 </Tip>
 
@@ -252,7 +252,7 @@ flowchart LR
     mainbranch -. publish .-> mainvariant
 ```
 
-In the deployment environments, your subgraphs and Router run with the Router configured to pull from a specific variant.
+In the deployment environments, your subgraphs and Router run with the router configured to pull from a specific variant.
 
 ```mermaid
 flowchart TB
@@ -299,11 +299,11 @@ flowchart TB
 
 ```
 
-## Running Subgraph Checks
+## Running subgraph checks
 
 Using [`rover subgraph check`](/rover/commands/subgraphs/#validating-subgraph-schema-changes) to run checks when opening a merge request is a great tool for ensuring that changes won't cause problems with the composition of your supergraph. Setting this up requires a CI/CD job to run against pull request events and execute the rover command on the updated schema.
 
-Here is an example using Github Actions:
+Here is an example using GitHub Actions:
 
 ```yml
 name: Pull Request Check Code
@@ -323,7 +323,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18.x
-          cache: "npm"
+          cache: 'npm'
 
       - run: npm ci
 
@@ -354,7 +354,7 @@ For a more comprehensive example of deployment, Kubernetes setup, CI/CD, etc., c
 
 </Tip>
 
-## Publishing Schema
+## Publishing schemas
 
 To publish a schema from your CI/CD jobs to a GraphOS variant, you can use the [`rover subgraph publish`](/rover/commands/subgraphs#publishing-a-subgraph-schema-to-graphos) command.
 

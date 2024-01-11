@@ -22,16 +22,16 @@ Not an enterprise customer? [Learn about GraphOS for Enterprise.](/graphos/enter
 
 When using the Apollo Router as the entry point to your federated supergraph, you have a few options for authenticating incoming client requests:
 
-- [Use Authorization Directives](#use-authorization-directives)
+- [Use authorization directives](#use-authorization-directives)
 - [Delegate authentication to your subgraphs.](#authenticate-in-subgraphs)
-- [Use the JWT Authentication plugin](#use-the-jwt-authentication-plugin) to your supergraph.
+- [Use the JWT authentication plugin](#use-the-jwt-authentication-plugin) to your supergraph.
 - [Use a coprocessor](#use-a-coprocessor).
 
 In fact, we recommend you [combine all three strategies](#combining-authentication-strategies) to create a more robust authentication system!
 
-## Use Authorization Directives
+## Use authorization directives
 
-In addition to the the approaches outlined below, you can use [authorization directives](/router/configuration/authorization/) to enforce authorization at the router layer.
+In addition to the approaches outlined below, you can use [authorization directives](/router/configuration/authorization/) to enforce authorization at the router layer.
 This allows you to authorize requests prior to them hitting your subgraphs saving on bandwidth and processing time.
 
 <EnterpriseFeature>

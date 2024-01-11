@@ -66,7 +66,7 @@ Your Apollo contact will let you know once SSO setup is complete.
 
 ## Using a custom integration
 
-Before the official Okta integration, you needed to create a custom integration to configure SSO. Now that an integration exists, we don't recommend creating a custom one. You can refer to the instructions below if you need them for a previously-created custom integration.
+Before the official Okta integration, you needed to create a custom integration to configure SSO. Now that an integration exists, we don't recommend creating a custom one. You can refer to the instructions below if you need them for a previously created custom integration.
 
 <ExpansionPanel title="Click to see instructions">
 
@@ -95,7 +95,7 @@ The **Create SAML Integration** dialog includes multiple steps:
 
    <img
      src="../../img/sso/okta-create-saml-integration.jpg"
-     alt="Okta create saml integration step"
+     alt="Okta create SAML integration step"
      className="screenshot"
    />
 
@@ -123,11 +123,11 @@ The **Create SAML Integration** dialog includes multiple steps:
 
 3. Still in the **Configure SAML** step, scroll down to **Attribute Statements**. Set values for the following attributes:
 
-   - **sub**: `user.email`
-     - The **sub** attribute should uniquely identify any particular user to GraphOS. In most cases, `user.email` provides this unique mapping.
-   - **email**: `user.email`
-   - **given_name**: `user.firstName`
-   - **family_name**: `user.lastName`
+   - `sub`: `user.email`
+     - The `sub` attribute should uniquely identify any particular user to GraphOS. In most cases, `user.email` provides this unique mapping.
+   - `email`: `user.email`
+   - `given_name`: `user.firstName`
+   - `family_name`: `user.lastName`
 
    <img
      src="../../img/sso/okta-attribute-statements.jpg"
@@ -159,7 +159,7 @@ The **Create SAML Integration** dialog includes multiple steps:
      className="screenshot"
    />{' '}
 
-2. In the dialog that appears, copy and paste the contents of the **IDP metadata** textbox into a text file:
+2. In the dialog that appears, copy and paste the contents of the **IDP metadata** text box into a text file:
 
    <img
      src="../../img/sso/okta-idp-metadata.jpg"

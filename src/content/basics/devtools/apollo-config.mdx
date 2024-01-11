@@ -23,7 +23,7 @@ module.exports = {
 
 ### `client.service`
 
-**Required** –– the CLI and VS Code extension rely on knowledge of your schema to show you "intellisense" (eg. autocomplete on fields, metrics annotations, query validation).
+**Required** - the Apollo CLI and VS Code extension rely on knowledge of your schema to show you "IntelliSense" (for example, autocomplete on fields, metrics annotations, query validation).
 
 There are a few different ways you can link your client to a schema:
 
@@ -47,7 +47,7 @@ module.exports = {
 
 <Note>
 
-You must have a [published schema](/graphos/delivery/publishing-schemas/) for features like VS Code intellisense, which requires knowledge of your schema, to work properly.
+You must have a [published schema](/graphos/delivery/publishing-schemas/) for features like VS Code IntelliSense, which requires knowledge of your schema, to work properly.
 
 </Note>
 
@@ -77,7 +77,7 @@ module.exports = {
       headers: {
         authorization: 'Bearer lkjfalkfjadkfjeopknavadf'
       },
-      // optional disable SSL validation check
+      // optionally turn off SSL validation check
       skipSSLValidation: true
     }
   }
@@ -101,7 +101,7 @@ module.exports = {
 
 ### `client.includes`
 
-_Optional_ –– by default, Apollo tools will look under a `./src` directory to find all operations and SDL to extract.
+_Optional_ - by default, Apollo tools will look under a `./src` directory to find all operations and SDL to extract.
 
 Client projects often contain client-side schema definitions for local state with Apollo Client. To make sure the Apollo CLI and VS Code extension can find these files and read them correctly, you may need to tell Apollo which folders to look for your schema and queries in like so:
 
@@ -116,7 +116,7 @@ module.exports = {
 
 ### `client.excludes`
 
-_Optional_ –– by default, Apollo tools will exclude `**/node_modules` and `**/__tests___` when looking for your queries and schema files.
+_Optional_ - by default, Apollo tools will exclude `**/node_modules` and `**/__tests___` when looking for your queries and schema files.
 
 If you want Apollo to ignore any of your other folders when looking for queries and schema definitions, adjust your config like so:
 
@@ -131,7 +131,7 @@ module.exports = {
 
 ### `client.tagName`
 
-_Optional_ –– custom tagged template literal.
+_Optional_ - custom tagged template literal.
 
 When using GraphQL with JavaScript or TypeScript projects, it is common to use the `gql` tagged template literal to write out operations. Apollo tools will be looking through your files for the `gql` tag to extract your queries, so if you use a different template literal, you can configure it like so:
 
@@ -146,7 +146,7 @@ module.exports = {
 
 ### `client.addTypename`
 
-_Optional_ –– Apollo will by default add the `__typename` field to all your operations automatically and to all your generated types during codegen.
+_Optional_ - Apollo will by default add the `__typename` field to all your operations automatically and to all your generated types during codegen.
 
 GraphQL clients like Apollo Client often add the `__typename` field to operations automatically when they're sent over the wire. This can come in really handy for things like caching, but it can be turned off by adding `addTypename: false` to the client config:
 
@@ -167,12 +167,12 @@ For consistency, we recommend that you keep this option consistent with how your
 
 ### `client.clientOnlyDirectives`, `client.clientSchemaDirectives`
 
-_Optional_ –– By default, Apollo projects support the following client-side directives:
+_Optional_ - By default, Apollo projects support the following client-side directives:
 
 - `@client` for local state
-- `@rest` for using apollo-link-rest
+- `@rest` for using `apollo-link-rest`
 - `@connection` for custom pagination with Apollo Client
-- `@type` for dynamic type names with apollo-link-rest
+- `@type` for dynamic type names with `apollo-link-rest`
 
 Client side applications can use custom directives on their queries that aren't meant to be sent to the server. Configuration of client side directives beyond the defaults listed above can be set up like so:
 
@@ -200,7 +200,7 @@ module.exports = {
 };
 ```
 
-Defining a `service` key in your Apollo config will provide the CLI with the information it needs to perform commands like `apollo service:push` and `apollo service:check`. You can set up the schema for your service to load in one of two ways:
+Defining a `service` key in your Apollo config will provide the Apollo CLI with the information it needs to perform commands like `apollo service:push` and `apollo service:check`. You can set up the schema for your service to load in one of two ways:
 
 1. Using a remote endpoint
 1. Using a local schema file
