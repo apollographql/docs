@@ -356,7 +356,7 @@ Operation checks will run against a maximum of 10,000 distinct operations. A war
 
 ### Input field usage reporting
 
-GraphOS tracks operation usage, however, to group duplicate operations, Apollo uses [operation signatures](../metrics/operation-signatures) which denormalize the arguments and inputs. This means that the result of the operation signature does not track which fields on input types that are used.
+GraphOS tracks operation usage. To deduplicate operations, Apollo uses [operation signatures](../metrics/operation-signatures) which denormalize the arguments and inputs. This means that the result of the operation signature does not track which fields on input types are used.
 
 For example, GraphOS will not be able to track how many times the input field `GetUsersInput.firstName` is used in this schema:
 
