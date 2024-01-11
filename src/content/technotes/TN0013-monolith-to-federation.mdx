@@ -16,11 +16,11 @@ Breaking up the monolith into smaller GraphQL APIs might be the right strategy f
 
 Here are the steps we recommend to convert a monolithic GraphQL API into a federated GraphQL API.
 
-## Planning & preparation
+## Planning and preparation
 
-### 1. Put the Apollo Router in front of your existing API
+### 1. Put a router in front of your existing API
 
-Start the process by making a "federated graph of one". Your existing monolith can act as a subgraph without any schema changes.
+Start the process by making a "federated graph of one." Your existing monolith can act as a subgraph without any schema changes.
 
 1. If you're not already publishing your schema to GraphOS Studio, create a new graph in your Studio organization. Choose "Supergraph" for your graph architecture.
 1. Publish your monolith schema to GraphOS Studio as a subgraph with the following command (modify your `--routing-url` and `--schema` path as needed):
@@ -177,7 +177,7 @@ When you're deciding how to start migrating types to other subgraphs, it's helpf
 
 **How many related types will you have to migrate at the same time?**
 
-Count the number of value types associated with an entity. You'll need to copy all of those types over to the new subgraph when you migrate the entity. Entities with fewer related scalars, enums, and non-entity object types will be a bit easier to migrate.
+Count the number of value types associated with an entity. You'll need to copy all those types over to the new subgraph when you migrate the entity. Entities with fewer related scalars, enums, and non-entity object types will be a bit easier to migrate.
 
 You won't need to move related entities at the same time as long as you can return an [entity reference](/federation/entities/#referencing-an-entity-without-contributing-fields). For example, you can move the `Room` type if you have access to the `Hotel` foreign key:
 

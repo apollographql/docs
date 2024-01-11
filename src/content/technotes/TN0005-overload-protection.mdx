@@ -29,11 +29,11 @@ Overload protection packages are available for most popular languages and server
 To use `overload-protection`, you include it in your Express startup like so:
 
 ```js
-import express from "express";
-import protect from "overload-protection";
+import express from 'express';
+import protect from 'overload-protection';
 
 const app = express();
-protect("express");
+protect('express');
 app.use(protect);
 ```
 
@@ -43,19 +43,19 @@ If you're currently using the `startStandaloneServer` function, you'll need to [
 
 </Note>
 
-If you're using `@apollo/server`'s Express integration (i.e.[`expressMiddleware`](/apollo-server/api/express-middleware)), you can add `overload-protection` via Express middleware by adding the highlighted lines to your server creation:
+If you're using `@apollo/server`'s Express integration (that is[`expressMiddleware`](/apollo-server/api/express-middleware)), you can add `overload-protection` via Express middleware by adding the highlighted lines to your server creation:
 
 ```js title="index.js"
-import { ApolloServer } from "@apollo/server";
-import { expressMiddleware } from "@apollo/server/express4";
-import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
-import express from "express";
-import http from "http";
-import cors from "cors";
-import { typeDefs, resolvers } from "./schema";
+import {ApolloServer} from '@apollo/server';
+import {expressMiddleware} from '@apollo/server/express4';
+import {ApolloServerPluginDrainHttpServer} from '@apollo/server/plugin/drainHttpServer';
+import express from 'express';
+import http from 'http';
+import cors from 'cors';
+import {typeDefs, resolvers} from './schema';
 // highlight-start
-import protect from "overload-protection";
-protect("express");
+import protect from 'overload-protection';
+protect('express');
 // highlight-end
 
 const app = express();
@@ -64,13 +64,13 @@ const httpServer = http.createServer(app);
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+  plugins: [ApolloServerPluginDrainHttpServer({httpServer})]
 });
 
 // Note the top-level `await` calls below!
 await server.start();
-app.use("/graphql", cors(), express.json(), expressMiddleware(server));
-await new Promise((resolve) => httpServer.listen({ port: 4000 }, resolve));
+app.use('/graphql', cors(), express.json(), expressMiddleware(server));
+await new Promise(resolve => httpServer.listen({port: 4000}, resolve));
 console.log(`🚀 Server ready at http://localhost:4000/graphql`);
 ```
 
@@ -85,7 +85,7 @@ When adding overload protection to a supergraph, a reasonable question is, "Do I
 - Protecting the router protects the availability of the supergraph as a whole.
 - Protecting a subgraph reduces the error rate for queries that request data from that subgraph.
 
-### Gateway/Router
+### Gateway/router
 
 The main concern with the gateway is a buildup of requests that cause partial or cascading failures. If the gateway can't shed excessive load, its performance starts to degrade.
 
@@ -95,6 +95,6 @@ A single request to the gateway usually transforms into multiple requests to sub
 
 A failure in a subgraph can cause a backup in the gateway. If this backup is due to load, overload protection helps short-circuit the return of an error. This relieves the pressure in both the gateway and the subgraph by allowing the gateway to return errors faster.
 
-## Additional Protections
+## Additional protections
 
 To further protect against overloading your graph and system, you should enable [limiting query depth](/technotes/TN0021-graph-security/#limit-query-depth) and [rate limiting](/technotes/TN0021-graph-security/#use-rate-limiting-as-needed).

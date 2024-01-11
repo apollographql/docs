@@ -52,7 +52,7 @@ These features (along with many others) are available to organizations on Apollo
 - [**Cloud routing.**](./routing/cloud/)
   - GraphOS automatically provisions and hosts a router for each of your supergraphs. Clients query your router instead of individual **subgraphs**, enabling the router to automatically collect operation metrics that you can then [visualize in GraphOS Studio](./metrics/).
 - **The schema registry.**
-  - GraphOS tracks the GraphQL schemas for all of your individual subgraphs, and it also handles **composing** those subgraph schemas into one _supergraph_ schema for your router.
+  - GraphOS tracks the GraphQL schemas for all your individual subgraphs, and it also handles **composing** those subgraph schemas into one _supergraph_ schema for your router.
 - **Safe schema delivery.**
   - The [schema checks](./delivery/schema-checks/) feature of GraphOS enables you to verify whether proposed changes to a subgraph will cause an issue with _other_ subgraphs, or with any of your existing clients.
   - Whenever you update a subgraph schema, GraphOS composes a new _supergraph_ schema for your router. If composition succeeds, your router automatically begins using its new schema.

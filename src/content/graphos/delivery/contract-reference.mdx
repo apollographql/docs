@@ -111,7 +111,7 @@ type User {
 - If a contract excludes _every field_ of an object or interface type, the entire type definition is excluded from the contract schema:
 
   ```graphql
-  # This object type is excluded because all of its fields are excluded.
+  # This object type is excluded because all its fields are excluded.
   type User {
     id: ID! @tag(name: "excludeMe")
   }
@@ -126,7 +126,7 @@ type User {
 - If a contract excludes _every object type_ that's part of a union type, the entire union type definition is excluded from the contract schema:
 
   ```graphql
-  # This union type is excluded because all of its possible types are excluded.
+  # This union type is excluded because all its possible types are excluded.
   union Media = Book | Movie
 
   type Book @tag(name: "excludeMe") {
