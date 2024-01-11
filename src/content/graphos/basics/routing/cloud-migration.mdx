@@ -18,9 +18,7 @@ GraphOS supports self-hosted and cloud graphs, each [recommended for different u
 
 GraphOS offers [two types of cloud routing](./#router-comparison): Serverless and Dedicated. With both, you offload router provisioning and management to Apollo. With [Dedicated](./cloud-dedicated), Apollo hosts your router on dedicated infrastructure that you control and scale.
 
-## How to migrate
-
-### Prerequisites
+## Prerequisites
 
 Your subgraphs must be accessible outside of your private cloud environment so that a cloud router can connect to them. That means you must either:
 
@@ -33,21 +31,13 @@ If you have multiple subgraphs, _each_ needs to be exposed to Apollo. Your super
 
 </Note>
 
-#### `@apollo/gateway` migration
+### Migrating from `@apollo/gateway`
 
 Cloud routers use the same [Apollo Router binary](https://github.com/apollographql/router) that you can self-host. Therefore, migrating from [`@apollo/gateway`](/apollo-server/using-federation/api/apollo-gateway/) entails migrating to the Apollo Router. Refer to the [Gateway migration guide](/router/migrating-from-gateway/) for tips.
 
-### Migration
-
-To use the Serverless plan, follow [these steps](./org/plans#upgrading-to-a-current-plan) to change your organization's plan. If you are interested in [Cloud Dedicated](./cloud-dedicated), <TrackableLink href="mailto:cloud@apollographql.com" eventName="content_contact_cloud">get in touch</TrackableLink> to request access.
-
-Once your organization is on the correct plan and your subgraphs are publicly available or allow for secure connections, you can follow the [cloud setup guide](../../quickstart/cloud#from-an-existing-account) to get started. 
-
-## Migration considerations
-
 ### Router customizations
 
-The Apollo Router supports a [few avenues for customization](/router/customizations/overview). Cloud routers don't support custom binaries nor Rhai scripts. To use cloud routing, you must migrate any such customizations to an [external coprocessor](/router/customizations/coprocessor/) or to built-in router features.
+The Apollo Router supports a [few avenues for customization](/router/customizations/overview). Cloud routers don't support custom binaries nor Rhai scripts. To use cloud routing, you must migrate any such customizations to [external coprocessors](/router/customizations/coprocessor/) or to built-in router features.
 
 <Note>
 
@@ -55,7 +45,13 @@ Serverless cloud routing doesn't support external coprocessors. Consider [Cloud 
 
 </Note>
 
-### Cloud pricing
+## Migration
+
+To use the Serverless plan, follow [these steps](./org/plans#upgrading-to-a-current-plan) to change your organization's plan. If you are interested in [Cloud Dedicated](./cloud-dedicated), <TrackableLink href="mailto:cloud@apollographql.com" eventName="content_contact_cloud">get in touch</TrackableLink> to request access.
+
+Once your organization is on the correct plan and your subgraphs are publicly available or allow secure connections, you can follow the [cloud setup guide](../../quickstart/cloud#from-an-existing-account) to get started. 
+
+## Cloud pricing
 
 Serverless pricing depends on the number of operations your cloud router processes. See the [pricing page](https://www.apollographql.com/pricing#cloud-hosted-router) for details. Dedicated pricing depends on [throughput](./cloud-dedicated/#gcu-performance) instead of operation volume.
 
