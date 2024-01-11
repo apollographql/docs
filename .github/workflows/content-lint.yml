@@ -1,4 +1,4 @@
-name: reviewdog
+name: content-lint
 on: [pull_request]
 
 jobs:
