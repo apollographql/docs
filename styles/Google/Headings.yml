@@ -1,0 +1,71 @@
+extends: capitalization
+message: "'%s' should use sentence-style capitalization."
+link: "https://developers.google.com/style/capitalization#capitalization-in-titles-and-headings"
+level: error
+scope: heading
+match: $sentence
+indicators:
+  - ":"
+exceptions:
+  - Apollo
+  - Apollo Client DevTools
+  - Apollo Client Web
+  - Apollo Federation
+  - Apollo iOS
+  - Apollo Kotlin
+  - Apollo Router
+  - Apollo Server
+  - AWS
+  - Azure
+  - Azure AD
+  - Bookmark Apps?
+  - CI(/CD)?
+  - CLI
+  - Cloud Dedicated
+  - Configur(e|ation|ing)
+  - CORS
+  - Cosmos
+  - Datadog Metrics Explorer
+  - Docker
+  - Emmet
+  - Enterprise
+  - Explorer
+  - Express
+  - FAQ
+  - Federation (1|2)
+  - GDPR
+  - GitHub
+  - GraphOS
+  - GraphOS Studio
+  - GraphQL Summit
+  - gRPC
+  - HTTP
+  - I
+  - IAM
+  - IDs?
+  - Kubernetes
+  - Linux
+  - macOS
+  - Markdown
+  - Marketplace
+  - MongoDB
+  - OpenTelemetry
+  - PingOne
+  - PRs?
+  - REPL
+  - Rover
+  - SAF
+  - Safari
+  - SAML
+  - Sandbox
+  - SDL
+  - SDUI
+  - Studio
+  - TypeScript
+  - URLs?
+  - VPC Lattice
+  - Visual
+  - VS
+  - WebSockets?
+  - Windows
+  - Zipkin

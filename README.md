@@ -5,7 +5,7 @@ This repo contains the code responsible for building the Apollo Docs site. It al
 > [!TIP]
 > We use the word **docset** to describe an individual docs website. For example, "I just updated the Android docset".
 
-The central piece of this repo, the docs infrastructure, is a [Gatsby](https://www.gatsbyjs.com/) website that sources MDX and Markdown files from the [remote git repos](#remote) of Apollo's tools. It pulls in all of this data and outputs a single static site. To learn more about this approach and why we built this, check out [this section](#history).
+The central piece of this repo, the docs infrastructure, is a [Gatsby](https://www.gatsbyjs.com/) website that sources MDX and Markdown files from the [remote git repos](#remote) of Apollo's tools. It pulls in all this data and outputs a single static site. To learn more about this approach and why we built this, check out [this section](#history).
 
 - [Developing locally](#developing-locally)
   - [Developing a single docset](#developing-a-single-docset)
@@ -173,7 +173,7 @@ The `config.json` file lives at the root of its docset's content directory, and 
 | -------------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | title          | yes       | The title of the docset. It is used to construct page titles and shown in the header when the docset is selected.                                                                                                                                                                                                 |
 | sidebar        | yes       | A JSON object mapping sidebar nav labels to their paths. Use paths beginning with a slash, relative to the root of the content directory for internal links. Full URLs are transformed into external links that open in a new tab. These objects can be nested to define categories and subcategories in the nav. |
-| version        | no        | A string representing the version of the software that is being documented, i.e. "v3". This value is shown in the version dropdown if multiple versions of a docset are configured.                                                                                                                               |
+| version        | no        | A string representing the version of the software that is being documented, that is "v3". This value is shown in the version dropdown if multiple versions of a docset are configured.                                                                                                                               |
 | algoliaFilters | no        | An array of filters that affect the ranking of search results when a search is made within a particular docset. This is passed to Algolia as an `optionalFilters` parameter, which you can learn more about [here](https://www.algolia.com/doc/api-reference/api-parameters/optionalFilters/).                    |
 | internal       | no        | Set to `true` if you want your docset to be [internal-only](#internal-only-docsets).                                                                                                                                                                                                                              |
 | versionBanner  | no        | A JSON object used to customize the `VersionBanner` link url and text.                                                                                                                                                                                                                                            |
@@ -291,7 +291,7 @@ Redirects can continue to be written in the `_redirects` file in the `docs/sourc
 /v2.4 /docs/react/v2/
 ```
 
-All of the redirects from each docset will be bundled together at build time, and deployed as one combined `_redirects` file deployed with the built docs site.
+All the redirects from each docset will be bundled together at build time, and deployed as one combined `_redirects` file deployed with the built docs site.
 
 #### Redirecting with anchors
 
@@ -427,9 +427,9 @@ Links between docs articles should be written as relative paths. For example, if
 [get started](../getting-started)
 ```
 
-Writing links using absolute paths, i.e. `/getting-started` will result in that link taking the user to `/docs/getting-started` in production, instead of `/docs/apollo-server/getting-started` as intended.
+Writing links using absolute paths, that is `/getting-started` will result in that link taking the user to `/docs/getting-started` in production, instead of `/docs/apollo-server/getting-started` as intended.
 
-That being said, links between docsets can (and should) be made using absolute paths. Previously we had to link between other docsets using full URLs, i.e. `https://www.apollographql.com/docs/apollo-server`. Now those links can be written as `/apollo-server` and they'll benefit from the same snappy, instant, client-side routing behaviour that internal links get.
+That being said, links between docsets can (and should) be made using absolute paths. Previously we had to link between other docsets using full URLs, that is `https://www.apollographql.com/docs/apollo-server`. Now those links can be written as `/apollo-server` and they'll benefit from the same snappy, instant, client-side routing behaviour that internal links get.
 
 ### Code blocks
 
@@ -554,7 +554,7 @@ const foo = 123;
 
 ##### YouTube
 
-A YouTube player exported from MDX Embed. Check out all of the different props and options [on their docs](https://www.mdx-embed.com/?path=/docs/components-youtube--usage).
+A YouTube player exported from MDX Embed. Check out all the different props and options [on their docs](https://www.mdx-embed.com/?path=/docs/components-youtube--usage).
 
 ```mdx
 Check out this introduction to GraphOS Studio:
@@ -672,6 +672,49 @@ The above code block renders like so:
 
 ![Rendered admonitions](src/content/graphos/img/admonitions.jpg)
 
+## Content linting
+
+The docs repository automatically lints pull requests via a [GitHub action](.github/workflows/content-lint.yml) that uses [Vale](https://vale.sh/), an open-source content linter. Vale checks `.md` and `.mdx` files against [style rules](https://vale.sh/docs/topics/styles/) imported from Google, Microsoft, and other developer documentation style guides. It also includes custom Apollo style rules. All styles are in the [`styles` directory](styles). Most rules are self-explanatory or include links to resources to help understand what to fix.
+
+#### Running Vale locally
+
+You can run Vale locally to catch and fix issues during local development.
+
+To install:
+
+```bash
+brew install vale
+```
+
+To lint:
+
+```bash
+vale <path/to/file-or-directory>
+```
+
+### Style rule evolution
+
+As we refine and evolve our style guidelines, you may see the need to add, update, or delete style rules. See Vale's [styles documentation](https://vale.sh/docs/topics/styles/) for guidance and feel free to submit a PR.
+
+The most common adjustments will be for spell and case checking. You can add terms to recognize in the [`accept.txt`](styles/config/vocabularies/Docs/accept.txt) file and terms with suggested substitutions in [`/styles/Apollo/Wordlist.yml`](styles/Apollo/WordList.yml).
+
+### Locally disabling rules
+
+In some cases, you may need to intentionally ignore a rule. For example, you may need to turn off the [`Google.Headings`](styles/Google/Headings.yml) rule that checks that headings use sentence case to exceptionally capitalize a word.
+
+In these cases, you can locally disable the rule for a portion of text by surrounding it with comments like this:
+
+```
+<!-- vale Google.Headings = NO -->
+
+### This header needs an Uppercase word
+
+<!-- vale Google.Headings = YES -->
+
+```
+
+Replace `Google.Headings` with the name of the rule you need to turn off.
+
 ## History
 
 Previous to this system, we built our docs site by building each repo's docs individually using a [shared Gatsby theme](https://github.com/apollographql/gatsby-theme-apollo/). Each site would be deployed to Netlify and "stitched" together to make one continuous website using Netlify path rewrites like this:
@@ -682,7 +725,7 @@ Previous to this system, we built our docs site by building each repo's docs ind
 ```
 
 > [!NOTE]
-> All of our path rewriting happens in the [website router](https://github.com/apollographql/website-router) repo.
+> All our path rewriting happens in the [website router](https://github.com/apollographql/website-router) repo.
 
 ### Benefits
 
@@ -736,7 +779,7 @@ I believe this represents an opportunity to cut down the amount of Netlify build
 
 ## Notable changes to authoring patterns
 
-Mostly all of the way that content authoring works in our docs stays the same with this change, with a few exceptions:
+Most of the ways that content authoring works in our docs stays the same with this change, with a few exceptions:
 
 ### No more component imports
 
@@ -785,6 +828,6 @@ More info about code blocks [here](#code-blocks).
 
 ### Internal links
 
-Previously, links within a docset could be written as absolute paths, i.e. `/get-started`. Now, all internal links should be written as relative paths, i.e. `./get-started` or `../get-started`, depending on where the destination page lives relative to the page it's being linked from.
+Previously, links within a docset could be written as absolute paths, that is `/get-started`. Now, all internal links should be written as relative paths, that is `./get-started` or `../get-started`, depending on where the destination page lives relative to the page it's being linked from.
 
 More information about linking [here](#linking).
