@@ -6,6 +6,7 @@ import React from 'react';
 import {Box, Flex, Heading, Icon, Text} from '@chakra-ui/react';
 import {BsJournals} from 'react-icons/bs';
 import {PrimaryLink} from '../RelativeLink';
+import {makeGlossaryTermId} from '../GlossaryPage/Results';
 
 const DefinitionText = ({children}) => {
   return (
@@ -82,9 +83,9 @@ export default function GlossaryResult({item}) {
           <PrimaryLink
             aria-label="Go to the glossary"
             as="a"
-            href={`https://www.apollographql.com/docs/resources/glossary#${item.term
-              .replace(/\s+/g, '-')
-              .toLowerCase()}`}
+            href={`https://www.apollographql.com/docs/resources/glossary#${makeGlossaryTermId(
+              item.term
+            )}`}
             mt="12px"
             style={{display: 'flex', alignItems: 'center'}}
           >
