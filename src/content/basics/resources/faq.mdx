@@ -32,7 +32,7 @@ query GetBooks {
 }
 ```
 
-Your GraphQL server defines a strongly-typed [schema](/apollo-server/schema/schema/) that describes the data that clients can query for. Clients execute queries that conform to this schema's structure.
+Your GraphQL server defines a strongly typed [schema](/apollo-server/schema/schema/) that describes the data that clients can query for. Clients execute queries that conform to this schema's structure.
 
 Here's an example GraphQL schema that supports the example query above:
 
@@ -127,7 +127,7 @@ One of the best things about GraphQL is that it works excellently with existing 
 
 The most common source is a REST API. The [`RESTDataSource`](/apollo-server/data/fetching-rest) class integrates with Apollo Server to simplify fetching and caching for existing REST APIs.
 
-But it's easy to connect any backend to a schema. [Resolvers](/apollo-server/data/resolvers/) can do anything, including fetch data from an SDK or ORM.
+However, you can connect any backend to a schema. [Resolvers](/apollo-server/data/resolvers/) can do anything, including fetch data from an SDK or ORM.
 
 ### How do I design the schema?
 
@@ -151,11 +151,11 @@ As with any large change, the adoption of GraphQL should be incremental. GraphQL
 
 ### Who owns the schema design?
 
-GraphQL schemas work best when their design is collaborated on by combination of back-end implementers and front-end consumers. It's tempting to design a schema to mirror underlying API structures or database tables, but this can reduce the usefulness of GraphQL.
+GraphQL schemas work best when their design is collaborated on by combination of backend implementers and frontend consumers. It's tempting to design a schema to mirror underlying API structures or database tables, but this can reduce the usefulness of GraphQL.
 
 ### How do I set up authentication/authorization for my GraphQL schema?
 
-Authentication and authorization are important topics to discuss with any API. GraphQL provides a very granular approach to handling these topics. But don't worry, if an API being consumed by GraphQL already has authorization built-in, it may be possible to ignore it completely.
+Authentication and authorization are important topics to discuss with any API. GraphQL provides a granular approach to handling these topics. But don't worry, if an API being consumed by GraphQL already has authorization built-in, it may be possible to ignore it completely.
 
 ### How can I secure my schema from malicious or expensive queries?
 
@@ -177,7 +177,7 @@ Partial query caching can be achieved by caching the responses from underlying s
 
 ### How can I monitor the health of my GraphQL schema?
 
-Many apps and sites are powered almost completely by an API such as a GraphQL schema, so it's important to make sure the API is healthy at all times. Indicators of an unhealthy service include long response times, high resource usage, and unusual traffic patterns.
+Many apps and sites are powered almost completely by an API such as a GraphQL schema, so it's important to make sure the API is stable at all times. Indicators of an unhealthy service include long response times, high resource usage, and unusual traffic patterns.
 
 [GraphOS Studio](https://studio.apollographql.com) is a great tool to track many of these things. It allows close inspection of fields to make it easy to see both total response times as well as how long each field took to execute.
 

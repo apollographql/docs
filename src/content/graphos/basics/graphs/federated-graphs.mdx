@@ -184,7 +184,7 @@ You can delete an existing subgraph from a variant of your cloud supergraph. If 
 
 #### ⚠️ Important considerations
 
-- **Deleting a subgraph can break existing clients!** This action is equivalent to removing _all_ of the subgraph's types and fields from your supergraph (unless they're also defined in _another_ subgraph). If a client sends an operation that includes any of those types and fields, the router will _reject_ that operation.
+- **Deleting a subgraph can break existing clients!** This action is equivalent to removing _all_ the subgraph's types and fields from your supergraph (unless they're also defined in _another_ subgraph). If a client sends an operation that includes any of those types and fields, the router will _reject_ that operation.
 
   - To help you remove schema definitions safely, learn about [schema checks](../delivery/schema-checks/).
 

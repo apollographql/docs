@@ -10,16 +10,16 @@ If your supergraph gateway uses Apollo Server with the `@apollo/gateway` library
 
 The Apollo Router is a high-throughput, low-latency Apollo Federation GraphQL gateway written in Rust. Its performance and consistency significantly exceed any Node.js-based gateway.
 
-[Migrating to Apollo Router from @apollo/gateway](/router/migrating-from-gateway)
+[Migrating to Apollo Router from `@apollo/gateway`](/router/migrating-from-gateway)
 
 ## Disable or reduce `ftv1` inline tracing
 
 Inline tracing (also known as federated tracing or `ftv1`) provides helpful field-level latency information in GraphOS Studio, however it comes at a cost: trace information can be expensive to calculate, and it's attached to subgraph responses, increasing payload size.
 
-In Apollo Server 3.6 and later, you can set the `fieldLevelInstrumentation` option to disable inline tracing entirely, or limit tracing to a representative sample of all requests.
+In Apollo Server 3.6 and later, you can set the `fieldLevelInstrumentation` option to turn off inline tracing entirely, or limit tracing to a representative sample of all requests.
 
 - During load testing, we recommend disabling tracing entirely.
-- For normal production traffic, we recommend setting a low sample rate such as `0.01` (one percent of requests).
+- For regular production traffic, we recommend setting a low sample rate such as `0.01` (one percent of requests).
 
 [Usage Reporting plugin docs for `fieldLevelInstrumentation`](/apollo-server/api/plugin/usage-reporting#fieldlevelinstrumentation)
 
@@ -29,7 +29,7 @@ The `maxSockets` setting controls the maximum number of connections that Apollo 
 
 In Apollo Gateway versions prior to v0.51.0, the default `maxSockets` setting is `15`, which is too low for many systems. In later versions, the default is `Infinity`, which lends itself to the overload scenario.
 
-The following `ApolloGateway` constructor sets maxSockets to 50:
+The following `ApolloGateway` constructor sets `maxSockets` to 50:
 
 ```js
 import {ApolloGateway, RemoteGraphQLDataSource} from '@apollo/gateway';
@@ -50,7 +50,7 @@ const gateway = new ApolloGateway({
 
 ## Instrument Gateway middleware and plugins
 
-If you've installed middleware (such as Express middleware) or Apollo Server plugins, it's worth using a code profiling tool such as [clinicjs](https://clinicjs.org/) to investigate potential issues, such as synchronous code blocking the main thread or expensive plugin functions.
+If you've installed middleware (such as Express middleware) or Apollo Server plugins, it's worth using a code profiling tool such as [Clinic.js](https://clinicjs.org/) to investigate potential issues, such as synchronous code blocking the main thread or expensive plugin functions.
 
 ## Use OpenTelemetry tracing
 
@@ -91,13 +91,13 @@ You might need to set higher CPU and memory limits on your Apollo Gateway pods. 
 - Subgraph latency
 - Use of shared caches
 
-In general, look at increasing memory limits as Node.js is single-threaded and cannot use more than one CPU. That being said, we recommend keeping CPU utilization below 50%. At higher CPU utilization percentages, you may start to see event loop delays increase relative. Monitoring both memory usage and CPU upsage metrics can help provide a clearer image of bottlenecks beyond just code profiling alone.
+In general, look at increasing memory limits as Node.js is single-threaded and cannot use more than one CPU. That being said, we recommend keeping CPU utilization below 50%. At higher CPU utilization percentages, you may start to see event loop delays increase relative. Monitoring both memory usage and CPU usage metrics can help provide a clearer image of bottlenecks beyond just code profiling alone.
 
 If CPU throttling becomes a problem, consider removing the limits on your gateway pods as discussed in [this blog post on Kubernetes resource limits](https://erickhun.com/posts/kubernetes-faster-services-no-cpu-limits/).
 
 ## Check query plans
 
-Query plans (the steps the Gateway takes to resolve an operation from multiple subgraphs) are almost always reasonable approximations of the original operation. They're also highly cacheable so they don't incur much of a performance penalty. But it's worth looking at them to make sure they're of an appropriate size and complexity. Fragment and abstract type usage may cause undesirable query plans in very specific cases.
+Query plans (the steps the Gateway takes to resolve an operation from multiple subgraphs) are almost always reasonable approximations of the original operation. They're also highly cacheable so they don't incur much of a performance penalty. But it's worth looking at them to make sure they're of an appropriate size and complexity. Fragment and abstract type usage may cause undesirable query plans in specific cases.
 
 ```js
 const gateway = new ApolloGateway({

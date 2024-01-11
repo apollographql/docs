@@ -24,7 +24,7 @@ You can view an operation's response as JSON or as a table. Table layout is espe
 
 When looking at arrays of data in table mode, you can click the header of any column of data to sort your array by that column's values.
 
-### Inline/Extract fragments
+### Inline and extract fragments
 
 <Tip>
 
@@ -34,7 +34,7 @@ Right-click any fragment name to inline that fragment in queries where it is use
 
 While editing your operations, you can now inline and extract your fragments with one click. This is useful when trying to select the same fields in multiple places using fragments, or when trying too inline fragments into a single operation to be used somewhere else.
 
-### Inline/Extract variables
+### Inline and extract variables
 
 <Tip>
 
@@ -74,7 +74,12 @@ query ($id: ID!) {
 
 The Explorer supports file upload for servers that support the [GraphQL multipart request spec](https://github.com/jaydenseric/graphql-multipart-request-spec). To run an operation that requires files as input, click **+ Add files** in the Explorer's **Variables** tab:
 
-<img className="screenshot" src="../img/explorer-file-upload.jpg" alt="File upload in the Explorer" width="500" />
+<img
+  className="screenshot"
+  src="../img/explorer-file-upload.jpg"
+  alt="File upload in the Explorer"
+  width="500"
+/>
 
 You can then set the name of the variable and select the files you want to upload. Note that if your operation supports providing _multiple_ files via a single variable, you need to select the toggle for that variable to enable the multi-file protocol.
 
@@ -84,7 +89,7 @@ You can use the Explorer for local development by opening [Sandbox](./sandbox/).
 
 Unlike a deployed graph, Sandbox uses **introspection** to fetch your schema from your development server, and it also polls regularly for changes. Whenever schema changes are detected, they're pulled in automatically.
 
-You can pause introspection polling at any time. To do so, open the Explorer Settings tab on the left and edit your connection settings. In the dialog, disable **Auto Update**.
+You can pause introspection polling at any time. To do so, open the Explorer Settings tab on the left and edit your connection settings. In the dialog, turn off **Auto Update**.
 
 ## Supergraphs
 
@@ -92,7 +97,12 @@ You can pause introspection polling at any time. To do so, open the Explorer Set
 
 If you're working with a supergraph in Studio, the Explorer dynamically calculates example query plans for your operations in the right-hand panel (click **Response** and select **Query Plan Preview** from the dropdown):
 
-<img className="screenshot" src="../img/explorer-query-plan.jpg" alt="Query plan in the Explorer" width="300" />
+<img
+  className="screenshot"
+  src="../img/explorer-query-plan.jpg"
+  alt="Query plan in the Explorer"
+  width="300"
+/>
 
 <Tip>
 
@@ -154,12 +164,12 @@ Enable **Inlined traces** from the Explorer's Settings tab.
 If you're using Apollo Server, you can see traces from your responses inlined in the Explorer by adding the `ApolloServerPluginInlineTrace` plugin to your server's configuration:
 
 ```ts
-import { ApolloServerPluginInlineTrace } from "@apollo/server/plugin/inlineTrace";
+import {ApolloServerPluginInlineTrace} from '@apollo/server/plugin/inlineTrace';
 
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  plugins: [ApolloServerPluginInlineTrace()],
+  plugins: [ApolloServerPluginInlineTrace()]
 });
 ```
 
@@ -214,7 +224,7 @@ You can change which percentile you want to see hints from at any time in the Ex
 
 ### `graphql-lodash` integration
 
-The Explorer [extends your schema with `graphql-lodash`](https://github.com/APIs-guru/graphql-lodash) on the client side, so you can write queries that include lodash directives and they will resolve correctly. This is helfpul if you want to manipulate your response data into into a specific format for exporting, or if you want to do some quick analysis without needing to export.
+The Explorer [extends your schema with `graphql-lodash`](https://github.com/APIs-guru/graphql-lodash) on the client side, so you can write queries that include lodash directives and they will resolve correctly. This is helpful if you want to manipulate your response data into a specific format for exporting, or if you want to do some quick analysis without needing to export.
 
 Here's an example of a query that uses `graphql-lodash`. You can try pasting this in the Explorer embedded at http://apollographql.com/studio/develop:
 
