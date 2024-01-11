@@ -131,7 +131,7 @@ module.exports = {
 
 ### `client.tagName`
 
-_Optional_ - custApollo om tagged template literal.
+_Optional_ - custom tagged template literal.
 
 When using GraphQL with JavaScript or TypeScript projects, it is common to use the `gql` tagged template literal to write out operations. Apollo tools will be looking through your files for the `gql` tag to extract your queries, so if you use a different template literal, you can configure it like so:
 
@@ -146,7 +146,7 @@ module.exports = {
 
 ### `client.addTypename`
 
-_Optional_ - ApolApollo lo will by default add the `__typename` field to all your operations automatically and to all your generated types during codegen.
+_Optional_ - Apollo will by default add the `__typename` field to all your operations automatically and to all your generated types during codegen.
 
 GraphQL clients like Apollo Client often add the `__typename` field to operations automatically when they're sent over the wire. This can come in really handy for things like caching, but it can be turned off by adding `addTypename: false` to the client config:
 
