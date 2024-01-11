@@ -1,16 +1,21 @@
 ---
-title: Cloud migration
+title: Migrating to cloud routing
 subtitle: Learn how to migrate from a self-hosted to cloud graph
 description: To-do
 ---
 
-You may want to migrate from a self-hosted graph to cloud routing in these two scenarios:
+<Tip>
 
-- You have a [self-hosted supergraph](../graphs/#self-hosted-supergraphs) and want to offload the provisioning and management of your router service to Apollo.
-  - Your router service may be either the Apollo Router or the [`@apollo/gateway`](/apollo-server/using-federation/api/apollo-gateway/) package
-- You have one or more [monographs](../graphs/#monographs) and want to make use of GraphOS functionality beyond support for multiple subgraphs, for example, [`@defer` support](/router/executing-operations/defer-support/) and [metrics reporting](../metrics/).
+Refer to [Router types](./#router-types) to learn the differences between self-hosted and cloud graphs.
 
-With [Dedicated](./cloud-dedicated) cloud routing, you maintain control over scaling, while offloading router management to Apollo. Refer to [Router types](./#router-types) for more information.
+</Tip>
+
+GraphOS supports self-hosted and cloud graphs, which are [recommended for different use cases](../graphs/#graph-types). You may want to migrate from a self-hosted to cloud graph in these scenarios:
+
+- You have a [self-hosted **supergraph**](../graphs/#self-hosted-supergraphs) and want to offload the management of your router service—either the Apollo Router or the [`@apollo/gateway` package](/apollo-server/using-federation/api/apollo-gateway/)—to Apollo.
+- You have one or more [self-hosted GraphQL APIs](../graphs/#monographs) and want to make use of GraphOS features beyond support for graph composition, for example, [`@defer` support](/router/executing-operations/defer-support/) and [metrics reporting](../metrics/).
+
+With [Dedicated](./cloud-dedicated) cloud routing, you offload router provisioning and management to Apollo while maintaining control over scaling. 
 
 ## How to migrate
 
@@ -18,10 +23,14 @@ With [Dedicated](./cloud-dedicated) cloud routing, you maintain control over sca
 
 To make use of a cloud router, your subgraphs must be accessible outside of your private cloud environment. That means you need to either:
 
-- Make your subgraphs available via a publicly accessible URL, for example `https://api.mycompany.com/subgraphA)`
-- Allow for them to be securely connected to with something like VPC Peering (see Dedicated Lattice docs)
+- Make your subgraphs available via a publicly accessible URL, for example `https://api.mycompany.com/subgraphA`
+- Keep your subgraphs private, but allow for secure connections, for example, via [VPC peering](./cloud-dedicated/lattice/)
 
-If you have multiple GraphQL APIs (subgraphs) each of these need to be exposed. You should NOT expose your supergraph as a publicly accessible URL and compose a supergraph into a cloud router.
+<Note>
+
+If you have multiple subgraphs, each needs to be exposed to Apollo. Your supergraph, however, should only be publicly accessible via your cloud router.
+
+</Note>
 
 ### Migration
 
@@ -31,14 +40,14 @@ To-do
 
 ### Migrating from `@apollo/gateway`
 
-Many customers are coming from `@apollo/gateway` to Cloud Router which inherently means also migrating from Gateway to Router. Mapping Gateway customizations to Router can take time and some features aren't yet supported (eg: full response caching). Refer to the existing [Gateway migration guide](/router/migrating-from-gateway/) for tips.
+If you're migrating from the [`@apollo/gateway` package](/apollo-server/using-federation/api/apollo-gateway/) to cloud routing, you first need to migrate to the Apollo Router. Refer to the [Gateway migration guide](/router/migrating-from-gateway/) for tips.
 
 ### Router customizations
 
-Dedicated does not support custom router binaries (eg: rust plugins) or RHAI. These customizations will need to be migrated to built in router functionality, or in most cases, to an external coprocessor.
+The Apollo Router supports a [few avenues for customization](/router/customizations/overview). Cloud routers don't support custom binaries nor Rhai scripts. To use cloud routing, you need to migrate any such customizations to an [external coprocessor](/router/customizations/coprocessor/) or built-in router features.
 
 ### Cloud billing
 
-Billing for Dedicated is also very different from Teams. With Dedicated you pay per throughput instead of query volume. Query volume is not a good indicator of throughput requirements. Run a load test to estimate your bill.
+With Dedicated cloud routing, you pay per throughput instead of query volume. Query volume is not a good indicator of throughput requirements. Run a load test to estimate your bill.
 
-Since you're not self hosting anymore, router to subgraph communication will be inter region, AZ, or egress traffic. Be aware of how your new network topology will result in a different cloud bill. This cost could be offset by the operational savings of not running routers yourselves (operating burden and infra costs).
+Since you're not self-hosting your router service anymore, router to subgraph communication will be inter-region, AZ, or egress traffic. Be aware of how your new network topology will result in a different cloud bill.
