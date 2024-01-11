@@ -1,7 +1,7 @@
 ---
 title: Migrating to cloud routing
-subtitle: Learn how to migrate from a self-hosted to cloud graph
-description: To-do
+subtitle: Learn how to migrate from a self-hosted to a cloud graph
+description: Migrate your self-hosted GraphQL APIs to a federated cloud supergraph
 ---
 
 <Tip>
@@ -10,44 +10,59 @@ Refer to [Router types](./#router-types) to learn the differences between self-h
 
 </Tip>
 
-GraphOS supports self-hosted and cloud graphs, which are [recommended for different use cases](../graphs/#graph-types). You may want to migrate from a self-hosted to cloud graph in these scenarios:
+GraphOS supports self-hosted and cloud graphs, each [recommended for different use cases](../graphs/#graph-types). You may want to migrate to a cloud graph in these scenarios:
 
-- You have a [self-hosted **supergraph**](../graphs/#self-hosted-supergraphs) and want to offload the management of your router service—either the Apollo Router or the [`@apollo/gateway` package](/apollo-server/using-federation/api/apollo-gateway/)—to Apollo.
-- You have one or more [self-hosted GraphQL APIs](../graphs/#monographs) and want to make use of GraphOS features beyond support for graph composition, for example, [`@defer` support](/router/executing-operations/defer-support/) and [metrics reporting](../metrics/).
+- You have a [self-hosted supergraph](../graphs/#self-hosted-supergraphs) and want to offload the management of your router service to Apollo.
+    - You router service may be either the Apollo Router or the [`@apollo/gateway` package](/apollo-server/using-federation/api/apollo-gateway/).
+- You have one or more [self-hosted GraphQL APIs](../graphs/#monographs) and want to use GraphOS features beyond graph composition, for example, [`@defer` support](/router/executing-operations/defer-support/) and [metrics reporting](../metrics/).
 
-With [Dedicated](./cloud-dedicated) cloud routing, you offload router provisioning and management to Apollo while maintaining control over scaling. 
+GraphOS offers [two types of cloud routing](./#router-comparison): Serverless and Dedicated. With both, you offload router provisioning and management to Apollo. With [Dedicated](./cloud-dedicated), Apollo hosts your router on dedicated infrastructure that you control and scale.
 
 ## How to migrate
 
 ### Prerequisites
 
-To make use of a cloud router, your subgraphs must be accessible outside of your private cloud environment. That means you need to either:
+Your subgraphs must be accessible outside of your private cloud environment so that a cloud router can connect to them. That means you must either:
 
-- Make your subgraphs available via a publicly accessible URL, for example `https://api.mycompany.com/subgraphA`
-- Keep your subgraphs private, but allow for secure connections, for example, via [VPC peering](./cloud-dedicated/lattice/)
+- Make your subgraphs available via a publicly accessible URL, for example, `https://api.mycompany.com/subgraphA`
+- Keep your subgraphs private but allow secure connections, for example, via [VPC peering](./cloud-dedicated/lattice/)
 
 <Note>
 
-If you have multiple subgraphs, each needs to be exposed to Apollo. Your supergraph, however, should only be publicly accessible via your cloud router.
+If you have multiple subgraphs, _each_ needs to be exposed to Apollo. Your supergraph, however, should only be publicly accessible via your cloud router.
 
 </Note>
 
+#### `@apollo/gateway` migration
+
+Cloud routers use the same [Apollo Router binary](https://github.com/apollographql/router) that you can self-host. Therefore, migrating from [`@apollo/gateway`](/apollo-server/using-federation/api/apollo-gateway/) entails migrating to the Apollo Router. Refer to the [Gateway migration guide](/router/migrating-from-gateway/) for tips.
+
 ### Migration
 
-To-do
+To use the Serverless plan, follow [these steps](./org/plans#upgrading-to-a-current-plan) to change your organization's plan. If you are interested in [Cloud Dedicated](./cloud-dedicated), <TrackableLink href="mailto:cloud@apollographql.com" eventName="content_contact_cloud">get in touch</TrackableLink> to request access.
+
+Once your organization is on the correct plan and your subgraphs are publicly available or allow for secure connections, you can follow the [cloud setup guide](../../quickstart/cloud#from-an-existing-account) to get started. 
 
 ## Migration considerations
 
-### Migrating from `@apollo/gateway`
-
-If you're migrating from the [`@apollo/gateway` package](/apollo-server/using-federation/api/apollo-gateway/) to cloud routing, you first need to migrate to the Apollo Router. Refer to the [Gateway migration guide](/router/migrating-from-gateway/) for tips.
-
 ### Router customizations
 
-The Apollo Router supports a [few avenues for customization](/router/customizations/overview). Cloud routers don't support custom binaries nor Rhai scripts. To use cloud routing, you need to migrate any such customizations to an [external coprocessor](/router/customizations/coprocessor/) or built-in router features.
+The Apollo Router supports a [few avenues for customization](/router/customizations/overview). Cloud routers don't support custom binaries nor Rhai scripts. To use cloud routing, you must migrate any such customizations to an [external coprocessor](/router/customizations/coprocessor/) or to built-in router features.
 
-### Cloud billing
+<Note>
 
-With Dedicated cloud routing, you pay per throughput instead of query volume. Query volume is not a good indicator of throughput requirements. Run a load test to estimate your bill.
+Serverless cloud routing doesn't support external coprocessors. Consider [Cloud Dedicated](./cloud-dedicated) if you need router customization.
 
-Since you're not self-hosting your router service anymore, router to subgraph communication will be inter-region, AZ, or egress traffic. Be aware of how your new network topology will result in a different cloud bill.
+</Note>
+
+### Cloud pricing
+
+Serverless pricing depends on the number of operations your cloud router processes. See the [pricing page](https://www.apollographql.com/pricing#cloud-hosted-router) for details. Dedicated pricing depends on [throughput](./cloud-dedicated/#gcu-performance) instead of operation volume.
+
+<Note>
+
+Operation volume isn't a good indicator of throughput requirements. Run a load test to estimate to estimate pricing on Cloud Dedicated.
+
+</Note>
+
+When you no longer host your router, router-to-subgraph communication may be inter-region, inter-Availablity Zone (AZ), or egress traffic. Be aware of how your new network topology may affect your cloud costs.
