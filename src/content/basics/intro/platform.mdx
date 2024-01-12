@@ -81,7 +81,7 @@ The GraphOS platform provides an ever-growing collection of tools and services t
 - [**Cloud routing.**](/graphos/routing/cloud/)
   - GraphOS automatically provisions and hosts a router for each of your supergraphs. Clients query your router instead of your individual services (also called **subgraphs**). This enables the router to automatically collect operation metrics that you can then visualize in GraphOS Studio.
 - **The schema registry.**
-  - GraphOS tracks the schemas for all of your GraphQL APIs, and it also handles **composing** those schemas into one _supergraph_ schema for your router.
+  - GraphOS tracks the schemas for all your GraphQL APIs, and it also handles **composing** those schemas into one _supergraph_ schema for your router.
 - **Safe schema delivery.**
   - The [schema checks](/graphos/delivery/schema-checks/) feature of GraphOS enables you to verify whether proposed changes to one of your services will cause an issue with _other_ services, or with any of your existing clients.
   - Whenever you update a service's schema, GraphOS composes a new _supergraph_ schema for your router. If composition succeeds, your router automatically begins using its new schema.

@@ -6,13 +6,17 @@ tags: [schema-design]
 
 ## Response types for mutations
 
-> See also [Structuring mutation responses](/apollo-server/schema/schema#structuring-mutation-responses).
+<Tip>
+
+See also [Structuring mutation responses](/apollo-server/schema/schema#structuring-mutation-responses).
+
+</Tip>
 
 This response type pattern is useful for mutations because they can result in many valid failure states (such as attempting to delete an object that doesn't exist).
 
 For example, let's say we have an e-commerce graph. When executing a `checkout` mutation, it's valid for that mutation to fail if a purchased item is out of stock or the buyer has insufficient funds.
 
-If we define a set of `ErrorResponse` types in our schema, front-end developers can provide customized experiences based on the type of failure that occurred:
+If we define a set of `ErrorResponse` types in our schema, frontend developers can provide customized experiences based on the type of failure that occurred:
 
 ```graphql
 interface MutationResponse {
@@ -42,7 +46,6 @@ type Mutation {
 }
 ```
 
-
 ## Response types for queries
 
 Let's say we have a basic GraphQL API that defines the following `Query` type:
@@ -55,9 +58,9 @@ type Query {
 
 This `Query.users` field makes intuitive sense: if you query it, you get back a list of `User` objects. _However_, this return type doesn't provide any insight into the result:
 
-* If the list is empty, is that because there are zero users, or did an error occur?
-* Even if the list is populated, did the API return _all_ users or just a subset?
-* Are there multiple pages of results?
+- If the list is empty, is that because there are zero users, or did an error occur?
+- Even if the list is populated, did the API return _all_ users or just a subset?
+- Are there multiple pages of results?
 
 To answer questions like these, it may be helpful for top-level fields of `Query` to return "wrapper" objects that can include both the operation result _and_ metadata about the operation's execution. For example, in cases where you need to [paginate your results](/technotes/TN0027-demand-oriented-schema-design/#a-brief-sidebar-on-pagination-conventions) or implement [Relay-style connections](/technotes/TN0029-relay-style-connections/) this pattern can be helpful.
 
@@ -98,5 +101,3 @@ query FetchUsers {
   }
 }
 ```
-
-

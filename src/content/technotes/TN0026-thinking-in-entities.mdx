@@ -9,6 +9,7 @@ tags: [federation, schema-design]
 If you're an enterprise customer looking for more material on this topic, try the [Enterprise best practices: Schema design](https://www.apollographql.com/tutorials/schema-design-best-practices) course on Odyssey.
 
 Not an enterprise customer? [Learn about GraphOS for Enterprise.](/graphos/enterprise)
+
 </Tip>
 
 ## Thinking entities
@@ -68,6 +69,6 @@ Whatever your architectural starting point, Apollo Federation was designed to al
 
 For more information on entity usage and capabilities, please see the [Entities documentation page](/federation/entities/).
 
-### `@defer` and Entities
+### `@defer` and entities
 
 Entities aren't just useful for connecting data across subgraphs. You can also use entities to enable the new [`@defer` directive for client-controlled prioritization of response data](https://github.com/graphql/graphql-wg/blob/main/rfcs/DeferStream.md). The Apollo Router can [defer resolution of fields in entities](/router/executing-operations/defer-support) (and root fields) and handle sending data back to the client in prioritized chunks. By defining types as entities within your graph, clients can improve perceived user experience by adding a directive to their operations.

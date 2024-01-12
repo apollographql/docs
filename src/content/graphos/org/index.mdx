@@ -4,7 +4,11 @@ title: Organizations in GraphOS
 
 All data in GraphOS (graphs, schemas, metrics, etc.) is associated with a particular **organization**. Every organization has one or more [members](./members/) who manage it and can access its associated data.
 
-> Enterprise organizations have access to fine-grained access controls via additional [member roles](./members/#organization-wide-member-roles).
+<Tip>
+
+Enterprise organizations have access to fine-grained access controls via additional [member roles](./members/#organization-wide-member-roles).
+
+</Tip>
 
 ## Creating an organization
 
@@ -14,7 +18,7 @@ You can create additional organizations by clicking **Create a new organization*
 
 <img
   src="../img/organization-list.jpg"
-  class="screenshot"
+  className="screenshot"
   alt="Studio organization list"
   width="300"
 />
@@ -27,7 +31,7 @@ Click the organization dropdown at the top of the page in [GraphOS Studio](https
 
 <img
   src="../img/organization-list.jpg"
-  class="screenshot"
+  className="screenshot"
   alt="Studio organization list"
   width="300"
 />
@@ -37,11 +41,15 @@ Click the organization dropdown at the top of the page in [GraphOS Studio](https
 
 ## Deleting an organization
 
-> ⚠️ **This action can't be undone!**
+<Caution>
+
+**This action can't be undone!**
+
+</Caution>
 
 You can delete an organization at any time. Doing so removes all traces of the organization from GraphOS.
 
-Deleting your organization does all of the following:
+Deleting your organization does all the following:
 
 - Removes all user memberships from the organization
 - Permanently deletes all graphs from the organization, along with their associated data. These graph IDs cannot be reused later.

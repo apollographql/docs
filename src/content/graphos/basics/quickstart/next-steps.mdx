@@ -5,7 +5,11 @@ description: Get the most out of GraphOS
 
 After you [create a supergraph](./cloud/) with GraphOS Studio, read below to learn about some of the next steps you should take to get the most out of it and the entire GraphOS platform.
 
-> For the most part, you can perform these next steps in any order. But you should definitely start by [installing the Rover CLI](#first-install-the-rover-cli).
+<Note>
+
+You should always start by [installing the Rover CLI](#first-install-the-rover-cli). Otherwise, you can perform the steps described on this page in any order.
+
+</Note>
 
 ## First, install the Rover CLI!
 
@@ -75,9 +79,9 @@ See [Adding a new subgraph](../graphs/federated-graphs#adding-a-new-subgraph).
 
 ### Add another variant
 
-Most supergraphs have multiple **variants**, each of which represents that supergraph running in a different environment (production, staging, and so on).
+Most supergraphs have multiple **variants**, each of which represents that supergraph running in a different environment (for example, production, staging, development).
 
-If your supergraph runs in multiple environments, you sould create a different variant for each.
+If your supergraph runs in multiple environments, you should create a different variant for each.
 
 [Learn how to create variants.](../graphs/federated-graphs/#adding-a-variant)
 
@@ -85,14 +89,18 @@ If your supergraph runs in multiple environments, you sould create a different v
 
 Supergraphs use an architecture called **Apollo Federation**. Federation is at its most powerful when your subgraphs _share_ responsibility for some of your schema's types, instead of defining mutually exclusive types and fields.
 
-> [Learn the fundamentals of federation.](/federation/#how-it-works)
+<Tip>
+
+[Learn the fundamentals of federation.](/federation/#how-it-works)
+
+</Tip>
 
 To take full advantage of federation features, each of your subgraphs needs to use a GraphQL server library that conforms to the **Apollo Federation subgraph specification**. Fortunately, many popular server libraries do!
 
 1. To check whether your current GraphQL server library supports the subgraph specification, see [this article](/federation/building-supergraphs/supported-subgraphs).
    - If your library _does_ support the spec, consult its documentation to learn how to enable its federation support. For Apollo Server, see [this article](/apollo-server/using-federation/apollo-subgraph-setup).
    - If your library _doesn't_ support the spec, consult the library list to find an alternative in your preferred programming language.
-2. Enable federation support for all of your subgraphs and deploy the updated subgraphs to your environment.
+2. Enable federation support for all your subgraphs and deploy the updated subgraphs to your environment.
 
 After you make these changes, you can start using powerful federation features in your subgraphs, including:
 
@@ -130,7 +138,11 @@ flowchart LR;
 
 How you choose to configure this access control depends on your GraphQL server library and your particular infrastructure.
 
-> Make sure any _existing_ clients that communicate directly with your API are updated to communicate with your router _before_ you begin rejecting direct requests!
+<Caution>
+
+Make sure any _existing_ clients that communicate directly with your API are updated to communicate with your router _before_ you begin rejecting direct requests!
+
+</Caution>
 
 For more information, see [Securing your subgraphs](/federation/building-supergraphs/subgraphs-overview#securing-your-subgraphs).
 
@@ -138,7 +150,7 @@ For more information, see [Securing your subgraphs](/federation/building-supergr
 
 ### Configure notifications
 
-GraphOS can send you various types of notifications via a few different channels (including Slack and Pagerduty). These notifications can include a daily metrics report, schema change updates, and experimental performance alerts. [Set up notifications.](../metrics/notifications/notification-setup/)
+GraphOS can send you various types of notifications via a few different channels (including Slack and PagerDuty). These notifications can include a daily metrics report, schema change updates, and experimental performance alerts. [Set up notifications.](../metrics/notifications/notification-setup/)
 
 ### Invite team members
 

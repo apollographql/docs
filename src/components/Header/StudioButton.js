@@ -10,7 +10,7 @@ export default function StudioButton() {
       flexShrink={0}
       colorScheme="indigo"
       _dark={{
-        color: 'indigo.200'
+        color: 'silver.300'
       }}
       variant="ghost"
       rightIcon={<FiArrowRight />}

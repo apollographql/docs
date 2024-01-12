@@ -45,13 +45,14 @@ graph LR;
 
 1. Identify the name of the subgraph you're publishing to. You can view the names of your existing subgraphs from your variant's **Subgraphs** page in [GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content).
 
-2. **If you're publishing a subgraph for the first time,** _also_ obtain the **routing URL** for that subgraph. This is the URL that your router will use to communicate with the subgraph.
+2. **If you're publishing a subgraph for the first time,** _also_ obtain the **routing URL** of that subgraph. This is the URL that your router will use to communicate with the subgraph.
 
    - If GraphOS already knows your subgraph's routing URL, you don't need to provide this value unless you're changing it.
 
 3. Run the `rover subgraph publish` command and provide it your subgraph's schema in one of the ways shown:
 
    ```bash showLineNumbers=false
+
    # Provide a local .graphql file path
    rover subgraph publish my-graph@my-variant --name locations --routing-url https://flyby-locations-sub.herokuapp.com/ --schema ./schema.graphql
 
@@ -93,6 +94,7 @@ These instructions apply only to [monographs](../graphs/#monographs), which are 
 2. Run the `rover graph publish` command, providing your schema in one of the ways shown:
 
    ```bash showLineNumbers=false
+
    # Provide a local .graphql file path
    rover graph publish my-graph@my-variant --schema ./schema.graphql
 

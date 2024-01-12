@@ -1,4 +1,8 @@
-import Panel, {DOCS_INDEX, QUERY_SUGGESTIONS_INDEX} from './Panel';
+import Panel, {
+  APOLLOPEDIA_INDEX,
+  DOCS_INDEX,
+  QUERY_SUGGESTIONS_INDEX
+} from './Panel';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
 import algoliasearch from 'algoliasearch/lite';
@@ -12,13 +16,14 @@ import {getAlgoliaResults} from '@algolia/autocomplete-preset-algolia';
 
 const SOURCES = {
   [DOCS_INDEX]: 'Documentation',
+  [APOLLOPEDIA_INDEX]: 'Apollopedia',
   blog: 'Blog',
   odyssey: 'Odyssey',
   [QUERY_SUGGESTIONS_INDEX]: "Can't find what you're looking for?"
 };
 
 const appId = process.env.ALGOLIA_APP_ID;
-const apiKey = process.env.ALGOLIA_SEARCH_KEY;
+const apiKey = process.env.GATSBY_ALGOLIA_RANKING_INFO_KEY;
 
 const searchClient = algoliasearch(appId, apiKey);
 insightsClient('init', {
@@ -33,6 +38,8 @@ function getEventName(index) {
       return 'Suggestion selected from Autocomplete';
     case DOCS_INDEX:
       return 'Article selected from docs index';
+    case APOLLOPEDIA_INDEX:
+      return 'Apollopedia term selected from Apollopedia index';
     default:
       return 'Article selected from Autocomplete';
   }
@@ -90,6 +97,8 @@ export default function Autocomplete({onClose, optionalFilters}) {
                       clickAnalytics: true,
                       hitsPerPage: !index
                         ? 8
+                        : indexName === APOLLOPEDIA_INDEX
+                        ? 10
                         : indexName === QUERY_SUGGESTIONS_INDEX
                         ? 4
                         : 2,
@@ -118,6 +127,7 @@ export default function Autocomplete({onClose, optionalFilters}) {
         <Input
           borderWidth="0"
           focusBorderColor="transparent"
+          bg="bg"
           roundedBottom={autocompleteState.isOpen ? 'none' : undefined}
           {...autocomplete.getInputProps({
             type: null,

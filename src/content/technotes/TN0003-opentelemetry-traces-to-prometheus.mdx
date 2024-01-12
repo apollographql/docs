@@ -4,17 +4,18 @@ id: TN0003
 tags: [server, observability]
 ---
 
-<EnterpriseFeature
-  text={
-    'Self-hosting the Apollo Router is limited to [GraphOS Enterprise plans](/graphos/enterprise/). Other plan types use [managed cloud routing with GraphOS](/graphos/routing/cloud/). Check out the [pricing page](https://www.apollographql.com/pricing/) to learn more.'
-  }
-/>
+<EnterpriseFeature>
+
+Self-hosting the Apollo Router is limited to [GraphOS Enterprise plans](/graphos/enterprise/). Other plan types use [managed cloud routing with GraphOS](/graphos/routing/cloud/). Check out the [pricing page](https://www.apollographql.com/pricing/) to learn more.
+
+</EnterpriseFeature>
 
 <Tip>
 
 If you're an enterprise customer looking for more material on this topic, try the [Enterprise best practices: Supergraph observability](https://www.apollographql.com/tutorials/supergraph-observability) course on Odyssey.
 
 Not an enterprise customer? [Learn about GraphOS for Enterprise.](/graphos/enterprise)
+
 </Tip>
 
 Operation traces provide insight into performance issues that are occurring at various execution points in your graph. However, individual traces don't provide a view of your graph's broader performance.
@@ -33,6 +34,7 @@ These repositories are similar in scope, but the contributor library includes ex
 <Tip>
 
 We also recommend checking out the [Collector Builder](https://github.com/open-telemetry/opentelemetry-collector/tree/main/cmd/builder) to build binaries that are tailored to your environment instead of relying on prebuilt images.
+
 </Tip>
 
 When your OpenTelemetry Collector is ready to run, you can start configuring it with this barebones example:
@@ -91,7 +93,7 @@ That's it- you should have access to span metrics using the same operation name!
 Here are a few sample queries to help explore the data structure being reported:
 
 - P95 by service: `histogram_quantile(.95, sum(rate(latency_bucket[5m])) by (le, service_name))`
-- Average latency by service and operation (e.g. `router` / `graphql.validate`): `sum by (operation, service_name)(rate(latency_sum{}[1m])) / sum by (operation, service_name)(rate(latency_count{}[1m]))`
+- Average latency by service and operation (for example `router` / `graphql.validate`): `sum by (operation, service_name)(rate(latency_sum{}[1m])) / sum by (operation, service_name)(rate(latency_count{}[1m]))`
 - RPM by service: `sum(rate(calls_total{operation="HTTP POST"}[1m])) by (service_name)`
 
 ## Full demo

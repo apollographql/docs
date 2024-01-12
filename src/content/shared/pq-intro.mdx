@@ -14,7 +14,11 @@ flowchart LR
   iosClient --> pql
 ```
 
-> Clients can register any kind of operation to a PQL, including queries, mutations, and subscriptions.
+<Note>
+
+Clients can register any kind of operation to a PQL, including queries, mutations, and subscriptions.
+
+</Note>
 
 At _runtime_, the [Apollo Router](/router/) checks incoming requests against the PQL, which can act as operation safelist, depending on your [router configuration](#2-router-configuration).
 
@@ -54,5 +58,5 @@ Your router can use its persisted query list (PQL) to both **protect your superg
 - When you enable **safelisting**, your router rejects any incoming operations not registered in its PQL.
 
 - Client apps can execute an operation by providing its PQL-specified ID _instead of_ the entire operation string.
-  - Requesting by ID can significantly reduce latency and bandwidth usage for very large operation strings.
+  - Requesting by ID can significantly reduce latency and bandwidth usage for large operation strings.
   - Your router can _require_ that clients provide operations by ID and _reject_ full operation strings—even operation strings present in the PQL.

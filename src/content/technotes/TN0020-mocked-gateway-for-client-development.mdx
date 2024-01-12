@@ -1,5 +1,5 @@
 ---
-title: 'Mocking graph functionality to unblock client development'
+title: "Mocking graph functionality to unblock client development"
 id: TN0020
 tags: [gateway, schema-design, federation]
 ---
@@ -10,7 +10,11 @@ As your organization builds out its supergraph, you might discover that your cli
 
 To mock parts of your supergraph effectively, both client and backend teams need to agree on the structure of those parts as part of a larger [governance strategy](/enterprise-guide/graph-administration#governance) and approval process. Alignment between these teams on schema additions/removals/changes can help make your schema more useful and expressive.
 
-> We recommended that your backend and client teams align on your schema's structure ahead of time, even if you _don't_ use schema mocking. Doing so enables you to create an expressive schema that accelerates _all_ teams.
+<Note>
+
+We recommended that your backend and client teams align on your schema's structure ahead of time, even if you _don't_ use schema mocking. Doing so enables you to create an expressive schema that accelerates _all_ teams.
+
+</Note>
 
 ### Creating a new schema
 
@@ -43,7 +47,7 @@ The data is mocked, however it doesn't require any work from server teams to sup
 
 ### Modifying an existing schema
 
-The process for making changes to an existing schema is similar to that for creating a new one, especially in terms of planning. As you add new features, it's important reach a design consensus early, especially for features that require extensive backend work (e.g., machine learning).
+The process for making changes to an existing schema is similar to that for creating a new one, especially in terms of planning. As you add new features, it's important reach a design consensus early, especially for features that require extensive backend work (for example, machine learning).
 
 To mock proposed changes (such as adding a new type/field), we recommend using [this sample created by Apollo's Solutions Architecture team](https://github.com/apollosolutions/apollo-faker-demo). This sample requires a preexisting GraphQL API to be running. It works by allowing for a "patched" or modified version of your subgraph to run locally with mocked data, while using the remote API for all other data.
 

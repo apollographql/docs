@@ -8,7 +8,7 @@ Most GraphQL APIs provide their capabilities as root-level fields of the `Query`
 
 To improve the logical organization of our graph's capabilities, we can define **namespaces** for our root-level operation fields. These are object types that in turn define query and mutation fields that are all related to a particular concern.
 
-For example, we can define all of the mutation fields related to `User` objects in a `UsersMutations` namespace object:
+For example, we can define all the mutation fields related to `User` objects in a `UsersMutations` namespace object:
 
 ```graphql
 type UsersMutations {
@@ -79,7 +79,11 @@ query FetchAllUsers {
 }
 ```
 
-> 💡 Note that you don’t need to repeat the text `user` in the field names of the `UsersQueries` type, because we already know all of these fields apply to `User` objects.
+<Note>
+
+You don't need to repeat the text `user` in the field names of the `UsersQueries` type, because we already know all these fields apply to `User` objects.
+
+</Note>
 
 ## Namespaces for serial mutations
 

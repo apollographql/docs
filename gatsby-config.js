@@ -80,11 +80,11 @@ const plugins = [
       fonts: {
         google: [
           {
-            family: 'Source Sans Pro',
+            family: 'Inter',
             variants: ['400', '600', '700']
           },
           {
-            family: 'Source Code Pro',
+            family: 'Fira Code',
             variants: ['400', '600']
           }
         ]

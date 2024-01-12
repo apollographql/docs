@@ -43,7 +43,11 @@ In subgraph "two", the description is:
   """
 ```
 
-> When a description is inconsistent across subgraphs, composition selects the description from the first subgraph alphabetically by name.
+<Note>
+
+When a description is inconsistent across subgraphs, composition selects the description from the first subgraph alphabetically by name.
+
+</Note>
 
 A mechanism for deciding the "owner" of the type allows tools such as linters to catch these inconsistencies early in the development process.
 
@@ -53,10 +57,7 @@ You can add an `@owner` directive to your supergraph using the [`@composeDirecti
 
 ```graphql title="subgraph-a.graphql"
 extend schema
-  @link(
-    url: "https://specs.apollo.dev/federation/v2.3"
-    import: ["@key", "@composeDirective"]
-  )
+  @link(url: "https://specs.apollo.dev/federation/v2.3", import: ["@key", "@composeDirective"])
   @link(url: "https://graphql.mycompany.dev/owner/v1.0")
   @composeDirective(name: "@owner")
 
@@ -94,10 +95,7 @@ directive @join__field(
 
 directive @join__graph(name: String!, url: String!) on ENUM_VALUE
 
-directive @join__implements(
-  graph: join__Graph!
-  interface: String!
-) repeatable on OBJECT | INTERFACE
+directive @join__implements(graph: join__Graph!, interface: String!) repeatable on OBJECT | INTERFACE
 
 directive @join__type(
   graph: join__Graph!
@@ -107,17 +105,9 @@ directive @join__type(
   isInterfaceObject: Boolean! = false
 ) repeatable on OBJECT | INTERFACE | UNION | ENUM | INPUT_OBJECT | SCALAR
 
-directive @join__unionMember(
-  graph: join__Graph!
-  member: String!
-) repeatable on UNION
+directive @join__unionMember(graph: join__Graph!, member: String!) repeatable on UNION
 
-directive @link(
-  url: String
-  as: String
-  for: link__Purpose
-  import: [link__Import]
-) repeatable on SCHEMA
+directive @link(url: String, as: String, for: link__Purpose, import: [link__Import]) repeatable on SCHEMA
 
 directive @owner(team: String!) on OBJECT
 
@@ -160,16 +150,16 @@ Here's an example of a [`@graphql-eslint`](https://the-guild.dev/graphql/eslint/
 <ExpansionPanel title="Click to expand">
 
 ```js
-const {getDirective} = require('@graphql-tools/utils');
-const {buildSchema} = require('graphql');
+const { getDirective } = require("@graphql-tools/utils");
+const { buildSchema } = require("graphql");
 
 module.exports = {
   rules: {
     /** @type {import("@graphql-eslint/eslint-plugin").GraphQLESLintRule} */
-    'subgraph-owned-type-has-description': {
+    "subgraph-owned-type-has-description": {
       create(context) {
         const schema = buildSchema(context.getSourceCode().text, {
-          assumeValidSDL: true // subgraph schemas may not be valid on their own
+          assumeValidSDL: true, // subgraph schemas may not be valid on their own
         });
 
         return {
@@ -180,26 +170,26 @@ module.exports = {
            */
           ObjectTypeDefinition(node) {
             const type = schema.getType(node.name.value);
-            const owner = getDirective(schema, type, 'owner');
+            const owner = getDirective(schema, type, "owner");
 
             if (owner && !node.description) {
               context.report({
                 node,
-                message: 'Description is required on owned types'
+                message: "Description is required on owned types",
               });
             }
 
             if (!owner && node.description) {
               context.report({
                 node,
-                message: 'Description not allowed on unowned types'
+                message: "Description not allowed on unowned types",
               });
             }
-          }
+          },
         };
-      }
-    }
-  }
+      },
+    },
+  },
 };
 ```
 
@@ -221,12 +211,12 @@ The exact process depends on your source control and continuous integration syst
 2. Determine the affected types in the schema change:
 
    ```js
-   import {diff} from '@graphql-inspector/core';
-   import {buildSchema} from 'graphql';
+   import { diff } from "@graphql-inspector/core";
+   import { buildSchema } from "graphql";
 
    const differences = diff(
-     buildSchema(schemaFromBaseRef, {assumeValidSDL: false}),
-     buildSchema(schemaFromCurrentRef, {assumeValidSDL: false})
+     buildSchema(schemaFromBaseRef, { assumeValidSDL: false }),
+     buildSchema(schemaFromCurrentRef, { assumeValidSDL: false })
    );
 
    /* Derive a list of affected types from the result:
@@ -245,12 +235,12 @@ The exact process depends on your source control and continuous integration syst
 
 3. Obtain the supergraph schema.
 
-   You can use [`rover supergraph fetch`](https://www.apollographql.com/docs/rover/commands/supergraphs#supergraph-fetch) or retreive it using the [Apollo Platform API](https://studio.apollographql.com/public/apollo-platform/explorer?explorerURLState=N4IgJg9gxgrgtgUwHYBcQC4QEcYIE4CeABAOIIoDKMADvgOZ4CG1AFgBQAkeCAZukQEkAIgEIAlEWAAdJESIA3RngCWjVG258iXXhOmy5RAPpGUBWkkaIZhogDoHRCLJJNWANSWrUkm7aIANowoCADOKACC1NR4EPIIYAAyjDBIUCy%2BBv5EAEYwygFgmdm23KEwASjFJbYmZhZWCH41cg52TrIAQvmFVFBQYaHVLYZQENwU6QhwjMMjo%2BMIQtDwyCjN8wC%2BGzXbWSV7uztEh4ane5sgm0A&variant=main).
+   You can use [`rover supergraph fetch`](https://www.apollographql.com/docs/rover/commands/supergraphs#supergraph-fetch) or retrieve it using the [Apollo Platform API](https://studio.apollographql.com/public/apollo-platform/explorer?explorerURLState=N4IgJg9gxgrgtgUwHYBcQC4QEcYIE4CeABAOIIoDKMADvgOZ4CG1AFgBQAkeCAZukQEkAIgEIAlEWAAdJESIA3RngCWjVG258iXXhOmy5RAPpGUBWkkaIZhogDoHRCLJJNWANSWrUkm7aIANowoCADOKACC1NR4EPIIYAAyjDBIUCy%2BBv5EAEYwygFgmdm23KEwASjFJbYmZhZWCH41cg52TrIAQvmFVFBQYaHVLYZQENwU6QhwjMMjo%2BMIQtDwyCjN8wC%2BGzXbWSV7uztEh4ane5sgm0A&variant=main).
 
 4. Extract the owners for the affected types:
 
    ```js
-   import {getDirective} from '@graphql-tools/utils';
+   import { getDirective } from "@graphql-tools/utils";
 
    const supergraphSchema = buildSchema(supergraphSdl);
    const affectedTeams = [];
@@ -258,7 +248,7 @@ The exact process depends on your source control and continuous integration syst
    for (const typeName of affectedTypes) {
      const type = supergraphSchema.getType(typeName);
 
-     const owner = getDirective(schema, type, 'owner')?.[0];
+     const owner = getDirective(schema, type, "owner")?.[0];
 
      if (owner) {
        affectedTeams.push(owner.team);
@@ -269,16 +259,16 @@ The exact process depends on your source control and continuous integration syst
 5. Add the team as reviewers on the pull request:
 
    ```js
-   import {Octokit} from '@octokit/action';
+   import { Octokit } from "@octokit/action";
 
    const octokit = new Octokit();
 
-   const [owner, repo] = process.env.GITHUB_REPOSITORY.split('/');
+   const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
 
    await octokit.pulls.requestReviewers({
      owner,
      repo,
      pull_number: pullNumber, // ${{ github.event.number }}
-     team_reviewers: affectedTeams
+     team_reviewers: affectedTeams,
    });
    ```

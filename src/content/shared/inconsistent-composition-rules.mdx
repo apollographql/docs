@@ -1,10 +1,65 @@
-#### `INCONSISTENT_ARGUMENT_PRESENCE`
 
-Indicates that an optional argument (of a field or directive definition) isn't present in all subgraphs and therefore won't be part of the supergraph.
+These rules identity inconsistencies in fields, types, arguments, etc across subgraphs. Such inconsistencies can disrupt or even break [composition](https://www.apollographql.com/docs/federation/federated-types/composition).
 
-<p style="margin-bottom: 0">❌</p>
+#### Compatibility
 
-```graphql title="Subgraph A"
+In some cases, inconsistency rules also indicate the **compatibility** of checked types. Two types are compatible if one is a non-nullable version, a list version, a subtype, or a combination of any of these of the other.
+
+For example, the `price` fields in the example subgraphs below are inconsistent and incompatible because they use completely different types (`Float` vs `String`):
+
+<CodeColumns>
+
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+type Product {
+  id: ID!
+  name: String
+  price: Float #highlight-line
+}
+```
+
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+type Product {
+  id: ID!
+  name: String
+  price: String #highlight-line
+}
+
+```
+
+</CodeColumns>
+
+These `price` fields in the example subgraphs below are inconsistent but compatible since both use `Float`s, but one is nullable and the other is the non-nullable list of `Float`s.
+
+<CodeColumns>
+
+```graphql title="Subgraph A" disableCopy=true showLineNumbers=false
+type Product {
+  id: ID!
+  name: String
+  price: Float #highlight-line
+}
+
+```
+
+```graphql title="Subgraph B" disableCopy=true showLineNumbers=false
+type Product {
+  id: ID!
+  name: String
+   price: [Float]! #highlight-line
+}
+```
+
+</CodeColumns>
+
+<RuleExpansionPanel
+  title="INCONSISTENT_ARGUMENT_PRESENCE"
+  whatItDoes="Checks that an argument of a field or directive definition is present in all subgraphs."
+  rationale="The supergraph schema only includes arguments that are exactly the same for all subgraphs that define its field or directive. [Learn more.](https://www.apollographql.com/docs/federation/federated-types/composition#input-types-and-field-arguments)"
+>
+
+The following example violates the rule:
+
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -12,7 +67,7 @@ type Product {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -20,9 +75,11 @@ type Product {
 }
 ```
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
-```graphql title="Subgraph A"
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -30,7 +87,7 @@ type Product {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -38,25 +95,24 @@ type Product {
 }
 ```
 
-<hr/>
+</RuleExpansionPanel>
 
-#### `INCONSISTENT_BUT_COMPATIBLE_ARGUMENT_TYPE`
+<RuleExpansionPanel
+  title="INCONSISTENT_BUT_COMPATIBLE_ARGUMENT_TYPE"
+  whatItDoes="Checks that arguments (of a field, input field, or directive definition) have the exact same types in all subgraphs. This warning/error indicates the argument types are [compatible](#compatibility) but inconsistent."
+  rationale="The supergraph schema only includes arguments that are exactly the same for all subgraphs that define its field or directive. [Learn more.](https://www.apollographql.com/docs/federation/federated-types/composition#input-types-and-field-arguments)"
+>
 
-Indicates that an argument type (of a field, input field, or directive definition) doesn't have the exact same type in all subgraphs, but that the types are compatible.
+<br/>
 
-Two types are compatible if one is:
-- a non-nullable version
-- a list version
-- a subtype
-- or a combination of any of these
+Because subgraph A's `price` field expects a non-nullable `Currency` argument type and subgraph B allows a nullable `Currency` argument type, the following example violates the rule:
 
-of the other.
-
-<p style="margin-bottom: 0">❌</p>
+<br/>
+<br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -73,7 +129,7 @@ enum Currency {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -92,11 +148,13 @@ enum Currency {
 
 </CodeColumns>
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -113,7 +171,7 @@ enum Currency {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -132,25 +190,20 @@ enum Currency {
 
 </CodeColumns>
 
-<hr/>
+</RuleExpansionPanel>
 
-#### `INCONSISTENT_BUT_COMPATIBLE_FIELD_TYPE`
+<RuleExpansionPanel
+  title="INCONSISTENT_BUT_COMPATIBLE_FIELD_TYPE"
+  whatItDoes="Checks that fields have the exact same types in all subgraphs. This warning/error indicates the field types are [compatible](#compatibility) but inconsistent."
+  rationale="Inconsistent types can lead to discrepancies in the way data is retrieved and processed, resulting in unexpected client behavior."
+>
 
-Indicates that a field doesn't have the exact same types in all subgraphs, but that the types are compatible.
-
-Two types are compatible if one is:
-- a non-nullable version
-- a list version
-- a subtype
-- or a combination of any of these
-
-of the other.
-
-<p style="margin-bottom: 0">❌</p>
+<br/>
+The following example violates the rule:
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -172,7 +225,7 @@ enum Currency {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -196,11 +249,13 @@ enum Currency {
 
 </CodeColumns>
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -222,7 +277,7 @@ enum Currency {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -246,17 +301,19 @@ enum Currency {
 
 </CodeColumns>
 
-<hr/>
+</RuleExpansionPanel>
 
-#### `INCONSISTENT_DEFAULT_VALUE_PRESENCE`
+<RuleExpansionPanel
+  title="INCONSISTENT_DEFAULT_VALUE_PRESENCE"
+  whatItDoes="Checks that argument definitions (of a field, input field, or directive definition) consistently include—or consistently don't include—a default value in all subgraphs that define the argument."
+  rationale="Inconsistent defaults can lead to discrepancies in the way data is retrieved and processed, resulting in unexpected client behavior."
+>
 
-Indicates that an argument definition (of a field, input field, or directive definition) has a default value in only some of the subgraphs that define the argument.
-
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -264,7 +321,7 @@ type Product {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -274,11 +331,13 @@ type Product {
 
 </CodeColumns>
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -286,7 +345,7 @@ type Product {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -296,17 +355,19 @@ type Product {
 
 </CodeColumns>
 
-<hr/>
+</RuleExpansionPanel>
 
-#### `INCONSISTENT_DESCRIPTION`
+<RuleExpansionPanel
+  title="INCONSISTENT_DESCRIPTION"
+  whatItDoes="Checks that a type's description is consistent across subgraphs."
+  rationale="Inconsistent type descriptions can lead to inconsistent expectations around type values resulting in unexpected client behavior."
+>
 
-Indicates that an element has a description in more than one subgraph, and the descriptions aren't equal.
-
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false
 """
 A type representing a product.
 """
@@ -316,7 +377,7 @@ type Product {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false
 """
 An object representing a product.
 """
@@ -327,11 +388,13 @@ type Product {
 ```
 </CodeColumns>
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false
 """
 A type representing a product.
 """
@@ -341,7 +404,7 @@ type Product {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
 """
 A type representing a product.
 """
@@ -352,24 +415,26 @@ type Product {
 ```
 </CodeColumns>
 
-<hr/>
+</RuleExpansionPanel>
 
-#### `INCONSISTENT_ENTITY`
+<RuleExpansionPanel
+  title="INCONSISTENT_ENTITY"
+  whatItDoes="Checks that an object is consistently declared as an [entity](https://www.apollographql.com/docs/federation/entities) (has a `@key`) in all subgraphs in which the object is defined."
+  rationale="If an object is only declared as an entity in some subgraphs, the federated schema won't have complete information about that entity."
+>
 
-Indicates that an object is declared as an entity (has a `@key`) in only some of the subgraphs in which the object is defined.
-
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false
 type Product @key(fields: "id") { #highlight-line
   id: ID!
   name: String
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false
 type Product { #highlight-line
   id: ID!
   stock: Int
@@ -378,18 +443,20 @@ type Product { #highlight-line
 
 </CodeColumns>
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false
 type Product @key(fields: "id") { #highlight-line
   id: ID!
   name: String
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
 type Product @key(fields: "id") { #highlight-line
   id: ID!
   stock: Int
@@ -398,17 +465,19 @@ type Product @key(fields: "id") { #highlight-line
 
 </CodeColumns>
 
-<hr/>
+</RuleExpansionPanel>
 
-#### `INCONSISTENT_ENUM_VALUE_FOR_INPUT_ENUM`
+<RuleExpansionPanel
+  title="INCONSISTENT_ENUM_VALUE_FOR_INPUT_ENUM"
+  whatItDoes="Checks that values of an input enum type are consistently defined in all subgraphs that declare the enum."
+  rationale="When a value of an enum that is only used as an input type is defined in only some of the subgraphs that declare the enum, inconsistent values won't be merged into the supergraph. [Learn more.](https://www.apollographql.com/docs/federation/federated-types/composition#enums)"
+>
 
-Indicates that a value of an enum type definition, that is only used as an input type, hasn't been merged into the supergraph because it's defined in only some of the subgraphs that declare the enum.
-
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false
 enum ProductStatus {
   AVAILABLE
   SOLD_OUT
@@ -421,7 +490,7 @@ input ProductInput {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false
 enum ProductStatus {
   AVAILABLE
   SOLD_OUT
@@ -435,11 +504,13 @@ input ProductInput {
 
 </CodeColumns>
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false
 enum ProductStatus {
   AVAILABLE
   SOLD_OUT
@@ -452,7 +523,7 @@ input ProductInput {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
 enum ProductStatus {
   AVAILABLE
   SOLD_OUT
@@ -467,17 +538,19 @@ input ProductInput {
 
 </CodeColumns>
 
-<hr/>
+</RuleExpansionPanel>
 
-#### `INCONSISTENT_ENUM_VALUE_FOR_OUTPUT_ENUM`
+<RuleExpansionPanel
+  title="INCONSISTENT_ENUM_VALUE_FOR_OUTPUT_ENUM"
+  whatItDoes="Checks that values of an output enum type are consistently defined in all subgraphs that declare the enum."
+  rationale="When values of an output or unused enum type definition are inconsistent, all values are merged into the supergraph. Regardless, it can be helpful to set expectations by including all possible values in all subgraphs defining the enum. [Learn more.](https://www.apollographql.com/docs/federation/federated-types/composition#enums)"
+>
 
-Indicates that a value of an enum type definition, that is only used as an output type or is unused, _has_ been merged in the supergraph but is defined in only some of the subgraphs that declare the enum.
-
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false
 enum OrderStatus {
   CREATED
   PROCESSING #highlight-line
@@ -490,7 +563,7 @@ type Order {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false
 enum OrderStatus {
   CREATED
   COMPLETED
@@ -504,11 +577,13 @@ type Order {
 
 </CodeColumns>
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false
 enum OrderStatus {
   CREATED
   PROCESSING
@@ -521,7 +596,7 @@ type Order {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
 enum OrderStatus {
   CREATED
   PROCESSING
@@ -536,23 +611,25 @@ type Order {
 
 </CodeColumns>
 
-<hr/>
+</RuleExpansionPanel>
 
-#### `INCONSISTENT_EXECUTABLE_DIRECTIVE_LOCATIONS`
+<RuleExpansionPanel
+  title="INCONSISTENT_EXECUTABLE_DIRECTIVE_LOCATIONS"
+  whatItDoes="Checks that an executable directive definition is declared with consistent locations across all subgraphs."
+  rationale="An executable directive is composed into the supergraph schema only when it is defined identically in all subgraphs. [Learn more.](https://www.apollographql.com/docs/federation/federated-types/composition#executable-directives)"
+>
 
-Indicates that an executable directive definition is declared with inconsistent locations across subgraphs. (The supergraph schema then uses the intersection of all locations in the supergraph.)
-
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false
 directive @log(
   message: String!
-) on QUERY | FIELD  #highlight-line
+) on QUERY  #highlight-line
 ```
 
-```graphql title="Subgraph B"
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false
 directive @log(
   message: String!
 ) on FIELD #highlight-line
@@ -560,17 +637,19 @@ directive @log(
 
 </CodeColumns>
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false
 directive @log(
   message: String!
 ) on QUERY | FIELD
 ```
 
-```graphql title="Subgraph B"
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
 directive @log(
   message: String!
 ) on QUERY | FIELD
@@ -578,39 +657,43 @@ directive @log(
 
 </CodeColumns>
 
-<hr/>
+</RuleExpansionPanel>
 
-#### `INCONSISTENT_EXECUTABLE_DIRECTIVE_PRESENCE`
+<RuleExpansionPanel
+  title="INCONSISTENT_EXECUTABLE_DIRECTIVE_PRESENCE"
+  whatItDoes="Checks that an executable directive definition is declared in all subgraphs."
+  rationale="An executable directive is composed into the supergraph schema only if it's defined in all subgraphs. [Learn more.](https://www.apollographql.com/docs/federation/federated-types/composition#executable-directives)"
+>
 
-Indicates that an executable directive definition is declared in only some of the subgraphs.
-
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false
 directive @modify(
   field: String!
 ) on FIELD
 ```
 
-```graphql title="Subgraph B"
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false
 # 🦗🦗🦗
 ```
 
 </CodeColumns>
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false
 directive @modify(
   field: String!
 ) on FIELD
 ```
 
-```graphql title="Subgraph B"
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
 directive @modify(
   field: String!
 ) on FIELD
@@ -618,23 +701,25 @@ directive @modify(
 
 </CodeColumns>
 
-<hr/>
+</RuleExpansionPanel>
 
-#### `INCONSISTENT_EXECUTABLE_DIRECTIVE_REPEATABLE`
+<RuleExpansionPanel
+  title="INCONSISTENT_EXECUTABLE_DIRECTIVE_REPEATABLE"
+  whatItDoes="Checks that an executable directive definition is marked `repeatable` in all subgraphs that define it."
+  rationale="Unless an executable directive is defined as `repeatable` in all subgraphs, it won't be `repeatable` in the supergraph."
+>
 
-Indicates that an executable directive definition is marked repeatable in only some of the subgraphs and won't be repeatable in the supergraph.
-
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false
 directive @validateLength(
   max: Int!
 ) repeatable on FIELD
 ```
 
-```graphql title="Subgraph B"
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false
 directive @validateLength(
   max: Int!
 ) on FIELD
@@ -643,17 +728,19 @@ directive @validateLength(
 
 </CodeColumns>
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false
 directive @validateLength(
   max: Int!
 ) repeatable on FIELD
 ```
 
-```graphql title="Subgraph B"
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
 directive @validateLength(
   max: Int!
 ) repeatable on FIELD
@@ -661,17 +748,19 @@ directive @validateLength(
 
 </CodeColumns>
 
-<hr/>
+</RuleExpansionPanel>
 
-#### `INCONSISTENT_INPUT_OBJECT_FIELD`
+<RuleExpansionPanel
+  title="INCONSISTENT_INPUT_OBJECT_FIELD"
+  whatItDoes="Checks that a field of an input object definition is defined in all the subgraphs that declare the input object."
+  rationale="The supergraph schema includes only the input object fields that all subgraphs define for the object. [Learn more.](https://www.apollographql.com/docs/federation/federated-types/composition#input-types-and-field-arguments)"
+>
 
-Indicates that a field of an input object type definition is only defined in some of the subgraphs that declare the input object.
-
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false
 input ProductInput {
   name: String
   price: Float #highlight-line
@@ -682,7 +771,7 @@ input OrderInput {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false
 input ProductInput {
   name: String
 }
@@ -694,11 +783,13 @@ input OrderInput {
 
 </CodeColumns>
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false
 input ProductInput {
   name: String
   price: Float
@@ -709,7 +800,7 @@ input OrderInput {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
 input ProductInput {
   name: String
   price: Float
@@ -722,15 +813,17 @@ input OrderInput {
 
 </CodeColumns>
 
-<hr/>
+</RuleExpansionPanel>
 
-#### `INCONSISTENT_INTERFACE_VALUE_TYPE_FIELD`
+<RuleExpansionPanel
+  title="INCONSISTENT_INTERFACE_VALUE_TYPE_FIELD"
+  whatItDoes="Checks that a field of an interface [value type](https://www.apollographql.com/docs/federation/federated-types/sharing-types) (has no `@key` in any subgraph) is defined in all the subgraphs that declare the type."
+  rationale="If different subgraphs contribute different fields to an interface type, any object types that implement that interface must define all contributed fields from all subgraphs. Otherwise, composition fails. [Learn more.](https://www.apollographql.com/docs/federation/federated-types/composition#object-union-and-interface-types)"
+>
 
-Indicates that a field of an interface "value type" (has no `@key` in any subgraph) isn't defined in all the subgraphs that declare the type.
+The following example violates the rule:
 
-<p style="margin-bottom: 0">❌</p>
-
-```graphql title="Subgraph A"
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false
 interface Product {
   id: ID!
   name: String
@@ -745,11 +838,11 @@ type DigitalProduct implements Product {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false {4}
 interface Product {
   id: ID!
   name: String
-  # cost is not defined in the interface
+  # cost is not defined in the interface 
 }
 
 type PhysicalProduct implements Product {
@@ -761,9 +854,11 @@ type PhysicalProduct implements Product {
 
 ```
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
-```graphql title="Subgraph A"
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false
 interface Product {
   id: ID!
   name: String
@@ -778,7 +873,7 @@ type DigitalProduct implements Product {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
 interface Product {
   id: ID!
   name: String
@@ -793,15 +888,17 @@ type PhysicalProduct implements Product {
 }
 ```
 
-<hr/>
+</RuleExpansionPanel>
 
-#### `INCONSISTENT_NON_REPEATABLE_DIRECTIVE_ARGUMENTS`
+<RuleExpansionPanel
+  title="INCONSISTENT_NON_REPEATABLE_DIRECTIVE_ARGUMENTS"
+  whatItDoes="Checks if a non-`repeatable` directive is applied to a schema element across different subgraphs with differing arguments."
+  rationale="Inconsistent directive argument usage can lead to misunderstandings and potential issues in client applications."
+>
 
-A non-repeatable directive is applied to a schema element in different subgraphs but with arguments that are different.
+The following example violates the rule:
 
-<p style="margin-bottom: 0">❌</p>
-
-```graphql title="Subgraph A"
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -812,7 +909,7 @@ type Query {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -823,9 +920,11 @@ type Query {
 }
 ```
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
-```graphql title="Subgraph A"
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -836,7 +935,7 @@ type Query {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -847,48 +946,52 @@ type Query {
 }
 ```
 
-<hr/>
+</RuleExpansionPanel>
 
-#### `INCONSISTENT_OBJECT_VALUE_TYPE_FIELD`
+<RuleExpansionPanel
+  title="INCONSISTENT_OBJECT_VALUE_TYPE_FIELD"
+  whatItDoes="Checks that object [value types](https://www.apollographql.com/docs/federation/federated-types/sharing-types) (has no `@key` in any subgraph) declare the same fields in all subgraphs that declare the type."
+  rationale="When an object value type includes differing fields across subgraphs, the supergraph schema includes the union of all fields. Depending on which subgraph executes the query, [omitted fields may be unresolvable](https://www.apollographql.com/docs/federation/federated-types/sharing-types#omitting-fields). You can include the same types as shown below or check out [Solutions for unresolvable fields](https://www.apollographql.com/docs/federation/federated-types/composition/#solutions-for-unresolvable-fields)."
+>
 
-Indicates that a field of an object "value type" (has no `@key` in any subgraph) isn't defined in all the subgraphs that declare the type.
-
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
-  id: ID!
-  name: String
+  id: ID! @shareable 
+  name: String @shareable 
   price: Float #highlight-line
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
-  id: ID!
-  name: String
+  id: ID! @shareable 
+  name: String @shareable 
 }
 
 ```
 
 </CodeColumns>
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
-type Product {
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false
+type Product @shareable {
   id: ID!
   name: String
   price: Float #highlight-line
 }
 ```
 
-```graphql title="Subgraph B"
-type Product {
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
+type Product @shareable {
   id: ID!
   name: String
   price: Float #highlight-line
@@ -897,17 +1000,19 @@ type Product {
 
 </CodeColumns>
 
-<hr/>
+</RuleExpansionPanel>
 
-#### `INCONSISTENT_RUNTIME_TYPES_FOR_SHAREABLE_RETURN`
+<RuleExpansionPanel
+  title="INCONSISTENT_RUNTIME_TYPES_FOR_SHAREABLE_RETURN"
+  whatItDoes="Checks that a `@shareable` field returns consistent sets of runtime types in all subgraphs in which it's defined."
+  rationale="Each subgraph's resolver for a `@shareable` field should behave identically. Otherwise, requests might return inconsistent results depending on which subgraph resolves the field. [Learn more.](https://www.apollographql.com/docs/federation/federated-types/sharing-types#using-shareable)"
+>
 
-Indicates that a @shareable field returns different sets of runtime types in the different subgraphs in which it's defined.
-
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -919,7 +1024,7 @@ type Details {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -933,11 +1038,13 @@ type Details {
 
 </CodeColumns>
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -949,7 +1056,7 @@ type Details {
 }
 ```
 
-```graphql title="Subgraph B"
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -963,23 +1070,25 @@ type Details {
 
 </CodeColumns>
 
-<hr/>
+</RuleExpansionPanel>
 
-#### `INCONSISTENT_TYPE_SYSTEM_DIRECTIVE_LOCATIONS`
+<RuleExpansionPanel
+  title="INCONSISTENT_TYPE_SYSTEM_DIRECTIVE_LOCATIONS"
+  whatItDoes="Checks that a type system directive definition is declared with consistent locations across subgraphs."
+  rationale="To ensure consistent expectations, it's best that all definitions declare the same locations. [Learn more.](https://www.apollographql.com/docs/federation/federated-types/composition#type-system-directives)"
+>
 
-Indicates that an executable directive definition is declared with inconsistent locations across subgraphs. (The supergraph schema then uses the intersection of all locations in the supergraph.)
-
-<p style="margin-bottom: 0">❌</p>
+The following example violates the rule:
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false
 directive @customDirective(
   message: String!
 ) on OBJECT | FIELD_DEFINITION  #highlight-line
 ```
 
-```graphql title="Subgraph B"
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false
 directive @customDirective(
   message: String!
 ) on FIELD_DEFINITION #highlight-line
@@ -987,17 +1096,19 @@ directive @customDirective(
 
 </CodeColumns>
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
 <CodeColumns>
 
-```graphql title="Subgraph A"
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false
 directive @customDirective(
   message: String!
 ) on OBJECT | FIELD_DEFINITION
 ```
 
-```graphql title="Subgraph B"
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
 directive @customDirective(
   message: String!
 ) on OBJECT | FIELD_DEFINITION
@@ -1005,41 +1116,47 @@ directive @customDirective(
 
 </CodeColumns>
 
-<hr/>
+</RuleExpansionPanel>
 
-#### `INCONSISTENT_TYPE_SYSTEM_DIRECTIVE_REPEATABLE`
+<RuleExpansionPanel
+  title="INCONSISTENT_TYPE_SYSTEM_DIRECTIVE_REPEATABLE"
+  whatItDoes="Checks that a type system directive definition is marked `repeatable` in all subgraphs that declare the directive and will be `repeatable` in the supergraph."
+  rationale="To ensure consistent expectations, directives should have consistent definitions across subgraphs, including whether they are `repeatable`. [Learn more.](https://www.apollographql.com/docs/federation/federated-types/composition#type-system-directives)"
+>
 
-Indicates that a type system directive definition is marked repeatable in only some of the subgraphs that declare the directive and will be repeatable in the supergraph.
+The following example violates the rule:
 
-<p style="margin-bottom: 0">❌</p>
-
-```graphql title="Subgraph A"
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false
 directive @customDirective on OBJECT
 ```
 
-```graphql title="Subgraph B"
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false
 directive @customDirective repeatable on OBJECT
 ```
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
-```graphql title="Subgraph A"
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false
 directive @customDirective repeatable on OBJECT
 ```
 
-```graphql title="Subgraph B"
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
 directive @customDirective repeatable on OBJECT
 ```
 
-<hr/>
+</RuleExpansionPanel>
 
-#### `INCONSISTENT_UNION_MEMBER`
+<RuleExpansionPanel
+  title="INCONSISTENT_UNION_MEMBER"
+  whatItDoes="Checks that a member of a union definition is defined in all subgraphs that declare the union."
+  rationale="When a union definition has inconsistent members, the supergraph schema includes all members in the union definition. Nevertheless, to ensure consistent expectations, it's best that all union definitions declare the same members across subgraphs. [Learn more.](https://www.apollographql.com/docs/federation/federated-types/composition#object-union-and-interface-types)"
+>
 
-Indicates that a member of a union type definition is only defined in some of the subgraphs that declare the union.
+The following example violates the rule:
 
-<p style="margin-bottom: 0">❌</p>
-
-```graphql title="Subgraph A"
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -1053,7 +1170,7 @@ type Service {
 union SearchResult = Product | Service #highlight-line
 ```
 
-```graphql title="Subgraph B"
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -1062,9 +1179,11 @@ type Product {
 union SearchResult = Product #highlight-line
 ```
 
-<p style="margin-bottom: 0">✅</p>
+<br/>
+Use instead:
+<br/>
 
-```graphql title="Subgraph A"
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -1078,7 +1197,7 @@ type Service {
 union SearchResult = Product | Service #highlight-line
 ```
 
-```graphql title="Subgraph B"
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
 type Product {
   id: ID!
   name: String
@@ -1092,4 +1211,4 @@ type Service {
 union SearchResult = Product | Service #highlight-line
 ```
 
-<hr/>
+</RuleExpansionPanel>
