@@ -10,11 +10,7 @@ export default function Result({item, ...props}) {
 
   const {colorMode} = useColorMode();
 
-  const activeBg = isSelected
-    ? colorMode === 'light'
-      ? 'gray.100'
-      : 'indigo.400'
-    : 'transparent';
+  const activeBg = colorMode === 'light' ? 'silver.400' : 'indigo.400';
 
   return (
     <chakra.li bg={isSelected && activeBg} {...props}>
