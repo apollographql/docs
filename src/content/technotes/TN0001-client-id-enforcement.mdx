@@ -1,6 +1,7 @@
 ---
 title: Client ID enforcement
-description: Require client details and operation names to help monitor schema usage.
+subtitle: Require client details and operation names to help monitor schema usage
+description: Improve GraphQL operation monitoring by tagging operations with with client details. See code examples for Apollo Router and Apollo Server.
 published: 2022-05-31
 id: TN0001
 tags: [server, observability, router]
@@ -14,7 +15,7 @@ Together, these pieces of information help teams monitor their graph and make ch
 
 ## Enforcing in Apollo Router
 
-Apollo router supports client awareness by default if the client sets the `apollographql-client-name` and `apollographql-client-id` in their requests. These values can be overriden using the [router configuration file](/router/managed-federation/client-awareness/) directly.
+The Apollo Router supports client awareness by default if the client sets the `apollographql-client-name` and `apollographql-client-id` in their requests. These values can be overriden using the [router configuration file](/router/managed-federation/client-awareness/) directly.
 
 Client headers can also be enforced using a [Rhai script](/router/customizations/rhai) on every incoming request.
 
