@@ -493,15 +493,20 @@ export default function Page({file}) {
           ) : null
         }
       >
-        <MultiCodeBlockContext.Provider value={{language, setLanguage}}>
-          {childMdx ? (
-            <MDXProvider components={mdxComponents}>
-              <MDXRenderer>{childMdx.body}</MDXRenderer>
-            </MDXProvider>
-          ) : (
-            processSync(childMarkdownRemark.html).result
-          )}
-        </MultiCodeBlockContext.Provider>
+        {useMemo(
+          () => (
+            <MultiCodeBlockContext.Provider value={{language, setLanguage}}>
+              {childMdx ? (
+                <MDXProvider components={mdxComponents}>
+                  <MDXRenderer>{childMdx.body}</MDXRenderer>
+                </MDXProvider>
+              ) : (
+                processSync(childMarkdownRemark.html).result
+              )}
+            </MultiCodeBlockContext.Provider>
+          ),
+          [childMarkdownRemark?.html, childMdx, language, setLanguage]
+        )}
       </PageContent>
       <HStack
         justify="flex-end"

@@ -3,6 +3,7 @@ import React, {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useRef,
   useState
 } from 'react';
@@ -86,6 +87,31 @@ export function Sidebar({
     };
   }, [dismissSidebar]);
 
+  const pathContextValue = useMemo(
+    () => ({
+      ...pathContext,
+      basePath: `/${activeDocset}`
+    }),
+    [pathContext, activeDocset]
+  );
+
+  const docsetContextValue = useMemo(
+    () => ({
+      configs,
+      activeDocset,
+      setActiveDocset,
+      sidebarOpen,
+      openSidebar,
+      dismissSidebar,
+      onKeyboardSelect: () => {
+        setSidebarOpen(false);
+        sidebarNavRef.current?.focusFirstLink();
+      },
+      isLocked
+    }),
+    [activeDocset, configs, dismissSidebar, isLocked, openSidebar, sidebarOpen]
+  );
+
   return (
     <chakra.aside
       ref={outerSidebarRef}
@@ -110,21 +136,7 @@ export function Sidebar({
         transform: isHidden ? 'translateX(-100%)' : 'none'
       }}
     >
-      <DocsetContext.Provider
-        value={{
-          configs,
-          activeDocset,
-          setActiveDocset,
-          sidebarOpen,
-          openSidebar,
-          dismissSidebar,
-          onKeyboardSelect: () => {
-            setSidebarOpen(false);
-            sidebarNavRef.current?.focusFirstLink();
-          },
-          isLocked
-        }}
-      >
+      <DocsetContext.Provider value={docsetContextValue}>
         <LeftSidebarNav
           w={isLocked ? COLLAPSED_SIDEBAR_WIDTH : SIDEBAR_WIDTH}
           onMouseOver={openSidebar}
@@ -152,12 +164,7 @@ export function Sidebar({
           transitionTimingFunction="ease-in-out"
         >
           {activeDocset ? (
-            <PathContext.Provider
-              value={{
-                ...pathContext,
-                basePath: `/${activeDocset}`
-              }}
-            >
+            <PathContext.Provider value={pathContextValue}>
               <SidebarNav
                 key={activeDocset}
                 ref={sidebarNavRef}

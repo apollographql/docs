@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, {useContext} from 'react';
+import React, {useContext, useMemo} from 'react';
 import SidebarNav from './SidebarNav';
 import {PathContext} from '../../utils';
 import {useConfig} from '../../utils/config';
@@ -7,13 +7,15 @@ import {useConfig} from '../../utils/config';
 export const DefaultSidebarNav = ({hideSidebar, isLocked, onLockToggle}) => {
   const {docset, navItems} = useConfig('/');
   const pathContext = useContext(PathContext);
+  const pathContextValue = useMemo(
+    () => ({
+      ...pathContext,
+      basePath: '/'
+    }),
+    [pathContext]
+  );
   return (
-    <PathContext.Provider
-      value={{
-        ...pathContext,
-        basePath: '/'
-      }}
-    >
+    <PathContext.Provider value={pathContextValue}>
       <SidebarNav
         docset={docset}
         navItems={navItems}
