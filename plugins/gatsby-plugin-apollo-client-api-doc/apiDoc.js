@@ -225,6 +225,7 @@ function processDocComment(
       '@deprecated'
     ),
     remarks: cleanDoc(renderDocNode(docComment?.remarksBlock), '@remarks'),
+    returns: cleanDoc(renderDocNode(docComment?.returnsBlock), '@returns'),
     since: cleanDoc(
       renderDocNode(
         docComment.customBlocks.find(v => v.blockTag.tagName === '@since')

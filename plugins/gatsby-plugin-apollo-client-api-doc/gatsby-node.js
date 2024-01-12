@@ -379,6 +379,7 @@ exports.createSchemaCustomization = ({actions}) => {
         summary: String
         deprecated: String
         remarks: String
+        returns: String
         since: String
         examples: [String!]
       }

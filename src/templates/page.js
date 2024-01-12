@@ -110,6 +110,7 @@ fragment Base on ApiDocBase {
     summary
     deprecated
     remarks
+    returns
     examples
     since
   }
