@@ -1,5 +1,5 @@
 
-These rules identity inconsistencies in fields, types, arguments, etc across subgraphs. Such inconsistencies can disrupte or even break [composition](https://www.apollographql.com/docs/federation/federated-types/composition).
+These rules identity inconsistencies in fields, types, arguments, etc across subgraphs. Such inconsistencies can disrupt or even break [composition](https://www.apollographql.com/docs/federation/federated-types/composition).
 
 #### Compatibility
 
@@ -817,7 +817,7 @@ input OrderInput {
 
 <RuleExpansionPanel
   title="INCONSISTENT_INTERFACE_VALUE_TYPE_FIELD"
-  whatItDoes="Checks that that a field of an interface [value type](https://www.apollographql.com/docs/federation/federated-types/sharing-types) (has no `@key` in any subgraph) is defined in all the subgraphs that declare the type."
+  whatItDoes="Checks that a field of an interface [value type](https://www.apollographql.com/docs/federation/federated-types/sharing-types) (has no `@key` in any subgraph) is defined in all the subgraphs that declare the type."
   rationale="If different subgraphs contribute different fields to an interface type, any object types that implement that interface must define all contributed fields from all subgraphs. Otherwise, composition fails. [Learn more.](https://www.apollographql.com/docs/federation/federated-types/composition#object-union-and-interface-types)"
 >
 

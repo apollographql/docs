@@ -450,7 +450,7 @@ export default function TypeScriptApiBox({name}) {
               </Thead>
               <Tbody>
                 {group.members.map((member, index) => (
-                  <Tr key={index} fontSize="md">
+                  <Tr key={index} fontSize="lg">
                     <Td sx={{code: {bg: 'none', p: 0}}}>
                       <chakra.h6 fontSize="lg" mb="1">
                         <InlineCode>{member.name}</InlineCode>

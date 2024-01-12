@@ -108,7 +108,7 @@ You can use Sandbox _without_ an internet connection if you're querying a graph 
 
 ### Reconnecting
 
-Sandbox automatically reconnects whenever your internet connection is restored. When it does, it might display a notification that your GraphOS Studio application version is stale by at least 24 hours. You can click the notification to update _all_ of your browser's open Studio tabs to the latest version.
+Sandbox automatically reconnects whenever your internet connection is restored. When it does, it might display a notification that your GraphOS Studio application version is stale by at least 24 hours. You can click the notification to update _all_ your browser's open Studio tabs to the latest version.
 
 <Note>
 
@@ -141,7 +141,7 @@ https://studio.apollographql.com/sandbox/explorer?endpoint=http://localhost:4200
 
 <Note>
 
-Note that for readability, the above URL is not URL-encoded. Most browsers automatically encode the URL for you, but it's a best practice to URL-encode parameter values before providing them to a user.
+For readability, the above URL is not URL-encoded. Most browsers automatically encode URLs, but it's a best practice to URL-encode parameter values before providing them to a user.
 
 </Note>
 
@@ -183,7 +183,7 @@ You can embed Sandbox on your own website. This can be useful for interacting wi
    - Use **JavaScript** for non-React JavaScript apps where you can `npm install` the `@apollo/sandbox` package.
    - Use **Built file on CDN** to use Apollo's CDN-hosted embedded Sandbox.
 
-4. Click **Copy** to copy the snippet, then paste it into your html code.
+4. Click **Copy** to copy the snippet, then paste it into your HTML code.
 
 ### Options
 
@@ -269,7 +269,7 @@ You might want to do this if you need to include specific headers in every reque
 
 By default, the embedded Sandbox does not show the **Include cookies** toggle in its connection settings.
 
-Set `hideCookieToggle` to `false` to enable users of your embedded Sandbox instance to toggle the **Include cookes** setting.
+Set `hideCookieToggle` to `false` to enable users of your embedded Sandbox instance to toggle the **Include cookies** setting.
 
 </td>
 </tr>
@@ -301,13 +301,13 @@ Set `endpointIsEditable` to `false` to prevent users of your embedded Sandbox in
 </td>
 <td>
 
-You can set `includeCookies` to `true` if you instead want the Sandbox to pass `{ credentials: 'include' }` for its requests.
+You can set `includeCookies` to `true` if you instead want Sandbox to pass `{ credentials: 'include' }` for its requests.
 
 If you pass the `handleRequest` option, this option is ignored.
 
 Read more about the `fetch` API and credentials [here](https://developer.mozilla.org/en-US/docs/Web/API/fetch#credentials).
 
-This config option is **deprecated** in favor of using the Sandbox connection settings cookie toggle and setting the default value via `initialState.includeCookies`.
+This config option is **deprecated** in favor of using the connection settings cookie toggle in Sandbox and setting the default value via `initialState.includeCookies`.
 
 </td>
 </tr>
@@ -356,7 +356,7 @@ These are the fields you can include in the `initialState` option you pass to `n
 </td>
 <td>
 
-Set this value to `true` if you want the Sandbox to pass `{ credentials: 'include' }` for its requests by default.
+Set this value to `true` if you want Sandbox to pass `{ credentials: 'include' }` for its requests by default.
 
 If you set `hideCookieToggle` to `false`, users can override this default setting with the **Include cookies** toggle. (By default, the embedded Sandbox does _not_ show the **Include cookies** toggle in its connection settings.)
 
@@ -377,9 +377,9 @@ Read more about the `fetch` API and credentials [here](https://developer.mozilla
 </td>
 <td>
 
-A URI-encoded operation to populate in the Sandbox's editor on load.
+A URI-encoded operation to populate in Sandbox's editor on load.
 
-If you omit this, the Sandbox initially loads an example query based on your schema.
+If you omit this, Sandbox initially loads an example query based on your schema.
 
 Example:
 
@@ -408,7 +408,7 @@ initialState: {
 </td>
 <td>
 
-A URI-encoded, serialized object containing initial variable values to populate in the Sandbox on load.
+A URI-encoded, serialized object containing initial variable values to populate in Sandbox on load.
 
 If provided, these variables should apply to the initial query you provide for [`document`](#document).
 
@@ -435,7 +435,7 @@ initialState: {
 </td>
 <td>
 
-A URI-encoded, serialized object containing initial HTTP header values to populate in the Sandbox on load.
+A URI-encoded, serialized object containing initial HTTP header values to populate in Sandbox on load.
 
 Example:
 
@@ -460,7 +460,7 @@ initialState: {
 </td>
 <td>
 
-The ID of a collection, paired with an operation ID to populate in the Sandbox on load. You can find these values from a registered graph in Studio by clicking the **...** menu next to an operation in the Explorer of that graph and selecting **View operation details**.
+The ID of a collection, paired with an operation ID to populate in Sandbox on load. You can find these values from a registered graph in Studio by clicking the **...** menu next to an operation in the Explorer of that graph and selecting **View operation details**.
 
 Example:
 
@@ -509,7 +509,7 @@ initialState: {
 </td>
 <td>
 
-Headers that are applied by default to every operation executed by the embedded Sandbox. Users can disable the application of these headers, but they can't modify their values.
+Headers that are applied by default to every operation executed by the embedded Sandbox. Users can turn off the application of these headers, but they can't modify their values.
 
 The embedded Sandbox _always_ includes these headers in its introspection queries to your `initialEndpoint`.
 

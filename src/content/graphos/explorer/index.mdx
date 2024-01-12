@@ -19,7 +19,11 @@ The Explorer is also available in a [sandbox mode](./sandbox/) that doesn't requ
 
 To get started with the Explorer, [create a graph](../quickstart/cloud/#2-create-your-first-supergraph) in GraphOS Studio and then navigate to that graph's Explorer page:
 
-<img src="../img/explorer-new-graph.jpg" className="screenshot" alt="The default Explorer view for a new supergraph" />
+<img
+  src="../img/explorer-new-graph.jpg"
+  className="screenshot"
+  alt="The default Explorer view for a new supergraph"
+/>
 
 ## Building a query
 
@@ -29,7 +33,7 @@ Here's an example [embedded Explorer](./embed-explorer/) you can use to try out 
 
 ### The operation editor
 
-The Explorer’s operation editor is built on [Monaco](https://microsoft.github.io/monaco-editor/). It provides common features of query-building tools, including:
+The Explorer's operation editor is built on [Monaco](https://microsoft.github.io/monaco-editor/). It provides common features of query-building tools, including:
 
 - Panels for specifying headers, variables, and environment variables
 - Persistence across sessions
@@ -44,7 +48,11 @@ The editor also provides full IntelliSense support for GraphQL, including:
 
 The editor can manage multiple operations and reason about those operations individually. As you work, the editor shifts focus to whichever operation you click into. Each operation has its own context menu (`•••`) that enables you to format it, copy a link to share, or generate a `curl` command.
 
+<!-- vale Apollo.Headings = NO -->
+
 ### The Documentation tab
+
+<!-- vale Apollo.Headings = YES -->
 
 The Explorer's Documentation tab enables you to step into your schema, beginning at one of its entry points. As you step into a field and its subfields, the Explorer keeps track of your current path within the schema.
 
@@ -59,13 +67,13 @@ The Explorer provides a two-step schema search (shortcut `⌘+K`):
 
 ### 1. Find a field
 
-First, you search for a field by its name (e.g., `email`). The interface helps you differentiate between fields with the same name (e.g., `User.email` versus `Organization.email`). The search is "fuzzy", so it works even if you don't know a field's exact spelling.
+First, you search for a field by its name, for example, `email`. The interface helps you differentiate between fields with the same name, for example, `User.email` versus `Organization.email`. The search is "fuzzy," so it works even if you don't know a field's exact spelling.
 
-If you know exactly which type and which field you're looking for, you can separate those values with a period (e.g., `User.email`).
+If you know exactly which type and which field you're looking for, you can separate those values with a period, for example, `User.email`.
 
 ### 2. Find a path to the field
 
-After you identify a type-field pair, the Explorer lists all of the _paths_ to that field that start at your schema's entry points (`Query`, `Mutation` and `Subscription`). These paths are ordered by depth.
+After you identify a type-field pair, the Explorer lists all the _paths_ to that field that start at your schema's entry points (`Query`, `Mutation` and `Subscription`). These paths are ordered by depth.
 
 <Note>
 

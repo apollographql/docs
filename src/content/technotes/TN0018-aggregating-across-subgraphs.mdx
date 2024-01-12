@@ -13,7 +13,7 @@ A supergraph helps you orchestrate data fetches across multiple domains, however
 
 Although it's sometimes possible to generate query plans to support these use cases using the `@requires` directive, it's almost always better to provide this functionality in a new system, such as a search index.
 
-## Example: search
+## Example: Search
 
 Given an operation to search across both books and movies, we want to return a polymorphic list of books and movies that match the search term.
 
@@ -85,7 +85,7 @@ type Movie implements Product @key(fields: "id") {
 
 Now the Books subgraph can return `Movie` instances, but that means it needs access to the data source for movie data. This breaks the _separation of concerns_ we rely on to create dividing lines between domains and subgraphs.
 
-## Solution: create a new subgraph
+## Solution: Create a new subgraph
 
 When product requirements don't fit cleanly into a single domain, it often indicates that we need a _new_ domain. Let's design a system that includes a new **search domain**. This includes a search index and a Search subgraph that provides the `Query.search` root field.
 
