@@ -149,7 +149,7 @@ const Results = () => {
                 my="4"
                 borderLeftWidth="2px"
                 borderColor="primary"
-                fontSize="md"
+                fontSize="lg"
                 sx={{
                   '>': {
                     ':not(:last-child)': {
