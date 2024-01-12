@@ -1,19 +1,15 @@
 import {components} from '@apollo/chakra-helpers';
 import {extendTheme} from '@chakra-ui/react';
+import {lighten} from 'polished';
 import {colors as newBrandColors} from '@apollo/brand';
 
-const {
-  gray,
-  navy: indigo,
-  blue,
-  yellow,
-  orange,
-  red,
-  green,
-  purple,
-  silver,
-  black
-} = newBrandColors.primitives;
+const {gray, navy, blue, yellow, orange, red, green, purple, silver, black} =
+  newBrandColors.primitives;
+
+const indigo = {
+  ...navy,
+  50: lighten(0.4, navy[100])
+};
 
 const {bg, button, border, text} = newBrandColors.tokens;
 
@@ -91,7 +87,7 @@ const theme = extendTheme({
     Text: {
       baseStyle: {
         lineHeight: '1.8rem',
-        fontSize: 'lg'
+        fontSize: 'md'
       }
     },
     Table: {
