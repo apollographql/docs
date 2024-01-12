@@ -93,8 +93,7 @@ export function NotesList({ notes, setCurrentTag, sort, setSort }) {
                   <PrimaryLink as={GatsbyLink} to={note.childMdx.fields.slug}>
                     {note.childMdx.frontmatter.title}
                   </PrimaryLink>
-                  <Flex fontSize="sm" gap={4} mt={2}>
-                    <Box>{note.childMdx.timeToRead} minute(s) read</Box>
+                  <Flex fontSize="sm" gap={4} mt={4}>
                     <HStack>
                       {note.childMdx.frontmatter.tags?.map((tag, index) => (
                         <Tag
@@ -113,6 +112,7 @@ export function NotesList({ notes, setCurrentTag, sort, setSort }) {
                   <Text mb="4" fontSize="md" noOfLines={3}>
                     {note.childMdx.frontmatter.description}
                   </Text>
+                  <Box color={'primary'} fontSize="xs" textTransform="uppercase">{note.childMdx.timeToRead} min read</Box>
                 </Td>
                 <Td fontSize={"sm"} whiteSpace={"nowrap"}>
                   {moment(note.childMdx.frontmatter.published).format("YYYY-MM-DD")}
