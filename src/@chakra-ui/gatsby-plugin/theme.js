@@ -88,6 +88,12 @@ const theme = extendTheme({
   },
   components: {
     ...components,
+    Heading: {
+      baseStyle: {
+        // TODO: contribute this back to chakra-helpers
+        fontWeight: 'medium'
+      }
+    },
     Text: {
       baseStyle: {
         lineHeight: '1.8rem',
@@ -121,9 +127,9 @@ const theme = extendTheme({
     '6xl': '4rem'
   },
   fonts: {
-    heading: "aeonik, 'aeonik', sans-serif",
-    body: "Inter, 'Inter var', sans-serif",
-    mono: "Fira Code, 'Fira Code Retina', monospace"
+    heading: 'Aeonik, sans-serif',
+    body: 'Inter, sans-serif',
+    mono: 'Fira Code, monospace'
   },
   colors: {
     silver,
