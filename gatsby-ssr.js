@@ -39,23 +39,7 @@ const headComponents = [
           root.style.setProperty('${DOCS_PAGE_WIDTH_VAR}', pageWidthPx);
         `
     }}
-  />,
-  <style
-    key="font-face"
-    dangerouslySetInnerHTML={{
-      __html: `
-        @font-face {
-          font-family: "Aeonik";
-          font-style: normal;
-          font-weight: 400;
-          font-display: swap;
-          src: url(${withPrefix(
-            "/fonts/aeonik/Aeonik-Regular.woff2"
-          )}) format("woff2");
-        }
-      `
-    }}
-  />,
+  />
 ];
 
 if (process.env.CONTEXT === 'production') {
