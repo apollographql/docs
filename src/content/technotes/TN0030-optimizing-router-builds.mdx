@@ -1,5 +1,8 @@
 ---
-title: Optimizing Custom Apollo Router Builds
+title: Optimizing custom Apollo Router builds
+subtitle: Enhance performance, minimize build time, and address system requirements
+description: Recommendations and considerations for minimizing build time when using custom Apollo Router builds.
+published: 2023-01-19
 id: TN0030
 tags: [router]
 ---
@@ -22,25 +25,25 @@ We also changed the default `options.machineType` value to `E2_HIGHCPU_8`, this 
 
 steps:
   - id: Build Router
-    name: 'gcr.io/kaniko-project/executor:latest'
+    name: "gcr.io/kaniko-project/executor:latest"
     args:
-      - '--cache=true'
-      - '--dockerfile=$_DOCKERFILE'
-      - '--context=dir://$_IMAGE_NAME'
+      - "--cache=true"
+      - "--dockerfile=$_DOCKERFILE"
+      - "--context=dir://$_IMAGE_NAME"
       - >-
         --destination=$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_IMAGE_NAME:$COMMIT_SHA
   - id: Deploy Router
-    name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:slim'
+    name: "gcr.io/google.com/cloudsdktool/cloud-sdk:slim"
     entrypoint: gcloud
     args:
       - run
       - services
       - update
       - $_SERVICE_NAME
-      - '--platform=managed'
-      - '--image=$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_IMAGE_NAME:$COMMIT_SHA'
-      - '--region=$_DEPLOY_REGION'
-      - '--quiet'
+      - "--platform=managed"
+      - "--image=$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_IMAGE_NAME:$COMMIT_SHA"
+      - "--region=$_DEPLOY_REGION"
+      - "--quiet"
 options:
   machineType: E2_HIGHCPU_8
 substitutions:

@@ -1,5 +1,8 @@
 ---
 title: Managing Apollo Router resources in Kubernetes
+subtitle: Recommendations and considerations for application pods
+description: Recommendations and considerations for determining the correct resource requests and limits for application pods in a Kubernetes system.
+published: 2022-10-31
 id: TN0016
 tags: [router, kubernetes]
 ---
@@ -22,10 +25,10 @@ Our general recommendation for Kubernetes is to start with these requests and li
 ```yaml
 resources:
   requests:
-    memory: '1G'
-    cpu: '1000m'
+    memory: "1G"
+    cpu: "1000m"
   limits:
-    memory: '2G'
+    memory: "2G"
     # no CPU limit to avoid throttling
 ```
 

@@ -1,5 +1,8 @@
 ---
 title: Testing with Apollo Federation
+subtitle: Unit, integration, end-to-end, composition, and component and operation testing
+description: Test your GraphQL architecture comprehensively with unit, integration, end-to-end, composition, and component and operation testing.
+published: 2022-07-12
 id: TN0007
 tags: [client, server, federation, testing]
 ---
@@ -27,7 +30,7 @@ We recommend creating unit tests for each of your subgraph server resolvers. Res
 Using `@faker-js/faker` to mock a return value in `jest` looks something like the following:
 
 ```js
-import {faker} from '@faker-js/faker';
+import { faker } from "@faker-js/faker";
 
 const testUser = {
   userId: faker.datatype.uuid(),
@@ -36,7 +39,7 @@ const testUser = {
   avatar: faker.image.avatar(),
   password: faker.internet.password(),
   birthdate: faker.date.birthdate(),
-  registeredAt: faker.date.past()
+  registeredAt: faker.date.past(),
 };
 
 const mockedFunction = jest.fn().mockReturnValue(testUser);
