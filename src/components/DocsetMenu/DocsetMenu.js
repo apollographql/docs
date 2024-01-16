@@ -29,7 +29,7 @@ import {ReactComponent as Router} from '../../assets/icons/router.svg';
 import {RxComponent1} from 'react-icons/rx';
 import {ReactComponent as Satellite} from '../../assets/icons/satellite.svg';
 import {ReactComponent as Schema} from '../../assets/icons/schema.svg';
-import {SiKotlin, SiReact, SiSwift} from 'react-icons/si';
+import {SiGraphql, SiKotlin, SiReact, SiSwift} from 'react-icons/si';
 import {SlChart} from 'react-icons/sl';
 import {TbRoute} from 'react-icons/tb';
 import {VscOrganization} from 'react-icons/vsc';
@@ -47,6 +47,7 @@ export const DOCSET_ICONS = {
   'apollo-kotlin': <SiKotlin />,
   'apollo-server': <CustomIcon icon={Satellite} />,
   federation: <CustomIcon icon={Federation} />,
+  graphql: <SiGraphql />,
   graphos: <CustomIcon icon={Schema} />,
   rover: <GoTerminal />,
   router: <CustomIcon icon={Router} />,
