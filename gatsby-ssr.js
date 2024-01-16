@@ -5,7 +5,6 @@ import {
   PAGE_JUMBO_WIDTH,
   PAGE_NORMAL_WIDTH
 } from './src/components/PageWidthContext';
-import { withPrefix } from 'gatsby';
 
 export const wrapPageElement = ({element, props}) => (
   <PageLayout {...props}>{element}</PageLayout>
