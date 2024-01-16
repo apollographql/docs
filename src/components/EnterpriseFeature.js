@@ -10,7 +10,7 @@ export const EnterpriseFeature = ({children}) => {
       py="1"
       borderLeftWidth="2px"
       borderColor="primary"
-      fontSize="md"
+      fontSize="lg"
       sx={{
         '>': {
           ':not(:last-child)': {
