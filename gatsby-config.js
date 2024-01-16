@@ -87,6 +87,15 @@ const plugins = [
             family: 'Fira Code',
             variants: ['400', '600']
           }
+        ],
+        selfHosted: [
+          {
+            family: 'Aeonik',
+            urls: {
+              woff2: '/src/fonts/aeonik/Aeonik-Medium.woff2'
+            },
+            fontWeight: 500
+          }
         ]
       }
     }
