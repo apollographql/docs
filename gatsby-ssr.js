@@ -1,13 +1,13 @@
-import PageLayout from "./src/components/PageLayout";
-import React from "react";
+import PageLayout from './src/components/PageLayout';
+import React from 'react';
 import {
   DOCS_PAGE_WIDTH_VAR,
   PAGE_JUMBO_WIDTH,
-  PAGE_NORMAL_WIDTH,
-} from "./src/components/PageWidthContext";
-import { withPrefix } from "gatsby";
+  PAGE_NORMAL_WIDTH
+} from './src/components/PageWidthContext';
+import { withPrefix } from 'gatsby';
 
-export const wrapPageElement = ({ element, props }) => (
+export const wrapPageElement = ({element, props}) => (
   <PageLayout {...props}>{element}</PageLayout>
 );
 
@@ -21,7 +21,7 @@ const headComponents = [
           ffWidgetScript.type = 'text/javascript';
           ffWidgetScript.src = 'https://freddyfeedback.com/widget/freddyfeedback.js';
           document.head.appendChild(ffWidgetScript);
-        `,
+        `
     }}
   />,
   <script
@@ -37,7 +37,7 @@ const headComponents = [
 
           const root = document.querySelector(':root');
           root.style.setProperty('${DOCS_PAGE_WIDTH_VAR}', pageWidthPx);
-        `,
+        `
     }}
   />,
   <style
@@ -53,12 +53,12 @@ const headComponents = [
             "/fonts/aeonik/Aeonik-Regular.woff2"
           )}) format("woff2");
         }
-      `,
+      `
     }}
   />,
 ];
 
-if (process.env.CONTEXT === "production") {
+if (process.env.CONTEXT === 'production') {
   headComponents.push(
     <script
       key="qualified-js"
@@ -69,7 +69,7 @@ if (process.env.CONTEXT === "production") {
   );
 }
 
-export const onRenderBody = ({ setHeadComponents, setHtmlAttributes }) => {
+export const onRenderBody = ({setHeadComponents, setHtmlAttributes}) => {
   setHeadComponents(headComponents);
-  setHtmlAttributes({ lang: "en" });
+  setHtmlAttributes({lang: 'en'});
 };
