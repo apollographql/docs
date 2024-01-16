@@ -15,17 +15,17 @@ exports.sourceNodes = async (api, options) => {
     let {file} = /** @type {{file:string}} */ (options);
 
     if (file.includes('://')) {
-      console.info("downloading api doc from url", file)
+      console.info('downloading api doc from url', file);
       const request = await fetch(file);
       const contents = await request.text();
       file = path.join(tempDir, 'api.json');
       fs.writeFileSync(file, contents);
     }
     if (fs.existsSync(file)) {
-      console.info("loading api doc from file", file)
+      console.info('loading api doc from file', file);
       loadApiDoc(file, api);
     } else {
-      console.info("api doc file not found, skipping", file)
+      console.info('api doc file not found, skipping', file);
     }
   } finally {
     fs.rmSync(tempDir, {recursive: true});
@@ -49,7 +49,8 @@ async function transpileMdx(contents) {
     .replace(
       /export\s*{\s*MDXContent\s+as\s+default\s*};?/,
       'return MDXContent;'
-    );
+    )
+    .replace(/MDXContent.isMDXComponent = true;/g, '');
 }
 
 const prerenderMarkdown = {
