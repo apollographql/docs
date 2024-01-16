@@ -4,6 +4,9 @@ const {loadApiDoc} = require('./apiDoc');
 const fs = require('fs');
 const path = require('path');
 const {default: fetch} = require('node-fetch');
+const mdx = require('@mdx-js/mdx');
+const babel = require('@babel/core');
+const reactPreset = require('@babel/preset-react');
 
 /** @type {import("gatsby").GatsbyNode['sourceNodes']} */
 exports.sourceNodes = async (api, options) => {
@@ -28,6 +31,58 @@ exports.sourceNodes = async (api, options) => {
     fs.rmSync(tempDir, {recursive: true});
   }
 };
+
+async function transpileMdx(contents) {
+  if (!contents || contents.trim() === '') return '';
+
+  let code = await mdx(contents, getMdxOptions());
+  code = babel.transform(code, {
+    configFile: false,
+    presets: [[reactPreset, {useBuiltIns: true}]]
+  })?.code;
+
+  return code
+    .replace(
+      /export\s*default\s*function\s*MDXContent\s*/,
+      'return function MDXContent'
+    )
+    .replace(
+      /export\s*{\s*MDXContent\s+as\s+default\s*};?/,
+      'return MDXContent;'
+    );
+}
+
+const prerenderMarkdown = {
+  type: 'String',
+  resolve(source, args, context, info) {
+    const contents = source[info.fieldName];
+    return transpileMdx(contents);
+  }
+};
+
+const prerenderMarkdownArray = {
+  type: '[String]',
+  resolve(source, args, context, info) {
+    const elements = source[info.fieldName];
+    return Promise.all(elements.map(transpileMdx));
+  }
+};
+
+function getMdxOptions() {
+  if (!getMdxOptions.options) {
+    const {plugins} = require('../../gatsby-config.js');
+    const plugin = plugins.find(
+      plugin =>
+        typeof plugin === 'object' && plugin.resolve === 'gatsby-plugin-mdx'
+    );
+
+    getMdxOptions.options = {
+      remarkPlugins: plugin.options.remarkPlugins
+    };
+  }
+
+  return getMdxOptions.options;
+}
 
 /** @type {import("gatsby").GatsbyNode['createResolvers']} */
 exports.createResolvers = ({createResolvers}) => {
@@ -131,6 +186,18 @@ exports.createResolvers = ({createResolvers}) => {
           });
         }
       }
+    },
+    ApiDocTypeDoc: {
+      summary: prerenderMarkdown,
+      deprecated: prerenderMarkdown,
+      remarks: prerenderMarkdown,
+      examples: prerenderMarkdownArray
+    },
+    ApiDocTypeParameter: {
+      comment: prerenderMarkdown
+    },
+    ApiDocFunctionParameter: {
+      comment: prerenderMarkdown
     }
   };
   createResolvers(resolvers);

@@ -220,7 +220,8 @@ const mdxComponents = {
   TrackableButton,
   TrackableLink,
   useApiDocContext,
-  PrimaryLink
+  PrimaryLink,
+  MDXRenderer
 };
 
 const {processSync} = rehype()
