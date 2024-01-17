@@ -41,7 +41,7 @@ import {
   chakra
 } from '@chakra-ui/react';
 import {Caution} from './Caution';
-import {CustomHeading} from './CustomHeading';
+import {CustomHeading, MinVersionTag} from './CustomHeading';
 import {
   DocBlock,
   DocPiece,
@@ -212,6 +212,7 @@ const mdxComponents = {
   ButtonLink,
   Tip,
   MinVersion,
+  MinVersionTag,
   EnterpriseFeature,
   ExperimentalFeature,
   PreviewFeature,
