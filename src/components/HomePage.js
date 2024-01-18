@@ -12,9 +12,8 @@ import {
   Text,
   useToken
 } from '@chakra-ui/react';
-import {FiArrowRight} from 'react-icons/fi';
+import {FiArrowRight, FiExternalLink} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
-import {PrimaryLink} from './RelativeLink';
 
 export function Odyssey() {
   const lightGradient = useToken('colors', ['blue.100', 'indigo.300']);
@@ -33,7 +32,7 @@ export function Odyssey() {
     >
       <div>
         <Text fontSize="lg">
-          <strong>Welcome!</strong> 👋 Our learning platform, Odyssey, provides{' '}
+          Our learning platform, Odyssey, provides{' '}
           <strong>interactive tutorials</strong> with videos and code challenges
           to help you launch your journey with GraphQL and Apollo.
         </Text>
@@ -66,6 +65,11 @@ export function Docset({
   icon,
   cta = 'Explore %s docs'
 }) {
+  const linkIcon = /^https:\/\//.test(path) ? (
+    <FiExternalLink />
+  ) : (
+    <FiArrowRight />
+  );
   return (
     <Flex align="flex-start" p="6" rounded="md" borderWidth="1px">
       <Flex align="flex-start" direction="column" h="full">
@@ -76,9 +80,20 @@ export function Docset({
           </HStack>
         </Heading>
         {description && <Text mb="4">{description}</Text>}
-        <PrimaryLink mt="auto" fontWeight="semibold" as={GatsbyLink} to={path}>
+        <Button
+          variant="link"
+          _dark={{
+            color: 'indigo.100'
+          }}
+          mt="auto"
+          fontWeight="semibold"
+          fontSize="lg"
+          as={GatsbyLink}
+          to={path}
+          leftIcon={linkIcon}
+        >
           {cta.replace('%s', title)}
-        </PrimaryLink>
+        </Button>
       </Flex>
       {children}
     </Flex>
