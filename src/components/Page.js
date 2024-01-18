@@ -43,13 +43,6 @@ import {
 import {Caution} from './Caution';
 import {CustomHeading, MinVersionTag} from './CustomHeading';
 import {
-  DocBlock,
-  DocPiece,
-  FunctionDetails,
-  InterfaceDetails,
-  useApiDocContext
-} from './ApiDoc';
-import {
   EmbeddableExplorer,
   MarkdownCodeBlock,
   MultiCodeBlock,
@@ -82,6 +75,7 @@ import {YouTube} from './YouTube';
 import {join} from 'path';
 import {kebabCase} from 'lodash';
 import {rehype} from 'rehype';
+import {useApiDocContext} from './ApiDoc';
 import {useConfig} from '../utils/config';
 import {useFieldTableStyles} from '../utils';
 import {useMermaidStyles} from '../utils/mermaid';
@@ -109,6 +103,7 @@ Prism.languages.rhai = Prism.languages.javascript;
 
 const LIST_SPACING = 4;
 const HEADINGS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
+const SCROLL_TARGETS = HEADINGS.concat('p');
 
 const SCROLL_MARGIN_TOP = PAGE_PADDING_TOP + TOTAL_HEADER_HEIGHT;
 
@@ -434,7 +429,7 @@ export default function Page({file}) {
           }
         }}
         css={{
-          [HEADINGS]: {
+          [SCROLL_TARGETS]: {
             scrollMarginTop: SCROLL_MARGIN_TOP
           }
         }}
