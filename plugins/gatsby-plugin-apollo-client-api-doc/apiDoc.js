@@ -232,10 +232,19 @@ function processDocComment(
       ),
       '@since'
     ),
+    docGroup: cleanDoc(
+      renderDocNode(
+        docComment.customBlocks.find(v => v.blockTag.tagName === '@docGroup')
+      ),
+      '@docGroup'
+    ),
     examples: docComment?.customBlocks
       .filter(v => v.blockTag.tagName === '@example')
       .map(renderDocNode)
-      .map(example => cleanDoc(example, '@example'))
+      .map(example => cleanDoc(example, '@example')),
+    alpha: docComment.modifierTagSet.isAlpha(),
+    beta: docComment.modifierTagSet.isBeta(),
+    experimental: docComment.modifierTagSet.isExperimental()
   };
 }
 

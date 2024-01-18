@@ -112,6 +112,10 @@ fragment Base on ApiDocBase {
     remarks
     returns
     examples
+    docGroup
+    alpha
+    beta
+    experimental
     since
   }
 }

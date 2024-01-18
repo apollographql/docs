@@ -449,7 +449,11 @@ exports.createSchemaCustomization = ({actions}) => {
         remarks: String
         returns: String
         since: String
+        docGroup: String
         examples: [String!]
+        alpha: Boolean!,
+        beta: Boolean!,
+        experimental: Boolean!
       }
     `);
 };
