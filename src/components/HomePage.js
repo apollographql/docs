@@ -32,7 +32,7 @@ export function Odyssey() {
       }}
     >
       <div>
-        <Text fontSize="md">
+        <Text fontSize="lg">
           <strong>Welcome!</strong> 👋 Our learning platform, Odyssey, provides{' '}
           <strong>interactive tutorials</strong> with videos and code challenges
           to help you launch your journey with GraphQL and Apollo.
