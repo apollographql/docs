@@ -6,12 +6,7 @@ description: Learn how Apollo GraphQL can help enterprise architects, API implem
 ---
 
 import {ButtonGroup, VStack} from '@chakra-ui/react';
-import {
-  CommunityButton,
-  Docset,
-  DocsetGrid,
-  Odyssey
-} from '../../components/HomePage';
+import {CommunityButton, Docset, DocsetGrid} from '../../components/HomePage';
 import {DOCSET_ICONS} from '../../components/DocsetMenu';
 import {
   SiDiscord,
@@ -24,20 +19,20 @@ import {
 **Apollo GraphOS** is the developer platform for building a [**supergraph**](./intro/platform/)—a unified network of your organization's data and services, all composed into a single distributed **GraphQL API**.
 
 <DocsetGrid>
-  <Docset
-    icon={DOCSET_ICONS.graphql}
-    title="Elevate the developer experience"
-    description="Understand how GraphQL and Apollo can help improve your organization's developer experience and ship features faster."
-    path="/intro/benefits"
-    cta="Learn about GraphQL"
-  />
-  <Docset
-    icon={DOCSET_ICONS.graphos}
-    title="Operate a GraphQL platform at any scale"
-    description="Connect any GraphQL API to Apollo's cloud platform to enable powerful features like collaborative schema development and governance, automated deployments, and field and operation-level observability."
-    path="/graphos"
-    cta="Learn about GraphOS"
-  />
+<Docset
+  icon={DOCSET_ICONS.graphql}
+  title="Ship features faster"
+  description="Understand how GraphQL and Apollo can help improve your organization's developer experience and ship features faster. Learn about GraphQL's advantages like efficient data fetching and robust tooling."
+  path="/intro/benefits"
+  cta="Learn about GraphQL"
+/>
+<Docset
+  icon={DOCSET_ICONS.graphos}
+  title="Operate at any scale"
+  description="Connect any GraphQL API to Apollo's cloud platform to enable powerful features like collaborative schema development and governance, automated deployments, and field and operation-level observability."
+  path="/graphos"
+  cta="Learn about GraphOS"
+/>
 </DocsetGrid>
 
 Apollo provides tools and resources for every developer who interacts with GraphQL. That's whether you're [building your first API](#for-api-implementers), [querying an existing one](#for-client-developers), or [moving your entire organization onto the supergraph](#for-enterprise-architects).
@@ -60,37 +55,44 @@ Apollo provides tools and resources for every developer who interacts with Graph
     cta="Explore the Apollo Router docs"
   />
   <Docset
+    icon={DOCSET_ICONS.odyssey}
+    title="Master concepts"
+    description="Boost your skills with hands-on tutorials and trainings on GraphOS and enterprise best practices."
+    path="https://www.apollographql.com/tutorials/browse?categories=GraphOS"
+    cta="Explore tutorials"
+  />
+  <Docset
     icon={DOCSET_ICONS.technotes}
     title="Learn from the field"
     description="Read in-depth articles on specialized Apollo topics from our own solutions architects."
     path="/technotes"
     cta="Explore tech notes"
   />
-  <Docset
-    icon={DOCSET_ICONS.principled}
-    title="Master principles"
-    description="Learn about the fundamental principles that underlie Apollo's supergraph architecture."
-    path="https://principledgraphql.com/"
-    cta="Explore PrincipledGraphQL.com"
-  />
 </DocsetGrid>
 
 ## For API implementers
 
+<Docset
+  icon={DOCSET_ICONS.nodejs}
+  title="Build a GraphQL server in Node.js"
+  description="Build a production-ready API that handles multiple datasources with Apollo Server."
+  path="/apollo-server"
+  cta="Explore Apollo Server docs"
+/>
 <DocsetGrid>
   <Docset
-    icon={DOCSET_ICONS['apollo-server']}
-    title="Build a GraphQL API"
-    description="Build a production-ready API that handles multiple datasources in Node.js with Apollo Server."
-    path="/apollo-server"
-    cta="Explore Apollo Server docs"
+    icon={DOCSET_ICONS.java}
+    title="Build a server in Java"
+    description="Explore the tutorial on implementing a GraphQL API with Java and DGS."
+    path="https://www.apollographql.com/tutorials/intro-dgs"
+    cta="Begin tutorial"
   />
   <Docset
-    icon={DOCSET_ICONS.rover}
-    title="Manage via CLI"
-    description="Manage, configure, and publish your GraphOS graphs from the command line with the Rover CLI."
-    path="/rover"
-    cta="Explore Rover CLI docs"
+    icon={DOCSET_ICONS.csharp}
+    title="Build a server in C#"
+    description="Explore the tutorial on implementing a GraphQL API with .NET (C#) and Hot Chocolate."
+    path="https://www.apollographql.com/tutorials/intro-hotchocolate"
+    cta="Begin tutorial"
   />
 </DocsetGrid>
 

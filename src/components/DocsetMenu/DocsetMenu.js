@@ -20,6 +20,7 @@ import {
 } from '@chakra-ui/react';
 import {BsListOl} from 'react-icons/bs';
 import {ReactComponent as Explorer} from '../../assets/icons/explorer.svg';
+import {FaJava, FaNodeJs} from 'react-icons/fa';
 import {ReactComponent as Federation} from '../../assets/icons/federation.svg';
 import {FiChevronDown, FiGrid} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
@@ -29,7 +30,7 @@ import {ReactComponent as Router} from '../../assets/icons/router.svg';
 import {RxComponent1} from 'react-icons/rx';
 import {ReactComponent as Satellite} from '../../assets/icons/satellite.svg';
 import {ReactComponent as Schema} from '../../assets/icons/schema.svg';
-import {SiGraphql, SiKotlin, SiReact, SiSwift} from 'react-icons/si';
+import {SiCsharp, SiGraphql, SiKotlin, SiReact, SiSwift} from 'react-icons/si';
 import {SlChart} from 'react-icons/sl';
 import {TbRoute} from 'react-icons/tb';
 import {VscOrganization} from 'react-icons/vsc';
@@ -46,9 +47,12 @@ export const DOCSET_ICONS = {
   'apollo-ios': <SiSwift />,
   'apollo-kotlin': <SiKotlin />,
   'apollo-server': <CustomIcon icon={Satellite} />,
+  csharp: <SiCsharp />,
   federation: <CustomIcon icon={Federation} />,
   graphql: <SiGraphql />,
   graphos: <CustomIcon icon={Schema} />,
+  java: <FaJava />,
+  nodejs: <FaNodeJs />,
   rover: <GoTerminal />,
   router: <CustomIcon icon={Router} />,
   odyssey: <IoRocketSharp />,
