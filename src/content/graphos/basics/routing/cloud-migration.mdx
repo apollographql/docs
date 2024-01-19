@@ -13,17 +13,19 @@ Refer to [Router types](./#router-types) to learn the differences between self-h
 GraphOS supports self-hosted and cloud graphs, each [recommended for different use cases](../graphs/#graph-types). You may want to migrate to a cloud graph in these scenarios:
 
 - You have a [self-hosted supergraph](../graphs/#self-hosted-supergraphs) and want to offload the management of your router service to Apollo.
-    - You router service may be either the Apollo Router or the [`@apollo/gateway` package](/apollo-server/using-federation/api/apollo-gateway/).
+    - Your router service may be either the Apollo Router or the [`@apollo/gateway` package](/apollo-server/using-federation/api/apollo-gateway/).
 - You have one or more [self-hosted GraphQL APIs](../graphs/#monographs) and want to use GraphOS features beyond graph composition, for example, [`@defer` support](/router/executing-operations/defer-support/) and [metrics reporting](../metrics/).
 
 GraphOS offers [two types of cloud routing](./#router-comparison): Serverless and Dedicated. With both, you offload router provisioning and management to Apollo. With [Dedicated](./cloud-dedicated), Apollo hosts your router on dedicated infrastructure that you control and scale.
 
 ## Prerequisites
 
-Your subgraphs must be accessible outside of your private cloud environment so that a cloud router can connect to them. That means you must either:
+The Apollo cloud routers must be able to access your subgraphs. That means you must either:
 
 - Make your subgraphs available via a publicly accessible URL, for example, `https://api.mycompany.com/subgraphA`
-- Keep your subgraphs private but allow secure connections, for example, via [VPC peering](./cloud-dedicated/lattice/)
+- Keep your subgraphs private but allow secure connections, for example, via [VPC peering](https://docs.aws.amazon.com/vpc/latest/peering/what-is-vpc-peering.html/)
+    - If your subgraphs are on AWS, refer to the [AWS Lattice configuration guide](./cloud-dedicated/lattice) for setup instructions
+
 
 <Note>
 
@@ -37,13 +39,20 @@ Cloud routers use the same [Apollo Router binary](https://github.com/apollograph
 
 ### Router customizations
 
-The Apollo Router supports a [few avenues for customization](/router/customizations/overview). Cloud routers don't support custom binaries nor Rhai scripts. To use cloud routing, you must migrate any such customizations to [external coprocessors](/router/customizations/coprocessor/) or to built-in router features.
-
 <Note>
 
-Serverless cloud routing doesn't support external coprocessors. Consider [Cloud Dedicated](./cloud-dedicated) if you need router customization.
+Serverless cloud routing doesn't support router customization. Consider [Cloud Dedicated](./cloud-dedicated) if you need router customization.
 
 </Note>
+
+The Apollo Router supports a [few avenues for customization](/router/customizations/overview):
+
+- Custom router binaries
+- Rhai scripting
+- External coprocessing
+
+
+As a managed service, cloud routers don't support running custom binaries. Cloud routers don't currently (January 2024) support Rhai scripts, though support is on the roadmap. Therefore, you must migrate any customizations to [external coprocessors](/router/customizations/coprocessor/) or built-in router features to use cloud routing.
 
 ## Migration
 
