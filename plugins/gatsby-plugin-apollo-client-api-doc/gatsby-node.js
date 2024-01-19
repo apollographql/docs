@@ -451,8 +451,8 @@ exports.createSchemaCustomization = ({actions}) => {
         since: String
         docGroup: String
         examples: [String!]
-        alpha: Boolean!,
-        beta: Boolean!,
+        alpha: Boolean!
+        beta: Boolean!
         experimental: Boolean!
       }
     `);
