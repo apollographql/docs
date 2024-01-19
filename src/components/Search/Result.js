@@ -18,7 +18,7 @@ export default function Result({item, ...props}) {
   const {text, title, description} = item._highlightResult;
   const {'aria-selected': isSelected} = props;
 
-  const url = item.__autocomplete_indexName == "docs" && typeof window !== 'undefined' ? window.location.origin + item.slug : item.url;
+  const url = item.__autocomplete_indexName == "staging_docs" && typeof window !== 'undefined' ? window.location.origin + item.slug : item.url;
 
   return (
     <chakra.li bg={isSelected && activeBg} {...props}>
