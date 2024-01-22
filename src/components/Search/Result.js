@@ -11,7 +11,6 @@ export default function Result({item, ...props}) {
   const {colorMode} = useColorMode();
   const activeBg = colorMode === 'light' ? 'silver.400' : 'indigo.400';
 
-  console.log(item.__autocomplete_indexName);
 
   const url =
     item.__autocomplete_indexName === 'staging_docs'
