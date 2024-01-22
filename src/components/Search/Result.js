@@ -2,22 +2,14 @@ import Highlight from './Highlight';
 import PropTypes from 'prop-types';
 import React from 'react';
 import ResultIcon from './ResultIcon';
-import {Box, Flex, chakra, useColorMode, useTheme} from '@chakra-ui/react';
+import {Box, Flex, chakra, useColorMode} from '@chakra-ui/react';
 
 export default function Result({item, ...props}) {
-  const theme = useTheme();
-  const {colorMode} = useColorMode();
-  const {
-    _hover: {bg: activeBg}
-  } = theme.components.Button.variants.ghost({
-    theme,
-    colorMode,
-    colorScheme: 'indigo'
-  });
-
   const {text, title, description} = item._highlightResult;
   const {'aria-selected': isSelected} = props;
 
+  const {colorMode} = useColorMode();
+  const activeBg = colorMode === 'light' ? 'silver.400' : 'indigo.400';
   const url = item.__autocomplete_indexName == "staging_docs" && typeof window !== 'undefined' ? window.location.origin + item.slug : item.url;
 
   return (
