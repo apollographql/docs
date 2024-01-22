@@ -18,9 +18,11 @@ export default function Result({item, ...props}) {
   const {text, title, description} = item._highlightResult;
   const {'aria-selected': isSelected} = props;
 
+  const url = item.__autocomplete_indexName == "staging_docs" && typeof window !== 'undefined' ? window.location.origin + item.slug : item.url;
+
   return (
     <chakra.li bg={isSelected && activeBg} {...props}>
-      <Flex as="a" href={item.url} p="2">
+      <Flex as="a" href={url} p="2">
         <Box mr="3" fontSize="xl" color="primary" flexShrink="0">
           <ResultIcon result={item} />
         </Box>

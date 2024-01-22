@@ -73,6 +73,13 @@ ClickableHeading.propTypes = {
 export const makeGlossaryTermId = term =>
   term.replace(/\s+/g, '-').replace(/@/g, '').replace(/\//g, '').toLowerCase();
 
+const updateHost = (url) => {
+  if (process.env.CONTEXT !== 'production' && typeof window !== 'undefined'){
+    return url.replace("https://www.apollographql.com/docs", window.location.origin)
+  }
+  return url;
+}
+
 const Results = () => {
   const {hits} = useHits();
   const {user} = useUser();
@@ -212,7 +219,7 @@ const Results = () => {
               <PrimaryLink
                 my="4"
                 as="a"
-                href={hit.learnMore}
+                href={updateHost(hit.learnMore)}
                 style={{display: 'flex', alignItems: 'center'}}
               >
                 {hit.learnMoreText
