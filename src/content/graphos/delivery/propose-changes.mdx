@@ -14,7 +14,7 @@ This article describes actions in the **Proposal creation** stage of the [schema
 
 You can create a new proposal in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content) from a graph's proposals list. To access the proposals list page, either:
 
-  - Click the pencil icon with the tooltip that says **Go to schema change proposals**.
+  - On the **Graphs** page, click the pencil icon with the tooltip that says **Go to schema change proposals** for a particular graph.
 
     <img
       src="../img/schema-proposals/proposals-list-page.jpg"
@@ -22,15 +22,15 @@ You can create a new proposal in [GraphOS Studio](https://studio.apollographql.c
       alt="Graphs page in Studio"
     />
   
-  - [Coming soon] Open the proposals list page from the left navigation.
+  - From a particular graph, open the **Proposals** page from the left navigation.
 
 Follow the steps below to create a new proposal:
 
-1. Click the **Propose changes** button in the top right. A dialog titled **Propose schema changes** appears.
+1. Click the **Propose changes** button in the top right. A dialog entitled **Propose schema changes** appears.
    <img
      src="../img/schema-proposals/proposal-modal.jpg"
      className="screenshot"
-     alt="Schema proposals modal in Studio"
+     alt="Schema proposals dialog in Studio"
      width="500px"
    />
 2. Enter a descriptive **proposal title** that outlines the schema changes you plan to propose.
@@ -41,16 +41,17 @@ Follow the steps below to create a new proposal:
 
    </Note>
 
-3. Select a **source variant**. The source variant's schema is used to start the proposal, but the proposal is not kept in sync with any schema changes that occur while the proposal is in progress.
+3. Select a **source variant**. The source variant's schema is used to start the proposal, but the proposal isn't kept in sync with any schema changes that occur while the proposal is in progress.
 
    <Tip>
 
    Because development environments are where most changes and experimentation occur, **Apollo recommends creating schema proposals from development variants**.
-   Proposing schema changes from a development variant helps minimize the risks associated with making direct changes to a production schema and allows for the earliest detection of issues and potential improvements.
+
+   Proposing schema changes from a development variant minimizes the risks associated with making direct changes to a production schema. It allows for the earliest detection of issues and potential improvements.
 
    </Tip>
 
-4. Optionally, enter the rationale for the proposed changes. This rationale appears as your proposal's README on the proposal overview and gives collaborators and reviewers context for the proposed changes. This field accepts [Markdown](https://www.markdownguide.org/getting-started/).
+4. Optionally, enter the rationale for the proposed changes. This rationale appears as your proposal's README on the proposal's overview and gives collaborators and reviewers context for the proposed changes. This field accepts [Markdown](https://www.markdownguide.org/getting-started/).
 
     <Note>
 
@@ -114,16 +115,16 @@ If you are having trouble finding the exact location of where the lint violation
 
 <Note>
 
-When a coordinate with a lint violation is changed so that it no longer exists—either because you've renamed or deleted a field—it appears grayed out in the violations list. See, for example, the `line 52 + User.token` in the screenshot above. This indicates you can ignore the violation.
+ A violation line number may no longer exist because you've renamed or deleted a field. When this happens, the violation appears grayed out in the violations list. See, for example, `52 + User.token` in the screenshot above. The grayed out line indicates you can ignore the violation.
 
 </Note>
 
-Once you've made changes in the editor, rerun linting by clicking the rerun button in the top right of the **Schema linting** panel.
+Once you've made changes in the editor, rerun the linter by clicking the rerun button in the top right of the **Schema linting** panel.
 
 ### Save revisions
 
 Once you've made changes, click the **Save Revision** button in the top right of the editor to save them to your proposal.
-A modal appears where you can optionally include a summary of your changes. This field accepts [Markdown](https://www.markdownguide.org/getting-started/).
+A dialog appears where you can optionally include a summary of your changes. This field accepts [Markdown](https://www.markdownguide.org/getting-started/).
 
 <img
   src="../img/schema-proposals/save-revision.jpg"
@@ -136,7 +137,7 @@ This summary appears in the activity your proposal's overview tab. A proposal ca
 
 <Tip>
 
-You can think of each revision as equal to a [commit](<https://en.wikipedia.org/wiki/Commit_(version_control)>) in the version control paradigm. Making each revision an atomic change can more easily give reviewers an overview of the changes that make up a proposal.
+You can think of each revision as equal to a [commit](<https://en.wikipedia.org/wiki/Commit_(version_control)>) in the version control paradigm. Making each revision an atomic change can give reviewers an overview of the changes that make up a proposal.
 
 </Tip>
 
@@ -171,7 +172,7 @@ You can manually change the proposal's status from the overview page by clicking
 - **Draft**: default status upon creation
 - **Open for feedback**: signals the proposal is ready for review
 - **Closed**: signals the proposal is abandoned or suspended
-  - Closed proposals cannot receive further revisions
+  - Closed proposals can't receive further revisions
   - You can always reopen a proposal by resetting the status to Draft or Open for feedback
 
 <img
