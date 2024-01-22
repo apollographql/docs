@@ -14,7 +14,8 @@ import {
   useBreakpointValue
 } from '@chakra-ui/react';
 
-export const DOCS_INDEX = 'docs';
+export const DOCS_INDEX =
+  process.env.CONTEXT === 'production' ? 'docs' : 'staging_docs';
 export const QUERY_SUGGESTIONS_INDEX = 'docs_query_suggestions';
 export const APOLLOPEDIA_INDEX = 'apollopedia';
 

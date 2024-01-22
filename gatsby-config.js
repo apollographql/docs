@@ -142,7 +142,12 @@ const plugins = [
   {
     resolve: 'gatsby-plugin-env-variables',
     options: {
-      allowList: ['ALGOLIA_APP_ID', 'ALGOLIA_SEARCH_KEY']
+      allowList: [
+        'ALGOLIA_APP_ID',
+        'ALGOLIA_SEARCH_KEY',
+        'CONTEXT',
+        'DEPLOY_URL'
+      ]
     }
   },
   {

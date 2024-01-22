@@ -10,7 +10,13 @@ export default function Result({item, ...props}) {
 
   const {colorMode} = useColorMode();
   const activeBg = colorMode === 'light' ? 'silver.400' : 'indigo.400';
-  const url = item.__autocomplete_indexName == "staging_docs" && typeof window !== 'undefined' ? window.location.origin + item.slug : item.url;
+
+  console.log(item.__autocomplete_indexName);
+
+  const url =
+    item.__autocomplete_indexName === 'staging_docs'
+      ? new URL(item.slug, process.env.DEPLOY_URL).toString()
+      : item.url;
 
   return (
     <chakra.li bg={isSelected && activeBg} {...props}>
