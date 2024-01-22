@@ -1,5 +1,8 @@
 ---
 title: Authenticating requests with the Apollo Router
+subtitle: Use authorization and authentication strategies to secure your graph
+description: Combine authorization and authentication strategies with the Apollo Router to secure your graph through defense in depth.
+published: 2022-06-13
 id: TN0004
 tags: [server, router, auth]
 ---
@@ -181,20 +184,20 @@ This example coprocessor is written in Node.js and uses Express:
 ```js
 const app = express();
 app.use(bodyParser.json());
-app.post('/', async (req, res) => {
-  const {headers} = req.body;
+app.post("/", async (req, res) => {
+  const { headers } = req.body;
   const token = headers.authorization;
   const isValid = await validateToken(token);
   if (!isValid) {
     res.json({
       ...req.body,
-      control: {break: 401}
+      control: { break: 401 },
     });
   } else {
     res.json({
       ...req.body,
-      control: 'continue',
-      headers: {'x-claims': extractClaims(token)}
+      control: "continue",
+      headers: { "x-claims": extractClaims(token) },
     });
   }
 });

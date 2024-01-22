@@ -1,6 +1,9 @@
 ---
 title: Connecting OpenTelemetry traces to Prometheus
 id: TN0003
+subtitle: Convert operation traces into aggregated metrics for a broader view of your graph's performance
+description: Convert operation traces into aggregated metrics using OpenTelemetry Collector and Prometheus for a broader view of your graph's performance.
+published: 2022-06-03
 tags: [server, observability]
 ---
 
@@ -56,7 +59,7 @@ receivers:
 
 exporters:
   prometheus:
-    endpoint: '0.0.0.0:9464'
+    endpoint: "0.0.0.0:9464"
 
 processors:
   batch:
