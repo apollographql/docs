@@ -1,5 +1,8 @@
 ---
 title: GraphQL adoption patterns
+subtitle: Adoption patterns, anti-patterns, shortcomings, and solutions
+description: Learn shortcomings and solutions for GraphQL adoption patterns and anti-patterns, including monoliths, BFFs.queries a single GraphQL server.
+published: 2023-01-09
 id: TN0022
 tags: [federation]
 ---
@@ -22,11 +25,7 @@ Client teams that are eager take advantage of GraphQL's client-centric data-fetc
 
 To illustrate this approach, a client-only GraphQL architecture might look like this:
 
-<img
-  src="./images/enterprise-guide/pattern-client-only.jpg"
-  alt="Client-only GraphQL pattern"
-  width="550"
-/>
+<img src="./images/enterprise-guide/pattern-client-only.jpg" alt="Client-only GraphQL pattern" width="550" />
 
 ### Pattern 2: Backend for frontend
 
@@ -36,11 +35,7 @@ As a solution, BFFs add a new layer where each client has a dedicated BFF servic
 
 In practice, the BFF pattern with GraphQL might look like this:
 
-<img
-  src="./images/enterprise-guide/pattern-bff.jpg"
-  alt="Backends for frontends pattern"
-  width="550"
-/>
+<img src="./images/enterprise-guide/pattern-bff.jpg" alt="Backends for frontends pattern" width="550" />
 
 ### Pattern 3: The monolith
 
@@ -54,11 +49,7 @@ As with GraphQL-based BFFs, maintaining a single, monolithic GraphQL API can hel
 
 For either monolithic scenario, its high-level architecture looks like this:
 
-<img
-  src="./images/enterprise-guide/pattern-monolith.jpg"
-  alt="Monolith pattern"
-  width="550"
-/>
+<img src="./images/enterprise-guide/pattern-monolith.jpg" alt="Monolith pattern" width="550" />
 
 ### Pattern 4: Multiple overlapping graphs
 

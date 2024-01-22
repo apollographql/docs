@@ -1,5 +1,8 @@
 ---
-title: Improving Apollo Gateway performance
+title: Improving gateway performance
+subtitle: Learn to adjust tracing, instrument middleware and plugins, and more
+description: Recommendations for improving your gateway's performance when using Apollo Server with the @apollo/gateway library.
+published: 2022-07-28
 id: TN0009
 tags: [gateway, performance]
 ---
@@ -25,24 +28,24 @@ In Apollo Server 3.6 and later, you can set the `fieldLevelInstrumentation` opti
 
 ## Change the default `maxSockets` setting
 
-The `maxSockets` setting controls the maximum number of connections that Apollo Gateway's `fetch` implementation can create to each subgraph host and port. With higher values, fewer subgraph requests are queued in the gateway, but the event loop might become overloaded serializing responses from subgraphs.
+The `maxSockets` setting controls the maximum number of connections that `@apollo/gateway`'s `fetch` implementation can create to each subgraph host and port. With higher values, fewer subgraph requests are queued in the gateway, but the event loop might become overloaded serializing responses from subgraphs.
 
-In Apollo Gateway versions prior to v0.51.0, the default `maxSockets` setting is `15`, which is too low for many systems. In later versions, the default is `Infinity`, which lends itself to the overload scenario.
+In `@apollo/gateway` versions prior to v0.51.0, the default `maxSockets` setting is `15`, which is too low for many systems. In later versions, the default is `Infinity`, which lends itself to the overload scenario.
 
 The following `ApolloGateway` constructor sets `maxSockets` to 50:
 
 ```js
-import {ApolloGateway, RemoteGraphQLDataSource} from '@apollo/gateway';
-import fetcher from 'make-fetch-happen';
+import { ApolloGateway, RemoteGraphQLDataSource } from "@apollo/gateway";
+import fetcher from "make-fetch-happen";
 
 const gateway = new ApolloGateway({
-  buildService({name, url}) {
+  buildService({ name, url }) {
     return new RemoteGraphQLDataSource({
       name,
       url,
-      fetcher: fetcher.defaults({maxSockets: 50})
+      fetcher: fetcher.defaults({ maxSockets: 50 }),
     });
-  }
+  },
 });
 ```
 
@@ -54,9 +57,9 @@ If you've installed middleware (such as Express middleware) or Apollo Server plu
 
 ## Use OpenTelemetry tracing
 
-OpenTelemetry is the <abbr title="Cloud Native Computing Foundation">CNCF</abbr> standard for instrumenting distributed systems. By tracing Apollo Gateway, subgraph services, data sources, and any other systems in the request path, you might discover that the cause of performance issues occurs outside of Apollo Gateway.
+OpenTelemetry is the <abbr title="Cloud Native Computing Foundation">CNCF</abbr> standard for instrumenting distributed systems. By tracing `@apollo/gateway`, subgraph services, data sources, and any other systems in the request path, you might discover that the cause of performance issues occurs outside of `@apollo/gateway`.
 
-[OpenTelemetry in Apollo Gateway](/federation/opentelemetry)
+[OpenTelemetry in `@apollo/gateway`](/federation/opentelemetry)
 
 ## Investigate subgraph latency
 
@@ -83,7 +86,7 @@ The slower your subgraphs, the more time the Gateway spends keeping track of con
 
 ## Tweak CPU and memory limits
 
-You might need to set higher CPU and memory limits on your Apollo Gateway pods. Determining the best limits for your system depends on a number of factors:
+You might need to set higher CPU and memory limits on your `@apollo/gateway` pods. Determining the best limits for your system depends on a number of factors:
 
 - Size of operations
 - Cardinality of operations (number of unique shapes)
@@ -101,10 +104,10 @@ Query plans (the steps the Gateway takes to resolve an operation from multiple s
 
 ```js
 const gateway = new ApolloGateway({
-  debug: true // print query plans to stdout
+  debug: true, // print query plans to stdout
 });
 ```
 
 ## Add more instances
 
-Apollo Gateway is designed to scale horizontally. If you've tried the previous strategies and performance still isn't where it should be, distribute the load across more instances of Apollo Gateway.
+`@apollo/gateway` is designed to scale horizontally. If you've tried the previous strategies and performance still isn't where it should be, distribute the load across more instances of the gateway.
