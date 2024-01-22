@@ -30,6 +30,10 @@ const PaddedMarkdownCodeBlock = ({children}) => {
   );
 };
 
+PaddedMarkdownCodeBlock.propTypes = {
+  children: PropTypes.node.isRequired
+};
+
 const ClickableHeading = ({as, fontSize, fontWeight, id, children}) => {
   const handleCopyClick = () => {
     if (id) {
@@ -73,12 +77,16 @@ ClickableHeading.propTypes = {
 export const makeGlossaryTermId = term =>
   term.replace(/\s+/g, '-').replace(/@/g, '').replace(/\//g, '').toLowerCase();
 
-const updateHost = (url) => {
-  if (process.env.CONTEXT !== 'production' && typeof window !== 'undefined'){
-    return url.replace("https://www.apollographql.com/docs", window.location.origin)
+const updateHost = url => {
+  if (process.env.CONTEXT === 'production') {
+    return url;
   }
-  return url;
-}
+
+  return url.replace(
+    'https://www.apollographql.com/docs',
+    process.env.DEPLOY_URL
+  );
+};
 
 const Results = () => {
   const {hits} = useHits();
