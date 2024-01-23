@@ -13,7 +13,13 @@ import {
   useToken
 } from '@chakra-ui/react';
 import {FiArrowRight, FiExternalLink} from 'react-icons/fi';
-import {PrimaryLink} from './RelativeLink';
+
+const linkIcon = (path) => {
+  if(/^https:\/\//.test(path)){
+    return <FiExternalLink />;
+  }
+  return <FiArrowRight />;
+}
 
 export function GradientCard ({icon, title, description, path, cta}) {
   const lightGradient = useToken('colors', ['blue.100', 'indigo.300']);
@@ -46,7 +52,7 @@ export function GradientCard ({icon, title, description, path, cta}) {
           as="a"
           href={path}
           colorScheme="indigo"
-          leftIcon={/^https:\/\//.test(path) ? ( <FiExternalLink /> ) : ( <FiArrowRight />)}
+          leftIcon={linkIcon(path)}
         >
           {cta}
         </Button>
@@ -59,8 +65,6 @@ export const DocsetGrid = props => (
   <SimpleGrid spacing="4" minChildWidth="250px" {...props} />
 );
 
-export const CTA_LEARN = 'Learn about %s';
-
 export function Docset({
   title,
   children,
@@ -69,11 +73,6 @@ export function Docset({
   icon,
   cta = 'Explore %s docs'
 }) {
-  const linkIcon = /^https:\/\//.test(path) ? (
-    <FiExternalLink />
-  ) : (
-    <FiArrowRight />
-  );
   return (
     <Flex align="flex-start" p="6" rounded="md" borderWidth="1px">
       <Flex align="flex-start" direction="column" h="full">
@@ -86,15 +85,15 @@ export function Docset({
         {description && <Text mb="4">{description}</Text>}
         <Button
           variant="link"
+          as="a"
           _dark={{
             color: 'indigo.100'
           }}
           mt="auto"
           fontWeight="semibold"
           fontSize="lg"
-          as={PrimaryLink}
-          to={path}
-          leftIcon={linkIcon}
+          href={path}
+          leftIcon={linkIcon(path)}
         >
           {cta.replace('%s', title)}
         </Button>
@@ -114,5 +113,5 @@ Docset.propTypes = {
 };
 
 export const CommunityButton = props => (
-  <IconButton as={PrimaryLink} fontSize="larger" isExternal {...props} />
+  <IconButton as={Link} fontSize="larger" isExternal {...props} />
 );
