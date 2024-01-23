@@ -15,7 +15,7 @@ This article describes actions in the **Proposal implementation** and **publicat
 Once a schema proposal is **Approved**, its changes need to be implemented.
 For those implementing the changes, [pulling the approved schema changes](#pull-subgraphs-schemas-with-rover) into their IDE is a great starting point.
 
-Once the changes are implemented—including updating resolvers and other supporting work—you can use [schema checks](#validate-changes-with-checks) to ensure that your organization only publishes changes that were part of an approved proposal.
+Once the changes are implemented—including updating resolvers and other supporting work—you can use [schema checks](#validate-changes-with-checks) to ensure your organization only publishes changes approved through a proposal.
 
 <MinVersion version="X.x">
 
@@ -23,29 +23,29 @@ Once the changes are implemented—including updating resolvers and other suppor
 
 </MinVersion>
 
-You can pull a proposal's subgraph schemas using the [`rover subgraph fetch` command](/rover/commands/subgraphs/#subgraph-fetch). This command is also used to pull subgraph schemas from a variant. To pull a schema from a proposal:
+You can pull a proposal's subgraph schemas using the [`rover subgraph fetch` command](/rover/commands/subgraphs/#subgraph-fetch). This command can also pull subgraph schemas from a variant. To pull a schema from a proposal:
 
 1. [Install](/rover/getting-started) `vX.x` or later of the Rover CLI.
 2. Run the `rover subgraph fetch` command using the proposal's ID instead of a variant name:
 
-```bash disableLineNumbers=true
-rover subgraph fetch my-graph@p-101 --name subgraph
-```
+  ```bash showLineNumbers=false
+  rover subgraph fetch my-graph@p-101 --name subgraph
+  ```
 
-A proposal's ID is always prefixed with `p-` and followed by a number. You can find the proposal ID in the proposal's URL in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content). For example, a proposal with the following URL `https://studio.apollographql.com/graph/Example-supergraph/proposal/p-0/home` has an ID of `p-0`.
+  A proposal's ID is always prefixed with `p-` and followed by a number. You can find the proposal ID in the proposal's URL in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content). For example, a proposal with the following URL `https://studio.apollographql.com/graph/Example-supergraph/proposal/p-0/home` has an ID of `p-0`.
 
 <Note>
 
-You cannot push schema changes to proposals with the `rover subgraph publish` command.
+You can't push schema changes to proposals with the `rover subgraph publish` command.
 
 </Note>
 
 ## Validate changes with checks
 
-GraphOS provides [schema checks](./schema-checks) to help you identify breaking changes before you make them. You [run checks on local changes](./schema-checks#the-checks-lifecycle) before publishing them.
+GraphOS provides [schema checks](./schema-checks) to help you identify breaking changes. You [run checks on local changes](./schema-checks#the-checks-lifecycle) before publishing them.
 
-Since schema checks [run automatically on every revision](./propose-changes#schema-checks) in a proposal, if your last revision's checks pass, any changes you implement locally from a proposal should pass, too.
-Regardless, it's best to run checks before publishing changes to make sure no errors have crept in.
+Since schema checks [run automatically on every revision](./propose-changes#schema-checks) in a proposal, if your last revision's checks pass, any changes you implement locally from a proposal should pass too.
+Regardless, it's best to run checks before publishing changes to make sure any errors haven't crept in.
 
 ### Ensure changes match an approved proposal
 
@@ -57,7 +57,7 @@ You can [configure schema checks](./configure-proposals/#configure-schema-checks
   alt="Schema proposals settings in Studio"
 />
 
-Configuring the **Proposals** task's severity to **Error** ensures that only changes that have gone through the proposal process can be published. By setting the severity to **Warning** you can publish changes that haven't gone through the proposal process but receive warnings about them.
+Configuring the **Proposals** task's severity to **Error** ensures that only changes approved through the proposal process can be published. By setting the severity to **Warning** you can publish changes that haven't been approved and receive warnings about them.
 
 <Note>
 
@@ -81,7 +81,11 @@ Click **Ignore** to allow the Proposals task to succeed without matching approve
 
 ### Matching changes to proposals
 
-**Incoming changes and approved proposals don't need to match one-to-one.** For example, if you have an approved proposal with changes in multiple subgraphs, you can check each subgraph's changes separately. Each subgraph check still passes even though the change doesn't encompass all the approved proposal's changes. Similarly, if a single proposal contains a large change in one subgraph that you want to divide into multiple checks, those changes can match across multiple checks and each check passes.
+**Incoming changes and approved proposals don't need to match one-to-one.**
+
+For example, suppose you have an approved proposal with changes in multiple subgraphs. You can check each subgraph's changes separately. Each subgraph check still passes even though the change doesn't encompass all the approved proposal's changes.
+
+Similarly, a single proposal can contain a large change in one subgraph that you want to divide into multiple checks. Those changes can match across multiple checks and each check passes.
 
 ## Publish changes to GraphOS
 
@@ -99,6 +103,6 @@ When an **Approved** or **Open for feedback** proposal's changes have been fully
 <Note>
 
 - A proposal with **Draft** status can't become **Implemented**, even when all its changes are published. Once such a proposal's status is changed to **Open for feedback**, it automatically switches to **Implemented**.
-- **Implemented** proposals cannot receive further revisions, nor their status be changed.
+- **Implemented** proposals can't receive further revisions, nor their status be changed.
 
 </Note>
