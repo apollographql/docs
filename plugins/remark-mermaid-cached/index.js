@@ -44,7 +44,6 @@ module.exports = async (arg, options) => {
           },
         ],
       });
-      console.log('Loaded Mermaid from cache', cacheFile);
       return visit.SKIP;
     } else {
       instances.push({index, parent, cacheFile});
