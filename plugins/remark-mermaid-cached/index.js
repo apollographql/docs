@@ -63,7 +63,6 @@ module.exports = async (arg, options) => {
       fs.writeFileSync(cacheFile, JSON.stringify(newNode), {
         encoding: 'utf-8'
       });
-      console.log('Saved transformed Mermaid to cache', cacheFile);
 
       parent.children[index].value =
         '<div class="mermaid">' + parent.children[index].value + "</div>";
