@@ -13,10 +13,10 @@ Schema proposals are currently in invite-only [preview](/resources/product-launc
 </PreviewFeature>
 
 As your supergraph schema grows, managing changes becomes increasingly challenging.
-Assessing the impact of subgraph schema changes on [composition](/federation/federated-types/composition/) and client operations becomes harder.
+It becomes more difficult to assess the impact of subgraph schema changes on [composition](/federation/federated-types/composition/) and client operations.
 After agreeing on schema design changes, ensuring their implementation during subgraph development poses another challenge.
 
-These challenges intensify when updating multiple subgraph schemas simultaneously and collaborating across teams.
+These challenges grow when updating multiple subgraph schemas simultaneously and collaborating across teams.
 Schema development can stall without the clear cross-team communication needed to understand, verify, and track changes.
 
 ## Schema proposals for schema change management
@@ -44,7 +44,7 @@ Managing schema changes _directly in GraphOS Studio_ provides the following bene
 
 ## How schema proposals work
 
-Team members [create](./propose-changes), [review](./review-proposals), and [approval](./review-proposals#approved-reviews) schema proposals in GraphOS Studio. After approval, the team implements the proposal&mdash;including resolver and any supporting code changes&mdash; before publishing the schema changes to GraphOS.
+Team members [create](./creation), [review](../review), and [approval](../review#approved-reviews) schema proposals in GraphOS Studio. After approval, the team implements the proposal&mdash;including resolver and any supporting code changes&mdash; before publishing the schema changes to GraphOS.
 
 [Org and graph admins](../org/members/#organization-wide-member-roles) can [configure schema checks](./schema-checks/#proposals-checks) to ensure an organization only publishes changes approved through a proposal.
 
@@ -69,7 +69,7 @@ Before diving into proposal process details, understanding proposal statuses is 
 
 </td>
 <td>
-Automatic at proposal creation but can be <br/> <a href="./propose-changes#change-proposal-status">manually reset</a>
+Automatic at proposal creation but can be <br/> <a href="./creation#change-proposal-status">manually reset</a>
 </td>
 <td>
 Default status upon creation until the proposal is ready for review.
@@ -81,10 +81,10 @@ Default status upon creation until the proposal is ready for review.
 ##### Open for feedback
 
 </td>
-<td><a href="./propose-changes#change-proposal-status">Manual</a></td>
+<td><a href="./creation#change-proposal-status">Manual</a></td>
 <td>Signals the proposal is ready for review.
 <br/><br/>
-- If <a href="./configure-proposals/#default-reviewers">default reviewers</a> are configured, they become assigned for review.</td>
+- If <a href="../configuration/#default-reviewers">default reviewers</a> are configured, they become assigned for review.</td>
 </tr>
 <tr>
 <td>
@@ -95,12 +95,12 @@ Default status upon creation until the proposal is ready for review.
 <td>Automatic</td>
 <td>
 Signals the{' '}
-<a href="./configure-proposals#required-approvals">
+<a href="../configuration#required-approvals">
 minimum number of reviewers
 </a>{' '}
 has approved the proposal.
 <br/> <br/>
-- If you've <a href="./configure-proposals/#require-default-reviewer-approval">required default reviewer approval</a>, at least one approval must be from a <a href="./configure-proposals/#default-reviewers">default reviewer</a>.
+- If you've <a href="../configuration/#require-default-reviewer-approval">required default reviewer approval</a>, at least one approval must be from a <a href="../configuration/#default-reviewers">default reviewer</a>.
 </td>
 </tr>
 <tr>
@@ -123,7 +123,7 @@ Their status can't be updated.
 ##### Closed
 
 </td>
-<td><a href="./propose-changes#change-proposal-status">Manual</a></td>
+<td><a href="./creation#change-proposal-status">Manual</a></td>
 <td>
 Signals the proposal is suspended or abandoned. <br />
 <br /> - Closed proposals can't receive further revisions. <br /> - You
@@ -162,10 +162,10 @@ graph TB
 
 ## Next steps
 
-Schema proposal default configurations let you start using proposals out of the box. If you want to fine-tune your graph's proposal process, check out [Configure proposals](./configure-proposals). Configurations include permissions, approval requirements, and more.
+Schema proposal default configurations let you start using proposals out of the box. If you want to fine-tune your graph's proposal process, check out [Configure proposals](../configuration). Configurations include permissions, approval requirements, and more.
 
 To learn more about each stage in the process, refer to the following articles:
 
-- [Propose changes](./propose-changes)
-- [Review proposals](./review-proposals)
-- [Implement proposals](./implement-proposals) (covers both implementation and publication)
+- [Propose changes](./creation)
+- [Review proposals](../review)
+- [Implement proposals](./implementation) (covers both implementation and publication)

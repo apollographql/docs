@@ -31,20 +31,20 @@
       [
         "enterprise", "preview"
       ]],
-      "Configure proposals":[ "/configure-proposals",
+      "Configure proposals":[ "/schema-proposals/configuration",
       [
         "enterprise", "preview"
       ]],
 
-      "Propose changes":[ "/propose-changes",
+      "Propose changes":[ "/schema-proposals/creation",
       [
         "enterprise", "preview"
       ]],
-      "Review proposals":[ "/review-proposals",
+      "Review proposals":[ "/schema-proposals/review",
       [
         "enterprise", "preview"
       ]],
-      "Implement proposals":[ "/implement-proposals",
+      "Implement proposals":[ "/schema-proposals/implementation",
       [
         "enterprise", "preview"
       ]]

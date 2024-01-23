@@ -50,12 +50,12 @@ You can't push schema changes to proposals with the `rover subgraph publish` com
 
 GraphOS provides [schema checks](./schema-checks) to help you identify breaking changes. You [run checks on local changes](./schema-checks#the-checks-lifecycle) before publishing them.
 
-Since schema checks [run automatically on every revision](./propose-changes#schema-checks) in a proposal, if your last revision's checks pass, any changes you implement locally from a proposal should pass too.
+Since schema checks [run automatically on every revision](./creation#schema-checks) in a proposal, if your last revision's checks pass, any changes you implement locally from a proposal should pass too.
 Regardless, it's best to run checks before publishing changes to make sure any errors haven't crept in.
 
 ### Ensure changes match an approved proposal
 
-You can [configure schema checks](./configure-proposals/#configure-schema-checks) to include a **Proposals** task that verifies whether the changes a check is running on have matching and approved schema proposals.
+You can [configure schema checks](../configuration/#configure-schema-checks) to include a **Proposals** task that verifies whether the changes a check is running on have matching and approved schema proposals.
 
 <img
   src="../img/schema-proposals/proposal-check-settings.jpg"
@@ -80,7 +80,7 @@ When a check with the **Proposals** task runs, you can see the following by clic
 />
 
 - Changes with matching approved proposals show checkmark icons.
-- Changes without matching approved proposals show warning or error icons depending on the [configured severity](./configure-proposals#configure-schema-checks).
+- Changes without matching approved proposals show warning or error icons depending on the [configured severity](../configuration#configure-schema-checks).
 
 Clicking the icons reveals a list of matching proposals in the right panel.
 Click **Ignore** to allow the Proposals task to succeed without matching approved proposals for all changes.
@@ -96,7 +96,7 @@ Similarly, a single proposal can contain a large change in one subgraph that you
 ## Publish changes to GraphOS
 
 Publishing changes that are part of a schema proposal uses the same [publishing steps](./publishing-schemas) as any other changes.
-When a schema published to a [proposal's source variant](./propose-changes/#start-a-proposal) contains changes that are in an **Approved**, **Open for Feedback**, or **Draft** proposal, the corresponding [launch](./launches) appears in the proposal's activity log.
+When a schema published to a [proposal's source variant](./creation/#start-a-proposal) contains changes that are in an **Approved**, **Open for Feedback**, or **Draft** proposal, the corresponding [launch](./launches) appears in the proposal's activity log.
 
 <img
   src="../img/schema-proposals/proposal-implementation-status.jpg"
