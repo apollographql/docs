@@ -6,7 +6,7 @@ description: Learn how Apollo GraphQL can help enterprise architects, API implem
 ---
 
 import {ButtonGroup, VStack} from '@chakra-ui/react';
-import {CommunityButton, Docset, DocsetGrid} from '../../components/HomePage';
+import {CommunityButton, Docset, DocsetGrid, GradientCard} from '../../components/HomePage';
 import {DOCSET_ICONS} from '../../components/DocsetMenu';
 import {
   SiDiscord,
@@ -18,33 +18,16 @@ import {
 
 **Apollo GraphOS** is the developer platform for building a [**supergraph**](./intro/platform/)—a unified network of your organization's data and services, all composed into a single distributed **GraphQL API**.
 
-<DocsetGrid>
-<Docset
-  icon={DOCSET_ICONS.graphql}
-  title="Ship features faster"
-  description="Understand how GraphQL and Apollo can improve your organization's developer experience and help ship features faster."
-  path="/intro/benefits"
-  cta="Learn about GraphQL"
-/>
-<Docset
-  icon={DOCSET_ICONS.graphos}
-  title="Operate at scale"
-  description="Connect any GraphQL API to Apollo's cloud platform to enable powerful features like schema governance and metrics reporting."
-  path="/graphos"
-  cta="Learn about GraphOS"
-/>
-</DocsetGrid>
-
-Apollo provides tools and resources for every developer who interacts with GraphQL. That's whether you're [building your first API](#for-api-implementers), [querying an existing one](#for-client-developers), or [moving your entire organization onto the supergraph](#for-architects).
+Apollo provides tools and resources for every developer who interacts with GraphQL. That's whether you're just [getting started with GraphQL](#for-graphql-newcomers), [building your first API](#for-api-developers), [querying an existing one](#for-client-developers), or [moving your entire organization onto the supergraph](#for-architects).
 
 ## For architects
 
-<Docset
-  icon={DOCSET_ICONS.federation}
-  title="Unify APIs"
-  description="Implement a single, unified supergraph that combines multiple APIs with Apollo Federation."
-  path="/federation"
-  cta="Explore Apollo Federation docs"
+<GradientCard
+  icon={DOCSET_ICONS.graphos}
+  title="Connect to GraphOS"
+  description="Connect any GraphQL API to Apollo's cloud platform to enable powerful features like schema governance and metrics reporting."
+  path="/graphos"
+  cta="Learn about GraphOS"
 />
 <DocsetGrid>
   <Docset
@@ -98,6 +81,16 @@ Apollo provides tools and resources for every developer who interacts with Graph
   <Docset icon={DOCSET_ICONS['apollo-ios']} title="iOS" path="/ios" />
   <Docset icon={DOCSET_ICONS['apollo-kotlin']} title="Kotlin" path="/kotlin" />
 </DocsetGrid>
+
+## For GraphQL newcomers
+
+<GradientCard
+  icon={DOCSET_ICONS.graphql}
+  title="Ship features faster"
+  description="Understand how GraphQL and Apollo can improve your organization's developer experience and help ship features faster."
+  path="/intro/benefits"
+  cta="Learn about GraphQL"
+/>
 
 <h3> Join our community 💬 </h3>
 
