@@ -13,7 +13,7 @@ import {
   useToken
 } from '@chakra-ui/react';
 import {FiArrowRight, FiExternalLink} from 'react-icons/fi';
-import {PrimaryLink as Link} from './RelativeLink';
+import {PrimaryLink} from './RelativeLink';
 
 export function GradientCard ({icon, title, description, path, cta}) {
   const lightGradient = useToken('colors', ['blue.100', 'indigo.300']);
@@ -92,7 +92,7 @@ export function Docset({
           mt="auto"
           fontWeight="semibold"
           fontSize="lg"
-          as={Link}
+          as={PrimaryLink}
           to={path}
           leftIcon={linkIcon}
         >
@@ -114,5 +114,5 @@ Docset.propTypes = {
 };
 
 export const CommunityButton = props => (
-  <IconButton as={Link} fontSize="larger" isExternal {...props} />
+  <IconButton as={PrimaryLink} fontSize="larger" isExternal {...props} />
 );
