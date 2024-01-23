@@ -29,24 +29,24 @@
     "Schema proposals": {
       "Overview": ["/schema-proposals",
       [
-        "enterprise"
+        "enterprise", "preview"
       ]],
       "Configure proposals":[ "/configure-proposals",
       [
-        "enterprise"
+        "enterprise", "preview"
       ]],
 
       "Propose changes":[ "/propose-changes",
       [
-        "enterprise"
+        "enterprise", "preview"
       ]],
       "Review proposals":[ "/review-proposals",
       [
-        "enterprise"
+        "enterprise", "preview"
       ]],
       "Implement proposals":[ "/implement-proposals",
       [
-        "enterprise"
+        "enterprise", "preview"
       ]]
     },
     "Schema delivery": {
