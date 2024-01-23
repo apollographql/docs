@@ -34,19 +34,19 @@ This increased coordination improves design decisions and accountability, stream
 
 Managing schema changes _directly in GraphOS Studio_ provides the following benefits:
 
-- The proposal process **uses GraphOS [schema checks](./schema-checks)&mdash;including [schema linting](./schema-linter)&mdash;at every step**.
+- The proposal process **uses GraphOS [schema checks](../schema-checks)&mdash;including [schema linting](../schema-linter)&mdash;at every step**.
   - This offers an immediate understanding of the changes' impacts on composition and client operations.
   - It also minimizes the likelihood of errors and inconsistencies.
 - Editing, reviewing, and approving changes in GraphOS allows for **GraphQL-aware schema diffing**.
-  - For example, GraphOS diffs additions of new fields and types in the [proposals editor](#edit-subgraph-schemas) as new fields and types, regardless of formatting.
+  - For example, GraphOS diffs additions of new fields and types in the [proposals editor](./creation#edit-subgraph-schemas) as new fields and types, regardless of formatting.
   - In contrast, GraphQL-naive text diffing may not understand and diff changes unless they're conventionally formatted.
 - Centralizing the schema change process **consolidates a comprehensive audit trail** of discussions and schema changes.
 
 ## How schema proposals work
 
-Team members [create](./creation), [review](../review), and [approval](../review#approved-reviews) schema proposals in GraphOS Studio. After approval, the team implements the proposal&mdash;including resolver and any supporting code changes&mdash; before publishing the schema changes to GraphOS.
+Team members [create](./creation), [review](./review), and [approval](./review#approved-reviews) schema proposals in GraphOS Studio. After approval, the team implements the proposal&mdash;including resolver and any supporting code changes&mdash; before publishing the schema changes to GraphOS.
 
-[Org and graph admins](../org/members/#organization-wide-member-roles) can [configure schema checks](./schema-checks/#proposals-checks) to ensure an organization only publishes changes approved through a proposal.
+[Org and graph admins](../../org/members/#organization-wide-member-roles) can [configure schema checks](../schema-checks/#proposals-checks) to ensure an organization only publishes changes approved through a proposal.
 
 Before diving into proposal process details, understanding proposal statuses is helpful.
 
@@ -162,10 +162,10 @@ graph TB
 
 ## Next steps
 
-Schema proposal default configurations let you start using proposals out of the box. If you want to fine-tune your graph's proposal process, check out [Configure proposals](../configuration). Configurations include permissions, approval requirements, and more.
+Schema proposal default configurations let you start using proposals out of the box. If you want to fine-tune your graph's proposal process, check out [Configure proposals](./configuration). Configurations include permissions, approval requirements, and more.
 
 To learn more about each stage in the process, refer to the following articles:
 
 - [Propose changes](./creation)
-- [Review proposals](../review)
+- [Review proposals](./review)
 - [Implement proposals](./implementation) (covers both implementation and publication)

@@ -12,11 +12,11 @@ Schema proposals are currently in invite-only [preview](/resources/product-launc
 
 </PreviewFeature>
 
-[Org and graph admins](../org/members/#organization-wide-member-roles) can configure various aspects of schema proposals:
+[Org and graph admins](../../org/members/#organization-wide-member-roles) can configure various aspects of schema proposals:
 
 - Which [roles can create and edit proposals](#configure-permissions-and-approvals)
 - Which team members are [default reviewers](#default-reviewers) and whether [default reviewer approval is required](#require-default-reviewer-approval)
-- The [minimum number of approvals](#required-approvals) needed for a proposal to achieve [**Approved** status](./schema-proposals#proposal-statuses)
+- The [minimum number of approvals](#required-approvals) needed for a proposal to achieve [**Approved** status](./#proposal-statuses)
 - Whether and how [schema checks incorporate proposals](#configure-schema-checks)
 - Whether to [turn off email notifications](#turn-off-notifications) of proposal activity
 
@@ -28,7 +28,7 @@ Schema proposal configurations are on a **per-graph** basis&mdash;not per-organi
 
 ## Configure permissions and approvals
 
-[Permissions](/graphos/org/members) for proposal actions are set at the graph level with the following defaults:
+[Permissions](../../org/members) for proposal actions are set at the graph level with the following defaults:
 
 | Proposal Action        | Org Admin | Graph Admin | Contributor | Observer / Documenter | Consumer |
 | :--------------------- | :-------: | :---------: | :---------: | :-------------------: | :------: |
@@ -40,12 +40,20 @@ Schema proposal configurations are on a **per-graph** basis&mdash;not per-organi
 | Make comments          |     ✓     |      ✓      |      ✓      |           ✓           |    ✓     |
 | Approve proposals      |     ✓     |      ✓      |      ✓      |           ✓           |    ✓     |
 
-[Org and graph admins](../org/members/#organization-wide-member-roles) can configure which roles can create, edit, and approve proposals. Permissions for other proposal actions aren't configurable.
+[Org and graph admins](../../org/members/#organization-wide-member-roles) can configure which roles can create, edit, and approve proposals. Permissions for other proposal actions aren't configurable.
 
 Permissions and other configurations are available on a graph's **Settings** page in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content).
 
 <img
-  src="../img/schema-proposals/schema-proposal-settings.jpg"
+  src="../../img/schema-proposals/schema-proposal-settings.jpg"
+  className="screenshot"
+  alt="Schema proposals settings in Studio"
+/>
+
+You can access this page by clicking the **Settings** button in the top right of the schema proposals overview page.
+
+<img
+  src="../../img/schema-proposals/schema-proposal-settings-access.jpg"
   className="screenshot"
   alt="Schema proposals settings in Studio"
 />
@@ -114,7 +122,7 @@ Default: `None`
 </td>
 <td>
 
-The team members automatically marked as reviewers once a proposal's status becomes [**Open for feedback**](./schema-proposals#proposal-statuses).
+The team members automatically marked as reviewers once a proposal's status becomes [**Open for feedback**](./#proposal-statuses).
 
 </td>
 
@@ -136,7 +144,7 @@ Default: `3`
 </td>
 <td>
 
-The minimum number of approvals a proposal must receive for its status to become [**Approved**](./schema-proposals#proposal-statuses).
+The minimum number of approvals a proposal must receive for its status to become [**Approved**](./#proposal-statuses).
 
 </td>
 
@@ -163,7 +171,7 @@ By default, _any_ team member's approval can contribute to the [minimum number o
 Once you've added [**default reviewers**](#default-reviewers), you can require _at least one_ approval to come from a default reviewer by selecting **Require at least one default reviewer's approval**.
 
 <img
-  src="../img/schema-proposals/require-default-reviewer-approval.jpg"
+  src="../../img/schema-proposals/require-default-reviewer-approval.jpg"
   className="screenshot"
   alt="Schema proposals settings in Studio"
 />
@@ -173,7 +181,7 @@ Once you've added [**default reviewers**](#default-reviewers), you can require _
 You can configure [schema checks](./schema-checks) to include a **Proposals** task that verifies whether the changes a check is running on have matching and approved schema proposals.
 
 <img
-  src="../img/schema-proposals/proposal-check-settings.jpg"
+  src="../../img/schema-proposals/proposal-check-settings.jpg"
   className="screenshot"
   alt="Schema proposals settings in Studio"
 />
@@ -215,7 +223,7 @@ Notifications are enabled by default. To turn off your notifications, go to a pr
 
 
 <img
-  src="../img/schema-proposals/turn-off-notifications.jpg"
+  src="../../img/schema-proposals/turn-off-notifications.jpg"
   className="screenshot"
   alt="Proposals overview page in Studio"
   width="600"
