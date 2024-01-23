@@ -13,7 +13,7 @@ import {
   useToken
 } from '@chakra-ui/react';
 import {FiArrowRight, FiExternalLink} from 'react-icons/fi';
-import {Link as GatsbyLink} from 'gatsby';
+import {PrimaryLink as Link} from './RelativeLink';
 
 export function GradientCard ({icon, title, description, path, cta}) {
   const lightGradient = useToken('colors', ['blue.100', 'indigo.300']);
@@ -38,7 +38,7 @@ export function GradientCard ({icon, title, description, path, cta}) {
           </HStack>
         </Heading>
         <Text fontSize="lg">
-{description}
+          {description}
         </Text>
       </div>
       <div>
@@ -46,7 +46,7 @@ export function GradientCard ({icon, title, description, path, cta}) {
           as="a"
           href={path}
           colorScheme="indigo"
-          rightIcon={<FiArrowRight />}
+          leftIcon={/^https:\/\//.test(path) ? ( <FiExternalLink /> ) : ( <FiArrowRight />)}
         >
           {cta}
         </Button>
@@ -92,7 +92,7 @@ export function Docset({
           mt="auto"
           fontWeight="semibold"
           fontSize="lg"
-          as={GatsbyLink}
+          as={Link}
           to={path}
           leftIcon={linkIcon}
         >
