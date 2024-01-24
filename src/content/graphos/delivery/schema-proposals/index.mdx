@@ -1,7 +1,7 @@
 ---
-title: Schema proposals overview
+title: Schema proposals
 subtitle: Propose, review, and track changes to new and published schemas
-description: Use GraphOS's native GraphQL schema management process propose, review, and track schema changes before and after publication.
+description: Use GraphOS's native GraphQL schema change management process propose, review, and track schema changes before and after publication.
 ---
 
 <EnterpriseFeature />
@@ -12,9 +12,9 @@ Schema proposals are currently in invite-only [preview](/resources/product-launc
 
 </PreviewFeature>
 
-As your supergraph schema grows, managing changes becomes increasingly challenging.
-It becomes more difficult to assess the impact of subgraph schema changes on [composition](/federation/federated-types/composition/) and client operations.
-After agreeing on schema design changes, ensuring their implementation during subgraph development poses another challenge.
+As your supergraph schema grows, managing changes becomes more difficult.
+Assessing the impact of subgraph schema changes on [composition](/federation/federated-types/composition/) and client operations becomes more complex.
+Once schema design changes are agreed upon, implementing them during subgraph development poses another challenge.
 
 These challenges grow when updating multiple subgraph schemas simultaneously and collaborating across teams.
 Schema development can stall without the clear cross-team communication needed to understand, verify, and track changes.
@@ -34,9 +34,9 @@ This increased coordination improves design decisions and accountability, stream
 
 Managing schema changes _directly in GraphOS Studio_ provides the following benefits:
 
-- The proposal process **uses GraphOS [schema checks](../schema-checks)&mdash;including [schema linting](../schema-linter)&mdash;at every step**.
-  - This offers an immediate understanding of the changes' impacts on composition and client operations.
-  - It also minimizes the likelihood of errors and inconsistencies.
+- The proposal process uses GraphOS [schema checks](../schema-checks)&mdash;including [schema linting](../schema-linter)&mdash;at every step.
+  - This minimizes the likelihood of errors and inconsistencies.
+  - It also offers an immediate understanding of the changes' impacts on composition and client operations.
 - Editing, reviewing, and approving changes in GraphOS allows for **GraphQL-aware schema diffing**.
   - For example, GraphOS diffs additions of new fields and types in the [proposals editor](./creation#edit-subgraph-schemas) as new fields and types, regardless of formatting.
   - In contrast, GraphQL-naive text diffing may not understand and diff changes unless they're conventionally formatted.
@@ -44,11 +44,11 @@ Managing schema changes _directly in GraphOS Studio_ provides the following bene
 
 ## How schema proposals work
 
-Team members [create](./creation), [review](./review), and [approval](./review#approved-reviews) schema proposals in GraphOS Studio. After approval, the team implements the proposal&mdash;including resolver and any supporting code changes&mdash; before publishing the schema changes to GraphOS.
+Team members [create](./creation), [review](./review), and [approval](./review#approvals) schema proposals in GraphOS Studio. After approval, the team implements the proposal&mdash;including resolvers and any supporting code changes&mdash; before publishing the schema changes to GraphOS.
 
 [Org and graph admins](../../org/members/#organization-wide-member-roles) can [configure schema checks](../schema-checks/#proposals-checks) to ensure an organization only publishes changes approved through a proposal.
 
-Before diving into schema proposal workflow, understanding proposal statuses is helpful.
+Before diving into schema proposal workflow, it's helpful to understand proposal statuses.
 
 ### Proposal statuses
 
@@ -135,9 +135,9 @@ can reopen a proposal by setting the status to <strong> Draft</strong> or <stron
 
 A proposal doesn't have to progress linearly from **Draft** to **Implemented**. For example, it may be **Closed** before returning to **Draft** and continuing through the process.
 
-### Proposal process
+### Proposal workflow
 
-Schema proposal statuses enable the following end-to-end schema change management process:
+Schema proposal statuses enable the following end-to-end schema change management workflow:
 
 <SchemaProposalCreationMermaid />
 

@@ -12,26 +12,29 @@ Schema proposals are currently in invite-only [preview](/resources/product-launc
 
 </PreviewFeature>
 
-This article describes actions in the **Proposal implementation** and **publication** stages of the [schema proposal process](./schema-proposals#proposal-process).
+This article describes actions in the **Proposal implementation** and **publication** stages of the [schema proposal workflow](./#proposal-workflow).
 
 <SchemaProposalImplementationMermaid />
 
 <SchemaProposalPublicationMermaid />
 
 Once a schema proposal is **Approved**, its changes need to be implemented.
-For those implementing the changes, [pulling the approved schema changes](#pull-subgraphs-schemas-with-rover) into their IDE is a great starting point.
+For those implementing the changes, [pulling the approved schema changes](#pull-proposed-schemas-with-rover) into their IDE is a great starting point.
+The approved schema changes serve as a guide for resolvers and any other supporting code that needs to be implemented.
 
-Once the changes are implemented—including updating resolvers and other supporting work—you can use [schema checks](#validate-changes-with-checks) to ensure your organization only publishes changes approved through a proposal.
+Once the changes are implemented, you can use schema checks to ensure your organization only [publishes changes approved through a proposal](#validate-changes-with-checks).
 
 ## Pull proposed schemas with Rover
 
-You can pull a proposal's subgraph schemas using the [`rover subgraph fetch` command](/rover/commands/subgraphs/#subgraph-fetch). This command can also pull subgraph schemas from a variant. To pull a schema from a proposal use the proposal's ID instead of a variant name:
+The [`rover subgraph fetch` command](/rover/commands/subgraphs/#subgraph-fetch) can pull subgraph schemas from variants and proposals. To pull a subgraph schema from a proposal, use the proposal's ID instead of a variant name:
 
 ```bash showLineNumbers=false
 rover subgraph fetch my-graph@p-101 --name subgraph
 ```
 
-A proposal's ID is always prefixed with `p-` and followed by a number. You can find the proposal ID in the proposal's URL in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content). For example, a proposal with the following URL `https://studio.apollographql.com/graph/Example-supergraph/proposal/p-0/home` has an ID of `p-0`.
+A proposal's ID is always prefixed with `p-` and followed by a number. You can find the proposal ID in the proposal's URL in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content). For example, a proposal with the following URL has an ID of `p-101`.
+
+`https://studio.apollographql.com/graph/Example-supergraph/proposal/p-101/home`
 
 <Note>
 
@@ -44,16 +47,16 @@ You can't push schema changes to proposals with the `rover subgraph publish` com
 GraphOS provides [schema checks](../schema-checks) to help you identify breaking changes. You [run checks on local changes](../schema-checks#the-checks-lifecycle) before publishing them.
 
 Since schema checks [run automatically on every revision](./creation#schema-checks) in a proposal, if your last revision's checks pass, any changes you implement locally from a proposal should pass too.
-Regardless, it's best to run checks before publishing changes to make sure any errors haven't crept in.
+Regardless, it's best to run checks before publishing changes to make sure errors haven't crept in.
 
 ### Ensure changes match an approved proposal
 
-You can [configure schema checks](../configuration/#configure-schema-checks) to include a **Proposals** task that verifies whether the changes a check is running on have matching and approved schema proposals.
+You can [configure schema checks](./configuration/#configure-schema-checks) that run in GraphOS to include a **Proposals** task. Proposal checks verify that the changes a check is running on have matching and approved schema proposals.
 
 <img
   src="../../img/schema-proposals/proposal-check-settings.jpg"
   className="screenshot"
-  alt="Schema proposals settings in Studio"
+  alt="Proposal check settings in GraphOS Studio"
 />
 
 Configuring the **Proposals** task's severity to **Error** ensures that only changes approved through the proposal process can be published. By setting the severity to **Warning** you can publish changes that haven't been approved and receive warnings about them.
@@ -73,7 +76,7 @@ When a check with the **Proposals** task runs, you can see which changes match a
 />
 
 - Changes with matching approved proposals show checkmark icons.
-- Changes without matching approved proposals show warning or error icons depending on the [configured severity](../configuration#configure-schema-checks).
+- Changes without matching approved proposals show warning or error icons depending on the [configured severity](./configuration#configure-schema-checks).
 
 Clicking the icons reveals a list of matching proposals in the right panel.
 Click **Ignore** to allow the Proposals task to succeed without matching approved proposals for all changes.
@@ -81,20 +84,20 @@ Click **Ignore** to allow the Proposals task to succeed without matching approve
 ### Matching changes to proposals
 
 **Incoming changes and approved proposals don't need to match one-to-one.**
-
 For example, suppose you have an approved proposal with changes in multiple subgraphs. You can check each subgraph's changes separately. Each subgraph check still passes even though the change doesn't encompass all the approved proposal's changes.
 
 Similarly, a single proposal can contain a large change in one subgraph that you want to divide into multiple checks. Those changes can match across multiple checks and each check passes.
 
 ## Publish changes to GraphOS
 
-Publishing changes that are part of a schema proposal uses the same [publishing steps](./publishing-schemas) as any other changes.
-When a schema published to a [proposal's source variant](./creation/#start-a-proposal) contains changes that are in an **Approved**, **Open for Feedback**, or **Draft** proposal, the corresponding [launch](./launches) appears in the proposal's activity log.
+Publishing schema proposal changes follows the same [steps](../publishing-schemas) as publishing any other changes.
+
+When a schema published to a [proposal's source variant](./creation/#start-a-proposal) contains changes that are in an **Approved**, **Open for Feedback**, or **Draft** proposal, the corresponding [launch](../launches) appears in the proposal's activity log.
 
 <img
   src="../../img/schema-proposals/proposal-implementation-status.jpg"
   className="screenshot"
-  alt="Schema proposals overview in Studio"
+  alt="A matching launch appears on a schema proposal's activity log"
 />
 
 When an **Approved** or **Open for feedback** proposal's changes have been fully implemented—[whether from one launch or many](#matching-changes-to-proposals)—the proposal's status changes to **Implemented**.

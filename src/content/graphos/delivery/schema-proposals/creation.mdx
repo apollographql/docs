@@ -12,20 +12,20 @@ Schema proposals are currently in invite-only [preview](/resources/product-launc
 
 </PreviewFeature>
 
-This article describes actions in the **Proposal creation** stage of the [schema proposal process](./schema-proposals#proposal-process).
+This article describes actions in the **Proposal creation** stage of the [schema proposal workflow](./#proposal-workflow).
 
 <SchemaProposalCreationMermaid />
 
 ## Start a proposal
 
-You can create a new proposal in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content) from a graph's proposals list. To access the proposals list page, either:
+You can create a new proposal in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content) from a graph's proposals page. To access the page, either:
 
   - Open the **Proposals** page from the left navigation from a particular graph.
 
     <img
       src="../../img/schema-proposals/proposals-left-nav.jpg"
       className="screenshot"
-      alt="Graph page in Studio"
+      alt="Opening the Proposals page from the left nav in GraphOS Studio"
     />
 
   - On the **Graphs** page, click the pencil icon with the tooltip that says **Go to schema change proposals** for a particular graph.
@@ -33,7 +33,7 @@ You can create a new proposal in [GraphOS Studio](https://studio.apollographql.c
     <img
       src="../../img/schema-proposals/proposals-list-page.jpg"
       className="screenshot"
-      alt="Graphs page in Studio"
+      alt="The Graphs page in GraphOS Studio"
     />
 
 Follow the steps below to create a new proposal:
@@ -42,14 +42,14 @@ Follow the steps below to create a new proposal:
    <img
      src="../../img/schema-proposals/proposal-dialog.jpg"
      className="screenshot"
-     alt="Schema proposals dialog in Studio"
+     alt="Schema proposal creation dialog in GraphOS Studio"
      width="400"
    />
 2. Enter a descriptive **proposal title** that outlines the schema changes you plan to propose.
 
    <Note>
 
-   If you want to edit the proposal's title later, you can do so from its [**Overview** tab](./review/#overview).
+   If you want to edit the proposal's title later, you can do so from its **Overview** tab.
 
    </Note>
 
@@ -57,17 +57,17 @@ Follow the steps below to create a new proposal:
 
    <Tip>
 
-   Because development environments are where most changes and experimentation occur, **Apollo recommends creating schema proposals from development variants**.
+   **Apollo recommends creating schema proposals from development variants**.
 
    Proposing schema changes from a development variant minimizes the risks associated with making direct changes to a production schema. It allows for the earliest detection of issues and potential improvements.
 
    </Tip>
 
-4. Optionally, enter the rationale for the proposed changes. This rationale appears as your proposal's README on the proposal's overview and gives collaborators and reviewers context for the proposed changes. This field accepts [Markdown](https://www.markdownguide.org/getting-started/).
+4. Optionally, enter the rationale for the proposed changes. This rationale appears as your proposal's README on the proposal's overview and gives collaborators and reviewers context for the proposed changes. This input accepts [Markdown](https://www.markdownguide.org/getting-started/).
 
     <Note>
 
-    If you want to edit the proposal's README later, you can do so from its [**Overview** tab](./review/#overview).
+    If you want to edit the proposal's README later, you can do so from its **Overview** tab.
 
     </Note>
 
@@ -82,7 +82,7 @@ You can directly edit one or more subgraph schemas from a proposal's **Editor** 
 <img
   src="../../img/schema-proposals/subgraph-schema-editor.jpg"
   className="screenshot"
-  alt="Schema proposals editor in Studio"
+  alt="Schema proposals editor in GraphOS Studio"
 />
 
 To start a new subgraph, click **+Add new** from the subgraph schema selector in the left nav.
@@ -91,7 +91,7 @@ You can also delete existing subgraphs and rename newly created ones by clicking
 <img
   src="../../img/schema-proposals/subgraph-schema-selector.jpg"
   className="screenshot"
-  alt="Subgraph selector in the schema proposals editor in Studio"
+  alt="Subgraph selector in the schema proposals editor in GraphOS Studio"
   width="200px"
 />
 
@@ -102,10 +102,10 @@ To lint the schema changes you've made, click the Lint schema button in the top 
 <img
   src="../../img/schema-proposals/lint-changes.jpg"
   className="screenshot"
-  alt="Schema proposals editor in Studio"
+  alt="Linting changes in the schema proposals editor in GraphOS Studio"
 />
 
-Clicking the button opens a panel where you can run the [schema linter](./schema-linter) on the current changes in the editor.
+Clicking the button opens a panel where you can run the [schema linter](../schema-linter) on the current changes in the editor.
 After successfully running a lint on your schema, the panel displays any linter violations so you can fix them accordingly.
 
 If you are having trouble finding the exact location of where the lint violation occurred, click the line in the violations list to highlight it in the editor.
@@ -113,7 +113,7 @@ If you are having trouble finding the exact location of where the lint violation
 <img
   src="../../img/schema-proposals/linter-violations.jpg"
   className="screenshot"
-  alt="Highlighting violations in the schema proposals editor in Studio"
+  alt="Highlighting linting violations in GraphOS Studio"
 />
 
 <Note>
@@ -122,21 +122,21 @@ If you are having trouble finding the exact location of where the lint violation
 
 </Note>
 
-Once you've made changes in the editor, rerun the linter by clicking the rerun button in the top right of the **Schema linting** panel.
+Once you've made changes in the editor, rerun the linter by clicking the rerun button in the top right of the schema linting panel.
 
 ### Save revisions
 
-Once you've made changes, click the **Save Revision** button in the bottom left of the editor to save them to your proposal.
-A dialog appears where you can optionally include a summary of your changes. This field accepts [Markdown](https://www.markdownguide.org/getting-started/).
+Once you've made changes, click the **Save Revision** button in the bottom left of the editor to save them.
+A dialog appears where you can optionally include a summary of your changes. This input accepts [Markdown](https://www.markdownguide.org/getting-started/).
 
 <img
   src="../../img/schema-proposals/save-revision.jpg"
   className="screenshot"
-  alt="Schema proposals editor in Studio"
-  width="500px"
+  alt="Save revision dialog in GraphOS Studio"
+  width="400px"
 />
 
-This summary appears in the activity your proposal's overview tab. A proposal can include as many revisions as necessary.
+The revision summary appears in the activity your proposal's overview tab. A proposal can include as many revisions as necessary.
 
 <Tip>
 
@@ -151,7 +151,7 @@ You can think of each revision as equal to a [commit](<https://en.wikipedia.org/
 <img
   src="../../img/schema-proposals/schema-checks.jpg"
   className="screenshot"
-  alt="Schema checks for a proposal in Studio"
+  alt="Failed schema check for a proposal in GraphOS Studio"
 />
 
 Checks run against the schema of the source variant from which the proposal was created.
@@ -170,7 +170,7 @@ While working on a proposal and before requesting reviews from teammates, you ma
 
 ## Change proposal status
 
-You can manually change the proposal's status from the overview page by clicking **Edit status**. You have the following choices:
+You can change the proposal's status from the overview page by clicking **Edit status**. You have the following options:
 
 - **Draft**: default status upon creation
 - **Open for feedback**: signals the proposal is ready for review
@@ -181,7 +181,7 @@ You can manually change the proposal's status from the overview page by clicking
 <img
   src="../../img/schema-proposals/edit-status.jpg"
   className="screenshot"
-  alt="Schema proposals overview tab in Studio"
+  alt="Changing a schema proposal's status in GraphOS Studio"
 />
 
 **Approved** and **Implemented** statuses are automatically set once [necessary conditions](./#proposal-statuses) have been met.
@@ -193,10 +193,12 @@ Add reviewers by clicking **Manage reviewers** on the proposal's overview tab:
 <img
   src="../../img/schema-proposals/manage-reviewers.jpg"
   className="screenshot"
-  alt="Schema proposals overview tab in Studio"
+  alt="Selecting schema proposal reviewers in GraphOS Studio"
 />
 
-### Approved reviews
+If proposals have [default reviewers](./configuration#default-reviewers) configured, these are automatically selected once the proposal's status is **Open for feedback**.
+
+### Approvals
 
 <ApprovedSchemaProposals />
 

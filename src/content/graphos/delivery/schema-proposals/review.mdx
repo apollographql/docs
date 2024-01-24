@@ -12,7 +12,7 @@ Schema proposals are currently in invite-only [preview](/resources/product-launc
 
 </PreviewFeature>
 
-This article describes actions in the **Proposal review** stage of the [schema proposal process](./schema-proposals#proposal-process).
+This article describes actions in the **Proposal review** stage of the [schema proposal workflow](./#proposal-workflow).
 
 <SchemaProposalReviewMermaid />
 
@@ -23,17 +23,19 @@ Proposal creators and reviewers can review different aspects of a proposal from 
 <img
   src="../../img/schema-proposals/proposal-overview.jpg"
   className="screenshot"
-  alt="Schema proposals overview in Studio"
+  alt="Schema proposals tabs in GraphOS Studio"
 />
 
-- A proposal's **Overview** tab is where team members with [the appropriate permissions](../configuration#configure-permissions-and-approvals) can:
+- A proposal's **Overview** tab is where team members with [the appropriate permissions](./configuration#configure-permissions-and-approvals) can:
   - View and edit a proposal's description by clicking the pencil icon on the **README**.
-  - Use the **Proposal activity** log to monitor changes over time and leave overall commentary.
+  - Use the **Proposal activity** log to monitor changes and leave commentary.
   - View the proposal's status and author.
   - Select reviewers.
 - The [**Changes**](#changes) tab shows both a summary and detailed view of the schema changes that make up a proposal.
-  - All viewers can also [provide commentary](#add-comments) on changes from the **Changes** tab.
-- The [**Checks**](./creation#schema-checks) tab shows all [schema checks](../schema-checks) that have run for [saved revisions](./creation#save-revisions).
+  - All viewers can provide line-specific [comments](#add-comments) from the **Changes** tab.
+- The [**Schema Reference**](#schema-reference) tab shows the entire supergraph schema with the proposal's changes applied.
+- The **Checks** tab shows all [schema checks](./creation#schema-checks) that have run for [saved revisions](./creation#save-revisions).
+  - Both reviewers and authors should ensure schema checks pass for a finalized proposal.
 
 ### Changes
 
@@ -42,8 +44,7 @@ A proposal's **Changes** tab shows both a **Summary** and **Detailed view** of t
 <img
   src="../../img/schema-proposals/changes.jpg"
   className="screenshot"
-  alt="Schema proposals changes tab in Studio"
-  width="700"
+  alt="The schema proposals changes tab in GraphOS Studio"
 />
 
 - The **Summary** shows the number of objects, interfaces, and other types that changed in the proposal. Each type shows the number of lines added, deleted, and modified.
@@ -59,7 +60,7 @@ You can comment on any line in the detailed view's diff. Hover over the line and
 <img
   src="../../img/schema-proposals/add-comment.jpg"
   className="screenshot"
-  alt="Schema proposals changes tab in Studio"
+  alt="Adding a comment to a schema proposal in GraphOS Studio"
 />
 
 Write your comment in the panel that appears on the right.
@@ -68,15 +69,15 @@ Click on the **•••** button next to a comment to edit or delete it.
 <img
   src="../../img/schema-proposals/edit-comment.jpg"
   className="screenshot"
-  alt="Schema proposals changes tab in Studio"
+  alt="Editing a schema proposal comment in GraphOS Studio"
 />
 
-Share a comment by clicking the link button to copy its URL.
+Share a comment thread by clicking the link button to copy its URL.
 
 <img
   src="../../img/schema-proposals/share-comment.jpg"
   className="screenshot"
-  alt="Schema proposals changes tab in Studio"
+  alt="Sharing a schema proposal comment in GraphOS Studio"
 />
 
 The blue tab that appears next to a line shows the number of comments that line has.
@@ -84,8 +85,23 @@ The blue tab that appears next to a line shows the number of comments that line 
 <img
   src="../../img/schema-proposals/comments-number.jpg"
   className="screenshot"
-  alt="Schema proposals changes tab in Studio"
+  alt="An indicator shows three comments on a schema proposal line in GraphOS Studio"
+  width="500"
 />
+
+### Schema reference
+
+Since the **Schema reference** tab shows the entire supergraph schema, it can be helpful to get a complete picture of your supergraph schema if the proposal were implemented.
+
+Select **Proposal changes only** to hone in on parts of the schema that the proposal changes.
+
+<img
+  src="../../img/schema-proposals/schema-reference.jpg"
+  className="screenshot"
+  alt="The schema proposals schema reference tabs in GraphOS Studio"
+/>
+
+You can also filter by subgraph, tag, directive, return types, and arguments to narrow your view.
 
 ## Add a review
 
@@ -94,16 +110,16 @@ Once you've reviewed a proposal, click the **Add review** button on the top righ
 <img
   src="../../img/schema-proposals/add-review.jpg"
   className="screenshot"
-  alt="Schema proposals overview tab in Studio"
+  alt="A blue notification showing a request to review a proposal in GraphOS Studio"
 />
 
-A dialog appears where you can leave general commentary on the proposal and select to approve the proposal.
+A dialog appears where you can leave general commentary and select to approve the proposal.
 
 <img
   src="../../img/schema-proposals/add-review-modal.jpg"
   className="screenshot"
-  alt="Schema proposals overview tab in Studio"
-  width="300"
+  alt="Schema proposal review dialog in GraphOS Studio"
+  width="350"
 />
 
 You can edit your review by clicking the pencil icon next to your name in the list of **Reviewers**.
@@ -111,10 +127,10 @@ You can edit your review by clicking the pencil icon next to your name in the li
 <img
   src="../../img/schema-proposals/edit-review.jpg"
   className="screenshot"
-  alt="Schema proposals overview tab in Studio"
-  width="200"
+  alt="Editing a schema proposal review in GraphOS Studio"
+  width="250"
 />
 
-### Approved reviews
+### Approvals
 
 <ApprovedSchemaProposals />
