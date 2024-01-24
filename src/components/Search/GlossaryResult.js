@@ -22,6 +22,10 @@ const DefinitionText = ({children}) => {
   );
 };
 
+DefinitionText.propTypes = {
+  children: PropTypes.node.isRequired
+};
+
 function stripCodeExample(definition) {
   const hasCodeBlocks = /```[\s\S]*?```/g.test(definition);
 
@@ -57,6 +61,11 @@ function stripCodeExample(definition) {
 }
 
 export default function GlossaryResult({item}) {
+  const host =
+    process.env.CONTEXT === 'production'
+      ? 'https://www.apollographql.com/docs'
+      : process.env.DEPLOY_URL;
+
   return (
     <Box key="Apollopedia" borderBottomWidth="1px" pb="16px">
       <Flex align="center" p="2" pr="0">
@@ -83,9 +92,7 @@ export default function GlossaryResult({item}) {
           <PrimaryLink
             aria-label="Go to the glossary"
             as="a"
-            href={`https://www.apollographql.com/docs/resources/glossary#${makeGlossaryTermId(
-              item.term
-            )}`}
+            href={`${host}/resources/glossary#${makeGlossaryTermId(item.term)}`}
             mt="12px"
             style={{display: 'flex', alignItems: 'center'}}
           >
