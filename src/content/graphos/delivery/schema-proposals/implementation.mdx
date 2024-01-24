@@ -23,22 +23,15 @@ For those implementing the changes, [pulling the approved schema changes](#pull-
 
 Once the changes are implemented—including updating resolvers and other supporting work—you can use [schema checks](#validate-changes-with-checks) to ensure your organization only publishes changes approved through a proposal.
 
-<MinVersion version="X.x">
-
 ## Pull proposed schemas with Rover
 
-</MinVersion>
+You can pull a proposal's subgraph schemas using the [`rover subgraph fetch` command](/rover/commands/subgraphs/#subgraph-fetch). This command can also pull subgraph schemas from a variant. To pull a schema from a proposal use the proposal's ID instead of a variant name:
 
-You can pull a proposal's subgraph schemas using the [`rover subgraph fetch` command](/rover/commands/subgraphs/#subgraph-fetch). This command can also pull subgraph schemas from a variant. To pull a schema from a proposal:
+```bash showLineNumbers=false
+rover subgraph fetch my-graph@p-101 --name subgraph
+```
 
-1. [Install](/rover/getting-started) `vX.x` or later of the Rover CLI.
-2. Run the `rover subgraph fetch` command using the proposal's ID instead of a variant name:
-
-  ```bash showLineNumbers=false
-  rover subgraph fetch my-graph@p-101 --name subgraph
-  ```
-
-  A proposal's ID is always prefixed with `p-` and followed by a number. You can find the proposal ID in the proposal's URL in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content). For example, a proposal with the following URL `https://studio.apollographql.com/graph/Example-supergraph/proposal/p-0/home` has an ID of `p-0`.
+A proposal's ID is always prefixed with `p-` and followed by a number. You can find the proposal ID in the proposal's URL in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content). For example, a proposal with the following URL `https://studio.apollographql.com/graph/Example-supergraph/proposal/p-0/home` has an ID of `p-0`.
 
 <Note>
 
@@ -88,6 +81,7 @@ Click **Ignore** to allow the Proposals task to succeed without matching approve
 ### Matching changes to proposals
 
 **Incoming changes and approved proposals don't need to match one-to-one.**
+
 For example, suppose you have an approved proposal with changes in multiple subgraphs. You can check each subgraph's changes separately. Each subgraph check still passes even though the change doesn't encompass all the approved proposal's changes.
 
 Similarly, a single proposal can contain a large change in one subgraph that you want to divide into multiple checks. Those changes can match across multiple checks and each check passes.
