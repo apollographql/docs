@@ -20,7 +20,7 @@ import {
 } from '@chakra-ui/react';
 import {BsListOl} from 'react-icons/bs';
 import {ReactComponent as Explorer} from '../../assets/icons/explorer.svg';
-import {FaJava, FaNodeJs} from 'react-icons/fa';
+import {FaCheckSquare, FaJava, FaNodeJs} from 'react-icons/fa';
 import {ReactComponent as Federation} from '../../assets/icons/federation.svg';
 import {FiChevronDown, FiGrid} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
@@ -47,6 +47,7 @@ export const DOCSET_ICONS = {
   'apollo-ios': <SiSwift />,
   'apollo-kotlin': <SiKotlin />,
   'apollo-server': <CustomIcon icon={Satellite} />,
+  check: <FaCheckSquare />,
   csharp: <SiCsharp />,
   federation: <CustomIcon icon={Federation} />,
   graphql: <SiGraphql />,
