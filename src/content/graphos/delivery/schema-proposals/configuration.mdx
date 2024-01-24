@@ -14,11 +14,13 @@ Schema proposals are currently in invite-only [preview](/resources/product-launc
 
 [Org and graph admins](../../org/members/#organization-wide-member-roles) can configure various aspects of schema proposals:
 
-- Which [roles can create and edit proposals](#configure-permissions-and-approvals)
-- Which team members are [default reviewers](#default-reviewers) and whether [default reviewer approval is required](#require-default-reviewer-approval)
-- The [minimum number of approvals](#required-approvals) needed for a proposal to achieve [**Approved** status](./#proposal-statuses)
-- Whether and how [schema checks incorporate proposals](#configure-schema-checks)
-- Whether to [turn off email notifications](#turn-off-notifications) of proposal activity
+| Configuration               | Description                                                                           |
+|---------------------------------|-------------------------------------------------------------------------------------------|
+| **Permissions**                     | Which [roles can create and edit proposals](#configure-permissions-and-approvals)       |
+| **Default reviewers**               | Which team members are [default reviewers](#default-reviewers) and whether [default reviewer approval is required](#require-default-reviewer-approval)    |
+| **Approvals**                       | The [minimum number of approvals](#required-approvals) needed for a proposal to achieve [**Approved** status](./#proposal-statuses) |                                          |
+| **Schema checks**                   | Whether and how [schema checks incorporate proposals](#configure-schema-checks)         |
+| **Notifications**                  | Whether to [send email notifications](#turn-off-notifications) for proposal activity |
 
 <Note>
 
@@ -178,7 +180,7 @@ Once you've added [**default reviewers**](#default-reviewers), you can require _
 
 ## Configure schema checks
 
-You can configure [schema checks](./schema-checks) to include a **Proposals** task that verifies whether the changes a check is running on have matching and approved schema proposals.
+You can configure [schema checks](../schema-checks) to include a **Proposals** task that verifies whether the changes a check is running on have matching and approved schema proposals.
 
 <img
   src="../../img/schema-proposals/proposal-check-settings.jpg"

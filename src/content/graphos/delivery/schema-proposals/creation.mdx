@@ -20,12 +20,12 @@ This article describes actions in the **Proposal creation** stage of the [schema
 
 You can create a new proposal in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content) from a graph's proposals list. To access the proposals list page, either:
 
-  - From a particular graph, open the **Proposals** page from the left navigation.
+  - Open the **Proposals** page from the left navigation from a particular graph.
 
     <img
       src="../../img/schema-proposals/proposals-left-nav.jpg"
       className="screenshot"
-      alt="Graphs page in Studio"
+      alt="Graph page in Studio"
     />
 
   - On the **Graphs** page, click the pencil icon with the tooltip that says **Go to schema change proposals** for a particular graph.
@@ -43,13 +43,13 @@ Follow the steps below to create a new proposal:
      src="../../img/schema-proposals/proposal-dialog.jpg"
      className="screenshot"
      alt="Schema proposals dialog in Studio"
-     width="500px"
+     width="400"
    />
 2. Enter a descriptive **proposal title** that outlines the schema changes you plan to propose.
 
    <Note>
 
-   If you want to edit the proposal's title later, you can do so from its [**Overview** tab](../review/#overview).
+   If you want to edit the proposal's title later, you can do so from its [**Overview** tab](./review/#overview).
 
    </Note>
 
@@ -67,7 +67,7 @@ Follow the steps below to create a new proposal:
 
     <Note>
 
-    If you want to edit the proposal's README later, you can do so from its [**Overview** tab](../review/#overview).
+    If you want to edit the proposal's README later, you can do so from its [**Overview** tab](./review/#overview).
 
     </Note>
 
@@ -77,7 +77,7 @@ Once you've created the proposal, you land on the newly created proposal's **Edi
 
 ## Edit subgraph schemas
 
-You can directly edit one or more subgraph schemas on a proposal's **Editor** tab.
+You can directly edit one or more subgraph schemas from a proposal's **Editor** tab.
 
 <img
   src="../../img/schema-proposals/subgraph-schema-editor.jpg"
@@ -91,7 +91,7 @@ You can also delete existing subgraphs and rename newly created ones by clicking
 <img
   src="../../img/schema-proposals/subgraph-schema-selector.jpg"
   className="screenshot"
-  alt="Schema proposals editor in Studio"
+  alt="Subgraph selector in the schema proposals editor in Studio"
   width="200px"
 />
 
@@ -103,31 +103,22 @@ To lint the schema changes you've made, click the Lint schema button in the top 
   src="../../img/schema-proposals/lint-changes.jpg"
   className="screenshot"
   alt="Schema proposals editor in Studio"
-  width="500px"
 />
 
 Clicking the button opens a panel where you can run the [schema linter](./schema-linter) on the current changes in the editor.
 After successfully running a lint on your schema, the panel displays any linter violations so you can fix them accordingly.
 
-<img
-  src="../../img/schema-proposals/linter-violations.jpg"
-  className="screenshot"
-  alt="Schema proposals editor in Studio"
-  width="500px"
-/>
-
 If you are having trouble finding the exact location of where the lint violation occurred, click the line in the violations list to highlight it in the editor.
 
 <img
-  src="../../img/schema-proposals/linter-location.jpg"
+  src="../../img/schema-proposals/linter-violations.jpg"
   className="screenshot"
-  alt="Schema proposals editor in Studio"
-  width="500px"
+  alt="Highlighting violations in the schema proposals editor in Studio"
 />
 
 <Note>
 
- A violation line number may no longer exist because you've renamed or deleted a field. When this happens, the violation appears grayed out in the violations list. See, for example, `52 + User.token` in the screenshot above. The grayed out line indicates you can ignore the violation.
+ A violation line number may no longer exist because you've renamed or deleted a field. When this happens, the violation appears grayed out in the violations list.
 
 </Note>
 
@@ -135,7 +126,7 @@ Once you've made changes in the editor, rerun the linter by clicking the rerun b
 
 ### Save revisions
 
-Once you've made changes, click the **Save Revision** button in the top right of the editor to save them to your proposal.
+Once you've made changes, click the **Save Revision** button in the bottom left of the editor to save them to your proposal.
 A dialog appears where you can optionally include a summary of your changes. This field accepts [Markdown](https://www.markdownguide.org/getting-started/).
 
 <img
@@ -155,7 +146,7 @@ You can think of each revision as equal to a [commit](<https://en.wikipedia.org/
 
 ## Schema checks
 
-[Schema checks](./schema-checks) automatically run each time you save a revision. These appear in a proposal's **Checks** tab.
+[Schema checks](../schema-checks) automatically run each time you save a revision. These appear in a proposal's **Checks** tab.
 
 <img
   src="../../img/schema-proposals/schema-checks.jpg"
@@ -175,7 +166,7 @@ For example, if the source variant schema includes a new type, unless the propos
 
 ## Self-review and commentary
 
-While working on a proposal and before requesting reviews from teammates, you may want to review the proposal yourself. See the [Review proposals](../review) article for how to review different aspects of a proposal and [provide commentary](../review/#add-comments) on it.
+While working on a proposal and before requesting reviews from teammates, you may want to review the proposal yourself. See the [Review proposals](./review) article for how to review different aspects of a proposal and [provide commentary](./review/#add-comments) on it.
 
 ## Change proposal status
 

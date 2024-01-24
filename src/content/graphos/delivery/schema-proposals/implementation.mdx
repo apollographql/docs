@@ -48,7 +48,7 @@ You can't push schema changes to proposals with the `rover subgraph publish` com
 
 ## Validate changes with checks
 
-GraphOS provides [schema checks](./schema-checks) to help you identify breaking changes. You [run checks on local changes](./schema-checks#the-checks-lifecycle) before publishing them.
+GraphOS provides [schema checks](../schema-checks) to help you identify breaking changes. You [run checks on local changes](../schema-checks#the-checks-lifecycle) before publishing them.
 
 Since schema checks [run automatically on every revision](./creation#schema-checks) in a proposal, if your last revision's checks pass, any changes you implement locally from a proposal should pass too.
 Regardless, it's best to run checks before publishing changes to make sure any errors haven't crept in.
@@ -71,7 +71,7 @@ The Proposals task also checks _comments_ in the SDL. For example, the Proposals
 
 </Note>
 
-When a check with the **Proposals** task runs, you can see the following by clicking the **Proposals** task on the **Checks** page:
+When a check with the **Proposals** task runs, you can see which changes match a proposal by clicking the **Proposals** task on the **Checks** page:
 
 <img
   src="../../img/schema-proposals/proposal-check-diff.jpg"
@@ -88,7 +88,6 @@ Click **Ignore** to allow the Proposals task to succeed without matching approve
 ### Matching changes to proposals
 
 **Incoming changes and approved proposals don't need to match one-to-one.**
-
 For example, suppose you have an approved proposal with changes in multiple subgraphs. You can check each subgraph's changes separately. Each subgraph check still passes even though the change doesn't encompass all the approved proposal's changes.
 
 Similarly, a single proposal can contain a large change in one subgraph that you want to divide into multiple checks. Those changes can match across multiple checks and each check passes.
