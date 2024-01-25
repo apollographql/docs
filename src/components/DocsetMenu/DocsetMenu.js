@@ -18,26 +18,32 @@ import {
   Stack,
   useDisclosure
 } from '@chakra-ui/react';
-import {ReactComponent as Home} from "@apollo/icons/default/IconHome.svg";
+import {ReactComponent as Document} from "@apollo/icons/default/IconDocument.svg";
 import {ReactComponent as Education} from "@apollo/icons/default/IconEducation.svg";
-import {BsListOl} from 'react-icons/bs';
-import {ReactComponent as Explorer} from '../../assets/icons/explorer.svg';
-import {FaCheckSquare, FaJava, FaNodeJs} from 'react-icons/fa';
-import {ReactComponent as Federation} from '../../assets/icons/federation.svg';
-import {FiChevronDown, FiGrid} from 'react-icons/fi';
+import {ReactComponent as Enterprise} from "@apollo/icons/default/IconEnterpriseFeatures.svg";
+import {ReactComponent as Explorer} from "@apollo/icons/default/IconExplorer.svg";
+import {ReactComponent as Federation} from "@apollo/icons/default/IconHierarchy.svg";
+import {ReactComponent as GraphQL} from "@apollo/icons/default/IconGraphQL.svg";
+import {ReactComponent as Home} from "@apollo/icons/default/IconHome.svg";
+import {ReactComponent as Insights} from "@apollo/icons/default/IconInsights.svg";
+import {ReactComponent as Pipeline} from "@apollo/icons/default/IconPipeline.svg";
+import {ReactComponent as ReactIcon} from "@apollo/icons/default/IconReact.svg";
+import {ReactComponent as Rocket} from "@apollo/icons/default/IconRocket.svg";
+import {ReactComponent as Router} from "@apollo/icons/default/IconRouter.svg";
+import {ReactComponent as Satellite} from "@apollo/icons/default/IconSatellite3.svg";
+import {ReactComponent as Schema} from "@apollo/icons/default/IconSchema.svg";
+import {ReactComponent as Success} from "@apollo/icons/default/IconSuccess.svg";
+import {ReactComponent as Team} from "@apollo/icons/default/IconTeam.svg";
+import {ReactComponent as Terminal} from "@apollo/icons/default/IconAppWindow.svg";
+import {FaJava, FaNodeJs} from 'react-icons/fa';
 import {Link as GatsbyLink} from 'gatsby';
-import {GoTerminal} from 'react-icons/go';
-import {IoDocumentTextOutline, IoRocketSharp} from 'react-icons/io5';
-import {ReactComponent as Router} from '../../assets/icons/router.svg';
-import {RxComponent1} from 'react-icons/rx';
-import {ReactComponent as Satellite} from '../../assets/icons/satellite.svg';
-import {ReactComponent as Schema} from '../../assets/icons/schema.svg';
-import {SiCsharp, SiGraphql, SiKotlin, SiReact, SiSwift} from 'react-icons/si';
-import {SlChart} from 'react-icons/sl';
-import {TbRoute} from 'react-icons/tb';
-import {VscOrganization} from 'react-icons/vsc';
+import {ReactComponent as LayoutModule} from "@apollo/icons/default/IconLayoutModule.svg";
+import {ReactComponent as Kotlin} from "@apollo/icons/default/IconKotlin.svg";
+import {SiCsharp} from 'react-icons/si';
+import {ReactComponent as Swift} from "@apollo/icons/default/IconSwift.svg";
+import {ReactComponent as ChevronDown} from "@apollo/icons/default/IconChevronDown.svg";
 
-const CustomIcon = ({icon}) => <Box fill="current" boxSize="1em" as={icon} />;
+const CustomIcon = ({icon}) => <Box fill="color" boxSize="1em" as={icon} />;
 
 CustomIcon.propTypes = {
   icon: PropTypes.elementType.isRequired
@@ -45,29 +51,28 @@ CustomIcon.propTypes = {
 
 export const DOCSET_ICONS = {
   default: <CustomIcon icon={ApolloMark} />,
-  'apollo-client': <SiReact />,
-  'apollo-ios': <SiSwift />,
-  'apollo-kotlin': <SiKotlin />,
+  'apollo-client': <CustomIcon icon={ReactIcon} />,
+  'apollo-ios': <CustomIcon icon={Swift} />,
+  'apollo-kotlin': <CustomIcon icon={Kotlin} />,
   'apollo-server': <CustomIcon icon={Satellite} />,
-  check: <FaCheckSquare />,
+  check: <CustomIcon icon={Success} />,
   csharp: <SiCsharp />,
+  delivery: <CustomIcon icon={Pipeline} />,
   education: <CustomIcon icon={Education} />,
+  enterprise: <CustomIcon icon={Enterprise} />,
+  explorer: <CustomIcon icon={Explorer} />,
   federation: <CustomIcon icon={Federation} />,
-  graphql: <SiGraphql />,
   graphos: <CustomIcon icon={Schema} />,
+  graphql: <CustomIcon icon={GraphQL} />,
   home: <CustomIcon icon={Home} />,
   java: <FaJava />,
+  metrics: <CustomIcon icon={Insights} />,
   nodejs: <FaNodeJs />,
-  rover: <GoTerminal />,
+  odyssey: <CustomIcon icon={Rocket} />,
+  org: <CustomIcon icon={Team} />,
+  rover: <CustomIcon icon={Terminal} />,
   router: <CustomIcon icon={Router} />,
-  odyssey: <IoRocketSharp />,
-  technotes: <IoDocumentTextOutline />,
-  metrics: <SlChart />,
-  org: <VscOrganization />,
-  delivery: <TbRoute />,
-  explorer: <CustomIcon icon={Explorer} />,
-  enterprise: <RxComponent1 />,
-  principled: <BsListOl />
+  technotes: <CustomIcon icon={Document} />
 };
 
 export function DocsetMenu({docset, versions = [], currentVersion, ...props}) {
@@ -75,7 +80,7 @@ export function DocsetMenu({docset, versions = [], currentVersion, ...props}) {
   return (
     <>
       <ButtonGroup isAttached {...props}>
-        <Button rightIcon={<FiGrid />} onClick={onOpen} colorScheme="indigo">
+        <Button rightIcon={<CustomIcon icon={LayoutModule} />} onClick={onOpen} colorScheme="indigo">
           {docset}
         </Button>
         {versions.length > 1 && (
@@ -83,7 +88,7 @@ export function DocsetMenu({docset, versions = [], currentVersion, ...props}) {
             <MenuButton
               as={Button}
               variant="outline"
-              rightIcon={<FiChevronDown />}
+              rightIcon={<CustomIcon icon={ChevronDown} />}
               borderLeft="none"
             >
               {currentVersion}
