@@ -1,5 +1,4 @@
 import React, {useContext} from 'react';
-import {AiOutlineHome} from '@react-icons/all-files/ai/AiOutlineHome';
 import {
   Box,
   Button,
@@ -15,7 +14,6 @@ import {
   SidebarCategoryLink
 } from './SidebarCategory';
 import {Link as GatsbyLink} from 'gatsby';
-import {IoSchoolOutline} from 'react-icons/io5';
 import {Rocket} from 'lucide-react';
 
 export const SIDEBAR_WIDTH = 280;
@@ -46,8 +44,8 @@ export function LeftSidebarNav(props) {
         }
       >
         <SidebarCategory title="Welcome">
-          <SidebarCategoryLink docset="/" icon={<AiOutlineHome />} />
-          <SidebarCategoryLink docset="odyssey" icon={<IoSchoolOutline />} />
+          <SidebarCategoryLink docset="/" icon={DOCSET_ICONS.home} />
+          <SidebarCategoryLink docset="odyssey" icon={DOCSET_ICONS.education} />
         </SidebarCategory>
         <SidebarCategory title="SDKs">
           <SidebarCategoryLink
