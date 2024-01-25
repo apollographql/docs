@@ -19,6 +19,7 @@ import {
   useDisclosure
 } from '@chakra-ui/react';
 import {ReactComponent as Home} from "@apollo/icons/default/IconHome.svg";
+import {ReactComponent as Education} from "@apollo/icons/default/IconEducation.svg";
 import {BsListOl} from 'react-icons/bs';
 import {ReactComponent as Explorer} from '../../assets/icons/explorer.svg';
 import {FaCheckSquare, FaJava, FaNodeJs} from 'react-icons/fa';
@@ -50,6 +51,7 @@ export const DOCSET_ICONS = {
   'apollo-server': <CustomIcon icon={Satellite} />,
   check: <FaCheckSquare />,
   csharp: <SiCsharp />,
+  education: <CustomIcon icon={Education} />,
   federation: <CustomIcon icon={Federation} />,
   graphql: <SiGraphql />,
   graphos: <CustomIcon icon={Schema} />,

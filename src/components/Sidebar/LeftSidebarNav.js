@@ -46,7 +46,7 @@ export function LeftSidebarNav(props) {
       >
         <SidebarCategory title="Welcome">
           <SidebarCategoryLink docset="/" icon={DOCSET_ICONS.home} />
-          <SidebarCategoryLink docset="odyssey" icon={<IoSchoolOutline />} />
+          <SidebarCategoryLink docset="odyssey" icon={DOCSET_ICONS.education} />
         </SidebarCategory>
         <SidebarCategory title="SDKs">
           <SidebarCategoryLink
