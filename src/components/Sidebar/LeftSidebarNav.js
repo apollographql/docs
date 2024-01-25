@@ -14,7 +14,6 @@ import {
   SidebarCategoryLink
 } from './SidebarCategory';
 import {Link as GatsbyLink} from 'gatsby';
-import {IoSchoolOutline} from 'react-icons/io5';
 import {Rocket} from 'lucide-react';
 
 export const SIDEBAR_WIDTH = 280;
