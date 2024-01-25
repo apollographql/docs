@@ -12,6 +12,7 @@ import {
   Text,
   useToken
 } from '@chakra-ui/react';
+import {ButtonLink} from './RelativeLink';
 import {FiArrowRight, FiExternalLink} from 'react-icons/fi';
 
 const linkIcon = (path) => {
@@ -48,14 +49,13 @@ export function GradientCard ({icon, title, description, path, cta}) {
         </Text>
       </div>
       <div>
-        <Button
-          as="a"
+        <ButtonLink
           href={path}
           colorScheme="indigo"
           leftIcon={linkIcon(path)}
         >
           {cta}
-        </Button>
+        </ButtonLink>
       </div>
     </Grid>
   );
@@ -83,9 +83,8 @@ export function Docset({
           </HStack>
         </Heading>
         {description && <Text mb="4">{description}</Text>}
-        <Button
+        <ButtonLink
           variant="link"
-          as="a"
           _dark={{
             color: 'indigo.100'
           }}
@@ -96,7 +95,7 @@ export function Docset({
           leftIcon={linkIcon(path)}
         >
           {cta.replace('%s', title)}
-        </Button>
+        </ButtonLink>
       </Flex>
       {children}
     </Flex>
