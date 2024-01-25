@@ -24,12 +24,7 @@
         "GraphQL subscriptions": "https://www.apollographql.com/docs/router/executing-operations/subscription-support",
         "Distributed caching": "https://www.apollographql.com/docs/router/configuration/distributed-caching",
         "JWT Authentication": "https://www.apollographql.com/docs/router/configuration/authn-jwt",
-        "Authorization": [
-          "https://www.apollographql.com/docs/router/configuration/authorization",
-          [
-            "preview"
-          ]
-        ],
+        "Authorization": "https://www.apollographql.com/docs/router/configuration/authorization",
         "Safelisting with persisted queries":
           "https://www.apollographql.com/docs/router/configuration/persisted-queries", 
         "Operation limits": "https://www.apollographql.com/docs/router/configuration/operation-limits",
@@ -37,7 +32,9 @@
       }
     },
     "Schema Pipeline": {
-      "Schema proposals": "https://www.apollographql.com/docs/graphos/delivery/schema-proposals",
+      "Schema proposals": ["https://www.apollographql.com/docs/graphos/delivery/schema-proposals",
+      ["preview"]
+    ],
       "Contracts": "https://www.apollographql.com/docs/graphos/delivery/contracts"
     },
     "Org Management & SSO": {
