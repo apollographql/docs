@@ -1,6 +1,5 @@
 [Aa]ction(?:ed|ing)?
 APIs?
-Apollo
 [Aa]pprovers?
 APQs?
 APM('s)?
