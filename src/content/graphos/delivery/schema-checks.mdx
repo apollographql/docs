@@ -21,18 +21,21 @@ With the exception of [contract checks](#types-of-checks), schema checks are **f
 
 GraphOS can perform the following types of schema checks:
 
-- [**Composition checks.**](#composition-checks) For supergraphs, verify whether your proposed changes to a subgraph schema will successfully compose with your other subgraph schemas.
+- [**Composition checks**](#composition-checks): For supergraphs, verify whether your proposed changes to a subgraph schema will successfully compose with your other subgraph schemas.
 
-- [**Operation checks.**](#operation-checks) Compare your proposed schema changes against historical operations to verify whether the changes will break any of your graph's active clients.
+- [**Operation checks**](#operation-checks): Compare your proposed schema changes against historical operations to verify whether the changes will break any of your graph's active clients.
 
-- [**Linter checks.**](./schema-linter/) Analyze your proposed schema changes for violations of formatting rules and other GraphQL best practices.
+- [**Linter checks**](./schema-linter/): Analyze your proposed schema changes for violations of formatting rules and other GraphQL best practices.
 
-- **[Contract checks](./contracts/)** (enterprise only). When running schema checks on a source variant, also check whether your proposed schema changes will break any downstream contract variants.
+- [**Proposals checks**](./schema-proposals/configuration#configure-schema-checks) (Enterprise only): Check whether your proposed schema changes have matching and approved [schema proposals](./schema-proposals).
+
+- **[Contract checks](./contract-setup/#run-contract-checks)** (Enterprise only): When running schema checks on a source variant, also check whether your proposed schema changes will break any downstream contract variants.
 
 Most of this article covers composition and operation checks.
 
 - For details on linter checks, see [Schema linting](./schema-linter/).
-- For details on contract checks, see [Contracts](./contracts/).
+- For details on proposals checks, see [Schema proposals check configuration](./schema-proposals/configuration#configure-schema-checks).
+- For details on contract checks, see [Contract checks](./contract-setup/#run-contract-checks).
 
 ## Prerequisites
 
@@ -188,11 +191,17 @@ You override flagged changes on an operation-by-operation basis. For each operat
 
 For more info on linter checks, see [Schema linting](./schema-linter/).
 
+## Proposals checks
+
+<EnterpriseFeature />
+
+For more info on proposals checks, see the [schema proposals documentation](./schema-proposals/).
+
 ## Contract checks
 
 <EnterpriseFeature />
 
-For more info on contract/downstream checks, see the [contracts documentation](./contracts/).
+For more info on contract checks, see the [contracts documentation](./contracts/).
 
 ## Using in CI
 

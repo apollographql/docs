@@ -18,6 +18,7 @@ export function useMermaidStyles() {
         stroke: primary,
         fill
       },
+      [['.CircleSize50 > circle']]: {r: 50},
       [[
         '.node.secondary rect',
         '.node.secondary circle',
