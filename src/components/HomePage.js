@@ -12,16 +12,11 @@ import {
   Text,
   useToken
 } from '@chakra-ui/react';
-import {FiArrowRight, FiExternalLink} from 'react-icons/fi';
+import {FiArrowRight} from 'react-icons/fi';
+import {Link as GatsbyLink} from 'gatsby';
+import {PrimaryLink} from './RelativeLink';
 
-const linkIcon = (path) => {
-  if(/^https:\/\//.test(path)){
-    return <FiExternalLink />;
-  }
-  return <FiArrowRight />;
-}
-
-export function GradientCard ({icon, title, description, path, cta}) {
+export function Odyssey() {
   const lightGradient = useToken('colors', ['blue.100', 'indigo.300']);
   const darkGradient = useToken('colors', ['indigo.400', 'indigo.500']);
   return (
@@ -37,24 +32,20 @@ export function GradientCard ({icon, title, description, path, cta}) {
       }}
     >
       <div>
-      <Heading as="h3" size="lg" mb="4">
-          <HStack spacing="3">
-            {icon}
-            <span>{title}</span>
-          </HStack>
-        </Heading>
         <Text fontSize="lg">
-          {description}
+          <strong>Welcome!</strong> 👋 Our learning platform, Odyssey, provides{' '}
+          <strong>interactive tutorials</strong> with videos and code challenges
+          to help you launch your journey with GraphQL and Apollo.
         </Text>
       </div>
       <div>
         <Button
           as="a"
-          href={path}
+          href="https://www.apollographql.com/tutorials"
           colorScheme="indigo"
-          leftIcon={linkIcon(path)}
+          rightIcon={<FiArrowRight />}
         >
-          {cta}
+          Explore Tutorials
         </Button>
       </div>
     </Grid>
@@ -64,6 +55,8 @@ export function GradientCard ({icon, title, description, path, cta}) {
 export const DocsetGrid = props => (
   <SimpleGrid spacing="4" minChildWidth="250px" {...props} />
 );
+
+export const CTA_LEARN = 'Learn about %s';
 
 export function Docset({
   title,
@@ -83,20 +76,9 @@ export function Docset({
           </HStack>
         </Heading>
         {description && <Text mb="4">{description}</Text>}
-        <Button
-          variant="link"
-          as="a"
-          _dark={{
-            color: 'indigo.100'
-          }}
-          mt="auto"
-          fontWeight="semibold"
-          fontSize="lg"
-          href={path}
-          leftIcon={linkIcon(path)}
-        >
+        <PrimaryLink mt="auto" fontWeight="semibold" as={GatsbyLink} to={path}>
           {cta.replace('%s', title)}
-        </Button>
+        </PrimaryLink>
       </Flex>
       {children}
     </Flex>

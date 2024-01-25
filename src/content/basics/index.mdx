@@ -1,12 +1,18 @@
 ---
-title: Documentation
+title: Apollo Docs
 toc: true
 subtitle: ' '
 description: Learn how Apollo GraphQL can help enterprise architects, API implementers, and client developers build, deploy, and manage a supergraph of unified microservices, data sources, and applications.
 ---
 
 import {ButtonGroup, VStack} from '@chakra-ui/react';
-import {CommunityButton, Docset, DocsetGrid, GradientCard} from '../../components/HomePage';
+import {
+  CTA_LEARN,
+  CommunityButton,
+  Docset,
+  DocsetGrid,
+  Odyssey
+} from '../../components/HomePage';
 import {DOCSET_ICONS} from '../../components/DocsetMenu';
 import {
   SiDiscord,
@@ -16,58 +22,70 @@ import {
   SiYoutube
 } from 'react-icons/si';
 
-Apollo provides the developer platform and tools to unify your data and services into a supergraph—a single distributed GraphQL API.
-Apollo makes GraphQL work for you at any stage and any scale, whether you're [just getting started](#for-graphql-newcomers), [building your first API](#for-api-developers), [querying an API](#for-client-developers), or [migrating your platform onto the supergraph](#for-architects).
+**Apollo GraphOS** is the developer platform for building a [**supergraph**](./intro/platform/): a unified network of your organization's data and services, all composed into a single distributed **GraphQL API**.
 
-## For architects
+Apollo provides tools for every developer that interacts with GraphQL—whether you're [building your first API](#for-api-implementers), [querying an existing one](#for-client-developers), or [moving your entire organization onto the supergraph](#for-enterprise-architects).
 
-<GradientCard
-  icon={DOCSET_ICONS.graphos}
-  title="Build a supergraph"
-  description="Use Apollo GraphOS to define, build, connect, and observe all of your data services together in a supergraph."
-  path="/graphos"
-  cta="Learn about GraphOS"
-/>
+## For GraphQL newcomers
+
+<Odyssey />
+
+## For API implementers
+
 <DocsetGrid>
   <Docset
-    icon={DOCSET_ICONS.odyssey}
-    title="Deploy reference architecture"
-    description="Set up an enterprise GraphOS deployment by following Apollo's reference architecture."
-    path="/graphos/enterprise/reference-architecture"
-    cta="Explore reference architecture"
-  />
-  <Docset
-    icon={DOCSET_ICONS.check}
-    title="Adopt best practices"
-    description="Assess your graph with the Supergraph Architecture Framework (SAF) and get tailored recommendations to improve it."
-    path="/graphos/enterprise/supergraph-architecture-framework"
-    cta="Learn about SAF"
+    icon={DOCSET_ICONS.graphos}
+    title="GraphOS"
+    description="Connect any GraphQL API to Apollo's cloud platform to enable powerful features like metrics reporting, schema validation, and the Explorer IDE."
+    path="/graphos"
+    cta={CTA_LEARN}
   />
 </DocsetGrid>
 
-## For API developers
-
-<Docset
-  icon={DOCSET_ICONS.nodejs}
-  title="Build a GraphQL server in Node.js"
-  description="Build a production-ready API that handles multiple datasources with Apollo Server."
-  path="/apollo-server"
-  cta="Explore Apollo Server docs"
-/>
 <DocsetGrid>
   <Docset
-    icon={DOCSET_ICONS.java}
-    title="Build a GraphQL server in Java"
-    description="Explore a tutorial on implementing a GraphQL API with Java and DGS."
-    path="https://www.apollographql.com/tutorials/intro-dgs"
-    cta="Begin tutorial"
+    icon={DOCSET_ICONS['apollo-server']}
+    title="Apollo Server"
+    description="Build a production-ready GraphQL API in Node.js. Fetch and combine results from multiple data sources."
+    path="/apollo-server"
   />
   <Docset
-    icon={DOCSET_ICONS.csharp}
-    title="Build a GraphQL server in C#"
-    description="Explore a tutorial on implementing a GraphQL API with .NET (C#) and Hot Chocolate."
-    path="https://www.apollographql.com/tutorials/intro-hotchocolate"
-    cta="Begin tutorial"
+    icon={DOCSET_ICONS.rover}
+    title="Rover CLI"
+    description="Manage your GraphOS graphs and their schemas from the command line."
+    path="/rover"
+  />
+</DocsetGrid>
+
+## For enterprise architects
+
+<DocsetGrid>
+  <Docset
+    icon={DOCSET_ICONS.federation}
+    title="Apollo Federation"
+    description="Implement a single, unified supergraph that combines multiple GraphQL APIs."
+    path="/federation"
+    cta={CTA_LEARN}
+  />
+  <Docset
+    icon={DOCSET_ICONS.router}
+    title="Apollo Router"
+    description="Deploy your supergraph's router in your own infrastructure and configure it to meet advanced enterprise requirements."
+    path="/router"
+  />
+  <Docset
+    icon={DOCSET_ICONS.technotes}
+    title="Tech Notes"
+    description="Read in-depth articles on specialized Apollo topics."
+    path="/technotes"
+    cta="Browse tech notes"
+  />
+  <Docset
+    icon={DOCSET_ICONS.principled}
+    title="Principled GraphQL"
+    description="Read about the fundamental principles that underlie Apollo's supergraph architecture."
+    path="https://principledgraphql.com/"
+    cta="Visit Principled GraphQL"
   />
 </DocsetGrid>
 
@@ -75,27 +93,21 @@ Apollo makes GraphQL work for you at any stage and any scale, whether you're [ju
 
 **Apollo Client** is the industry-standard GraphQL client library. Execute GraphQL operations, cache their results, and manage your application's state in one place.
 
-<Docset icon={DOCSET_ICONS['apollo-client']} title="React / JS" path="/react" />
 <DocsetGrid>
+  <Docset
+    icon={DOCSET_ICONS['apollo-client']}
+    title="React / JS"
+    path="/react"
+  />
   <Docset icon={DOCSET_ICONS['apollo-ios']} title="iOS" path="/ios" />
   <Docset icon={DOCSET_ICONS['apollo-kotlin']} title="Kotlin" path="/kotlin" />
 </DocsetGrid>
 
-## For GraphQL newcomers
-
-<GradientCard
-  icon={DOCSET_ICONS.graphql}
-  title="Improve developer velocity"
-  description="Understand how GraphQL and Apollo help enhance developer experience and ship features faster."
-  path="/intro/benefits"
-  cta="Learn about GraphQL"
-/>
+<VStack pt="4" spacing="4" textAlign="center" maxW="md" mx="auto">
 
 <h3> Join our community 💬 </h3>
 
-We love hearing from you! Here are a few ways to connect with us and other Apollo community members.
-
-<VStack pt="4" spacing="4" textAlign="center" maxW="md" mx="auto">
+We love hearing from you! Here are a few ways you can connect with us and other Apollo community members.
 
 <ButtonGroup variant="ghost">
   <CommunityButton
