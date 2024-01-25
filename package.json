@@ -24,6 +24,7 @@
     "@apollo/brand": "^0.2.1",
     "@apollo/chakra-helpers": "^2.0.0",
     "@apollo/client": "^3.5.10",
+    "@apollo/icons": "^0.0.3",
     "@apollo/pedia": "^3.1.0",
     "@apollo/signup-tracer": "^2.0.0",
     "@apollo/space-kit": "8.11.0",

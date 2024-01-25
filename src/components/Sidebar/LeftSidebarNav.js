@@ -1,5 +1,4 @@
 import React, {useContext} from 'react';
-import {AiOutlineHome} from '@react-icons/all-files/ai/AiOutlineHome';
 import {
   Box,
   Button,
@@ -46,7 +45,7 @@ export function LeftSidebarNav(props) {
         }
       >
         <SidebarCategory title="Welcome">
-          <SidebarCategoryLink docset="/" icon={<AiOutlineHome />} />
+          <SidebarCategoryLink docset="/" icon={DOCSET_ICONS.home} />
           <SidebarCategoryLink docset="odyssey" icon={<IoSchoolOutline />} />
         </SidebarCategory>
         <SidebarCategory title="SDKs">

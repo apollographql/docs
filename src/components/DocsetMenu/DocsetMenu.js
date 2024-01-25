@@ -18,6 +18,7 @@ import {
   Stack,
   useDisclosure
 } from '@chakra-ui/react';
+import {ReactComponent as Home} from "@apollo/icons/default/IconHome.svg";
 import {BsListOl} from 'react-icons/bs';
 import {ReactComponent as Explorer} from '../../assets/icons/explorer.svg';
 import {FaCheckSquare, FaJava, FaNodeJs} from 'react-icons/fa';
@@ -52,6 +53,7 @@ export const DOCSET_ICONS = {
   federation: <CustomIcon icon={Federation} />,
   graphql: <SiGraphql />,
   graphos: <CustomIcon icon={Schema} />,
+  home: <CustomIcon icon={Home} />,
   java: <FaJava />,
   nodejs: <FaNodeJs />,
   rover: <GoTerminal />,
