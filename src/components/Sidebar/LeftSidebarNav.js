@@ -1,5 +1,24 @@
 import React, {useContext} from 'react';
 import {
+  ApolloClientIcon,
+  ApolloIOSIcon,
+  ApolloKotlinIcon,
+  ApolloServerIcon,
+  DeliveryIcon,
+  EnterpriseIcon,
+  ExplorerIcon,
+  FederationIcon,
+  GraphOSIcon,
+  HomeIcon,
+  MetricsIcon,
+  OdysseyIcon,
+  OrgIcon,
+  RocketIcon,
+  RouterIcon,
+  RoverIcon,
+  TechnotesIcon
+} from '../Icons';
+import {
   Box,
   Button,
   DarkMode,
@@ -7,14 +26,12 @@ import {
   StackDivider,
   chakra
 } from '@chakra-ui/react';
-import {DOCSET_ICONS} from '../DocsetMenu';
 import {
   DocsetContext,
   SidebarCategory,
   SidebarCategoryLink
 } from './SidebarCategory';
 import {Link as GatsbyLink} from 'gatsby';
-import {Rocket} from 'lucide-react';
 
 export const SIDEBAR_WIDTH = 280;
 export const COLLAPSED_SIDEBAR_WIDTH = 93;
@@ -44,23 +61,17 @@ export function LeftSidebarNav(props) {
         }
       >
         <SidebarCategory title="Welcome">
-          <SidebarCategoryLink docset="/" icon={DOCSET_ICONS.home} />
-          <SidebarCategoryLink docset="odyssey" icon={DOCSET_ICONS.education} />
+          <SidebarCategoryLink docset="/" icon={<HomeIcon />} />
+          <SidebarCategoryLink docset="odyssey" icon={<OdysseyIcon />} />
         </SidebarCategory>
         <SidebarCategory title="SDKs">
           <SidebarCategoryLink
             docset="apollo-server"
-            icon={DOCSET_ICONS['apollo-server']}
+            icon={<ApolloServerIcon />}
           />
-          <SidebarCategoryLink
-            docset="react"
-            icon={DOCSET_ICONS['apollo-client']}
-          />
-          <SidebarCategoryLink
-            docset="kotlin"
-            icon={DOCSET_ICONS['apollo-kotlin']}
-          />
-          <SidebarCategoryLink docset="ios" icon={DOCSET_ICONS['apollo-ios']} />
+          <SidebarCategoryLink docset="react" icon={<ApolloClientIcon />} />
+          <SidebarCategoryLink docset="kotlin" icon={<ApolloKotlinIcon />} />
+          <SidebarCategoryLink docset="ios" icon={<ApolloIOSIcon />} />
         </SidebarCategory>
         <SidebarCategory
           title={
@@ -72,7 +83,7 @@ export function LeftSidebarNav(props) {
                     as={GatsbyLink}
                     size="sm"
                     to="/graphos/quickstart/cloud"
-                    leftIcon={<Box as={Rocket} boxSize="1em" />}
+                    leftIcon={<Box as={<RocketIcon />} boxSize="1em" />}
                     onClick={dismissSidebar}
                   >
                     Get started
@@ -82,34 +93,28 @@ export function LeftSidebarNav(props) {
             </>
           }
         >
-          <SidebarCategoryLink docset="graphos" icon={DOCSET_ICONS.graphos} />
+          <SidebarCategoryLink docset="graphos" icon={<GraphOSIcon />} />
           <SidebarCategoryLink
             docset="graphos/delivery"
-            icon={DOCSET_ICONS.delivery}
+            icon={<DeliveryIcon />}
           />
           <SidebarCategoryLink
             docset="graphos/explorer"
-            icon={DOCSET_ICONS.explorer}
+            icon={<ExplorerIcon />}
           />
           <SidebarCategoryLink
             docset="graphos/metrics"
-            icon={DOCSET_ICONS.metrics}
+            icon={<MetricsIcon />}
           />
-          <SidebarCategoryLink docset="graphos/org" icon={DOCSET_ICONS.org} />
-          <SidebarCategoryLink
-            docset="federation"
-            icon={DOCSET_ICONS.federation}
-          />
-          <SidebarCategoryLink docset="rover" icon={DOCSET_ICONS.rover} />
-          <SidebarCategoryLink docset="router" icon={DOCSET_ICONS.router} />
+          <SidebarCategoryLink docset="graphos/org" icon={<OrgIcon />} />
+          <SidebarCategoryLink docset="federation" icon={<FederationIcon />} />
+          <SidebarCategoryLink docset="rover" icon={<RoverIcon />} />
+          <SidebarCategoryLink docset="router" icon={<RouterIcon />} />
           <SidebarCategoryLink
             docset="graphos/enterprise"
-            icon={DOCSET_ICONS.enterprise}
+            icon={<EnterpriseIcon />}
           />
-          <SidebarCategoryLink
-            docset="technotes"
-            icon={DOCSET_ICONS.technotes}
-          />
+          <SidebarCategoryLink docset="technotes" icon={<TechnotesIcon />} />
         </SidebarCategory>
       </Stack>
     </Box>

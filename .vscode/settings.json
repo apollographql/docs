@@ -1,3 +1,6 @@
 {
-  "eslint.validate": ["mdx"]
+  "eslint.validate": [
+    "mdx"
+  ],
+  "editor.formatOnSave": true
 }

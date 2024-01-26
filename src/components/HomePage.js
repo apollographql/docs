@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import {ButtonLink} from './RelativeLink';
+import {FiArrowRight, FiExternalLink} from 'react-icons/fi';
 import {
   Flex,
   Grid,
@@ -11,17 +13,15 @@ import {
   Text,
   useToken
 } from '@chakra-ui/react';
-import {ButtonLink} from './RelativeLink';
-import {FiArrowRight, FiExternalLink} from 'react-icons/fi';
 
-const linkIcon = (path) => {
-  if(/^https:\/\//.test(path)){
+const linkIcon = path => {
+  if (/^https:\/\//.test(path)) {
     return <FiExternalLink />;
   }
   return <FiArrowRight />;
-}
+};
 
-export function GradientCard ({icon, title, description, path, cta}) {
+export function GradientCard({icon, title, description, path, cta}) {
   const lightGradient = useToken('colors', ['blue.100', 'indigo.300']);
   const darkGradient = useToken('colors', ['indigo.400', 'indigo.500']);
   return (
@@ -37,22 +37,16 @@ export function GradientCard ({icon, title, description, path, cta}) {
       }}
     >
       <div>
-      <Heading as="h3" size="lg" mb="4">
+        <Heading as="h3" size="lg" mb="4">
           <HStack spacing="3">
             {icon}
             <span>{title}</span>
           </HStack>
         </Heading>
-        <Text fontSize="lg">
-          {description}
-        </Text>
+        <Text fontSize="lg">{description}</Text>
       </div>
       <div>
-        <ButtonLink
-          href={path}
-          colorScheme="indigo"
-          leftIcon={linkIcon(path)}
-        >
+        <ButtonLink href={path} colorScheme="indigo" leftIcon={linkIcon(path)}>
           {cta}
         </ButtonLink>
       </div>
