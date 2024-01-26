@@ -20,8 +20,8 @@ import VersionBanner from './VersionBanner';
 import autolinkHeadings from 'rehype-autolink-headings';
 import rehypeReact from 'rehype-react';
 import useLocalStorage from 'react-use/lib/useLocalStorage';
-import {ReactComponent as ApolloLogo} from '@apollo/space-kit/logos/logo.svg';
-import {ReactComponent as ApolloMark} from '@apollo/space-kit/logos/mark.svg';
+import {ReactComponent as ApolloLogo} from '@apollo/icons/logos/LogoType.svg';
+import {ReactComponent as ApolloMark} from '@apollo/icons/logos/LogoSymbol.svg';
 import {
   Box,
   Button,
@@ -42,13 +42,6 @@ import {
 } from '@chakra-ui/react';
 import {Caution} from './Caution';
 import {CustomHeading} from './CustomHeading';
-import {
-  DocBlock,
-  DocPiece,
-  FunctionDetails,
-  InterfaceDetails,
-  useApiDocContext
-} from './ApiDoc';
 import {
   EmbeddableExplorer,
   MarkdownCodeBlock,
@@ -82,6 +75,7 @@ import {YouTube} from './YouTube';
 import {join} from 'path';
 import {kebabCase} from 'lodash';
 import {rehype} from 'rehype';
+import {useApiDocContext} from './ApiDoc';
 import {useConfig} from '../utils/config';
 import {useFieldTableStyles} from '../utils';
 import {useMermaidStyles} from '../utils/mermaid';
