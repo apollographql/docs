@@ -5,6 +5,7 @@
     "typescript",
     "typescriptreact",
     "markdown",
-    "mdx"
+    "mdx",
+    "astro"
   ]
 }
