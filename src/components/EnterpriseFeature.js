@@ -32,7 +32,7 @@ export const EnterpriseFeature = ({children}) => {
           <Text pl="1">
             <strong>
               This feature is only available with a{' '}
-              <Link color={'primary'} href="/graphos/enterprise/">
+              <Link color={'tertiary'} href="/graphos/enterprise/">
                 GraphOS Enterprise plan
               </Link>
               .{' '}
@@ -40,7 +40,7 @@ export const EnterpriseFeature = ({children}) => {
             If your organization doesn&apos;t currently have an Enterprise plan,
             you can test this functionality by signing up for a free{' '}
             <Link
-              color={'primary'}
+              color={'tertiary'}
               href="https://studio.apollographql.com/signup?type=enterprise-trial&referrer=docs-content"
             >
               Enterprise trial
