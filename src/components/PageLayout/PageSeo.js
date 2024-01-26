@@ -24,7 +24,7 @@ export function PageSeo({docset, title, description, noindex}) {
     `
   );
 
-  const titleFont = encodeURIComponent('Source Sans Pro');
+  const titleFont = encodeURIComponent('Aeonik, sans-serif');
 
   return (
     <GatsbySeo
@@ -44,11 +44,11 @@ export function PageSeo({docset, title, description, noindex}) {
               titleFontSize: 80,
               titleExtraConfig: '_bold',
               taglineFont: titleFont,
-              textColor: 'FFFFFF',
+              textColor: 'FFEADB',
               textLeftOffset: 80,
               textAreaWidth: 1120,
               cloudName: 'apollographql',
-              imagePublicID: 'docs-thumbnail_xvgmrd'
+              imagePublicID: 'docs-thumbnail_zjdqzj'
             })
           }
         ]
