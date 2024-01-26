@@ -155,7 +155,7 @@ fragment PropertySignature on ApiDocPropertySignature {
 fragment MethodSignature on ApiDocMethodSignature {
   optional
   returnType {
-    ...ApiDocTypeReference
+    ...TypeReference
   }
   parameters {
     ...FunctionParameter
@@ -164,7 +164,7 @@ fragment MethodSignature on ApiDocMethodSignature {
 
 fragment Function on ApiDocFunction {
   returnType {
-    ...ApiDocTypeReference
+    ...TypeReference
   }
   parameters {
     ...FunctionParameter
@@ -198,7 +198,7 @@ fragment Method on ApiDocMethod {
   optional
   static
   returnType {
-    ...ApiDocTypeReference
+    ...TypeReference
   }
   parameters {
     ...FunctionParameter
