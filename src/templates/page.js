@@ -163,7 +163,9 @@ fragment MethodSignature on ApiDocMethodSignature {
 }
 
 fragment Function on ApiDocFunction {
-  returnType
+  returnType {
+    ...ApiDocTypeReference
+  }
   parameters {
     ...FunctionParameter
   }
