@@ -44,7 +44,7 @@ export function PageSeo({docset, title, description, noindex}) {
               titleFontSize: 80,
               titleExtraConfig: '_bold',
               taglineFont: titleFont,
-              textColor: 'FFEADB',
+              textColor: 'C6CFCE',
               textLeftOffset: 80,
               textAreaWidth: 1120,
               cloudName: 'apollographql',
