@@ -1,6 +1,8 @@
 ---
 import { getCollection } from "astro:content";
 
+import ButtonLink from "../components/ButtonLink.astro";
+
 export async function getStaticPaths() {
   const articles = await getCollection("docs");
   return articles.map((article) => ({
@@ -13,9 +15,17 @@ const { article } = Astro.props;
 const { Content } = await article.render();
 ---
 
-<div class="p-10">
-  <h1 class="text-6xl mb-8">{article.data.title}</h1>
-  <div class="prose prose-lg">
-    <Content />
-  </div>
-</div>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>{article.data.title}</title>
+  </head>
+  <body>
+    <div class="p-10">
+      <h1 class="text-6xl mb-8">{article.data.title}</h1>
+      <div class="prose prose-lg">
+        <Content components={{ ButtonLink }} />
+      </div>
+    </div>
+  </body>
+</html>

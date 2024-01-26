@@ -8,7 +8,7 @@ const config = {
   "apollo-server/v3": "apollographql/apollo-server/docs/source#version-3",
   "apollo-server/v2": "apollographql/apollo-server/docs/source#version-2",
   kotlin: "apollographql/apollo-kotlin/docs/source",
-  ios: "apollographql/apollo-ios-dev/docs/source",
+  // ios: "apollographql/apollo-ios-dev/docs/source",
 } satisfies Record<string, string>;
 
 // copy each docset's source files into the docs content folder

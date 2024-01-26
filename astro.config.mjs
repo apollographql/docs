@@ -8,4 +8,9 @@ export default defineConfig({
   integrations: [mdx(), tailwind()],
   output: "hybrid",
   adapter: netlify(),
+  vite: {
+    resolve: {
+      preserveSymlinks: true,
+    },
+  },
 });

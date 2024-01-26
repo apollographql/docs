@@ -1,0 +1,9 @@
+---
+import type { JSX } from "astro/jsx-runtime";
+
+type Props = JSX.AnchorHTMLAttributes;
+---
+
+<a {...Astro.props}>
+  <slot />
+</a>
