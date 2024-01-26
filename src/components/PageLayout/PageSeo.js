@@ -48,7 +48,7 @@ export function PageSeo({docset, title, description, noindex}) {
               textLeftOffset: 80,
               textAreaWidth: 1120,
               cloudName: 'apollographql',
-              imagePublicID: 'apollo-docs-template2_dohzxt'
+              imagePublicID: 'docs-thumbnail_xvgmrd'
             })
           }
         ]
