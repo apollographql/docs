@@ -37,9 +37,9 @@ export const PreviewFeature = ({
           ) : (
             <>
               <b>
-                This feature is currently in{' '}
+                This feature is in{' '}
                 <Link
-                  color={'primary'}
+                  color={'tertiary'}
                   href="https://www.apollographql.com/docs/resources/product-launch-stages#preview"
                 >
                   preview
@@ -49,7 +49,7 @@ export const PreviewFeature = ({
               Your questions and feedback are highly valued{'—'}don&apos;t
               hesitate to get in touch with your Apollo contact or on the
               official
-              <Link color={'primary'} href={discordLink}>
+              <Link color={'tertiary'} href={discordLink}>
                 {' '}
                 Apollo GraphQL Discord
               </Link>
