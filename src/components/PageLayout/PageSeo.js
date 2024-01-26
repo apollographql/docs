@@ -5,7 +5,7 @@ import {GatsbySeo} from 'gatsby-plugin-next-seo';
 import {PathContext} from '../../utils';
 import {graphql, useStaticQuery} from 'gatsby';
 
-export function PageSeo({docset, title, description, noindex}) {
+export function PageSeo({ title, description, noindex}) {
   const {uri} = useContext(PathContext);
 
   const {
@@ -48,7 +48,7 @@ export function PageSeo({docset, title, description, noindex}) {
               textLeftOffset: 80,
               textAreaWidth: 1120,
               cloudName: 'apollographql',
-              imagePublicID: 'docs-thumbnail_zjdqzj'
+              imagePublicID: 'docs-thumbnail_xdb1xi'
             })
           }
         ]
