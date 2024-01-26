@@ -2,7 +2,6 @@ import NavItems, {GA_EVENT_CATEGORY_SIDEBAR, NavContext} from './NavItems';
 import PropTypes from 'prop-types';
 import React, {forwardRef, useImperativeHandle, useMemo, useRef} from 'react';
 import useLocalStorage from 'react-use/lib/useLocalStorage';
-import {BiCollapseVertical, BiExpandVertical} from 'react-icons/bi';
 import {
   Button,
   Flex,
@@ -17,12 +16,14 @@ import {
   chakra
 } from '@chakra-ui/react';
 import {
-  FiChevronDown,
-  FiChevronLeft,
-  FiChevronsLeft,
-  FiLock,
-  FiUnlock
-} from 'react-icons/fi';
+  ChevronDownIcon,
+  ChevronLeftIcon,
+  CollapseListIcon,
+  DoubleChevronLeftIcon,
+  ExpandListIcon,
+  LockIcon,
+  UnlockIcon
+} from '../Icons';
 import {PAGE_FOOTER_HEIGHT} from '../PageLayout';
 import {flattenNavItems} from '../../utils';
 
@@ -107,7 +108,7 @@ const SidebarNav = forwardRef(
               variant="ghost"
               size="sm"
               fontSize="xl"
-              icon={<FiChevronLeft />}
+              icon={<ChevronLeftIcon />}
               onClick={onGoBack}
             />
           )}
@@ -126,7 +127,7 @@ const SidebarNav = forwardRef(
                 size="sm"
                 ml="2"
                 variant="outline"
-                rightIcon={<FiChevronDown />}
+                rightIcon={<ChevronDownIcon />}
                 as={Button}
               >
                 {currentVersion}
@@ -190,11 +191,7 @@ const SidebarNav = forwardRef(
                       isAllExpanded ? 'Collapse' : 'Expand'
                     } all categories`}
                     icon={
-                      isAllExpanded ? (
-                        <BiCollapseVertical />
-                      ) : (
-                        <BiExpandVertical />
-                      )
+                      isAllExpanded ? <CollapseListIcon /> : <ExpandListIcon />
                     }
                     onClick={event => {
                       event.stopPropagation();
@@ -224,7 +221,7 @@ const SidebarNav = forwardRef(
                   <SidebarButton
                     aria-label="Hide navigation"
                     onClick={hideSidebar}
-                    icon={<FiChevronsLeft />}
+                    icon={<DoubleChevronLeftIcon />}
                   />
                 </div>
               </Tooltip>
@@ -234,7 +231,7 @@ const SidebarNav = forwardRef(
                 <div>
                   <SidebarButton
                     aria-label={`${isLocked ? 'Unlock' : 'Lock'} sidebar`}
-                    icon={isLocked ? <FiLock /> : <FiUnlock />}
+                    icon={isLocked ? <LockIcon /> : <UnlockIcon />}
                     onClick={onLockToggle}
                   />
                 </div>

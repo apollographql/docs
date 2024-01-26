@@ -16,8 +16,8 @@ import {
   useColorMode,
   useColorModeValue
 } from '@chakra-ui/react';
-import {FiMoon, FiSun} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
+import {MoonIcon, SunIcon} from '../Icons';
 import {TbViewportNarrow, TbViewportWide} from 'react-icons/tb';
 import {usePageWidthContext} from '../PageWidthContext';
 
@@ -165,14 +165,14 @@ export function Header({children, algoliaFilters}) {
             icon={
               <>
                 <Icon
-                  as={FiSun}
+                  as={SunIcon}
                   display="none"
                   _dark={{
                     display: 'block'
                   }}
                 />
                 <Icon
-                  as={FiMoon}
+                  as={MoonIcon}
                   display="block"
                   _dark={{
                     display: 'none'

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import {ArrowRightIcon, OutlinkIcon} from './Icons';
 import {ButtonLink} from './RelativeLink';
-import {FiArrowRight, FiExternalLink} from 'react-icons/fi';
 import {
   Flex,
   Grid,
@@ -16,9 +16,9 @@ import {
 
 const linkIcon = path => {
   if (/^https:\/\//.test(path)) {
-    return <FiExternalLink />;
+    return <OutlinkIcon />;
   }
-  return <FiArrowRight />;
+  return <ArrowRightIcon />;
 };
 
 export function GradientCard({icon, title, description, path, cta}) {

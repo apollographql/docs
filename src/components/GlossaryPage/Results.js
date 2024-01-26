@@ -17,7 +17,7 @@ import {
   TagLabel,
   Text
 } from '@chakra-ui/react';
-import {FiArrowRight} from 'react-icons/fi';
+import {ArrowRightIcon} from '../Icons';
 import {Highlight, useHits} from 'react-instantsearch';
 import {MarkdownCodeBlock} from '@apollo/chakra-helpers';
 import {useUser} from '../../utils';
@@ -233,7 +233,7 @@ const Results = () => {
                 {hit.learnMoreText
                   ? hit.learnMoreText
                   : 'Learn more about this term'}
-                <FiArrowRight style={{marginLeft: '0.5rem'}} />
+                <ArrowRightIcon style={{marginLeft: '0.5rem'}} />
               </PrimaryLink>
               {isApollonaut && <EditOnGitHub term={hit.objectID} />}
             </Flex>

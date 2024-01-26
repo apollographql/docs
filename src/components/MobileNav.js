@@ -11,7 +11,7 @@ import {
   useDisclosure
 } from '@chakra-ui/react';
 import {DocsetContext, LeftSidebarNav, SidebarNav} from './Sidebar';
-import {FiMenu} from 'react-icons/fi';
+import {MenuIcon} from './Icons';
 import {PathContext} from '../utils';
 import {useConfigs} from '../utils/config';
 
@@ -76,7 +76,7 @@ export default function MobileNav({isInternal}) {
         d={{base: 'flex', md: 'none'}}
         variant="ghost"
         fontSize="2xl"
-        icon={<FiMenu />}
+        icon={<MenuIcon />}
         onClick={onOpen}
       />
       <Drawer placement="left" isOpen={isOpen} onClose={onClose}>

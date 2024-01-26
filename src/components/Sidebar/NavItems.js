@@ -10,11 +10,15 @@ import {
   Tooltip,
   chakra
 } from '@chakra-ui/react';
-import {FiChevronDown, FiChevronRight, FiExternalLink} from 'react-icons/fi';
+import {
+  ChevronDownIcon,
+  ChevronRightIcon,
+  EnterpriseIcon,
+  OutlinkIcon
+} from '../Icons';
 import {Link as GatsbyLink} from 'gatsby';
 import {IoFlaskOutline, IoPartlySunnyOutline} from 'react-icons/io5';
 import {PathContext, getFullPath, isPathActive, isUrl} from '../../utils';
-import {TbComponents} from 'react-icons/tb';
 
 export const GA_EVENT_CATEGORY_SIDEBAR = 'Sidebar';
 export const NavContext = createContext();
@@ -33,11 +37,11 @@ const Tags = ({tags}) => {
 
         switch (tag) {
           case 'enterprise':
-            tagIcon = <TbComponents />;
+            tagIcon = <EnterpriseIcon />;
             tagTooltip = 'Enterprise feature';
             break;
           case 'graphos':
-            tagIcon = <TbComponents />;
+            tagIcon = <EnterpriseIcon />;
             tagTooltip = 'Requires GraphOS';
             break;
           case 'preview':
@@ -133,7 +137,7 @@ function NavGroup({group, depth}) {
       >
         <span>{group.title}</span>
         <Box
-          as={isOpen ? FiChevronDown : FiChevronRight}
+          as={isOpen ? ChevronDownIcon : ChevronRightIcon}
           pointerEvents="none"
         />
       </HStack>
@@ -174,7 +178,7 @@ export default function NavItems({items, depth = 0}) {
             !/^https:\/\/www.apollographql.com\/docs(\/|$)/.test(item.path) && {
               target: '_blank',
               rel: 'noreferrer noopener',
-              rightIcon: <FiExternalLink />
+              rightIcon: <OutlinkIcon />
             };
           return (
             <NavButton

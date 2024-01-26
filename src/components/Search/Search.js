@@ -3,7 +3,6 @@ import React from 'react';
 import SearchButton from './SearchButton';
 import loadable from '@loadable/component';
 import useKey from 'react-use/lib/useKey';
-import {FiSearch} from 'react-icons/fi';
 import {
   IconButton,
   Modal,
@@ -11,6 +10,7 @@ import {
   ModalOverlay,
   useDisclosure
 } from '@chakra-ui/react';
+import {SearchIcon} from '../Icons';
 
 const Autocomplete = loadable(() => import('./Autocomplete'));
 
@@ -44,7 +44,7 @@ export function Search({algoliaFilters}) {
         mr="2"
         d={{base: 'flex', sm: 'none'}}
         fontSize="xl"
-        icon={<FiSearch />}
+        icon={<SearchIcon />}
         onClick={onOpen}
       />
       <Modal
