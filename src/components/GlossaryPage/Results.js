@@ -5,6 +5,7 @@ import Markdown from 'react-markdown';
 import PropTypes from 'prop-types';
 import React from 'react';
 import RelativeLink, {PrimaryLink} from '../RelativeLink';
+import {ArrowRightIcon} from '../Icons';
 import {
   Box,
   Flex,
@@ -17,7 +18,6 @@ import {
   TagLabel,
   Text
 } from '@chakra-ui/react';
-import {ArrowRightIcon} from '../Icons';
 import {Highlight, useHits} from 'react-instantsearch';
 import {MarkdownCodeBlock} from '@apollo/chakra-helpers';
 import {useUser} from '../../utils';
@@ -230,10 +230,12 @@ const Results = () => {
                 href={updateHost(hit.learnMore)}
                 style={{display: 'flex', alignItems: 'center'}}
               >
-                {hit.learnMoreText
-                  ? hit.learnMoreText
-                  : 'Learn more about this term'}
-                <ArrowRightIcon style={{marginLeft: '0.5rem'}} />
+                <Text style={{marginRight: '0.5rem'}}>
+                  {hit.learnMoreText
+                    ? hit.learnMoreText
+                    : 'Learn more about this term'}
+                </Text>
+                <ArrowRightIcon />
               </PrimaryLink>
               {isApollonaut && <EditOnGitHub term={hit.objectID} />}
             </Flex>

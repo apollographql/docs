@@ -1,6 +1,7 @@
 import React from 'react';
 import {GitHubIcon} from '../Icons';
 import {PrimaryLink} from '../RelativeLink';
+import {Text} from '@chakra-ui/react';
 
 const EditOnGitHub = term => {
   const url = `https://github.com/apollographql/dxe/blob/main/packages/apollopedia/terms/${term.term}.md`;
@@ -13,7 +14,7 @@ const EditOnGitHub = term => {
       href={url}
       style={{display: 'flex', alignItems: 'center'}}
     >
-      <GitHubIcon style={{marginRight: '0.5rem'}} /> Edit on GitHub
+      <GitHubIcon /> <Text style={{marginLeft: '0.5rem'}}>Edit on GitHub</Text>
     </PrimaryLink>
   );
 };

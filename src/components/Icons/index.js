@@ -24,6 +24,7 @@ import {ReactComponent as Discourse} from '@apollo/icons/default/IconDiscourse.s
 import {ReactComponent as Document} from '@apollo/icons/default/IconDocument.svg';
 import {ReactComponent as DoubleChevronDown} from '@apollo/icons/default/IconDoubleChevronDown.svg';
 import {ReactComponent as DoubleChevronLeft} from '@apollo/icons/default/IconDoubleChevronLeft.svg';
+import {ReactComponent as DoubleChevronRight} from '@apollo/icons/default/IconDoubleChevronRight.svg';
 import {ReactComponent as Education} from '@apollo/icons/default/IconEducation.svg';
 import {ReactComponent as Enterprise} from '@apollo/icons/default/IconEnterpriseFeatures.svg';
 import {ReactComponent as ExpandList} from '@apollo/icons/default/IconExpandList.svg';
@@ -95,6 +96,9 @@ export const DoubleChevronDownIcon = () => (
 );
 export const DoubleChevronLeftIcon = () => (
   <CustomIcon icon={DoubleChevronLeft} />
+);
+export const DoubleChevronRightIcon = () => (
+  <CustomIcon icon={DoubleChevronRight} />
 );
 export const EnterpriseIcon = () => <CustomIcon icon={Enterprise} />;
 export const ExplorerIcon = () => <CustomIcon icon={Explorer} />;

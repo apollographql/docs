@@ -11,7 +11,7 @@ import Sidebar, {
 } from '../Sidebar';
 import useLocalStorage from 'react-use/lib/useLocalStorage';
 import {Box, Fade, IconButton, Tooltip} from '@chakra-ui/react';
-import {ChevronRight} from '../Icons';
+import {DoubleChevronRightIcon} from '../Icons';
 import {PageWidthProvider} from '../PageWidthContext';
 import {PathContext} from '../../utils';
 import {dirname} from 'path';
@@ -117,7 +117,7 @@ export function PageLayout({pageContext, children, location, data}) {
               size="sm"
               variant="outline"
               fontSize="lg"
-              icon={<ChevronRight />}
+              icon={<DoubleChevronRightIcon />}
               onClick={() => setSidebarHidden(false)}
             />
           </Tooltip>
