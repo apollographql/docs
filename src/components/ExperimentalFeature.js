@@ -37,7 +37,7 @@ export const ExperimentalFeature = ({
           ) : (
             <>
               <b>
-                This feature is currently{' '}
+                This feature is{' '}
                 <Link
                   color={'tertiary'}
                   href="https://www.apollographql.com/docs/resources/product-launch-stages#experimental-features"

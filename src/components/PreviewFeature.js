@@ -37,7 +37,7 @@ export const PreviewFeature = ({
           ) : (
             <>
               <b>
-                This feature is currently in{' '}
+                This feature is in{' '}
                 <Link
                   color={'tertiary'}
                   href="https://www.apollographql.com/docs/resources/product-launch-stages#preview"

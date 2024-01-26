@@ -37,8 +37,8 @@ export const EnterpriseFeature = ({children}) => {
               </Link>
               .{' '}
             </strong>
-            If your organization doesn&apos;t currently have an Enterprise plan,
-            you can test this functionality by signing up for a free{' '}
+            If your organization doesn&apos;t have an Enterprise plan, you can
+            test this functionality by signing up for a free{' '}
             <Link
               color={'tertiary'}
               href="https://studio.apollographql.com/signup?type=enterprise-trial&referrer=docs-content"
