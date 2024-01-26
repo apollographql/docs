@@ -2,7 +2,7 @@ import DocsetButton from './DocsetButton';
 import DocsetGroup from './DocsetGroup';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {ReactComponent as ApolloMark} from '@apollo/space-kit/logos/mark.svg';
+import {ReactComponent as ApolloMark} from '@apollo/icons/logos/LogoSymbol.svg';
 import {
   Box,
   Button,
@@ -18,31 +18,31 @@ import {
   Stack,
   useDisclosure
 } from '@chakra-ui/react';
-import {ReactComponent as ChevronDown} from "@apollo/icons/default/IconChevronDown.svg";
-import {ReactComponent as Connectors} from "@apollo/icons/default/IconConnectors.svg";
-import {ReactComponent as Document} from "@apollo/icons/default/IconDocument.svg";
-import {ReactComponent as Education} from "@apollo/icons/default/IconEducation.svg";
-import {ReactComponent as Enterprise} from "@apollo/icons/default/IconEnterpriseFeatures.svg";
-import {ReactComponent as Explorer} from "@apollo/icons/default/IconExplorer.svg";
+import {ReactComponent as ChevronDown} from '@apollo/icons/default/IconChevronDown.svg';
+import {ReactComponent as Connectors} from '@apollo/icons/default/IconConnectors.svg';
+import {ReactComponent as Document} from '@apollo/icons/default/IconDocument.svg';
+import {ReactComponent as Education} from '@apollo/icons/default/IconEducation.svg';
+import {ReactComponent as Enterprise} from '@apollo/icons/default/IconEnterpriseFeatures.svg';
+import {ReactComponent as Explorer} from '@apollo/icons/default/IconExplorer.svg';
 import {FaJava, FaNodeJs} from 'react-icons/fa';
-import {ReactComponent as Federation} from "@apollo/icons/default/IconHierarchy.svg";
+import {ReactComponent as Federation} from '@apollo/icons/default/IconHierarchy.svg';
 import {Link as GatsbyLink} from 'gatsby';
-import {ReactComponent as GraphQL} from "@apollo/icons/default/IconGraphQL.svg";
-import {ReactComponent as Home} from "@apollo/icons/default/IconHome.svg";
-import {ReactComponent as Insights} from "@apollo/icons/default/IconInsights.svg";
-import {ReactComponent as Kotlin} from "@apollo/icons/default/IconKotlin.svg";
-import {ReactComponent as LayoutModule} from "@apollo/icons/default/IconLayoutModule.svg";
-import {ReactComponent as Pipeline} from "@apollo/icons/default/IconPipeline.svg";
-import {ReactComponent as ReactIcon} from "@apollo/icons/default/IconReact.svg";
-import {ReactComponent as Rocket} from "@apollo/icons/default/IconRocket.svg";
-import {ReactComponent as Router} from "@apollo/icons/default/IconRouter.svg";
-import {ReactComponent as Satellite} from "@apollo/icons/default/IconSatellite3.svg";
-import {ReactComponent as Schema} from "@apollo/icons/default/IconSchema.svg";
+import {ReactComponent as GraphQL} from '@apollo/icons/default/IconGraphQL.svg';
+import {ReactComponent as Home} from '@apollo/icons/default/IconHome.svg';
+import {ReactComponent as Insights} from '@apollo/icons/default/IconInsights.svg';
+import {ReactComponent as Kotlin} from '@apollo/icons/default/IconKotlin.svg';
+import {ReactComponent as LayoutModule} from '@apollo/icons/default/IconLayoutModule.svg';
+import {ReactComponent as Pipeline} from '@apollo/icons/default/IconPipeline.svg';
+import {ReactComponent as ReactIcon} from '@apollo/icons/default/IconReact.svg';
+import {ReactComponent as Rocket} from '@apollo/icons/default/IconRocket.svg';
+import {ReactComponent as Router} from '@apollo/icons/default/IconRouter.svg';
+import {ReactComponent as Satellite} from '@apollo/icons/default/IconSatellite3.svg';
+import {ReactComponent as Schema} from '@apollo/icons/default/IconSchema.svg';
 import {SiCsharp} from 'react-icons/si';
-import {ReactComponent as Success} from "@apollo/icons/default/IconSuccess.svg";
-import {ReactComponent as Swift} from "@apollo/icons/default/IconSwift.svg";
-import {ReactComponent as Team} from "@apollo/icons/default/IconTeam.svg";
-import {ReactComponent as Terminal} from "@apollo/icons/default/IconAppWindow.svg";
+import {ReactComponent as Success} from '@apollo/icons/default/IconSuccess.svg';
+import {ReactComponent as Swift} from '@apollo/icons/default/IconSwift.svg';
+import {ReactComponent as Team} from '@apollo/icons/default/IconTeam.svg';
+import {ReactComponent as Terminal} from '@apollo/icons/default/IconAppWindow.svg';
 
 const CustomIcon = ({icon}) => <Box fill="color" boxSize="1em" as={icon} />;
 
@@ -82,7 +82,11 @@ export function DocsetMenu({docset, versions = [], currentVersion, ...props}) {
   return (
     <>
       <ButtonGroup isAttached {...props}>
-        <Button rightIcon={<CustomIcon icon={LayoutModule} />} onClick={onOpen} colorScheme="indigo">
+        <Button
+          rightIcon={<CustomIcon icon={LayoutModule} />}
+          onClick={onOpen}
+          colorScheme="indigo"
+        >
           {docset}
         </Button>
         {versions.length > 1 && (

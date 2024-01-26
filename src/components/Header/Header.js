@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Search from '../Search';
 import StudioButton from './StudioButton';
-import {ReactComponent as ApolloLogo} from '@apollo/brand/logos/logotype.svg';
-import {ReactComponent as ApolloMark} from '@apollo/brand/logos/symbol.svg';
+import {ReactComponent as ApolloLogo} from '@apollo/icons/logos/LogoType.svg';
+import {ReactComponent as ApolloMark} from '@apollo/icons/logos/LogoSymbol.svg';
 import {
   Box,
   Center,
@@ -53,6 +53,11 @@ function Eyebrow({children}) {
 
 Eyebrow.propTypes = {
   children: PropTypes.node.isRequired
+};
+
+Header.propTypes = {
+  children: PropTypes.node.isRequired,
+  algoliaFilters: PropTypes.array
 };
 
 export function Header({children, algoliaFilters}) {

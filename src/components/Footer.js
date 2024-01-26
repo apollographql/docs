@@ -1,6 +1,5 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import {ReactComponent as ApolloLogo} from '@apollo/space-kit/logos/logo.svg';
+import {ReactComponent as ApolloLogo} from '@apollo/icons/logos/LogoType.svg';
 import {
   Box,
   Flex,
