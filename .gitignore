@@ -1,11 +1,5 @@
 node_modules
-.cache
-public
-.netlify
-local
 .DS_Store
 .env
 .volta
-.idea
-.mermaid
-pnpm-lock.yaml
+.astro

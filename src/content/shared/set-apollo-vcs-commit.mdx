@@ -1,6 +1,0 @@
-To display schema check results on pull requests correctly, you need to make sure Rover associates the schema check execution with the pull request's `HEAD` commit, as opposed to the _merge_ commit that GitHub adds. To guarantee this, set the `APOLLO_VCS_COMMIT` environment variable in your action's configuration, like so:
-
-```yaml
-env:
-  APOLLO_VCS_COMMIT: ${{ github.event.pull_request.head.sha }}
-```
