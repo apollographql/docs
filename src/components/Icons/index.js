@@ -36,51 +36,49 @@ import {ReactComponent as Terminal} from '@apollo/icons/default/IconAppWindow.sv
 import {ReactComponent as Twitter} from '@apollo/icons/default/IconTwitterSolid.svg';
 import {ReactComponent as Youtube} from '@apollo/icons/default/IconYouTubeSolid.svg';
 
-const CustomIcon = ({icon}) => <Box fill="color" boxSize="1em" as={icon} />;
-const SolidIcon = ({icon}) => <Box fill="current" boxSize="1em" as={icon} />;
+const CustomIcon = ({icon, isSolid}) => {
+  return <Box as={icon} boxSize="1em" fill={isSolid ? 'current' : 'none'} />;
+};
 
 CustomIcon.propTypes = {
-  icon: PropTypes.elementType.isRequired
+  icon: PropTypes.elementType.isRequired,
+  isSolid: PropTypes.boolean
 };
 
-SolidIcon.propTypes = {
-  icon: PropTypes.elementType.isRequired
-};
-
-export const ApolloClientIcon = <CustomIcon icon={ReactIcon} />;
-export const ApolloIOSIcon = <CustomIcon icon={Swift} />;
-export const ApolloKotlinIcon = <CustomIcon icon={Kotlin} />;
-export const ApolloMarkIcon = <CustomIcon icon={ApolloMark} />;
-export const ApolloServerIcon = <CustomIcon icon={Satellite} />;
-export const ArrowRightIcon = <CustomIcon icon={ArrowRight} />;
-export const BookIcon = <CustomIcon icon={Book} />;
-export const CheckIcon = <CustomIcon icon={Success} />;
-export const ChevronDownIcon = <CustomIcon icon={ChevronDown} />;
-export const ConnectorsIcon = <CustomIcon icon={Connectors} />;
-export const CSharpIcon = <CustomIcon icon={CSharp} />;
-export const DiscordIcon = <CustomIcon icon={Discord} />;
-export const DiscourseIcon = <CustomIcon icon={Discourse} />;
-export const DeliveryIcon = <CustomIcon icon={Pipeline} />;
-export const EnterpriseIcon = <CustomIcon icon={Enterprise} />;
-export const ExplorerIcon = <CustomIcon icon={Explorer} />;
-export const FederationIcon = <CustomIcon icon={Federation} />;
-export const GitHubIcon = <SolidIcon icon={GitHub} />;
-export const GraphOSIcon = <CustomIcon icon={Schema} />;
-export const GraphQLIcon = <CustomIcon icon={GraphQL} />;
-export const GridIcon = <CustomIcon icon={LayoutModule} />;
-export const HomeIcon = <CustomIcon icon={Home} />;
-export const JavaIcon = <CustomIcon icon={Java} />;
-export const MetricsIcon = <CustomIcon icon={Insights} />;
-export const NodeJsIcon = <CustomIcon icon={NodeJs} />;
-export const OdysseyIcon = <CustomIcon icon={Education} />;
-export const OrgIcon = <CustomIcon icon={Team} />;
-export const PipelineIcon = <CustomIcon icon={Pipeline} />;
-export const RocketIcon = <CustomIcon icon={Rocket} />;
-export const RoverIcon = <CustomIcon icon={Terminal} />;
-export const RouterIcon = <CustomIcon icon={Router} />;
-export const TechnotesIcon = <CustomIcon icon={Document} />;
-export const TwitterIcon = <SolidIcon icon={Twitter} />;
-export const YoutubeIcon = <SolidIcon icon={Youtube} />;
+export const ApolloClientIcon = () => <CustomIcon icon={ReactIcon} />;
+export const ApolloIOSIcon = () => <CustomIcon icon={Swift} />;
+export const ApolloKotlinIcon = () => <CustomIcon icon={Kotlin} />;
+export const ApolloMarkIcon = () => <CustomIcon icon={ApolloMark} />;
+export const ApolloServerIcon = () => <CustomIcon icon={Satellite} />;
+export const ArrowRightIcon = () => <CustomIcon icon={ArrowRight} />;
+export const BookIcon = () => <CustomIcon icon={Book} />;
+export const CheckIcon = () => <CustomIcon icon={Success} />;
+export const ChevronDownIcon = () => <CustomIcon icon={ChevronDown} />;
+export const ConnectorsIcon = () => <CustomIcon icon={Connectors} />;
+export const CSharpIcon = () => <CustomIcon icon={CSharp} />;
+export const DiscordIcon = () => <CustomIcon icon={Discord} />;
+export const DiscourseIcon = () => <CustomIcon icon={Discourse} />;
+export const DeliveryIcon = () => <CustomIcon icon={Pipeline} />;
+export const EnterpriseIcon = () => <CustomIcon icon={Enterprise} />;
+export const ExplorerIcon = () => <CustomIcon icon={Explorer} />;
+export const FederationIcon = () => <CustomIcon icon={Federation} />;
+export const GitHubIcon = () => <CustomIcon isSolid icon={GitHub} />;
+export const GraphOSIcon = () => <CustomIcon icon={Schema} />;
+export const GraphQLIcon = () => <CustomIcon icon={GraphQL} />;
+export const GridIcon = () => <CustomIcon icon={LayoutModule} />;
+export const HomeIcon = () => <CustomIcon icon={Home} />;
+export const JavaIcon = () => <CustomIcon icon={Java} />;
+export const MetricsIcon = () => <CustomIcon icon={Insights} />;
+export const NodeJsIcon = () => <CustomIcon icon={NodeJs} />;
+export const OdysseyIcon = () => <CustomIcon icon={Education} />;
+export const OrgIcon = () => <CustomIcon icon={Team} />;
+export const PipelineIcon = () => <CustomIcon icon={Pipeline} />;
+export const RocketIcon = () => <CustomIcon icon={Rocket} />;
+export const RoverIcon = () => <CustomIcon icon={Terminal} />;
+export const RouterIcon = () => <CustomIcon icon={Router} />;
+export const TechnotesIcon = () => <CustomIcon icon={Document} />;
+export const TwitterIcon = () => <CustomIcon isSolid icon={Twitter} />;
+export const YoutubeIcon = () => <CustomIcon isSolid icon={Youtube} />;
 
 export const DOCSET_ICONS = {
   default: <ApolloMarkIcon />,

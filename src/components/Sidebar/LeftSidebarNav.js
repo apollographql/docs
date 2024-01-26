@@ -83,7 +83,7 @@ export function LeftSidebarNav(props) {
                     as={GatsbyLink}
                     size="sm"
                     to="/graphos/quickstart/cloud"
-                    leftIcon={<Box as={<RocketIcon />} boxSize="1em" />}
+                    leftIcon={<RocketIcon />}
                     onClick={dismissSidebar}
                   >
                     Get started
