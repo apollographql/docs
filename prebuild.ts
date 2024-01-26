@@ -3,11 +3,11 @@ import { downloadTemplate } from "giget";
 
 const config = {
   "apollographql/apollo-client/docs/source": "react",
-  "apollographql/apollo-client/docs/source#version-2.6": "react/v2",
-  "apollographql/apollo-server/docs/source": "apollo-server",
-  "apollographql/apollo-server/docs/source#version-3": "apollo-server/v3",
-  "apollographql/apollo-server/docs/source#version-2": "apollo-server/v2",
-  "apollographql/apollo-kotlin/docs/source": "kotlin",
+  // "apollographql/apollo-client/docs/source#version-2.6": "react/v2",
+  // "apollographql/apollo-server/docs/source": "apollo-server",
+  // "apollographql/apollo-server/docs/source#version-3": "apollo-server/v3",
+  // "apollographql/apollo-server/docs/source#version-2": "apollo-server/v2",
+  // "apollographql/apollo-kotlin/docs/source": "kotlin",
   // "apollographql/apollo-ios-dev/docs/source": "ios",
 };
 

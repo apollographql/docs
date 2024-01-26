@@ -18,6 +18,7 @@
     "yarn": "1.22.21"
   },
   "dependencies": {
+    "@astrojs/check": "^0.4.1",
     "@astrojs/mdx": "^2.1.0",
     "@astrojs/netlify": "^5.0.0",
     "@astrojs/tailwind": "^5.1.0",
