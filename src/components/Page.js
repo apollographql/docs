@@ -20,8 +20,8 @@ import VersionBanner from './VersionBanner';
 import autolinkHeadings from 'rehype-autolink-headings';
 import rehypeReact from 'rehype-react';
 import useLocalStorage from 'react-use/lib/useLocalStorage';
-import {ReactComponent as ApolloLogo} from '@apollo/space-kit/logos/logo.svg';
-import {ReactComponent as ApolloMark} from '@apollo/space-kit/logos/mark.svg';
+import {ReactComponent as ApolloLogo} from '@apollo/icons/logos/LogoType.svg';
+import {ReactComponent as ApolloMark} from '@apollo/icons/logos/LogoSymbol.svg';
 import {
   Box,
   Button,

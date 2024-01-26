@@ -27,7 +27,6 @@
     "@apollo/icons": "^0.0.6",
     "@apollo/pedia": "^3.3.1",
     "@apollo/signup-tracer": "^2.0.0",
-    "@apollo/space-kit": "8.11.0",
     "@apollo/utm-grabber": "^1.3.1",
     "@chakra-ui/gatsby-plugin": "^2.0.3",
     "@chakra-ui/react": "^1.8.3",
