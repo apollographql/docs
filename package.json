@@ -11,7 +11,8 @@
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "prebuild": "tsx prebuild.ts"
+    "prebuild": "tsx prebuild.ts",
+    "dev:react": "symlink-dir ../apollo-client/docs/source src/content/docs/react"
   },
   "volta": {
     "node": "20.11.0",

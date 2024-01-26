@@ -4,3 +4,6 @@
 /rover
 /kotlin
 /ios
+
+# these are created by symlink-dir if a directory already exists
+/.ignored_*
