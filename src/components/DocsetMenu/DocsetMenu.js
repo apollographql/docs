@@ -18,31 +18,40 @@ import {
   Stack,
   useDisclosure
 } from '@chakra-ui/react';
-import {ReactComponent as ChevronDown} from "@apollo/icons/default/IconChevronDown.svg";
+import {Link as GatsbyLink} from 'gatsby';
+
+// import {ReactComponent as ChevronDown} from "@apollo/icons/default/IconChevronDown.svg";
 import {ReactComponent as Connectors} from "@apollo/icons/default/IconConnectors.svg";
+import {ReactComponent as CSharp} from "@apollo/icons/default/IconCSharp.svg";
+import {ReactComponent as Discord} from "@apollo/icons/default/IconDiscord.svg";
+import {ReactComponent as Discourse} from "@apollo/icons/default/IconDiscourse.svg";
 import {ReactComponent as Document} from "@apollo/icons/default/IconDocument.svg";
 import {ReactComponent as Education} from "@apollo/icons/default/IconEducation.svg";
 import {ReactComponent as Enterprise} from "@apollo/icons/default/IconEnterpriseFeatures.svg";
 import {ReactComponent as Explorer} from "@apollo/icons/default/IconExplorer.svg";
-import {FaJava, FaNodeJs} from 'react-icons/fa';
 import {ReactComponent as Federation} from "@apollo/icons/default/IconHierarchy.svg";
-import {Link as GatsbyLink} from 'gatsby';
+import {ReactComponent as GitHub} from "@apollo/icons/default/IconGitHubSolid.svg";
 import {ReactComponent as GraphQL} from "@apollo/icons/default/IconGraphQL.svg";
 import {ReactComponent as Home} from "@apollo/icons/default/IconHome.svg";
 import {ReactComponent as Insights} from "@apollo/icons/default/IconInsights.svg";
+import {ReactComponent as Java} from "@apollo/icons/default/IconJava.svg";
 import {ReactComponent as Kotlin} from "@apollo/icons/default/IconKotlin.svg";
 import {ReactComponent as LayoutModule} from "@apollo/icons/default/IconLayoutModule.svg";
+import {ReactComponent as NodeJs} from "@apollo/icons/default/IconNodeJs.svg";
 import {ReactComponent as Pipeline} from "@apollo/icons/default/IconPipeline.svg";
 import {ReactComponent as ReactIcon} from "@apollo/icons/default/IconReact.svg";
 import {ReactComponent as Rocket} from "@apollo/icons/default/IconRocket.svg";
 import {ReactComponent as Router} from "@apollo/icons/default/IconRouter.svg";
 import {ReactComponent as Satellite} from "@apollo/icons/default/IconSatellite3.svg";
 import {ReactComponent as Schema} from "@apollo/icons/default/IconSchema.svg";
-import {SiCsharp} from 'react-icons/si';
 import {ReactComponent as Success} from "@apollo/icons/default/IconSuccess.svg";
 import {ReactComponent as Swift} from "@apollo/icons/default/IconSwift.svg";
 import {ReactComponent as Team} from "@apollo/icons/default/IconTeam.svg";
 import {ReactComponent as Terminal} from "@apollo/icons/default/IconAppWindow.svg";
+import {ReactComponent as Twitter} from "@apollo/icons/default/IconTwitterSolid.svg";
+import {ReactComponent as Youtube} from "@apollo/icons/default/IconYoutubeSolid.svg";
+
+import { ChevronDownIcon } from "../Icons";
 
 const CustomIcon = ({icon}) => <Box fill="color" boxSize="1em" as={icon} />;
 
@@ -58,23 +67,28 @@ export const DOCSET_ICONS = {
   'apollo-server': <CustomIcon icon={Satellite} />,
   check: <CustomIcon icon={Success} />,
   connectors: <CustomIcon icon={Connectors} />,
-  csharp: <SiCsharp />,
+  csharp: <CustomIcon icon={CSharp} />,
+  discord: <CustomIcon icon={Discord} />,
+  discourse: <CustomIcon icon={Discourse} />,
   delivery: <CustomIcon icon={Pipeline} />,
   education: <CustomIcon icon={Education} />,
   enterprise: <CustomIcon icon={Enterprise} />,
   explorer: <CustomIcon icon={Explorer} />,
   federation: <CustomIcon icon={Federation} />,
+  github: <CustomIcon icon={GitHub} />,
   graphos: <CustomIcon icon={Schema} />,
   graphql: <CustomIcon icon={GraphQL} />,
   home: <CustomIcon icon={Home} />,
-  java: <FaJava />,
+  java: <CustomIcon icon={Java} />,
   metrics: <CustomIcon icon={Insights} />,
-  nodejs: <FaNodeJs />,
+  nodejs: <CustomIcon icon={NodeJs} />,
   odyssey: <CustomIcon icon={Rocket} />,
   org: <CustomIcon icon={Team} />,
   rover: <CustomIcon icon={Terminal} />,
   router: <CustomIcon icon={Router} />,
-  technotes: <CustomIcon icon={Document} />
+  technotes: <CustomIcon icon={Document} />,
+  twitter: <CustomIcon icon={Twitter} />,
+  youtube: <CustomIcon icon={Youtube} />
 };
 
 export function DocsetMenu({docset, versions = [], currentVersion, ...props}) {
@@ -90,7 +104,7 @@ export function DocsetMenu({docset, versions = [], currentVersion, ...props}) {
             <MenuButton
               as={Button}
               variant="outline"
-              rightIcon={<CustomIcon icon={ChevronDown} />}
+              rightIcon={<CustomIcon icon={ChevronDownIcon} />}
               borderLeft="none"
             >
               {currentVersion}
