@@ -39,7 +39,7 @@ export function PageSeo({docset, title, description, noindex}) {
           {
             url: getShareImage({
               title,
-              tagline: docset,
+              tagline: description,
               titleFont,
               titleFontSize: 80,
               titleExtraConfig: '_bold',
