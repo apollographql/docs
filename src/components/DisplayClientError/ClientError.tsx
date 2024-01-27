@@ -54,14 +54,12 @@ export const ClientError = () => {
       {code.message && (
         <>
           <h2>Error message</h2>
-          <p>
-            <Markdown>
-              {result.args.reduce(
-                (acc, arg) => acc.replace(/%[sdfo]/, arg),
-                code.message,
-              )}
-            </Markdown>
-          </p>
+          <Markdown>
+            {result.args.reduce(
+              (acc, arg) => acc.replace(/%[sdfo]/, arg),
+              code.message,
+            )}
+          </Markdown>
         </>
       )}
       <h2>File</h2>
