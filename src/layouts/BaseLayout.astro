@@ -1,0 +1,17 @@
+---
+import { type Props, SEO } from "astro-seo";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <SEO
+      titleTemplate="%s - Apollo Docs"
+      titleDefault="Apollo Docs"
+      {...Astro.props}
+    />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

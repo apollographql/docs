@@ -1,7 +1,9 @@
 ---
 import { getCollection } from "astro:content";
 
-import ButtonLink from "../components/ButtonLink.astro";
+import ButtonLink from "~/components/ButtonLink.astro";
+import { DisplayClientError } from "~/components/DisplayClientError";
+import BaseLayout from "~/layouts/BaseLayout.astro";
 
 export async function getStaticPaths() {
   const articles = await getCollection("docs");
@@ -15,17 +17,16 @@ const { article } = Astro.props;
 const { Content } = await article.render();
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>{article.data.title}</title>
-  </head>
-  <body>
-    <div class="p-10">
-      <h1 class="text-6xl mb-8">{article.data.title}</h1>
-      <div class="prose prose-lg">
-        <Content components={{ ButtonLink }} />
-      </div>
+<BaseLayout title={article.data.title} description={article.data.description}>
+  <div class="p-10">
+    <h1 class="text-6xl mb-8">{article.data.title}</h1>
+    <div class="prose prose-lg">
+      <Content
+        components={{
+          ButtonLink,
+          DisplayClientError,
+        }}
+      />
     </div>
-  </body>
-</html>
+  </div>
+</BaseLayout>

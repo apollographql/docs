@@ -11,7 +11,7 @@
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "prebuild": "tsx prebuild.ts",
+    "copy": "tsx prebuild.ts",
     "link:react": "symlink-dir ../apollo-client/docs/source src/content/docs/react",
     "link:server": "symlink-dir ../apollo-server/docs/source src/content/docs/apollo-server"
   },
@@ -20,12 +20,22 @@
     "yarn": "1.22.21"
   },
   "dependencies": {
+    "@apollo/client": "^3.8.10",
     "@astrojs/check": "^0.4.1",
     "@astrojs/mdx": "^2.1.0",
     "@astrojs/netlify": "^5.0.0",
+    "@astrojs/react": "^3.0.9",
     "@astrojs/tailwind": "^5.1.0",
+    "@types/react": "^18.2.48",
+    "@types/react-dom": "^18.2.18",
     "astro": "^4.2.4",
-    "tailwindcss": "^3.4.1"
+    "astro-seo": "^0.8.0",
+    "graphql": "^16.8.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-markdown": "^9.0.1",
+    "tailwindcss": "^3.4.1",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.10",
