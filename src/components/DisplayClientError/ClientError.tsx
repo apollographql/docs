@@ -10,7 +10,8 @@ const schema = z.object({
 });
 
 export const ClientError = () => {
-  const [error, setError] = useState<
+  const [error, setError] = useState<Error | null>(null);
+  const [data, setData] = useState<
     [ErrorCodes[number], z.infer<typeof schema>] | null
   >(null);
 
@@ -35,42 +36,53 @@ export const ClientError = () => {
             new Error("Error message could not be found.");
           }
 
-          setError([errorCodes[result.data.message], result.data]);
+          setData([errorCodes[result.data.message], result.data]);
         } catch (error) {
-          console.warn(error);
+          if (error instanceof Error) {
+            setError(error);
+          }
         }
       })();
     }
   }, []);
 
-  if (!error) {
+  if (error) {
+    return (
+      <>
+        <h3>⚠️ Unable to fetch error code</h3>
+        <blockquote>{error.message}</blockquote>
+      </>
+    );
+  }
+
+  if (!data) {
     return null;
   }
 
-  const [code, result] = error;
+  const [errorCode, result] = data;
 
   return (
     <>
-      {code.message && (
+      {errorCode.message && (
         <>
           <h2>Error message</h2>
           <Markdown>
             {result.args.reduce(
               (acc, arg) => acc.replace(/%[sdfo]/, arg),
-              code.message,
+              errorCode.message,
             )}
           </Markdown>
         </>
       )}
       <h2>File</h2>
       <p>
-        <code>{code.file}</code>
+        <code>{errorCode.file}</code>
       </p>
-      {code.condition && (
+      {errorCode.condition && (
         <>
           <h2>Condition</h2>
           <p>
-            <code>{code.condition}</code>
+            <code>{errorCode.condition}</code>
           </p>
         </>
       )}
