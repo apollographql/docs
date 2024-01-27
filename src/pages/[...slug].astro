@@ -1,9 +1,14 @@
 ---
-import { getCollection } from "astro:content";
+import { type CollectionEntry, getCollection } from "astro:content";
 
 import ButtonLink from "~/components/ButtonLink.astro";
 import { DisplayClientError } from "~/components/DisplayClientError";
 import BaseLayout from "~/layouts/BaseLayout.astro";
+
+const navItems = {
+  "React intro": "react",
+  "Apollo server": "apollo-server",
+} satisfies Record<string, CollectionEntry<"docs">["slug"]>;
 
 export async function getStaticPaths() {
   const articles = await getCollection("docs");
@@ -18,15 +23,30 @@ const { Content } = await article.render();
 ---
 
 <BaseLayout title={article.data.title} description={article.data.description}>
-  <div class="p-10">
-    <h1 class="text-6xl mb-8">{article.data.title}</h1>
-    <div class="prose prose-lg">
-      <Content
-        components={{
-          ButtonLink,
-          DisplayClientError,
-        }}
-      />
+  <div class="flex">
+    <aside class="max-w-60 w-full p-4">
+      <nav>
+        {
+          Object.entries(navItems).map(([title, slug]) => {
+            return (
+              <div>
+                <a href={`/${slug}`}>{title}</a>
+              </div>
+            );
+          })
+        }
+      </nav>
+    </aside>
+    <div class="p-10">
+      <h1 class="text-6xl mb-8">{article.data.title}</h1>
+      <div class="prose prose-lg">
+        <Content
+          components={{
+            ButtonLink,
+            DisplayClientError,
+          }}
+        />
+      </div>
     </div>
   </div>
 </BaseLayout>
