@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import {Box, Center, Flex, Link, Text, chakra} from '@chakra-ui/react';
-import {IoPartlySunnyOutline} from 'react-icons/io5';
+import {PreviewIcon} from './Icons';
 
 import {MarkdownInAdmonitions} from './MarkdownInAdmonitions';
 
@@ -28,7 +28,7 @@ export const PreviewFeature = ({
       <Flex as="span">
         <chakra.span pl="10px" pr="10px">
           <Center h="100%">
-            <IoPartlySunnyOutline />
+            <PreviewIcon />
           </Center>
         </chakra.span>
         <Text pl="1">

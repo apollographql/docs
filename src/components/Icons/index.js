@@ -30,6 +30,7 @@ import {ReactComponent as Enterprise} from '@apollo/icons/default/IconEnterprise
 import {ReactComponent as ExpandList} from '@apollo/icons/default/IconExpandList.svg';
 import {ReactComponent as Explorer} from '@apollo/icons/default/IconExplorer.svg';
 import {ReactComponent as Federation} from '@apollo/icons/default/IconHierarchy.svg';
+import {ReactComponent as Flask} from '@apollo/icons/default/IconFlask.svg';
 import {ReactComponent as GitHub} from '@apollo/icons/default/IconGitHubSolid.svg';
 import {ReactComponent as GraphQL} from '@apollo/icons/default/IconGraphQL.svg';
 import {ReactComponent as Home} from '@apollo/icons/default/IconHome.svg';
@@ -40,10 +41,12 @@ import {ReactComponent as LayoutModule} from '@apollo/icons/default/IconLayoutMo
 import {ReactComponent as Lock} from '@apollo/icons/default/IconLock.svg';
 import {ReactComponent as Menu} from '@apollo/icons/default/IconMenu.svg';
 import {ReactComponent as Moon} from '@apollo/icons/default/IconMoon.svg';
+import {ReactComponent as NarrowViewport} from '@apollo/icons/default/IconNarrowViewport.svg';
 import {ReactComponent as NodeJs} from '@apollo/icons/default/IconNodeJs.svg';
 import {ReactComponent as Outlink} from '@apollo/icons/default/IconOutlink.svg';
 import {ReactComponent as Paperclip} from '@apollo/icons/default/IconAttach.svg';
 import {ReactComponent as Pipeline} from '@apollo/icons/default/IconPipeline.svg';
+import {ReactComponent as Preview} from '@apollo/icons/default/IconPreview.svg';
 import {ReactComponent as Quote} from '@apollo/icons/default/IconQuote.svg';
 import {ReactComponent as ReactIcon} from '@apollo/icons/default/IconReact.svg';
 import {ReactComponent as Repository} from '@apollo/icons/default/IconRepository.svg';
@@ -59,6 +62,7 @@ import {ReactComponent as Team} from '@apollo/icons/default/IconTeam.svg';
 import {ReactComponent as Terminal} from '@apollo/icons/default/IconAppWindow.svg';
 import {ReactComponent as Twitter} from '@apollo/icons/default/IconTwitterSolid.svg';
 import {ReactComponent as Unlock} from '@apollo/icons/default/IconUnlock.svg';
+import {ReactComponent as WidenViewport} from '@apollo/icons/default/IconWidenViewport.svg';
 import {ReactComponent as Youtube} from '@apollo/icons/default/IconYouTubeSolid.svg';
 
 const CustomIcon = ({icon, isSolid}) => {
@@ -70,27 +74,30 @@ CustomIcon.propTypes = {
   isSolid: PropTypes.boolean
 };
 
-export const ApolloClientIcon = () => <CustomIcon icon={ReactIcon} />;
-export const ApolloIOSIcon = () => <CustomIcon icon={Swift} />;
 export const ApolloKotlinIcon = () => <CustomIcon icon={Kotlin} />;
 export const ApolloMarkIcon = () => <CustomIcon icon={ApolloMark} />;
+export const ApolloClientIcon = () => <CustomIcon icon={ReactIcon} />;
+export const ApolloIOSIcon = () => <CustomIcon icon={Swift} />;
 export const ApolloServerIcon = () => <CustomIcon icon={Satellite} />;
-export const ArrowRightIcon = () => <CustomIcon icon={ArrowRight} />;
 export const ArrowDownIcon = () => <CustomIcon icon={ArrowDown} />;
-export const ArrowUpIcon = () => <CustomIcon icon={ArrowUp} />;
 export const ArrowLeftIcon = () => <CustomIcon icon={ArrowLeft} />;
+export const ArrowRightIcon = () => <CustomIcon icon={ArrowRight} />;
+export const ArrowUpIcon = () => <CustomIcon icon={ArrowUp} />;
 export const BookIcon = () => <CustomIcon icon={Book} />;
-export const CircleCheckIcon = () => <CustomIcon icon={CircleCheck} />;
+export const CSharpIcon = () => <CustomIcon icon={CSharp} />;
 export const CheckIcon = () => <CustomIcon icon={Check} />;
+export const CircleCheckIcon = () => <CustomIcon icon={CircleCheck} />;
 export const ChevronDownIcon = () => <CustomIcon icon={ChevronDown} />;
 export const ChevronLeftIcon = () => <CustomIcon icon={ChevronLeft} />;
-export const ChevronUpIcon = () => <CustomIcon icon={ChevronUp} />;
 export const ChevronRightIcon = () => <CustomIcon icon={ChevronRight} />;
+export const ChevronUpIcon = () => <CustomIcon icon={ChevronUp} />;
+export const CloudIcon = () => <CustomIcon icon={Cloud} />;
+export const CloseIcon = () => <CustomIcon icon={Close} />;
+export const CollapseListIcon = () => <CustomIcon icon={CollapseList} />;
 export const ConnectorsIcon = () => <CustomIcon icon={Connectors} />;
-export const CSharpIcon = () => <CustomIcon icon={CSharp} />;
+export const DeliveryIcon = () => <CustomIcon icon={Pipeline} />;
 export const DiscordIcon = () => <CustomIcon icon={Discord} />;
 export const DiscourseIcon = () => <CustomIcon icon={Discourse} />;
-export const DeliveryIcon = () => <CustomIcon icon={Pipeline} />;
 export const DoubleChevronDownIcon = () => (
   <CustomIcon icon={DoubleChevronDown} />
 );
@@ -101,39 +108,41 @@ export const DoubleChevronRightIcon = () => (
   <CustomIcon icon={DoubleChevronRight} />
 );
 export const EnterpriseIcon = () => <CustomIcon icon={Enterprise} />;
-export const ExplorerIcon = () => <CustomIcon icon={Explorer} />;
 export const ExpandListIcon = () => <CustomIcon icon={ExpandList} />;
-export const CollapseListIcon = () => <CustomIcon icon={CollapseList} />;
+export const ExplorerIcon = () => <CustomIcon icon={Explorer} />;
 export const FederationIcon = () => <CustomIcon icon={Federation} />;
+export const FlaskIcon = () => <CustomIcon icon={Flask} />;
 export const GitHubIcon = () => <CustomIcon isSolid icon={GitHub} />;
 export const GraphOSIcon = () => <CustomIcon icon={Schema} />;
 export const GraphQLIcon = () => <CustomIcon icon={GraphQL} />;
 export const GridIcon = () => <CustomIcon icon={LayoutModule} />;
 export const HomeIcon = () => <CustomIcon icon={Home} />;
-export const SunIcon = () => <CustomIcon icon={Sun} />;
-export const StarIcon = () => <CustomIcon icon={Star} />;
-export const MenuIcon = () => <CustomIcon icon={Menu} />;
-export const MoonIcon = () => <CustomIcon icon={Moon} />;
-export const LockIcon = () => <CustomIcon icon={Lock} />;
-export const UnlockIcon = () => <CustomIcon icon={Unlock} />;
-export const CloudIcon = () => <CustomIcon icon={Cloud} />;
-export const CloseIcon = () => <CustomIcon icon={Close} />;
-export const RepositoryIcon = () => <CustomIcon icon={Repository} />;
-export const QuoteIcon = () => <CustomIcon icon={Quote} />;
+export const InsightsIcon = () => <CustomIcon icon={Insights} />;
 export const JavaIcon = () => <CustomIcon icon={Java} />;
+export const LockIcon = () => <CustomIcon icon={Lock} />;
+export const MenuIcon = () => <CustomIcon icon={Menu} />;
 export const MetricsIcon = () => <CustomIcon icon={Insights} />;
+export const MoonIcon = () => <CustomIcon icon={Moon} />;
+export const NarrowViewportIcon = () => <CustomIcon icon={NarrowViewport} />;
 export const NodeJsIcon = () => <CustomIcon icon={NodeJs} />;
 export const OdysseyIcon = () => <CustomIcon icon={Education} />;
 export const OrgIcon = () => <CustomIcon icon={Team} />;
 export const OutlinkIcon = () => <CustomIcon icon={Outlink} />;
 export const PaperclipIcon = () => <CustomIcon icon={Paperclip} />;
 export const PipelineIcon = () => <CustomIcon icon={Pipeline} />;
+export const PreviewIcon = () => <CustomIcon icon={Preview} />;
+export const QuoteIcon = () => <CustomIcon icon={Quote} />;
+export const RepositoryIcon = () => <CustomIcon icon={Repository} />;
 export const RocketIcon = () => <CustomIcon icon={Rocket} />;
 export const RoverIcon = () => <CustomIcon icon={Terminal} />;
 export const RouterIcon = () => <CustomIcon icon={Router} />;
 export const SearchIcon = () => <CustomIcon icon={Search} />;
+export const StarIcon = () => <CustomIcon icon={Star} />;
+export const SunIcon = () => <CustomIcon icon={Sun} />;
 export const TechnotesIcon = () => <CustomIcon icon={Document} />;
 export const TwitterIcon = () => <CustomIcon isSolid icon={Twitter} />;
+export const UnlockIcon = () => <CustomIcon icon={Unlock} />;
+export const WidenViewportIcon = () => <CustomIcon icon={WidenViewport} />;
 export const YoutubeIcon = () => <CustomIcon isSolid icon={Youtube} />;
 
 export const DOCSET_ICONS = {

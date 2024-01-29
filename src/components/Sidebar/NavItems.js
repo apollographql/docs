@@ -14,10 +14,11 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
   EnterpriseIcon,
-  OutlinkIcon
+  FlaskIcon,
+  OutlinkIcon,
+  PreviewIcon
 } from '../Icons';
 import {Link as GatsbyLink} from 'gatsby';
-import {IoFlaskOutline, IoPartlySunnyOutline} from 'react-icons/io5';
 import {PathContext, getFullPath, isPathActive, isUrl} from '../../utils';
 
 export const GA_EVENT_CATEGORY_SIDEBAR = 'Sidebar';
@@ -45,11 +46,11 @@ const Tags = ({tags}) => {
             tagTooltip = 'Requires GraphOS';
             break;
           case 'preview':
-            tagIcon = <IoPartlySunnyOutline />;
+            tagIcon = <PreviewIcon />;
             tagTooltip = 'Preview feature';
             break;
           case 'experimental':
-            tagIcon = <IoFlaskOutline />;
+            tagIcon = <FlaskIcon />;
             tagTooltip = 'Experimental feature';
             break;
           default:

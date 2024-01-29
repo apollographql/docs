@@ -17,8 +17,12 @@ import {
   useColorModeValue
 } from '@chakra-ui/react';
 import {Link as GatsbyLink} from 'gatsby';
-import {MoonIcon, SunIcon} from '../Icons';
-import {TbViewportNarrow, TbViewportWide} from 'react-icons/tb';
+import {
+  MoonIcon,
+  NarrowViewportIcon,
+  SunIcon,
+  WidenViewportIcon
+} from '../Icons';
 import {usePageWidthContext} from '../PageWidthContext';
 
 const EYEBROW_HEIGHT = 32; // 0;
@@ -142,9 +146,9 @@ export function Header({children, algoliaFilters}) {
               onClick={togglePageWidth}
               icon={
                 pageWidth === 'jumbo' ? (
-                  <TbViewportNarrow />
+                  <NarrowViewportIcon />
                 ) : (
-                  <TbViewportWide />
+                  <WidenViewportIcon />
                 )
               }
             />
