@@ -142,10 +142,11 @@ export const SidebarCategoryLink = ({icon, docset, ...props}) => {
               transitionProperty="opacity"
               transitionDuration="normal"
               transitionTimingFunction="ease-in-out"
+              mr="3"
             >
               {config.docset}
             </chakra.span>
-            {isExternal && <Box ml="2" as={OutlinkIcon} />}
+            {isExternal && <OutlinkIcon />}
           </>
         )}
       </Box>
