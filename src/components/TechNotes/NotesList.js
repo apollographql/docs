@@ -1,92 +1,135 @@
-import PropTypes from "prop-types";
-import React from "react";
-import { PrimaryLink } from "../RelativeLink";
-import moment from "moment";
-import { Stack, Flex, Text, Tag, HStack, Box, Table, Thead, Tbody, Th, Tr, Td, Link } from "@chakra-ui/react";
-import { Link as GatsbyLink } from "gatsby";
-import { SORT_OPTIONS } from "./AllNotes";
-import { FaArrowDown, FaArrowUp } from "react-icons/fa";
+import PropTypes from 'prop-types';
+import React from 'react';
+import moment from 'moment';
+import {ArrowDownIcon, ArrowUpIcon} from '../Icons';
+import {
+  Box,
+  Flex,
+  HStack,
+  Link,
+  Table,
+  Tag,
+  Tbody,
+  Td,
+  Text,
+  Th,
+  Thead,
+  Tr
+} from '@chakra-ui/react';
+import {Link as GatsbyLink} from 'gatsby';
+import {PrimaryLink} from '../RelativeLink';
+import {SORT_OPTIONS} from './AllNotes';
 
-const getBrowserCompatibleDate = (note) => {
+const getBrowserCompatibleDate = note => {
   // The date string here look like "2022-11-01 16:39:41 -0400"
   // This is not valid in Safari, so we are just splitting and selecting the date part
   // since the time and timezone offset are not needed
-  const gitLogDate = note.fields?.gitLogLatestDate ?? "";
-  const simpleDate = gitLogDate.split(" ")[0] ?? Date.now();
-  return moment(simpleDate).format("YYYY-MM-DD");
+  const gitLogDate = note.fields?.gitLogLatestDate ?? '';
+  const simpleDate = gitLogDate.split(' ')[0] ?? Date.now();
+  return moment(simpleDate).format('YYYY-MM-DD');
 };
 
-export function NotesList({ notes, setCurrentTag, sort, setSort }) {
+export function NotesList({notes, setCurrentTag, sort, setSort}) {
   return (
-    <Box width={"100%"} overflowX={"auto"}>
+    <Box width={'100%'} overflowX={'auto'}>
       <Table className="notesList">
         <Thead>
           <Th>
             {sort === SORT_OPTIONS.ALPHABETICAL_ASC && (
-              <PrimaryLink as={Link} onClick={() => setSort(SORT_OPTIONS.ALPHABETICAL_DESC)}>
-                <Flex alignItems={"center"} gap={1}>
-                  Note <FaArrowUp />
+              <PrimaryLink
+                as={Link}
+                onClick={() => setSort(SORT_OPTIONS.ALPHABETICAL_DESC)}
+              >
+                <Flex alignItems={'center'} gap={1}>
+                  Note <ArrowUpIcon />
                 </Flex>
               </PrimaryLink>
             )}
             {sort === SORT_OPTIONS.ALPHABETICAL_DESC && (
-              <PrimaryLink as={Link} onClick={() => setSort(SORT_OPTIONS.ALPHABETICAL_ASC)}>
-                <Flex alignItems={"center"} gap={1}>
-                  Note <FaArrowDown />
+              <PrimaryLink
+                as={Link}
+                onClick={() => setSort(SORT_OPTIONS.ALPHABETICAL_ASC)}
+              >
+                <Flex alignItems={'center'} gap={1}>
+                  Note <ArrowDownIcon />
                 </Flex>
               </PrimaryLink>
             )}
-            {sort !== SORT_OPTIONS.ALPHABETICAL_ASC && sort !== SORT_OPTIONS.ALPHABETICAL_DESC && (
-              <PrimaryLink as={Link} onClick={() => setSort(SORT_OPTIONS.ALPHABETICAL_ASC)}>
-                Note
-              </PrimaryLink>
-            )}
+            {sort !== SORT_OPTIONS.ALPHABETICAL_ASC &&
+              sort !== SORT_OPTIONS.ALPHABETICAL_DESC && (
+                <PrimaryLink
+                  as={Link}
+                  onClick={() => setSort(SORT_OPTIONS.ALPHABETICAL_ASC)}
+                >
+                  Note
+                </PrimaryLink>
+              )}
           </Th>
           <Th>
             {sort === SORT_OPTIONS.PUBLISHED_ASC && (
-              <PrimaryLink as={Link} onClick={() => setSort(SORT_OPTIONS.PUBLISHED_DESC)}>
-                <Flex alignItems={"center"} gap={1}>
-                  Published <FaArrowUp />
+              <PrimaryLink
+                as={Link}
+                onClick={() => setSort(SORT_OPTIONS.PUBLISHED_DESC)}
+              >
+                <Flex alignItems={'center'} gap={1}>
+                  Published <ArrowUpIcon />
                 </Flex>
               </PrimaryLink>
             )}
             {sort === SORT_OPTIONS.PUBLISHED_DESC && (
-              <PrimaryLink as={Link} onClick={() => setSort(SORT_OPTIONS.PUBLISHED_ASC)}>
-                <Flex alignItems={"center"} gap={1}>
-                  Published <FaArrowDown />
+              <PrimaryLink
+                as={Link}
+                onClick={() => setSort(SORT_OPTIONS.PUBLISHED_ASC)}
+              >
+                <Flex alignItems={'center'} gap={1}>
+                  Published <ArrowDownIcon />
                 </Flex>
               </PrimaryLink>
             )}
-            {sort !== SORT_OPTIONS.PUBLISHED_ASC && sort !== SORT_OPTIONS.PUBLISHED_DESC && (
-              <PrimaryLink as={Link} onClick={() => setSort(SORT_OPTIONS.PUBLISHED_ASC)}>
-                Published
-              </PrimaryLink>
-            )}
+            {sort !== SORT_OPTIONS.PUBLISHED_ASC &&
+              sort !== SORT_OPTIONS.PUBLISHED_DESC && (
+                <PrimaryLink
+                  as={Link}
+                  onClick={() => setSort(SORT_OPTIONS.PUBLISHED_ASC)}
+                >
+                  Published
+                </PrimaryLink>
+              )}
           </Th>
           <Th>
             {sort === SORT_OPTIONS.UPDATED_ASC && (
-              <PrimaryLink as={Link} onClick={() => setSort(SORT_OPTIONS.UPDATED_DESC)}>
-                <Flex alignItems={"center"} gap={1}>
-                  Updated <FaArrowUp />
+              <PrimaryLink
+                as={Link}
+                onClick={() => setSort(SORT_OPTIONS.UPDATED_DESC)}
+              >
+                <Flex alignItems={'center'} gap={1}>
+                  Updated <ArrowUpIcon />
                 </Flex>
               </PrimaryLink>
             )}
             {sort === SORT_OPTIONS.UPDATED_DESC && (
-              <PrimaryLink as={Link} onClick={() => setSort(SORT_OPTIONS.UPDATED_ASC)}>
-                <Flex alignItems={"center"} gap={1}>
-                  Updated <FaArrowDown />
+              <PrimaryLink
+                as={Link}
+                onClick={() => setSort(SORT_OPTIONS.UPDATED_ASC)}
+              >
+                <Flex alignItems={'center'} gap={1}>
+                  Updated <ArrowDownIcon />
                 </Flex>
               </PrimaryLink>
             )}
-            {sort !== SORT_OPTIONS.UPDATED_ASC && sort !== SORT_OPTIONS.UPDATED_DESC && (
-              <PrimaryLink as={Link} onClick={() => setSort(SORT_OPTIONS.UPDATED_ASC)}>
-                Updated
-              </PrimaryLink>
-            )}
+            {sort !== SORT_OPTIONS.UPDATED_ASC &&
+              sort !== SORT_OPTIONS.UPDATED_DESC && (
+                <PrimaryLink
+                  as={Link}
+                  onClick={() => setSort(SORT_OPTIONS.UPDATED_ASC)}
+                >
+                  Updated
+                </PrimaryLink>
+              )}
           </Th>
         </Thead>
         <Tbody>
-          {notes.map((note) => (
+          {notes.map(note => (
             <>
               <Tr>
                 <Td>
@@ -99,8 +142,8 @@ export function NotesList({ notes, setCurrentTag, sort, setSort }) {
                         <Tag
                           key={index}
                           size="sm"
-                          cursor={setCurrentTag ? "pointer" : "inherit"}
-                          whiteSpace={"nowrap"}
+                          cursor={setCurrentTag ? 'pointer' : 'inherit'}
+                          whiteSpace={'nowrap'}
                           onClick={() => setCurrentTag && setCurrentTag(tag)}
                         >
                           {tag}
@@ -112,12 +155,20 @@ export function NotesList({ notes, setCurrentTag, sort, setSort }) {
                   <Text mb="4" fontSize="md" noOfLines={3}>
                     {note.childMdx.frontmatter.description}
                   </Text>
-                  <Box color={'primary'} fontSize="xs" textTransform="uppercase">{note.childMdx.timeToRead} min read</Box>
+                  <Box
+                    color={'primary'}
+                    fontSize="xs"
+                    textTransform="uppercase"
+                  >
+                    {note.childMdx.timeToRead} min read
+                  </Box>
                 </Td>
-                <Td fontSize={"sm"} whiteSpace={"nowrap"}>
-                  {moment(note.childMdx.frontmatter.published).format("YYYY-MM-DD")}
+                <Td fontSize={'sm'} whiteSpace={'nowrap'}>
+                  {moment(note.childMdx.frontmatter.published).format(
+                    'YYYY-MM-DD'
+                  )}
                 </Td>
-                <Td fontSize={"sm"} whiteSpace={"nowrap"}>
+                <Td fontSize={'sm'} whiteSpace={'nowrap'}>
                   {getBrowserCompatibleDate(note)}
                 </Td>
               </Tr>
@@ -130,5 +181,5 @@ export function NotesList({ notes, setCurrentTag, sort, setSort }) {
 }
 
 NotesList.propTypes = {
-  notes: PropTypes.array.isRequired,
+  notes: PropTypes.array.isRequired
 };

@@ -1,6 +1,6 @@
 import React from 'react';
+import {ArrowRightIcon} from '../Icons';
 import {Button} from '@chakra-ui/react';
-import {FiArrowRight} from 'react-icons/fi';
 import {useUser} from '../../utils';
 
 export default function StudioButton() {
@@ -13,7 +13,7 @@ export default function StudioButton() {
         color: 'silver.300'
       }}
       variant="ghost"
-      rightIcon={<FiArrowRight />}
+      rightIcon={<ArrowRightIcon />}
       as="a"
       ml="2"
       href={`https://studio.apollographql.com${

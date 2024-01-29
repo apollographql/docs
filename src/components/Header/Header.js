@@ -16,9 +16,13 @@ import {
   useColorMode,
   useColorModeValue
 } from '@chakra-ui/react';
-import {FiMoon, FiSun} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
-import {TbViewportNarrow, TbViewportWide} from 'react-icons/tb';
+import {
+  MoonIcon,
+  NarrowViewportIcon,
+  SunIcon,
+  WidenViewportIcon
+} from '../Icons';
 import {usePageWidthContext} from '../PageWidthContext';
 
 const EYEBROW_HEIGHT = 32; // 0;
@@ -142,9 +146,9 @@ export function Header({children, algoliaFilters}) {
               onClick={togglePageWidth}
               icon={
                 pageWidth === 'jumbo' ? (
-                  <TbViewportNarrow />
+                  <NarrowViewportIcon />
                 ) : (
-                  <TbViewportWide />
+                  <WidenViewportIcon />
                 )
               }
             />
@@ -170,14 +174,14 @@ export function Header({children, algoliaFilters}) {
             icon={
               <>
                 <Icon
-                  as={FiSun}
+                  as={SunIcon}
                   display="none"
                   _dark={{
                     display: 'block'
                   }}
                 />
                 <Icon
-                  as={FiMoon}
+                  as={MoonIcon}
                   display="block"
                   _dark={{
                     display: 'none'

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import {Box, Center, Flex, Link, Text, chakra} from '@chakra-ui/react';
-import {TbComponents} from 'react-icons/tb';
+import {EnterpriseIcon} from './Icons';
 
 export const EnterpriseFeature = ({children}) => {
   return (
@@ -22,7 +22,7 @@ export const EnterpriseFeature = ({children}) => {
       <Flex as="span">
         <chakra.span pl="10px" pr="10px">
           <Center h="100%">
-            <TbComponents />
+            <EnterpriseIcon />
           </Center>
         </chakra.span>
 
