@@ -1,6 +1,5 @@
 {
   "eslint.validate": [
     "mdx"
-  ],
-  "editor.formatOnSave": true
+  ]
 }
