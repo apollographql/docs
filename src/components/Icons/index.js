@@ -40,7 +40,7 @@ import {ReactComponent as Kotlin} from '@apollo/icons/default/IconKotlin.svg';
 import {ReactComponent as LayoutModule} from '@apollo/icons/default/IconLayoutModule.svg';
 import {ReactComponent as Lock} from '@apollo/icons/default/IconLock.svg';
 import {ReactComponent as Menu} from '@apollo/icons/default/IconMenu.svg';
-import {ReactComponent as Moon} from '@apollo/icons/default/IconMoon.svg';
+import {ReactComponent as Moon} from '@apollo/icons/small/IconMoon.svg';
 import {ReactComponent as NarrowViewport} from '@apollo/icons/default/IconNarrowViewport.svg';
 import {ReactComponent as NodeJs} from '@apollo/icons/default/IconNodeJs.svg';
 import {ReactComponent as Outlink} from '@apollo/icons/default/IconOutlink.svg';
@@ -56,7 +56,7 @@ import {ReactComponent as Satellite} from '@apollo/icons/default/IconSatellite3.
 import {ReactComponent as Schema} from '@apollo/icons/default/IconSchema.svg';
 import {ReactComponent as Search} from '@apollo/icons/default/IconSearch.svg';
 import {ReactComponent as Star} from '@apollo/icons/default/IconStar.svg';
-import {ReactComponent as Sun} from '@apollo/icons/default/IconSun.svg';
+import {ReactComponent as Sun} from '@apollo/icons/small/IconSun.svg';
 import {ReactComponent as Swift} from '@apollo/icons/default/IconSwift.svg';
 import {ReactComponent as Team} from '@apollo/icons/default/IconTeam.svg';
 import {ReactComponent as Terminal} from '@apollo/icons/default/IconAppWindow.svg';
@@ -65,8 +65,15 @@ import {ReactComponent as Unlock} from '@apollo/icons/default/IconUnlock.svg';
 import {ReactComponent as WidenViewport} from '@apollo/icons/default/IconWidenViewport.svg';
 import {ReactComponent as Youtube} from '@apollo/icons/default/IconYouTubeSolid.svg';
 
-const CustomIcon = ({icon, isSolid}) => {
-  return <Box as={icon} boxSize="1em" fill={isSolid ? 'current' : 'none'} />;
+const CustomIcon = ({icon, isSolid, ...props}) => {
+  return (
+    <Box
+      as={icon}
+      boxSize="1em"
+      fill={isSolid ? 'current' : 'none'}
+      {...props}
+    />
+  );
 };
 
 CustomIcon.propTypes = {
@@ -122,7 +129,7 @@ export const JavaIcon = () => <CustomIcon icon={Java} />;
 export const LockIcon = () => <CustomIcon icon={Lock} />;
 export const MenuIcon = () => <CustomIcon icon={Menu} />;
 export const MetricsIcon = () => <CustomIcon icon={Insights} />;
-export const MoonIcon = () => <CustomIcon icon={Moon} />;
+export const MoonIcon = props => <CustomIcon icon={Moon} {...props} />;
 export const NarrowViewportIcon = () => <CustomIcon icon={NarrowViewport} />;
 export const NodeJsIcon = () => <CustomIcon icon={NodeJs} />;
 export const OdysseyIcon = () => <CustomIcon icon={Education} />;
@@ -138,7 +145,7 @@ export const RoverIcon = () => <CustomIcon icon={Terminal} />;
 export const RouterIcon = () => <CustomIcon icon={Router} />;
 export const SearchIcon = () => <CustomIcon icon={Search} />;
 export const StarIcon = () => <CustomIcon icon={Star} />;
-export const SunIcon = () => <CustomIcon icon={Sun} />;
+export const SunIcon = props => <CustomIcon icon={Sun} {...props} />;
 export const TechnotesIcon = () => <CustomIcon icon={Document} />;
 export const TwitterIcon = () => <CustomIcon isSolid icon={Twitter} />;
 export const UnlockIcon = () => <CustomIcon icon={Unlock} />;
