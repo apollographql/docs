@@ -25,12 +25,13 @@ If you're already using GraphOS, go to Insights and look at the Request Rate cha
 <img
   className="screenshot"
   alt="GraphOS Studio Insights Requests per Minute"
-  src="../../../img/cloud-dedicated/studio-rpm.png"
+  src="../../img/cloud-dedicated/studio-rpm.png"
 />
 
 ## How do query complexity and response size affect throughput?
 
 Beyond RPS, query complexity and repsonse size influence GCU throughput. For example, the following scenarios would decrease relative GCU throughput:
+
 - Query plans that query more than 5 subgraphs
 - Query plans that return 100s or 1,000s of fields per operation
 
@@ -51,7 +52,7 @@ Dedicated starts with 1 x GCU when you create a new variant. You can add additio
 <img
   className="screenshot"
   alt="GraphOS Studio managed GCUs"
-  src="../../../img/cloud-dedicated/gcus-manage.png"
+  src="../../img/cloud-dedicated/gcus-manage.png"
 />
 
 Then, select the number of GCUs required and choose "Save".
@@ -59,11 +60,11 @@ Then, select the number of GCUs required and choose "Save".
 <img
   className="screenshot"
   alt="GraphOS Studio edit GCUs"
-  src="../../../img/cloud-dedicated/gcus-scale.png"
+  src="../../img/cloud-dedicated/gcus-scale.png"
 />
 
-## Are GCUs rate limited? 
+## Are GCUs rate limited?
 
-No. However, GCUs do offer a specific amount of throughput capacity. It's possible to temporarily burst GCU throughput for a few seconds. After this period, your clients will receive 429 errors. We recommend adding retry logic to your clients to minimize dropped requests. 
+No. However, GCUs do offer a specific amount of throughput capacity. It's possible to temporarily burst GCU throughput for a few seconds. After this period, your clients will receive 429 errors. We recommend adding retry logic to your clients to minimize dropped requests.
 
-Later this year, GraphOS Cloud will include the ability to forecast and estimate the number of GCUs you should use to run your Dedicated variant. 
+Later this year, GraphOS Cloud will include the ability to forecast and estimate the number of GCUs you should use to run your Dedicated variant.

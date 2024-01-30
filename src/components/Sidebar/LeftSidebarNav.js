@@ -110,7 +110,10 @@ export function LeftSidebarNav(props) {
           <SidebarCategoryLink docset="graphos/org" icon={<OrgIcon />} />
           <SidebarCategoryLink docset="federation" icon={<FederationIcon />} />
           <SidebarCategoryLink docset="rover" icon={<RoverIcon />} />
-          <SidebarCategoryLink docset="graphos/cloud" icon={<CloudIcon />} />
+          <SidebarCategoryLink
+            docset="graphos/cloud-routing"
+            icon={<CloudIcon />}
+          />
           <SidebarCategoryLink docset="router" icon={<RouterIcon />} />
           <SidebarCategoryLink
             docset="graphos/enterprise"

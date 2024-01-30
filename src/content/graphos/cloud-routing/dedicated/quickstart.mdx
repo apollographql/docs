@@ -11,14 +11,17 @@ Cloud Dedicated is currently in invite-only [preview](/graphos/routing/cloud-ded
 </PreviewFeature>
 
 Prerequisites:
+
 - A GraphOS Studio account
 - An organization on the Dedicated plan
 - One or more existing GraphQL APIs
 
 ## 1. Create a new graph
+
 To create a new Dedicated cloud router in the AWS region of your choice, you'll need to create a new graph in Studio. You can do this by choosing "Create New Graph" from the Graphs page.
 
 ## 2. Connect an API
+
 If your subgraph URLs are publicly accessible, enter your API URL and name your subgraph.
 
 If your subgraphs are not publicly accessible and require private networking, you can connect to them with (AWS VPC Lattice)[../lattice]. Select "My endpoint is not publicly accessible" to connect a VPC (see below).
@@ -26,16 +29,17 @@ If your subgraphs are not publicly accessible and require private networking, yo
 <img
   className="screenshot"
   alt="Connect a VPC for Cloud Dedicated"
-  src="../../../img/cloud-dedicated/quickstart.png"
+  src="../../img/cloud-dedicated/quickstart.png"
 />
 
 ## 3. Setup your graph
+
 Dedicated cloud routers have a new UI for management and configuration. Head over to the Cloud Router page from the Studio navigation. From here, you can see a summary of your cloud router's settings. Use the "Configuration" tab to manage your Cloud Router's configuration. See the [Apollo Router](https://www.apollographql.com/docs/router/configuration/overview) docs for more information.
 
 <img
   className="screenshot"
   alt="Dedicated Cloud Router Settings"
-  src="../../../img/cloud-dedicated/cloudrouter.png"
+  src="../../img/cloud-dedicated/cloudrouter.png"
 />
 
 You'll also need to add each of your GraphQL APIs to your new Dedicated cloud router. Head over to the Subgraphs page from the Studio navigation.
@@ -43,7 +47,7 @@ You'll also need to add each of your GraphQL APIs to your new Dedicated cloud ro
 <img
   className="screenshot"
   alt="Dedicated cloud router add a subgraph"
-  src="../../../img/cloud-dedicated/subgraph.png"
+  src="../../img/cloud-dedicated/subgraph.png"
 />
 
 <Note>
@@ -53,6 +57,7 @@ Each change you make to your router configuration and each change to your superg
 </Note>
 
 ## 4. Test and validate
+
 To test your graph is working as intended, head over to Explorer and run a sample query. You may want to enable subgraph error reporting if you run into issues.
 
 Finally, we recommend running a load test to determine how much [throughput capacity](/graphos/routing/cloud-dedicated/throughput) you need to run your graph.
@@ -62,8 +67,9 @@ You may want to add additional variants to your graph. You can do that by going 
 <img
   className="screenshot"
   alt="Dedicated cloud router add a variant"
-  src="../../../img/cloud-dedicated/variants.png"
+  src="../../img/cloud-dedicated/variants.png"
 />
 
 ## 5. Go live
-When you're ready to go live, you'll need to migrate clients to your new `apollographos.net` endpoint by either passing this to your clients directly or by configuring a reverse proxy. Support for custom domains will arive in 2024. 
+
+When you're ready to go live, you'll need to migrate clients to your new `apollographos.net` endpoint by either passing this to your clients directly or by configuring a reverse proxy. Support for custom domains will arive in 2024.

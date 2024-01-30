@@ -4,6 +4,7 @@
 /: src/content/basics
 graphos: src/content/graphos/basics
 graphos/metrics: src/content/graphos/metrics
+graphos/cloud-routing: src/content/graphos/cloud-routing
 graphos/delivery: src/content/graphos/delivery
 graphos/org: src/content/graphos/org
 graphos/explorer: src/content/graphos/explorer
