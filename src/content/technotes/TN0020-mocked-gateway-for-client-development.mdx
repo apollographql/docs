@@ -1,5 +1,8 @@
 ---
-title: "Mocking graph functionality to unblock client development"
+title: Mocking graph functionality to unblock client development
+subtitle: Enable teams to work in parallel without blocking each other
+description: Mock parts of your supergraph as you develop both your subgraphs and clients to enable teams to work in parallel without blocking each other.
+published: 2022-11-17
 id: TN0020
 tags: [gateway, schema-design, federation]
 ---
@@ -47,7 +50,7 @@ The data is mocked, however it doesn't require any work from server teams to sup
 
 ### Modifying an existing schema
 
-The process for making changes to an existing schema is similar to that for creating a new one, especially in terms of planning. As you add new features, it's important reach a design consensus early, especially for features that require extensive backend work (e.g., machine learning).
+The process for making changes to an existing schema is similar to that for creating a new one, especially in terms of planning. As you add new features, it's important reach a design consensus early, especially for features that require extensive backend work (for example, machine learning).
 
 To mock proposed changes (such as adding a new type/field), we recommend using [this sample created by Apollo's Solutions Architecture team](https://github.com/apollosolutions/apollo-faker-demo). This sample requires a preexisting GraphQL API to be running. It works by allowing for a "patched" or modified version of your subgraph to run locally with mocked data, while using the remote API for all other data.
 

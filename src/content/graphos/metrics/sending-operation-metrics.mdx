@@ -67,7 +67,7 @@ If you're interested in collaborating with Apollo on creating a dedicated integr
 
 The GraphOS reporting endpoint accepts batches of traces and metrics that are encoded in **protocol buffer** format. Each trace corresponds to the execution of a single GraphQL operation, including a breakdown of the timing and error information for each field that's resolved as part of the operation. The schema for this protocol buffer is defined as the `Report` message in [the protobuf schema](https://usage-reporting.api.apollographql.com/proto/reports.proto).
 
-[The protobuf schema](https://usage-reporting.api.apollographql.com/proto/reports.proto) document describes how to create a report whose `tracesPerQuery` objects consist solely of a list of detailed execution traces in the `trace` array. GraphOS now allows your server to describe usage as a mix of detailed execution traces and pre-aggregated metrics (released in Apollo Server 2.24), which leads to much more efficient reports. This document doesn't describe how to generate these metrics. Nor does it descibe how to report the number of requests for a particular operation shown in the [**Clients & Operations** table](./field-usage#field-details) on the Insights page.
+[The protobuf schema](https://usage-reporting.api.apollographql.com/proto/reports.proto) document describes how to create a report whose `tracesPerQuery` objects consist solely of a list of detailed execution traces in the `trace` array. GraphOS now allows your server to describe usage as a mix of detailed execution traces and pre-aggregated metrics (released in Apollo Server 2.24), which leads to much more efficient reports. This document doesn't describe how to generate these metrics. Nor does it describe how to report the number of requests for a particular operation shown in the [**Clients & Operations** table](./field-usage#field-details) on the Insights page.
 
 <Note>
 
@@ -75,13 +75,13 @@ We strongly encourage developers to contact Apollo support at **support@apollogr
 
 </Note>
 
-As a starting point, we recommend implementing an extension to the GraphQL execution that creates a report with a single trace, as defined in the `Trace` message of [the protobuf schema](https://usage-reporting.api.apollographql.com/proto/reports.proto). Then, you can batch multiple traces into a single report. We recommend sending batches approximately every 20 seconds and limiting each batch to a reasonable size (~4MB).
+As a starting point, we recommend implementing an extension to the GraphQL execution that creates a report with a single trace, as defined in the `Trace` message of [the protobuf schema](https://usage-reporting.api.apollographql.com/proto/reports.proto). Then, you can batch multiple traces into a single report. We recommend sending batches approximately every 20 seconds and limiting each batch to a reasonable size (~4 MB).
 
 Many server runtimes already support emitting tracing information as a [GraphQL extension](https://github.com/apollographql/apollo-tracing). Such extensions are available for [Node](/apollo-server/api/plugin/usage-reporting/), [Ruby](https://github.com/uniiverse/apollo-tracing-ruby), [Scala](https://github.com/sangria-graphql/sangria-slowlog#apollo-tracing-extension), [Java](https://github.com/graphql-java/graphql-java/pull/577), [Elixir](https://github.com/sikanhe/apollo-tracing-elixir), and [.NET](https://graphql-dotnet.github.io/docs/getting-started/metrics/). If you're working on adding metrics reporting functionality for one of these languages, reading through that tracing instrumentation is a good place to start. For other languages, we recommend consulting the [Apollo Server usage reporting plugin](/apollo-server/api/plugin/usage-reporting).
 
 #### Operation signing
 
-For GraphOS Studio to correctly group GraphQL queries, your reporting agent should define a function to generate an [operation signature](./operation-signatures) for each distinct operation. This can be challenging because two structurally different operations can be functionally equivalent. For instance, all of the following queries request the same information:
+For GraphOS Studio to correctly group GraphQL queries, your reporting agent should define a function to generate an [operation signature](./operation-signatures) for each distinct operation. This can be challenging because two structurally different operations can be functionally equivalent. For instance, all the following queries request the same information:
 
 ```graphql
 query AuthorForPost($foo: String!) {
@@ -151,11 +151,11 @@ For a reference implementation, see the `sendReport()` function in the [TypeScri
 
 #### Tuning reporting behavior
 
-We recommend implementing retries with backoff when you encounter `5xx` responses or networking errors when communicating with the reporting endpoint. Additionally, implement a shutdown hook to ensure you push all pending reports before your server initiates a healthy shutdown.
+We recommend implementing retries with backoff when you encounter `5xx` responses or networking errors when communicating with the reporting endpoint. Additionally, implement a shutdown hook to ensure you push all pending reports before your server initiates a stable shutdown.
 
 #### Implementing additional reporting features
 
-The reference TypeScript implementation includes several features that you might want to include in your implementation. All of these features are implemented in the usage reporting plugin itself and are documented in [the plugin's API reference](/apollo-server/api/plugin/usage-reporting/).
+The reference TypeScript implementation includes several features that you might want to include in your implementation. All these features are implemented in the usage reporting plugin itself and are documented in [the plugin's API reference](/apollo-server/api/plugin/usage-reporting/).
 
 For example, you can restrict which information is sent to GraphOS, particularly to avoid reporting personal data. Because personal data most commonly appears in variables and headers, the TypeScript agent offers options to `sendVariablesValues` and `sendHeaders`.
 

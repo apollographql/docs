@@ -1,7 +1,9 @@
 ---
 title: Schema naming conventions
 id: TN0002
-description: Conventions for types, fields, and arguments
+subtitle: Naming conventions and considerations for types, fields, and arguments in your GraphQL schema
+description: Learn naming and casing conventions for GraphQL schema types, fields, and arguments and how to enforce them with GraphOS.
+published: 2023-06-03
 tags: [schema-design]
 ---
 
@@ -10,6 +12,7 @@ tags: [schema-design]
 If you're an enterprise customer looking for more material on this topic, try the [Enterprise best practices: Schema design](https://www.apollographql.com/tutorials/schema-design-best-practices) course on Odyssey.
 
 Not an enterprise customer? [Learn about GraphOS for Enterprise.](/graphos/enterprise)
+
 </Tip>
 
 ## Enforcing conventions
@@ -135,14 +138,14 @@ type AddCustomerResponse {
 
 When resolving naming conflicts between different domains, we recommend using one of the following:
 
-**PascalCase Prefix**
+**`PascalCase` Prefix**
 
 ```graphql
 type StoreCustomer { ... }
 type SiteCustomer { ... }
 ```
 
-**Single_Underscore Prefix**
+**`Single_Underscore` Prefix**
 
 ```graphql
 type Store_Customer { ... }

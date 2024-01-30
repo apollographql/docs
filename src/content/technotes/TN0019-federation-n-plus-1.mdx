@@ -1,5 +1,8 @@
 ---
 title: How Federation handles the N+1 query problem
+subtitle: Learn how to handle the N+1 problem for operations that return a list in a federated graph
+description: Learn how to handle the "N+1 query problem" for operations that return a list in a federated graph.
+published: 2022-11-15
 id: TN0019
 tags: [federation, subgraphs]
 ---
@@ -26,7 +29,7 @@ In a monolithic GraphQL server, the execution engine takes these steps:
 
 If the `Query.topReviews` field returns 10 reviews, then the executor resolves `Review.product` field 10 times. If the `Reviews.product` field makes a database or REST query for a single `Product`, then we'll see 10 unique calls to the data source. This is suboptimal for the following reasons:
 
-- It's more efficient to fetch the 10 products in a single query (e.g. `SELECT * FROM products WHERE id IN (<product ids>)`).
+- It's more efficient to fetch the 10 products in a single query (for example `SELECT * FROM products WHERE id IN (<product ids>)`).
 - If any reviews refer to the _same_ product, then we're wasting resources fetching something we already have.
 
 The solution for monolithic GraphQL APIs is the [dataloader](https://github.com/graphql/dataloader) pattern. All GraphQL server implementations support this pattern. The [Apollo Server documentation explains how to use the JavaScript implementation](/apollo-server/data/fetching-data#batching-and-caching) in Node.js servers.

@@ -17,7 +17,7 @@ import {
   chakra,
   useColorModeValue
 } from '@chakra-ui/react';
-import {FiChevronRight} from 'react-icons/fi';
+import {ChevronRightIcon} from '../Icons';
 
 const DOCSET_TITLES = {
   'apollo-client': 'React',
@@ -98,7 +98,7 @@ export default function Preview({preview}) {
           >
             {allAncestors.map((ancestor, index) => (
               <Fragment key={index}>
-                {index > 0 && <Box as={FiChevronRight} flexShrink="0" />}
+                {index > 0 && <Box as={ChevronRightIcon} flexShrink="0" />}
                 <Link isTruncated href={ancestor.url} title={ancestor.title}>
                   {ancestor.title}
                 </Link>

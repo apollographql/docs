@@ -1,5 +1,8 @@
 ---
 title: Relay-style connections and pagination FAQ
+subtitle: Common questions around Relay's Connection specification
+description: Common questions around Relay's Connections specification and how to use it wih Apollo Federation.
+published: 2023-01-17
 id: TN0029
 tags: [best-practices, schema-design]
 ---
@@ -99,44 +102,44 @@ No, unless you're using the Relay client. But its popularity outside of the Rela
 
 ## Do I even need a wrapper type for my lists?
 
-Consider the ["Zero, One, Infinity" rule](https://en.wikipedia.org/wiki/Zero_one_infinity_rule) — can you definitively assert that your list will never require pagination or other metadata about the relationship?
+Consider the ["Zero, One, Infinity" rule](https://en.wikipedia.org/wiki/Zero_one_infinity_rule)—can you definitively assert that your list will never require pagination or other metadata about the relationship?
 
 Using a wrapper type for lists provides the following benefits:
 
 - **Avoid breaking changes.** You can initially return a wrapper type that _doesn't_ use pagination, and then add pagination later without breaking existing clients. If you return a list directly, you _can't_ add pagination metadata later.
 - **Represent entity relationships.** The `Connection` and `Edge` wrapper types support fields that model attributes _of the relationship between entities_ that don't belong in the entities themselves.
 
-    Consider this example of a many-to-many relationship between `Business` and `Customer`:
+  Consider this example of a many-to-many relationship between `Business` and `Customer`:
 
-   ```graphql
-   type Business {
-     id: ID
-     customers: CustomerConnection
-   }
+  ```graphql
+  type Business {
+    id: ID
+    customers: CustomerConnection
+  }
 
-   type CustomerConnection {
-     edges: [CustomerEdge]
-     total: Int
-   }
+  type CustomerConnection {
+    edges: [CustomerEdge]
+    total: Int
+  }
 
-   type CustomerEdge {
-     node: Customer
-     type: CustomerType #highlight-line
-   }
+  type CustomerEdge {
+    node: Customer
+    type: CustomerType #highlight-line
+  }
 
-   enum CustomerType {
-     IN_STORE
-     ONLINE
-     MULTI_CHANNEL
-   }
+  enum CustomerType {
+    IN_STORE
+    ONLINE
+    MULTI_CHANNEL
+  }
 
-   type Customer {
-     id: ID
-     shopsAt: BusinessConnection # --snip --
-   }
-   ```
+  type Customer {
+    id: ID
+    shopsAt: BusinessConnection # --snip --
+  }
+  ```
 
-   A specific `Customer` might shop at one business `IN_STORE` and another `ONLINE`. The `type` is an attribute of the _relationship_, not the business or customer itself. Without wrapper types, you don't have a place to put this data.
+  A specific `Customer` might shop at one business `IN_STORE` and another `ONLINE`. The `type` is an attribute of the _relationship_, not the business or customer itself. Without wrapper types, you don't have a place to put this data.
 
 ## Do I have to implement the entire connection specification?
 

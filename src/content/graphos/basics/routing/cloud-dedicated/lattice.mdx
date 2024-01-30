@@ -10,7 +10,7 @@ Cloud Dedicated is currently in invite-only [preview](#private-preview). Don't h
 
 </PreviewFeature>
 
-Cloud Dedicated leverages [AWS VPC Lattice](https://aws.amazon.com/vpc/lattice/) to send traffic to your subgraphs running in an AWS VPC without exposing them to the internet. With Lattice, you can define services and share them with the Apollo AWS organization.
+Cloud Dedicated uses [AWS VPC Lattice](https://aws.amazon.com/vpc/lattice/) to send traffic to your subgraphs running in an AWS VPC without exposing them to the internet. With Lattice, you can define services and share them with the Apollo AWS organization.
 
 You can provision AWS VPC Lattice with the [Apollo Terraform module](https://github.com/apollographql/terraform-graphos-aws). Refer to the [module's README](https://github.com/apollographql/terraform-graphos-aws#apollo-graphos-cloud-private-subgraphs-module) for more information.
 
@@ -65,8 +65,8 @@ A Lattice **target group** is a collection of targets, or compute resources, tha
 
 1. In the AWS Console for your region of choice, go to the VPC service page:
 
-- [US East (N. Virginia) — `us-east-1`](https://us-east-1.console.aws.amazon.com/vpc/home?region=us-east-1)
-- [Europe (Ireland) — `eu-west-1`](https://eu-west-1.console.aws.amazon.com/vpc/home?region=eu-west-1)
+- [US East (N. Virginia) - `us-east-1`](https://us-east-1.console.aws.amazon.com/vpc/home?region=us-east-1)
+- [Europe (Ireland) - `eu-west-1`](https://eu-west-1.console.aws.amazon.com/vpc/home?region=eu-west-1)
 
 2. In the menu on the left, scroll down and open **Target groups** in the **VPC Lattice** section.
 
@@ -131,8 +131,8 @@ Congratulations! You've created an AWS VPC Lattice target group. Repeat this pro
 
 1. In the AWS Console for your region, go to the VPC service page:
 
-- [US East (N. Virginia) — `us-east-1`](https://us-east-1.console.aws.amazon.com/vpc/home?region=us-east-1)
-- [Europe (Ireland) — `eu-west-1`](https://eu-west-1.console.aws.amazon.com/vpc/home?region=eu-west-1)
+- [US East (N. Virginia) - `us-east-1`](https://us-east-1.console.aws.amazon.com/vpc/home?region=us-east-1)
+- [Europe (Ireland) - `eu-west-1`](https://eu-west-1.console.aws.amazon.com/vpc/home?region=eu-west-1)
 
 2. In the menu on the left, scroll down and open **Services** in the **VPC Lattice** section.
 
@@ -256,8 +256,8 @@ Congratulations! You've now created a Lattice service for your subgraphs.
 
 1. In the AWS Console for your region of choice, go to the Resource Access Manager service page:
 
-- [US East (N. Virginia) — us-east-1](https://us-east-1.console.aws.amazon.com/ram/home?region=us-east-1)
-- [Europe (Ireland) — eu-west-1](https://eu-west-1.console.aws.amazon.com/ram/home?region=eu-west-1)
+- [US East (N. Virginia) - us-east-1](https://us-east-1.console.aws.amazon.com/ram/home?region=us-east-1)
+- [Europe (Ireland) - eu-west-1](https://eu-west-1.console.aws.amazon.com/ram/home?region=eu-west-1)
 
 2. In the menu on the left, click **Resource shares** in the **Shared by me** section.
 
@@ -363,8 +363,8 @@ The last step is associating your resource share with the Apollo Organization ac
 
 1. In the AWS Console for your region of choice, go to the Resource Access Manager service page:
 
-- [US East (N. Virginia) — us-east-1](https://us-east-1.console.aws.amazon.com/ram/home?region=us-east-1)
-- [Europe (Ireland) — eu-west-1](https://eu-west-1.console.aws.amazon.com/ram/home?region=eu-west-1)
+- [US East (N. Virginia) - us-east-1](https://us-east-1.console.aws.amazon.com/ram/home?region=us-east-1)
+- [Europe (Ireland) - eu-west-1](https://eu-west-1.console.aws.amazon.com/ram/home?region=eu-west-1)
 
 2. In the menu on the left, click **Resource shares** in the **Shared by me** section.
 
@@ -564,7 +564,7 @@ To update a Lattice service's authorization policy with additional restrictions,
 
   <Note>
 
-  The Apollo account ID you specify in your authorization policy is _not_ the Apollo organization ID you can find in Apollo GraphOS Studio.
+  The Apollo account ID you specify in your authorization policy is _not_ the Apollo organization ID you can find in GraphOS Studio.
 
   </Note>
 
@@ -588,8 +588,8 @@ If you aren't using the Apollo Terraform module, follow these steps:
 
 1. In the AWS Console for your region of choice, go to the VPC service page:
 
-- [US East (N. Virginia) — us-east-1](https://us-east-1.console.aws.amazon.com/ram/home?region=us-east-1)
-- [Europe (Ireland) — eu-west-1](https://eu-west-1.console.aws.amazon.com/ram/home?region=eu-west-1)
+- [US East (N. Virginia) - us-east-1](https://us-east-1.console.aws.amazon.com/ram/home?region=us-east-1)
+- [Europe (Ireland) - eu-west-1](https://eu-west-1.console.aws.amazon.com/ram/home?region=eu-west-1)
 
 2. In the menu on the left, scroll down and open **Services** in the **VPC Lattice** section.
 
@@ -654,8 +654,8 @@ To remove Cloud Dedicated access to private subgraphs, you need to remove both r
 
 1. In the AWS Console for your region of choice, go to the Resource Access Manager service page:
 
-- [US East (N. Virginia) — us-east-1](https://us-east-1.console.aws.amazon.com/ram/home?region=us-east-1)
-- [Europe (Ireland) — eu-west-1](https://eu-west-1.console.aws.amazon.com/ram/home?region=eu-west-1)
+- [US East (N. Virginia) - us-east-1](https://us-east-1.console.aws.amazon.com/ram/home?region=us-east-1)
+- [Europe (Ireland) - eu-west-1](https://eu-west-1.console.aws.amazon.com/ram/home?region=eu-west-1)
 
 2. In the menu on the left, click **Resource shares** in the **Shared by me** section.
 
@@ -686,8 +686,8 @@ To remove Cloud Dedicated access to private subgraphs, you need to remove both r
 
 1. In the AWS Console for your region of choice, go to the VPC service page:
 
-- [US East (N. Virginia) — us-east-1](https://us-east-1.console.aws.amazon.com/ram/home?region=us-east-1)
-- [Europe (Ireland) — eu-west-1](https://eu-west-1.console.aws.amazon.com/ram/home?region=eu-west-1)
+- [US East (N. Virginia) - us-east-1](https://us-east-1.console.aws.amazon.com/ram/home?region=us-east-1)
+- [Europe (Ireland) - eu-west-1](https://eu-west-1.console.aws.amazon.com/ram/home?region=eu-west-1)
 
 2. In the menu on the left, scroll down and open **Services** in the **VPC Lattice** section.
 
@@ -734,7 +734,7 @@ Deleting the network association can take a few seconds. Once the network associ
 
 ## AWS VPC Lattice monitoring
 
-To validate that traffic is flowing to your private subgraphs, you can leverage the metrics and access logs emitted by AWS VPC Lattice:
+To validate that traffic is flowing to your private subgraphs, you can use the metrics and access logs emitted by AWS VPC Lattice:
 
 1. In the AWS Console for your region of choice, go to the VPC service page.
 
@@ -747,7 +747,7 @@ To validate that traffic is flowing to your private subgraphs, you can leverage 
     width="175px"
   />
 
-3. Click on the name of the Lattice service leveraged by the subgraph in question.
+3. Click on the name of the Lattice service used by the subgraph in question.
 
   <img
     className="screenshot"
@@ -771,7 +771,7 @@ From there, you can configure and enable access logs for your AWS VPC Lattice se
     src="../../../img/cloud-dedicated/vpc-lattice-metrics.png"
   />
 
-You can also leverage [Amazon CloudWatch metrics emitted by AWS VPC Lattice](https://docs.aws.amazon.com/vpc-lattice/latest/ug/monitoring-cloudwatch.html) to set up dashboards and alarms to understand the health of your private subgraphs.
+You can also use [Amazon CloudWatch metrics emitted by AWS VPC Lattice](https://docs.aws.amazon.com/vpc-lattice/latest/ug/monitoring-cloudwatch.html) to set up dashboards and alarms to understand the health of your private subgraphs.
 
 ## Frequently asked questions
 

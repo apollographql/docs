@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import {Box, Center, Flex, Link, Text, chakra} from '@chakra-ui/react';
-import {TbComponents} from 'react-icons/tb';
+import {EnterpriseIcon} from './Icons';
 
 export const EnterpriseFeature = ({children}) => {
   return (
@@ -10,7 +10,7 @@ export const EnterpriseFeature = ({children}) => {
       py="1"
       borderLeftWidth="2px"
       borderColor="primary"
-      fontSize="md"
+      fontSize="lg"
       sx={{
         '>': {
           ':not(:last-child)': {
@@ -22,7 +22,7 @@ export const EnterpriseFeature = ({children}) => {
       <Flex as="span">
         <chakra.span pl="10px" pr="10px">
           <Center h="100%">
-            <TbComponents />
+            <EnterpriseIcon />
           </Center>
         </chakra.span>
 
@@ -32,15 +32,15 @@ export const EnterpriseFeature = ({children}) => {
           <Text pl="1">
             <strong>
               This feature is only available with a{' '}
-              <Link color={'primary'} href="/graphos/enterprise/">
+              <Link color={'tertiary'} href="/graphos/enterprise/">
                 GraphOS Enterprise plan
               </Link>
               .{' '}
             </strong>
-            If your organization doesn&apos;t currently have an Enterprise plan,
-            you can test this functionality by signing up for a free{' '}
+            If your organization doesn&apos;t have an Enterprise plan, you can
+            test this functionality by signing up for a free{' '}
             <Link
-              color={'primary'}
+              color={'tertiary'}
               href="https://studio.apollographql.com/signup?type=enterprise-trial&referrer=docs-content"
             >
               Enterprise trial

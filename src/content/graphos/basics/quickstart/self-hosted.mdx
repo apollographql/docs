@@ -265,7 +265,7 @@ To compose a supergraph schema for our router, GraphOS needs the following infor
 * The subgraph's schema
 * The URL of the subgraph's GraphQL endpoint (which must be accessible by the router)
 
-Fortunately, we have all of this information! Let's send it to GraphOS.
+Fortunately, we have all this information! Let's send it to GraphOS.
 
 ## 5. Publish your subgraph schemas
 
@@ -302,7 +302,7 @@ To publish our subgraph schema, we'll first use Rover to **introspect** the runn
     - The value before the `@` is your graph's unique ID in GraphOS.
     - The value after the `@` is the name of the graph variant you're interacting with.
 
-    Each **variant** of a graph represents a different _environment_ where that graph runs (such as staging and production). For this quickstart, you can keep the default suggested variant name or change it to anything else you like (e.g., `quickstart`). Just make sure to provide the _same_ graph ref to every command in this quickstart!
+    Each **variant** of a graph represents a different _environment_ where that graph runs (such as staging and production). For this quickstart, you can keep the default suggested variant name or change it to anything else you like (for example, `quickstart`). Just make sure to provide the _same_ graph ref to every command in this quickstart!
 
     _After_ you've published a schema to a particular variant, that variant's graph ref is always available at the top of its README page:
 
@@ -338,7 +338,7 @@ To publish our subgraph schema, we'll first use Rover to **introspect** the runn
 
     If you refresh the Schema page in Studio, you'll now see types and fields from the `reviews` subgraph as well.
 
-Every time we publish a subgraph schema, GraphOS automatically composes _all_ of our subgraph schemas into a **supergraph schema**! However, our router isn't yet _fetching_ that schema from Apollo. We'll tackle that next.
+Every time we publish a subgraph schema, GraphOS automatically composes _all_ our subgraph schemas into a **supergraph schema**! However, our router isn't yet _fetching_ that schema from Apollo. We'll tackle that next.
 
 ## 6. Connect the router to GraphOS
 
@@ -391,7 +391,7 @@ We recommend that you create a separate API key for each system that communicate
     ```
     INFO Apollo Router v1.18.0 // (c) Apollo Graph, Inc. // Licensed as ELv2 (https://go.apollo.dev/elv2)
     INFO Anonymous usage data is gathered to inform Apollo product development.  See https://go.apollo.dev/o/privacy for more info.
-    INFO Running with *development* mode settings which facilitate development experience (e.g., introspection enabled)
+    INFO Running with *development* mode settings which facilitate development experience (for example, introspection enabled)
     INFO GraphOS Studio usage reporting is enabled. See https://go.apollo.dev/o/data for details
     INFO creating apollo exporter spaceport_endpoint=https://127.0.0.1:62894/
     INFO creating apollo exporter spaceport_endpoint=https://127.0.0.1:62894/
@@ -422,9 +422,13 @@ Return to [GraphOS Studio](https://studio.apollographql.com?referrer=docs-conten
   alt="The Insights page in GraphOS Studio, showing metrics for operations and their fields"
 />
 
-Within a few minutes, the test queries you executed in the previous step should be represented on this page. The Insights page is vital to monitoring your supergraph's performance across all of your clients that query the router.
+Within a few minutes, the test queries you executed in the previous step should be represented on this page. The Insights page is vital to monitoring your supergraph's performance across all your clients that query the router.
 
-Learn more about the available metrics in the [metrics documentation](../metrics).
+Learn more about the available metrics in the [metrics documentation](../metrics). Expand the summary table below to learn more about the other variant pages in Studio.
+
+### Variant pages in Studio
+
+<StudioPages />
 
 ## 8. Deploy your router and connect clients
 

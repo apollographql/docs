@@ -1,6 +1,9 @@
 ---
 title: Connecting OpenTelemetry traces to Prometheus
 id: TN0003
+subtitle: Convert operation traces into aggregated metrics for a broader view of your graph's performance
+description: Convert operation traces into aggregated metrics using OpenTelemetry Collector and Prometheus for a broader view of your graph's performance.
+published: 2022-06-03
 tags: [server, observability]
 ---
 
@@ -56,7 +59,7 @@ receivers:
 
 exporters:
   prometheus:
-    endpoint: '0.0.0.0:9464'
+    endpoint: "0.0.0.0:9464"
 
 processors:
   batch:
@@ -93,7 +96,7 @@ That's it- you should have access to span metrics using the same operation name!
 Here are a few sample queries to help explore the data structure being reported:
 
 - P95 by service: `histogram_quantile(.95, sum(rate(latency_bucket[5m])) by (le, service_name))`
-- Average latency by service and operation (e.g. `router` / `graphql.validate`): `sum by (operation, service_name)(rate(latency_sum{}[1m])) / sum by (operation, service_name)(rate(latency_count{}[1m]))`
+- Average latency by service and operation (for example `router` / `graphql.validate`): `sum by (operation, service_name)(rate(latency_sum{}[1m])) / sum by (operation, service_name)(rate(latency_count{}[1m]))`
 - RPM by service: `sum(rate(calls_total{operation="HTTP POST"}[1m])) by (service_name)`
 
 ## Full demo

@@ -1,5 +1,8 @@
 ---
 title: Enforcing entity ownership in Apollo Federation
+subtitle: Designating entity ownership in Apollo Federation 2
+description: Learn how to designate entity ownership and make "entity extension" a first-class concept in your Apollo Federation 2 supergraph.
+published: 2023-02-16
 id: TN0036
 tags: [federation]
 ---
@@ -235,7 +238,7 @@ The exact process depends on your source control and continuous integration syst
 
 3. Obtain the supergraph schema.
 
-   You can use [`rover supergraph fetch`](https://www.apollographql.com/docs/rover/commands/supergraphs#supergraph-fetch) or retreive it using the [Apollo Platform API](https://studio.apollographql.com/public/apollo-platform/explorer?explorerURLState=N4IgJg9gxgrgtgUwHYBcQC4QEcYIE4CeABAOIIoDKMADvgOZ4CG1AFgBQAkeCAZukQEkAIgEIAlEWAAdJESIA3RngCWjVG258iXXhOmy5RAPpGUBWkkaIZhogDoHRCLJJNWANSWrUkm7aIANowoCADOKACC1NR4EPIIYAAyjDBIUCy%2BBv5EAEYwygFgmdm23KEwASjFJbYmZhZWCH41cg52TrIAQvmFVFBQYaHVLYZQENwU6QhwjMMjo%2BMIQtDwyCjN8wC%2BGzXbWSV7uztEh4ane5sgm0A&variant=main).
+   You can use [`rover supergraph fetch`](https://www.apollographql.com/docs/rover/commands/supergraphs#supergraph-fetch) or retrieve it using the [Apollo Platform API](https://studio.apollographql.com/public/apollo-platform/explorer?explorerURLState=N4IgJg9gxgrgtgUwHYBcQC4QEcYIE4CeABAOIIoDKMADvgOZ4CG1AFgBQAkeCAZukQEkAIgEIAlEWAAdJESIA3RngCWjVG258iXXhOmy5RAPpGUBWkkaIZhogDoHRCLJJNWANSWrUkm7aIANowoCADOKACC1NR4EPIIYAAyjDBIUCy%2BBv5EAEYwygFgmdm23KEwASjFJbYmZhZWCH41cg52TrIAQvmFVFBQYaHVLYZQENwU6QhwjMMjo%2BMIQtDwyCjN8wC%2BGzXbWSV7uztEh4ane5sgm0A&variant=main).
 
 4. Extract the owners for the affected types:
 
