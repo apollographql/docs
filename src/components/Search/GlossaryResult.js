@@ -4,8 +4,8 @@ import Markdown from 'react-markdown';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {Box, Flex, Heading, Icon, Text} from '@chakra-ui/react';
-import {BsJournals} from 'react-icons/bs';
 import {PrimaryLink} from '../RelativeLink';
+import {RepositoryIcon} from '../Icons';
 import {makeGlossaryTermId} from '../GlossaryPage/Results';
 
 const DefinitionText = ({children}) => {
@@ -20,6 +20,10 @@ const DefinitionText = ({children}) => {
       <Text>{children}</Text>
     </Box>
   );
+};
+
+DefinitionText.propTypes = {
+  children: PropTypes.node.isRequired
 };
 
 function stripCodeExample(definition) {
@@ -57,6 +61,11 @@ function stripCodeExample(definition) {
 }
 
 export default function GlossaryResult({item}) {
+  const host =
+    process.env.CONTEXT === 'production'
+      ? 'https://www.apollographql.com/docs'
+      : process.env.DEPLOY_URL;
+
   return (
     <Box key="Apollopedia" borderBottomWidth="1px" pb="16px">
       <Flex align="center" p="2" pr="0">
@@ -65,7 +74,7 @@ export default function GlossaryResult({item}) {
       </Flex>
       <Flex p="2">
         <Box mr="3" fontSize="xl" color="primary" flexShrink="0">
-          <Icon as={BsJournals} />
+          <Icon as={RepositoryIcon} />
         </Box>
         <Box lineHeight="shorter" w="0" flexGrow="1">
           <Box fontSize="lg">
@@ -83,9 +92,7 @@ export default function GlossaryResult({item}) {
           <PrimaryLink
             aria-label="Go to the glossary"
             as="a"
-            href={`https://www.apollographql.com/docs/resources/glossary#${makeGlossaryTermId(
-              item.term
-            )}`}
+            href={`${host}/resources/glossary#${makeGlossaryTermId(item.term)}`}
             mt="12px"
             style={{display: 'flex', alignItems: 'center'}}
           >

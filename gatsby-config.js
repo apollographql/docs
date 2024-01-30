@@ -142,16 +142,23 @@ const plugins = [
   {
     resolve: 'gatsby-plugin-env-variables',
     options: {
-      allowList: ['ALGOLIA_APP_ID', 'ALGOLIA_SEARCH_KEY']
+      allowList: [
+        'ALGOLIA_APP_ID',
+        'ALGOLIA_SEARCH_KEY',
+        'CONTEXT',
+        'DEPLOY_URL'
+      ]
     }
   },
   {
     resolve: 'gatsby-plugin-algolia',
     options: {
       appId: process.env.ALGOLIA_APP_ID,
-      apiKey: process.env.ALGOLIA_WRITE_KEY,
-      skipIndexing: process.env.CONTEXT !== 'production',
-      indexName: 'docs',
+      apiKey: isProduction
+        ? process.env.ALGOLIA_WRITE_KEY
+        : process.env.GATSBY_STAGING_DOCS_ALGOLIA_KEY,
+      // skipIndexing: process.env.CONTEXT !== 'production',
+      indexName: isProduction ? 'docs' : 'staging_docs',
       queries: [
         {
           query,

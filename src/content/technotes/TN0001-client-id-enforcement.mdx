@@ -1,7 +1,9 @@
 ---
 title: Client ID enforcement
+subtitle: Require client details and operation names to help monitor schema usage
+description: Improve GraphQL operation monitoring by tagging operations with with client details. See code examples for Apollo Router and Apollo Server.
+published: 2022-05-31
 id: TN0001
-description: Require client details and operation names to help monitor schema usage
 tags: [server, observability, router]
 ---
 
@@ -13,9 +15,9 @@ Together, these pieces of information help teams monitor their graph and make ch
 
 ## Enforcing in Apollo Router
 
-Apollo router supports client awareness by default if the client sets the `apollographql-client-name` and `apollographql-client-id` in their requests. These values can be overriden using the [router configuration file](/router/managed-federation/client-awareness/) directly.
+The Apollo Router supports client awareness by default if the client sets the `apollographql-client-name` and `apollographql-client-id` in their requests. These values can be overriden using the [router configuration file](/router/managed-federation/client-awareness/) directly.
 
-Client headers can also be enforced using a [Rhai script](/router/customizations/rhai) on every incoming request. 
+Client headers can also be enforced using a [Rhai script](/router/customizations/rhai) on every incoming request.
 
 ```rhai title="client-id.rhai"
 fn supergraph_service(service) {
@@ -31,7 +33,7 @@ fn process_request(request) {
   if ("apollographql-client-version" in request.headers && "apollographql-client-name" in request.headers) {
     let client_header = request.headers["apollographql-client-version"];
     let name_header = request.headers["apollographql-client-name"];
-  
+
     if !valid_clients.contains(client_header) {
       log_error("Invalid client ID provided");
       throw #{
@@ -53,7 +55,7 @@ fn process_request(request) {
       status: 401,
       message: "No client headers set"
     };
-  }    
+  }
 }
 ```
 
@@ -62,6 +64,7 @@ fn process_request(request) {
 If you're an enterprise customer looking for more material on this topic, try the [Enterprise best practices: Router extensibility](https://www.apollographql.com/tutorials/router-extensibility) course on Odyssey.
 
 Not an enterprise customer? [Learn about GraphOS for Enterprise.](/graphos/enterprise)
+
 </Tip>
 
 ## Enforcing in Apollo Server
@@ -70,7 +73,8 @@ If you're using Apollo Server for your gateway, you can require client metadata 
 
 <Tip>
 
-The header names used below are the default headers sent by Apollo Client, but you can change them to whatever names your client uses. Additionally, these changes must be reflected in the [usage reporting plugin](/apollo-server/api/plugin/usage-reporting/#generateclientinfo) in order to report client headers to GraphOS. For an example, see [using custom client id headers](/apollo-server/monitoring/metrics#using-custom-headers).
+The header names used below are the default headers sent by Apollo Client, but you can change them to whatever names your client uses. Additionally, these changes must be reflected in the [usage reporting plugin](/apollo-server/api/plugin/usage-reporting/#generateclientinfo) to report client headers to GraphOS. For an example, see [using custom client id headers](/apollo-server/monitoring/metrics#using-custom-headers).
+
 </Tip>
 
 <MultiCodeBlock>
@@ -81,12 +85,8 @@ function clientEnforcementPlugin(): ApolloServerPlugin<BaseContext> {
     async requestDidStart() {
       return {
         async didResolveOperation(requestContext) {
-          const clientName = requestContext.request.http.headers.get(
-            "apollographql-client-name"
-          );
-          const clientVersion = requestContext.request.http.headers.get(
-            "apollographql-client-version"
-          );
+          const clientName = requestContext.request.http.headers.get("apollographql-client-name");
+          const clientVersion = requestContext.request.http.headers.get("apollographql-client-version");
 
           if (!clientName) {
             const logString = `Execution Denied: Operation has no identified client`;
@@ -117,6 +117,7 @@ const server = new ApolloServer({
   plugins: [clientEnforcementPlugin()],
 });
 ```
+
 </MultiCodeBlock>
 
 ## Adding enforcement for existing clients
@@ -128,9 +129,11 @@ If clients are already consuming your graph and _are not_ providing client metad
 If you have other existing headers in your HTTP requests that can be parsed to extract some client info, you can extract the info from there.
 
 #### Apollo Router
+
 Client awareness headers should be overridden using the [router configuration file](/router/managed-federation/client-awareness/#overriding-client-awareness-headers) to use the appropriate header names.
 
 #### Apollo Server
+
 If you do change the identifying headers, also update the [Usage Reporting Plugin](/apollo-server/api/plugin/usage-reporting) to use the new headers so that the proper client info is also sent to Studio.
 
 ### Ask clients to update their requests

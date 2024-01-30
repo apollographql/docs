@@ -20,8 +20,8 @@ import VersionBanner from './VersionBanner';
 import autolinkHeadings from 'rehype-autolink-headings';
 import rehypeReact from 'rehype-react';
 import useLocalStorage from 'react-use/lib/useLocalStorage';
-import {ReactComponent as ApolloLogo} from '@apollo/space-kit/logos/logo.svg';
-import {ReactComponent as ApolloMark} from '@apollo/space-kit/logos/mark.svg';
+import {ReactComponent as ApolloLogo} from '@apollo/icons/logos/LogoType.svg';
+import {ReactComponent as ApolloMark} from '@apollo/icons/logos/LogoSymbol.svg';
 import {
   Box,
   Button,
@@ -42,13 +42,7 @@ import {
 } from '@chakra-ui/react';
 import {Caution} from './Caution';
 import {CustomHeading} from './CustomHeading';
-import {
-  DocBlock,
-  DocPiece,
-  FunctionDetails,
-  InterfaceDetails,
-  useApiDocContext
-} from './ApiDoc';
+import {DiscordIcon, GitHubIcon, QuoteIcon} from './Icons';
 import {
   EmbeddableExplorer,
   MarkdownCodeBlock,
@@ -58,7 +52,6 @@ import {
 import {EnterpriseFeature} from './EnterpriseFeature';
 import {ExperimentalFeature} from './ExperimentalFeature';
 import {FeedbackButton} from './FeedbackButton';
-import {FiGithub, FiMessageCircle} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
 import {Global} from '@emotion/react';
 import {HighlightKeyTerms} from '@apollo/pedia';
@@ -74,13 +67,14 @@ import {
   PageSeo
 } from './PageLayout';
 import {PreviewFeature} from './PreviewFeature';
-import {SiDiscord} from 'react-icons/si';
 import {TOTAL_HEADER_HEIGHT} from './Header';
 import {Tip} from './Tip';
+import {WistiaEmbed} from './WistiaEmbed';
 import {YouTube} from './YouTube';
 import {join} from 'path';
 import {kebabCase} from 'lodash';
 import {rehype} from 'rehype';
+import {useApiDocContext} from './ApiDoc';
 import {useConfig} from '../utils/config';
 import {useFieldTableStyles} from '../utils';
 import {useMermaidStyles} from '../utils/mermaid';
@@ -202,6 +196,7 @@ const mdxComponents = {
   MultiCodeBlock,
   Note,
   YouTube,
+  WistiaEmbed,
   CodeColumns,
   TypeScriptApiBox,
   TypescriptApiBox: TypeScriptApiBox,
@@ -316,7 +311,7 @@ export default function Page({file}) {
           color: 'gray.200'
         }}
         size="lg"
-        leftIcon={<FiGithub />}
+        leftIcon={<GitHubIcon />}
       >
         <Text as="span" display={{base: 'none', lg: 'inline'}}>
           Edit on GitHub
@@ -528,7 +523,7 @@ export default function Page({file}) {
           _dark={{
             color: 'gray.200'
           }}
-          leftIcon={<FiMessageCircle />}
+          leftIcon={<QuoteIcon />}
         >
           Forums
         </Button>
@@ -542,7 +537,7 @@ export default function Page({file}) {
             color: 'gray.200'
           }}
           onClick={() => window.gtag?.('event', 'discord_join_docs')}
-          leftIcon={<SiDiscord />}
+          leftIcon={<DiscordIcon />}
         >
           Discord
         </Button>

@@ -24,7 +24,7 @@ In [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content), you
 
 - **Time range**: _Include_ all distinct operations that were executed within this range. The default value is 7 days ("Within the last week").
 - **Operation count threshold**: _Exclude_ all operations that were executed fewer than this number of times within the specified **time range**.
-- **Variants**: _Include_ all distinct operations that were executed against each selected variant of your graph. The default value is "Base variant" (i.e., whichever variant schema checks are being run against).
+- **Variants**: _Include_ all distinct operations that were executed against each selected variant of your graph. The default value is "Base variant" (that is, whichever variant schema checks are being run against).
 - **Client exclusions**: _Exclude_ all operations that were executed by particular clients, such as clients used exclusively for development and testing.
 
   <img
@@ -33,7 +33,7 @@ In [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content), you
     alt="Excluded clients configuration in GraphOS Studio"
   />
 
-## Using the CLI
+## Using the Rover CLI
 
 You can customize a single run of schema checks by providing options to the Rover CLI. If you've _also_ [configured default rules](#using-graphos-studio-recommended) for schema checks, any command-line options you provide take precedence over those rules.
 

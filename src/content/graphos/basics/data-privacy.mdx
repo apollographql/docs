@@ -15,9 +15,9 @@ This article describes which data is and is _not_ sent to Apollo GraphOS by othe
 
 The [Apollo Router](/router/), [Apollo Server](/apollo-server/), the [Rover CLI](/rover/), and the legacy [Apollo CLI](/devtools/cli/) have **opt-in features** that send data to GraphOS.
 
-The Rover CLI also collects anonymous usage data by default. [You can disable this.](/rover/privacy/)
+The Rover CLI also collects anonymous usage data by default. [You can turn this off.](/rover/privacy/)
 
-The [Apollo Kotlin IDE plugin](/kotlin/v4/testing/android-studio-plugin/) also collects anonymous usage data by default. [You can disable this.](/kotlin/v4/testing/android-studio-plugin/#privacy-and-data-collection)
+The [Apollo Kotlin IDE plugin](/kotlin/v4/testing/android-studio-plugin/) also collects anonymous usage data by default. [You can turn this off.](/kotlin/v4/testing/android-studio-plugin/#privacy-and-data-collection)
 
 If you have a [cloud supergraph](./graphs/#cloud-supergraphs), its router is hosted and managed _by_ GraphOS, and it automatically enables metrics reporting. [Learn about data collection for cloud supergraphs.](#which-types-of-data-are-collected-by-a-cloud-supergraph)
 
@@ -71,13 +71,13 @@ In addition, you can configure a standalone instance of Apollo Server to [report
 
 <Note>
 
-_All_ data sent to GraphOS from both the Apollo Router and Apollo Server is transmitted using HTTPS on port 443, and HTTP traffic on port 80 is disabled.
+_All_ data sent to GraphOS from both the Apollo Router and Apollo Server is transmitted using HTTPS on port 443, and HTTP traffic on port 80 is turned off.
 
 </Note>
 
 ### Operation response fields
 
-Let’s walk through the default behaviors of the Apollo Router and Apollo Server when reporting fields in a typical GraphQL response:
+Let's walk through the default behaviors of the Apollo Router and Apollo Server when reporting fields in a typical GraphQL response:
 
 ```json
 // GraphQL Response
@@ -177,7 +177,7 @@ If you perform authorization in a header other than those listed above (such as 
 
 In Apollo Server 2.7.0 and later, **none** of an operation's HTTP headers is sent to GraphOS by default.
 
-You can set a value for the [usage reporting plugin's `sendHeaders` option](/apollo-server/api/plugin/usage-reporting/#sendheaders) to specify a different strategy for reporting some or all of your HTTP headers.
+You can set a value for the [usage reporting plugin's `sendHeaders` option](/apollo-server/api/plugin/usage-reporting/#sendheaders) to specify a different strategy for reporting some or all your HTTP headers.
 
 #### Apollo Server prior to 2.7.0
 
@@ -218,11 +218,11 @@ Each GraphOS-managed router is an instance of the [Apollo Router](/router/) runn
 
 ## What data does GraphOS log about operations executed in the Explorer?
 
-**Only front-end usage metrics for improving the product.** The [GraphOS Studio Explorer](./explorer/) enables you to build and execute operations against your graph. These operations are sent directly from your browser and **do not** pass through Apollo systems.
+**Only frontend usage metrics for improving the product.** The [GraphOS Studio Explorer](./explorer/) enables you to build and execute operations against your graph. These operations are sent directly from your browser and **do not** pass through Apollo systems.
 
 ## GDPR
 
-Effective May 25, 2018, the General Data Protection Regulation (GDPR) expands European Union (EU) residents’ (Data Subjects) rights concerning their personal data. Meteor Development Group Inc. (“MDG” also dba Apollo) stands ready to assist our customers to become or remain compliant with GDPR after this crucial transition.
+Effective May 25, 2018, the General Data Protection Regulation (GDPR) expands European Union (EU) residents' (Data Subjects) rights concerning their personal data. Meteor Development Group Inc. (“MDG” also dba Apollo) stands ready to assist our customers to become or remain compliant with GDPR after this crucial transition.
 
 #### What is GDPR?
 
@@ -234,7 +234,7 @@ We have been complying with GDPR since before it became enforceable on May 25, 2
 
 #### How will GDPR affect the way companies use Apollo's products or services?
 
-Our products and services are not intended to be used for processing personal data. Our products and services are focused on software, systems, and applications - not individuals. If a customer wishes to set up a custom API, custom attribute, or custom event to track such data, it may do so. Our processing is data agnostic and automated, so all data is processed in the same way in accordance with a customer’s configuration. If, however, a customer believes that it has included personal data in the information processed by Apollo, we will assist the customer in meeting its obligations in accordance with the requirements of GDPR and the terms of our Data Processing Agreement.
+Our products and services are not intended to be used for processing personal data. Our products and services are focused on software, systems, and applications - not individuals. If a customer wishes to set up a custom API, custom attribute, or custom event to track such data, it may do so. Our processing is data agnostic and automated, so all data is processed in the same way in accordance with a customer's configuration. If, however, a customer believes that it has included personal data in the information processed by Apollo, we will assist the customer in meeting its obligations in accordance with the requirements of GDPR and the terms of our Data Processing Agreement.
 
 #### How can Apollo assist customers in meeting their obligations under GDPR?
 
@@ -245,9 +245,13 @@ As a Processor, we will assist customers in fulfilling their obligations as data
 - replying to investigations and inquiries from supervisory authorities concerning processing activities on behalf of a customer
 - conducting Data Protection Impact Assessments
 
+<!-- vale Apollo.Headings = NO -->
+
 #### How can Apollo help address requests from Data Subjects?
 
-Apollo has implemented a process to intake, review, and fulfill customer requests arising from Data Subject Access Requests (DSAR) they receive. As a result of a DSAR, customers might request that Apollo securely delete or return the Data Subject’s personal data. Due to their sensitivity, such requests will be handled by Apollo on a case-by-case basis.
+<!-- vale Apollo.Headings = YES -->
+
+Apollo has implemented a process to intake, review, and fulfill customer requests arising from Data Subject Access Requests (DSAR) they receive. As a result of a DSAR, customers might request that Apollo securely delete or return the Data Subject's personal data. Due to their sensitivity, such requests will be handled by Apollo on a case-by-case basis.
 
 #### Where can I learn more about Apollo's security and privacy policies?
 

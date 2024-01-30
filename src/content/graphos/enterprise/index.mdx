@@ -23,7 +23,7 @@ You can sign up for a GraphOS Enterprise trial to freely test out _most_ Enterpr
     colorScheme="indigo"
     href="https://studio.apollographql.com/signup?type=enterprise-trial&referrer=docs-content"
     style={{
-      marginRight: "10px",
+      marginRight: '10px'
     }}
   >
     Start an Enterprise trial
@@ -77,7 +77,24 @@ This architecture helps you satisfy sophisticated requirements around data compl
 
 </Tip>
 
-## Schema filtering with contracts
+## Schema pipeline
+
+GraphOS provides schema [pipeline tools](../delivery) to efficiently develop and deploy changes to your supergraph schema.
+
+### Schema change management with proposals
+
+[Schema proposals](../delivery/schema-proposals) provide GraphOS-native schema change management.
+The centralized proposal process fosters collaboration and strengthens schema governance:
+
+- Subgraph developers can propose changes in the context of the supergraph using automated checks and reviewer feedback for validation.
+- Graph consumers can actively participate by commenting on, reviewing, and approving proposals.
+- Graph owners and governance teams can use proposals to set standards and ensure only approved changes are published.
+
+This increased coordination improves design decisions and accountability, streamlining development cycles.
+
+> [Learn more about schema proposals.](../delivery/schema-proposals/)
+
+### Schema filtering with contracts
 
 GraphOS [**Contracts**](../delivery/contracts/) enable you to filter your supergraph schema's types and fields according to different inclusion and exclusion rules you define:
 
@@ -125,7 +142,7 @@ Contracts are especially useful if you want to expose a subset of your supergrap
 
 You can integrate GraphOS with your organization's identity provider (IdP) to enable single sign-on (SSO) for [GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content).
 
-SSO configuration is available for all of the following:
+SSO configuration is available for the following:
 
 - [Okta](../org/sso/okta-integration-guide/)
 - [Azure AD](../org/sso/azure-ad-integration-guide/)

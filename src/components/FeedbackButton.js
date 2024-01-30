@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import {Button, Text} from '@chakra-ui/react';
-import {FiStar} from 'react-icons/fi';
+import {StarIcon} from './Icons';
 import {useUser} from '../utils';
 
 export const FeedbackButton = ({title}) => {
@@ -23,7 +23,7 @@ export const FeedbackButton = ({title}) => {
         color: 'gray.200'
       }}
       size="lg"
-      leftIcon={<FiStar />}
+      leftIcon={<StarIcon />}
     >
       <Text as="span" display={{base: 'none', lg: 'inline'}}>
         Rate article

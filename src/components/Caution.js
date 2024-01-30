@@ -10,7 +10,7 @@ export const Caution = ({children, ...props}) => {
       py="1"
       borderLeftWidth="4px"
       borderColor="yellow.400"
-      fontSize="md"
+      fontSize="lg"
       sx={{
         '>': {
           ':not(:last-child)': {

@@ -1,30 +1,36 @@
 ---
 title: Production readiness checklist
+subtitle: Use this checklist to identify potential gaps before your graph handles production traffic
+description: Use this checklist—covering the Apollo Router, subgraphs, and clients—to identify potential gaps before your graph handles production traffic.
+published: 2022-07-11
 id: TN0008
-tags: [sre, router, server, client]
+tags: [sre, router, server, client, best-practices]
 ---
 
-We recommend that you read through this checklist and idenitify critical features for your team before your supergraph begins handling production traffic.
+We recommend that you read through this checklist and identify critical features for your team before your supergraph begins handling production traffic.
 
 ## GraphOS Studio
-- Ensure that you've created multiple [variants](/graphos/graphs/#variants) to represent the different environments where your supergraph runs (production, staging, and so on).
+
+- Ensure that you've created multiple [variants](/graphos/graphs/#variants) to represent the different environments where your supergraph runs (for example, production, staging, and development).
 - [Protect your production variant](/graphos/graphs/studio-features#protected-variants-enterprise-only) to avoid accidental changes while working in Studio.
 
 ## Apollo Router
+
 - Ensure that you've correctly configured [managed federation](/federation/managed-federation/setup/) and [GraphOS schema usage reporting](/router/configuration/telemetry/apollo-telemetry).
-- For security, [disable introspection](/router/configuration/overview/#introspection) for all production routers (by default Router disables introspection, but make sure you are not using `--dev` mode).
+- For security, [turn off introspection](/router/configuration/overview/#introspection) for all production routers (by default the router disables introspection, but make sure you are not using `--dev` mode).
   - You can continue to view and fetch your GraphQL schemas from GraphOS and run operations from [GraphOS Studio Explorer](/graphos/explorer).
-- Configure the [Router traffic shapping](/router/configuration/traffic-shaping) features:
+- Configure the [router traffic shaping](/router/configuration/traffic-shaping) features:
   - Set request and subgraph level timeouts and rate limits
   - Deduplicate subgraph requests
   - Communicate with subgraphs using APQ
-- Enable [operation limits](/router/configuration/operation-limits) to block large and malicous requests
-- Configure additional [tracing, metrics, and logging](/router/configuration/telemetry/overview) through OpenTelemetry or Prometheous
+- Enable [operation limits](/router/configuration/operation-limits) to block large and malicious requests
+- Configure additional [tracing, metrics, and logging](/router/configuration/telemetry/overview) through OpenTelemetry or Prometheus
 - Enable the operation and query plan [distributed cache](/router/configuration/distributed-caching)
 - Optionally, enable any [other features](/router/enterprise-features/) deemed critical for your deployment of Apollo Router
 
-## Subgraphs/Servers
-- For security, [disable introspection](/apollo-server/api/apollo-server/#introspection) for all production GraphQL subgraphs.
+## Subgraphs/servers
+
+- For security, [turn off introspection](/apollo-server/api/apollo-server/#introspection) for all production GraphQL subgraphs.
   - You can continue to view and fetch your GraphQL schemas from GraphOS and run operations from [GraphOS Studio Explorer](/graphos/explorer).
 - Ensure that you've integrated [`rover subgraph check`](/rover/commands/subgraphs#subgraph-check) and [`rover subgraph publish`](/rover/commands/subgraphs#subgraph-publish) into your CI/CD pipeline.
 - If your subgraph servers are listed as [compatible with `FEDERATED TRACING`](/federation/building-supergraphs/supported-subgraphs/), ensure that you've enabled [federated traces](/federation/metrics/), and that you can view operation metrics as expected in Apollo Studio.
@@ -42,12 +48,12 @@ We recommend that you read through this checklist and idenitify critical feature
   - Optionally add [full response caching](/apollo-server/performance/caching/) to improve performance.
 
 ## Clients
+
 - Ensure that your [clients identify themselves](/graphos/metrics/client-awareness/) by name and version.
   - If you're using an Apollo Client library, you can add a client name and version to the constructor.
   - For example, the [React client uses the `name` and `version` attributes](/react/api/core/ApolloClient#name) in the constructor options.
   - If you're using a third-party GraphQL client, set the `apollographql-client-name` and `apollographql-client-version` HTTP headers for each request to identify your client.
-  - For an example of enforcing client identification in your gateway, see [this technote for Client ID enforcement](/technotes/TN0001-client-id-enforcement/).
+  - For an example of enforcing client identification in your gateway, see [this tech note for Client ID enforcement](/technotes/TN0001-client-id-enforcement/).
 - Consider adding caching layers.
   - Enable [Persisted Queries and/or Automatic Persisted Queries (APQ)](https://www.apollographql.com/docs/react/api/link/persisted-queries) support for request-size savings.
   - Enable and configure the client side [normalized cache](/react/caching/overview)
-

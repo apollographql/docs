@@ -11,7 +11,7 @@ import {
   Stack,
   useDisclosure
 } from '@chakra-ui/react';
-import {FiCheck, FiChevronDown, FiChevronUp} from 'react-icons/fi';
+import {CheckIcon, ChevronDownIcon, ChevronUpIcon} from './Icons'
 
 function ExpansionPanelLine(props) {
   return <Box w="px" mx="auto" bg="current" {...props} />;
@@ -54,7 +54,7 @@ export function ExpansionPanelList({children}) {
       {React.Children.toArray(children).map((child, index, array) => {
         const number = index + 1;
         return React.cloneElement(child, {
-          number: number < array.length ? number : <FiCheck />
+          number: number < array.length ? number : <CheckIcon />
         });
       })}
     </List>
@@ -84,7 +84,7 @@ export default function ExpansionPanel({
         variant="ghost"
         rounded="none"
         justifyContent="flex-start"
-        leftIcon={isOpen ? <FiChevronUp /> : <FiChevronDown />}
+        leftIcon={isOpen ? <ChevronDownIcon /> : <ChevronUpIcon />}
         onClick={onToggle}
         _focus={{shadow: 'none'}}
       >

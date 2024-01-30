@@ -34,7 +34,7 @@ To help resolve AWS VPC Lattice connection issues, we recommend enabling subgrap
   src="../../../img/cloud-dedicated/studio-settings-page.png"
 />
 
-4. In the **Router configuration YAML** section, ensure that the following configuration block that sets `include_subgraph_errors` is present:
+4. In **Router configuration YAML**, ensure that the following configuration block that sets `include_subgraph_errors` is present:
 
 ```yaml
 include_subgraph_errors:
@@ -51,7 +51,7 @@ include_subgraph_errors:
 
 Configuration changes trigger a new launch. Please wait a few minutes for your cloud router to update with this new configuration. You can monitor the deployment status in the Launches page for your graph variant.
 
-Once you've identißfied and resolved the underlying issue, we recommend you disable subgraph errors by removing the block that sets `include_subgraph_errors` and saving the Router configuration YAML again.
+Once you've identißfied and resolved the underlying issue, we recommend you turn off subgraph errors by removing the block that sets `include_subgraph_errors` and saving the router configuration YAML again.
 
 ## Common issues and errors
 
@@ -134,13 +134,13 @@ If this is not the case, you must create a new listener by clicking on the **Add
 This error likely occurs for one of the following reasons:
 
 - One of your clients is sending a subscription request to a private subgraph over WebSockets.
-- The VPC Lattice IAM Policy does not allow traffic from Apollo GraphOS Cloud.
+- The VPC Lattice IAM policy does not allow traffic from Apollo GraphOS Cloud.
 
-#### Subsriptions over WebSockets
+#### Subscriptions over WebSockets
 
 Subscriptions over WebSockets are not supported in AWS VPC Lattice, as the platform [lacks WebSocket support](https://docs.aws.amazon.com/vpc-lattice/latest/ug/listeners.html#listener-configuration) at this time. When sending a request to upgrade to a WebSockets connection, Lattice will return a blank response with a 403 response code. In this situation, Lattice will also not emit access log entries to Amazon CloudWatch Logs. We recommend you [contact your AWS account team](https://aws.amazon.com/contact-us/sales-support/) to notify them of your interest in this feature.
 
-#### VPC Lattice IAM Policy
+#### VPC Lattice IAM policy
 
 You can validate that your Lattice services are configured to allow traffic from Apollo GraphOS Cloud by navigating to the service access page:
 

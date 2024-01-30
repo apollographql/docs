@@ -1,5 +1,8 @@
 ---
 title: Federation is not a saga orchestrator
+subtitle: Considerations for sequencing mutations and distributed orchestration
+description: Federation orchestrates mutation fields but additional considerations are necessary when handling state changes across distributed systems.
+published: 2023-04-20
 id: TN0040
 tags: [federation]
 ---
@@ -55,15 +58,15 @@ const resolvers = {
 
       try {
         validate(account);
-        setAccountStatus(account, 'ACTIVE');
+        setAccountStatus(account, "ACTIVE");
       } catch (e) {
         deleteAccount(account);
-        return {success: false};
+        return { success: false };
       }
 
-      return {success: true, account};
-    }
-  }
+      return { success: true, account };
+    },
+  },
 };
 ```
 
@@ -71,7 +74,7 @@ By representing this operation in a single field, we can properly handle failure
 
 ## Distributed orchestration
 
-But what if the state changes occur in different services? Because GraphQL and Federation do not provide semantics for distributed transactions, we still need to implement orchestration logic within a single field.
+What if the state changes occur in different services? Because GraphQL and Federation do not provide semantics for distributed transactions, we still need to implement orchestration logic within a single field.
 
 This requirement leads to a few challenging questions:
 
@@ -91,10 +94,10 @@ It's tempting to have the orchestrating subgraph resolvers call back to the Apol
 - If using cloud-native telemetry, you must ensure that the Apollo Router receives the trace context to correlate spans.
 - Be wary of circular dependencies. Consider using [contracts](/graphos/delivery/contracts/) to create variants that expose only the domain-specific mutations and eliminate the potential for loops in an operation.
 
-
 <Tip>
 
-Read more on [contracts usage patterns in this technote](/technotes/TN0014-contracts-patterns/).
+Read more on [contracts usage patterns in this tech note](/technotes/TN0014-contracts-patterns/).
+
 </Tip>
 
 <Tip>
@@ -102,4 +105,5 @@ Read more on [contracts usage patterns in this technote](/technotes/TN0014-contr
 If you're an enterprise customer looking for more material on this topic, try the [Enterprise best practices: Contracts](https://www.apollographql.com/tutorials/contracts) course on Odyssey.
 
 Not an enterprise customer? [Learn about GraphOS for Enterprise.](/graphos/enterprise)
+
 </Tip>

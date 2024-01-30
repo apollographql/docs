@@ -1,5 +1,8 @@
 ---
 title: Namespacing by separation of concerns
+subtitle: Organize root-level operation fields into namespaces
+description: Organize root-level operation fields into namespaces to improve the logical structure to your GraphQL schema.
+published: 2022-08-31
 id: TN0012
 tags: [schema-design]
 ---
@@ -8,7 +11,7 @@ Most GraphQL APIs provide their capabilities as root-level fields of the `Query`
 
 To improve the logical organization of our graph's capabilities, we can define **namespaces** for our root-level operation fields. These are object types that in turn define query and mutation fields that are all related to a particular concern.
 
-For example, we can define all of the mutation fields related to `User` objects in a `UsersMutations` namespace object:
+For example, we can define all the mutation fields related to `User` objects in a `UsersMutations` namespace object:
 
 ```graphql
 type UsersMutations {
@@ -81,7 +84,7 @@ query FetchAllUsers {
 
 <Note>
 
-You don’t need to repeat the text `user` in the field names of the `UsersQueries` type, because we already know all of these fields apply to `User` objects.
+You don't need to repeat the text `user` in the field names of the `UsersQueries` type, because we already know all these fields apply to `User` objects.
 
 </Note>
 
@@ -105,7 +108,10 @@ mutation DoTwoThings {
 With namespaces, your mutation fields that actually modify data are no longer root-level fields (instead, your namespace objects are). Because of this, the mutation fields _are_ resolved in parallel. In many systems, this doesn't present an issue (for example, you probably want to use another mechanism in your mutation resolvers to ensure transactional consistency, such as a saga orchestrator).
 
 ```graphql
-mutation DoTwoNestedThings($createInput: CreateReviewInput!, $deleteInput: DeleteReviewInput!) {
+mutation DoTwoNestedThings(
+  $createInput: CreateReviewInput!
+  $deleteInput: DeleteReviewInput!
+) {
   reviews {
     create(input: $createInput) {
       success
@@ -121,7 +127,10 @@ mutation DoTwoNestedThings($createInput: CreateReviewInput!, $deleteInput: Delet
 If you want to guarantee serial execution in a particular operation, you can use client-side aliases to create two root fields that are resolved serially:
 
 ```graphql
-mutation DoTwoNestedThingsInSerial($createInput: CreateReviewInput!, $deleteInput: DeleteReviewInput!) {
+mutation DoTwoNestedThingsInSerial(
+  $createInput: CreateReviewInput!
+  $deleteInput: DeleteReviewInput!
+) {
   a: reviews {
     create(input: $createInput) {
       success

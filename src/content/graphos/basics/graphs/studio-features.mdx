@@ -8,11 +8,11 @@ This article describes GraphOS Studio features for all [graph types](./#graph-ty
 
 **To create a cloud supergraph,** see the [GraphOS quickstart](../quickstart/cloud/).
 
-**To create a _non_-cloud graph** (i.e., a self-hosted supergraph or a monograph), see [this section](./#creating-graphs).
+**To create a _non_-cloud graph** (that is, a self-hosted supergraph or a monograph), see [this section](./#creating-graphs).
 
 ## Viewing graph details
 
-After selecting an organization in GraphOS Studio, click on a particular graph variant to view its README, schema, data, and settings. All of a Studio organization's members can access the data and settings for every graph that belongs to that organization.
+After selecting an organization in GraphOS Studio, click a particular graph variant to view its README, schema, data, and settings. All of a Studio organization's members can access the data and settings for every graph that belongs to that organization.
 
 <Tip>
 
@@ -84,7 +84,11 @@ GraphOS Studio provides a powerful **Explorer** IDE that helps you visualize you
 
 </Tip>
 
+<!-- vale Apollo.Headings = NO -->
+
 #### The Schema page
+
+<!-- vale Apollo.Headings = YES -->
 
 The Schema page lists the different kinds of definitions in your schema (objects, scalars, etc.):
 
@@ -125,7 +129,7 @@ The top of the Schema page provides a **Filter Schema** box you can use to find 
 <Tip>
 
 - Click the arrow button to the left of the filter box to show/hide the filter selection dropdowns.
-- Click the button to the right of the filter box to copy a shareable URL for your currently active set of filters (you can also copy your browser's address bar directly).
+- Click the button to the right of the filter box to copy a shareable URL of your currently active set of filters (you can also copy your browser's address bar directly).
 
 </Tip>
 
@@ -230,7 +234,7 @@ This filter includes all fields that return a particular type, regardless of eac
 </td>
 <td>
 
-Include results that take a GraphQL argument with any of the the specified names. If viewing a table of objects, include objects with at least one _field_ that takes a specified argument.
+Include results that take a GraphQL argument with any of the specified names. If viewing a table of objects, include objects with at least one _field_ that takes a specified argument.
 
 </td>
 <td>
@@ -340,7 +344,7 @@ by visiting the graph's Settings page in Studio and changing the **graph owner**
 
 **Deleting a graph cannot be undone!**
 
-If you delete a cloud supergraph, all of its GraphOS-hosted routers are **deprovisioned**.
+If you delete a cloud supergraph, all its GraphOS-hosted routers are **deprovisioned**.
 
 </Caution>
 
