@@ -83,6 +83,7 @@ export const pageQuery = graphql`
       ...Method
       ...PropertySignature
       ...MethodSignature
+      ...Enum
       ... on ApiDocBase {
         references {
           text
@@ -109,7 +110,13 @@ fragment Base on ApiDocBase {
     summary
     deprecated
     remarks
+    returns
     examples
+    docGroup
+    alpha
+    beta
+    experimental
+    since
   }
 }
 
@@ -120,6 +127,7 @@ fragment Interface on ApiDocInterface {
     comment
   }
   childrenIncomplete
+  childrenIncompleteDetails
   properties {
     ...Ref
   }
@@ -161,6 +169,7 @@ fragment Class on ApiDocClass {
     ...Ref
   }
   childrenIncomplete
+  childrenIncompleteDetails
   properties {
     ...Ref
   }
@@ -197,5 +206,11 @@ fragment FunctionParameter on ApiDocFunctionParameter {
   type
   optional
   comment
+}
+
+fragment Enum on ApiDocEnum {
+  members {
+    ...Ref
+  }
 }
 `;
