@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React, {createContext, useContext, useRef} from 'react';
 import {Box, Flex, Stack, Tooltip, chakra} from '@chakra-ui/react';
-import {FiExternalLink} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
+import {OutlinkIcon} from '../Icons';
 import {PathContext} from '../../utils';
 
 export const DocsetContext = createContext();
@@ -142,10 +142,11 @@ export const SidebarCategoryLink = ({icon, docset, ...props}) => {
               transitionProperty="opacity"
               transitionDuration="normal"
               transitionTimingFunction="ease-in-out"
+              mr="3"
             >
               {config.docset}
             </chakra.span>
-            {isExternal && <Box ml="2" as={FiExternalLink} />}
+            {isExternal && <OutlinkIcon />}
           </>
         )}
       </Box>

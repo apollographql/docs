@@ -1,5 +1,5 @@
 import {Box, Center, Flex, Link, Text, chakra} from '@chakra-ui/react';
-import {TbComponents} from 'react-icons/tb';
+import {EnterpriseIcon} from '../../components/Icons';
 
 <Box
     pl="2"
@@ -19,24 +19,24 @@ import {TbComponents} from 'react-icons/tb';
 <Flex as="span">
   <chakra.span pl="10px" pr="10px">
     <Center h="100%">
-      <TbComponents />
+      <EnterpriseIcon />
     </Center>
   </chakra.span>
   <Text pl="1">
     <b>
       This feature is only available with a{' '}
       <Link
-        color={'primary'}
+        color={'tertiary'}
         href="https://www.apollographql.com/docs/graphos/enterprise/"
       >
         GraphOS Enterprise plan
       </Link>
       .
     </b>{' '}
-    If your organization doesn't currently have an Enterprise plan, you can test
-    this functionality by signing up for a free{' '}
+    If your organization doesn't have an Enterprise plan, you can test this
+    functionality by signing up for a free{' '}
     <Link
-      color={'primary'}
+      color={'tertiary'}
       href="https://www.apollographql.com/docs/graphos/org/plans/#enterprise-trials"
     >
       Enterprise trial

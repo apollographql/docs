@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {BsBook} from 'react-icons/bs';
-import {DOCSET_ICONS} from '../DocsetMenu';
-import {VscMortarBoard} from 'react-icons/vsc';
+import {BookIcon, DOCSET_ICONS, OdysseyIcon} from '../Icons';
 
 export default function ResultIcon({result}) {
   const {type, docset} = result;
@@ -14,9 +12,9 @@ export default function ResultIcon({result}) {
       }
       break;
     case 'blog':
-      return <BsBook />;
+      return <BookIcon />;
     case 'odyssey':
-      return <VscMortarBoard />;
+      return <OdysseyIcon />;
     default:
   }
 

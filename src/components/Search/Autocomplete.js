@@ -8,8 +8,8 @@ import React, {useEffect, useMemo, useState} from 'react';
 import algoliasearch from 'algoliasearch/lite';
 import insightsClient from 'search-insights';
 import usePreviousDistinct from 'react-use/lib/usePreviousDistinct';
-import {FiSearch} from 'react-icons/fi';
 import {Input, InputGroup, InputLeftElement} from '@chakra-ui/react';
+import {SearchIcon} from '../Icons';
 import {createAlgoliaInsightsPlugin} from '@algolia/autocomplete-plugin-algolia-insights';
 import {createAutocomplete} from '@algolia/autocomplete-core';
 import {getAlgoliaResults} from '@algolia/autocomplete-preset-algolia';
@@ -135,7 +135,7 @@ export default function Autocomplete({onClose, optionalFilters}) {
           })}
         />
         <InputLeftElement>
-          <FiSearch />
+          <SearchIcon />
         </InputLeftElement>
       </InputGroup>
       {autocompleteState.isOpen && (

@@ -1,5 +1,5 @@
 import React from 'react';
-import {FiSearch, FiX} from 'react-icons/fi';
+import {CloseIcon, SearchIcon} from '../Icons';
 import {
   Input,
   InputGroup,
@@ -14,7 +14,7 @@ function Search(props) {
   return (
     <InputGroup>
       <InputLeftElement pointerEvents="none">
-        <FiSearch color="gray.300" />
+        <SearchIcon color="gray.300" />
       </InputLeftElement>
       <Input
         type="text"
@@ -23,7 +23,7 @@ function Search(props) {
         onChange={e => refine(e.target.value)}
       />
       <InputRightElement>
-        <FiX color="gray.300" onClick={clear} />
+        <CloseIcon color="gray.300" onClick={clear} />
       </InputRightElement>
     </InputGroup>
   );
