@@ -50,7 +50,7 @@ headers:
 
 ## Router configuration YAML
 
-You can configure your router's behavior under **Router configuration YAML** on the **Cloud Router** tab.
+You can configure your router's behavior in the **Router configuration YAML** section of the **Cloud Router** tab.
 
 On the [**Serverless** plan](../org/plans/), you can configure:
 
@@ -95,7 +95,7 @@ Cloud routing supports the following types of header rules:
 
 Enables you to selectively pass along headers that were included in the client's request to the router.
 
-You can specify which headers to propagate based on a matching [regular expression pattern](https://docs.rs/regex/latest/regex/):
+You can specify which headers to propagate based on a matching [regex pattern](https://docs.rs/regex/latest/regex/):
 
 ```yaml
 - propagate:
@@ -237,7 +237,7 @@ By default, the router enables _only_ GraphOS Studio to initiate browser connect
 
 - Add the origins of those web applications to the router's list of allowed `origins`.
   - Use this option if there is a known, finite list of web applications that consume your cloud supergraph.
-- Add a regular expression that matches the origins of those web applications to the router's list of allowed `origins`.
+- Add a regex that matches the origins of those web applications to the router's list of allowed `origins`.
   - This option comes in handy if you want to match origins against a pattern, see the example below that matches subdomains of a specific namespace.
 - Enable the `allow_any_origin` option.
 
@@ -267,7 +267,7 @@ cors:
     - 'https://([a-z0-9]+[.])*api[.]example[.]com' # any host that uses https and ends with .api.example.com
 ```
 
-You can also turn off CORS entirely by setting `origins` to an empty list:
+You can also disable CORS entirely by setting `origins` to an empty list:
 
 ```yml
 cors:
@@ -276,7 +276,7 @@ cors:
 
 #### Passing credentials
 
-If your router requires requests to [include a user's credentials](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#requests_with_credentials) (for example, via cookies), you need to modify your CORS configuration to tell the browser those credentials are allowed.
+If your router requires requests to [include a user's credentials](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#requests_with_credentials) (e.g., via cookies), you need to modify your CORS configuration to tell the browser those credentials are allowed.
 
 You can enable credentials with CORS by setting the [`Access-Control-Allow-Credentials`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Credentials) HTTP header to `true`.
 
@@ -340,7 +340,7 @@ cors:
 
 #### Response `Vary` header
 
-A plugin may set a response `Vary` header. If, after all plugins are processed, there is no response `Vary` header, then the router will add one with a value of `origin`.
+A plugin may set a response `Vary` header. If, after all plugins are processed, there is no response `Vary` header, then the router will add one with a value of "origin".
 
 ### Subgraph error inclusion
 

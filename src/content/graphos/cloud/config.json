@@ -1,0 +1,44 @@
+{
+  "title": "Cloud routing",
+  "algoliaFilters": [
+    [
+      "docset:graphos",
+      "docset:graphos/delivery",
+      "docset:graphos/metrics",
+      "docset:graphos/org",
+      "docset:graphos/explorer",
+      "docset:graphos/enterprise"
+    ],
+    [
+      "docset:rover",
+      "docset:federation",
+      "docset:router"
+    ]
+  ],
+  "sidebar": {
+    "Overview": "/",
+    "Configuration": "/configuration",
+    "Dedicated": {
+      "Overview": ["/dedicated",
+      [
+        "preview"
+      ]],
+      "Quickstart":[ "/dedicated/quickstart",
+      [
+        "preview"
+      ]],
+      "GCUs":[ "/dedicated/throughput",
+      [
+        "preview"
+      ]],
+      "AWS Lattice configuration":[ "/dedicated/lattice",
+      [
+        "preview"
+      ]],
+      "AWS Lattice troubleshooting":[ "/dedicated/lattice-troubleshooting",
+      [
+        "preview"
+      ]]
+    }
+  }
+}
