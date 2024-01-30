@@ -3,7 +3,7 @@ title: Safelisting with persisted queries
 description: Secure your graph while minimizing request latency
 ---
 
-<GraphOSEnterpriseRequired />
+<EnterpriseFeature />
 
 GraphQL APIs are broadly open by design to provide flexibility and efficiency in client development. However, this openness also introduces the risk of potentially malicious requests and the subsequent need to secure your graph.
 
@@ -55,7 +55,7 @@ APQ has a few limitations compared to registered persisted queries.
         with <em>any</em> operations it receives.
       </td>
       <td>
-        ✅ Clients <em>pre</em>register their operations to GraphOS. Your router fetches its PQL on startup, enabling it
+        ✅ Clients <em>preregister</em> their operations to GraphOS. Your router fetches its PQL on startup, enabling it
         to reject operations not present in the PQL.
       </td>
     </tr>
@@ -345,7 +345,7 @@ See the instructions for your client library:
 
 #### Apollo Client Web
 
-1. In your app's project, install the `@apollo/generate-persisted-query-manifest` package as a dev dependency:
+1. In your app's project, install the `@apollo/generate-persisted-query-manifest` package as a development dependency:
 
    ```bash showLineNumbers=false
    npm install --save-dev @apollo/generate-persisted-query-manifest
@@ -656,7 +656,7 @@ Each operation object has the following properties:
 
 The unique ID to use for the operation in your PQL.
 
-**This value must be unique among operations in the PQL.** It can match a previously-published operation as long as the operation's [`body`](#body) remains the same. If you try to publish an operation with the same `id` as an existing operation but a different body, manifest publication throws an error. GraphOS interprets this as an attempt to _overwrite_ the existing PQL entry with a new [`body`](#body), which would change the behavior of existing deployed clients.
+**This value must be unique among operations in the PQL.** It can match a previously published operation as long as the operation's [`body`](#body) remains the same. If you try to publish an operation with the same `id` as an existing operation but a different body, manifest publication throws an error. GraphOS interprets this as an attempt to _overwrite_ the existing PQL entry with a new [`body`](#body), which would change the behavior of existing deployed clients.
 
 **To ensure uniqueness,** tooling should generate this value based on the operation `body`. For details, see [Generating IDs](#generating-ids).
 
@@ -721,7 +721,7 @@ By generating identifiers based on query documents this way, you ensure that dif
 
 <Caution>
 
-**Never use an operation's _name_ for its PQL ID.** Different clients (or even different versions of the _same_ client) might execute different operations with the same name, and _all_ of those distinct operations should be present in your PQL.
+**Never use an operation's _name_ for its PQL ID.** Different clients (or even different versions of the _same_ client) might execute different operations with the same name, and _all_ those distinct operations should be present in your PQL.
 
 </Caution>
 
@@ -731,8 +731,12 @@ Whenever a client sends an operation string to a router with safelisting enabled
 
 When comparing an incoming freeform GraphQL document to the registered operations in its PQL, the router **ignores some aspects** of the document that have no semantic impact:
 
+<!-- vale Google.Spacing = NO -->
+
 - [Ignored tokens](http://spec.graphql.org/draft/#sec-Language.Source-Text.Ignored-Tokens) such as white space, comments, and commas are ignored.
 - The order of **top-level** definitions (operation and fragment definitions) is ignored. This means that when assembling a full GraphQL document from its operation and fragments, there's no need to ensure that fragments are put in the same order at build time and at run time.
+
+<!-- vale Google.Spacing = YES -->
 
 However, **all other details of the document must match**. For example, field order, argument order, `$variable` names, alias names, string and numeric literals, and the presence of `__typename` fields must match between the incoming freeform GraphQL document and the document in the persisted query list.
 
@@ -794,7 +798,7 @@ query GetBooks($limit: Int, $offset: Int) {
 
 <Note>
 
-The router ignores top-level definition order and ignored tokens in order to make it easier to build tools that generate persisted query manifests whose contents match what will be sent at runtime. If your use case requires further normalization steps to be applied when comparing incoming opportunities to the safelist, contact Apollo Support; we are open to adding further normalization as an opt-in feature.
+The router ignores top-level definition order and ignored tokens to make it easier to build tools that generate persisted query manifests whose contents match what will be sent at runtime. If your use case requires further normalization steps to be applied when comparing incoming opportunities to the safelist, contact Apollo Support; we are open to adding further normalization as an opt-in feature.
 
 </Note>
 

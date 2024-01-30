@@ -47,6 +47,7 @@ exceptions:
   - SCM
   - SCSS
   - SDK
+  - SDL
   - SQL
   - SSH
   - SSL

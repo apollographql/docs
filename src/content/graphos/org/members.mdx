@@ -12,9 +12,9 @@ Each organization member has one of the following roles:
 | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------: |
 | **Org Admin**       | Has management access to the entire organization, including its members, graphs, and configuration.                                                                                                                                                                                                                           |                              All                               |
 | **Graph Admin**     | Has management access to the organization's graphs, but not to members or organization-level configuration. Intended for developers who are considered admins to the graph.                                                                                                                                                   |                        Enterprise only                         |
-| **Contributor**     | Can push new schemas to graphs, but cannot configure graph settings or integrations. Intended for back-end developers who are authorized to make changes to graphs. _Cannot_ push schema changes to [protected variants](../graphs/studio-features/#protected-variants-enterprise-only).                                      |                        Enterprise only                         |
+| **Contributor**     | Can push new schemas to graphs, but cannot configure graph settings or integrations. Intended for backend developers who are authorized to make changes to graphs. _Cannot_ push schema changes to [protected variants](../graphs/studio-features/#protected-variants-enterprise-only).                                       |                        Enterprise only                         |
 | **Documenter**      | Has all permissions of the Observer role, plus the ability to edit graph READMEs, descriptions, and similar non-operational metadata.                                                                                                                                                                                         |                        Enterprise only                         |
-| **Observer**        | Has view-only access to the organization's graph data, such as schemas and metrics. Can also execute queries in the Explorer. Intended for back-end developers who are _not_ authorized to make changes to graphs.                                                                                                            |                        Enterprise only                         |
+| **Observer**        | Has view-only access to the organization's graph data, such as schemas and metrics. Can also execute queries in the Explorer. Intended for backend developers who are _not_ authorized to make changes to graphs.                                                                                                             |                        Enterprise only                         |
 | **Consumer**        | <p>Has view-only access to the organization's graph _schemas_, but not metrics. Can also execute queries in the Explorer. Intended for application developers building clients against a graph.</p><p>This role is available to all plan types. For legacy Team plans, **Consumer** members do not count as billed users.</p> |                              All                               |
 | **Billing Manager** | <p>Has management access to organization-level configuration and billing. Can also remove members (but not invite them). No access to graphs. [Learn more](#billing-managers)</p><p>This role is available to all paid plan types. For legacy Team plans, **Billing Manager** members do not count as billed users.</p>       |                      All paid plan types                       |
 
@@ -46,37 +46,82 @@ When **Contributor**s in an organization create a new graph, they are automatica
 
 ## Role permissions
 
-| Action                                                                      | Org Admin | Graph Admin |                                         Contributor                                          | Observer / Documenter | Consumer |
-| :-------------------------------------------------------------------------- | :-------: | :---------: | :------------------------------------------------------------------------------------------: | :-------------------: | :------: |
-| Invite members                                                              |     ✓     |             |                                                                                              |                       |          |
-| Remove members                                                              |     ✓     |             |                                                                                              |                       |          |
-| View and edit billing information                                           |     ✓     |             |                                                                                              |                       |          |
-| Manage organization configuration (name, avatar, etc.)                      |     ✓     |             |                                                                                              |                       |          |
-| Export [audit logs](./audit-log) (enterprise only)                          |     ✓     |             |                                                                                              |                       |          |
-| Delete the organization                                                     |     ✓     |             |                                                                                              |                       |          |
-| Manage which users have access to graphs                                    |     ✓     |      ✓      |                                                                                              |                       |          |
-| Manage graph integrations (Slack, Datadog, etc.)                            |     ✓     |      ✓      |                                                                                              |                       |          |
-| View and manage graph API keys                                              |     ✓     |      ✓      |                                                                                              |                       |          |
-| Modify schema checks configuration                                          |     ✓     |      ✓      |                                                                                              |                       |          |
-| Delete and rename graphs                                                    |     ✓     |      ✓      |                                                                                              |                       |          |
-| Create and modify [contracts](../delivery/contracts/) and contract variants |     ✓     |      ✓      |                                                                                              |                       |          |
-| View existing contracts                                                     |     ✓     |      ✓      |                                              ✓                                               |                       |          |
-| Create new variants                                                         |     ✓     |      ✓      | Non-[protected](../graphs/studio-features/#protected-variants-enterprise-only) variants only |                       |          |
-| Push schemas to a graph                                                     |     ✓     |      ✓      | Non-[protected](../graphs/studio-features/#protected-variants-enterprise-only) variants only |                       |          |
-| Manage Explorer settings (URL, etc)                                         |     ✓     |      ✓      | Non-[protected](../graphs/studio-features/#protected-variants-enterprise-only) variants only |                       |          |
-| Create graphs                                                               |     ✓     |      ✓      |                                              ✓                                               |                       |          |
-| Edit variant READMEs                                                        |     ✓     |      ✓      |                                              ✓                                               |    Documenter only    |          |
-| Run [schema checks](../delivery/schema-checks)                              |     ✓     |      ✓      |                                              ✓                                               |           ✓           |          |
-| See the schemas of subgraphs in federated graphs                            |     ✓     |      ✓      |                                              ✓                                               |           ✓           |          |
-| View graph usage metrics and traces                                         |     ✓     |      ✓      |                                              ✓                                               |           ✓           |          |
-| View graph schemas and changelogs                                           |     ✓     |      ✓      |                                              ✓                                               |           ✓           |    ✓     |
-| Query graphs with the Explorer                                              |     ✓     |      ✓      |                                              ✓                                               |           ✓           |    ✓     |
+### Organization management permissions
 
-<Note>
+| Action                                                 | Org Admin | Graph Admin | Contributor | Observer / Documenter | Consumer |
+| :----------------------------------------------------- | :-------: | :---------: | :---------: | :-------------------: | :------: |
+| Manage organization configuration (name, avatar, etc.) |     ✓     |             |             |                       |          |
+| Delete the organization                                |     ✓     |             |             |                       |          |
+| View and edit billing information                      |     ✓     |             |             |                       |          |
+| Invite members                                         |     ✓     |             |             |                       |          |
+| Remove members                                         |     ✓     |             |             |                       |          |
+| Export [audit logs](./audit-log) (enterprise only)     |     ✓     |             |             |                       |          |
+| Manage which users have access to graphs               |     ✓     |      ✓      |             |                       |          |
 
-Currently, graph usage metrics and traces are not displayed to **Consumer**s via the Studio web app, but they are not blocked at the API layer. We intend to remove this capability from **Consumer**s, but for the time being you should understand that **Consumer**s are not fully prevented from accessing these metrics and traces.
+### Graph management permissions
 
-</Note>
+| Action                                           | Org Admin | Graph Admin |                                         Contributor                                          | Observer / Documenter | Consumer |
+| :----------------------------------------------- | :-------: | :---------: | :------------------------------------------------------------------------------------------: | :-------------------: | :------: |
+| View and manage graph API keys                   |     ✓     |      ✓      |                                                                                              |                       |          |
+| Manage graph integrations (Slack, Datadog, etc.) |     ✓     |      ✓      |                                                                                              |                       |          |
+| Delete and rename graphs                         |     ✓     |      ✓      |                                                                                              |                       |          |
+| Create graphs                                    |     ✓     |      ✓      |                                              ✓                                               |                       |          |
+| Create new variants                              |     ✓     |      ✓      | Non-[protected](../graphs/studio-features/#protected-variants-enterprise-only) variants only |                       |          |
+| Push schemas to a graph                          |     ✓     |      ✓      | Non-[protected](../graphs/studio-features/#protected-variants-enterprise-only) variants only |                       |          |
+| Manage Explorer settings (URL, etc)              |     ✓     |      ✓      | Non-[protected](../graphs/studio-features/#protected-variants-enterprise-only) variants only |                       |          |
+| See the schemas of subgraphs in federated graphs |     ✓     |      ✓      |                                              ✓                                               |           ✓           |          |
+| View graph usage metrics and traces <sup>1</sup> |     ✓     |      ✓      |                                              ✓                                               |           ✓           |          |
+| Edit variant READMEs                             |     ✓     |      ✓      |                                              ✓                                               |    Documenter only    |          |
+| Query graphs with the Explorer                   |     ✓     |      ✓      |                                              ✓                                               |           ✓           |    ✓     |
+| View graph schemas and changelogs                |     ✓     |      ✓      |                                              ✓                                               |           ✓           |    ✓     |
+
+<blockquote>
+
+<sup>1</sup> Currently, graph usage metrics and traces are not displayed to <strong>
+  Consumer
+</strong>
+s via the Studio web app, but they are not blocked at the API layer. We intend to
+remove this capability from <strong>Consumer</strong>s, but for the time being
+you should understand that <strong>Consumer</strong>s are not fully prevented from
+accessing these metrics and traces.
+
+</blockquote>
+
+### Schema checks permissions
+
+Learn more about [schema checks](../delivery/schema-checks).
+
+| Action                             | Org Admin | Graph Admin | Contributor | Observer / Documenter | Consumer |
+| :--------------------------------- | :-------: | :---------: | :---------: | :-------------------: | :------: |
+| Modify schema checks configuration |     ✓     |      ✓      |             |                       |          |
+| Run schema checks                  |     ✓     |      ✓      |      ✓      |           ✓           |          |
+
+### Schema proposals permissions
+
+<EnterpriseFeature />
+
+The table below shows _default_ schema proposal settings. You can [configure which roles can create, edit, and approve proposals](../delivery/schema-proposals/configuration#configure-permissions-and-approvals).
+
+| Action                 | Org Admin | Graph Admin | Contributor | Observer / Documenter | Consumer |
+| :--------------------- | :-------: | :---------: | :---------: | :-------------------: | :------: |
+| Change proposal status |     ✓     |      ✓      |             |                       |          |
+| Create proposals       |     ✓     |      ✓      |      ✓      |           ✓           |          |
+| Edit proposals         |     ✓     |      ✓      |      ✓      |           ✓           |          |
+| Add reviewers          |     ✓     |      ✓      |      ✓      |           ✓           |          |
+| View proposals         |     ✓     |      ✓      |      ✓      |           ✓           |    ✓     |
+| Make comments          |     ✓     |      ✓      |      ✓      |           ✓           |    ✓     |
+| Approve proposals      |     ✓     |      ✓      |      ✓      |           ✓           |    ✓     |
+
+### Contract permissions
+
+<EnterpriseFeature />
+
+Learn more about [contracts](../delivery/contracts/).
+
+| Action                                            | Org Admin | Graph Admin | Contributor | Observer / Documenter | Consumer |
+| :------------------------------------------------ | :-------: | :---------: | :---------: | :-------------------: | :------: |
+| Create and modify contracts and contract variants |     ✓     |      ✓      |             |                       |          |
+| View existing contracts                           |     ✓     |      ✓      |      ✓      |                       |          |
 
 ### Billing managers
 
@@ -121,7 +166,7 @@ Before January 2021, graph keys did not have roles. Keys created before that dat
 <Note>
 
 - If your organization uses an identity provider (IdP) for single sign-on (SSO), you should configure access in your IdP rather than via invitations. For example, with Okta, you need to [assign](./sso/okta-integration-guide#assign-users-in-okta) members to your GraphOS Studio integration to give them access. If you've configured a member to have access in your IdP, they can access GraphOS Studio without an invitation link.
-- **Do not share invite links publicly.** Anyone with the link can join your organization. If an invite link becomes compromised, an admin can replace or disable it from the Settings tab.
+- **Do not share invite links publicly.** Anyone with the link can join your organization. If an invite link becomes compromised, an admin can replace or turn it off from the Settings tab.
 
 </Note>
 

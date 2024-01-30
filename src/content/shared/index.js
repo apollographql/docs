@@ -1,3 +1,4 @@
+export {default as ApprovedSchemaProposals} from './approved-schema-proposals.mdx';
 export {default as CalloutCard} from './callout-card.mdx';
 export {default as ClientPQDifferences} from './client-pq-differences.mdx';
 export {default as ClientPQImplementation} from './client-pq-implementation.mdx';
@@ -16,5 +17,10 @@ export {default as PQSecurityLevels} from './pq-security-levels.mdx';
 export {default as PublishPQMs} from './publish-pqms.mdx';
 export {default as RegisterCLI} from './register-cli.mdx';
 export {default as RegisterFederatedCLI} from './register-federated-cli.mdx';
+export {default as SchemaProposalCreationMermaid} from './schema-proposal-creation-mermaid.mdx';
+export {default as SchemaProposalImplementationMermaid} from './schema-proposal-implementation-mermaid.mdx';
+export {default as SchemaProposalPublicationMermaid} from './schema-proposal-publication-mermaid.mdx';
+export {default as SchemaProposalReviewMermaid} from './schema-proposal-review-mermaid.mdx';
 export {default as SetApolloVCSCommit} from './set-apollo-vcs-commit.mdx';
+export {default as StudioPages} from './studio-pages.mdx';
 export {default as TopLevelAwait} from './top-level-await.mdx';

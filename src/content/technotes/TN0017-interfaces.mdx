@@ -1,5 +1,8 @@
 ---
 title: Recommended usage for GraphQL interfaces
+subtitle: Explore examples and avoid common pitfalls
+description: Interfaces enable schema fields to return one of multiple object types. Explore examples and avoid common pitfalls in using interfaces.
+published: 2022-10-31
 id: TN0017
 tags: [schema-design, federation]
 ---
@@ -25,7 +28,7 @@ type Book implements Media {
 }
 ```
 
-Because interfaces can enforce this requirement on implementing object types, it can be tempting to create interfaces _purely_ to enforce field definitions. The following schema requires a `name` field on all of its object types by declaring that those types implement the `Nameable` interface:
+Because interfaces can enforce this requirement on implementing object types, it can be tempting to create interfaces _purely_ to enforce field definitions. The following schema requires a `name` field on all its object types by declaring that those types implement the `Nameable` interface:
 
 <p style="margin-bottom: 0;">❌</p>
 
@@ -90,7 +93,7 @@ type Query {
 
 ## Implications of adding new implementing types
 
-When a client includes a field returning an abstract type in an operation, they usually enumerate which fields from the _concrete_ types they're interested in with "conditional fragments", like so:
+When a client includes a field returning an abstract type in an operation, they usually enumerate which fields from the _concrete_ types they're interested in with "conditional fragments," like so:
 
 ```graphql
 query OwnersAndPets {
@@ -120,18 +123,19 @@ If your API adds additional possible types to the abstract type, clients must ch
 ```ts
 // Trigger a TypeScript error if a new type is introduced but
 // we haven't added a switch case for it.
-const assertUnknown = (x: never) => console.log(`Unknown Pet type: ${(x as any).__typename}`);
+const assertUnknown = (x: never) =>
+  console.log(`Unknown Pet type: ${(x as any).__typename}`);
 
 switch (pet.__typename) {
-  case "Cat":
+  case 'Cat':
     console.log(`Cat meows ${pet.meowVolume}`);
     break;
-  case "Dog":
+  case 'Dog':
     console.log(`Dog barks ${pet.barkVolume}`);
     break;
   default:
     assertUnknown(pet);
-    console.log("Fallback behavior");
+    console.log('Fallback behavior');
 }
 ```
 

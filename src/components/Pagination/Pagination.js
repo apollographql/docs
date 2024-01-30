@@ -1,7 +1,7 @@
 import PaginationButton from './PaginationButton';
 import PropTypes from 'prop-types';
 import React, {useContext, useMemo} from 'react';
-import {FiChevronLeft, FiChevronRight} from 'react-icons/fi';
+import {ChevronLeftIcon, ChevronRightIcon} from '../Icons';
 import {Flex} from '@chakra-ui/react';
 import {
   PathContext,
@@ -36,7 +36,7 @@ export function Pagination({navItems}) {
           key="prev"
           label="Previous"
           item={prevItem}
-          leftIcon={<FiChevronLeft />}
+          leftIcon={<ChevronLeftIcon />}
           pl="3"
         />
       )}
@@ -46,7 +46,7 @@ export function Pagination({navItems}) {
           ml="auto"
           textAlign="right"
           label="Next"
-          rightIcon={<FiChevronRight />}
+          rightIcon={<ChevronRightIcon />}
           item={nextItem}
           pr="3"
         />

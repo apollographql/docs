@@ -5,6 +5,7 @@ import Markdown from 'react-markdown';
 import PropTypes from 'prop-types';
 import React from 'react';
 import RelativeLink, {PrimaryLink} from '../RelativeLink';
+import {ArrowRightIcon} from '../Icons';
 import {
   Box,
   Flex,
@@ -17,7 +18,6 @@ import {
   TagLabel,
   Text
 } from '@chakra-ui/react';
-import {FiArrowRight} from 'react-icons/fi';
 import {Highlight, useHits} from 'react-instantsearch';
 import {MarkdownCodeBlock} from '@apollo/chakra-helpers';
 import {useUser} from '../../utils';
@@ -28,6 +28,10 @@ const PaddedMarkdownCodeBlock = ({children}) => {
       <MarkdownCodeBlock>{children}</MarkdownCodeBlock>
     </Box>
   );
+};
+
+PaddedMarkdownCodeBlock.propTypes = {
+  children: PropTypes.node.isRequired
 };
 
 const ClickableHeading = ({as, fontSize, fontWeight, id, children}) => {
@@ -72,6 +76,17 @@ ClickableHeading.propTypes = {
 
 export const makeGlossaryTermId = term =>
   term.replace(/\s+/g, '-').replace(/@/g, '').replace(/\//g, '').toLowerCase();
+
+const updateHost = url => {
+  if (process.env.CONTEXT === 'production') {
+    return url;
+  }
+
+  return url.replace(
+    'https://www.apollographql.com/docs',
+    process.env.DEPLOY_URL
+  );
+};
 
 const Results = () => {
   const {hits} = useHits();
@@ -149,7 +164,7 @@ const Results = () => {
                 my="4"
                 borderLeftWidth="2px"
                 borderColor="primary"
-                fontSize="md"
+                fontSize="lg"
                 sx={{
                   '>': {
                     ':not(:last-child)': {
@@ -212,13 +227,15 @@ const Results = () => {
               <PrimaryLink
                 my="4"
                 as="a"
-                href={hit.learnMore}
+                href={updateHost(hit.learnMore)}
                 style={{display: 'flex', alignItems: 'center'}}
               >
-                {hit.learnMoreText
-                  ? hit.learnMoreText
-                  : 'Learn more about this term'}
-                <FiArrowRight style={{marginLeft: '0.5rem'}} />
+                <Text style={{marginRight: '0.5rem'}}>
+                  {hit.learnMoreText
+                    ? hit.learnMoreText
+                    : 'Learn more about this term'}
+                </Text>
+                <ArrowRightIcon />
               </PrimaryLink>
               {isApollonaut && <EditOnGitHub term={hit.objectID} />}
             </Flex>

@@ -29,7 +29,7 @@ Only [Organization Admins](./members/#organization-wide-member-roles) can reques
 
 </Note>
 
-When creating an audit log export, you specify a **time range**, along with optional filters to limit actions to a particular **user** or **graph**. The maximum time range that you can request audits for is 180 days, as definied by our retention policy.
+When creating an audit log export, you specify a **time range**, along with optional filters to limit actions to a particular **user** or **graph**. The maximum time range that you can request audits for is 180 days, as defined by our retention policy.
 
 <img
   src="../img/audit-log-create.jpg"
@@ -51,6 +51,8 @@ Note that it takes about 10 to 15 minutes before a performed action can appear i
 ## Reading an audit log
 
 An exported audit log is a CSV file in which each row represents a material change to your Studio organization. Columns contain the following information:
+
+<!-- vale Vale.Spelling = NO -->
 
 | Column             | Description                                                                                                                                                                           |
 | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -86,6 +88,8 @@ An audit log's **Resource_Type** column indicates what type of resource each act
 ## Audited actions
 
 The **Action** column of an audit log indicates the type of each action that was performed. Possible values are listed below.
+
+<!-- vale Vale.Spelling = YES -->
 
 <Note>
 

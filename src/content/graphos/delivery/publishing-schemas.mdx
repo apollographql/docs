@@ -8,6 +8,12 @@ Whenever you make changes to a graph's schema, you should **publish** those chan
 
 This page covers how to publish different kinds of schemas using the Rover CLI. Consult the [Platform API](/graphos/platform-api/) reference to learn how to use the API for publication.
 
+<Tip>
+
+Incorporate [schema proposals](./schema-proposals) into [schema checks](./schema-checks) to ensure your organization only publishes approved changes. [Learn more.](./schema-proposals/implementation#ensure-changes-match-an-approved-proposal)
+
+</Tip>
+
 ## Prerequisites
 
 1. [Install the Rover CLI](/rover/getting-started/).
@@ -39,7 +45,7 @@ graph LR;
 
 1. Identify the name of the subgraph you're publishing to. You can view the names of your existing subgraphs from your variant's **Subgraphs** page in [GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content).
 
-2. **If you're publishing a subgraph for the first time,** _also_ obtain the **routing URL** for that subgraph. This is the URL that your router will use to communicate with the subgraph.
+2. **If you're publishing a subgraph for the first time,** _also_ obtain the **routing URL** of that subgraph. This is the URL that your router will use to communicate with the subgraph.
 
    - If GraphOS already knows your subgraph's routing URL, you don't need to provide this value unless you're changing it.
 

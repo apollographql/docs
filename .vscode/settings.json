@@ -1,3 +1,5 @@
 {
-  "eslint.validate": ["mdx"]
+  "eslint.validate": [
+    "mdx"
+  ]
 }

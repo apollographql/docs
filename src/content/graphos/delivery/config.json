@@ -19,15 +19,38 @@
     "Overview": "/",
     "Schema checks": {
       "Overview": "/schema-checks",
-      "Configuring schema checks": "/check-configurations",
-      "Connecting to GitHub": "/github-integration"
+      "Configure schema checks": "/check-configurations",
+      "Connect to GitHub": "/github-integration"
     },
     "Schema linting": {
       "Overview": "/schema-linter",
       "Linter rules": "/linter-rules"
     },
+    "Schema proposals": {
+      "Overview": ["/schema-proposals",
+      [
+        "enterprise", "preview"
+      ]],
+      "Configure proposals":[ "/schema-proposals/configuration",
+      [
+        "enterprise", "preview"
+      ]],
+
+      "Propose changes":[ "/schema-proposals/creation",
+      [
+        "enterprise", "preview"
+      ]],
+      "Review proposals":[ "/schema-proposals/review",
+      [
+        "enterprise", "preview"
+      ]],
+      "Implement proposals":[ "/schema-proposals/implementation",
+      [
+        "enterprise", "preview"
+      ]]
+    },
     "Schema delivery": {
-      "Publishing schemas": "/publishing-schemas",
+      "Publish schemas": "/publishing-schemas",
       "Launches": "/launches",
       "Contracts":
       {

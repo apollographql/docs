@@ -1,6 +1,6 @@
 import React from 'react';
 import {Box} from '@chakra-ui/react';
-import {FiSearch} from 'react-icons/fi';
+import {SearchIcon} from '../Icons';
 
 export default function SearchButton(props) {
   return (
@@ -24,7 +24,7 @@ export default function SearchButton(props) {
       }}
       {...props}
     >
-      <FiSearch />
+      <SearchIcon />
       <Box
         ml="2"
         color="gray.500"
