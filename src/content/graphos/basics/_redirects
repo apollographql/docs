@@ -75,9 +75,14 @@
 /odyssey https://www.apollographql.com/tutorials/
 
 # Move Validating client operations to Rover docs
-
 /delivery/validating-client-operations/ /docs/rover/validating-client-operations/
 
 # Redirect self-hosted routing setup to self-hosted quickstart
-
 /routing/self-hosted /docs/graphos/quickstart/self-hosted/
+
+# Migrate cloud routing to its own docset
+/routing/cloud /docs/graphos/cloud-routing
+/routing/cloud-configuration /docs/graphos/cloud-routing/configuration
+/routing/cloud-dedicated /docs/graphos/cloud-routing/dedicated
+/routing/cloud-dedicated/lattice /docs/graphos/cloud-routing/dedicated/lattice
+/routing/cloud-dedicated/lattice-troubleshooting /docs/graphos/cloud-routing/dedicated/lattice-troubleshooting
