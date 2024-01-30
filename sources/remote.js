@@ -55,9 +55,5 @@ module.exports = {
   router: {
     remote: 'https://github.com/apollographql/router',
     branch: 'main'
-  },
-  'platform-users': {
-    remote: `https://svc-apollo-docs:${process.env.GITHUB_TOKEN}@github.com/apollographql/platform-users-docs`,
-    branch: 'main'
   }
 };
