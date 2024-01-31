@@ -1,66 +1,119 @@
 ---
-title: GCU Throughput Performance
-subtitle: Understanding GCU performance and scaling
-description: Learn about Apollo's dedicated cloud routing for GraphQL APIs
+title: Throughput guide
+subtitle: Understand GCU performance and scaling
+description: Learn how to calculate and scale the throughput capacity of your cloud supergraph.
 ---
 
 <DedicatedPreview />
 
-From a single GCU, you can expect the following performance:
+This guide covers:
+- An [overview of **Graph Compute Units** (GCUs)](#overview) and their performance expectations
+- How to [calculate the number of GCUs](#gcu-calculation) your supergraph needs
+- How to [manage your supergraph's throughput capacity](#manage-capacity) as needs change
+
+## Overview
+
+Cloud Dedicated pricing is based on the amount of **Graph Compute Units** (GCUs) needed to run your graph. A GCU is a unit of throughput capacity that takes into account:
+
+- Processing incoming GraphQL requests
+- Making a query plan across subgraphs
+- Securely routing traffic to your backend services
+
+GCUs run on AWS in the region of your choice.
+
+### Performance expectations
+
+<PreviewFeature>
+
+While Cloud Dedicated is in [preview](#private-preview), these performance expectations may change.
+
+</PreviewFeature>
+
+From a single GCU, you can expect the following baseline performance:
 
 - 25 requests per second (RPS)
 - 150 subgraph RPS
 - Up to 0.5 megabytes of response data per second
 
-GCU performance varies depending on your GraphQL workload and architecture. For example, queries that return large payloads may decrease throughput below the baseline 25 RPS. Conversely, queries that return small amounts of data from several subgraphs may achieve above the baseline 25 RPS. Apollo recommends load testing your GraphQL workload on Cloud Dedicated before going into production.
+GCU performance varies depending on [additional factors](#throughput-factors), such as payload size. For example, requests that return large payloads may decrease throughput below the baseline 25 RPS. Conversely, requests that return small amounts of data may achieve above the baseline 25 RPS.
 
-## How many GCUs do I need?
+Apollo recommends [load testing](#load-testing) your GraphQL workload on Cloud Dedicated before going into production.
 
-If you're already using GraphOS, go to Insights and look at the Request Rate chart. Request Rate is in requests per minute, so find the peak requests per minute (eg: 19,000) and divide by 60 to calculate requests per second. In this workload, the customer has a peak of 317 RPS. Assuming a GCU can serve 25 RPS, this workload would require at least 13 GCUs to operate properly.
+### Throughput factors
+
+Beyond RPS, query complexity and response size influence GCU throughput. For example, the following scenarios would decrease relative GCU throughput:
+
+- Requests that query more than five subgraphs
+- Requests that return hundreds or thousands of fields per operation
+
+Requests like this decrease throughput capacity because they require additional compute resources to execute.
+Factor in additional GCUs into your throughput calculation if your supergraph receives complex queries or returns large responses.
+
+<Note>
+
+GCUs include burst capacity to handle the occasional complex query. A sustained period of complex queries can [exhaust this capacity](#rate-limiting).
+
+</Note>
+
+### Rate limiting
+
+GCUs aren't rate-limited. However, GCUs do offer a specific amount of throughput capacity. It's possible to temporarily burst GCU throughput for a few seconds. After this period, clients receive 429 errors. Apollo recommends adding retry logic to your clients to minimize dropped requests.
+
+## GCU calculation
+
+If you already use GraphOS, you can calculate your required GCUs using the operation metrics in GraphOS Studio.
+
+1. In [Studio](https://studio.apollographql.com?referrer=docs-content), go to the **Insights** page and select **Last month** as the timeframe.
 
 <img
   className="screenshot"
-  alt="GraphOS Studio Insights Requests per Minute"
-  src="../../img/cloud-dedicated/studio-rpm.png"
+  alt="GraphOS Studio Insights page with timeframe selection"
+  src="../../img/cloud-dedicated/insights-page.png"
 />
 
-## How do query complexity and response size affect throughput?
+2. Scroll down to the **Request Rate** chart. This chart shows the request rate in requests per minute (RPM). 
+3. To calculate your required requests per second (RPS), find the peak RPM and divide it by 60.
+4. Since, as [a baseline](#performance-expectations), 1 GCU can serve 25 RPS, divide your peak RPS by 25 to calculate your required GCUs.
 
-Beyond RPS, query complexity and repsonse size influence GCU throughput. For example, the following scenarios would decrease relative GCU throughput:
+<img
+  className="screenshot"
+  alt="GraphOS Studio Insights Request Rate chart with highlighted peak"
+  src="../../img/cloud-dedicated/request-rate.png"
+/>
 
-- Query plans that query more than 5 subgraphs
-- Query plans that return 100s or 1,000s of fields per operation
+- In the example above, the peak is **19,000 RPM**.
+- _19,000 / 60 = 317_, so the graph has a peak of **317 RPS**.
+- _317 / 25 = 13_, so this workload requires at least **13 GCUs** to operate.
 
-This is because these types of operations require additional compute resources to execute. This may mean you need to add additional GCUs as query complexity or response size increases. GCUs include burst capacity, so the occassional complex or large query should be handled properly.
+<Note>
 
-## Load testing
+Factor in additional GCUs if your supergraph serves [complex or large requests](#throughput-factors).
 
-Before going into production on Dedicated, we highly recommend running a load test to simulate production traffic. For example, if you run a load test of 10% of a typical day's traffic and this runs well on a single GCU, you may need 10 x GCUs to serve a typical day.
+</Note>
 
-Dedicated Trials are available to help you run a load test for free. <TrackableLink href="https://www.apollographql.com/contact-sales?type=dedicated&referrer=docs" eventName="content_contact_cloud">Contact us</TrackableLink> to start a trial.
+### Load testing
 
-## How do I scale Dedicated?
+Before going into production on Cloud Dedicated, Apollo highly recommends running a load test to simulate production traffic.
+For example, suppose you run a load test of 10% of a typical day's traffic, which runs well on a single GCU. That means you need at least 10 GCUs to operate your graph on a typical day.
 
-Dedicated supports mission-critical production workloads, and you can scale performance to meet the needs of your GraphQL APIs. Dedicated supports up to 40 x GCUs per GraphOS variant.
+Dedicated trials are available to help you run a load test for free. <TrackableLink href="https://www.apollographql.com/contact-sales?type=dedicated&referrer=docs" eventName="content_contact_cloud">Get in touch</TrackableLink> to start a trial.
 
-Dedicated starts with 1 x GCU when you create a new variant. You can add additional GCUs from the Cloud Router page in Studio:
+## Manage capacity
+
+Cloud Dedicated supports mission-critical production workloads, and you can scale performance to meet the needs of your GraphQL APIs. Dedicated supports up to 40 GCUs per GraphOS variant.
+
+Dedicated starts with 1 GCU per variant. You can add GCUs from the **Cloud Router** page in Studio. Click **Manage Capacity** to the right of **Router Capacity**.
 
 <img
   className="screenshot"
   alt="GraphOS Studio managed GCUs"
-  src="../../img/cloud-dedicated/gcus-manage.png"
+  src="../../img/cloud-dedicated/manage-capacity.png"
 />
 
-Then, select the number of GCUs required and choose "Save".
+Then, select the number of GCUs required and click **Save changes**.
 
 <img
   className="screenshot"
   alt="GraphOS Studio edit GCUs"
   src="../../img/cloud-dedicated/gcus-scale.png"
 />
-
-## Are GCUs rate limited?
-
-No. However, GCUs do offer a specific amount of throughput capacity. It's possible to temporarily burst GCU throughput for a few seconds. After this period, your clients will receive 429 errors. We recommend adding retry logic to your clients to minimize dropped requests.
-
-Later this year, GraphOS Cloud will include the ability to forecast and estimate the number of GCUs you should use to run your Dedicated variant.
