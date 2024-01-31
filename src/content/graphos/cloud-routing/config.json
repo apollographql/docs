@@ -18,7 +18,7 @@
   "sidebar": {
     "Overview": "/",
     "Configuration": "/configuration",
-    "Dedicated": {
+    "Cloud Dedicated": {
       "Overview": ["/dedicated",
       [
         "preview"
@@ -27,7 +27,7 @@
       [
         "preview"
       ]],
-      "GCUs":[ "/dedicated/throughput",
+      "Throughput guide":[ "/dedicated/throughput",
       [
         "preview"
       ]],

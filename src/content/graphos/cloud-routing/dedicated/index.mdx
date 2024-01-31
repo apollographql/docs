@@ -6,11 +6,19 @@ description: Learn about Apollo's dedicated cloud routing for GraphQL APIs
 
 <DedicatedPreview />
 
-GraphOS **Cloud Dedicated** is the Apollo offering that lets you run a cloud router on dedicated, pre-provisioned infrastructure that you control and scale. It gives you access to a fully managed and monitored fleet of Apollo Routers. This approach lets you implement and scale your supergraph without managing any additional infrastructure. Tailored for teams handling production-grade workloads, Cloud Dedicated offers additional control over performance and security.
+GraphOS **Cloud Dedicated** is the Apollo offering that lets you run a cloud router on dedicated, pre-provisioned infrastructure that you control and scale. It gives you access to a fully managed and monitored fleet of Apollo Routers.
+
+The Cloud Dedicated approach lets you implement and scale your supergraph without managing any additional infrastructure. Tailored for teams handling production-grade workloads, Cloud Dedicated offers additional control over performance and security.
+
+<Tip>
+
+Go the [Cloud Dedicated quickstart](./quickstart) to get started.
+
+</Tip>
 
 ## Private preview
 
-Cloud Dedicated is a new product and is in [preview](/resources/product-launch-stages/#preview) while it matures. It is only available to select customers on an invite-only basis. If you have feedback or are interested in joining the preview, <TrackableLink href="mailto:cloud@apollographql.com" eventName="content_contact_cloud">get in touch</TrackableLink>.
+Cloud Dedicated is a new product and is in [preview](/resources/product-launch-stages/#preview) while it matures. It is only available to select customers on an invite-only basis. If you have feedback or are interested in joining the preview, <TrackableLink href="https://www.apollographql.com/contact-sales?type=dedicated&referrer=docs" eventName="content_contact_cloud">get in touch</TrackableLink>.
 
 Please note the following while Cloud Dedicated is in preview:
 
@@ -20,26 +28,6 @@ Please note the following while Cloud Dedicated is in preview:
 
 ## Pricing
 
-Cloud Dedicated pricing is based on the amount of **Graph Compute Units**(GCUs) needed to run your graph. A GCU is a unit of throughput capacity that takes into account:
+Cloud Dedicated pricing is based on the amount of **Graph Compute Units** (GCUs) needed to run your graph. A GCU is a unit of throughput capacity.
 
-- processing incoming GraphQL requests
-- making a query plan across subgraphs
-- securely routing traffic to your backend services
-
-GCUs run on AWS in the region of your choice. You can scale them via [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content) or the [GraphOS Platform API](/graphos/platform-api/).
-
-### GCU performance
-
-<PreviewFeature>
-
-While Cloud Dedicated is in [preview](#private-preview), these performance expectations may change.
-
-</PreviewFeature>
-
-From a single GCU, you can expect the following performance:
-
-- 25 requests per second (RPS)
-- 150 subgraph RPS
-- Up to 0.5 megabytes of response data per second
-
-GCU performance varies depending on your GraphQL workload and architecture. For example, queries that return large payloads may decrease throughput below the baseline 25 RPS. Conversely, queries that return small amounts of data from several subgraphs may achieve above the baseline 25 RPS. Apollo recommends load testing your GraphQL workload on Cloud Dedicated before going into production.
+You can scale GCUS via [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content) or the [GraphOS Platform API](/graphos/platform-api/). To learn about GCU performance and scaling, consult the [Throughput guide](./throughput).
