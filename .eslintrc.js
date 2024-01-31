@@ -18,6 +18,7 @@ module.exports = {
         ClientPQDifferences: 'readonly',
         ClientPQImplementation: 'readonly',
         ClientPQIntro: 'readonly',
+        DedicatedPreview: 'readonly',
         DirectiveCompositionRules: 'readonly',
         Disclaimer: 'readonly',
         EnterpriseFeature: 'readonly',

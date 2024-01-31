@@ -4,11 +4,7 @@ subtitle: Troubleshoot common issues and errors with AWS Lattice
 description: Troubleshoot common issues and errors with AWS Lattice and an Apollo Cloud Dedicated router
 ---
 
-<PreviewFeature>
-
-Cloud Dedicated is currently in invite-only [preview](#private-preview). Don't hesitate to <TrackableLink href="mailto:cloud@apollographql.com" eventName="content_contact_cloud">get in touch</TrackableLink> if you'd like to request access or have any questions or feedback.
-
-</PreviewFeature>
+<DedicatedPreview />
 
 To learn how to configure AWS VPC Lattice to send traffic to your subgraphs, refer to the [configuration docs](./lattice).
 
@@ -18,21 +14,14 @@ To help resolve AWS VPC Lattice connection issues, we recommend enabling subgrap
 
 1. Go to [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content).
 
-2. Navigate to the Settings page for your graph variant.
+2. Open the **Cloud Router** page from the left navigation.
+3. Open the **Configuration** tab:
 
-<img
-  className="screenshot"
-  alt="GraphOS Studio variant page"
-  src="../../../img/cloud-dedicated/studio-variant-page.png"
-/>
-
-3. In the left sidebar menu, click **Settings**, then on **Cloud Router** to access the GraphOS Cloud settings page.
-
-<img
-  className="screenshot"
-  alt="GraphOS Studio Cloud Router settings page"
-  src="../../../img/cloud-dedicated/studio-settings-page.png"
-/>
+  <img
+    className="screenshot"
+    alt="The Cloud Router page in GraphOS Studio"
+    src="../../img/cloud-dedicated/cloud-router-configuration.png"
+  />
 
 4. In **Router configuration YAML**, ensure that the following configuration block that sets `include_subgraph_errors` is present:
 
@@ -46,7 +35,7 @@ include_subgraph_errors:
 <img
   className="screenshot"
   alt="GraphOS Studio Router configuration YAML"
-  src="../../../img/cloud-dedicated/router-yaml-subgraph-errors.png"
+  src="../../img/cloud-dedicated/router-yaml-subgraph-errors.png"
 />
 
 Configuration changes trigger a new launch. Please wait a few minutes for your cloud router to update with this new configuration. You can monitor the deployment status in the Launches page for your graph variant.
@@ -55,7 +44,21 @@ Once you've identißfied and resolved the underlying issue, we recommend you tur
 
 ## Common issues and errors
 
-If you encounter an error or not listed below and need assistance, don't hesitate to <TrackableLink href="mailto:cloud@apollographql.com" eventName="content_contact_cloud">get in touch</TrackableLink>. We're here to help.
+If you encounter an error or not listed below and need assistance, don't hesitate to <TrackableLink href="https://www.apollographql.com/contact-sales?type=dedicated&referrer=docs" eventName="content_contact_cloud">get in touch</TrackableLink>. We're here to help.
+
+### Overriding `host` headers
+
+AWS Lattice relies on the `host` header to properly secure and route requests. You can't change this header on Cloud Dedicated. Instead, consider using a header like `x-host`. You can rewrite an incoming `host` header as `x-host` through your [router configuration](./quickstart#step-3-inspect-and-configure-your-cloud-router) YAML:
+
+```yaml title="router.yaml"
+# ...other configuration...
+headers:
+  all: # Header rules for all subgraphs
+    request:
+      - propagate:
+        named: 'host'
+        rename: 'x-host'
+```
 
 ### Service in resource share doesn't appear in private subgraphs
 
@@ -92,7 +95,7 @@ You can validate that your Lattice services are configured to receive traffic on
 <img
   className="screenshot"
   alt="AWS VPC service page left menu"
-  src="../../../img/cloud-dedicated/vpc-lattice-menu.jpg"
+  src="../../img/cloud-dedicated/vpc-lattice-menu.jpg"
   width="175px"
 />
 
@@ -101,7 +104,7 @@ You can validate that your Lattice services are configured to receive traffic on
 <img
   className="screenshot"
   alt="AWS VPC Lattice service"
-  src="../../../img/cloud-dedicated/vpc-lattice-service.png"
+  src="../../img/cloud-dedicated/vpc-lattice-service.png"
 />
 
 4. Click the **Routing** tab.
@@ -109,7 +112,7 @@ You can validate that your Lattice services are configured to receive traffic on
 <img
   className="screenshot"
   alt="AWS VPC Lattice routing"
-  src="../../../img/cloud-dedicated/vpc-lattice-routing.png"
+  src="../../img/cloud-dedicated/vpc-lattice-routing.png"
 />
 
 5. Validate that you have a listener with a `protocol:port` configuration of **HTTPS:443**.
@@ -138,7 +141,7 @@ You can validate that your Lattice services are configured to allow traffic from
 <img
   className="screenshot"
   alt="AWS VPC service page left menu"
-  src="../../../img/cloud-dedicated/vpc-lattice-menu.jpg"
+  src="../../img/cloud-dedicated/vpc-lattice-menu.jpg"
   width="175px"
 />
 
@@ -147,7 +150,7 @@ You can validate that your Lattice services are configured to allow traffic from
 <img
   className="screenshot"
   alt="AWS VPC Lattice service"
-  src="../../../img/cloud-dedicated/vpc-lattice-service.png"
+  src="../../img/cloud-dedicated/vpc-lattice-service.png"
 />
 
 4. Click the **Access** tab.

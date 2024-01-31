@@ -18,6 +18,7 @@
   "sidebar": {
     "Intro to GraphOS": "/",
     "Graphs and variants": "/graphs",
+    "Routing": "/routing",
     "API keys": "/api-keys",
     "Get Started": {
       "Cloud setup": "/quickstart/cloud",
@@ -46,30 +47,6 @@
           "enterprise"
         ]
       ]
-    },
-    "Routing": {
-      "Overview": "/routing",
-      "Self-hosted routing": [
-        "/quickstart/self-hosted",
-        [
-          "enterprise"
-        ]
-      ],
-      "Cloud routing": {
-        "Overview": "/routing/cloud",
-        "Configuration": "/routing/cloud-configuration",
-        "Cloud Dedicated routing": {
-          "Overview": ["/routing/cloud-dedicated", [
-            "preview"
-          ]],
-          "AWS Lattice configuration": ["/routing/cloud-dedicated/lattice", [
-            "preview"
-          ]],
-          "AWS Lattice troubleshooting": ["/routing/cloud-dedicated/lattice-troubleshooting", [
-            "preview"
-          ]]
-        }
-      }
     },
     "Client Operations": {
       "Using @defer": "/operations/defer",

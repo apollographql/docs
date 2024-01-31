@@ -8,6 +8,7 @@ indicators:
   - ":"
 exceptions:
   - API
+  - APIs
   - Apollo Client DevTools
   - Apollo Client Web
   - Apollo Federation
