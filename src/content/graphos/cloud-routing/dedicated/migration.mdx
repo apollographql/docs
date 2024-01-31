@@ -1,12 +1,14 @@
 ---
 title: Migration considerations
-subtitle: Learn what to consider when migrating from a self-hosted graph to a cloud graph
+subtitle: Learn what to consider when migrating to a cloud graph
 description: Migrate your self-hosted GraphQL APIs to a federated cloud supergraph with a pre-provisioned router.
 ---
 
+<DedicatedPreview />
+
 GraphOS supports [self-hosted and cloud graphs](../../graphs/#graph-types), each recommended for different use cases. You may want to migrate to a cloud graph in these scenarios:
 
-- You have multiple GraphQL APIs you want compose into a supergraph.
+- You have multiple GraphQL APIs you want to compose into a supergraph.
 - You have one or more self-hosted GraphQL APIs and want to use GraphOS features beyond graph composition, for example, [`@defer` support](/router/executing-operations/defer-support/) or [metrics reporting](../../metrics/).
 - You have a self-hosted supergraph and want to offload the management of your router service to Apollo while retaining or gaining access to premium router features like [subscription support](/router/executing-operations/subscription-support/), [authentication](/router/configuration/authn-jwt), and [more](/router/enterprise-features). Your router service may be either the Apollo Router or the `@apollo/gateway` package.
 
@@ -42,7 +44,7 @@ See the [Apollo Router documentation](/router/) for a full list of features.
 
 ## Migration
 
-Once your implementation is ready to run on the Apollo Router (including customizations) and your subgraphs are publicly available or allow secure connections, you can follow the [Dedicated quickstart](./quickstart) to get started. 
+Once your implementation is ready to run on the Apollo Router, including customizations, you can follow the [Dedicated quickstart](./quickstart) to get started. 
 
 ## Pricing considerations
 
