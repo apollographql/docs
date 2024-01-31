@@ -18,9 +18,27 @@ Go the [Cloud Dedicated quickstart](./quickstart) to get started.
 
 ## Runs on AWS
 
-Cloud Dedicated includes a fully managed fleet of Apollo Routers that run in the AWS region of your choice. The following regions are currently available: us-east-2, us-east-1,  us-west-2,  ap-southeast-1,  ap-southeast-2,  ap-northeast-1,  ca-central-1,  eu-central-1,  eu-west-1,  eu-west-2,  eu-north-1. 
-Dedicated supports subgraphs running in any cloud region or provider; however, you may incur additional networking charges for subgraphs running outside the selected AWS region. AWS VPC Lattice is only supported the regions listed above.
+Cloud Dedicated runs a fleet of Apollo Routers in the AWS region of your choice. The following regions are currently available:
 
+- us-east-1
+- us-east-2
+- us-west-2
+- ap-southeast-1
+- ap-southeast-2
+- ap-northeast-1
+- ca-central-1
+- eu-central-1
+- eu-west-1
+- eu-west-2
+- eu-north-1
+
+Dedicated supports subgraphs running in any cloud region or provider. However, you may incur additional networking charges for subgraphs running outside your selected AWS region. AWS VPC Lattice is only supported for the regions listed above.
+
+## Pricing
+
+Cloud Dedicated pricing is based on the amount of **Graph Compute Units** (GCUs) needed to run your graph. A GCU is a unit of throughput capacity. You can scale GCUS via [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content) or the [GraphOS Platform API](/graphos/platform-api/).
+
+To learn about GCU performance and scaling, consult the [Throughput guide](./throughput).
 
 ## Private preview
 
@@ -31,9 +49,3 @@ Please note the following while Cloud Dedicated is in preview:
 - 99.9% SLA for ingress traffic
 - Limited to customers running subgraphs in AWS
 - Month-to-month billing, pricing subject to change
-
-## Pricing
-
-Cloud Dedicated pricing is based on the amount of **Graph Compute Units** (GCUs) needed to run your graph. A GCU is a unit of throughput capacity.
-
-You can scale GCUS via [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content) or the [GraphOS Platform API](/graphos/platform-api/). To learn about GCU performance and scaling, consult the [Throughput guide](./throughput).

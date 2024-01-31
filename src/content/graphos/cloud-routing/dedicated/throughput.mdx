@@ -19,7 +19,7 @@ Cloud Dedicated pricing is based on the amount of **Graph Compute Units** (GCUs)
 - Making a query plan across subgraphs
 - Securely routing traffic to your backend services
 
-GCUs run on AWS in the region of your choice.
+GCUs run on [AWS in the region of your choice](./#runs-on-aws).
 
 ### Performance expectations
 
@@ -46,8 +46,8 @@ Beyond RPS, query complexity and response size influence GCU throughput. For exa
 - Requests that query more than five subgraphs
 - Requests that return hundreds or thousands of fields per operation
 
-Requests like this decrease throughput capacity because they require additional compute resources to execute.
-Factor in additional GCUs into your throughput calculation if your supergraph receives complex queries or returns large responses.
+Requests like this decrease throughput because they require additional compute resources to execute.
+Factor in additional GCUs into your [GCU calculation](#gcu-calculation) if your supergraph receives complex queries or returns large responses.
 
 <Note>
 

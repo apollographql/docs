@@ -1,43 +1,28 @@
 ---
 title: Migration considerations
-subtitle: Learn how to migrate from a self-hosted graph to a cloud graph
+subtitle: Learn what to consider when migrating from a self-hosted graph to a cloud graph
 description: Migrate your self-hosted GraphQL APIs to a federated cloud supergraph with a pre-provisioned router.
 ---
-
-<Tip>
-
-Refer to [Router types](/graphos/routing#router-types) to learn the differences between self-hosted and cloud graphs.
-
-</Tip>
 
 GraphOS supports [self-hosted and cloud graphs](../../graphs/#graph-types), each recommended for different use cases. You may want to migrate to a cloud graph in these scenarios:
 
 - You have multiple GraphQL APIs you want compose into a supergraph.
 - You have one or more self-hosted GraphQL APIs and want to use GraphOS features beyond graph composition, for example, [`@defer` support](/router/executing-operations/defer-support/) or [metrics reporting](../../metrics/).
-- You have a self-hosted supergraph and want to offload the management of your router service to Apollo while retaining or gaining access to premium router features like [subscription support](/router/executing-operations/subscription-support/), [authentication](/router/configuration/authn-jwt), and [more](/router/enterprise-features).
-    - Your router service may be either the Apollo Router or the `@apollo/gateway` package.
+- You have a self-hosted supergraph and want to offload the management of your router service to Apollo while retaining or gaining access to premium router features like [subscription support](/router/executing-operations/subscription-support/), [authentication](/router/configuration/authn-jwt), and [more](/router/enterprise-features). Your router service may be either the Apollo Router or the `@apollo/gateway` package.
 
-GraphOS offers two types of cloud routing: Serverless and Dedicated. This guide focuses on considerations when migrating to [Dedicated](./).
-
-## Prerequisites
-
-Apollo cloud routers must be able to access your subgraphs. That means you must either:
-
-- Make your GraphQL API(s) available via a publicly accessible URL, for example, `https://api.mycompany.com/subgraphA`
-- Keep your GraphQL API(s) private but allow secure connections, for example, via [VPC networking](https://docs.aws.amazon.com/vpc/latest/peering/what-is-vpc-peering.html/)
-    - If your subgraphs are on AWS, refer to the [AWS Lattice configuration guide](./cloud-dedicated/lattice) for setup instructions
+GraphOS offers two tiers of cloud routing: Serverless and Dedicated. This guide focuses on considerations when migrating to [Dedicated](./). Refer to [this router comparison](/graphos/routing#router-comparison) to learn about the differences.
 
 <Note>
 
-If you have multiple subgraphs, _each_ needs to be exposed to Apollo. Your supergraph, however, should only be publicly accessible via your cloud router.
+Dedicated cloud routers currently support all [premium router features](/router/enterprise-features) except for [safelisting with persisted queries](/router/configuration/persisted-queries/) and [automatic persisted queries](/apollo-server/performance/apq/). Support for these is on the roadmap.
 
 </Note>
 
-### Migrating from `@apollo/gateway`
+## Migrating from `@apollo/gateway`
 
 Cloud routers use the same [Apollo Router binary](https://github.com/apollographql/router) that you can self-host. Therefore, migrating from [`@apollo/gateway`](/apollo-server/using-federation/api/apollo-gateway/) entails migrating to the Apollo Router. Refer to the [Gateway migration guide](/router/migrating-from-gateway/) for tips.
 
-### Router customizations
+## Router customizations
 
 The Apollo Router supports a [few avenues for customization](/router/customizations/overview):
 
@@ -59,8 +44,8 @@ See the [Apollo Router documentation](/router/) for a full list of features.
 
 Once your implementation is ready to run on the Apollo Router (including customizations) and your subgraphs are publicly available or allow secure connections, you can follow the [Dedicated quickstart](./quickstart) to get started. 
 
-## Pricing
+## Pricing considerations
 
 Cloud Dedicated pricing depends on throughput instead of operation volume. Refer to the [Throughput guide](./throughput) to learn more.
 
-When you no longer host your router, router-to-subgraph communication may be inter-region, inter-Availablity Zone (AZ), or egress traffic. Be aware of how your new network topology may affect your cloud costs.[Throughput guide](./throughput).
+When you no longer host your router, router-to-subgraph communication may be inter-region, inter-Availablity Zone (AZ), or egress traffic. Be aware of how your new network topology may affect your cloud costs.

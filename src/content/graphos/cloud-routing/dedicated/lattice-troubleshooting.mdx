@@ -55,7 +55,7 @@ If you encounter an error or not listed below and need assistance, don't hesitat
 
 ### Overriding `host` headers
 
-AWS Lattice relies on the `host` header to properly secure and route requests. It is not possible to modify this header on Cloud Dedicated. Instead, consider using a header like `x-host`. You can rewrite an incoming `host` header as `x-host` with router config (see below).
+AWS Lattice relies on the `host` header to properly secure and route requests. You can't change this header on Cloud Dedicated. Instead, consider using a header like `x-host`. You can rewrite an incoming `host` header as `x-host` through your [router configuration](./quickstart#step-3-inspect-and-configure-your-cloud-router) YAML:
 
 ```yaml title="router.yaml"
 # ...other configuration...
