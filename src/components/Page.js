@@ -41,7 +41,7 @@ import {
   chakra
 } from '@chakra-ui/react';
 import {Caution} from './Caution';
-import {CustomHeading} from './CustomHeading';
+import {CustomHeading, MinVersionTag} from './CustomHeading';
 import {DiscordIcon, GitHubIcon, QuoteIcon} from './Icons';
 import {
   EmbeddableExplorer,
@@ -102,6 +102,7 @@ Prism.languages.rhai = Prism.languages.javascript;
 
 const LIST_SPACING = 4;
 const HEADINGS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
+const SCROLL_TARGETS = HEADINGS.concat('p');
 
 const SCROLL_MARGIN_TOP = PAGE_PADDING_TOP + TOTAL_HEADER_HEIGHT;
 
@@ -205,6 +206,7 @@ const mdxComponents = {
   ButtonLink,
   Tip,
   MinVersion,
+  MinVersionTag,
   EnterpriseFeature,
   ExperimentalFeature,
   PreviewFeature,
@@ -213,7 +215,8 @@ const mdxComponents = {
   TrackableButton,
   TrackableLink,
   useApiDocContext,
-  PrimaryLink
+  PrimaryLink,
+  MDXRenderer
 };
 
 const {processSync} = rehype()
@@ -425,7 +428,7 @@ export default function Page({file}) {
           }
         }}
         css={{
-          [HEADINGS]: {
+          [SCROLL_TARGETS]: {
             scrollMarginTop: SCROLL_MARGIN_TOP
           }
         }}

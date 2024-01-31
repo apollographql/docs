@@ -32,7 +32,9 @@ function handleMember(
     item instanceof model.ApiProperty ||
     item instanceof model.ApiConstructor ||
     item instanceof model.ApiMethodSignature ||
-    item instanceof model.ApiTypeAlias
+    item instanceof model.ApiTypeAlias ||
+    item instanceof model.ApiEnum ||
+    item instanceof model.ApiEnumMember
   ) {
     createGatsbyNode({
       gatsbyApi,
@@ -78,8 +80,15 @@ function extractChildren(
     const extracted = item.findMembersWithInheritance();
     if (extracted.maybeIncompleteResult) {
       return {
-        children: item.members.map(getId),
-        childrenIncomplete: true
+        children: Array.from(
+          new Set(
+            extracted.items.map(getId).concat(item.members.map(getId))
+          ).values()
+        ),
+        childrenIncomplete: true,
+        childrenIncompleteDetails: extracted.messages
+          .map(m => m.text)
+          .join('\n')
       };
     } else {
       return {
@@ -210,14 +219,43 @@ function processDocComment(
   if (!docComment) return;
   return {
     comment: docComment?.emitAsTsdoc(),
-    summary: renderDocNode(docComment?.summarySection),
-    deprecated: renderDocNode(docComment?.deprecatedBlock),
-    remarks: renderDocNode(docComment?.remarksBlock),
+    summary: cleanDoc(renderDocNode(docComment?.summarySection)),
+    deprecated: cleanDoc(
+      renderDocNode(docComment?.deprecatedBlock),
+      '@deprecated'
+    ),
+    remarks: cleanDoc(renderDocNode(docComment?.remarksBlock), '@remarks'),
+    returns: cleanDoc(renderDocNode(docComment?.returnsBlock), '@returns'),
+    since: cleanDoc(
+      renderDocNode(
+        docComment.customBlocks.find(v => v.blockTag.tagName === '@since')
+      ),
+      '@since'
+    ),
+    docGroup: cleanDoc(
+      renderDocNode(
+        docComment.customBlocks.find(v => v.blockTag.tagName === '@docGroup')
+      ),
+      '@docGroup'
+    ),
     examples: docComment?.customBlocks
       .filter(v => v.blockTag.tagName === '@example')
       .map(renderDocNode)
-      .map(example => example.replace(/^\s*@example/g, ''))
+      .map(example => cleanDoc(example, '@example')),
+    alpha: docComment.modifierTagSet.isAlpha(),
+    beta: docComment.modifierTagSet.isBeta(),
+    experimental: docComment.modifierTagSet.isExperimental()
   };
+}
+
+function cleanDoc(
+  /** @type {string} */ docString,
+  /** @type {undefined|string} */ removeTag
+) {
+  if (removeTag) {
+    return docString.replace(new RegExp(`^\\s*${removeTag}`, 'g'), '').trim();
+  }
+  return docString.trim();
 }
 
 /**

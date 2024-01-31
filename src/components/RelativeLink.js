@@ -3,7 +3,7 @@ import React, {useContext} from 'react';
 import {Button, Link} from '@chakra-ui/react';
 import {Link as GatsbyLink, graphql, useStaticQuery} from 'gatsby';
 import {PathContext, isUrl} from '../utils';
-import {isAbsolute, resolve} from 'path';
+import {isAbsolute, relative, resolve} from 'path';
 
 export const PrimaryLink = props => (
   <Link
@@ -31,6 +31,25 @@ function useLinkProps(href) {
 
   if (!href) {
     return null;
+  }
+
+  if (process.env.CONTEXT !== 'production') {
+    // fix up absolute urls pointing to the docs
+    // for netlify previews and localhost
+    href = href.replace(
+      'https://www.apollographql.com/docs',
+      process.env.DEPLOY_URL
+    );
+  }
+
+  try {
+    // convert full urls for the current domain into absolute domain-relative urls
+    const url = new URL(href);
+    if (url.host === window.location.host) {
+      href = url.pathname;
+    }
+  } catch {
+    // it's okay if this fails, then it probably wasn't a full url
   }
 
   const isExternal = isUrl(href);
