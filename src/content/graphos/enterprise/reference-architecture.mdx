@@ -15,7 +15,13 @@ In this guide, learn about the fundamental concepts and configuration underlying
 
 In a modern cloud-native stack, your components must be scalable with high availability. The [Apollo Router](/router) is built with this in mind. The router is [much faster and less resource-intensive than the Apollo Gateway](https://www.apollographql.com/blog/announcement/backend/apollo-router-our-graphql-federation-runtime-in-rust/#apollo-router-vs-apollo-gateway-benchmarks), Apollo's original runtime.
 
-Apollo provides a reference architecture for self-hosting the router and subgraphs in an enterprise cloud environment using Kubernetes and Helm. This reference architecture includes autoscaling to suit the needs of a modern enterprise application. Continue reading to learn more about the reference architecture and how to use it.
+Apollo provides a reference architecture for self-hosting the router and subgraphs in an enterprise cloud environment using Kubernetes and Helm. It demonstrates how to deploy the router and subgraphs in a cloud environment, including the use of [Apollo GraphOS](/graphos) and enterprise features of the Apollo Router:
+
+- [Authentication/Authorization directives](/router/configuration/authorization) within the schema to secure your supergraph
+- [External coprocessing](/router/customizations/coprocessor) to enable complex customizations to the router
+- [Persisted Queries](/router/configuration/persisted-queries) to improve performance and security through allowlisting only known operations
+
+Furthermore, the reference architecture demonstrates how to use the router with [OpenTelemetry](https://opentelemetry.io/) to collect and analyze performance and utilization metrics for your supergraph, as well as testing performance using [k6](https://k6.io/).
 
 <Tip>
 
