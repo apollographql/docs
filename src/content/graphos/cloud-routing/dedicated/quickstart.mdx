@@ -111,7 +111,7 @@ To test whether your graph works as intended, run a sample query by clicking **R
 
 [Enable subgraph error reporting](./lattice-troubleshooting/#enable-subgraph-error-inclusion) if you run into issues.
 
-For further testing, you can add variants to your graph for different environments. To do so, go to **Settings** > **This Graph** > **Variants** and click **Add a variant**.
+For further testing, you can add variants to your graph for development or staging environments. To do so, go to **Settings** > **This Graph** > **Variants** and click **Add a variant**.
 
 <img
   className="screenshot"
@@ -119,7 +119,7 @@ For further testing, you can add variants to your graph for different environmen
   src="../../img/cloud-dedicated/add-a-variant.png"
 />
 
-Finally, Apollo recommends running a load test to determine how much [throughput capacity](./throughput) you need to run your graph.
+Apollo recommends running a [load test](./throughput#loud-testing) to determine how much [throughput capacity](./throughput) you need to run your graph.
 
 ## Step 5. Go live
 
@@ -135,6 +135,6 @@ Either pass the endpoint directly to your clients or configure a reverse proxy.
 
 <Note>
 
-Support for endpoints with custom domains will become available in 2024.
+Every router URL is on a subdomain of `apollographos.net`. Support for custom domains will become available in 2024.
 
 </Note>
