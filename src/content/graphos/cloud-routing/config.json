@@ -38,6 +38,10 @@
       "AWS Lattice troubleshooting":[ "/dedicated/lattice-troubleshooting",
       [
         "preview"
+      ]],
+      "Migration":[ "/dedicated/migration",
+      [
+        "preview"
       ]]
     }
   }
