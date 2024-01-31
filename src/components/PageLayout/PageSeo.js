@@ -5,7 +5,7 @@ import {GatsbySeo} from 'gatsby-plugin-next-seo';
 import {PathContext} from '../../utils';
 import {graphql, useStaticQuery} from 'gatsby';
 
-export function PageSeo({ title, description, noindex}) {
+export function PageSeo({title, description, noindex}) {
   const {uri} = useContext(PathContext);
 
   const {
@@ -24,8 +24,6 @@ export function PageSeo({ title, description, noindex}) {
     `
   );
 
-  const titleFont = encodeURIComponent('Aeonik, sans-serif');
-
   return (
     <GatsbySeo
       noindex={noindex}
@@ -40,10 +38,10 @@ export function PageSeo({ title, description, noindex}) {
             url: getShareImage({
               title,
               tagline: description,
-              titleFont,
+              titleFont: 'Aeonik',
               titleFontSize: 80,
               titleExtraConfig: '_bold',
-              taglineFont: titleFont,
+              taglineFont: 'Inter',
               textColor: 'C6CFCE',
               textLeftOffset: 80,
               textAreaWidth: 1120,
