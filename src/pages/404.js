@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button, Flex, Heading, Text, chakra} from '@chakra-ui/react';
-import {FiChevronLeft} from 'react-icons/fi';
+import {ChevronLeftIcon} from '../components/Icons';
 import {Link as GatsbyLink} from 'gatsby';
 import {GatsbySeo} from 'gatsby-plugin-next-seo';
 
@@ -34,7 +34,7 @@ export default function NotFound() {
           as={GatsbyLink}
           to="/"
           colorScheme="indigo"
-          leftIcon={<FiChevronLeft />}
+          leftIcon={<ChevronLeftIcon />}
         >
           Back to home
         </Button>

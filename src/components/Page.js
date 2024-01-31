@@ -41,7 +41,8 @@ import {
   chakra
 } from '@chakra-ui/react';
 import {Caution} from './Caution';
-import {CustomHeading} from './CustomHeading';
+import {CustomHeading, MinVersionTag} from './CustomHeading';
+import {DiscordIcon, GitHubIcon, QuoteIcon} from './Icons';
 import {
   EmbeddableExplorer,
   MarkdownCodeBlock,
@@ -50,8 +51,6 @@ import {
 } from '@apollo/chakra-helpers';
 import {EnterpriseFeature} from './EnterpriseFeature';
 import {ExperimentalFeature} from './ExperimentalFeature';
-import {FeedbackButton} from './FeedbackButton';
-import {FiGithub, FiMessageCircle} from 'react-icons/fi';
 import {Link as GatsbyLink} from 'gatsby';
 import {Global} from '@emotion/react';
 import {HighlightKeyTerms} from '@apollo/pedia';
@@ -67,7 +66,6 @@ import {
   PageSeo
 } from './PageLayout';
 import {PreviewFeature} from './PreviewFeature';
-import {SiDiscord} from 'react-icons/si';
 import {TOTAL_HEADER_HEIGHT} from './Header';
 import {Tip} from './Tip';
 import {WistiaEmbed} from './WistiaEmbed';
@@ -103,6 +101,7 @@ Prism.languages.rhai = Prism.languages.javascript;
 
 const LIST_SPACING = 4;
 const HEADINGS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
+const SCROLL_TARGETS = HEADINGS.concat('p');
 
 const SCROLL_MARGIN_TOP = PAGE_PADDING_TOP + TOTAL_HEADER_HEIGHT;
 
@@ -206,6 +205,7 @@ const mdxComponents = {
   ButtonLink,
   Tip,
   MinVersion,
+  MinVersionTag,
   EnterpriseFeature,
   ExperimentalFeature,
   PreviewFeature,
@@ -214,7 +214,8 @@ const mdxComponents = {
   TrackableButton,
   TrackableLink,
   useApiDocContext,
-  PrimaryLink
+  PrimaryLink,
+  MDXRenderer
 };
 
 const {processSync} = rehype()
@@ -312,7 +313,7 @@ export default function Page({file}) {
           color: 'gray.200'
         }}
         size="lg"
-        leftIcon={<FiGithub />}
+        leftIcon={<GitHubIcon />}
       >
         <Text as="span" display={{base: 'none', lg: 'inline'}}>
           Edit on GitHub
@@ -426,7 +427,7 @@ export default function Page({file}) {
           }
         }}
         css={{
-          [HEADINGS]: {
+          [SCROLL_TARGETS]: {
             scrollMarginTop: SCROLL_MARGIN_TOP
           }
         }}
@@ -513,7 +514,6 @@ export default function Page({file}) {
           height: PAGE_FOOTER_HEIGHT
         }}
       >
-        <FeedbackButton title={title} />
         {editOnGitHub}
         <Button
           aria-label="Ask a question on our forums"
@@ -524,7 +524,7 @@ export default function Page({file}) {
           _dark={{
             color: 'gray.200'
           }}
-          leftIcon={<FiMessageCircle />}
+          leftIcon={<QuoteIcon />}
         >
           Forums
         </Button>
@@ -538,7 +538,7 @@ export default function Page({file}) {
             color: 'gray.200'
           }}
           onClick={() => window.gtag?.('event', 'discord_join_docs')}
-          leftIcon={<SiDiscord />}
+          leftIcon={<DiscordIcon />}
         >
           Discord
         </Button>

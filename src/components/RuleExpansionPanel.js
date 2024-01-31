@@ -13,7 +13,12 @@ import {
   StackDivider,
   useDisclosure
 } from '@chakra-ui/react';
-import {FiCheck, FiChevronDown, FiChevronUp, FiPaperclip} from 'react-icons/fi';
+import {
+  CheckIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
+  PaperclipIcon
+} from './Icons';
 import {MarkdownInAdmonitions} from './MarkdownInAdmonitions';
 
 function CustomHeader({level, id, children, ...props}) {
@@ -54,7 +59,7 @@ function CopyLinkButton({headingId, isOpen}) {
       color="gray.500"
       onClick={handleCopyLink}
     >
-      <FiPaperclip />
+      <PaperclipIcon />
     </Button>
   );
 }
@@ -105,7 +110,7 @@ export function ExpansionPanelList({children}) {
       {React.Children.toArray(children).map((child, index, array) => {
         const number = index + 1;
         return React.cloneElement(child, {
-          number: number < array.length ? number : <FiCheck />
+          number: number < array.length ? number : <CheckIcon />
         });
       })}
     </List>
@@ -133,7 +138,7 @@ export default function RuleExpansionPanel({
         rounded="none"
         borderBottomWidth="1px"
         justifyContent="flex-start"
-        leftIcon={isOpen ? <FiChevronUp /> : <FiChevronDown />}
+        leftIcon={isOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
         onClick={onToggle}
         _focus={{shadow: 'none'}}
       >

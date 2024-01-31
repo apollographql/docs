@@ -5,7 +5,7 @@ description: With GraphOS
 
 To keep your supergraph secure, it's important that your individual subgraphs are [queried _only_ by your router](/federation/building-supergraphs/subgraphs-overview/#securing-your-subgraphs). That's because your subgraphs expose powerful fields that the router uses to execute operations across them. External clients should _not_ have access to these fields.
 
-This article describes steps for securing your subgraphs when using a [cloud supergraph](/graphos/routing/cloud).
+This article describes steps for securing your subgraphs when using a [cloud supergraph](/graphos/cloud-routing).
 
 <Tip>
 
@@ -31,7 +31,7 @@ Your cloud supergraph's router needs to know the shared secret so it can include
 
 <Tip>
 
-For details, see [Managing secrets](/graphos/routing/cloud-configuration#managing-secrets).
+For details, see [Managing secrets](/graphos/cloud-routing/configuration#managing-secrets).
 
 </Tip>
 
@@ -43,13 +43,13 @@ headers:
     products:
       request:
         - insert:
-            name: "Router-Authorization"
-            value: "${env.PRODUCTS_SUBGRAPH_SECRET}"
+            name: 'Router-Authorization'
+            value: '${env.PRODUCTS_SUBGRAPH_SECRET}'
     users:
       request:
         - insert:
-            name: "Router-Authorization"
-            value: "${env.USERS_SUBGRAPH_SECRET}"
+            name: 'Router-Authorization'
+            value: '${env.USERS_SUBGRAPH_SECRET}'
 ```
 
 ## 3. Configure the subgraph to require the secret

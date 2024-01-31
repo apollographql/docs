@@ -4,6 +4,9 @@ const {loadApiDoc} = require('./apiDoc');
 const fs = require('fs');
 const path = require('path');
 const {default: fetch} = require('node-fetch');
+const mdx = require('@mdx-js/mdx');
+const babel = require('@babel/core');
+const reactPreset = require('@babel/preset-react');
 
 /** @type {import("gatsby").GatsbyNode['sourceNodes']} */
 exports.sourceNodes = async (api, options) => {
@@ -12,22 +15,75 @@ exports.sourceNodes = async (api, options) => {
     let {file} = /** @type {{file:string}} */ (options);
 
     if (file.includes('://')) {
-      console.info("downloading api doc from url", file)
+      console.info('downloading api doc from url', file);
       const request = await fetch(file);
       const contents = await request.text();
       file = path.join(tempDir, 'api.json');
       fs.writeFileSync(file, contents);
     }
     if (fs.existsSync(file)) {
-      console.info("loading api doc from file", file)
+      console.info('loading api doc from file', file);
       loadApiDoc(file, api);
     } else {
-      console.info("api doc file not found, skipping", file)
+      console.info('api doc file not found, skipping', file);
     }
   } finally {
     fs.rmSync(tempDir, {recursive: true});
   }
 };
+
+async function transpileMdx(contents) {
+  if (!contents || contents.trim() === '') return '';
+
+  let code = await mdx(contents, getMdxOptions());
+  code = babel.transform(code, {
+    configFile: false,
+    presets: [[reactPreset, {useBuiltIns: true}]]
+  })?.code;
+
+  return code
+    .replace(
+      /export\s*default\s*function\s*MDXContent\s*/,
+      'return function MDXContent'
+    )
+    .replace(
+      /export\s*{\s*MDXContent\s+as\s+default\s*};?/,
+      'return MDXContent;'
+    )
+    .replace(/MDXContent.isMDXComponent = true;/g, '');
+}
+
+const prerenderMarkdown = {
+  type: 'String',
+  resolve(source, args, context, info) {
+    const contents = source[info.fieldName];
+    return transpileMdx(contents);
+  }
+};
+
+const prerenderMarkdownArray = {
+  type: '[String]',
+  resolve(source, args, context, info) {
+    const elements = source[info.fieldName];
+    return Promise.all(elements.map(transpileMdx));
+  }
+};
+
+function getMdxOptions() {
+  if (!getMdxOptions.options) {
+    const {plugins} = require('../../gatsby-config.js');
+    const plugin = plugins.find(
+      plugin =>
+        typeof plugin === 'object' && plugin.resolve === 'gatsby-plugin-mdx'
+    );
+
+    getMdxOptions.options = {
+      remarkPlugins: plugin.options.remarkPlugins
+    };
+  }
+
+  return getMdxOptions.options;
+}
 
 /** @type {import("gatsby").GatsbyNode['createResolvers']} */
 exports.createResolvers = ({createResolvers}) => {
@@ -80,6 +136,16 @@ exports.createResolvers = ({createResolvers}) => {
           })
       }
     },
+    ApiDocEnum: {
+      members: {
+        type: '[ApiDocEnumMember!]',
+        resolve: (source, args, context) =>
+          context.nodeModel.getNodesByIds({
+            ids: source.children,
+            type: 'ApiDocEnumMember'
+          })
+      }
+    },
     MdxFrontmatter: {
       recursive_api_doc: {
         type: '[String!]!',
@@ -121,6 +187,18 @@ exports.createResolvers = ({createResolvers}) => {
           });
         }
       }
+    },
+    ApiDocTypeDoc: {
+      summary: prerenderMarkdown,
+      deprecated: prerenderMarkdown,
+      remarks: prerenderMarkdown,
+      examples: prerenderMarkdownArray
+    },
+    ApiDocTypeParameter: {
+      comment: prerenderMarkdown
+    },
+    ApiDocFunctionParameter: {
+      comment: prerenderMarkdown
     }
   };
   createResolvers(resolvers);
@@ -129,7 +207,7 @@ exports.createResolvers = ({createResolvers}) => {
 /** @type {import("gatsby").GatsbyNode['createSchemaCustomization']} */
 exports.createSchemaCustomization = ({actions}) => {
   actions.createTypes(`
-      union ApiDoc = ApiDocInterface | ApiDocPropertySignature | ApiDocMethodSignature | ApiDocFunction | ApiDocClass | ApiDocMethod | ApiDocProperty | ApiDocTypeAlias | ApiDocConstructor
+      union ApiDoc = ApiDocInterface | ApiDocPropertySignature | ApiDocMethodSignature | ApiDocFunction | ApiDocClass | ApiDocMethod | ApiDocProperty | ApiDocTypeAlias | ApiDocConstructor | ApiDocEnum | ApiDocEnumMember
       union InterfaceMember = ApiDocPropertySignature | ApiDocMethodSignature
 
       interface ApiDocBase {
@@ -152,6 +230,7 @@ exports.createSchemaCustomization = ({actions}) => {
         parent: Node
         children: [Node!]!
         childrenIncomplete: Boolean
+        childrenIncompleteDetails: String
         internal: Internal!
         kind: String
         canonicalReference: String
@@ -236,11 +315,44 @@ exports.createSchemaCustomization = ({actions}) => {
         parameters: [ApiDocFunctionParameter]
       }
 
+      type ApiDocEnum implements Node & ApiDocBase {
+        id: ID!
+        parent: Node
+        children: [Node!]!
+        internal: Internal!
+        kind: String
+        canonicalReference: String
+        displayName: String
+        file: String
+        type: String
+        excerpt: String
+        references: [ApiDocReference]
+        comment: ApiDocTypeDoc
+        releaseTag: String
+      }
+
+      type ApiDocEnumMember implements Node & ApiDocBase {
+        id: ID!
+        parent: Node
+        children: [Node!]!
+        internal: Internal!
+        kind: String
+        canonicalReference: String
+        displayName: String
+        file: String
+        type: String
+        excerpt: String
+        references: [ApiDocReference]
+        comment: ApiDocTypeDoc
+        releaseTag: String
+      }
+
       type ApiDocClass implements Node & ApiDocBase {
         id: ID!
         parent: Node
         children: [Node!]!
         childrenIncomplete: Boolean
+        childrenIncompleteDetails: String
         internal: Internal!
         kind: String
         canonicalReference: String
@@ -335,7 +447,13 @@ exports.createSchemaCustomization = ({actions}) => {
         summary: String
         deprecated: String
         remarks: String
+        returns: String
+        since: String
+        docGroup: String
         examples: [String!]
+        alpha: Boolean!
+        beta: Boolean!
+        experimental: Boolean!
       }
     `);
 };
