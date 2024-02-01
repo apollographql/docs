@@ -23,6 +23,7 @@ function lookahead(code, index, left) {
   while (code[index] === ' ') index++;
   /** @type {AstNode} */
   let node = left;
+  let found;
 
   if (code[index] === '[' && code[index + 1] === ']') {
     node = {
@@ -50,6 +51,24 @@ function lookahead(code, index, left) {
       start: left.start,
       end: right.end
     };
+  } else if ((found = peekFixedString(code, index, 'extends'))) {
+    const constraint = parseExpression(code, found);
+    const question = constraint && peekFixedString(code, constraint.end, '?');
+    const trueCase = question && parseExpression(code, question);
+    const colon = trueCase && peekFixedString(code, trueCase.end, ':');
+    const falseCase = colon && parseExpression(code, colon);
+
+    if (falseCase) {
+      node = {
+        type: 'Conditional',
+        expression: left,
+        extends: constraint,
+        trueCase,
+        falseCase,
+        start: left.start,
+        end: falseCase.end
+      };
+    }
   }
 
   if (node !== left) return lookahead(code, node.end, node);
@@ -64,9 +83,11 @@ function lookahead(code, index, left) {
 function parseExpression(code, index) {
   while (code[index] === ' ') index++;
   let node =
+    parseArrowFunction(code, index) ||
+    parseParenthesis(code, index) ||
     parseInterfaceDefinition(code, index) ||
     parseKeyword(code, index) ||
-    parseArrowFunction(code, index) ||
+    parsePropertyAccess(code, index) ||
     parseTypeExpression(code, index) ||
     parseNumber(code, index) ||
     parseString(code, index) ||
@@ -188,6 +209,51 @@ function parseArrowFunction(code, index) {
 }
 
 /** @type {ParserFn} */
+function parseParenthesis(code, index) {
+  if (code[index] === '(') {
+    const expression = parseExpression(code, index + 1);
+    const finalIndex = peekFixedString(code, expression.end, ')');
+    if (finalIndex) return expression;
+  }
+}
+
+/** @type {ParserFn} */
+function parsePropertyAccess(code, index) {
+  const parent = parseIdentifier(code, index);
+  const dotAccessStart = parent && peekFixedString(code, parent.end, '.');
+  if (dotAccessStart) {
+    const property = parseIdentifier(code, dotAccessStart);
+    return (
+      property && {
+        type: 'PropertyAccess',
+        parent,
+        property,
+        start: index,
+        end: property.end
+      }
+    );
+  }
+  const propertyAccessStart = parent && peekFixedString(code, parent.end, '[');
+  if (propertyAccessStart) {
+    if (peekFixedString(code, propertyAccessStart, ']')) {
+      // array expression not handled here
+      return null;
+    }
+    const property = parseExpression(code, propertyAccessStart);
+    const propertyAccessEnd = peekFixedString(code, property.end, ']');
+    return (
+      propertyAccessEnd && {
+        type: 'PropertyAccess',
+        parent,
+        property,
+        start: index,
+        end: propertyAccessEnd
+      }
+    );
+  }
+}
+
+/** @type {ParserFn} */
 function parseInterfaceDefinition(code, index) {
   index = peekFixedString(code, index, 'export') || index;
   const typeEnd = peekFixedString(code, index, 'interface');
@@ -257,7 +323,16 @@ function parseAst(code) {
   try {
     return parseExpression(code, 0);
   } catch (e) {
-    console.error(e);
+    /**
+     * This might leave single parts of the API documentation without the right "primary reference type",
+     * but it won't make the docs unusable in any way, so we only log it and don't fail.
+     */
+    console.warn(
+      'Encountered error while parsing expression %s. ',
+      code,
+      ':',
+      e
+    );
     return null;
   }
 }
