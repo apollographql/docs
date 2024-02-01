@@ -44,10 +44,11 @@ export function PageSeo({title, description, noindex}) {
               titleFont: 'odyssey:fonts:AeonikBold.otf',
               textColor: 'CFD7D6',
               titleFontSize: 80,
-              textLeftOffset: 150,
+              textLeftOffset: 90,
               textAreaWidth: 1120,
               cloudName: 'apollographql',
-              imagePublicID: 'docs-thumbnail_xdb1xi'
+              imagePublicID: 'docs-thumbnail_z8ifvw'
+
             })
           }
         ]
