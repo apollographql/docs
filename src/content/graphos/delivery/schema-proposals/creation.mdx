@@ -157,13 +157,6 @@ You can think of each revision as equal to a [commit](<https://en.wikipedia.org/
 Checks run against the schema of the source variant from which the proposal was created.
 This enables checks to capture breaking changes based on the source variant's operation history.
 
-<Note>
-
-Proposals don't inherit schema changes made to a source variant after the proposal was created.
-For example, if the source variant schema includes a new type, unless the proposal also adds the type, then the proposal's checks show that type as being deleted.
-
-</Note>
-
 ## Self-review and commentary
 
 While working on a proposal and before requesting reviews from teammates, you may want to review the proposal yourself. See the [Review proposals](./review) article for how to review different aspects of a proposal and [provide commentary](./review/#add-comments) on it.
