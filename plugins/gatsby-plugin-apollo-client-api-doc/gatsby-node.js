@@ -275,7 +275,8 @@ exports.createSchemaCustomization = ({actions}) => {
         comment: ApiDocTypeDoc
         releaseTag: String
         returnType: ApiDocTypeReference!
-        parameters: [ApiDocFunctionParameter]
+        parameters: [ApiDocFunctionParameter!]
+        typeParameters: [ApiDocTypeParameter!]
       }
 
       type ApiDocPropertySignature implements Node & ApiDocBase {
@@ -312,7 +313,8 @@ exports.createSchemaCustomization = ({actions}) => {
         releaseTag: String
         optional: Boolean
         returnType: ApiDocTypeReference!
-        parameters: [ApiDocFunctionParameter]
+        parameters: [ApiDocFunctionParameter!]
+        typeParameters: [ApiDocTypeParameter!]
       }
 
       type ApiDocEnum implements Node & ApiDocBase {
@@ -400,7 +402,7 @@ exports.createSchemaCustomization = ({actions}) => {
         references: [ApiDocReference]
         comment: ApiDocTypeDoc
         releaseTag: String
-        parameters: [ApiDocFunctionParameter]
+        parameters: [ApiDocFunctionParameter!]
       }
 
       type ApiDocMethod implements Node & ApiDocBase {
@@ -421,7 +423,7 @@ exports.createSchemaCustomization = ({actions}) => {
         optional: Boolean
         returnType: ApiDocTypeReference!
         static: Boolean
-        parameters: [ApiDocFunctionParameter]
+        parameters: [ApiDocFunctionParameter!]
       }
 
       type ApiDocReference {
