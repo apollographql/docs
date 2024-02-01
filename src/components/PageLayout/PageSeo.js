@@ -4,6 +4,7 @@ import getShareImage from '@jlengstorf/get-share-image';
 import {GatsbySeo} from 'gatsby-plugin-next-seo';
 import {PathContext} from '../../utils';
 import {graphql, useStaticQuery} from 'gatsby';
+import {truncate} from 'lodash';
 
 export function PageSeo({title, description, noindex}) {
   const {uri} = useContext(PathContext);
@@ -37,13 +38,12 @@ export function PageSeo({title, description, noindex}) {
           {
             url: getShareImage({
               title,
-              tagline: description,
-              titleFont: 'Aeonik',
+              tagline: truncate(description, {length: 100, separator: /,? +/}),
+              titleFont: 'odyssey:fonts:AeonikBold.otf',
               titleFontSize: 80,
-              titleExtraConfig: '_bold',
-              taglineFont: 'Inter',
+              taglineFont: 'odyssey:fonts:InterRegular.ttf',
               textColor: 'C6CFCE',
-              textLeftOffset: 80,
+              textLeftOffset: 150,
               textAreaWidth: 1120,
               cloudName: 'apollographql',
               imagePublicID: 'docs-thumbnail_xdb1xi'
