@@ -5,6 +5,8 @@ const model = require('@microsoft/api-extractor-model');
 /** @type {import("@microsoft/tsdoc")} */
 const tsdoc = require('@microsoft/tsdoc');
 
+const parseTs = require('./parseTs');
+
 function loadApiDoc(
   /** @type {string} */ fileName,
   /** @type {import("gatsby").SourceNodesArgs} */ gatsbyApi
@@ -100,88 +102,82 @@ function extractChildren(
   return {children: item.members.map(getId)};
 }
 
+function extractPrimaryReference(type, item) {
+  if (!(item instanceof model.ApiDeclaredItem)) {
+    return {type};
+  }
+  const ast = parseTs.parseAst(type);
+  const primaryReference = parseTs.skipToPrimaryType(ast);
+  const referencedTypeName = primaryReference?.name?.value;
+  const referencedType = item.excerptTokens?.find(
+    r => r.text === referencedTypeName
+  );
+
+  return {
+    type,
+    primaryCanonicalReference: referencedType?.canonicalReference?.toString(),
+    primaryGenericArguments: primaryReference?.generics?.map(g => g.unparsed)
+  };
+}
+
 function extraData(
   /** @type  {import("@microsoft/api-extractor-model").ApiItem} */ item
 ) {
-  return item instanceof model.ApiInterface
-    ? {
-        typeParameters: item.typeParameters.map(p => ({
-          name: p.name,
-          optional: p.isOptional,
-          comment: renderDocNode(p.tsdocTypeParamBlock?.content.nodes)
-        }))
-      }
-    : item instanceof model.ApiTypeAlias
-    ? {
-        typeParameters: item.typeParameters.map(p => ({
-          name: p.name,
-          optional: p.isOptional,
-          comment: renderDocNode(p.tsdocTypeParamBlock?.content.nodes)
-        })),
-        type: item.typeExcerpt.text
-      }
-    : item instanceof model.ApiPropertySignature
-    ? {
-        readonly: item.isReadonly,
-        optional: item.isOptional,
-        type: item.propertyTypeExcerpt.text
-      }
-    : item instanceof model.ApiMethodSignature
-    ? {
-        optional: item.isOptional,
-        returnType: item.returnTypeExcerpt.text,
-        parameters: item.parameters.map(p => ({
-          type: p.parameterTypeExcerpt.text,
-          name: p.name,
-          optional: p.isOptional,
-          comment: renderDocNode(p.tsdocParamBlock?.content.nodes)
-        }))
-      }
-    : item instanceof model.ApiFunction
-    ? {
-        returnType: item.returnTypeExcerpt.text,
-        parameters: item.parameters.map(p => ({
-          type: p.parameterTypeExcerpt.text,
-          name: p.name,
-          optional: p.isOptional,
-          comment: renderDocNode(p.tsdocParamBlock?.content.nodes)
-        }))
-      }
-    : item instanceof model.ApiClass
-    ? {
-        implements: item.implementsTypes.map(p => p.excerpt.text)
-      }
-    : item instanceof model.ApiMethod
-    ? {
-        abstract: item.isAbstract,
-        optional: item.isOptional,
-        static: item.isStatic,
-        returnType: item.returnTypeExcerpt.text,
-        parameters: item.parameters.map(p => ({
-          type: p.parameterTypeExcerpt.text,
-          name: p.name,
-          optional: p.isOptional,
-          comment: renderDocNode(p.tsdocParamBlock?.content.nodes)
-        }))
-      }
-    : item instanceof model.ApiConstructor
-    ? {
-        parameters: item.parameters.map(p => ({
-          type: p.parameterTypeExcerpt.text,
-          name: p.name,
-          optional: p.isOptional,
-          comment: renderDocNode(p.tsdocParamBlock?.content.nodes)
-        }))
-      }
-    : item instanceof model.ApiProperty
-    ? {
-        abstract: item.isAbstract,
-        optional: item.isOptional,
-        protected: item.isProtected,
-        static: item.isStatic,
-        readonly: item.isReadonly
-      }
-    : {};
+  const ret = {};
+  if (model.ApiParameterListMixin.isBaseClassOf(item)) {
+    ret.parameters = item.parameters.map(p => ({
+      ...extractPrimaryReference(p.parameterTypeExcerpt.text, item),
+      name: p.name,
+      optional: p.isOptional,
+      comment: renderDocNode(p.tsdocParamBlock?.content.nodes)
+    }));
+  }
+
+  if (model.ApiTypeParameterListMixin.isBaseClassOf(item)) {
+    ret.typeParameters = item.typeParameters.map(p => ({
+      name: p.name,
+      optional: p.isOptional,
+      defaultType: p.defaultTypeExcerpt.text,
+      constraint: p.constraintExcerpt.text,
+      comment: renderDocNode(p.tsdocTypeParamBlock?.content.nodes)
+    }));
+  }
+
+  if (model.ApiReadonlyMixin.isBaseClassOf(item)) {
+    ret.readonly = item.isReadonly;
+  }
+  if (model.ApiOptionalMixin.isBaseClassOf(item)) {
+    ret.optional = item.isOptional;
+  }
+  if (model.ApiAbstractMixin.isBaseClassOf(item)) {
+    ret.abstract = item.isAbstract;
+  }
+  if (model.ApiStaticMixin.isBaseClassOf(item)) {
+    ret.static = item.isStatic;
+  }
+  if (model.ApiProtectedMixin.isBaseClassOf(item)) {
+    ret.protected = item.isProtected;
+  }
+  if (model.ApiReturnTypeMixin.isBaseClassOf(item)) {
+    ret.returnType = extractPrimaryReference(item.returnTypeExcerpt.text, item);
+  }
+
+  return Object.assign(
+    ret,
+    item instanceof model.ApiTypeAlias
+      ? {
+          type: item.typeExcerpt.text
+        }
+      : item instanceof model.ApiPropertyItem
+      ? {
+          type: item.propertyTypeExcerpt.text
+        }
+      : item instanceof model.ApiClass
+      ? {
+          implements: item.implementsTypes.map(p => p.excerpt.text)
+        }
+      : {}
+  );
 }
 
 function getId(
