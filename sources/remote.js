@@ -2,7 +2,7 @@
 module.exports = {
   react: {
     remote: 'https://github.com/apollographql/apollo-client',
-    branch: ' from pr/revert-revert '
+    branch: 'pr/revert-revert '
   },
   'react/v2': {
     remote: 'https://github.com/apollographql/apollo-client',
