@@ -122,9 +122,7 @@ fragment Base on ApiDocBase {
 
 fragment Interface on ApiDocInterface {
   typeParameters {
-    name
-    optional
-    comment
+    ...TypeParameters
   }
   childrenIncomplete
   childrenIncompleteDetails
@@ -135,9 +133,7 @@ fragment Interface on ApiDocInterface {
 
 fragment TypeAlias on ApiDocTypeAlias {
   typeParameters {
-    name
-    optional
-    comment
+    ...TypeParameters
   }
   type
 }
@@ -150,14 +146,24 @@ fragment PropertySignature on ApiDocPropertySignature {
 
 fragment MethodSignature on ApiDocMethodSignature {
   optional
-  returnType
+  typeParameters {
+    ...TypeParameters
+  }
+  returnType {
+    ...TypeReference
+  }
   parameters {
     ...FunctionParameter
   }
 }
 
 fragment Function on ApiDocFunction {
-  returnType
+  typeParameters {
+    ...TypeParameters
+  }
+  returnType {
+    ...TypeReference
+  }
   parameters {
     ...FunctionParameter
   }
@@ -189,7 +195,9 @@ fragment Method on ApiDocMethod {
   abstract
   optional
   static
-  returnType
+  returnType {
+    ...TypeReference
+  }
   parameters {
     ...FunctionParameter
   }
@@ -201,16 +209,32 @@ fragment Constructor on ApiDocConstructor {
   }
 }
 
+fragment TypeReference on ApiDocTypeReference {
+  type
+  primaryCanonicalReference
+  primaryGenericArguments
+}
+
 fragment FunctionParameter on ApiDocFunctionParameter {
   name
   type
   optional
   comment
+  primaryCanonicalReference
+  primaryGenericArguments
 }
 
 fragment Enum on ApiDocEnum {
   members {
     ...Ref
   }
+}
+
+fragment TypeParameters on ApiDocTypeParameter {
+  name
+  optional
+  comment
+  defaultType
+  constraint
 }
 `;
