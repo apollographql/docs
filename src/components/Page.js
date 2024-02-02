@@ -108,7 +108,6 @@ const SCROLL_MARGIN_TOP = PAGE_PADDING_TOP + TOTAL_HEADER_HEIGHT;
 const NESTED_LIST_STYLES = {
   [['ul', 'ol']]: {
     mt: 3,
-    fontSize: 'md',
     lineHeight: 'normal'
   }
 };
