@@ -274,8 +274,9 @@ exports.createSchemaCustomization = ({actions}) => {
         references: [ApiDocReference]
         comment: ApiDocTypeDoc
         releaseTag: String
-        returnType: String
-        parameters: [ApiDocFunctionParameter]
+        returnType: ApiDocTypeReference!
+        parameters: [ApiDocFunctionParameter!]
+        typeParameters: [ApiDocTypeParameter!]
       }
 
       type ApiDocPropertySignature implements Node & ApiDocBase {
@@ -311,8 +312,9 @@ exports.createSchemaCustomization = ({actions}) => {
         comment: ApiDocTypeDoc
         releaseTag: String
         optional: Boolean
-        returnType: String
-        parameters: [ApiDocFunctionParameter]
+        returnType: ApiDocTypeReference!
+        parameters: [ApiDocFunctionParameter!]
+        typeParameters: [ApiDocTypeParameter!]
       }
 
       type ApiDocEnum implements Node & ApiDocBase {
@@ -400,7 +402,7 @@ exports.createSchemaCustomization = ({actions}) => {
         references: [ApiDocReference]
         comment: ApiDocTypeDoc
         releaseTag: String
-        parameters: [ApiDocFunctionParameter]
+        parameters: [ApiDocFunctionParameter!]
       }
 
       type ApiDocMethod implements Node & ApiDocBase {
@@ -419,9 +421,9 @@ exports.createSchemaCustomization = ({actions}) => {
         releaseTag: String
         abstract: Boolean
         optional: Boolean
-        returnType: String
+        returnType: ApiDocTypeReference!
         static: Boolean
-        parameters: [ApiDocFunctionParameter]
+        parameters: [ApiDocFunctionParameter!]
       }
 
       type ApiDocReference {
@@ -433,6 +435,8 @@ exports.createSchemaCustomization = ({actions}) => {
         name: String
         optional: Boolean
         comment: String
+        defaultType: String
+        constraint: String
       }
 
       type ApiDocFunctionParameter {
@@ -440,6 +444,8 @@ exports.createSchemaCustomization = ({actions}) => {
         name: String
         optional: Boolean
         comment: String
+        primaryCanonicalReference: String
+        primaryGenericArguments: [String!]
       }
 
       type ApiDocTypeDoc {
@@ -454,6 +460,12 @@ exports.createSchemaCustomization = ({actions}) => {
         alpha: Boolean!
         beta: Boolean!
         experimental: Boolean!
+      }
+
+      type ApiDocTypeReference {
+        type: String!
+        primaryCanonicalReference: String
+        primaryGenericArguments: [String!]
       }
     `);
 };

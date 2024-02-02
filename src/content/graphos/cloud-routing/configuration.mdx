@@ -1,16 +1,27 @@
 ---
-title: Configuring cloud routing
+title: Cloud router configuration
 subtitle: Learn how to configure cloud routers in GraphOS Studio
 description: Learn how to configure cloud routers and manage secrets in GraphOS Studio
 ---
 
-After you [create a cloud supergraph](../quickstart/cloud/), you can view and manage its router's configuration from GraphOS Studio. Go to the **Settings** page for your variant in Studio, then click the **Cloud Router** tab:
+After you create a cloud supergraph, you can view and manage its router's configuration from GraphOS Studio.
 
-<img
-  className="screenshot"
-  alt="Configuring the routing for your cloud supergraph in GraphOS Studio"
-  src="../../img/cloud-routing/configuration-main.jpg"
-/>
+- For cloud routers on the Serverless plan, go to the **Settings** page for your variant in Studio, then click the **Cloud Router** tab:
+
+  <img
+    className="screenshot"
+    alt="Configuring the routing for your cloud supergraph in GraphOS Studio"
+    src="../img/cloud-routing/configuration-main.jpg"
+  />
+
+- For cloud routers on the Dedicated plan, open the **Cloud Router** page from the left navigation:
+
+  <img
+    className="screenshot"
+    alt="The Cloud Router page in GraphOS Studio"
+    src="../img/cloud-dedicated/dedicated-configuration.png"
+  />
+
 
 This page shows the following information:
 
@@ -29,7 +40,7 @@ To add a new secret, click **Save a secret**. The following dialog appears:
 <img
   className="screenshot"
   alt="Adding a secret to your router"
-  src="../../img/cloud-routing/add-secret.jpg"
+  src="../img/cloud-routing/add-secret.jpg"
   width="500"
 />
 
@@ -50,7 +61,7 @@ headers:
 
 ## Router configuration YAML
 
-You can configure your router's behavior under **Router configuration YAML** on the **Cloud Router** tab.
+You can configure your router's behavior in the **Router configuration YAML** section of the **Cloud Router** tab or page.
 
 On the [**Serverless** plan](../org/plans/), you can configure:
 
@@ -60,9 +71,10 @@ On the [**Serverless** plan](../org/plans/), you can configure:
 
 * [Introspection](#introspection) to allow resolving introspection queries.
 
+
 [Dedicated and Enterprise plans](../org/plans/) offer a [wider variety of configurations](/router/configuration/overview#yaml-config-file).
 
-**If you require more advanced router customization,** please <TrackableLink href="https://www.apollographql.com/contact-sales" eventName="content_contact_sales">reach out</TrackableLink> to learn about your about Dedicated and Enterprise plan options.
+If you require more advanced router customization, <TrackableLink href="https://www.apollographql.com/contact-sales" eventName="content_contact_sales">get in touch</TrackableLink> to learn about your about Dedicated and Enterprise plan options.
 
 ### HTTP header rules
 
@@ -340,7 +352,7 @@ cors:
 
 #### Response `Vary` header
 
-A plugin may set a response `Vary` header. If, after all plugins are processed, there is no response `Vary` header, then the router will add one with a value of `origin`.
+A plugin may set a response `Vary` header. If, after all plugins are processed, there is no response `Vary` header, then the router will add one with a value of "origin".
 
 ### Subgraph error inclusion
 

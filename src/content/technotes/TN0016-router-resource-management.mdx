@@ -9,7 +9,7 @@ tags: [router, kubernetes]
 
 <EnterpriseFeature>
 
-Self-hosting the Apollo Router is limited to [GraphOS Enterprise plans](/graphos/enterprise/). Other plan types use [managed cloud routing with GraphOS](/graphos/routing/cloud/). Check out the [pricing page](https://www.apollographql.com/pricing/) to learn more.
+Self-hosting the Apollo Router is limited to [GraphOS Enterprise plans](/graphos/enterprise/). Other plan types use [managed cloud routing with GraphOS](/graphos/cloud-routing). Check out the [pricing page](https://www.apollographql.com/pricing/) to learn more.
 
 </EnterpriseFeature>
 
@@ -25,16 +25,16 @@ Our general recommendation for Kubernetes is to start with these requests and li
 ```yaml
 resources:
   requests:
-    memory: "1G"
-    cpu: "1000m"
+    memory: '1G'
+    cpu: '1000m'
   limits:
-    memory: "2G"
+    memory: '2G'
     # no CPU limit to avoid throttling
 ```
 
 <Tip>
 
-The [router resource estimator](technotes/TN0045-router_resource_estimator/) is a helpful tool for getting a starting baseline for what resources you may need in production based on your expected traffic.
+The [router resource estimator](./TN0045-router_resource_estimator/) is a helpful tool for getting a starting baseline for what resources you may need in production based on your expected traffic.
 
 </Tip>
 
