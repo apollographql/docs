@@ -31,7 +31,7 @@ type Query {
 }
 ```
 
-API gateways usually have no understanding of all the services underneath them or what their capabilities are. They may have configuration options and rules that can apply to a list of services, but these are blanket rules that must be configured at the gateway level, not at the service definition.
+API gateways (like Apigee, Mulesoft, or ones from AWS, Azure, or Google Cloud) usually have little understanding of all the services underneath them or what their capabilities are. They may have configuration options and rules that can apply to those services, but these are blanket rules that must be configured at the gateway level, not at the service definition.
 If you wanted to apply a common rule across many services it would be up to the API gateway managers to configure, deploy, and apply that new rule to a set of services rather than the individual service teams.
 
 ```yaml
