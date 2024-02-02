@@ -6,7 +6,7 @@ title: Setting up Apollo SSO with Azure AD
 
 **Single sign-on (SSO) is available only for [Enterprise plans](https://www.apollographql.com/pricing/).**
 
-Unlike most Enterprise features, this feature is _not_ available as part of an [Enterprise trial](../plans/#enterprise-trials).
+Unlike most Enterprise features, this feature is not available as part of an [Enterprise trial](../plans/#enterprise-trials).
 
 </EnterpriseFeature>
 
@@ -122,7 +122,7 @@ After you successfully configure the identity bridge between Azure AD and PingOn
 
 2. In Step 1 of the **Add OIDC Application** wizard, configure the application name, description, category, and icon (optional).
 3. Click **Next** for Steps 2-5 (these are configured by default).
-4. In Step 6 of the wizard (**Attribute Mapping**), you _must_ map `email` to `email` and `sub` to `preferred_username`. You can optionally map more attributes for given name, family name, and others.
+4. In Step 6 of the wizard (**Attribute Mapping**), you must map `email` to `email` and `sub` to `preferred_username`. You can optionally map more attributes for given name, family name, and others.
 5. In Step 7 of the wizard (**Group Access**), select whichever groups should receive SSO access to Apollo.
 6. Click **Done** to complete the configuration.
 

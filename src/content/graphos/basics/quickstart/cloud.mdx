@@ -35,7 +35,7 @@ If your account is part of an organization created prior to October 2022, you mi
   width="300"
 />
 
-_Some_ legacy organizations can upgrade to a current plan. [See details.](../org/plans#upgrading-to-a-current-plan)
+ legacy organizations can upgrade to a current plan. [See details.](../org/plans#upgrading-to-a-current-plan)
 
 </Note>
 
@@ -105,7 +105,7 @@ Otherwise, continue with the steps below.
 
    - If your GraphQL server requires certain HTTP headers for Studio to introspect it, click **Provide HTTP Headers** to specify them.
 
-3. Provide the **name of your service**. The name should reflect the data or capabilities that your API provides and should uniquely identify your API among any _other_ APIs you might add to the supergraph later.
+3. Provide the **name of your service**. The name should reflect the data or capabilities that your API provides and should uniquely identify your API among any other APIs you might add to the supergraph later.
 
    <Note>
 
@@ -183,7 +183,7 @@ Skip to [the next step](#3-learn-about-your-variant) to learn about **variants**
 - You can click **Provide your schema directly** to provide your API's schema as plaintext SDL.
 - Finally, you can select **Use local introspection** to provide a local URL and do a one-time introspection of your schema.
 
-5. Provide a **Subgraph Name** for your API. This name uniquely identifies your API among any _other_ APIs you might add to the supergraph later. The name should reflect the data or capabilities that your API provides.
+5. Provide a **Subgraph Name** for your API. This name uniquely identifies your API among any other APIs you might add to the supergraph later. The name should reflect the data or capabilities that your API provides.
 
    - If you're using the `https://flyby-locations-sub.herokuapp.com/` example URL, you can enter **Locations** as the subgraph name.
 
@@ -234,7 +234,7 @@ From your **Graphs** tab, click your graph's `current` variant. This opens the v
 
 The README is great for documenting your supergraph so team members can learn the basics of how to work with it. It supports Markdown syntax like a typical README in a Git repository.
 
-While you're viewing _any_ page for a variant, the following navigation is shown on the left side:
+While you're viewing any page for a variant, the following navigation is shown on the left side:
 
 <img
   src="../../img/variant-pages.jpg"
@@ -253,7 +253,7 @@ We'll cover some of these pages in later steps, but feel free to click around an
 
 ## 4. Configure your router's network settings
 
-Before we try executing operations on your supergraph, we need to make sure your router is set up to communicate successfully with both your clients _and_ your subgraph.
+Before we try executing operations on your supergraph, we need to make sure your router is set up to communicate successfully with both your clients and your subgraph.
 
 Go to your variant's **Settings** page, then click **Cloud Router**:
 
@@ -309,12 +309,12 @@ cors:
     # highlight-end
 ```
 
-**To allow browser-based queries from _any_ domain,** you can instead set `allow_any_origin: true`:
+**To allow browser-based queries from any domain,** you can instead set `allowanyorigin: true`:
 
 ```yaml
 cors:
   # highlight-start
-  allow_any_origin: true
+  allowanyorigin: true
   # highlight-end
 ```
 
@@ -376,7 +376,7 @@ Here, we add two headers: `Authorization` and `X-CUSTOM-HEADER`. The `Authorizat
 
 <Note>
 
-Make sure you save any [router-specific secrets](#creating-secrets) _before_ you update your config YAML to include them. Otherwise, your router won't be updated with the new configuration.
+Make sure you save any [router-specific secrets](#creating-secrets) before you update your config YAML to include them. Otherwise, your router won't be updated with the new configuration.
 
 </Note>
 
@@ -394,7 +394,7 @@ From your organization's **Graphs** tab, select your new variant and then open i
 
 Try building a couple of queries and running them against your supergraph. Notice that the supergraph supports the exact same query structures as your underlying GraphQL API.
 
-Because you've created a cloud supergraph, operations you run in the Explorer are sent to the GraphOS-managed **router** that sits in front of your API. Application clients will _also_ query the router instead of querying your API directly.
+Because you've created a cloud supergraph, operations you run in the Explorer are sent to the GraphOS-managed **router** that sits in front of your API. Application clients will also query the router instead of querying your API directly.
 
 <Note>
 
@@ -427,9 +427,9 @@ Learn more about the available metrics in the [metrics documentation](../metrics
 
 ## 7. Connect clients to your router
 
-Your supergraph is ready to start receiving client operations! If you have existing client applications that connect _directly_ to your GraphQL API, you can update their GraphQL endpoint URL to your _router's_ URL.
+Your supergraph is ready to start receiving client operations! If you have existing client applications that connect directly to your GraphQL API, you can update their GraphQL endpoint URL to your router's URL.
 
-Similarly, any _new_ client applications should use your router's URL.
+Similarly, any new client applications should use your router's URL.
 
 <Note>
 

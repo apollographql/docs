@@ -37,7 +37,7 @@ For our examples, we'll be connecting to New Relic, however this would apply to 
 We recommend using the OpenTelemetry Collector to send router metrics to your APM tool for the following reasons:
 
 - The collector provides a centralized reporter when running multiple router instances.
-- The collector enables you to processing and send metrics to _multiple_ locations beyond your APM tool, such as a local Prometheus instance.
+- The collector enables you to processing and send metrics to multiple locations beyond your APM tool, such as a local Prometheus instance.
 
 You'll need an instance of the [OpenTelemetry Collector](https://opentelemetry.io/docs/collector/) to export to your APM tool. A basic configuration requires both an OpenTelemetry Protocol (OTLP) receiver (for the router) and an exporter (to forward to your APM tool).
 
@@ -81,7 +81,7 @@ The router then needs to connect directly to the collector instance. Here's an e
 
 ```yaml title="router.yaml"
 cors:
-  allow_any_origin: true
+  allowanyorigin: true
 supergraph:
   listen: 0.0.0.0:4000
 telemetry:
@@ -106,7 +106,7 @@ Here's an example router configuration for connecting directly to New Relic:
 
 ```yaml title="router.yaml"
 cors:
-  allow_any_origin: true
+  allowanyorigin: true
 supergraph:
   listen: 0.0.0.0:4000
 telemetry:

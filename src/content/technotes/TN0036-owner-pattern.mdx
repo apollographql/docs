@@ -7,7 +7,7 @@ id: TN0036
 tags: [federation]
 ---
 
-In Federation 2, the notion of "extending" an entity type is strictly conceptual. All definitions of a type in different subgraphs are merged according to the "shareability" of fields. In the following example, neither subgraph really _owns_ or _extends_ the `Product` entity. Instead, they both _contribute fields_ to it.
+In Federation 2, the notion of "extending" an entity type is strictly conceptual. All definitions of a type in different subgraphs are merged according to the "shareability" of fields. In the following example, neither subgraph really owns or extends the `Product` entity. Instead, they both _contribute fields_ to it.
 
 <CodeColumns>
 
@@ -31,7 +31,7 @@ Federation 1 required that one of these definitions used the `extend` keyword or
 
 However, in some situations you still might want to designate an "owner" of an entity and make "entity extension" a first-class concept in your supergraph.
 
-One example is the ability assert which subgraph is responsible for documenting an entity. If two subgraphs add different descriptions to a type, composition selects _one_ of those descriptions and emits a hint informing you of the inconsistency:
+One example is the ability assert which subgraph is responsible for documenting an entity. If two subgraphs add different descriptions to a type, composition selects one of those descriptions and emits a hint informing you of the inconsistency:
 
 ```
 HINT: [INCONSISTENT_DESCRIPTION]: Element "Product" has inconsistent

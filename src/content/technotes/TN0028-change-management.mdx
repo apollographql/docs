@@ -32,7 +32,7 @@ Allowing teams to independently update the components they own is a key benefit 
 This document will cover the basic release steps that involve changes to an existing [supergraph API](/federation/federated-types/overview). We will not go into depth on deploying changes to runtime code or the router runtime configuration. Specifically, we'll examine two scenarios, both of which involve introducing changes to an existing federated API schema
 
 - [Backward compatible subgraph schema changes](#backward-compatible-subgraph-schema-changes)
-- [Backward _incompatible_ subgraph schema changes](#backward-incompatible-subgraph-schema-changes)
+- [Backward incompatible subgraph schema changes](#backward-incompatible-subgraph-schema-changes)
 
 This guide assumes the general use of [Apollo GraphOS](/graphos/) and some of it's specific features:
 
@@ -49,7 +49,7 @@ A schema change is backward compatible if it doesn't affect existing operations.
 - Adding a type or field (unused until a client includes the fields in new operations)
 - Adding an optional argument to existing fields, ideally with a default value (the argument will have a null or default value until a client uses it in new operations)
 - Making a nullable field non-nullable (this restricts the set of possible output values)
-- Removing or changing _unused_ schema elements (no existing operation will be broken)
+- Removing or changing unused schema elements (no existing operation will be broken)
 
 <Note>
 
@@ -76,7 +76,7 @@ The release steps for backward compatible changes are as follows:
 
 During Step 4, our system will most likely end up in an inconsistent state, where the router's version of the schema is out of sync with the subgraph's version.
 
-When the subgraphs update first, a client _could_ request the new schema elements, and the router will raise an operation validation error because it is not yet aware of changes.
+When the subgraphs update first, a client could request the new schema elements, and the router will raise an operation validation error because it is not yet aware of changes.
 
 In practice, however, this rarely matters. Due to the declarative nature of GraphQL, clients must update their operations to use the new schema elements. **Clients aren't polling our schema's introspection response to discover new fields and immediately start requesting them.** (Also, Apollo recommends [disabling introspection in production](https://www.apollographql.com/blog/graphql/security/why-you-should-disable-graphql-introspection-in-production/). Only after the system reaches a consistent state will we announce the availability of these new schema elements to clients.
 
@@ -87,7 +87,7 @@ If we enable [Schema Change Notifications](/graphos/metrics/notifications/schema
 Most of the time we can focus on a single subgraph, but it is possible to encounter conflicts when two or more subgraphs change. Consider this sequence of events:
 
 1. Team A makes a change to Subgraph A. The build check succeeds in CI and they merge their code.
-2. Team B makes a change to Subgraph B. Their build check also succeeds in CI, even though it actually conflicts with the change in Subgraph A, because the build check runs against _released_ schema definitions.
+2. Team B makes a change to Subgraph B. Their build check also succeeds in CI, even though it actually conflicts with the change in Subgraph A, because the build check runs against released schema definitions.
 3. Team B releases their change to production.
 4. Team A attempts to release their change, but their new subgraph schema fails to compose and the router does not update.
 
@@ -151,7 +151,7 @@ Not an enterprise customer? [Learn about GraphOS for Enterprise.](/graphos/enter
 
 Backward incompatible schema changes remove or alter schema elements in ways that would break existing operations.
 
-Crucially, if a schema element is unused, this does _not_ qualify as a backward incompatible change.
+Crucially, if a schema element is unused, this does not qualify as a backward incompatible change.
 
 ### Release steps
 

@@ -12,7 +12,7 @@ To enable client awareness, your clients must identify themselves in their reque
 
 </Note>
 
-[GraphOS Enterprise](https://www.apollographql.com/pricing) organizations can segment operation metrics even further, by individual client _versions_ (`1.0`, `1.1`, etc.). This helps you track the adoption of new versions and identify older versions you can safely deprecate or discontinue.
+[GraphOS Enterprise](https://www.apollographql.com/pricing) organizations can segment operation metrics even further, by individual client versions (`1.0`, `1.1`, etc.). This helps you track the adoption of new versions and identify older versions you can safely deprecate or discontinue.
 
 You view client-segmented metrics from a variant's **Clients** page in Studio:
 
@@ -60,7 +60,7 @@ const client = new ApolloClient({
 
 ### Diagnose client-specific issues
 
-By filtering your graph's metrics by client (and client _version_ with Enterprise), you can identify when a high failure rate for an operation is tied to a particular client. This helps you isolate the underlying cause and push an update for the affected client.
+By filtering your graph's metrics by client (and client version with Enterprise), you can identify when a high failure rate for an operation is tied to a particular client. This helps you isolate the underlying cause and push an update for the affected client.
 
 ### Deprecate, change, and remove fields safely
 

@@ -45,7 +45,7 @@ This page organizes linter options into the following categories:
 - **General Linter Configuration** provides high-level options, including disabling the linter entirely.
 - **Approved @tag names** enables you to specify approved values for the `name` argument of the `@tag` directive. This directive is used most commonly with [GraphOS contracts](./contracts/).
   - If you don't use the `@tag` directive, you can ignore this category.
-  - Using a _non_-approved value for `name` raises the [`TAG_DIRECTIVE_USES_UNKNOWN_NAME`](./linter-rules#tag_directive_uses_unknown_name) violation.
+  - Using a non-approved value for `name` raises the [`TAG_DIRECTIVE_USES_UNKNOWN_NAME`](./linter-rules#tag_directive_uses_unknown_name) violation.
 - **Rule Severity Configuration** enables you to [set the severity level](#setting-severity-levels) for violations of each rule.
 
 If you view this configuration for a single variant, each category displays a **Use Graph Settings** toggle in the upper right. If this toggle is enabled, the variant uses whatever graph-wide defaults are set for that category. At this time, the **Use Graph Settings** toggle is always enabled for all variants.
@@ -65,7 +65,7 @@ Click a rule's severity to set it to any of the following:
 
 - **Error.** Any violation of this rule causes the associated linter check to fail.
     - This in turn causes the _entire schema checks run_ to fail, which is useful for failing builds in CI.
-- **Warn.** Violations of this rule are flagged in checks reports, but they _don't_ cause the associated linter check to fail.
+- **Warn.** Violations of this rule are flagged in checks reports, but they don't cause the associated linter check to fail.
 - **Ignore.** Violations of this rule are ignored entirely.
 
 For information on specific rules, see the [reference list of rules](./linter-rules).
@@ -76,7 +76,7 @@ Schema linting runs automatically as part of your graph's [schema checks](#linti
 
 ### Linting via schema checks
 
-If you set up [schema checks](./schema-checks) for your graph, schema linting automatically runs as a separate check type alongside build and operation checks. You can view the results of _all_ check types from your graph's **Checks** page in Studio:
+If you set up [schema checks](./schema-checks) for your graph, schema linting automatically runs as a separate check type alongside build and operation checks. You can view the results of all check types from your graph's **Checks** page in Studio:
 
 <img
     src="../img/linter-check-results.jpg"
@@ -105,7 +105,7 @@ The Rover CLI provides `subgraph lint` and `graph lint` commands for running the
 - Use `subgraph lint` for subgraphs in a supergraph.
 - Use `graph lint` for [monographs](../graphs/#monographs) (not recommended).
 
-The `rover subgraph lint` and `rover graph lint` commands validate all [linter rules](./linter-rules) _except_ for [composition rules](./linter-rules#composition-rules). Use [`rover subgraph check`](/rover/commands/subgraphs#subgraph-check) or [`rover supergraph compose`](/rover/commands/supergraphs#supergraph-compose) to validate composition rules locally.
+The `rover subgraph lint` and `rover graph lint` commands validate all [linter rules](./linter-rules) except for [composition rules](./linter-rules#composition-rules). Use [`rover subgraph check`](/rover/commands/subgraphs#subgraph-check) or [`rover supergraph compose`](/rover/commands/supergraphs#supergraph-compose) to validate composition rules locally.
 
 ```bash showLineNumbers=false title="Example command"
 rover subgraph lint --name products --schema ./products-schema.graphql my-graph@my-variant
@@ -161,9 +161,9 @@ Alternatively, you can provide `-`, in which case the command uses an SDL string
 
 <td>
 
-If provided, the linter _only_ flags violations that are present in the diff between your local schema and your published schema.
+If provided, the linter only flags violations that are present in the diff between your local schema and your published schema.
 
-By default, one-off linting flags _all_ violations in your local schema. 
+By default, one-off linting flags all violations in your local schema. 
 
 </td>
 </tr>

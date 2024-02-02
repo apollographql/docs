@@ -22,10 +22,10 @@ In [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content), you
 
 ### Configuration options
 
-- **Time range**: _Include_ all distinct operations that were executed within this range. The default value is 7 days ("Within the last week").
-- **Operation count threshold**: _Exclude_ all operations that were executed fewer than this number of times within the specified **time range**.
-- **Variants**: _Include_ all distinct operations that were executed against each selected variant of your graph. The default value is "Base variant" (that is, whichever variant schema checks are being run against).
-- **Client exclusions**: _Exclude_ all operations that were executed by particular clients, such as clients used exclusively for development and testing.
+- **Time range**: Include all distinct operations that were executed within this range. The default value is 7 days ("Within the last week").
+- **Operation count threshold**: Exclude all operations that were executed fewer than this number of times within the specified **time range**.
+- **Variants**: Include all distinct operations that were executed against each selected variant of your graph. The default value is "Base variant" (that is, whichever variant schema checks are being run against).
+- **Client exclusions**: Exclude all operations that were executed by particular clients, such as clients used exclusively for development and testing.
 
   <img
     class="screenshot"
@@ -35,7 +35,7 @@ In [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content), you
 
 ## Using the Rover CLI
 
-You can customize a single run of schema checks by providing options to the Rover CLI. If you've _also_ [configured default rules](#using-graphos-studio-recommended) for schema checks, any command-line options you provide take precedence over those rules.
+You can customize a single run of schema checks by providing options to the Rover CLI. If you've also [configured default rules](#using-graphos-studio-recommended) for schema checks, any command-line options you provide take precedence over those rules.
 
 ### Validation period
 
@@ -66,12 +66,12 @@ For example, you might want to discontinue support for an old version of your cl
 
 Provide threshold values with the following flags:
 
-- `--query-count-threshold` - Check your schema only against operations that have been executed _at least_ the specified number of times within the specified duration.
-- `--query-percentage-threshold` - Check your schema only against operations that account for _at least_ the specified percentage of _all_ operations against the graph within the specified duration. For example, specify `3` to set this threshold to 3%.
+- `--query-count-threshold` - Check your schema only against operations that have been executed at least the specified number of times within the specified duration.
+- `--query-percentage-threshold` - Check your schema only against operations that account for at least the specified percentage of all operations against the graph within the specified duration. For example, specify `3` to set this threshold to 3%.
 
 <Note>
 
-You can provide values for both of these flags. If you do, an operation must meet or exceed _both_ thresholds for schema checks to include it.
+You can provide values for both of these flags. If you do, an operation must meet or exceed both thresholds for schema checks to include it.
 
 </Note>
 

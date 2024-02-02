@@ -84,7 +84,7 @@ Recommended for enterprise organizations that require full customization of thei
 </td>
 <td>
 
-**Not recommended.** A single GraphQL service hosted in your infrastructure with _no_ router.
+**Not recommended.** A single GraphQL service hosted in your infrastructure with no router.
 
 </td>
 </tr>
@@ -125,7 +125,7 @@ The router automatically reports certain operation metrics to GraphOS, so you do
 
 </Tip>
 
-Cloud supergraphs use an architecture called [Apollo Federation](/federation/). With federation, you can distribute your supergraph's capabilities across _multiple_ GraphQL services, which are known as **subgraphs**. The router executes client operations across multiple subgraphs as needed:
+Cloud supergraphs use an architecture called [Apollo Federation](/federation/). With federation, you can distribute your supergraph's capabilities across multiple GraphQL services, which are known as **subgraphs**. The router executes client operations across multiple subgraphs as needed:
 
 ```mermaid
 flowchart LR;
@@ -142,7 +142,7 @@ flowchart LR;
   class clients secondary;
 ```
 
-Even if your API currently uses only _one_ GraphQL server, a cloud supergraph helps you add more subgraphs later as your organization grows.
+Even if your API currently uses only one GraphQL server, a cloud supergraph helps you add more subgraphs later as your organization grows.
 
 <Tip>
 
@@ -154,11 +154,11 @@ Even if your API currently uses only _one_ GraphQL server, a cloud supergraph he
 
 <EnterpriseFeature>
 
-**Self-hosted supergraphs are an [Enterprise feature](/graphos/enterprise/)** for organizations with advanced performance or compliance requirements. If your organization _doesn't_ currently have an Enterprise plan, you can test out this functionality by signing up for a free [Enterprise trial](https://studio.apollographql.com/signup?type=enterprise-trial&referrer=docs-content).
+**Self-hosted supergraphs are an [Enterprise feature](/graphos/enterprise/)** for organizations with advanced performance or compliance requirements. If your organization doesn't currently have an Enterprise plan, you can test out this functionality by signing up for a free [Enterprise trial](https://studio.apollographql.com/signup?type=enterprise-trial&referrer=docs-content).
 
 </EnterpriseFeature>
 
-With a self-hosted supergraph, GraphOS does _not_ provision a router for your supergraph. Instead, you host your supergraph's router in your own infrastructure:
+With a self-hosted supergraph, GraphOS does not provision a router for your supergraph. Instead, you host your supergraph's router in your own infrastructure:
 
 ```mermaid
 flowchart LR;
@@ -197,7 +197,7 @@ Monographs require an Apollo organization on the **Enterprise** plan. [Learn mor
 
 </EnterpriseFeature>
 
-A **monograph** is a graph that consists of a single GraphQL server with _no_ router:
+A **monograph** is a graph that consists of a single GraphQL server with no router:
 
 ```mermaid
 flowchart LR;
@@ -211,7 +211,7 @@ flowchart LR;
 
 <Caution>
 
-**We strongly recommend _against_ monographs!** A monograph introduces significant technical _and_ logistical scaling issues as more teams contribute to your graph and its schema.
+**We strongly recommend against monographs!** A monograph introduces significant technical and logistical scaling issues as more teams contribute to your graph and its schema.
 
 Additionally, the router provides essential GraphOS functionality beyond support for multiple subgraphs. It also enables powerful features like [`@defer` support](/router/executing-operations/defer-support/) and straightforward [metrics reporting](../metrics/).
 
@@ -221,7 +221,7 @@ Additionally, the router provides essential GraphOS functionality beyond support
 
 **To create a cloud supergraph,** see the [GraphOS quickstart](../quickstart/cloud/).
 
-**To create a _non_-cloud graph** (a self-hosted supergraph or a monograph), follow these steps:
+**To create a non-cloud graph** (a self-hosted supergraph or a monograph), follow these steps:
 
 <EnterpriseFeature />
 

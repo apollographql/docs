@@ -78,7 +78,7 @@ If you require more advanced router customization, <TrackableLink href="https://
 
 ### HTTP header rules
 
-You can configure which HTTP headers your router includes in its requests to each of your subgraphs. You can define per-subgraph header rules, along with rules that apply to _all_ subgraphs.
+You can configure which HTTP headers your router includes in its requests to each of your subgraphs. You can define per-subgraph header rules, along with rules that apply to all subgraphs.
 
 You define header rules in your **Router configuration YAML**, like so:
 
@@ -116,13 +116,13 @@ You can specify which headers to propagate based on a matching [regular expressi
 
 <Note>
 
-The router _never_ propagates so-called [hop-by-hop headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers#hop-by-hop_headers), such as `Content-Length`, when propagating by pattern.
+The router never propagates so-called [hop-by-hop headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers#hop-by-hop_headers), such as `Content-Length`, when propagating by pattern.
 
 </Note>
 
 Alternatively, you can provide a static string via the `named` option. These `named` configurations have additional flexibility, because they support the following options:
 
-- `default`: A value to set if _no_ value was sent by the client
+- `default`: A value to set if no value was sent by the client
 - `rename`: Renames the header's key to the provided value
 
 ```yaml
@@ -157,7 +157,7 @@ Enables you to add custom headers to requests going to a specific subgraph. Thes
 
 #### Rule ordering
 
-Header rules are applied in the same order they're declared, and later rules can _override_ the effects of earlier rules. Consider this example:
+Header rules are applied in the same order they're declared, and later rules can override the effects of earlier rules. Consider this example:
 
 <p style="margin-bottom: 0;">❌</p>
 
@@ -171,9 +171,9 @@ headers:
         matching: .*
 ```
 
-In this example, first any header named `test` is removed from the list of headers to propagate. However, _the list of headers to propagate is currently empty!_ Next, the `propagate` rule adds _all_ headers to the propagation list, _including_ `test`.
+In this example, first any header named `test` is removed from the list of headers to propagate. However, the list of headers to propagate is currently empty! Next, the `propagate` rule adds all headers to the propagation list, including `test`.
 
-To correctly remove a header from the propagation list, make sure to define your `remove` rule _after_ any `propagate` rules:
+To correctly remove a header from the propagation list, make sure to define your `remove` rule after any `propagate` rules:
 
 <p style="margin-bottom: 0;">✅</p>
 
@@ -236,7 +236,7 @@ headers:
 
 <Note>
 
-If your router serves exclusively _non_-browser-based clients, you probably don't need to modify the default CORS configuration.
+If your router serves exclusively non-browser-based clients, you probably don't need to modify the default CORS configuration.
 
 For a more general introduction to CORS and common considerations, see the following sections:
 
@@ -245,29 +245,29 @@ For a more general introduction to CORS and common considerations, see the follo
 
 </Note>
 
-By default, the router enables _only_ GraphOS Studio to initiate browser connections to it. If your supergraph serves data to other browser-based applications, you need to do one of the following in the `cors` section of your **Router configuration YAML**:
+By default, the router enables only GraphOS Studio to initiate browser connections to it. If your supergraph serves data to other browser-based applications, you need to do one of the following in the `cors` section of your **Router configuration YAML**:
 
 - Add the origins of those web applications to the router's list of allowed `origins`.
   - Use this option if there is a known, finite list of web applications that consume your cloud supergraph.
 - Add a regular expression that matches the origins of those web applications to the router's list of allowed `origins`.
   - This option comes in handy if you want to match origins against a pattern, see the example below that matches subdomains of a specific namespace.
-- Enable the `allow_any_origin` option.
+- Enable the `allowanyorigin` option.
 
   - Use this option if your supergraph is a public API with arbitrarily many web app consumers.
-  - With this option enabled, the router sends the [wildcard (`*`)](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin#directives) value for the `Access-Control-Allow-Origin` header. This enables _any_ website to initiate browser connections to it (but they can't provide cookies or other credentials).
+  - With this option enabled, the router sends the [wildcard (`*`)](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin#directives) value for the `Access-Control-Allow-Origin` header. This enables any website to initiate browser connections to it (but they can't provide cookies or other credentials).
 
-- You _must_ use the `origins` + `match_origins` option if clients need to [authenticate their requests with cookies](#passing-credentials).
+- You must use the `origins` + `match_origins` option if clients need to [authenticate their requests with cookies](#passing-credentials).
 
-The following snippet includes an example of each option (use either `allow_any_origin`, or `origins + match_origins`):
+The following snippet includes an example of each option (use either `allowanyorigin`, or `origins + match_origins`):
 
 ```yaml
 cors:
   # Set to true to allow any origin
   # (Defaults to false)
-  allow_any_origin: true
+  allowanyorigin: true
 
   # List of accepted origins
-  # (Ignored if allow_any_origin is true)
+  # (Ignored if allowanyorigin is true)
   # (Defaults to the GraphOS Studio url: `https://studio.apollographql.com`)
   #
   # An origin is a combination of scheme, hostname and port.
@@ -294,7 +294,7 @@ You can enable credentials with CORS by setting the [`Access-Control-Allow-Crede
 
 <Note>
 
-**Your router must specify individual `origins` to support credentialed requests.** If your router enables `allow_any_origin`, your browser will refuse to send credentials.
+**Your router must specify individual `origins` to support credentialed requests.** If your router enables `allowanyorigin`, your browser will refuse to send credentials.
 
 </Note>
 
@@ -320,10 +320,10 @@ The following snippet shows all CORS configuration defaults for your router:
 #
 cors:
   # Set to true to allow any origin
-  allow_any_origin: false
+  allowanyorigin: false
 
   # List of accepted origins
-  # (Ignored if allow_any_origin is set to true)
+  # (Ignored if allowanyorigin is set to true)
   #
   # An origin is a combination of scheme, hostname and port.
   # It does not have any path section, so no trailing slash.
@@ -373,7 +373,7 @@ include_subgraph_errors:
     products: false # Do not propagate errors from the products subgraph
 ```
 
-Any configuration under the `subgraphs` key takes precedence over configuration under the `all` key. In the example above, subgraph errors are included from all subgraphs _except_ the `products` subgraph.
+Any configuration under the `subgraphs` key takes precedence over configuration under the `all` key. In the example above, subgraph errors are included from all subgraphs except the `products` subgraph.
 
 ### Introspection
 

@@ -23,7 +23,7 @@ Incorporate [schema proposals](./schema-proposals) into [schema checks](./schema
 
 Every supergraph in GraphOS includes one or more **subgraphs**. These are the individual GraphQL-powered microservices in your organization.
 
-You _individually_ publish each subgraph's schema to Apollo with `rover subgraph publish`:
+You individually publish each subgraph's schema to Apollo with `rover subgraph publish`:
 
 ```bash showLineNumbers=false title="Example command"
 rover subgraph publish --schema ./products.graphql --name products docs-example-graph@current --routing-url https://products.example.com
@@ -45,7 +45,7 @@ graph LR;
 
 1. Identify the name of the subgraph you're publishing to. You can view the names of your existing subgraphs from your variant's **Subgraphs** page in [GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content).
 
-2. **If you're publishing a subgraph for the first time,** _also_ obtain the **routing URL** of that subgraph. This is the URL that your router will use to communicate with the subgraph.
+2. **If you're publishing a subgraph for the first time,** also obtain the **routing URL** of that subgraph. This is the URL that your router will use to communicate with the subgraph.
 
    - If GraphOS already knows your subgraph's routing URL, you don't need to provide this value unless you're changing it.
 
@@ -74,7 +74,7 @@ graph TB;
   class composition tertiary;
 ```
 
-If this composition succeeds, your router is updated with the result. This enables clients to query any newly added fields, and it _prevents_ them from querying any _removed_ fields.
+If this composition succeeds, your router is updated with the result. This enables clients to query any newly added fields, and it prevents them from querying any removed fields.
 
 You can manually fetch your router's latest supergraph schema with the `rover supergraph fetch` command, or retrieve it from your supergraph's **Schema > SDL** page in GraphOS Studio.
 
