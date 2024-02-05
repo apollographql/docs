@@ -41,6 +41,7 @@ module.exports = {
         SchemaProposalCreationMermaid: 'readonly',
         SchemaProposalReviewMermaid: 'readonly',
         SchemaProposalImplementationMermaid: 'readonly',
+        SchemaProposalImplementationNote: 'readonly',
         SchemaProposalPublicationMermaid: 'readonly',
         SetApolloVCSCommit: 'readonly',
         StudioPages: 'readonly',
