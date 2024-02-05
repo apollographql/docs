@@ -13,7 +13,6 @@ const LIST_SPACING = 1;
 const NESTED_LIST_STYLES = {
   [['ul', 'ol']]: {
     mt: 3,
-    fontSize: 'md',
     lineHeight: 'normal'
   }
 };
