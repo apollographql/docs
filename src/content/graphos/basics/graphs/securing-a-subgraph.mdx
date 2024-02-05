@@ -3,19 +3,19 @@ title: Securing subgraphs
 description: With GraphOS
 ---
 
-To keep your supergraph secure, it's important that your individual subgraphs are [queried _only_ by your router](/federation/building-supergraphs/subgraphs-overview/#securing-your-subgraphs). That's because your subgraphs expose powerful fields that the router uses to execute operations across them. External clients should _not_ have access to these fields.
+To keep your supergraph secure, it's important that your individual subgraphs are [queried only by your router](/federation/building-supergraphs/subgraphs-overview/#securing-your-subgraphs). That's because your subgraphs expose powerful fields that the router uses to execute operations across them. External clients should not have access to these fields.
 
 This article describes steps for securing your subgraphs when using a [cloud supergraph](/graphos/cloud-routing).
 
 <Tip>
 
-As with all changes, we recommend first performing these steps for a _non-production_ variant of your supergraph.
+As with all changes, we recommend first performing these steps for a non-production variant of your supergraph.
 
 </Tip>
 
 ## 1. Generate a shared secret
 
-To restrict subgraph communication to _only_ your router, we recommend creating a separate **shared secret** for _each_ of your subgraphs. Whenever your router queries a subgraph, it includes that subgraph's corresponding secret in an HTTP header.
+To restrict subgraph communication to only your router, we recommend creating a separate **shared secret** for each of your subgraphs. Whenever your router queries a subgraph, it includes that subgraph's corresponding secret in an HTTP header.
 
 You can generate a random secret using a variety of tools. For example, most password managers provide this functionality.
 
@@ -35,7 +35,7 @@ For details, see [Managing secrets](/graphos/cloud-routing/configuration#managin
 
 </Tip>
 
-After you define the secret, you can inject its value into your router's configuration as an environment variable, as shown below. We recommend setting the value in a header named `Router-Authorization` (and again, create a separate secret _for each subgraph_):
+After you define the secret, you can inject its value into your router's configuration as an environment variable, as shown below. We recommend setting the value in a header named `Router-Authorization` (and again, create a separate secret for each subgraph):
 
 ```yaml
 headers:
@@ -59,7 +59,7 @@ The exact steps you take to require the shared secret in your subgraph depend on
 - The language and framework your subgraph uses
 - The service you use to host your subgraph
 
-Most cloud providers include a mechanism for saving secrets that are then made available to your application as environment variables. Your subgraph should read the secret from an environment variable and reject any incoming requests that _don't_ include that secret in the specified header.
+Most cloud providers include a mechanism for saving secrets that are then made available to your application as environment variables. Your subgraph should read the secret from an environment variable and reject any incoming requests that don't include that secret in the specified header.
 
 <Note>
 
@@ -71,9 +71,9 @@ If you have an existing subgraph that wasn't created from a template, you can ch
 
 ## 4. Test the configuration
 
-After adding the shared secret to both your router _and_ subgraph, do the following to confirm that communication has been secured as intended:
+After adding the shared secret to both your router and subgraph, do the following to confirm that communication has been secured as intended:
 
-1. Verify that your router _can_ still communicate with the subgraph by executing a test query against the router from the Explorer.
+1. Verify that your router can still communicate with the subgraph by executing a test query against the router from the Explorer.
    - Make sure the query includes at least one field from the relevant subgraph!
-2. Verify that other clients _can't_ communicate with the subgraph by executing a test query _against the subgraph directly_.
+2. Verify that other clients can't communicate with the subgraph by executing a test query against the subgraph directly.
    - This query should fail with an authorization error.

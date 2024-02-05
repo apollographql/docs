@@ -11,7 +11,7 @@ As part of GraphOS Studio metrics reporting, servers can [tag reported operation
 
 Clients can (and should) also [name their GraphQL operations](/react/data/operation-best-practices/#name-all-operations), which provides more context around how and where data is being used.
 
-Together, these pieces of information help teams monitor their graph and make changes to it safely. We strongly encourage that your GraphQL gateway _require_ client details _and_ operation names from all requesting clients.
+Together, these pieces of information help teams monitor their graph and make changes to it safely. We strongly encourage that your GraphQL gateway require client details and operation names from all requesting clients.
 
 ## Enforcing in Apollo Router
 
@@ -122,7 +122,7 @@ const server = new ApolloServer({
 
 ## Adding enforcement for existing clients
 
-If clients are already consuming your graph and _are not_ providing client metadata, adding universal enforcement will _break_ those clients. To resolve this you should take the following steps:
+If clients are already consuming your graph and are not providing client metadata, adding universal enforcement will break those clients. To resolve this you should take the following steps:
 
 ### Use other headers
 

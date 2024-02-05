@@ -28,7 +28,7 @@ Consider a webpage that displays a list of adorable pets that are available for 
 
 This solution requires multiple dependent network requests, which can result in slower page loads and additional battery consumption on mobile devices. This logic is also difficult to reuse on other pages that display slightly different data.
 
-**Using GraphQL**, the page can obtain _all_ this data with a single query to a single endpoint. That query looks like this:
+**Using GraphQL**, the page can obtain all this data with a single query to a single endpoint. That query looks like this:
 
 ```graphql
 query GetPetsByShelter {
@@ -42,7 +42,7 @@ query GetPetsByShelter {
 }
 ```
 
-This query describes the shape of the data we want to receive from the GraphQL server. The server takes care of combining and filtering backend data to return _exactly_ what we ask for. This keeps payload sizes small, especially compared to a REST endpoint that might return hundreds of unnecessary fields.
+This query describes the shape of the data we want to receive from the GraphQL server. The server takes care of combining and filtering backend data to return exactly what we ask for. This keeps payload sizes small, especially compared to a REST endpoint that might return hundreds of unnecessary fields.
 
 To execute a query like the one above, the page uses a GraphQL client such as [Apollo Client](/react/), with code that resembles the following (in the case of a React app):
 
@@ -121,7 +121,7 @@ Consider the following trade-offs when using GraphQL:
 
 ### Change management
 
-GraphQL introduces a new conceptual model for representing and interacting with data. An organization that's comfortable with this model can design, implement, and ship features quickly. However, the process of _becoming_ comfortable with this model takes time.
+GraphQL introduces a new conceptual model for representing and interacting with data. An organization that's comfortable with this model can design, implement, and ship features quickly. However, the process of becoming comfortable with this model takes time.
 
 - Frontend developers must come up to speed with a new API for fetching and manipulating data.
 - Backend developers must come up to speed with how to handle incoming requests from the frontend.
@@ -135,12 +135,12 @@ Your [GraphQL schema](/apollo-server/schema/schema/) defines which types and fie
 
 Depending on your schema and your resolver definitions, your server might inadvertently support GraphQL operations that execute slowly, or even max out your server's resources.
 
-Consequently, it's important to design your schema such that it supports the operations your clients need, _without_ supporting unnecessary operations that affect performance. It's also helpful to set up [trace reporting](/graphos/metrics/operations/#resolver-level-traces) for your GraphQL server, enabling you to identify and improve slow operations.
+Consequently, it's important to design your schema such that it supports the operations your clients need, without supporting unnecessary operations that affect performance. It's also helpful to set up [trace reporting](/graphos/metrics/operations/#resolver-level-traces) for your GraphQL server, enabling you to identify and improve slow operations.
 
 [Learn about query-driven schema design](/apollo-server/schema/schema/#query-driven-schema-design)
 
 ### Incompatibility with web browser caching
 
-Although [Apollo Client](/react/) provides powerful client-side [caching features](/react/caching/cache-configuration/), those features often require some configuration to get the most out of them. The _automatic_ caching provided by your _web browser_ does not interact well with GraphQL.
+Although [Apollo Client](/react/) provides powerful client-side [caching features](/react/caching/cache-configuration/), those features often require some configuration to get the most out of them. The automatic caching provided by your web browser does not interact well with GraphQL.
 
-Web browsers cache fetched data according to its URL. With GraphQL, you fetch all data from the _same_ URL (the URL of your GraphQL server). Consequently, you can't rely on the cached value for this URL.
+Web browsers cache fetched data according to its URL. With GraphQL, you fetch all data from the same URL (the URL of your GraphQL server). Consequently, you can't rely on the cached value for this URL.

@@ -95,7 +95,7 @@ Follow these best practices when creating end-to-end tests for your supergraph:
   - If you are not in production yet, we suggest making these tests as close to what you think they will be as possible.
   - Make sure to include operation that span multiple subgraphs to validate entity resolvers
 - Use variables to ensure high operation cardinality.
-  - If your test operations don't use any GraphQL variables (or if you use the _same_ variable values across executions), your supergraph is likely to return cached data. This circumvents large portions of execution logic, limiting test effectiveness.
+  - If your test operations don't use any GraphQL variables (or if you use the same variable values across executions), your supergraph is likely to return cached data. This circumvents large portions of execution logic, limiting test effectiveness.
   - By using a variety of operations and variable values, you help make sure that your tests result in minimal cache hits.
 
 ## Composition testing

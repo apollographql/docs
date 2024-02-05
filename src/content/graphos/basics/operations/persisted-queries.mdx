@@ -62,7 +62,7 @@ APQ has a few limitations compared to registered persisted queries.
   </tbody>
 </table>
 
-If you _only_ want to improve request latency and bandwidth usage, APQ addresses your use case. If you _also_ want to secure your supergraph with operation safelisting, you should register operations in a PQL.
+If you only want to improve request latency and bandwidth usage, APQ addresses your use case. If you also want to secure your supergraph with operation safelisting, you should register operations in a PQL.
 
 ## Security levels
 
@@ -114,11 +114,11 @@ The Apollo Router supports the following security levels, in increasing order of
 
 <Tip>
 
-_You can find more details, including configuration instructions, in the [implementation section](#2-router-configuration)._
+You can find more details, including configuration instructions, in the [implementation section](#2-router-configuration).
 
 </Tip>
 
-These levels allow you to [incrementally adopt](#incremental-adoption-path) persisted queries on a client-by-client basis. Specifically, the router should use audit mode until you're confident that _all_ your clients' trusted operations have been registered in the PQL. Refer to the [incremental adoption section](#incremental-adoption-path) for a step-by-step guide.
+These levels allow you to [incrementally adopt](#incremental-adoption-path) persisted queries on a client-by-client basis. Specifically, the router should use audit mode until you're confident that all your clients' trusted operations have been registered in the PQL. Refer to the [incremental adoption section](#incremental-adoption-path) for a step-by-step guide.
 
 ## Implementation steps
 
@@ -247,7 +247,7 @@ After you create a PQL, you can link it to one or more variants of your graph. E
 
 <Tip>
 
-It's safe to link an empty or incomplete PQL to a variant because your router doesn't _use_ its PQL for anything until you [configure it to do so](#2-router-configuration) (covered in a later step).
+It's safe to link an empty or incomplete PQL to a variant because your router doesn't use its PQL for anything until you [configure it to do so](#2-router-configuration) (covered in a later step).
 
 </Tip>
 
@@ -469,7 +469,7 @@ If safelisting is your goal, you'll need to [coordinate across client teams](#co
 Once your router's logs are completely clear of unexpected operations, you can configure your router to use [safelisting mode](#safelisting). Then, to reap the performance benefits, [update your client apps](#4-client-updates) to use operation IDs rather than full operation strings.
 
 Once you've confirmed all client apps use IDs, you can move to the most restrictive security level: [safelisting with IDs only](#safelisting-with-ids-only).
-This security level _enforces_ the performance benefit of using operation IDs rather than full operation strings. If you're content with the safelisting aspect of persisted queries with only optional performance benefits, you don't need to enable it.
+This security level enforces the performance benefit of using operation IDs rather than full operation strings. If you're content with the safelisting aspect of persisted queries with only optional performance benefits, you don't need to enable it.
 
 ### Coordinate with client teams
 
@@ -519,7 +519,7 @@ You can add new operations to a PQL by using the [Rover CLI](/rover/commands/per
 
 #### Adding operations
 
-To add new operations to a PQL, you need to [publish an updated manifest using the Rover CLI](#32-publish-manifests-to-the-pql). If the manifest you're publishing doesn't include an operation in the PQL, this does _not_ delete that operation from the PQL. Each manifest publication only adds any new operations to the PQL.
+To add new operations to a PQL, you need to [publish an updated manifest using the Rover CLI](#32-publish-manifests-to-the-pql). If the manifest you're publishing doesn't include an operation in the PQL, this does not delete that operation from the PQL. Each manifest publication only adds any new operations to the PQL.
 
 #### Deleting operations
 
@@ -534,8 +534,8 @@ If you want to delete an operation, you must do so from Studio. From the **Persi
 
 You should only delete operations that are problematic and shouldn't be executed. Even for such operations, it's important to recognize that operation deletions can cause application errors for legitimate clients, depending on your router's [security level](#router-security-levels) and if the client is sending full operation strings or operation IDs.
 
-- Regardless of security level, if a client sends an _operation ID_ of a deleted operation, the router _rejects the operation_.
-- If you enabled [safelisting](#safelisting), the router rejects _any_ operations you deleted from the PQL but that your clients still perform, whether clients send operation IDs or full operation strings for the deleted operation.
+- Regardless of security level, if a client sends an operation ID of a deleted operation, the router rejects the operation.
+- If you enabled [safelisting](#safelisting), the router rejects any operations you deleted from the PQL but that your clients still perform, whether clients send operation IDs or full operation strings for the deleted operation.
 - When the router [allows operation IDs](#allow-operation-ids) or is in [audit mode](#audit-mode-dry-run), if a client sends the full operation string of a deleted operation, the router executes it.
 
 Although you can't undo operation deletions directly via the Studio UI, you can always republish a deleted operation using [the Rover CLI](#32-publish-manifests-to-the-pql).
@@ -656,7 +656,7 @@ Each operation object has the following properties:
 
 The unique ID to use for the operation in your PQL.
 
-**This value must be unique among operations in the PQL.** It can match a previously published operation as long as the operation's [`body`](#body) remains the same. If you try to publish an operation with the same `id` as an existing operation but a different body, manifest publication throws an error. GraphOS interprets this as an attempt to _overwrite_ the existing PQL entry with a new [`body`](#body), which would change the behavior of existing deployed clients.
+**This value must be unique among operations in the PQL.** It can match a previously published operation as long as the operation's [`body`](#body) remains the same. If you try to publish an operation with the same `id` as an existing operation but a different body, manifest publication throws an error. GraphOS interprets this as an attempt to overwrite the existing PQL entry with a new [`body`](#body), which would change the behavior of existing deployed clients.
 
 **To ensure uniqueness,** tooling should generate this value based on the operation `body`. For details, see [Generating IDs](#generating-ids).
 
@@ -686,7 +686,7 @@ The complete query document for the operation. Includes the definition of the op
 
 The operation's name. Must match the name specified in `body`.
 
-This value does _not_ need to be unique among operations in the PQL. Often, different clients execute slightly different operations with the same name, and those operations each require a separate entry in the PQL.
+This value does not need to be unique among operations in the PQL. Often, different clients execute slightly different operations with the same name, and those operations each require a separate entry in the PQL.
 
 </td>
 </tr>
@@ -721,7 +721,7 @@ By generating identifiers based on query documents this way, you ensure that dif
 
 <Caution>
 
-**Never use an operation's _name_ for its PQL ID.** Different clients (or even different versions of the _same_ client) might execute different operations with the same name, and _all_ those distinct operations should be present in your PQL.
+**Never use an operation's name for its PQL ID.** Different clients (or even different versions of the same client) might execute different operations with the same name, and all those distinct operations should be present in your PQL.
 
 </Caution>
 
@@ -742,7 +742,7 @@ However, **all other details of the document must match**. For example, field or
 
 <Note>
 
-Prior to Router v1.28, safelisting required the incoming document to match the document in the safelist _precisely_, including white space, comments, and top-level definition order.
+Prior to Router v1.28, safelisting required the incoming document to match the document in the safelist precisely, including white space, comments, and top-level definition order.
 
 </Note>
 
@@ -802,7 +802,7 @@ The router ignores top-level definition order and ignored tokens to make it easi
 
 </Note>
 
-To ensure that you generate manifest entries correctly, it's important to note that your app's client library may _modify_ the operation strings you define in your source before executing those corresponding operations. For example, by default, all Apollo Client libraries add the `__typename` field to every object in a query if that field isn't already present:
+To ensure that you generate manifest entries correctly, it's important to note that your app's client library may modify the operation strings you define in your source before executing those corresponding operations. For example, by default, all Apollo Client libraries add the `__typename` field to every object in a query if that field isn't already present:
 
 <CodeColumns>
 

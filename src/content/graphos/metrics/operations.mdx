@@ -245,7 +245,7 @@ flowchart LR;
   class clients secondary;
 ```
 
-For federated subscriptions, latency is measured from when the router receives a response from one subgraph's resolver until the client receives an aggregated response, _including the time it takes the router to fetch data from subsequent subgraphs and aggregate it into a single response_.
+For federated subscriptions, latency is measured from when the router receives a response from one subgraph's resolver until the client receives an aggregated response, including the time it takes the router to fetch data from subsequent subgraphs and aggregate it into a single response.
 
 Since fetching data from subsequent subgraphs requires those subgraphs' resolvers to complete, high latency in federated subscription notifications can indicate slow resolver performance.
 

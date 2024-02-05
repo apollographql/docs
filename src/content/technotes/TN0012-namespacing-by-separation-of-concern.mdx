@@ -40,7 +40,7 @@ type Mutation {
 }
 ```
 
-We can use the same pattern for _queries_ that involve `User` and `Comment` types:
+We can use the same pattern for queries that involve `User` and `Comment` types:
 
 ```graphql
 type UsersQueries {
@@ -90,7 +90,7 @@ You don't need to repeat the text `user` in the field names of the `UsersQueries
 
 ## Namespaces for serial mutations
 
-Unlike all other fields in a GraphQL operation, the root-level fields of the `Mutation` type must be resolved _serially_ instead of in parallel. This can help prevent two mutation fields from interacting with the same data simultaneously, which might cause a race condition.
+Unlike all other fields in a GraphQL operation, the root-level fields of the `Mutation` type must be resolved serially instead of in parallel. This can help prevent two mutation fields from interacting with the same data simultaneously, which might cause a race condition.
 
 ```graphql
 mutation DoTwoThings {
@@ -105,7 +105,7 @@ mutation DoTwoThings {
 }
 ```
 
-With namespaces, your mutation fields that actually modify data are no longer root-level fields (instead, your namespace objects are). Because of this, the mutation fields _are_ resolved in parallel. In many systems, this doesn't present an issue (for example, you probably want to use another mechanism in your mutation resolvers to ensure transactional consistency, such as a saga orchestrator).
+With namespaces, your mutation fields that actually modify data are no longer root-level fields (instead, your namespace objects are). Because of this, the mutation fields are resolved in parallel. In many systems, this doesn't present an issue (for example, you probably want to use another mechanism in your mutation resolvers to ensure transactional consistency, such as a saga orchestrator).
 
 ```graphql
 mutation DoTwoNestedThings(

@@ -86,7 +86,7 @@ Each row in the **Clients & Operations** table displays some combination of the 
 | Requests            | How many operations sent by clients over a given time period included the field, according to [metrics provided by your servers](./sending-operation-metrics#reporting-field-usage-metrics) |
 | Executions          | How many times your servers have executed the resolver for the field over a given time period                                       |
 
-For each of these columns to appear on the Insights page, your GraphQL servers must [report the associated metrics to GraphOS](./sending-operation-metrics#reporting-field-usage). If some but not _all_ your GraphQL servers report this data, the Insights page presents an incomplete picture of your graph's field usage.
+For each of these columns to appear on the Insights page, your GraphQL servers must [report the associated metrics to GraphOS](./sending-operation-metrics#reporting-field-usage). If some but not all your GraphQL servers report this data, the Insights page presents an incomplete picture of your graph's field usage.
 
 Take a look at the **Requests** and **Executions** for an example field:
 
@@ -111,7 +111,7 @@ query GetBooks {
 }
 ```
 
-If `Query.books` returns a list of ten `Book` objects, then `Book.title` is resolved _ten times_. This query, therefore contributes just one request but _ten_ executions to the `Book.title` field.
+If `Query.books` returns a list of ten `Book` objects, then `Book.title` is resolved ten times. This query, therefore contributes just one request but ten executions to the `Book.title` field.
 
 #### Multiple references to a field
 
@@ -128,7 +128,7 @@ query GetTwoBooks {
 }
 ```
 
-This operation includes two references to the fields `Query.book` and `Book.title`. Therefore, the resolvers for these fields each execute twice (assuming `Query.book` doesn't return `null`). However, these multiple references are all part of a _single_ operation.
+This operation includes two references to the fields `Query.book` and `Book.title`. Therefore, the resolvers for these fields each execute twice (assuming `Query.book` doesn't return `null`). However, these multiple references are all part of a single operation.
 
 Therefore, this query contributes just one request but two executions for each of the `Query.book` and `Book.title` fields.
 
@@ -161,7 +161,7 @@ query GetFavoriteMedia {
 }
 ```
 
-If `Query.favoriteMedia` returns a `Book` object here, then `Book.title` is resolved one time. _However_, the original query _does not reference_ `Book.title`. Instead, it references **`Media.title`**, because `Query.favoriteMedia` has a return type of `Media`.
+If `Query.favoriteMedia` returns a `Book` object here, then `Book.title` is resolved one time. However, the original query does not reference `Book.title`. Instead, it references **`Media.title`**, because `Query.favoriteMedia` has a return type of `Media`.
 
 Therefore, this query contributes zero requests and one execution for `Book.title`. It also contributes one request for `Media.title`. Note that interface fields always have zero executions.
 
@@ -238,6 +238,6 @@ query GetAllReviews {
 
 This query's execution starts in the Reviews subgraph, but it needs to obtain each `Product`'s `name` from the Products subgraph. As part of this process, the Products subgraph must [resolve references](/federation/entities/#2-define-a-reference-resolver) to `Product`s provided by the Reviews subgraph.
 
-To help resolve these references, the Reviews subgraph _must_ return each `Product`'s `id` field, even though that field isn't included in the original query. This is because `id` is a `@key` field for `Product`.
+To help resolve these references, the Reviews subgraph must return each `Product`'s `id` field, even though that field isn't included in the original query. This is because `id` is a `@key` field for `Product`.
 
 Therefore, this query contributes zero requests and one execution for `Product.id`. Similar logic applies to fields that use the [`@requires` directive](/federation/entities-advanced#contributing-computed-entity-fields).
