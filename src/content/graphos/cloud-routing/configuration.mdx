@@ -251,23 +251,23 @@ By default, the router enables only GraphOS Studio to initiate browser connectio
   - Use this option if there is a known, finite list of web applications that consume your cloud supergraph.
 - Add a regular expression that matches the origins of those web applications to the router's list of allowed `origins`.
   - This option comes in handy if you want to match origins against a pattern, see the example below that matches subdomains of a specific namespace.
-- Enable the `allowanyorigin` option.
+- Enable the `allow_any_origin` option.
 
   - Use this option if your supergraph is a public API with arbitrarily many web app consumers.
   - With this option enabled, the router sends the [wildcard (`*`)](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin#directives) value for the `Access-Control-Allow-Origin` header. This enables any website to initiate browser connections to it (but they can't provide cookies or other credentials).
 
 - You must use the `origins` + `match_origins` option if clients need to [authenticate their requests with cookies](#passing-credentials).
 
-The following snippet includes an example of each option (use either `allowanyorigin`, or `origins + match_origins`):
+The following snippet includes an example of each option (use either `allow_any_origin`, or `origins + match_origins`):
 
 ```yaml
 cors:
   # Set to true to allow any origin
   # (Defaults to false)
-  allowanyorigin: true
+  allow_any_origin: true
 
   # List of accepted origins
-  # (Ignored if allowanyorigin is true)
+  # (Ignored if allow_any_origin is true)
   # (Defaults to the GraphOS Studio url: `https://studio.apollographql.com`)
   #
   # An origin is a combination of scheme, hostname and port.
@@ -294,7 +294,7 @@ You can enable credentials with CORS by setting the [`Access-Control-Allow-Crede
 
 <Note>
 
-**Your router must specify individual `origins` to support credentialed requests.** If your router enables `allowanyorigin`, your browser will refuse to send credentials.
+**Your router must specify individual `origins` to support credentialed requests.** If your router enables `allow_any_origin`, your browser will refuse to send credentials.
 
 </Note>
 
@@ -320,10 +320,10 @@ The following snippet shows all CORS configuration defaults for your router:
 #
 cors:
   # Set to true to allow any origin
-  allowanyorigin: false
+  allow_any_origin: false
 
   # List of accepted origins
-  # (Ignored if allowanyorigin is set to true)
+  # (Ignored if allow_any_origin is set to true)
   #
   # An origin is a combination of scheme, hostname and port.
   # It does not have any path section, so no trailing slash.
