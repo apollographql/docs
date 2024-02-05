@@ -3,7 +3,7 @@ import React, {useContext} from 'react';
 import {Button, Link} from '@chakra-ui/react';
 import {Link as GatsbyLink, graphql, useStaticQuery} from 'gatsby';
 import {PathContext, isUrl} from '../utils';
-import {isAbsolute, relative, resolve} from 'path';
+import {isAbsolute, resolve} from 'path';
 
 export const PrimaryLink = props => (
   <Link
@@ -45,9 +45,15 @@ function useLinkProps(href) {
   try {
     // convert full urls for the current domain into absolute domain-relative urls
     const url = new URL(href);
-    if (url.host === window.location.host) {
+    console.log("test", href, href.includes("https://www.apollographql.com/tutorials/"))
+    if (
+      url.host === window.location.host &&
+      !href.includes("https://www.apollographql.com/tutorials/") &&
+      !href.includes("https://www.apollographql.com/blog/")
+    ) {
       href = url.pathname;
     }
+
   } catch {
     // it's okay if this fails, then it probably wasn't a full url
   }
