@@ -120,6 +120,8 @@ typings
 URI(s)?
 Uplink
 [Vv]alidator
+[Vv]irtualized?
+VPCs?
 Vue
 walkthrough
 [Ww]ebhook
