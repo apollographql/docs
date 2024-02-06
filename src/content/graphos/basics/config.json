@@ -37,6 +37,7 @@
     "Graph Administration": {
       "Updating your graph": "/graphs/updating",
       "Managing graphs in Studio": "/graphs/studio-features",
+      "Graph visualization": "/graphs/visualization",
       "Supergraph-specific Studio features": "/graphs/federated-graphs"
     },
     "Graph Security": {
