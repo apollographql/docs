@@ -1,32 +1,38 @@
 ---
 title: GraphOS Cloud security
-subtitle: "Security overview of GraphOS Cloud on AWS"
-description: ""
+subtitle: 'Security overview of GraphOS Cloud on AWS'
+description: 'A security and compliance overview of GraphOS Cloud on AWS, a managed GraphQL API solution that runs the Apollo Router on AWS.'
 ---
 
 Apollo GraphOS Cloud on AWS is a managed API solution.
 It runs the Apollo Router on AWS infrastructure to provide a high-performance, configurable GraphQL router.
 
-This article provides a security overview of GraphOS Cloud on AWS. 
+This article provides a [security](#graphos-cloud-security) and [compliance](#graphos-cloud-compliance) overview of GraphOS Cloud on AWS.
 It's intended for existing and potential Apollo users who run their federated GraphQL API on Apollo GraphOS Cloud on AWS.
 
 <Note>
 
-All [Dedicated](./dedicated) cloud routers run on AWS. Serverless cloud routers currently run on other providers.
+All [Dedicated](./dedicated) cloud routers run on AWS. [Serverless](/graphos/routing/#router-comparison) cloud routers don't run on AWS.
 
 </Note>
+
+<Caution>
 
 This article represents the current state of Apollo GraphOS Cloud on AWS, which is subject to change without notice.
 It doesn't provide any commitment or guarantee regarding the security of Apollo GraphOS Cloud on AWS.
 
 This article is for informational purposes only.
-Apollo users are responsible for making their own independent assessment of the information in this document.
+Apollo users are responsible for making their own independent assessment of the information in this article.
+
+</Caution>
 
 ## Shared security responsibility model
 
 Apollo GraphOS Cloud on AWS operates on a shared security responsibility model between Apollo, AWS, and Apollo users.
 
 <img src="to-do" alt="Shared security diagram" />
+
+### Apollo responsibilities
 
 Apollo is responsible for the security of:
 
@@ -37,24 +43,29 @@ Apollo is responsible for the security of:
 - Cloud router runtimes
 - Data in transit
 
-Apollo users are responsible for the following:
-
-- Providing cloud router configurations and GraphQL schema that meet their security requirements
-- The creation and management of cloud router secrets outside of the Apollo GraphOS Cloud platform
-    - This includes the use of secure storage or secret generation solutions
-- The security of their own infrastructure and cloud environments, whether they run on AWS or elsewhere, including:
-    - Subgraphs
-    - VPC Lattice services
-    - OpenTelemetry receivers
-    - External coprocessors
-    - The security of data in transit and at rest in those environments
+### AWS responsibilities
 
 Apollo relies on AWS for the security of the underlying infrastructure powering Apollo GraphOS Cloud on AWS.
 This includes AWS IAM, AWS Global Infrastructure, its regions and availability zones, its network and hardware infrastructure, AWS API endpoints, and underlying worker nodes used by cloud routers.
 
+### Apollo user responsibilities
+
+Apollo users are responsible for the following:
+
+- Providing cloud router configurations and GraphQL schemas that meet their security requirements
+- The creation and management of cloud router secrets outside of the Apollo GraphOS Cloud platform
+  - This includes the use of secure storage or secret generation solutions
+- The security of their own infrastructure and cloud environments, whether they run on AWS or elsewhere, including:
+  - Subgraphs
+  - VPC Lattice services
+  - OpenTelemetry receivers
+  - External coprocessors
+  - The security of data in transit and at rest in those environments
+
 ## GraphOS Cloud security
 
 Apollo GraphOS Cloud on AWS addresses security through:
+
 - [Compute isolation](#compute-isolation)
 - [Network security](#network-security)
 - [Security inherent to the Apollo Router itself](#apollo-router-security)
