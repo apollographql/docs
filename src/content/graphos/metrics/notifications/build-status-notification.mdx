@@ -45,7 +45,7 @@ interface ResponseShape {
 }
 ```
 
-- **If the build succeeds**, the value of `supergraphSchemaURL` is a short-lived (24-hour) URL that enables you to fetch the supergraph schema _without_ authenticating (such as with an API key). Otherwise, this field is not present.
+- **If the build succeeds**, the value of `supergraphSchemaURL` is a short-lived (24-hour) URL that enables you to fetch the supergraph schema without authenticating (such as with an API key). Otherwise, this field is not present.
 
 - **If the build fails**, `buildErrors` is an array of `BuildError` objects that describe the errors that occurred during the build. Otherwise, this field is not present.
 

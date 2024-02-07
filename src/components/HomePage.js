@@ -67,8 +67,8 @@ export function Docset({
   cta = 'Explore %s docs'
 }) {
   return (
-    <Flex align="flex-start" p="6" rounded="md" borderWidth="1px">
-      <Flex align="flex-start" direction="column" h="full">
+    <Flex align="flex-start" p="6" rounded="md" borderWidth="1px" overflow="auto">
+      <Flex align="flex-start" direction="column" h="full" maxWidth="100%">
         <Heading as="h3" size="lg" mb="4">
           <HStack spacing="3">
             {icon}
@@ -85,6 +85,7 @@ export function Docset({
           fontWeight="semibold"
           fontSize="lg"
           href={path}
+          whiteSpace="normal"
           leftIcon={linkIcon(path)}
         >
           {cta.replace('%s', title)}

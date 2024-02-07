@@ -50,9 +50,9 @@ As a result, Apollo finds this approach best when it's acceptable to have fields
 
 Although the "includes" filter can be more cumbersome to use than "excludes," we recommend using it to create contracts in most cases for the following reasons:
 
-- It's more intuitive to reason with when working with the schema SDL. Having clear markings on which fields _are_ exposed, alongside clear naming conventions, provides an improved developer experience when working with contracts.
+- It's more intuitive to reason with when working with the schema SDL. Having clear markings on which fields are exposed, alongside clear naming conventions, provides an improved developer experience when working with contracts.
 
-2. It's much more secure when compared to the "exclude" strategy, given that new and potentially sensitive schema fields must be explicitly _added_ to a contract.
+2. It's much more secure when compared to the "exclude" strategy, given that new and potentially sensitive schema fields must be explicitly added to a contract.
 
 To demonstrate why this is the case, let's take a look at the same type as before, but using an "include" model. This time, the company opted to use an `external` tag to denote which fields are exposed to external consumers:
 
@@ -69,7 +69,7 @@ type User {
 
 Instead of tagging the two `support` fields to exclude them, we now explicitly denote which fields are exposed externally. This also more clearly conveys the intent of the tag—a developer would know that the `id` is exposed to external parties.
 
-If the team wants to expose a new field and forgets to tag it, it is _not_ included in the resulting contract variant.
+If the team wants to expose a new field and forgets to tag it, it is not included in the resulting contract variant.
 
 As a result, we recommend this approach when building anything that requires that only specific fields are exposed to another audience, such as external or partner APIs.
 
@@ -101,7 +101,7 @@ type SupportInformation: @tag(name:"internal") {
 }
 ```
 
-Now that we've created a new type to house the support information, we tag that type with the `internal` tag. We'd use this tag to exclude the type from the resulting external API, but the general `User` type would be included without the `support` field. If the `support` field is not _also_ tagged as `internal`, it results in a composition error, providing some safety.
+Now that we've created a new type to house the support information, we tag that type with the `internal` tag. We'd use this tag to exclude the type from the resulting external API, but the general `User` type would be included without the `support` field. If the `support` field is not also tagged as `internal`, it results in a composition error, providing some safety.
 
 By allowing types to be tagged, it's possible to create "guardrails" against missing tags. As noted above, if a type is tagged but a field emitting that type is not, it fails that contract's composition. If the owning service can ensure that all types are tagged appropriately with the correct tag to filter, it can be a good way to still accomplish the exclude approach while getting some of the benefit of the include approach.
 
@@ -111,7 +111,7 @@ You can also use this strategy for documentation purposes, where including and o
 
 ## Cross-subgraph tagging
 
-When considering the strategies described above, there's an additional composition behavior to be aware of: it's possible for a tag applied in one subgraph to affect fields that are defined in _another_ subgraph.
+When considering the strategies described above, there's an additional composition behavior to be aware of: it's possible for a tag applied in one subgraph to affect fields that are defined in another subgraph.
 
 As an example, consider these two subgraphs:
 
@@ -132,7 +132,7 @@ type Document @key(fields: "id") @tag(name: "internal") {
 }
 ```
 
-As shown above, the `Document` type is tagged as `internal` by Subgraph B, but _not_ by Subgraph A. When the contract schema is generated for this supergraph, the `Document` type definition looks like this:
+As shown above, the `Document` type is tagged as `internal` by Subgraph B, but not by Subgraph A. When the contract schema is generated for this supergraph, the `Document` type definition looks like this:
 
 ```graphql
 type Document @key(fields: "id") @tag(name: "internal") {
@@ -145,4 +145,4 @@ type Document @key(fields: "id") @tag(name: "internal") {
 }
 ```
 
-This is due to the fact that tag inheritance is applied _after_ composition. Any tags added at the type level are inherited _after_ cross-subgraph entity definitions are merged. This means that what might be considered the "correct" application of a tag within one subgraph can adversely affect _other_ subgraphs and the resulting supergraph.
+This is due to the fact that tag inheritance is applied after composition. Any tags added at the type level are inherited after cross-subgraph entity definitions are merged. This means that what might be considered the "correct" application of a tag within one subgraph can adversely affect other subgraphs and the resulting supergraph.

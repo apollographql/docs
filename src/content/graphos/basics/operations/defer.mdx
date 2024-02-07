@@ -3,7 +3,7 @@ title: Deferring query response data with GraphOS
 description: Using the @defer directive
 ---
 
-With GraphOS, your supergraph's router can **defer** returning data for certain fields in your schema. This enables a querying client to receive _non_-deferred data more quickly, because the router can return it _immediately_ instead of waiting for _all_ response data to be ready:
+With GraphOS, your supergraph's router can **defer** returning data for certain fields in your schema. This enables a querying client to receive non-deferred data more quickly, because the router can return it immediately instead of waiting for all response data to be ready:
 
 ```mermaid
 sequenceDiagram
@@ -82,7 +82,7 @@ With the query above, the router first returns a list of `User` IDs, then later 
 
 Your router supports deferring fields of the special object types in your supergraph called [**entities**](/federation/entities/).
 
-Entities are object types that often define their fields across _multiple_ subgraphs (but they don't have to). You can identify an entity by its use of the `@key` directive. In the example subgraph schemas below, the `Product` type is an entity:
+Entities are object types that often define their fields across multiple subgraphs (but they don't have to). You can identify an entity by its use of the `@key` directive. In the example subgraph schemas below, the `Product` type is an entity:
 
 <CodeColumns>
 
@@ -111,7 +111,7 @@ type Review {
 
 </CodeColumns>
 
-Entities are query entry points into your subgraphs, and this is what enables your router to defer their fields: the router can send a _followup_ query to a subgraph to fetch any entity fields that it doesn't fetch initially.
+Entities are query entry points into your subgraphs, and this is what enables your router to defer their fields: the router can send a followup query to a subgraph to fetch any entity fields that it doesn't fetch initially.
 
 Here's an example query that defers entity fields using the subgraphs above:
 
@@ -135,7 +135,7 @@ To handle this query, the router first resolves and returns a list of `Product` 
 
 <Note>
 
-It doesn't matter _which_ subgraph defines a particular entity field! Queries can defer entity fields that are defined across any number of different subgraphs.
+It doesn't matter which subgraph defines a particular entity field! Queries can defer entity fields that are defined across any number of different subgraphs.
 
 </Note>
 

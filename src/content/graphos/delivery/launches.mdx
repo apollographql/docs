@@ -4,7 +4,7 @@ subtitle: Learn about the process of deploying updates to supergraphs
 description: Discover what changes trigger a launch, how to monitor launch status, and the steps involved in an Apollo GraphOS launch.
 ---
 
-In GraphOS, a **launch** represents the complete process of applying a set of updates to a supergraph. Launches are _usually_ triggered by making changes to one of your published subgraph schemas.
+In GraphOS, a **launch** represents the complete process of applying a set of updates to a supergraph. Launches are usually triggered by making changes to one of your published subgraph schemas.
 
 <img className="screenshot" src="../img/launch-completed.jpg" width="500" />
 
@@ -13,7 +13,7 @@ Updates that trigger a launch include:
 - Adding, removing, or modifying types and fields in a subgraph schema
 - Adding or removing entire subgraphs
 - Migrating types or fields between subgraphs
-- Modifying your [cloud router's configuration](../routing/cloud-configuration/)
+- Modifying your [cloud router's configuration](../cloud-routing/configuration/)
 - Updating your federation version
 
 A launch might consist entirely of changes that don't affect your supergraph's public API (such as migrating fields between subgraphs).
@@ -55,6 +55,6 @@ graph TB;
 
 <PreviewFeature />
 
-You can trigger a launch manually by calling the [GraphOS Platform API](/graphos/platform-api) to publish subgraph schema updates. This is useful for deployments that require progressive rollouts, where different environments have unique subgraph schemas. In this scenario, you can publish the subgraph schemas for an environment, wait for the completed launch (and any downstream launches), then retrieve the supergraph schema with the launch ID.  
+You can trigger a launch manually by calling the [GraphOS Platform API](/graphos/platform-api) to publish subgraph schema updates. This is useful for deployments that require progressive rollouts, where different environments have unique subgraph schemas. In this scenario, you can publish the subgraph schemas for an environment, wait for the completed launch (and any downstream launches), then retrieve the supergraph schema with the launch ID.
 
 For an example workflow using GraphOS Platform API to manually trigger a launch, see the [Advanced deployment workflow for blue-green deployment](/federation/managed-federation/deployment/#example-blue-green-deployment).

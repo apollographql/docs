@@ -56,7 +56,7 @@ From [Sandbox](https://studio.apollographql.com/sandbox/), open the **Schema Dif
 
 <Note>
 
-If you're using Sandbox with a subgraph, this diff shows the schema as originally defined, _not_ the generated subgraph schema that includes federation-specific fields (such as `Query._entities`). You can view the generated subgraph schema from the SDL page in Sandbox.
+If you're using Sandbox with a subgraph, this diff shows the schema as originally defined, not the generated subgraph schema that includes federation-specific fields (such as `Query._entities`). You can view the generated subgraph schema from the SDL page in Sandbox.
 
 </Note>
 
@@ -80,7 +80,7 @@ Select any accessible organization, graph, and variant to check against and clic
 
 <img class="screenshot" src="../img/sandbox-checks-result.jpg" alt="Sandbox checks result" width="400" />
 
-To view the result's _full_ details in Studio, click **Go to details**.
+To view the result's full details in Studio, click **Go to details**.
 
 ### Subgraph checks
 
@@ -104,15 +104,15 @@ When you click **Run a check**, Sandbox first performs a build check using your 
 
 ## Offline Sandbox
 
-You can use Sandbox _without_ an internet connection if you're querying a graph running on `localhost`. To do so, [open Sandbox in your browser](https://studio.apollographql.com/sandbox/) at least once while connected to the internet. You can then use that browser to open Sandbox while offline.
+You can use Sandbox without an internet connection if you're querying a graph running on `localhost`. To do so, [open Sandbox in your browser](https://studio.apollographql.com/sandbox/) at least once while connected to the internet. You can then use that browser to open Sandbox while offline.
 
 ### Reconnecting
 
-Sandbox automatically reconnects whenever your internet connection is restored. When it does, it might display a notification that your GraphOS Studio application version is stale by at least 24 hours. You can click the notification to update _all_ your browser's open Studio tabs to the latest version.
+Sandbox automatically reconnects whenever your internet connection is restored. When it does, it might display a notification that your GraphOS Studio application version is stale by at least 24 hours. You can click the notification to update all your browser's open Studio tabs to the latest version.
 
 <Note>
 
-This notification indicates only that the GraphOS Studio _UI_ is out of date. Your Studio _data_ is always kept up to date.
+This notification indicates only that the GraphOS Studio UI is out of date. Your Studio data is always kept up to date.
 
 </Note>
 
@@ -358,7 +358,7 @@ These are the fields you can include in the `initialState` option you pass to `n
 
 Set this value to `true` if you want Sandbox to pass `{ credentials: 'include' }` for its requests by default.
 
-If you set `hideCookieToggle` to `false`, users can override this default setting with the **Include cookies** toggle. (By default, the embedded Sandbox does _not_ show the **Include cookies** toggle in its connection settings.)
+If you set `hideCookieToggle` to `false`, users can override this default setting with the **Include cookies** toggle. (By default, the embedded Sandbox does not show the **Include cookies** toggle in its connection settings.)
 
 If you also pass the `handleRequest` option, this option is ignored.
 
@@ -511,7 +511,7 @@ initialState: {
 
 Headers that are applied by default to every operation executed by the embedded Sandbox. Users can turn off the application of these headers, but they can't modify their values.
 
-The embedded Sandbox _always_ includes these headers in its introspection queries to your `initialEndpoint`.
+The embedded Sandbox always includes these headers in its introspection queries to your `initialEndpoint`.
 
 Example:
 

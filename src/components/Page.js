@@ -41,7 +41,7 @@ import {
   chakra
 } from '@chakra-ui/react';
 import {Caution} from './Caution';
-import {CustomHeading} from './CustomHeading';
+import {CustomHeading, MinVersionTag} from './CustomHeading';
 import {DiscordIcon, GitHubIcon, QuoteIcon} from './Icons';
 import {
   EmbeddableExplorer,
@@ -51,7 +51,6 @@ import {
 } from '@apollo/chakra-helpers';
 import {EnterpriseFeature} from './EnterpriseFeature';
 import {ExperimentalFeature} from './ExperimentalFeature';
-import {FeedbackButton} from './FeedbackButton';
 import {Link as GatsbyLink} from 'gatsby';
 import {Global} from '@emotion/react';
 import {HighlightKeyTerms} from '@apollo/pedia';
@@ -104,13 +103,13 @@ Prism.languages.rhai = Prism.languages.javascript;
 
 const LIST_SPACING = 4;
 const HEADINGS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
+const SCROLL_TARGETS = HEADINGS.concat('p');
 
 const SCROLL_MARGIN_TOP = PAGE_PADDING_TOP + TOTAL_HEADER_HEIGHT;
 
 const NESTED_LIST_STYLES = {
   [['ul', 'ol']]: {
     mt: 3,
-    fontSize: 'md',
     lineHeight: 'normal'
   }
 };
@@ -209,6 +208,7 @@ const mdxComponents = {
   ButtonLink,
   Tip,
   MinVersion,
+  MinVersionTag,
   EnterpriseFeature,
   ExperimentalFeature,
   PreviewFeature,
@@ -217,7 +217,8 @@ const mdxComponents = {
   TrackableButton,
   TrackableLink,
   useApiDocContext,
-  PrimaryLink
+  PrimaryLink,
+  MDXRenderer
 };
 
 const {processSync} = rehype()
@@ -429,7 +430,7 @@ export default function Page({file}) {
           }
         }}
         css={{
-          [HEADINGS]: {
+          [SCROLL_TARGETS]: {
             scrollMarginTop: SCROLL_MARGIN_TOP
           }
         }}
@@ -478,7 +479,7 @@ export default function Page({file}) {
               maxH={`calc(100vh - ${SCROLL_MARGIN_TOP}px - ${PAGE_PADDING_BOTTOM}px - ${PAGE_FOOTER_HEIGHT}px)`}
             >
               <Heading size="md" mb="3">
-                {title}
+                On this page
               </Heading>
               <TableOfContents
                 headings={headings}
@@ -516,7 +517,6 @@ export default function Page({file}) {
           height: PAGE_FOOTER_HEIGHT
         }}
       >
-        <FeedbackButton title={title} />
         {editOnGitHub}
         <Button
           aria-label="Ask a question on our forums"

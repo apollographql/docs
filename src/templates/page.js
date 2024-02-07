@@ -83,6 +83,7 @@ export const pageQuery = graphql`
       ...Method
       ...PropertySignature
       ...MethodSignature
+      ...Enum
       ... on ApiDocBase {
         references {
           text
@@ -109,17 +110,22 @@ fragment Base on ApiDocBase {
     summary
     deprecated
     remarks
+    returns
     examples
+    docGroup
+    alpha
+    beta
+    experimental
+    since
   }
 }
 
 fragment Interface on ApiDocInterface {
   typeParameters {
-    name
-    optional
-    comment
+    ...TypeParameters
   }
   childrenIncomplete
+  childrenIncompleteDetails
   properties {
     ...Ref
   }
@@ -127,9 +133,7 @@ fragment Interface on ApiDocInterface {
 
 fragment TypeAlias on ApiDocTypeAlias {
   typeParameters {
-    name
-    optional
-    comment
+    ...TypeParameters
   }
   type
 }
@@ -142,14 +146,24 @@ fragment PropertySignature on ApiDocPropertySignature {
 
 fragment MethodSignature on ApiDocMethodSignature {
   optional
-  returnType
+  typeParameters {
+    ...TypeParameters
+  }
+  returnType {
+    ...TypeReference
+  }
   parameters {
     ...FunctionParameter
   }
 }
 
 fragment Function on ApiDocFunction {
-  returnType
+  typeParameters {
+    ...TypeParameters
+  }
+  returnType {
+    ...TypeReference
+  }
   parameters {
     ...FunctionParameter
   }
@@ -161,6 +175,7 @@ fragment Class on ApiDocClass {
     ...Ref
   }
   childrenIncomplete
+  childrenIncompleteDetails
   properties {
     ...Ref
   }
@@ -180,7 +195,9 @@ fragment Method on ApiDocMethod {
   abstract
   optional
   static
-  returnType
+  returnType {
+    ...TypeReference
+  }
   parameters {
     ...FunctionParameter
   }
@@ -192,10 +209,32 @@ fragment Constructor on ApiDocConstructor {
   }
 }
 
+fragment TypeReference on ApiDocTypeReference {
+  type
+  primaryCanonicalReference
+  primaryGenericArguments
+}
+
 fragment FunctionParameter on ApiDocFunctionParameter {
   name
   type
   optional
   comment
+  primaryCanonicalReference
+  primaryGenericArguments
+}
+
+fragment Enum on ApiDocEnum {
+  members {
+    ...Ref
+  }
+}
+
+fragment TypeParameters on ApiDocTypeParameter {
+  name
+  optional
+  comment
+  defaultType
+  constraint
 }
 `;
