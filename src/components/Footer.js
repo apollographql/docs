@@ -76,19 +76,18 @@ export default function Footer() {
       px="12"
       py="12"
     >
-      <Box>
-        <Flex mb="2">
-          <a href="https://www.apollographql.com">
+      <Stack>
+          <Link target="_blank" href="https://www.apollographql.com">
             <Box
               as={ApolloLogo}
               aria-label="apollo-logo"
               fill="current"
               h="8"
             />
-          </a>
-        </Flex>
+          </Link>
         <Text >&copy; {new Date().getFullYear()} Apollo Graph Inc.</Text>
-      </Box>
+        <Link target="_blank" href="https://www.apollographql.com/privacy-policy">Privacy Policy</Link>
+      </Stack>
       <Stack
         direction={{
           base: "column",
@@ -106,7 +105,7 @@ export default function Footer() {
           <List spacing="1" fontSize="lg">
             {links.map(({href, text}, index) => (
               <ListItem key={index}>
-                <Link href={href}>{text}</Link>
+                <Link href={href} target="_blank">{text}</Link>
               </ListItem>
             ))}
           </List>
