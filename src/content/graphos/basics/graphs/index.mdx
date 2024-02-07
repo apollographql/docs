@@ -3,6 +3,8 @@ title: Understanding graphs
 description: The heart of Apollo GraphOS
 ---
 
+import { Tabs as TabsChk, TabList, TabPanels, Tab as TabChk, TabPanel } from '@chakra-ui/react'
+
 As its name suggests, **GraphOS** is a platform for building and managing **graphs**. Each graph corresponds to a GraphQL service in your organization.
 
 A GraphQL service usually runs in more than one environment (such as staging or production), so every graph in GraphOS has one or more **variants** that each correspond to one environment:
@@ -219,9 +221,17 @@ Additionally, the router provides essential GraphOS functionality beyond support
 
 ## Creating graphs
 
-**To create a cloud supergraph,** see the [GraphOS quickstart](../quickstart/cloud/).
+<Tabs labels={['Cloud supergraph','Non-cloud supergraph']}>
 
-**To create a _non_-cloud graph** (a self-hosted supergraph or a monograph), follow these steps:
+<Tab label="Cloud supergraph">
+
+To create a cloud supergraph, see the [GraphOS quickstart](../quickstart/cloud/).
+
+</Tab>
+
+<Tab label="Non-cloud supergraph">
+
+To create a _non_-cloud graph (a self-hosted supergraph or a monograph), follow these steps:
 
 <EnterpriseFeature />
 
@@ -245,6 +255,9 @@ Additionally, the router provides essential GraphOS functionality beyond support
 6. **If you're creating a self-hosted supergraph,** select the version of Apollo Federation you're using from the **Supergraph Pipeline Track** dropdown.
 
 Your graph has been created.
+
+</Tab>
+</Tabs>
 
 Next, you need to publish your graph's schema(s) to Apollo using the Rover CLI. For details, see [Publishing schemas to GraphOS](../delivery/publishing-schemas/).
 
