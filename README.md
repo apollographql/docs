@@ -672,6 +672,9 @@ The above code block renders like so:
 
 ![Rendered admonitions](src/content/graphos/img/admonitions.jpg)
 
+> [!TIP]
+> Be sure to include two newlines between the admonition components and content and as shown in the examples above. MDX parsing for MDX v1 requires this extra separation between JSX and Markdown.
+
 ## Content linting
 
 The docs repository automatically lints pull requests via a [GitHub action](.github/workflows/content-lint.yml) that uses [Vale](https://vale.sh/), an open-source content linter. Vale checks `.md` and `.mdx` files against [style rules](https://vale.sh/docs/topics/styles/) imported from Google, Microsoft, and other developer documentation style guides. It also includes custom Apollo style rules. All styles are in the [`styles` directory](styles). Most rules are self-explanatory or include links to resources to help understand what to fix.
