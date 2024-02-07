@@ -33,6 +33,30 @@ function useLinkProps(href) {
     return null;
   }
 
+  if (process.env.CONTEXT !== 'production') {
+    // fix up absolute urls pointing to the docs
+    // for netlify previews and localhost
+    href = href.replace(
+      'https://www.apollographql.com/docs',
+      process.env.DEPLOY_URL
+    );
+  }
+
+  try {
+    // convert full urls for the current domain into absolute domain-relative urls
+    const url = new URL(href);
+    if (
+      url.host === window.location.host &&
+      !href.startsWith("https://www.apollographql.com/tutorials/") &&
+      !href.startsWith("https://www.apollographql.com/blog/")
+    ) {
+      href = url.pathname;
+    }
+
+  } catch {
+    // it's okay if this fails, then it probably wasn't a full url
+  }
+
   const isExternal = isUrl(href);
   const isHash = href.startsWith('#');
   const isFile = /\.[a-z]+$/.test(href);

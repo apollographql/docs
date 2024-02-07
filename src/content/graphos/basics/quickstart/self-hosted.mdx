@@ -14,7 +14,7 @@ This tutorial uses [Docker](https://www.docker.com/) for containerization of you
 
 ## Supergraph concepts
 
-Before we get started, let's quickly cover what a self-hosted supergraph _is_.
+Before we get started, let's quickly cover what a self-hosted supergraph is.
 
 A **supergraph** combines multiple GraphQL APIs into a single unified GraphQL service. The individual APIs in a supergraph are called **subgraphs**:
 
@@ -37,7 +37,7 @@ A separate service called the **router** sits in front of your subgraphs and pro
 
 The router uses a special GraphQL schema called the **supergraph schema**. This schema incorporates the types and fields in each subgraph schema, along with metadata that enables the router to correctly distribute queries across subgraphs.
 
-A **_self-hosted_ supergraph** is a supergraph with a router that you host and manage in your _own infrastructure_. This is in contrast to a [**cloud supergraph**](./cloud/), which uses a router that's hosted and managed by Apollo.
+A **self-hosted supergraph** is a supergraph with a router that you host and manage in your own infrastructure. This is in contrast to a [**cloud supergraph**](./cloud/), which uses a router that's hosted and managed by Apollo.
 
 We'll cover these concepts in more detail as we proceed through the steps below.
 
@@ -46,7 +46,7 @@ We'll cover these concepts in more detail as we proceed through the steps below.
 This quickstart uses the following Apollo tools:
 
 - **GraphOS Studio.** This is the primary web interface for GraphOS. Studio helps you monitor, manage, and collaborate on your supergraph.
-- **The Rover CLI.** This is the primary _command-line_ interface for GraphOS. Rover helps you interact with your graphs and their schemas.
+- **The Rover CLI.** This is the primary command-line interface for GraphOS. Rover helps you interact with your graphs and their schemas.
 
 Let's set these up first.
 
@@ -86,7 +86,7 @@ After installing, run `rover` in your terminal with no arguments to confirm that
 
 #### Authenticate Rover with GraphOS
 
-We'll use Rover to publish our subgraph schemas to GraphOS. To do that, we first need to _authenticate_ Rover with GraphOS.
+We'll use Rover to publish our subgraph schemas to GraphOS. To do that, we first need to authenticate Rover with GraphOS.
 
 Complete the first two steps of <a href="/rover/configuring/" target="_blank">Configuring Rover</a> (**Obtain an API key** and **Provide the API key to Rover**), then return here.
 
@@ -291,7 +291,7 @@ To publish our subgraph schema, we'll first use Rover to **introspect** the runn
     --schema - <GRAPH_REF>
     ```
 
-2. In your terminal, replace the final value `<GRAPH_REF>` with the appropriate value for _your_ graph. In the screenshot above, this value is `MyGraph-1ncyus@current`, but **your value will be different**.
+2. In your terminal, replace the final value `<GRAPH_REF>` with the appropriate value for your graph. In the screenshot above, this value is `MyGraph-1ncyus@current`, but **your value will be different**.
 
     <ExpansionPanel title="What's a graph ref?">
 
@@ -302,9 +302,9 @@ To publish our subgraph schema, we'll first use Rover to **introspect** the runn
     - The value before the `@` is your graph's unique ID in GraphOS.
     - The value after the `@` is the name of the graph variant you're interacting with.
 
-    Each **variant** of a graph represents a different _environment_ where that graph runs (such as staging and production). For this quickstart, you can keep the default suggested variant name or change it to anything else you like (for example, `quickstart`). Just make sure to provide the _same_ graph ref to every command in this quickstart!
+    Each **variant** of a graph represents a different environment where that graph runs (such as staging and production). For this quickstart, you can keep the default suggested variant name or change it to anything else you like (for example, `quickstart`). Just make sure to provide the same graph ref to every command in this quickstart!
 
-    _After_ you've published a schema to a particular variant, that variant's graph ref is always available at the top of its README page:
+    After you've published a schema to a particular variant, that variant's graph ref is always available at the top of its README page:
 
     <img class="screenshot" alt="Graph ref in Studio" src="../../img/studio-graph-ref.jpg" width="300"/>
 
@@ -334,11 +334,11 @@ To publish our subgraph schema, we'll first use Rover to **introspect** the runn
     --schema - <GRAPH_REF>
     ```
 
-    You only need to provide a subgraph's `--routing-url` the _first_ time you publish that subgraph's schema to a particular variant (unless you need to change that URL later).
+    You only need to provide a subgraph's `--routing-url` the first time you publish that subgraph's schema to a particular variant (unless you need to change that URL later).
 
     If you refresh the Schema page in Studio, you'll now see types and fields from the `reviews` subgraph as well.
 
-Every time we publish a subgraph schema, GraphOS automatically composes _all_ our subgraph schemas into a **supergraph schema**! However, our router isn't yet _fetching_ that schema from Apollo. We'll tackle that next.
+Every time we publish a subgraph schema, GraphOS automatically composes all our subgraph schemas into a **supergraph schema**! However, our router isn't yet fetching that schema from Apollo. We'll tackle that next.
 
 ## 6. Connect the router to GraphOS
 
@@ -346,7 +346,7 @@ It's time to enable our router to fetch its supergraph schema from GraphOS. To d
 
 <Tip>
 
-We recommend that you create a separate API key for each system that communicates with GraphOS. This reduces the impact whenever you need to _replace_ an API key that might be compromised.
+We recommend that you create a separate API key for each system that communicates with GraphOS. This reduces the impact whenever you need to replace an API key that might be compromised.
 
 </Tip>
 
@@ -457,9 +457,9 @@ The exact details for deploying the router depend on which platform you use, but
 
     </Tip>
 
-After you successfully deploy your router, it's ready to start receiving client operations! If you have any existing client applications that connect _directly_ to your GraphQL API, you can update their GraphQL endpoint URL to your _router's_ URL.
+After you successfully deploy your router, it's ready to start receiving client operations! If you have any existing client applications that connect directly to your GraphQL API, you can update their GraphQL endpoint URL to your router's URL.
 
-Similarly, any _new_ client applications should use your router's URL.
+Similarly, any new client applications should use your router's URL.
 
 <Note>
 
@@ -472,7 +472,7 @@ Similarly, any _new_ client applications should use your router's URL.
 
 Nice work! We've registered two **subgraph schemas** with GraphOS, and we've set up a **router** that fetches its composed **supergraph schema** so it can execute operations across subgraphs.
 
-If we now publish changes to one of our subgraph schemas, our running router _automatically_ fetches the corresponding changes to the supergraph schema (assuming composition succeeds).
+If we now publish changes to one of our subgraph schemas, our running router automatically fetches the corresponding changes to the supergraph schema (assuming composition succeeds).
 
 Next, we'll cover some of the most common and important actions to perform on your new supergraph, including:
 

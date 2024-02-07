@@ -4,6 +4,7 @@ export {default as ClientPQDifferences} from './client-pq-differences.mdx';
 export {default as ClientPQImplementation} from './client-pq-implementation.mdx';
 export {default as ClientPQIntro} from './client-pq-intro.mdx';
 export {default as CreateSelfHostedSupergraph} from './create-self-hosted-supergraph.mdx';
+export {default as DedicatedPreview} from './dedicated-preview.mdx';
 export {default as DirectiveCompositionRules} from './directive-composition-rules.mdx';
 export {default as Disclaimer} from './disclaimer.mdx';
 export {default as GraphOSEnterpriseRequired} from './graphos-enteprise-required.mdx';
@@ -19,6 +20,7 @@ export {default as RegisterCLI} from './register-cli.mdx';
 export {default as RegisterFederatedCLI} from './register-federated-cli.mdx';
 export {default as SchemaProposalCreationMermaid} from './schema-proposal-creation-mermaid.mdx';
 export {default as SchemaProposalImplementationMermaid} from './schema-proposal-implementation-mermaid.mdx';
+export {default as SchemaProposalImplementationNote} from './schema-proposal-implementation-note.mdx'
 export {default as SchemaProposalPublicationMermaid} from './schema-proposal-publication-mermaid.mdx';
 export {default as SchemaProposalReviewMermaid} from './schema-proposal-review-mermaid.mdx';
 export {default as SetApolloVCSCommit} from './set-apollo-vcs-commit.mdx';

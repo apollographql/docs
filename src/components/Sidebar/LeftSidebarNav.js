@@ -4,6 +4,7 @@ import {
   ApolloIOSIcon,
   ApolloKotlinIcon,
   ApolloServerIcon,
+  CloudIcon,
   DeliveryIcon,
   EnterpriseIcon,
   ExplorerIcon,
@@ -109,6 +110,10 @@ export function LeftSidebarNav(props) {
           <SidebarCategoryLink docset="graphos/org" icon={<OrgIcon />} />
           <SidebarCategoryLink docset="federation" icon={<FederationIcon />} />
           <SidebarCategoryLink docset="rover" icon={<RoverIcon />} />
+          <SidebarCategoryLink
+            docset="graphos/cloud-routing"
+            icon={<CloudIcon />}
+          />
           <SidebarCategoryLink docset="router" icon={<RouterIcon />} />
           <SidebarCategoryLink
             docset="graphos/enterprise"

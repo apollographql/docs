@@ -9,7 +9,7 @@ tags: [server, router, auth]
 
 <EnterpriseFeature>
 
-Self-hosting the Apollo Router is limited to [GraphOS Enterprise plans](/graphos/enterprise/). Other plan types use [managed cloud routing with GraphOS](/graphos/routing/cloud/). Check out the [pricing page](https://www.apollographql.com/pricing/) to learn more.
+Self-hosting the Apollo Router is limited to [GraphOS Enterprise plans](/graphos/enterprise/). Other plan types use [managed cloud routing with GraphOS](/graphos/cloud-routing). Check out the [pricing page](https://www.apollographql.com/pricing/) to learn more.
 
 </EnterpriseFeature>
 
@@ -184,20 +184,20 @@ This example coprocessor is written in Node.js and uses Express:
 ```js
 const app = express();
 app.use(bodyParser.json());
-app.post("/", async (req, res) => {
-  const { headers } = req.body;
+app.post('/', async (req, res) => {
+  const {headers} = req.body;
   const token = headers.authorization;
   const isValid = await validateToken(token);
   if (!isValid) {
     res.json({
       ...req.body,
-      control: { break: 401 },
+      control: {break: 401}
     });
   } else {
     res.json({
       ...req.body,
-      control: "continue",
-      headers: { "x-claims": extractClaims(token) },
+      control: 'continue',
+      headers: {'x-claims': extractClaims(token)}
     });
   }
 });
