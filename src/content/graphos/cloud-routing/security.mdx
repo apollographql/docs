@@ -12,7 +12,7 @@ It's intended for existing and potential Apollo users who run their federated Gr
 
 <Note>
 
-All [Dedicated](./dedicated) cloud routers run on AWS. Serverless cloud routers run on other providers but may be transitioned to AWS starting MMMM, DD, YYYY.
+All [Dedicated](./dedicated) cloud routers run on AWS. Serverless cloud routers currently run on other providers.
 
 </Note>
 
@@ -79,7 +79,7 @@ Apollo follows these practices to ensure network security:
 - [Network access control lists (ACL)](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html) block communication on a list of restricted ports.
 - [VPC Flow Logs](https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html) and [CloudTrail](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html) are enabled and monitored to detect and respond to security events within the Apollo GraphOS Cloud VPC.
 
-To mitigate the impact of security incidents, cloud routers are deployed in small groups in isolated cells with no shared network infrastructure.
+To mitigate the impact of security incidents, Apollo deploys cloud routers in small groups in isolated cells with no shared network infrastructure.
 Each cell contains a dedicated VPC, load balancer, and other networking resources.
 
 #### Private subgraph networking security
@@ -93,19 +93,20 @@ Cloud routers also encrypt traffic in transit between cloud router instances and
 
 The Apollo Router is source available software that powers the federated GraphQL API capabilities of Apollo GraphOS Cloud on AWS.
 
-Apollo regularly contracts third-party firms to perform security audits of the Apollo Router. Apollo also performs automated security scans and collaborates with security researchers through its responsible disclosure policy, available on the [Apollo Router GitHub repository](https://github.com/apollographql/router).
+Apollo contracts third-party firms to perform security audits of the Apollo Router. Apollo also performs automated security scans and collaborates with security researchers through its responsible disclosure policy, available on the [Apollo Router GitHub repository](https://github.com/apollographql/router).
 
 The Apollo Router and the Apollo GraphOS Cloud on the AWS platform are built using the Rust programming language. Rust provides strong memory safety guarantees compared to other high-performance languages.
 
 ### Secrets security
 
-Cloud router secrets are encrypted at rest using [AWS Key Management Service (KMS)](https://aws.amazon.com/kms/). Cloud router instances use AWS IAM Roles to access secrets and can only access secrets related to their respective cloud routers.
+Apollo encrypts cloud router secrets at rest using [AWS Key Management Service (KMS)](https://aws.amazon.com/kms/).
+Cloud router instances use AWS IAM Roles to access secrets and can only access secrets related to their respective cloud routers.
 
 Apollo employees can't access cloud router secrets or their decryption keys.
 
 ### Security updates
 
-If a security issue is found that impacts cloud routers, Apollo creates an updated cloud router build. Cloud router builds are comprised of the underlying Apollo Router version and a unique number identifying the build number, for example, `1.30.1-4567`.
+If a security issue that impacts cloud routers arises, Apollo creates an updated cloud router build. Cloud router builds consist of the underlying Apollo Router version and a unique number identifying the build number, for example, `1.30.1-4567`.
 
 Once a build is created, Apollo deploys this new build to a fleet of cloud routers and performs automated scale and regression testing.
 Once all tests pass, Apollo progressively rolls out the new build version to all cloud routers in production.
@@ -116,4 +117,4 @@ During the update process, Apollo creates new cloud router instances and progres
 ## GraphOS Cloud compliance
 
 Apollo GraphOS Cloud on AWS meets the standards for SOC2 Type II.
-Apollo regularly contracts with third-party firms to perform security audits and penetration tests of the Apollo GraphOS Cloud on AWS infrastructure.
+Apollo contracts with third-party firms to perform security audits and penetration tests of the Apollo GraphOS Cloud on AWS infrastructure.
