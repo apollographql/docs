@@ -1,6 +1,6 @@
 ---
-title: GraphOS Cloud on AWS security overview
-subtitle: ""
+title: GraphOS Cloud security
+subtitle: "Security overview of GraphOS Cloud on AWS"
 description: ""
 ---
 
@@ -112,7 +112,7 @@ Once a build is created, Apollo deploys this new build to a fleet of cloud route
 Once all tests pass, Apollo progressively rolls out the new build version to all cloud routers in production.
 This rollout uses the same mechanism as any cloud router updates, such as those used for GraphQL schema or configuration changes.
 
-During the update process, Apollo creates new cloud router instances and progressively switches traffic to them. If any issue arises during this deployment, Apollo automatically rolls back traffic to the previous cloud router instances.
+During the update process, Apollo creates new cloud router instances and progressively migrates traffic to them. If any issue arises during this deployment, Apollo automatically rolls back traffic to the previous cloud router instances.
 
 ## GraphOS Cloud compliance
 
