@@ -71,7 +71,7 @@ export default function Footer() {
       borderTopWidth="1px"
       p="12"
     >
-      <Stack spacing="8">
+      <Stack spacing="2">
         <Link target="_blank" href="https://www.apollographql.com">
           <Box as={ApolloLogo} aria-label="apollo-logo" fill="current" h="8" />
         </Link>
