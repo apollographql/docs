@@ -475,7 +475,7 @@ export default function Page({file}) {
               maxH={`calc(100vh - ${SCROLL_MARGIN_TOP}px - ${PAGE_PADDING_BOTTOM}px - ${PAGE_FOOTER_HEIGHT}px)`}
             >
               <Heading size="md" mb="3">
-                {title}
+                On this page
               </Heading>
               <TableOfContents
                 headings={headings}
