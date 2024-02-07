@@ -3,7 +3,7 @@ title: GraphOS Enterprise features
 description: Overview
 ---
 
-**With an Apollo GraphOS Enterprise plan,** you gain access to powerful routing, delivery, and governance features for your supergraph. This article summarizes the most notable of these features and provides links to the full documentation for each.
+**With an Apollo GraphOS Enterprise plan,** you gain access to powerful routing, delivery, governance, and reporting features for your supergraph. This article summarizes the most notable of these features and provides links to the full documentation for each.
 
 See the left navigation for a list of all Enterprise-specific articles from across the GraphOS documentation.
 
@@ -66,8 +66,10 @@ This architecture helps you satisfy sophisticated requirements around data compl
 
 - **Real-time updates** via [GraphQL subscriptions](/router/executing-operations/subscription-support/)
 - **Authentication of inbound requests** via [JSON Web Token (JWT)](/router/configuration/authn-jwt/)
-- [**Authorization** of specific fields and types](/router/configuration/authorization) through the [`@requiresScopes`](/router/configuration/authorization#requiresscopes) and [`@authenticated`](/router/configuration/authorization#authenticated) directives
+- [**Authorization** of specific fields and types](/router/configuration/authorization) through the [`@requiresScopes`](/router/configuration/authorization#requiresscopes), [`@authenticated`](/router/configuration/authorization#authenticated), and [`@policy`](/router/configuration/authorization#policy) directives
+- Incremental migration between subgraphs through [the progressive `@override` directive](/federation/entities-advanced/#incremental-migration-with-progressive-override).
 - Redis-backed [**distributed caching** of query plans and persisted queries](/router/configuration/distributed-caching/)
+- Redis-backed [**entity caching** of subgraph responses](/router/configuration/entity-caching/)
 - **Custom request handling** in any language via [external coprocessing](/router/customizations/coprocessor/)
 - **Mitigation of potentially malicious requests** via [operation limits](/router/configuration/operation-limits) and [safelisting](../operations/persisted-queries/)
 
@@ -92,7 +94,11 @@ The centralized proposal process fosters collaboration and strengthens schema go
 
 This increased coordination improves design decisions and accountability, streamlining development cycles.
 
-> [Learn more about schema proposals.](../delivery/schema-proposals/)
+<Tip>
+
+[Learn more about schema proposals.](../delivery/schema-proposals/)
+
+</Tip>
 
 ### Schema filtering with contracts
 
@@ -149,3 +155,11 @@ SSO configuration is available for the following:
 - [Generic SAML](../org/sso/saml-integration-guide/)
 
 Additionally, Enterprise organizations can export an [audit log](../org/audit-log/) of material actions taken by organization members.
+
+## Metrics and reporting
+
+GraphOS Studio offers a performant and intuitive UI to help all GraphOS users monitor and understand their supergraph's usage and performance.
+The following features are only available to GraphOS Enteprise organizations:
+
+- The [Apollo Datadog integration](../metrics/datadog-integration) let you forward performance metrics to your Datadog account. Datadog supports an advanced function API, which enables you to create sophisticated visualizations and alerts for GraphQL metrics.
+- [Build status notifications](../metrics/notifications/) let you notify your team via webhook whenever GraphOS attempts to build a new supergraph schema for your federated graph.

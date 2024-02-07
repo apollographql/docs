@@ -45,7 +45,9 @@
     },
     "Metrics & Reporting": {
       "Datadog forwarding": "https://www.apollographql.com/docs/graphos/metrics/datadog-integration",
-      "Build status notifications": "https://www.apollographql.com/docs/graphos/metrics/notifications/build-status-notification"
+      "Build status notifications": ["https://www.apollographql.com/docs/graphos/metrics/notifications/build-status-notification",
+      ["experimental"]
+    ]
     },
     "Architecture": {
       "Supergraph Architecture Framework": "/supergraph-architecture-framework",
