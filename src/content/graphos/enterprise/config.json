@@ -25,6 +25,7 @@
         "Distributed caching": "https://www.apollographql.com/docs/router/configuration/distributed-caching",
         "JWT Authentication": "https://www.apollographql.com/docs/router/configuration/authn-jwt",
         "Authorization": "https://www.apollographql.com/docs/router/configuration/authorization",
+        "Incremental subgraph migration": "https://www.apollographql.com/docs/federation/entities-advanced/#incremental-migration-with-progressive-override",
         "Safelisting with persisted queries":
           "https://www.apollographql.com/docs/router/configuration/persisted-queries", 
         "Operation limits": "https://www.apollographql.com/docs/router/configuration/operation-limits",
