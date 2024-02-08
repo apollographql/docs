@@ -25,6 +25,7 @@
         "Distributed caching": "https://www.apollographql.com/docs/router/configuration/distributed-caching",
         "JWT Authentication": "https://www.apollographql.com/docs/router/configuration/authn-jwt",
         "Authorization": "https://www.apollographql.com/docs/router/configuration/authorization",
+        "Incremental subgraph migration": "https://www.apollographql.com/docs/federation/entities-advanced/#incremental-migration-with-progressive-override",
         "Safelisting with persisted queries":
           "https://www.apollographql.com/docs/router/configuration/persisted-queries", 
         "Operation limits": "https://www.apollographql.com/docs/router/configuration/operation-limits",
@@ -32,9 +33,7 @@
       }
     },
     "Schema Pipeline": {
-      "Schema proposals": ["https://www.apollographql.com/docs/graphos/delivery/schema-proposals",
-      ["preview"]
-    ],
+      "Schema proposals": "https://www.apollographql.com/docs/graphos/delivery/schema-proposals",
       "Contracts": "https://www.apollographql.com/docs/graphos/delivery/contracts"
     },
     "Org Management & SSO": {
@@ -45,7 +44,9 @@
     },
     "Metrics & Reporting": {
       "Datadog forwarding": "https://www.apollographql.com/docs/graphos/metrics/datadog-integration",
-      "Build status notifications": "https://www.apollographql.com/docs/graphos/metrics/notifications/build-status-notification"
+      "Build status notifications": ["https://www.apollographql.com/docs/graphos/metrics/notifications/build-status-notification",
+      ["experimental"]
+    ]
     },
     "Architecture": {
       "Supergraph Architecture Framework": "/supergraph-architecture-framework",
