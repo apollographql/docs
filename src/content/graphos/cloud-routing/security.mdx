@@ -107,8 +107,6 @@ The Apollo Router and the Apollo GraphOS Cloud on the AWS platform are built usi
 Apollo encrypts cloud router secrets at rest using [AWS Key Management Service (KMS)](https://aws.amazon.com/kms/).
 Cloud router instances use AWS IAM Roles to access secrets and can only access secrets related to their respective cloud routers.
 
-Apollo employees can't access cloud router secrets or their decryption keys.
-
 ### Security updates
 
 If a security issue that impacts cloud routers arises, Apollo creates an updated cloud router build. Cloud router builds consist of the underlying Apollo Router version and a unique number identifying the build number, for example, `1.30.1-4567`.
