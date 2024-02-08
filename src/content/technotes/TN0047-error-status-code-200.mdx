@@ -12,7 +12,8 @@ However, when it comes to GraphQL, the traditional approach of using REST/HTTP e
 GraphQL introduces a paradigm shift in how APIs are designed and operated, rendering conventional status codes insufficient for capturing the nuances of GraphQL operations, especially in the context of parallel operations.
 
 >
-> TLDR; The GraphQL 200 status codes signify the successful processing of a request at the Apollo Router level, but they do not encapsulate the outcome of individual operations or the presence of errors within a GraphQL response.
+> **TLDR;** The GraphQL 200 status codes signify the client has sent a request, the operation is valid GraphQL against the schema, and the GraphQL server was able to return a spec-compliant GraphQL response, but they do not encapsulate the outcome of individual fields or the presence of errors within the GraphQL response.
+>
 > Attempting to shoehorn HTTP error codes into the GraphQL paradigm overlooks the unique characteristics and capabilities of GraphQL, such as granular error handling, parallel execution, and asynchronous patterns.
 > 
 > You can learn more about status codes in GraphQL by reading the [GraphQL-over-HTTP](https://graphql.github.io/graphql-over-http/draft/) specification.
