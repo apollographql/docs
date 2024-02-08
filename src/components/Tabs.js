@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {Box, Button, Stack, StackDivider} from '@chakra-ui/react';
+import {Box, Button, Divider, Stack} from '@chakra-ui/react';
 
 export const TabContext = React.createContext();
 
@@ -9,20 +9,31 @@ export function Tabs({labels, children}) {
 
   return (
     <TabContext.Provider value={currentTab}>
-      <Stack direction="row" spacing="0.5em">
+      <Stack direction="row" spacing="0" wrap>
         {labels.map(label => (
-          <Box
-            key={label}
-            color={currentTab === label ? 'text' : 'gray.300'}
-            fontweight={currentTab === label ? 'extrabold' : 'light'}
-          >
+          <Box key={label}>
             <Button
-              variant="outline"
-              borderColor={currentTab === label ? 'primary' : 'transparent'}
+              color={currentTab === label ? 'navy' : 'gray.400'}
+              fontweight={currentTab === label ? 'extrabold' : 'light'}
+              bg="transparent"
               onClick={() => setCurrentTab(label)}
+              _focus={{boxShadow: 'none'}}
+              _active={{outline: 'none', color: 'inherit'}}
+              _hover={{textDecoration: 'none'}}
+              _dark={{
+                color: currentTab === label ? 'gray.100' : 'gray.400'
+              }}
             >
               {label}
             </Button>
+            <Divider
+              borderColor={currentTab === label ? 'navy' : 'transparent'}
+              borderWidth={currentTab === label ? '2px' : '0'}
+              _dark={{
+                color: 'gray.200',
+                borderColor: 'gray'
+              }}
+            />
           </Box>
         ))}
       </Stack>
