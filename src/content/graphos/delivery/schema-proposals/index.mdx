@@ -6,12 +6,6 @@ description: Use GraphOS's native GraphQL schema change management process propo
 
 <EnterpriseFeature />
 
-<PreviewFeature>
-
-Schema proposals are currently in invite-only [preview](/resources/product-launch-stages/#preview). Get in touch with your account team if you'd like to request access or have any questions or feedback.
-
-</PreviewFeature>
-
 As your supergraph schema grows, managing changes becomes more difficult.
 Assessing the impact of subgraph schema changes on [composition](/federation/federated-types/composition/) and client operations becomes more complex.
 Once schema design changes are agreed upon, implementing them during subgraph development poses another challenge.
@@ -86,7 +80,7 @@ Default status upon creation until the proposal is ready for review.
 <td><a href="./creation#change-proposal-status">Manual</a></td>
 <td>Signals the proposal is ready for review.
 <br/><br/>
-- If <a href="../configuration/#default-reviewers">default reviewers</a> are configured, they become assigned for review.</td>
+- If <a href="./configuration/#default-reviewers">default reviewers</a> are configured, they become assigned for review.</td>
 </tr>
 <tr>
 <td>
@@ -97,12 +91,12 @@ Default status upon creation until the proposal is ready for review.
 <td>Automatic</td>
 <td>
 Signals the{' '}
-<a href="../configuration#required-approvals">
+<a href="./configuration/#required-approvals">
 minimum number of reviewers
 </a>{' '}
 has approved the proposal.
 <br/> <br/>
-- If you've <a href="../configuration/#require-default-reviewer-approval">required default reviewer approval</a>, at least one approval must be from a <a href="../configuration/#default-reviewers">default reviewer</a>.
+- If you've <a href="./configuration/#require-default-reviewer-approval">required default reviewer approval</a>, at least one approval must be from a <a href="./configuration/#default-reviewers">default reviewer</a>.
 </td>
 </tr>
 <tr>
@@ -114,7 +108,7 @@ has approved the proposal.
 <td>Automatic</td>
 <td>
 Signals all the proposal's changes have been{' '}
-<a href="./publishing-schemas">published</a>. <br />
+<a href="../publishing-schemas">published</a>. <br />
 <br /> - Implemented proposals can't receive further revisions. <br /> -
 Their status can't be updated.
 </td>

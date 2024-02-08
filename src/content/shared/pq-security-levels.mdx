@@ -133,7 +133,7 @@ To enable safelisting, you must turn off [automatic persisted queries](/router/c
 
 If you want to use this security level, you should always first set up [safelisting with operation strings allowed](#safelisting). ID-only safelisting requires all your clients to execute operations via PQL-specified ID instead of an operation string. While making those necessary changes, you can use the less restrictive [safelisting mode](#safelisting) in your router.
 
-With `log_unknown` set to true, the router [logs](/router/logging) all rejected operations, including those registered to your PQL but that used the full operation string rather than the PQL-specified ID.
+With `log_unknown` set to true, the router [logs](/router/configuration/telemetry/exporters/logging/overview) all rejected operations, including those registered to your PQL but that used the full operation string rather than the PQL-specified ID.
 
 <Note>
 
