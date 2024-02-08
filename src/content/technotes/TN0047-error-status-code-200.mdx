@@ -28,7 +28,7 @@ This unified approach allows clients to request precisely the data they need in 
 ## Granular Error Handling
 
 GraphQL offers granular error handling through its response structure.
-In a GraphQL response, along with the data requested by the client, the server can include an array of errors, each containing detailed information about what went wrong.
+In a GraphQL response,  you have two key fields: the `data` field represents all the information the server could respond with that matches the clients request, and `errors` field is an array containing detailed information about what may have gone wrong when making the request. If the server is able to return a response in this shape, it is matching that GraphQL spec, even if it only contains the `errors` field.
 This level of granularity enables clients to understand and react to errors more effectively than traditional HTTP status codes would allow.
 
 ## Parallel Execution and Partial Results
