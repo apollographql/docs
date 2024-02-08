@@ -32,7 +32,7 @@ export const EnterpriseFeature = ({children}) => {
           <Text pl="1">
             <strong>
               This feature is only available with a{' '}
-              <Link color={'tertiary'} href="/graphos/enterprise/">
+              <Link color={'tertiary'} href="https://www.apollographql.com/docs/graphos/enterprise/">
                 GraphOS Enterprise plan
               </Link>
               .{' '}

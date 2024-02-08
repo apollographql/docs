@@ -121,10 +121,10 @@ Apollo offers the following router options, in increasing order of configurabili
   </tbody>
 </table>
 
-Somes organizations might need to use Cloud Dedicated or self-hosted routing instead of shared cloud routing for these reasons:
+Some organizations might need to use Cloud Dedicated or self-hosted routing instead of shared cloud routing for these reasons:
 
 - **Compliance.** All of your supergraph's components must be hosted in a particular region to adhere to compliance requirements.
-- **Performance.** You need to minimize latency between your router and subgraphs by enabling them to communicate _without_ traversing the public internet, for example by hosting all components in a VPC.
+- **Performance.** You need to minimize latency between your router and subgraphs by enabling them to communicate without traversing the public internet, for example by hosting all components in a VPC.
 - **Customization.** You need to configure or customize your router's behavior beyond what's available on shared infrastructure.
 
 With the exception of Apollo-managed routing, self-hosted supergraphs benefit from all of the same GraphOS features as cloud supergraphs: metrics reporting, schema checks, the Explorer, etc.
@@ -136,5 +136,5 @@ If you are interested in either Cloud Dedicated or self-hosted routing, don't he
 For setup and configuration instructions, refer to the respective router documentation:
 
 - [Cloud router on shared infrastructure](./quickstart/cloud)
-- [Cloud router on dedicated infrastucture](/graphos/cloud-routing/dedicated/quickstart)
+- [Cloud router on dedicated infrastructure](/graphos/cloud-routing/dedicated/quickstart)
 - [Self-hosted router](./quickstart/self-hosted)

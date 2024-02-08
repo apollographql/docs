@@ -8,12 +8,13 @@ indicators:
   - ":"
 exceptions:
   - API
-  - APIs
   - Apollo Client DevTools
   - Apollo Client Web
   - Apollo Federation
+  - Apollo GraphOS
   - Apollo iOS
   - Apollo Kotlin
+  - Apollo Organization
   - Apollo Router
   - Apollo Server
   - AWS
@@ -23,6 +24,7 @@ exceptions:
   - CLI
   - Cloud Dedicated
   - "Configur(e|ation|ing)"
+  - Connect APIs
   - CORS
   - Cosmos
   - Datadog Metrics Explorer
@@ -40,6 +42,7 @@ exceptions:
   - GraphOS
   - GraphOS Studio
   - GraphQL Summit
+  - Go live
   - gRPC
   - HTTP
   - I

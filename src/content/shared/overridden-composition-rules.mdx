@@ -43,7 +43,7 @@ type Product @key(fields: "id") {
 <RuleExpansionPanel
   title="OVERRIDDEN_FIELD_CAN_BE_REMOVED"
   whatItDoes="Checks if a field has been overridden by another subgraph."
-  rationale="You should consider removing overriden fields to avoid confusion."
+  rationale="You should consider removing overridden fields to avoid confusion."
 >
 
 The following example violates the rule:
@@ -65,6 +65,50 @@ type Product @key(fields: "id") {
 
 <br/>
 Use instead:
+<br/>
+
+```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false
+type Product @key(fields: "id") {
+  id: ID!
+  name: String!
+  inStock: Boolean!
+}
+```
+
+```graphql title="✅ Subgraph B" disableCopy=true showLineNumbers=false
+type Product @key(fields: "id") {
+  id: ID!
+  name: String!
+}
+```
+
+</RuleExpansionPanel>
+
+<RuleExpansionPanel
+  title="OVERRIDE_MIGRATION_IN_PROGRESS"
+  whatItDoes="Checks if a field migration is in progress."
+  rationale="You should complete a field migration."
+>
+
+The following example violates the rule:
+
+```graphql title="❌ Subgraph A" disableCopy=true showLineNumbers=false {3}
+type Product @key(fields: "id") {
+  id: ID!
+  inStock: Boolean! @override(from: "Subgraph B", label: "percent(50)")
+}
+```
+
+```graphql title="❌ Subgraph B" disableCopy=true showLineNumbers=false {4}
+type Product @key(fields: "id") {
+  id: ID!
+  name: String!
+  inStock: Boolean!
+}
+```
+
+<br/>
+After completing the migration, use instead:
 <br/>
 
 ```graphql title="✅ Subgraph A" disableCopy=true showLineNumbers=false

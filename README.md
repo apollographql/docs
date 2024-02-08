@@ -92,7 +92,7 @@ The central piece of this repo, the docs infrastructure, is a [Gatsby](https://w
 
 ### Developing a single docset
 
-By default, running the local development environment will build a site with _everything_ included. If you're working on a content edit to a single docset and want to preview those changes within the context of the docs site, you can specify the path to another docs repo that you have checked out on your computer. This will cause the site to source content _only_ from the provided local directory, and changes to content in those repos will be hot-reloaded. 🔥
+By default, running the local development environment will build a site with everything included. If you're working on a content edit to a single docset and want to preview those changes within the context of the docs site, you can specify the path to another docs repo that you have checked out on your computer. This will cause the site to source content only from the provided local directory, and changes to content in those repos will be hot-reloaded. 🔥
 
 ```sh
 # this will build the React at the root of your local development environment
@@ -607,7 +607,7 @@ If necessary, you can nest markdown within the component to completely replace t
 ```mdx
 <ExperimentalFeature>
 
-This _completely_ replaces the text within the component.
+This completely replaces the text within the component.
 
 </ExperimentalFeature>
 ```
@@ -629,7 +629,7 @@ If you include custom text, it completely replaces this text. Please make sure t
 ```mdx
 <EnterpriseFeature>
 
-This is some _custom markdown text_ that still includes a link to the [GraphOS Enterprise plan\*\*](http://apollographql.com/graphos/enterprise/) and [Enterprise trial](https://studio.apollographql.com/signup?type=enterprise-trial&referrer=docs-content) docs.
+This is some custom markdown text that still includes a link to the [GraphOS Enterprise plan\*\*](http://apollographql.com/graphos/enterprise/) and [Enterprise trial](https://studio.apollographql.com/signup?type=enterprise-trial&referrer=docs-content) docs.
 
 </EnterpriseFeature>
 ```
@@ -671,6 +671,9 @@ Use `<Tip>` admonitions for any particularly helpful advice or suggestions.
 The above code block renders like so:
 
 ![Rendered admonitions](src/content/graphos/img/admonitions.jpg)
+
+> [!TIP]
+> Be sure to include two newlines between the admonition components and content and as shown in the examples above. MDX parsing for MDX v1 requires this extra separation between JSX and Markdown.
 
 ## Content linting
 

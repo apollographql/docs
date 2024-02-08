@@ -4,7 +4,7 @@ subtitle: Validate all proposed changes to your schema are safe
 description: Use GraphOS Schema checks to identify and validate potential breaking changes in your GraphQL schema before deployment.
 ---
 
-Certain changes to your graph's schema (such as removing a field or type) might break one of your application's clients. GraphOS provides **schema checks** to help you identify breaking changes before you make them, and to help you identify when a _potentially_ dangerous change is in fact safe.
+Certain changes to your graph's schema (such as removing a field or type) might break one of your application's clients. GraphOS provides **schema checks** to help you identify breaking changes before you make them, and to help you identify when a potentially dangerous change is in fact safe.
 
 You can review the results of schema checks inside GraphOS Studio from your graph's Checks page, helping you make informed decisions about evolving your graph:
 
@@ -78,7 +78,7 @@ It requires the following:
 
 - The locally modified version of your schema. In the command above, the schema is provided via a `.graphql` file.
 
-  - If your schema is _not_ in a standalone `.graphql` file, you can run your GraphQL server locally and pipe its schema directly from `rover graph introspect`, like so:
+  - If your schema is not in a standalone `.graphql` file, you can run your GraphQL server locally and pipe its schema directly from `rover graph introspect`, like so:
 
     ```bash showLineNumbers=false
     rover subgraph introspect http://localhost:4000 | rover subgraph check docs-example-graph@main --name products --schema -
@@ -145,7 +145,7 @@ You can rerun checks from GraphOS Studio:
   alt="Rerun check in GraphOS Studio"
 />
 
-When you do, the new run uses the current [check configuration options](./check-configurations/), regardless of the configuration at the time of the original run. Similarly, the new run's time window is based on the current time, _not_ the time when the original check ran.
+When you do, the new run uses the current [check configuration options](./check-configurations/), regardless of the configuration at the time of the original run. Similarly, the new run's time window is based on the current time, not the time when the original check ran.
 
 The new checks run incorporates any changes made to excluded or included clients, checked variants, and any operations marked as safe or ignored.
 
@@ -157,7 +157,7 @@ If you've [integrated schema checks with your GitHub PRs](#integrating-with-gith
 
 ## Composition checks
 
-When you run `rover subgraph check`, GraphOS performs a **composition check** _before_ it performs any other checks. A composition check verifies that changes you make to a subgraph schema are valid GraphQL definitions and are compatible with your _other_ subgraph schemas, enabling them to compose into a _supergraph_ schema for your router ([learn more](/federation/federated-types/composition/)).
+When you run `rover subgraph check`, GraphOS performs a **composition check** before it performs any other checks. A composition check verifies that changes you make to a subgraph schema are valid GraphQL definitions and are compatible with your other subgraph schemas, enabling them to compose into a supergraph schema for your router ([learn more](/federation/federated-types/composition/)).
 
 **If a composition check fails, Studio does not then perform additional checks for the provided schema.**
 
@@ -169,7 +169,7 @@ If a [composition check](#composition-checks) succeeds, GraphOS then validates s
 
 ### Overriding flagged changes
 
-Occasionally, schema checks might flag a change that you know is safe. For example, you might change an input type's field from nullable to non-nullable (usually a breaking change) when you're certain that your clients _never_ provide a null value for the field.
+Occasionally, schema checks might flag a change that you know is safe. For example, you might change an input type's field from nullable to non-nullable (usually a breaking change) when you're certain that your clients never provide a null value for the field.
 
 In cases like this, you can **override** a flagged change in GraphOS Studio from the associated check's details page:
 
@@ -182,10 +182,10 @@ In cases like this, you can **override** a flagged change in GraphOS Studio from
 
 You override flagged changes on an operation-by-operation basis. For each operation with flagged changes, you can override those changes in the following ways:
 
-- **Mark the changes as safe.** In this case, schema checks will _not_ flag these exact changes for the operation in any future execution. This effectively "approves" the changes for the operation.
-  - If a future check detects approved changes along with _new_ unsafe changes to the operation, the new unsafe changes _will_ be flagged.
-- **Ignore the operation.** In this case, schema checks will completely ignore the operation when checking _all_ changes in any future execution.
-  - This option is useful when you know an operation originates _only_ from clients or client versions that you don't actively support.
+- **Mark the changes as safe.** In this case, schema checks will not flag these exact changes for the operation in any future execution. This effectively "approves" the changes for the operation.
+  - If a future check detects approved changes along with new unsafe changes to the operation, the new unsafe changes will be flagged.
+- **Ignore the operation.** In this case, schema checks will completely ignore the operation when checking all changes in any future execution.
+  - This option is useful when you know an operation originates only from clients or client versions that you don't actively support.
 
 ## Linter checks
 
@@ -211,7 +211,7 @@ We recommend defining a separate CI job for each [variant of your schema](./chec
 
 ### Authenticating Rover
 
-The `rover config auth` command is _interactive_, which means you shouldn't use it in CI environments. Instead, you can authenticate Rover with Studio by setting the `APOLLO_KEY` environment variable in CI. For details, see [Configuring Rover](/rover/configuring).
+The `rover config auth` command is interactive, which means you shouldn't use it in CI environments. Instead, you can authenticate Rover with Studio by setting the `APOLLO_KEY` environment variable in CI. For details, see [Configuring Rover](/rover/configuring).
 
 ### Example configuration
 
@@ -283,7 +283,7 @@ These changes remove a schema element. If a removed element is actively being us
 | `TYPE_REMOVED`                | A scalar or object used by at least one operation was removed.                                                                            |
 | `ARG_REMOVED`                 | An argument used by at least one operation was removed from a field.                                                                      |
 | `TYPE_REMOVED_FROM_UNION`     | A type was removed from a union used by at least one operation.                                                                           |
-| `INPUT_FIELD_REMOVED`         | A field was removed from an input type. That field is referenced by an argument on _another_ field that's used by at least one operation. |
+| `INPUT_FIELD_REMOVED`         | A field was removed from an input type. That field is referenced by an argument on another field that's used by at least one operation. |
 | `VALUE_REMOVED_FROM_ENUM`     | A value was removed from an enum used by at least one operation.                                                                          |
 | `TYPE_REMOVED_FROM_INTERFACE` | An object was removed from an interface used by at least one operation.                                                                   |
 
@@ -309,7 +309,7 @@ In some cases, in-place updates are compatible with affected clients at runtime 
 | Name                       | Description                                                                                                                                              |
 | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `FIELD_CHANGED_TYPE`       | An existing field used by at least one operation changed its type.                                                                                       |
-| `INPUT_FIELD_CHANGED_TYPE` | An existing field of an input object changed its type. That field is referenced by an argument on _another_ field that's used by at least one operation. |
+| `INPUT_FIELD_CHANGED_TYPE` | An existing field of an input object changed its type. That field is referenced by an argument on another field that's used by at least one operation. |
 | `TYPE_CHANGED_KIND`        | An existing type used by at least one operation changed its "kind." For example, an object type was changed to a union type.                             |
 | `ARG_CHANGED_TYPE`         | An existing argument on a field used by at least one operation changed its type.                                                                         |
 

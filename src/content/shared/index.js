@@ -20,6 +20,7 @@ export {default as RegisterCLI} from './register-cli.mdx';
 export {default as RegisterFederatedCLI} from './register-federated-cli.mdx';
 export {default as SchemaProposalCreationMermaid} from './schema-proposal-creation-mermaid.mdx';
 export {default as SchemaProposalImplementationMermaid} from './schema-proposal-implementation-mermaid.mdx';
+export {default as SchemaProposalImplementationNote} from './schema-proposal-implementation-note.mdx'
 export {default as SchemaProposalPublicationMermaid} from './schema-proposal-publication-mermaid.mdx';
 export {default as SchemaProposalReviewMermaid} from './schema-proposal-review-mermaid.mdx';
 export {default as SetApolloVCSCommit} from './set-apollo-vcs-commit.mdx';

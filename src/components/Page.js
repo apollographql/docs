@@ -108,7 +108,6 @@ const SCROLL_MARGIN_TOP = PAGE_PADDING_TOP + TOTAL_HEADER_HEIGHT;
 const NESTED_LIST_STYLES = {
   [['ul', 'ol']]: {
     mt: 3,
-    fontSize: 'md',
     lineHeight: 'normal'
   }
 };
@@ -476,7 +475,7 @@ export default function Page({file}) {
               maxH={`calc(100vh - ${SCROLL_MARGIN_TOP}px - ${PAGE_PADDING_BOTTOM}px - ${PAGE_FOOTER_HEIGHT}px)`}
             >
               <Heading size="md" mb="3">
-                {title}
+                On this page
               </Heading>
               <TableOfContents
                 headings={headings}

@@ -15,7 +15,7 @@ Apollo Federation is a powerful system for orchestrating queries across a distri
 - Batch calls to a single system to [solve the infamous N+1 problem](/technotes/TN0019-federation-n-plus-1/)
 - Split a single call into multiple calls with different priorities [using `@defer`](/router/executing-operations/defer-support/)
 
-Federation applies these same orchestration capabilities to mutation fields (and their selection sets), but managing state changes across distributed systems typically involves additional requirements. Federation does _not_ provide common functionality for these requirements, such as compensating transactions or data propagation between sibling fields.
+Federation applies these same orchestration capabilities to mutation fields (and their selection sets), but managing state changes across distributed systems typically involves additional requirements. Federation does not provide common functionality for these requirements, such as compensating transactions or data propagation between sibling fields.
 
 You need to implement your own orchestration logic within a single field resolver to implement these requirements. This is due to the design of GraphQL itself.
 

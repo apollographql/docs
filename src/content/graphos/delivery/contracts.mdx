@@ -102,7 +102,7 @@ Contract routers can safely connect to the same subgraph instances as any other 
 
 <Note>
 
-Any `@tag` in a source variant's supergraph schema is _also_ present in a contract variant's supergraph schema.
+Any `@tag` in a source variant's supergraph schema is also present in a contract variant's supergraph schema.
 
 </Note>
 
@@ -112,16 +112,16 @@ In GraphOS Studio, each contract variant has its own README, schema reference, a
 
 ## Federation 1 limitations
 
-Contracts behave slightly differently depending on which version of Apollo Federation your graph uses—either Federation 1 or Federation 2. Most importantly, graphs that use Federation 1 _cannot_ use `@tag`s to exclude the following from a contract schema:
+Contracts behave slightly differently depending on which version of Apollo Federation your graph uses—either Federation 1 or Federation 2. Most importantly, graphs that use Federation 1 cannot use `@tag`s to exclude the following from a contract schema:
 
-- Custom scalar types (default scalar types can _never_ be excluded in Federation 1)
+- Custom scalar types (default scalar types can never be excluded in Federation 1)
 - Enum types or their values
 - Input types or their fields
 - Arguments of object fields or interface fields
 
 ## Contracts and Federation 2
 
-To create a contract variant that uses Federation 2, the contract's source variant must _also_ use Federation 2.
+To create a contract variant that uses Federation 2, the contract's source variant must also use Federation 2.
 [Learn how to move an existing variant to Federation 2.](/federation/federation-2/moving-to-federation-2#step-2-configure-your-composition-method)
 
 ### Moving an existing contract to Federation 2

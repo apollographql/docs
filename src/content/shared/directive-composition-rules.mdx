@@ -6,7 +6,7 @@
 <RuleExpansionPanel
   title="MERGED_NON_REPEATABLE_DIRECTIVE_ARGUMENTS"
   whatItDoes="Checks if a non-[`repeatable`](https://spec.graphql.org/draft/#sel-GAHnBRVABeBoB_2T) directive has been applied to the same schema element in different subgraphs with different arguments. [Learn more.](https://www.apollographql.com/docs/apollo-server/schema/directives/#in-subgraphs)"
-  rationale="Arguments should be consistent across a non-[`repeatable`](https://spec.graphql.org/draft/#sel-GAHnBRVABeBoB_2T) directive's usage. If arguments differ, it may be a sign that subgraph owners need to communicate about the directive's usage. If the arguments _need_ to differ, consider using a [`repeatable`](https://spec.graphql.org/draft/#sel-GAHnBRVABeBoB_2T) directive."
+  rationale="Arguments should be consistent across a non-[`repeatable`](https://spec.graphql.org/draft/#sel-GAHnBRVABeBoB_2T) directive's usage. If arguments differ, it may be a sign that subgraph owners need to communicate about the directive's usage. If the arguments need to differ, consider using a [`repeatable`](https://spec.graphql.org/draft/#sel-GAHnBRVABeBoB_2T) directive."
 >
 
 The following example violates the rule:

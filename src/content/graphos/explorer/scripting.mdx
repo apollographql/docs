@@ -12,10 +12,10 @@ Preflight scripts are useful for managing authentication flows like OAuth, for e
 
 The Explorer lets you define two different types of scripts:
 
-- [**Preflight scripts**](#preflight-scripts): You can define a single preflight script _per variant_ of a graph. This script runs **before every Explorer operation that's executed against the associated variant**.
+- [**Preflight scripts**](#preflight-scripts): You can define a single preflight script per variant of a graph. This script runs **before every Explorer operation that's executed against the associated variant**.
   - Preflight scripts are helpful for enabling organization-wide Explorer authentication to your graph.
 - [**Operation scripts**](#operation-scripts): If you use [operation collections](./operation-collections/), you can define one pre- and one post-operation script for each saved operation in a collection.
-  - Pre-operation scripts run before the operation executes. **They act as _additional_, per-operation preflight scripts.**
+  - Pre-operation scripts run before the operation executes. **They act as additional, per-operation preflight scripts.**
   - Post-operation scripts run after the operation executes. **They act as per-operation postflight scripts.**
   - Operation scripts are helpful for testing or debugging the behavior of individual operations or [operation chains](#chaining-operations).
 
@@ -44,7 +44,7 @@ graph LR
 
   </Caution>
 
-- If a team member has view access to a particular graph variant or operation collection, that team member can _also_ view any scripts associated with that variant or operation collection.
+- If a team member has view access to a particular graph variant or operation collection, that team member can also view any scripts associated with that variant or operation collection.
 - Preflight scripts are **on** by default. Individual team members can [turn them off](#turn-off-preflight-scripts) for their own Explorer usage.
 - Operations scripts are **off** by default. Individual team members can [turn them on](#turn-on-operation-scripts) for their own Explorer usage.
 
@@ -56,7 +56,7 @@ graph LR
 
 For [protected variants](../graphs/studio-features/#protected-variants-enterprise-only), only organization members with the **Graph Admin** role can create or edit a variant's preflight script.
 
-For _non_-protected variants, members with the **Contributor** role can also modify the preflight script.
+For non-protected variants, members with the **Contributor** role can also modify the preflight script.
 
 </Note>
 
@@ -175,7 +175,7 @@ To do so, toggle the **Operation script** switch to **ON**.
 
 ## Chaining operations
 
-A script can use the [`explorer.runOperation`](#explorerrunoperation) function to execute _another_ operation that's saved in a collection. That operation might have its _own_ script, which can _also_ call `explorer.runOperation`.
+A script can use the [`explorer.runOperation`](#explorerrunoperation) function to execute another operation that's saved in a collection. That operation might have its own script, which can also call `explorer.runOperation`.
 
 You can use this mechanism to chain together a sequence of operations for more advanced workflows.
 

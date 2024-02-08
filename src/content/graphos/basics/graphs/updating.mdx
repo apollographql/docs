@@ -21,14 +21,14 @@ flowchart LR;
 - **The router** is powered by a particular version of the [Apollo Router](/router/).
   - This is true for all supergraph types ([cloud](./#cloud-supergraphs) and [self-hosted](./#self-hosted-supergraphs)).
 - **The GraphOS build pipeline** uses a particular version of Apollo Federation to compose your router's supergraph schema.
-  - If you use the [Rover CLI](/rover/) to compose your supergraph schema, this is true for Rover as well. In this case, you effectively maintain your _own_ build pipeline.
+  - If you use the [Rover CLI](/rover/) to compose your supergraph schema, this is true for Rover as well. In this case, you effectively maintain your own build pipeline.
 - **Your subgraph schemas** might each use special directives that were first introduced in a particular version of Apollo Federation.
 
-These components _each_ target support for a particular version of [Apollo Federation](/federation/), the architecture that underpins every supergraph. Because of this, it's important to make sure these various Federation versions remain compatible with each other as you make updates to individual components.
+These components each target support for a particular version of [Apollo Federation](/federation/), the architecture that underpins every supergraph. Because of this, it's important to make sure these various Federation versions remain compatible with each other as you make updates to individual components.
 
 ## Recommended update order
 
-**To avoid runtime or composition errors,** your supergraph's components should _always_ maintain the following relationship between their targeted Apollo Federation versions:
+**To avoid runtime or composition errors,** your supergraph's components should always maintain the following relationship between their targeted Apollo Federation versions:
 
 <Note>
 
@@ -51,7 +51,7 @@ The method you use to update your router depends on which type of supergraph you
 
 - **If you have a [self-hosted supergraph](./#self-hosted-supergraphs),** you [download the latest Apollo Router binary](/router/quickstart#1-download-and-extract-the-apollo-router-binary) in every environment where your router runs.
 
-- **If you have a [cloud supergraph](./#cloud-supergraphs),** GraphOS _automatically_ updates your router to the latest supported version whenever that version changes.
+- **If you have a [cloud supergraph](./#cloud-supergraphs),** GraphOS automatically updates your router to the latest supported version whenever that version changes.
 
   - You can see which Apollo Router version you're running from the **Cloud Router** section of your variant's Settings page in [Studio](https://studio.apollographql.com/?referrer=docs-content):
 
@@ -62,17 +62,17 @@ The method you use to update your router depends on which type of supergraph you
     alt="Router status for cloud supergraph"
   />
 
-For details on each Apollo Router version's corresponding Apollo _Federation_ version, see [this article](/router/federation-version-support#support-table).
+For details on each Apollo Router version's corresponding Apollo Federation version, see [this article](/router/federation-version-support#support-table).
 
 ## 2. Update your build pipeline
 
-Whenever you make an operational change to your graph (such as [publishing changes to a subgraph schema](../delivery/publishing-schemas/#publish-subgraph-schemas)), GraphOS initiates a **build** that composes your graph's new _supergraph_ schema. From [GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content), you can configure which version of Apollo Federation the build pipeline uses to perform this composition.
+Whenever you make an operational change to your graph (such as [publishing changes to a subgraph schema](../delivery/publishing-schemas/#publish-subgraph-schemas)), GraphOS initiates a **build** that composes your graph's new supergraph schema. From [GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content), you can configure which version of Apollo Federation the build pipeline uses to perform this composition.
 
 <Note>
 
-GraphOS enables you to choose between _minor_ versions of Federation (such as `2.1`). Each option automatically uses the latest supported _patch_ release of that minor version (such as `2.1.4`).
+GraphOS enables you to choose between minor versions of Federation (such as `2.1`). Each option automatically uses the latest supported patch release of that minor version (such as `2.1.4`).
 
-Although patch release updates are automatic, you must _manually_ move a graph's build pipeline to a different _minor_ release.
+Although patch release updates are automatic, you must manually move a graph's build pipeline to a different minor release.
 
 </Note>
 
@@ -108,7 +108,7 @@ If you host your own Apollo Router instance, you can use the [Rover CLI](/rover/
 
 </Note>
 
-If you _do_ perform composition with `rover supergraph compose`, the command uses the _exact_ version of composition you specify via the `federation_version` key in the YAML configuration file you pass:
+If you do perform composition with `rover supergraph compose`, the command uses the exact version of composition you specify via the `federation_version` key in the YAML configuration file you pass:
 
 ```bash showLineNumbers=false
 rover supergraph compose --config ./supergraph.yaml
@@ -120,11 +120,11 @@ subgraphs:
   # ...
 ```
 
-This value **must** target a _specific patch release_ (`2.3.1`, `2.3.2`, etc.), and it must start with an equals sign (`=`).
+This value **must** target a specific patch release (`2.3.1`, `2.3.2`, etc.), and it must start with an equals sign (`=`).
 
 <Caution>
 
-If you _don't_ provide a value for `federation_version`, Rover prints a warning and chooses a composition version according to [this logic](/rover/commands/supergraphs#automatic-updates). This could potentially cause failures. Rover might use a newer composition version than what your router supports, resulting in a supergraph schema that causes the router to fail on startup.
+If you don't provide a value for `federation_version`, Rover prints a warning and chooses a composition version according to [this logic](/rover/commands/supergraphs#automatic-updates). This could potentially cause failures. Rover might use a newer composition version than what your router supports, resulting in a supergraph schema that causes the router to fail on startup.
 
 [Learn more about setting a Rover composition version](/rover/commands/supergraphs#setting-a-composition-version).
 
@@ -132,18 +132,18 @@ If you _don't_ provide a value for `federation_version`, Rover prints a warning 
 
 ## 3. Update subgraph schemas (as needed)
 
-After both your [router](#1-update-your-router) _and_ your [build pipeline](#2-update-your-build-pipeline) support a particular minimum version of Apollo Federation, your subgraphs can use features that were first introduced in that version.
+After both your [router](#1-update-your-router) and your [build pipeline](#2-update-your-build-pipeline) support a particular minimum version of Apollo Federation, your subgraphs can use features that were first introduced in that version.
 
 <Note>
 
-You _don't need_ to update any subgraph schema that _doesn't_ use newly introduced Apollo Federation features. Different subgraph schemas can target different Federation versions as needed. Ultimately, your [build pipeline](#2-update-your-build-pipeline) determines which version of composition is actually used to create the supergraph schema.
+You don't need to update any subgraph schema that doesn't use newly introduced Apollo Federation features. Different subgraph schemas can target different Federation versions as needed. Ultimately, your [build pipeline](#2-update-your-build-pipeline) determines which version of composition is actually used to create the supergraph schema.
 
 </Note>
 
 As an example, the [`@interfaceObject` directive](/federation/federated-types/federated-directives#interfaceobject) was first introduced in Federation 2.3. To start using this directive in a subgraph, do the following:
 
 1. Make sure your chosen subgraph library has added support for the `@interfaceObject` directive by consulting [this table](/federation/building-supergraphs/supported-subgraphs/).
-   - If your library _doesn't_ yet support the directive, reach out to its maintainers about adding support.
+   - If your library doesn't yet support the directive, reach out to its maintainers about adding support.
 2. Upgrade to the latest version of your subgraph library to make sure you're using a version that supports `@interfaceObject`.
 3. Modify the following `@link` directive in your subgraph schema (or add it if it isn't present yet):
 
@@ -163,16 +163,16 @@ Because you've already updated your [router](#1-update-your-router) and [build p
 
 ## Why is this update order necessary?
 
-GraphOS supergraphs use the [Apollo Federation 2](/federation/) architecture. Federation 2 is _itself_ a versioned technology (2.2, 2.3, etc.), and each version introduces changes and additions to the set of supported [subgraph directives](/federation/federated-types/federated-directives/).
+GraphOS supergraphs use the [Apollo Federation 2](/federation/) architecture. Federation 2 is itself a versioned technology (2.2, 2.3, etc.), and each version introduces changes and additions to the set of supported [subgraph directives](/federation/federated-types/federated-directives/).
 
-- Each version of the Apollo Router is compiled against a particular version of Federation 2 (for details, [see this table](/router/federation-version-support)). Any given router version is backward compatible with _previous_ versions of Federation. However, it _isn't_ compatible with _newer_ versions.
+- Each version of the Apollo Router is compiled against a particular version of Federation 2 (for details, [see this table](/router/federation-version-support)). Any given router version is backward compatible with previous versions of Federation. However, it isn't compatible with newer versions.
 
-  Therefore, it's important to update your router _first_, before any _other_ supergraph component begins using a later Federation 2 version. Otherwise, you might cause your router to break by providing it a supergraph schema that it doesn't support.
+  Therefore, it's important to update your router first, before any other supergraph component begins using a later Federation 2 version. Otherwise, you might cause your router to break by providing it a supergraph schema that it doesn't support.
 
 - Your graph's **Supergraph Pipeline Track** setting in GraphOS Studio determines which version of Federation 2 is used to compose your supergraph schema. This composition process fails if one of your subgraph schemas uses a directive that was introduced in a Federation version later than your chosen pipeline track.
 
-  - In the case of a failed build, GraphOS continues to provide your router with the supergraph schema from the most recent _successful_ build.
+  - In the case of a failed build, GraphOS continues to provide your router with the supergraph schema from the most recent successful build.
 
-- Finally, subgraph schemas are where you _actually apply_ new Federation 2 directives. You need to update your subgraph library to a version that recognizes all directives that you use in your schema.
+- Finally, subgraph schemas are where you actually apply new Federation 2 directives. You need to update your subgraph library to a version that recognizes all directives that you use in your schema.
 
-  You perform this update _last_ to make sure that every other component of your supergraph is prepared to interact with any newly introduced directives.
+  You perform this update last to make sure that every other component of your supergraph is prepared to interact with any newly introduced directives.

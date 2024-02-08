@@ -36,7 +36,7 @@ We recommend that you read through this checklist and identify critical features
 - If your subgraph servers are listed as [compatible with `FEDERATED TRACING`](/federation/building-supergraphs/supported-subgraphs/), ensure that you've enabled [federated traces](/federation/metrics/), and that you can view operation metrics as expected in Apollo Studio.
   - Enable [fractional trace sampling via `fieldLevelInstrumentation`](/graphos/metrics/field-usage/#fractional-sampling) to reduce performance hits due to tracing.
 - Ensure that you've [load-tested your graph](/technotes/TN0035-load-testing-graphql/).
-  - Test loads should be representative of your current traffic (both in terms of volume _and_ in terms of the actual operations you execute in the test).
+  - Test loads should be representative of your current traffic (both in terms of volume and in terms of the actual operations you execute in the test).
   - To investigate performance issues, use Apollo Studio to identify which operations are performing slowly.
     - Look at resolver execution times to identify slow areas of execution.
     - Whenever possible, avoid making multiple calls to data sources within a single resolver.

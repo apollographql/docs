@@ -63,7 +63,7 @@ Configuring the **Proposals** task's severity to **Error** ensures that only cha
 
 <Note>
 
-The Proposals task also checks _descriptions_ in the SDL. For example, the Proposals task fails if a matching approved proposal includes a description with a period and the change the check is running on doesn't.
+The Proposals task also checks descriptions in the SDL. For example, the Proposals task fails if a matching approved proposal includes a description with a period and the change the check is running on doesn't.
 
 </Note>
 
@@ -90,9 +90,9 @@ Similarly, a single proposal can contain a large change in one subgraph that you
 
 ## Publish changes to GraphOS
 
-Publishing schema proposal changes follows the same [steps](../publishing-schemas) as publishing any other changes.
+Once you've implemented the approved schema changes, including supporting code, you need to publish the subgraph schemas back to GraphOS. Publishing schema proposal changes follows the same [steps](../publishing-schemas) as publishing any other changes.
 
-When a schema published to a [proposal's source variant](./creation/#start-a-proposal) contains changes that are in an **Approved**, **Open for Feedback**, or **Draft** proposal, the corresponding [launch](../launches) appears in the proposal's activity log.
+When a subgraph schema published to a proposal's source variant contains changes that are in an **Approved**, **Open for Feedback**, or **Draft** proposal, the corresponding [launch](../launches) appears in the proposal's activity log.
 
 <img
   src="../../img/schema-proposals/proposal-implementation-status.jpg"
