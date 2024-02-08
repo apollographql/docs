@@ -33,9 +33,7 @@
       }
     },
     "Schema Pipeline": {
-      "Schema proposals": ["https://www.apollographql.com/docs/graphos/delivery/schema-proposals",
-      ["preview"]
-    ],
+      "Schema proposals": "https://www.apollographql.com/docs/graphos/delivery/schema-proposals",
       "Contracts": "https://www.apollographql.com/docs/graphos/delivery/contracts"
     },
     "Org Management & SSO": {
