@@ -83,7 +83,7 @@ This method of adding a variant is available only to cloud supergraphs. For othe
 
 #### Adding a variant via the Rover CLI
 
-To add a new variant to your supergraph with Rover, you publish its first subgraph's schema! To do this, you use the exact same Rover command as [updating an _existing_ subgraph](../quickstart/next-steps/#update-a-subgraph-schema). The only difference is that you provide the name of the new variant to the command.
+To add a new variant to your supergraph with Rover, you publish its first subgraph's schema! To do this, you use the exact same Rover command as [updating an existing subgraph](../quickstart/next-steps/#update-a-subgraph-schema). The only difference is that you provide the name of the new variant to the command.
 
 [Learn about publishing subgraph schemas.](../delivery/publishing-schemas/#publish-subgraph-schemas)
 
@@ -141,7 +141,7 @@ This method of adding a subgraph is available only to cloud supergraphs. For oth
 
 #### Adding a subgraph via the Rover CLI
 
-To add a subgraph to your supergraph with Rover, you publish the subgraph's schema! To do this, you use the exact same Rover command as [updating an _existing_ subgraph](../quickstart/next-steps/#update-a-subgraph-schema). The only difference is that you provide the name of the _new_ subgraph to the command.
+To add a subgraph to your supergraph with Rover, you publish the subgraph's schema! To do this, you use the exact same Rover command as [updating an existing subgraph](../quickstart/next-steps/#update-a-subgraph-schema). The only difference is that you provide the name of the new subgraph to the command.
 
 [Learn about publishing subgraph schemas.](../delivery/publishing-schemas/#publish-subgraph-schemas)
 
@@ -162,7 +162,7 @@ From your variant's Subgraphs page, you can modify an existing subgraph's routin
 3. In the dialog that appears, provide a new URL and click **Update**.
    - Your router automatically begins using the new URL to communicate with your subgraph.
 
-If you need to make any _other_ modifications to an existing subgraph, use the Rover CLI. [Learn about `rover subgraph` commands.](/rover/commands/subgraphs)
+If you need to make any other modifications to an existing subgraph, use the Rover CLI. [Learn about `rover subgraph` commands.](/rover/commands/subgraphs)
 
 ### Deleting a subgraph
 
@@ -174,21 +174,21 @@ If you need to make any _other_ modifications to an existing subgraph, use the R
 
 You can delete an existing subgraph from a variant of your cloud supergraph. If you do:
 
-1. The variant automatically attempts to compose an updated supergraph schema using the schemas from all _remaining_ subgraphs.
+1. The variant automatically attempts to compose an updated supergraph schema using the schemas from all remaining subgraphs.
 
    - Studio displays the result of this attempt, and you can cancel the deletion if there are errors.
 
 2. **If composition succeeds,** the variant's router automatically begins using the updated supergraph schema. This means clients can no longer query the router for fields that are defined only in the deleted subgraph.
 
-   **If composition fails,** the router continues using its _existing_ supergraph schema. This means clients can _continue_ querying the router for fields from the deleted subgraph, _until_ the remaining subgraph schemas are updated to compose successfully.
+   **If composition fails,** the router continues using its existing supergraph schema. This means clients can continue querying the router for fields from the deleted subgraph, until the remaining subgraph schemas are updated to compose successfully.
 
 #### ⚠️ Important considerations
 
-- **Deleting a subgraph can break existing clients!** This action is equivalent to removing _all_ the subgraph's types and fields from your supergraph (unless they're also defined in _another_ subgraph). If a client sends an operation that includes any of those types and fields, the router will _reject_ that operation.
+- **Deleting a subgraph can break existing clients!** This action is equivalent to removing all the subgraph's types and fields from your supergraph (unless they're also defined in another subgraph). If a client sends an operation that includes any of those types and fields, the router will reject that operation.
 
   - To help you remove schema definitions safely, learn about [schema checks](../delivery/schema-checks/).
 
-- Deleting a subgraph in Studio has no effect on your actual running subgraph instance. It only removes your router's _knowledge_ of that instance and its corresponding schema fields.
+- Deleting a subgraph in Studio has no effect on your actual running subgraph instance. It only removes your router's knowledge of that instance and its corresponding schema fields.
 
 #### Steps to delete within Studio
 
@@ -203,7 +203,7 @@ You can delete an existing subgraph from a variant of your cloud supergraph. If 
      width="450"
    />
 
-3. Click **Delete subgraph**. Studio attempts to compose a new supergraph schema that _doesn't_ include the subgraph you want to delete.
+3. Click **Delete subgraph**. Studio attempts to compose a new supergraph schema that doesn't include the subgraph you want to delete.
 
 4. A confirmation dialog appears that displays any composition errors that occurred:
 
@@ -214,7 +214,7 @@ You can delete an existing subgraph from a variant of your cloud supergraph. If 
      width="500"
    />
 
-   If you're _sure_ you want to delete the subgraph, enter its name and click **Delete subgraph**.
+   If you're sure you want to delete the subgraph, enter its name and click **Delete subgraph**.
 
 ## Viewing a field's originating subgraph
 
@@ -265,7 +265,7 @@ From this page, you can:
 
 ## Contact info for subgraphs
 
-You can use the `@contact` directive to add your team's contact info to a subgraph schema. This info is displayed in Studio, which helps _other_ teams know who to contact for assistance with the subgraph:
+You can use the `@contact` directive to add your team's contact info to a subgraph schema. This info is displayed in Studio, which helps other teams know who to contact for assistance with the subgraph:
 
 <img
   class="screenshot"
@@ -278,7 +278,7 @@ The contact info includes a name (of a team or individual), along with an option
 
 ### Adding the `@contact` directive to your subgraph
 
-To use the `@contact` directive in your subgraph schema, you first need to _define_ the directive in your schema. Add the following definition to each of your subgraph schemas:
+To use the `@contact` directive in your subgraph schema, you first need to define the directive in your schema. Add the following definition to each of your subgraph schemas:
 
 ```graphql title="schema.graphql"
 directive @contact(
@@ -401,9 +401,9 @@ type Product {
 }
 ```
 
-By default, these tags are _removed_ from the [API schema](/federation/federated-types/overview/#api-schema) that's generated as part of composition. This means that tag information _isn't visible_ to clients querying your supergraph.
+By default, these tags are removed from the [API schema](/federation/federated-types/overview/#api-schema) that's generated as part of composition. This means that tag information isn't visible to clients querying your supergraph.
 
-If tag information _should_ be visible to clients (for example, to help document your API), you can enable this for a variant in Studio with the following steps:
+If tag information should be visible to clients (for example, to help document your API), you can enable this for a variant in Studio with the following steps:
 
 1. Go to the **Settings** page for your variant in GraphOS Studio.
 2. On the **General** tab, click **Edit Configuration**. The Update Build Configuration dialog appears.

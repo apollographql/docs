@@ -7,10 +7,16 @@ id: TN0037
 tags: [federation, router, gateway]
 ---
 
-The [Apollo Router](https://www.apollographql.com/docs/router) is a high-performant GraphQL gateway that supports [Apollo Federation](https://www.apollographql.com/docs/federation). It handles GraphQL requests that can then be resolved by many GraphQL subgraphs underneath. When comparing the router to other API technologies in the market today, a natural first comparison to draw is to API gateways. Tools like Apigee, Kong, or your cloud provider offer capabilities to secure, manage, and monitor your API endpoints.
+The [Apollo Router](https://www.apollographql.com/docs/router) is a high-performant GraphQL gateway that supports [Apollo Federation](https://www.apollographql.com/docs/federation). It handles GraphQL requests that can then be resolved by many GraphQL subgraphs underneath. When comparing the router to other API technologies in the market today, a natural first comparison to draw is to API gateways. Tools like Kong or your cloud provider offer capabilities to secure, manage, and monitor your API endpoints.
 These gateways usually live at the outermost edges of your companies infrastructure. Sometimes they are even required by your security team so that all inbound and outbound traffic flows through the same top layer of your tech stack.
 
 The key distinction of the router is that is not based on URLs or REST endpoints. The router is a GraphQL-native solution to handle your clients API operations.
+
+<Tip>
+
+Apollo GraphQL and Kong have partnered to produce a joint paper that provides API practitioners with the tools they need to navigate the complex API landscape and drive successful digital experiences. Read more in the [blog post](https://www.apollographql.com/blog/leveraging-graphql-for-next-generation-api-platforms).
+
+</Tip>
 
 ## GraphQL native
 
@@ -25,7 +31,7 @@ type Query {
 }
 ```
 
-API gateways usually have no understanding of all the services underneath them or what their capabilities are. They may have configuration options and rules that can apply to a list of services, but these are blanket rules that must be configured at the gateway level, not at the service definition.
+API gateways (like Apigee, Mulesoft, or ones from AWS, Azure, or Google Cloud) usually have little understanding of all the services underneath them or what their capabilities are. They may have configuration options and rules that can apply to those services, but these are blanket rules that must be configured at the gateway level, not at the service definition.
 If you wanted to apply a common rule across many services it would be up to the API gateway managers to configure, deploy, and apply that new rule to a set of services rather than the individual service teams.
 
 ```yaml

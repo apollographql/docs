@@ -148,15 +148,9 @@ You can think of each revision as equal to a [commit](<https://en.wikipedia.org/
   alt="Failed schema check for a proposal in GraphOS Studio"
 />
 
-Checks run against the schema of the source variant from which the proposal was created.
-This enables checks to capture breaking changes based on the source variant's operation history.
-
-<Note>
-
-Proposals don't inherit schema changes made to a source variant after the proposal was created.
-For example, if the source variant schema includes a new type, unless the proposal also adds the type, then the proposal's checks show that type as being deleted.
-
-</Note>
+Checks run proposal changes against the most recent version of the proposal's source variant schema.
+For example, if your proposal removes a field that was already removed in the latest published version of the source variant, the check doesn't consider the removal a change.
+This allows checks to detect breaking changes in the proposal as efficiently as possible.
 
 ## Self-review and commentary
 

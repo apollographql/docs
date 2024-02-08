@@ -4,7 +4,7 @@ subtitle: Understand how GraphOS identifies equivalent operations
 description: Learn how Apollo generates GraphQL operation signatures to group functionally identical operations for accurate performance analysis.
 ---
 
-When you're viewing your graph's [operation metrics](./operations), GraphOS Studio groups operations based on the set of fields they include, _not_ based on operation names. That means that operations with the same name but different sets of fields are displayed separately:
+When you're viewing your graph's [operation metrics](./operations), GraphOS Studio groups operations based on the set of fields they include, not based on operation names. That means that operations with the same name but different sets of fields are displayed separately:
 
 <img
   src="../img/separate-operations.jpg"
@@ -104,7 +104,7 @@ Within each of these, sorting is alphanumeric by field name or fragment name.
 
 ##### Field aliases
 
-All field aliases are _removed_. If an operation includes three instances of the same field with different aliases, then that field is listed in the signature three times with its non-aliased name.
+All field aliases are removed. If an operation includes three instances of the same field with different aliases, then that field is listed in the signature three times with its non-aliased name.
 
 #### Directives and arguments
 

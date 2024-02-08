@@ -31,7 +31,7 @@ Both the Apollo Router and Apollo Server use the same mechanism to enable operat
 
 2. Obtain the **graph ref** for the graph and variant you want to report metrics for. You can find your variant's graph ref at the top of the variant's README page in Studio. It has the format `graph-id@variant-name` (such as `my-graph@staging`).
 
-3. Use the obtained values to set the following environment variables in your environment _before_ starting up your router/server:
+3. Use the obtained values to set the following environment variables in your environment before starting up your router/server:
 
    ```bash showLineNumbers=false
    export APOLLO_KEY=<YOUR_GRAPH_API_KEY>
@@ -170,7 +170,7 @@ How you report these metrics to GraphOS depends on whether you're using the [Apo
 
 ### From the Apollo Router
 
-If you have a [cloud](/graphos/graphs#cloud-supergraphs) or [self-hosted supergraph](/graphos/graphs#self-hosted-supergraphs), you only need to configure your [router](/federation/building-supergraphs/router/) to [send operation metrics to GraphOS](#from-the-apollo-router-or-apollo-server), and field usage will be automatically reported. Subgraphs should _not_ send any metrics to GraphOS directly. Instead, they can include [trace data](./operations#enabling-traces) in their responses to the router. The router then includes that data in its own reports to GraphOS.
+If you have a [cloud](/graphos/graphs#cloud-supergraphs) or [self-hosted supergraph](/graphos/graphs#self-hosted-supergraphs), you only need to configure your [router](/federation/building-supergraphs/router/) to [send operation metrics to GraphOS](#from-the-apollo-router-or-apollo-server), and field usage will be automatically reported. Subgraphs should not send any metrics to GraphOS directly. Instead, they can include [trace data](./operations#enabling-traces) in their responses to the router. The router then includes that data in its own reports to GraphOS.
 
 ### From Apollo Server
 
@@ -204,7 +204,7 @@ Turning off field-level instrumentation for a particular request has the followi
 
 These requests still contribute to most features of Studio, such as schema checks, the Insights page, and the "Request" metrics on the Insights page.
 
-To turn off field-level instrumentation for _all_ requests, pass `() => false` as the `fieldLevelInstrumentation` option:
+To turn off field-level instrumentation for all requests, pass `() => false` as the `fieldLevelInstrumentation` option:
 
 ```ts
 new ApolloServer({
@@ -238,7 +238,7 @@ If you do so, Apollo Server randomly chooses to enable field-level instrumentati
 
 <Caution>
 
-Make sure to pass a number (like `0.01`), _not_ a function that always returns the same number (like `() => 0.01`), which has a [different effect](#custom-sampling).
+Make sure to pass a number (like `0.01`), not a function that always returns the same number (like `() => 0.01`), which has a [different effect](#custom-sampling).
 
 </Caution>
 

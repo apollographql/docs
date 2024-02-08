@@ -73,13 +73,13 @@ Teams that opt for client-only GraphQL approaches are motivated to improve their
 
 ### BFFs
 
-As with client-only approaches, teams that use GraphQL with BFFs enjoy the advantage of improved developer experience, and they _also_ manage to overcome the performance issues incurred by client-only approaches. BFFs accomplish this by providing a unified interface for a client application to send its requests while also handling the heavy lifting of querying multiple backend services on behalf of the client.
+As with client-only approaches, teams that use GraphQL with BFFs enjoy the advantage of improved developer experience, and they also manage to overcome the performance issues incurred by client-only approaches. BFFs accomplish this by providing a unified interface for a client application to send its requests while also handling the heavy lifting of querying multiple backend services on behalf of the client.
 
 However, there's an inherent tradeoff in building and maintaining BFFs. When every client team is empowered to create a BFF to suit its needs, there is an inevitable duplication of effort across those teams. Alternatively, where BFFs are shared between seemingly similar clients in an effort to reduce duplication, then the GraphQL schema contained within can balloon in size and become confusing due to the lack of clear ownership.
 
 ### Monoliths
 
-The challenges that emerge from shared BFFs are intensified with monolithic GraphQL servers that have shared ownership. Portions of a graph might be designed to suit only the needs of a particular client team, while _other_ clients must find workarounds or create overlapping types for their own use. At the same time, standardization becomes an issue because the shape of the graph evolves myopically on a client-by-client or a feature-by-feature basis.
+The challenges that emerge from shared BFFs are intensified with monolithic GraphQL servers that have shared ownership. Portions of a graph might be designed to suit only the needs of a particular client team, while other clients must find workarounds or create overlapping types for their own use. At the same time, standardization becomes an issue because the shape of the graph evolves myopically on a client-by-client or a feature-by-feature basis.
 
 Even in scenarios where a dedicated server team maintains ownership of the graph, challenges quickly arise when more than one graph definition is required for a single product to support the needs of multiple clients. A server team might also find itself burdened with the task of building and maintaining the necessary tooling to evolve the schema over time to meet new product needs without breaking compatibility for any clients that are actively consuming data from the graph.
 
@@ -132,7 +132,7 @@ flowchart TB;
   class clients secondary;
 ```
 
-Federation uses a declarative programming model that enables each subgraph to implement _only_ the part of your graph that it's responsible for. With this approach, your company can represent an enterprise-scale graph as a collection of separately maintained GraphQL services.
+Federation uses a declarative programming model that enables each subgraph to implement only the part of your graph that it's responsible for. With this approach, your company can represent an enterprise-scale graph as a collection of separately maintained GraphQL services.
 
 Many [GraphQL libraries and frameworks support the federation subgraph specification](/federation/building-supergraphs/supported-subgraphs), so you can adopt the supergraph regardless of your tech stack.
 

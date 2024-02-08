@@ -8,7 +8,7 @@ This article describes GraphOS Studio features for all [graph types](./#graph-ty
 
 **To create a cloud supergraph,** see the [GraphOS quickstart](../quickstart/cloud/).
 
-**To create a _non_-cloud graph** (that is, a self-hosted supergraph or a monograph), see [this section](./#creating-graphs).
+**To create a non-cloud graph** (that is, a self-hosted supergraph or a monograph), see [this section](./#creating-graphs).
 
 ## Viewing graph details
 
@@ -30,15 +30,15 @@ Like the typical homepage for a Git repository, this page displays a Markdown-ba
 
 <Note>
 
-Only organization members with the [**Org Admin**, **Graph Admin**, **Contributor**, or **Documenter** role](../org/members/) can edit a variant's README. If a variant is [protected](#protected-variants-enterprise-only), **Contributor**s _cannot_ edit its README.
+Only organization members with the [**Org Admin**, **Graph Admin**, **Contributor**, or **Documenter** role](../org/members/) can edit a variant's README. If a variant is [protected](#protected-variants-enterprise-only), **Contributor**s cannot edit its README.
 
 </Note>
 
-**Each variant has its own README.** If you edit one variant's README, those edits are _not_ applied to other variants. Among other uses, this enables you to provide different information to external consumers in a [public variant](#public-variants).
+**Each variant has its own README.** If you edit one variant's README, those edits are not applied to other variants. Among other uses, this enables you to provide different information to external consumers in a [public variant](#public-variants).
 
 #### Supported Markdown
 
-The README supports all [basic Markdown syntax](https://www.markdownguide.org/cheat-sheet/#basic-syntax) and _most_ [extended syntax](https://www.markdownguide.org/cheat-sheet/#extended-syntax) (including tables, code blocks, and footnotes).
+The README supports all [basic Markdown syntax](https://www.markdownguide.org/cheat-sheet/#basic-syntax) and most [extended syntax](https://www.markdownguide.org/cheat-sheet/#extended-syntax) (including tables, code blocks, and footnotes).
 
 You can define a GraphQL code block with the following syntax:
 
@@ -176,7 +176,7 @@ Valid only for federated supergraphs.
 </td>
 <td>
 
-If your graph uses the `@tag` directive, include results that have a `@tag` with any of the specified names. If viewing a table of objects, also include objects with at least one _field_ that has a specified `@tag`.
+If your graph uses the `@tag` directive, include results that have a `@tag` with any of the specified names. If viewing a table of objects, also include objects with at least one field that has a specified `@tag`.
 
 If your graph doesn't use the `@tag` directive, this filter is not available.
 
@@ -196,7 +196,7 @@ If your graph doesn't use the `@tag` directive, this filter is not available.
 </td>
 <td>
 
-Include results that have any of the specified directives applied. If viewing a table of objects, also include objects with at least one _field_ that has a specified directive.
+Include results that have any of the specified directives applied. If viewing a table of objects, also include objects with at least one field that has a specified directive.
 
 </td>
 <td>
@@ -214,7 +214,7 @@ Include results that have any of the specified directives applied. If viewing a 
 </td>
 <td>
 
-Include results with any of the specified return types. If viewing a table of objects, include objects with at least one _field_ that has a specified return type.
+Include results with any of the specified return types. If viewing a table of objects, include objects with at least one field that has a specified return type.
 
 This filter includes all fields that return a particular type, regardless of each field's nullability or whether it returns a list. For example, if you specify `returnType:Int`, the filter includes fields that return any of `Int`, `Int!`, or `[Int]`.
 
@@ -234,7 +234,7 @@ This filter includes all fields that return a particular type, regardless of eac
 </td>
 <td>
 
-Include results that take a GraphQL argument with any of the specified names. If viewing a table of objects, include objects with at least one _field_ that takes a specified argument.
+Include results that take a GraphQL argument with any of the specified names. If viewing a table of objects, include objects with at least one field that takes a specified argument.
 
 </td>
 <td>
@@ -253,9 +253,9 @@ Include results that take a GraphQL argument with any of the specified names. If
 - If you list multiple possible values in a single filter, those values use "OR" logic.
   - For example, if you filter by `subgraph:products,reviews` the result includes definitions from each subgraph.
 - If you apply multiple types of filters, those filters use "AND" logic.
-  - For example, if you filter by `subgraph:products` and `returnType:Int`, the result includes only definitions that fulfill _both_ criteria.
-- Currently, it isn't possible to use "AND" logic for multiple filters of the _same_ type.
-  - For example, it isn't possible to filter by `subgraph:products` "AND" `subgraph:reviews` to include only definitions that are present in _both_ subgraphs.
+  - For example, if you filter by `subgraph:products` and `returnType:Int`, the result includes only definitions that fulfill both criteria.
+- Currently, it isn't possible to use "AND" logic for multiple filters of the same type.
+  - For example, it isn't possible to filter by `subgraph:products` "AND" `subgraph:reviews` to include only definitions that are present in both subgraphs.
 
 ### Tracking schema changes
 
@@ -279,7 +279,7 @@ You can enable public access for individual variants of your graph. If you do, *
 
 This enables consumers of your graph to learn about your graph's schema and any special usage information (such as authentication details) that you've documented in [the public variant's README](#the-readme-page). They can also run properly authenticated operations against your graph with the Explorer.
 
-People outside your organization can't view any _other_ pages for a public variant (Fields, Operations, etc.), and they can never view _any_ pages for private variants. New variants always start as private.
+People outside your organization can't view any other pages for a public variant (Fields, Operations, etc.), and they can never view any pages for private variants. New variants always start as private.
 
 #### Making a variant public
 
@@ -311,9 +311,9 @@ After you make a variant public, you can click the variant's **PUBLIC** label at
 
 If you have a [GraphOS Enterprise plan](../enterprise/), you can designate particular variants of a graph as **protected variants**. A protected variant limits the capabilities of users with the [**Contributor** role](../org/members/#organization-wide-member-roles) to make certain changes to the variant:
 
-- **Contributor**s _cannot_ push schema updates to a protected variant.
-- **Contributor**s _cannot_ manage Explorer-related settings for a protected variant, such as setting the variant's endpoint URL.
-- Graph API Keys with the **Contributor** role _cannot_ report usage metrics for a protected variant.
+- **Contributor**s cannot push schema updates to a protected variant.
+- **Contributor**s cannot manage Explorer-related settings for a protected variant, such as setting the variant's endpoint URL.
+- Graph API Keys with the **Contributor** role cannot report usage metrics for a protected variant.
 
 **Graph Admin**s and **Org Admin**s can configure whether a variant is protected from the **This Variant** tab of the variant's Settings page.
 
@@ -321,7 +321,7 @@ If you have a [GraphOS Enterprise plan](../enterprise/), you can designate parti
 
 <Tip>
 
-For _external_ graph visibility, see [Public variants](#public-variants).
+For external graph visibility, see [Public variants](#public-variants).
 
 </Tip>
 
@@ -329,7 +329,7 @@ By default, graphs are visible to all members of your organization. If you have 
 
 You can configure visibility and grant your organization's members explicit access to your graph from the Permissions tab of your graph's Settings page.
 
-Note that **Org Admin**s can always see _all_ graphs in your organization.
+Note that **Org Admin**s can always see all graphs in your organization.
 
 ## Dangerous actions
 

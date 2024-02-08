@@ -39,7 +39,7 @@ type User {
 
 ### Dependent `@tag`s
 
-- Whenever you tag the definition of an object or interface type, GraphOS automatically considers that tag to be applied to _all fields_ of that type:
+- Whenever you tag the definition of an object or interface type, GraphOS automatically considers that tag to be applied to all fields of that type:
 
   ```graphql
   type InternalUser @tag(name: "internal") {
@@ -68,7 +68,7 @@ type User {
 
 - If a contract excludes an object that implements an interface or is included in a union:
 
-  - The contract is _not_ required to exclude schema fields that return that interface or union as long as at least one other associated object type remains:
+  - The contract is not required to exclude schema fields that return that interface or union as long as at least one other associated object type remains:
 
     ```graphql {1,7,13,20}
     # Two object types implement this interface.
@@ -99,7 +99,7 @@ type User {
 
 ### Special cases for filtering
 
-- If a contract defines a list of included `@tags`, any object or interface type _without_ an included tag is still included in the contract schema if at least one of its _fields_ is included:
+- If a contract defines a list of included `@tags`, any object or interface type without an included tag is still included in the contract schema if at least one of its fields is included:
 
   ```graphql
   # This type definition is included because one if its fields is included.
@@ -108,7 +108,7 @@ type User {
   }
   ```
 
-- If a contract excludes _every field_ of an object or interface type, the entire type definition is excluded from the contract schema:
+- If a contract excludes every field of an object or interface type, the entire type definition is excluded from the contract schema:
 
   ```graphql
   # This object type is excluded because all its fields are excluded.
@@ -123,7 +123,7 @@ type User {
 
   </Caution>
 
-- If a contract excludes _every object type_ that's part of a union type, the entire union type definition is excluded from the contract schema:
+- If a contract excludes every object type that's part of a union type, the entire union type definition is excluded from the contract schema:
 
   ```graphql
   # This union type is excluded because all its possible types are excluded.
@@ -144,13 +144,13 @@ type User {
 
   </Caution>
 
-- A contract _cannot_ exclude any of the following, even if tagged:
+- A contract cannot exclude any of the following, even if tagged:
 
   - Built-in scalars (`Int`, `Float`, etc.)
   - Built-in directives (`@skip`, `@include`, etc.)
   - Custom directives that are applied to type system locations ([see the list](https://spec.graphql.org/October2021/#TypeSystemDirectiveLocation))
 
-- A contract _can_ exclude object fields that are used in a computed field's [`@requires` directive](/federation/entities-advanced/#contributing-computed-entity-fields) without causing runtime errors.
+- A contract can exclude object fields that are used in a computed field's [`@requires` directive](/federation/entities-advanced/#contributing-computed-entity-fields) without causing runtime errors.
 
 ## Errors
 

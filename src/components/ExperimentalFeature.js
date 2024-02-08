@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import {Box, Center, Flex, Link, Text, chakra} from '@chakra-ui/react';
-import {IoFlaskOutline} from 'react-icons/io5';
+import {FlaskIcon} from './Icons';
 
 import {MarkdownInAdmonitions} from './MarkdownInAdmonitions';
 
@@ -28,7 +28,7 @@ export const ExperimentalFeature = ({
       <Flex as="span">
         <chakra.span pl="10px" pr="10px">
           <Center h="100%">
-            <IoFlaskOutline />
+            <FlaskIcon />
           </Center>
         </chakra.span>
         <Text pl="1">
@@ -37,9 +37,9 @@ export const ExperimentalFeature = ({
           ) : (
             <>
               <b>
-                This feature is currently{' '}
+                This feature is{' '}
                 <Link
-                  color={'primary'}
+                  color={'tertiary'}
                   href="https://www.apollographql.com/docs/resources/product-launch-stages#experimental-features"
                 >
                   experimental
@@ -49,7 +49,7 @@ export const ExperimentalFeature = ({
               Your questions and feedback are highly valued{'—'}don&apos;t
               hesitate to get in touch with your Apollo contact or on the
               official
-              <Link color={'primary'} href={discordLink}>
+              <Link color={'tertiary'} href={discordLink}>
                 {' '}
                 Apollo GraphQL Discord
               </Link>

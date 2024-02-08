@@ -12,10 +12,10 @@ Each organization member has one of the following roles:
 | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------: |
 | **Org Admin**       | Has management access to the entire organization, including its members, graphs, and configuration.                                                                                                                                                                                                                           |                              All                               |
 | **Graph Admin**     | Has management access to the organization's graphs, but not to members or organization-level configuration. Intended for developers who are considered admins to the graph.                                                                                                                                                   |                        Enterprise only                         |
-| **Contributor**     | Can push new schemas to graphs, but cannot configure graph settings or integrations. Intended for backend developers who are authorized to make changes to graphs. _Cannot_ push schema changes to [protected variants](../graphs/studio-features/#protected-variants-enterprise-only).                                       |                        Enterprise only                         |
+| **Contributor**     | Can push new schemas to graphs, but cannot configure graph settings or integrations. Intended for backend developers who are authorized to make changes to graphs. Cannot push schema changes to [protected variants](../graphs/studio-features/#protected-variants-enterprise-only).                                       |                        Enterprise only                         |
 | **Documenter**      | Has all permissions of the Observer role, plus the ability to edit graph READMEs, descriptions, and similar non-operational metadata.                                                                                                                                                                                         |                        Enterprise only                         |
-| **Observer**        | Has view-only access to the organization's graph data, such as schemas and metrics. Can also execute queries in the Explorer. Intended for backend developers who are _not_ authorized to make changes to graphs.                                                                                                             |                        Enterprise only                         |
-| **Consumer**        | <p>Has view-only access to the organization's graph _schemas_, but not metrics. Can also execute queries in the Explorer. Intended for application developers building clients against a graph.</p><p>This role is available to all plan types. For legacy Team plans, **Consumer** members do not count as billed users.</p> |                              All                               |
+| **Observer**        | Has view-only access to the organization's graph data, such as schemas and metrics. Can also execute queries in the Explorer. Intended for backend developers who are not authorized to make changes to graphs.                                                                                                             |                        Enterprise only                         |
+| **Consumer**        | <p>Has view-only access to the organization's graph schemas, but not metrics. Can also execute queries in the Explorer. Intended for application developers building clients against a graph.</p><p>This role is available to all plan types. For legacy Team plans, **Consumer** members do not count as billed users.</p> |                              All                               |
 | **Billing Manager** | <p>Has management access to organization-level configuration and billing. Can also remove members (but not invite them). No access to graphs. [Learn more](#billing-managers)</p><p>This role is available to all paid plan types. For legacy Team plans, **Billing Manager** members do not count as billed users.</p>       |                      All paid plan types                       |
 
 Only members with the **Org Admin** role can assign roles to other members. You can see which role you have in a particular organization from your [user settings page](https://studio.apollographql.com/user-settings), or from the organization's Members tab.
@@ -26,7 +26,7 @@ You can override a member's organization-wide role for individual graphs. For ex
 
 <Note>
 
-A member's graph-specific role must have _more_ permissions than their organization-wide role.
+A member's graph-specific role must have more permissions than their organization-wide role.
 
 </Note>
 
@@ -100,7 +100,7 @@ Learn more about [schema checks](../delivery/schema-checks).
 
 <EnterpriseFeature />
 
-The table below shows _default_ schema proposal settings. You can [configure which roles can create, edit, and approve proposals](../delivery/schema-proposals/configuration#configure-permissions-and-approvals).
+The table below shows default schema proposal settings. You can [configure which roles can create, edit, and approve proposals](../delivery/schema-proposals/configuration#configure-permissions-and-approvals).
 
 | Action                 | Org Admin | Graph Admin | Contributor | Observer / Documenter | Consumer |
 | :--------------------- | :-------: | :---------: | :---------: | :-------------------: | :------: |
@@ -143,7 +143,7 @@ This role is appropriate for use in client development teams' deployment process
 
 Otherwise, a graph API key is equivalent in privileges to a user with the same role for the graph. For example, you can use a **Consumer** key to fetch a graph's schema, and you can use a **Graph Admin** key to manage integrations.
 
-A few operations aren't listed in the table above because they are _only_ supported by graph API keys, not personal API keys for users in the graph's organization. These are primarily operations that are performed by your GraphQL server, such as usage reporting (traces and performance metrics).
+A few operations aren't listed in the table above because they are only supported by graph API keys, not personal API keys for users in the graph's organization. These are primarily operations that are performed by your GraphQL server, such as usage reporting (traces and performance metrics).
 
 <Note>
 

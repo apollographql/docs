@@ -69,6 +69,23 @@ export default function TableOfContents({
     return () => window.removeEventListener('scroll', handleScroll);
   }, [toc]);
 
+  useEffect(() => {
+    function onHashChange() {
+      // uncollapse `details` elements that might be wrapping around the target
+      const target = document.getElementById(window.location.hash.slice(1));
+      let details = target?.closest('details');
+      while (details) {
+        details.setAttribute('open', true);
+        details = details.parentElement?.closest('details');
+      }
+    }
+    if (window.location.hash) {
+      onHashChange();
+    }
+    window.addEventListener('hashchange', onHashChange);
+    return () => window.removeEventListener('hashchange', onHashChange);
+  }, []);
+
   return (
     <List overflow="auto" spacing="3.5">
       {toc.map(({id, value, depth}, index) => {

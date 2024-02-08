@@ -9,7 +9,7 @@ tags: [server, observability]
 
 <EnterpriseFeature>
 
-Self-hosting the Apollo Router is limited to [GraphOS Enterprise plans](/graphos/enterprise/). Other plan types use [managed cloud routing with GraphOS](/graphos/routing/cloud/). Check out the [pricing page](https://www.apollographql.com/pricing/) to learn more.
+Self-hosting the Apollo Router is limited to [GraphOS Enterprise plans](/graphos/enterprise/). Other plan types use [managed cloud routing with GraphOS](/graphos/cloud-routing). Check out the [pricing page](https://www.apollographql.com/pricing/) to learn more.
 
 </EnterpriseFeature>
 
@@ -59,7 +59,7 @@ receivers:
 
 exporters:
   prometheus:
-    endpoint: "0.0.0.0:9464"
+    endpoint: '0.0.0.0:9464'
 
 processors:
   batch:
