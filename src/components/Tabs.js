@@ -13,7 +13,7 @@ export function Tabs({labels, children}) {
         {labels.map(label => (
           <Box key={label}>
             <Button
-              color={currentTab === label ? 'navy' : 'gray.400'}
+              color={currentTab === label ? 'navy.400' : 'gray.400'}
               fontweight={currentTab === label ? 'extrabold' : 'light'}
               bg="transparent"
               onClick={() => setCurrentTab(label)}
@@ -27,7 +27,7 @@ export function Tabs({labels, children}) {
               {label}
             </Button>
             <Divider
-              borderColor={currentTab === label ? 'navy' : 'transparent'}
+              borderColor={currentTab === label ? 'navy.200' : 'transparent'}
               borderWidth={currentTab === label ? '2px' : '0'}
               _dark={{
                 color: 'gray.200',
