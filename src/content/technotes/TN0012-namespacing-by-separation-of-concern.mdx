@@ -108,10 +108,7 @@ mutation DoTwoThings {
 With namespaces, your mutation fields that actually modify data are no longer root-level fields (instead, your namespace objects are). Because of this, the mutation fields are resolved in parallel. In many systems, this doesn't present an issue (for example, you probably want to use another mechanism in your mutation resolvers to ensure transactional consistency, such as a saga orchestrator).
 
 ```graphql
-mutation DoTwoNestedThings(
-  $createInput: CreateReviewInput!
-  $deleteInput: DeleteReviewInput!
-) {
+mutation DoTwoNestedThings($createInput: CreateReviewInput!, $deleteInput: DeleteReviewInput!) {
   reviews {
     create(input: $createInput) {
       success
@@ -127,10 +124,7 @@ mutation DoTwoNestedThings(
 If you want to guarantee serial execution in a particular operation, you can use client-side aliases to create two root fields that are resolved serially:
 
 ```graphql
-mutation DoTwoNestedThingsInSerial(
-  $createInput: CreateReviewInput!
-  $deleteInput: DeleteReviewInput!
-) {
+mutation DoTwoNestedThingsInSerial($createInput: CreateReviewInput!, $deleteInput: DeleteReviewInput!) {
   a: reviews {
     create(input: $createInput) {
       success
@@ -144,3 +138,9 @@ mutation DoTwoNestedThingsInSerial(
   }
 }
 ```
+
+## Caveats
+
+As pointed out by Benjie from the technical steering committee, while the above approach does work in practice, it is [currently unsupported by the spec](https://benjie.dev/graphql/nested-mutations).
+
+However, at this time, there is currently no alternative, but there has been a [proposal for GraphQL Namespaces](https://github.com/graphql/graphql-spec/issues/163) since 2016.
