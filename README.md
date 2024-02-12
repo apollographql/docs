@@ -491,7 +491,7 @@ A Chakra UI `Button` component that behaves as a link. These links follow the sa
   View older version
 </ButtonLink>
 
-<ButtonLink colorScheme="indigo" href="./get-started">
+<ButtonLink colorScheme="navy" href="./get-started">
   Get started
 </ButtonLink>
 ```
@@ -808,7 +808,7 @@ import {Link} from 'gatsby';
 <Button
 -  color={colors.primary}
 -  as={<Link to="./get-started" />}
-+  colorScheme="indigo"
++  colorScheme="navy"
 +  as={Link}
 +  to="./get-started"
 >

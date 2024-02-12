@@ -9,11 +9,11 @@ export function Tabs({labels, children}) {
 
   return (
     <TabContext.Provider value={currentTab}>
-      <Stack direction="row" spacing="0" wrap>
+      <Stack direction="row" spacing="0.5em">
         {labels.map(label => (
           <Box key={label}>
             <Button
-              color={currentTab === label ? '#365E72' : 'gray.500'}
+              color={currentTab === label ? 'navy.300' : 'gray.500'}
               fontweight={currentTab === label ? 'extrabold' : 'light'}
               bg="transparent"
               onClick={() => setCurrentTab(label)}
@@ -27,11 +27,10 @@ export function Tabs({labels, children}) {
               {label}
             </Button>
             <Divider
-              borderColor={currentTab === label ? '#365E72' : 'transparent'}
+              borderColor={currentTab === label ? 'navy.300' : 'transparent'}
               borderWidth={currentTab === label ? '2px' : '0'}
               _dark={{
-                color: 'gray.200',
-                borderColor: 'gray'
+                borderColor: currentTab === label ? 'gray.100' : 'gray.400'
               }}
             />
           </Box>
