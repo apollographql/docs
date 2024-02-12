@@ -141,6 +141,10 @@ mutation DoTwoNestedThingsInSerial($createInput: CreateReviewInput!, $deleteInpu
 
 ## Caveats
 
-As pointed out by Benjie from the technical steering committee, while the above approach does work in practice, it is [currently unsupported by the spec](https://benjie.dev/graphql/nested-mutations).
+As pointed out by [members from the GraphQL Technical Steering Committee]((https://benjie.dev/graphql/nested-mutations)), while the above approach does execute in a GraphQL server, it does not satisfy the GraphQL spec requirement that:
 
-However, at this time, there is currently no alternative, but there has been a [proposal for GraphQL Namespaces](https://github.com/graphql/graphql-spec/issues/163) since 2016.
+> resolution of fields other than top-level mutation fields must always be side effect-free and idempotent.
+
+Instead it is recommended that any GraphQL mutations by specified at the root level so they are executed serially, or that any nested fields are combined so only one action is actually performed.
+
+At this time, there is currently not an official name spacing tool that nested mutations aims to solve, but there has been a [proposal for GraphQL Namespaces](https://github.com/graphql/graphql-spec/issues/163) open for some time where we encourage community members to share their requirements for any spec updates.
