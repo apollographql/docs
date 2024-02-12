@@ -137,6 +137,19 @@ flowchart LR;
 
 After you complete these prerequisites, you begin [executing subscriptions](#example-execution) on your cloud router.
 
+## Default configuration
+
+Subscriptions is enabled automatically for GraphOS Cloud with the following default router configuration:
+
+```
+subscription:
+  enabled: true
+  mode:
+    passthrough:
+      all:
+        path: /ws
+```
+
 ## Example execution
 
 Let's say our supergraph includes the following subgraphs and partial schemas:
