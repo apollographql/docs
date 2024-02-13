@@ -172,7 +172,11 @@ How you report these metrics to GraphOS depends on whether you're using the [Apo
 
 If you have a [cloud](/graphos/graphs#cloud-supergraphs) or [self-hosted supergraph](/graphos/graphs#self-hosted-supergraphs), you only need to configure your [router](/federation/building-supergraphs/router/) to [send operation metrics to GraphOS](#from-the-apollo-router-or-apollo-server), and field usage will be automatically reported. Subgraphs should not send any metrics to GraphOS directly. Instead, they can include [trace data](./operations#enabling-traces) in their responses to the router. The router then includes that data in its own reports to GraphOS.
 
-> Note: Subgraphs need to send data to Router with Federation, which requires your subgraph to support the [Federation tracing implementation](/graphos/metrics/operations#enabling-traces) and that it is enabled for your environment.
+<Note>
+
+Subgraphs need to send data to the router with Federation. That means your subgraphs must support [federated tracing implementation](/graphos/metrics/operations#enabling-traces) and that it is enabled for your environment.
+
+</Note>
 
 ### From Apollo Server
 
