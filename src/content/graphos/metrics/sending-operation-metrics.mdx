@@ -174,7 +174,7 @@ If you have a [cloud](/graphos/graphs#cloud-supergraphs) or [self-hosted supergr
 
 <Note>
 
-Subgraphs need to send data to the router with Federation. That means your subgraphs must support [federated tracing implementation](/graphos/metrics/operations#enabling-traces) and that it is enabled for your environment.
+Subgraphs send field tracing and error data to the router using the [federated tracing implementation](/graphos/metrics/operations#enabling-traces). This means your subgraphs must support federated tracing and that it is enabled for your environment before you start seeing error details in GraphOS for a supergraph.
 
 </Note>
 
