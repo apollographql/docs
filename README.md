@@ -675,6 +675,33 @@ The above code block renders like so:
 > [!TIP]
 > Be sure to include two newlines between the admonition components and content and as shown in the examples above. MDX parsing for MDX v1 requires this extra separation between JSX and Markdown.
 
+##### Tabs
+
+Tabs enable context-specific content to be user-selectable and dynamically updatable within a page.
+
+You can use tabs to present multiple options within a single step or section. A reader selects the option they're interested in, and the content is presented within the flow of the page. With prudent use of tabs, a reader can avoid scrolling over irrelevant content or navigating external links. For example, a guide that has unique prerequisites for different operating systems can have a single prerequisite section with a tab for each OS.
+
+Using the `<Tabs>` component requires:
+
+- Setting the `labels` array argument with the labels of all contained tabs.
+- Nesting a `<Tab>` component for each contained tab, with its `label` argument set to match one of the `labels` of the parent `<Tabs>`.
+
+For example:
+
+```mdx
+<Tabs labels={['one','two']}>
+
+<Tab label="one">
+Body of tab labeled one.
+</Tab>
+
+<Tab label="two">
+Body of tab labeled two.
+</Tab>
+
+</Tabs>
+```
+
 ## Content linting
 
 The docs repository automatically lints pull requests via a [GitHub action](.github/workflows/content-lint.yml) that uses [Vale](https://vale.sh/), an open-source content linter. Vale checks `.md` and `.mdx` files against [style rules](https://vale.sh/docs/topics/styles/) imported from Google, Microsoft, and other developer documentation style guides. It also includes custom Apollo style rules. All styles are in the [`styles` directory](styles). Most rules are self-explanatory or include links to resources to help understand what to fix.
