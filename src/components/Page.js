@@ -68,6 +68,7 @@ import {
 import {PreviewFeature} from './PreviewFeature';
 import {TOTAL_HEADER_HEIGHT} from './Header';
 import {Tip} from './Tip';
+import { UnavailableForMonographs } from './UnavailableForMonographs';
 import {WistiaEmbed} from './WistiaEmbed';
 import {YouTube} from './YouTube';
 import {join} from 'path';
@@ -208,6 +209,7 @@ const mdxComponents = {
   EnterpriseFeature,
   ExperimentalFeature,
   PreviewFeature,
+  UnavailableForMonographs,
   ApolloLogo,
   ApolloMark,
   TrackableButton,

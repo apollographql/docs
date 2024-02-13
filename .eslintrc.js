@@ -1,3 +1,5 @@
+const { UnavailableForMonographs } = require("./src/components/UnavailableForMonographs");
+
 module.exports = {
   extends: ['@trevorblades/eslint-config/react', 'plugin:mdx/recommended'],
   overrides: [
@@ -45,7 +47,8 @@ module.exports = {
         SchemaProposalPublicationMermaid: 'readonly',
         SetApolloVCSCommit: 'readonly',
         StudioPages: 'readonly',
-        TopLevelAwait: 'readonly'
+        TopLevelAwait: 'readonly',
+        UnavailableForMonographs: 'readonly'
       },
       rules: {
         'react/no-unescaped-entities': 'off'
