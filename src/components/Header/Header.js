@@ -33,10 +33,10 @@ export const TOTAL_HEADER_HEIGHT =
   HEADER_HEIGHT + HEADER_BORDER_WIDTH;
 
 function Eyebrow({children}) {
-  const bgHover = useColorModeValue('indigo.100', 'indigo.500');
+  const bgHover = useColorModeValue('navy.100', 'navy.500');
   return (
     <Center
-      bg="indigo.50"
+      bg="navy.50"
       _dark={{
         bg: 'black.200'
       }}
@@ -115,7 +115,7 @@ export function Header({children, algoliaFilters}) {
               borderRadius="sm"
               _dark={{
                 bg: 'bg',
-                borderColor: 'indigo.400',
+                borderColor: 'navy.400',
                 color: 'inherit'
               }}
             >

@@ -39,9 +39,9 @@ function LabelsFilter() {
             <Tag
               key={item.label}
               size="md"
-              colorScheme="indigo"
+              colorScheme="navy"
               _dark={{
-                color: 'indigo.100'
+                color: 'navy.100'
               }}
               variant="outline"
               borderRadius="md"
