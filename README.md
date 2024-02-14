@@ -44,6 +44,7 @@ The central piece of this repo, the docs infrastructure, is a [Gatsby](https://w
       - [Release stage components](#release-stage-components)
       - [Plan components](#plan-components)
       - [Admonitions](#admonitions)
+      - [Tabs](#tabs)
 - [History](#history)
   - [Benefits](#benefits)
   - [Drawbacks](#drawbacks)
