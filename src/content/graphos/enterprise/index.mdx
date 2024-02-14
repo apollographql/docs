@@ -62,19 +62,11 @@ This architecture helps you satisfy sophisticated requirements around data compl
 
 ### Apollo Router features
 
-[The Apollo Router](/router/) supports a collection of features specific to GraphOS Enterprise organizations. These include:
-
-- **Real-time updates** via [GraphQL subscriptions](/router/executing-operations/subscription-support/)
-- **Authentication of inbound requests** via [JSON Web Token (JWT)](/router/configuration/authn-jwt/)
-- [**Authorization** of specific fields and types](/router/configuration/authorization) through the [`@requiresScopes`](/router/configuration/authorization#requiresscopes), [`@authenticated`](/router/configuration/authorization#authenticated), and [`@policy`](/router/configuration/authorization#policy) directives
-- Incremental migration between subgraphs through [the progressive `@override` directive](/federation/entities-advanced/#incremental-migration-with-progressive-override).
-- Redis-backed [**distributed caching** of query plans and persisted queries](/router/configuration/distributed-caching/)
-- **Custom request handling** in any language via [external coprocessing](/router/customizations/coprocessor/)
-- **Mitigation of potentially malicious requests** via [operation limits](/router/configuration/operation-limits) and [safelisting](../operations/persisted-queries/)
+<GraphOSRouterFeatures />
 
 <Tip>
 
-[Learn more about Enterprise features in the Apollo Router.](/router/enterprise-features/)
+[Learn more about GraphOSRouterFeatures features in the Apollo Router.](/router/enterprise-features/)
 
 </Tip>
 

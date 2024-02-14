@@ -29,6 +29,7 @@ module.exports = {
         Tip: 'readonly',
         ExperimentalFeature: 'readonly',
         GraphOSEnterpriseRequired: 'readonly',
+        GraphOSRouterFeatures: 'readonly',
         InconsistentCompositionRules: 'readonly',
         ObtainGraphApiKey: 'readonly',
         ObtainPersonalApiKey: 'readonly',
