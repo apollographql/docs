@@ -33,7 +33,7 @@ export default function NotFound() {
         <Button
           as={GatsbyLink}
           to="/"
-          colorScheme="indigo"
+          colorScheme="navy"
           leftIcon={<ChevronLeftIcon />}
         >
           Back to home

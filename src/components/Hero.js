@@ -6,9 +6,9 @@ export default function HomePage() {
     <Box
       py="16"
       px="10"
-      bg="indigo.200"
+      bg="navy.200"
       _dark={{
-        bg: 'indigo.500'
+        bg: 'navy.500'
       }}
     >
       <Heading mb="2" size="3xl">

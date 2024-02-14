@@ -21,7 +21,7 @@
     "@algolia/autocomplete-core": "^1.5.2",
     "@algolia/autocomplete-plugin-algolia-insights": "^1.5.2",
     "@algolia/autocomplete-preset-algolia": "^1.5.2",
-    "@apollo/brand": "^0.2.1",
+    "@apollo/brand": "^0.5.0",
     "@apollo/chakra-helpers": "^2.0.0",
     "@apollo/client": "^3.5.10",
     "@apollo/icons": "^0.0.7",

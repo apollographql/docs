@@ -8,7 +8,7 @@ export default function StudioButton() {
   return (
     <Button
       flexShrink={0}
-      colorScheme="indigo"
+      colorScheme="navy"
       _dark={{
         color: 'silver.300'
       }}
