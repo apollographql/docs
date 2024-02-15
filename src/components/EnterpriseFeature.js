@@ -38,7 +38,7 @@ export const EnterpriseFeature = ({linkWithAnchor, children}) => {
               </RelativeLink>
               .{' '}
             </strong>
-            You can test it out by signing up for a free{' '}
+            <br/> You can test it out by signing up for a free{' '}
             <RelativeLink
               color={'tertiary'}
               href="https://studio.apollographql.com/signup?type=enterprise-trial&referrer=docs-content"
