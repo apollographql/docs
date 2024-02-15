@@ -145,6 +145,6 @@ As pointed out by [members from the GraphQL Technical Steering Committee](https:
 
 > resolution of fields other than top-level mutation fields must always be side effect-free and idempotent.
 
-Instead it is recommended that any GraphQL mutations by specified at the root level so they are executed serially, or that any nested fields are combined so only one action is actually performed.
+Instead it is recommended that any GraphQL mutations by defined at the root level so they are executed serially and in accordance with the expectations of the specification.
 
 At this time the only solution the GraphQL specification provides for grouping related mutations is field naming conventions and ordering these fields carefully - there's currently no spec-compliant solution to having an overwhelming number of fields on the root mutation type. However, there are some interesting proposals to address this issue that we encourage community members to review and provide feedback on, in particular the [proposal for GraphQL Namespaces](https://github.com/graphql/graphql-spec/issues/163) and the [proposal for "serial fields"](https://github.com/graphql/graphql-spec/issues/252).
