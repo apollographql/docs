@@ -10,6 +10,8 @@ module.exports = {
         ExpansionPanel: 'readonly',
         MultiCodeBlock: 'readonly',
         YouTube: 'readonly',
+        Tabs: 'readonly',
+        Tab: 'readonly',
         EmbeddableExplorer: 'readonly',
         MinVersion: 'readonly',
         // shared content
