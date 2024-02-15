@@ -12,6 +12,7 @@ exceptions:
   - ASP
   - AWS
   - CLI
+  - CORS
   - CPU
   - CSS
   - CSV

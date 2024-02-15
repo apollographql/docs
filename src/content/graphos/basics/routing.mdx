@@ -63,12 +63,6 @@ Apollo also offers the [`@apollo/gateway`](/federation/v1/gateway/) library, but
 
 </Note>
 
-### GraphOS Router features
-
-Since the Apollo Router is [source-available](https://www.apollographql.com/blog/evaluating-apollo-router-understanding-free-and-open-vs-commercial-features), you can use the router's codebase without connecting it to GraphOS. If you self-host the router, you can [connect it to GraphOS](./quickstart/self-hosted#6-connect-the-router-to-graphos) for additional functionality. Cloud routers are automatically connected to GraphOS.
-
-A router connected to GraphOS, regardless of whether it's cloud- or self-hosted is called a **GraphOS Router**, and has access to [specific GraphOS features](../enterprise#graphos-router-features) depending on the connected GraphOS organization's plan.
-
 ### Router comparison
 
 Apollo offers the following router options, in increasing order of configurability:
@@ -84,7 +78,7 @@ Apollo offers the following router options, in increasing order of configurabili
   </thead>
   <tbody>
     <tr>
-      <th>Cloud shared router</th>
+      <th>Shared cloud router</th>
       <td>Apollo provisions and manages routers on shared infrastructure.</td>
       <td>
         Basic configurability, including HTTP header rules, CORS settings, and
@@ -95,7 +89,7 @@ Apollo offers the following router options, in increasing order of configurabili
       </td>
     </tr>
     <tr>
-      <th>Cloud Dedicated router</th>
+      <th>Dedicated cloud router</th>
       <td>
         Apollo provisions and manages routers on dedicated infrastructure that
         you control and scale.
@@ -125,15 +119,11 @@ Apollo offers the following router options, in increasing order of configurabili
   </tbody>
 </table>
 
-Some organizations might need to use Cloud Dedicated or self-hosted routing instead of shared cloud routing for these reasons:
+### GraphOS Router features
 
-- **Compliance.** All of your supergraph's components must be hosted in a particular region to adhere to compliance requirements.
-- **Performance.** You need to minimize latency between your router and subgraphs by enabling them to communicate without traversing the public internet, for example by hosting all components in a VPC.
-- **Customization.** You need to configure or customize your router's behavior beyond what's available on shared infrastructure.
+Since the Apollo Router is [source-available](https://www.apollographql.com/blog/evaluating-apollo-router-understanding-free-and-open-vs-commercial-features), you can use its codebase without connecting it to GraphOS. GraphOS organizations with the Enterprise plan can [connect a self-hosted router to GraphOS](./quickstart/self-hosted#6-connect-the-router-to-graphos) for an expanded feature set. All cloud routers are automatically connected to GraphOS.
 
-With the exception of Apollo-managed routing, self-hosted supergraphs benefit from all of the same GraphOS features as cloud supergraphs: metrics reporting, schema checks, the Explorer, etc.
-
-If you are interested in either Cloud Dedicated or self-hosted routing, don't hesitate to <TrackableLink href="https://www.apollographql.com/contact-sales?referrer=docs" eventName="content_contact_sales">get in touch</TrackableLink>.
+A router connected to GraphOS, whether cloud- or self-hosted, is called a **GraphOS Router**, and has access to specific GraphOS features depending on the connected GraphOS organization's plan. Refer to the [pricing page](https://www.apollographql.com/pricing/) to compare GraphOS feature support across plan types.
 
 ## Setup and configuration
 
