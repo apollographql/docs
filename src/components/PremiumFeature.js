@@ -3,7 +3,7 @@ import React from 'react';
 import {Box, Center, Flex, Link, Text, chakra} from '@chakra-ui/react';
 import {EnterpriseIcon} from './Icons';
 
-export const EnterpriseFeature = ({children}) => {
+export const PremiumFeature = ({children}) => {
   return (
     <Box
       pl="2"
@@ -30,19 +30,13 @@ export const EnterpriseFeature = ({children}) => {
           <Text pl="1">{children}</Text>
         ) : (
           <Text pl="1">
-            <strong>
-              This feature is only available with a{' '}
-              <Link color={'tertiary'} href="https://www.apollographql.com/pricing/">
-                GraphOS Enterprise plan
-              </Link>
-              .{' '}
-            </strong>
-            You can test it out by signing up for a free{' '}
+              <strong>This feature is only available with a GraphOS Dedicated or Enterprise plan.</strong>
+              <br/>To compare GraphOS feature support across all plan types, see the{' '}
             <Link
               color={'tertiary'}
-              href="https://studio.apollographql.com/signup?type=enterprise-trial&referrer=docs-content"
+              href="https://www.apollographql.com/pricing/"
             >
-              Enterprise trial
+              pricing page
             </Link>
             .
           </Text>
@@ -52,6 +46,6 @@ export const EnterpriseFeature = ({children}) => {
   );
 };
 
-EnterpriseFeature.propTypes = {
+PremiumFeature.propTypes = {
   children: PropTypes.node
 };

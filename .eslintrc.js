@@ -24,6 +24,7 @@ module.exports = {
         DirectiveCompositionRules: 'readonly',
         Disclaimer: 'readonly',
         EnterpriseFeature: 'readonly',
+        PremiumFeature: 'readonly',
         Caution: 'readonly',
         Note: 'readonly',
         Tip: 'readonly',
