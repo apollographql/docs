@@ -100,9 +100,19 @@ Dedicated trials are available to help you run a load test for free. <TrackableL
 
 ## Manage capacity
 
-Cloud Dedicated supports mission-critical production workloads, and you can scale performance to meet the needs of your GraphQL APIs. Dedicated supports up to 40 GCUs per GraphOS variant.
+Cloud Dedicated supports mission-critical production workloads, and you can scale performance to meet the needs of your GraphQL APIs. Dedicated supports up to 10 GCUs per GraphOS variant.
 
-Dedicated starts with 1 GCU per variant. You can add GCUs from the **Cloud Router** page in Studio. Click **Manage Capacity** to the right of **Router Capacity**.
+Dedicated starts with 1 GCU per variant. You can modify the number GCUs from either:
+* [Studio](#edit-gcus-in-studio)
+* [Platform API](#edit-gcus-via-apis)
+
+<Note>
+Modifying the number of GCUs takes about 1 minute to provision.
+</Note>
+
+### Edit GCUs in Studio
+
+You can add GCUs from the **Cloud Router** page in Studio. Click **Manage Capacity** to the right of **Router Capacity**.
 
 <img
   className="screenshot"
@@ -117,3 +127,34 @@ Then, select the number of GCUs required and click **Save changes**.
   alt="GraphOS Studio edit GCUs"
   src="../../img/cloud-dedicated/gcus-scale.png"
 />
+
+### Edit GCUs via APIs
+
+You can modify the number of GCUs per a Dedicated variant with the following mutation from the [GraphOS Platform API](/graphos/platform-api/).
+
+```
+mutation Graph($graphId: ID!, $name: String!, $gcus: Int!) {
+  graph(id: $graphId) {
+    variant(name: $name) {
+      router {
+        setGcus(gcus: $gcus) {
+          ... on RouterGcusSuccess {
+            order {
+              id
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+You'll need to set the following variables:
+```
+{
+  "graphId": null,
+  "name": null,
+  "gcus": null
+}
+```
