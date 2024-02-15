@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {Box, Center, Flex, Link, Text, chakra} from '@chakra-ui/react';
+import {Box, Center, Flex, Text, chakra} from '@chakra-ui/react';
+import RelativeLink from './RelativeLink';
 import {EnterpriseIcon} from './Icons';
 
 export const PremiumFeature = ({children}) => {
@@ -32,12 +33,12 @@ export const PremiumFeature = ({children}) => {
           <Text pl="1">
               <strong>This feature is only available with a GraphOS Dedicated or Enterprise plan.</strong>
               <br/>To compare GraphOS feature support across all plan types, see the{' '}
-            <Link
+            <RelativeLink
               color={'tertiary'}
               href="https://www.apollographql.com/pricing/"
             >
               pricing page
-            </Link>
+            </RelativeLink>
             .
           </Text>
         )}
