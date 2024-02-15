@@ -626,7 +626,11 @@ Custom text for plan components can be provided by nesting Markdown within the c
 
 By default, without any children, `<EnterpriseFeature />` renders this text:
 
-> **This feature is only available with a [**GraphOS Enterprise plan\*\*](http://apollographql.com/graphos/enterprise/). You can test it out by signing up for a free [Enterprise trial](https://studio.apollographql.com/signup?type=enterprise-trial&referrer=docs-content).
+> **This feature is only available with a [**GraphOS Enterprise plan\*\*](http://apollographql.com/pricing/). You can test it out by signing up for a free [Enterprise trial](https://studio.apollographql.com/signup?type=enterprise-trial&referrer=docs-content).
+
+By default, the link to the pricing page is `http://apollographql.com/pricing/`, if possible, direct users to the most appropriate part of the pricing page using the `linkWithAnchor` property:
+
+`<EnterpriseFeature linkWithAnchor="https://www.apollographql.com/pricing#graphos-router" />`
 
 If you include custom text, it completely replaces this text. Please make sure to include links to the pricing page and Enterprise trial accordingly.
 
@@ -641,6 +645,12 @@ This is some custom markdown text that still includes a link to the [pricing pag
 By default, without any children, `<PremiumFeature />` renders this text:
 
 > **This feature is only available with a GraphOS Dedicated or Enterprise plan.** To compare GraphOS feature support across all plan types, see the [pricing page](http://apollographql.com/pricing/).
+
+By default, the link to the pricing page is `http://apollographql.com/pricing/`, if possible, direct users to the most appropriate part of the pricing page using the `linkWithAnchor` property:
+
+`<PremiumFeature linkWithAnchor="https://www.apollographql.com/pricing#graphos-router" />`
+
+If you include custom text, it completely replaces this text. Please make sure to include links to the pricing page and Enterprise trial accordingly.
 
 Like `<EnterpriseFeature>`, you can provide custom text by nesting Markdown.
 

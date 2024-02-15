@@ -3,7 +3,7 @@ import React from 'react';
 import {Box, Center, Flex, Link, Text, chakra} from '@chakra-ui/react';
 import {EnterpriseIcon} from './Icons';
 
-export const EnterpriseFeature = ({children}) => {
+export const EnterpriseFeature = ({linkWithAnchor, children}) => {
   return (
     <Box
       pl="2"
@@ -32,7 +32,7 @@ export const EnterpriseFeature = ({children}) => {
           <Text pl="1">
             <strong>
               This feature is only available with a{' '}
-              <Link color={'tertiary'} href="https://www.apollographql.com/pricing/">
+              <Link color={'tertiary'} href={linkWithAnchor ? linkWithAnchor : "https://www.apollographql.com/pricing/"}>
                 GraphOS Enterprise plan
               </Link>
               .{' '}
@@ -53,5 +53,6 @@ export const EnterpriseFeature = ({children}) => {
 };
 
 EnterpriseFeature.propTypes = {
-  children: PropTypes.node
+  children: PropTypes.node,
+  linkWithAnchor: PropTypes.string
 };
