@@ -19,24 +19,9 @@ flowchart LR;
 
 The router intelligently executes each incoming client operation across the appropriate combination of subgraphs. It then merges subgraph responses into a single response for the client. You can configure your router's error handling, CORS settings, other security features, and more. Your configuration options depend on your router type.
 
-## Router types
+## GraphOS router types
 
-With GraphOS, you can host your own Apollo Router, a configurable, high-performance routing runtime packaged as a standalone binary:
-
-```mermaid
-flowchart LR;
-  clients(Clients);
-  subgraph "Your infrastructure";
-  router(["Router"]);
-  serviceB[Subgraph A];
-  serviceC[Subgraph B];
-  router --- serviceB & serviceC;
-  end;
-  clients -.- router;
-  class clients secondary;
-```
-
-Or you can choose for Apollo to provision and manage a **cloud router** for you:
+With GraphOS, you can you can choose for Apollo to provision and manage a cloud-hosted router for you:
 
 ```mermaid
 flowchart LR;
@@ -55,9 +40,22 @@ flowchart LR;
   class clients secondary;
 ```
 
-Cloud routers use the same [Apollo Router binary](https://github.com/apollographql/router) that you can self-host.
+Or you can choose to self-host your router:
 
-If you use a cloud router, you can choose to run it on shared or dedicated infrastructure. Running it on dedicated infrastructure offers more configuration options. Continue reading for a more detailed comparison of your router options.
+```mermaid
+flowchart LR;
+  clients(Clients);
+  subgraph "Your infrastructure";
+  router(["Router"]);
+  serviceB[Subgraph A];
+  serviceC[Subgraph B];
+  router --- serviceB & serviceC;
+  end;
+  clients -.- router;
+  class clients secondary;
+```
+
+Cloud and self-hosted routers are both powered by the Apollo Router—a high-performance routing runtime packaged as a [standalone binary](https://github.com/apollographql/router).
 
 <Note>
 
@@ -80,7 +78,7 @@ Apollo offers the following router options, in increasing order of configurabili
   </thead>
   <tbody>
     <tr>
-      <th>Cloud shared router</th>
+      <th>Shared cloud router</th>
       <td>Apollo provisions and manages routers on shared infrastructure.</td>
       <td>
         Basic configurability, including HTTP header rules, CORS settings, and
@@ -91,7 +89,7 @@ Apollo offers the following router options, in increasing order of configurabili
       </td>
     </tr>
     <tr>
-      <th>Cloud Dedicated router</th>
+      <th>Dedicated cloud router</th>
       <td>
         Apollo provisions and manages routers on dedicated infrastructure that
         you control and scale.
@@ -114,22 +112,18 @@ Apollo offers the following router options, in increasing order of configurabili
       </td>
       <td>
         Apollo Router is available as a free and source-available runtime.
-        Connecting your self-hosted Router to GraphOS requires an{' '}
+        Connecting your self-hosted router to GraphOS requires an{' '}
         <a href="https://apollographql.com/pricing">Enterprise</a> plan.
       </td>
     </tr>
   </tbody>
 </table>
 
-Some organizations might need to use Cloud Dedicated or self-hosted routing instead of shared cloud routing for these reasons:
+### GraphOS router features
 
-- **Compliance.** All of your supergraph's components must be hosted in a particular region to adhere to compliance requirements.
-- **Performance.** You need to minimize latency between your router and subgraphs by enabling them to communicate without traversing the public internet, for example by hosting all components in a VPC.
-- **Customization.** You need to configure or customize your router's behavior beyond what's available on shared infrastructure.
+Although all GraphOS routers (both cloud- and self-hosted) are powered by the source-available Apollo Router binary, they offer an expanded feature set that isn't available when running the Apollo Router without connecting it to GraphOS.
 
-With the exception of Apollo-managed routing, self-hosted supergraphs benefit from all of the same GraphOS features as cloud supergraphs: metrics reporting, schema checks, the Explorer, etc.
-
-If you are interested in either Cloud Dedicated or self-hosted routing, don't hesitate to <TrackableLink href="https://www.apollographql.com/contact-sales?referrer=docs" eventName="content_contact_sales">get in touch</TrackableLink>.
+Cloud-hosted routers automatically have access to additional GraphOS router features, while self-hosted routers must be authenticated with a GraphOS Enterprise license to gain access to these features. Refer to the [pricing page](https://www.apollographql.com/pricing#graphos-router) to compare GraphOS router features across plan types.
 
 ## Setup and configuration
 
