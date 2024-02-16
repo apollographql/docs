@@ -23,6 +23,7 @@
         "Overview": "https://www.apollographql.com/docs/router/enterprise-features",
         "GraphQL subscriptions": "https://www.apollographql.com/docs/router/executing-operations/subscription-support",
         "Distributed caching": "https://www.apollographql.com/docs/router/configuration/distributed-caching",
+        "Entity caching": "https://www.apollographql.com/docs/router/configuration/entity-caching",
         "JWT Authentication": "https://www.apollographql.com/docs/router/configuration/authn-jwt",
         "Authorization": "https://www.apollographql.com/docs/router/configuration/authorization",
         "Incremental subgraph migration": "https://www.apollographql.com/docs/federation/entities-advanced/#incremental-migration-with-progressive-override",
