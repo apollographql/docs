@@ -7,6 +7,7 @@ match: $sentence
 indicators:
   - ":"
 exceptions:
+  - About Apollo's reference
   - API
   - Apollo Client DevTools
   - Apollo Client Web
@@ -25,8 +26,10 @@ exceptions:
   - Cloud Dedicated
   - "Configur(e|ation|ing)"
   - Connect APIs
+  - Contribute to Apollo
   - CORS
   - Cosmos
+  - Create an Apollo account
   - Datadog Metrics Explorer
   - Docker
   - Emmet
@@ -40,6 +43,7 @@ exceptions:
   - GDPR
   - GitHub
   - GraphOS
+  - Premium GraphOS Router features
   - GraphOS Studio
   - GraphQL Summit
   - Go live
@@ -54,6 +58,7 @@ exceptions:
   - Markdown
   - Marketplace
   - MongoDB
+  - Notify Apollo
   - OpenTelemetry Collector
   - PingOne
   - PRs?
@@ -66,6 +71,7 @@ exceptions:
   - Sandbox
   - SDL
   - SDUI
+  - Send SAML metadata
   - Studio
   - TypeScript
   - UI

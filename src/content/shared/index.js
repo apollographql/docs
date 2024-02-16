@@ -7,6 +7,7 @@ export {default as CreateSelfHostedSupergraph} from './create-self-hosted-superg
 export {default as DedicatedPreview} from './dedicated-preview.mdx';
 export {default as DirectiveCompositionRules} from './directive-composition-rules.mdx';
 export {default as Disclaimer} from './disclaimer.mdx';
+export {default as GraphOSRouterFeatures} from './graphos-router-features.mdx'
 export {default as GraphOSEnterpriseRequired} from './graphos-enteprise-required.mdx';
 export {default as InconsistentCompositionRules} from './inconsistent-composition-rules.mdx';
 export {default as ObtainGraphApiKey} from './obtain-graph-api-key.mdx';

@@ -50,6 +50,7 @@ import {
   MultiCodeBlockContext
 } from '@apollo/chakra-helpers';
 import {EnterpriseFeature} from './EnterpriseFeature';
+import { PremiumFeature } from './PremiumFeature';
 import {ExperimentalFeature} from './ExperimentalFeature';
 import {Link as GatsbyLink} from 'gatsby';
 import {Global} from '@emotion/react';
@@ -211,6 +212,7 @@ const mdxComponents = {
   MinVersionTag,
   EnterpriseFeature,
   ExperimentalFeature,
+  PremiumFeature,
   PreviewFeature,
   ApolloLogo,
   ApolloMark,
