@@ -59,7 +59,6 @@ function useLinkProps(href) {
   const isExternal = isUrl(href);
   const isHash = href.startsWith('#');
   const isFile = /\.[a-z]+$/.test(href);
-  console.log(href, isExternal)
   if (isExternal || isHash || isFile) {
     return {
       href,

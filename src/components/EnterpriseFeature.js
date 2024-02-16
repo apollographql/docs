@@ -33,7 +33,9 @@ export const EnterpriseFeature = ({linkWithAnchor, children}) => {
           <Text pl="1">
             <strong>
               This feature is only available with a{' '}
-              <RelativeLink color={'tertiary'} href={linkWithAnchor ? linkWithAnchor : "https://www.apollographql.com/pricing/"}>
+              <RelativeLink
+                color={'tertiary'}
+                href={linkWithAnchor ? linkWithAnchor : "https://www.apollographql.com/pricing/"}>
                 GraphOS Enterprise plan
               </RelativeLink>
               .{' '}

@@ -4,7 +4,7 @@ import {Box, Center, Flex, Text, chakra} from '@chakra-ui/react';
 import RelativeLink from './RelativeLink';
 import {EnterpriseIcon} from './Icons';
 
-export const PremiumFeature = ({children}) => {
+export const PremiumFeature = ({linkWithAnchor, children}) => {
   return (
     <Box
       pl="2"
@@ -35,7 +35,7 @@ export const PremiumFeature = ({children}) => {
               <br/>To compare GraphOS feature support across all plan types, see the{' '}
             <RelativeLink
               color={'tertiary'}
-              href="https://www.apollographql.com/pricing/"
+              href={linkWithAnchor ? linkWithAnchor : "https://www.apollographql.com/pricing/"}
             >
               pricing page
             </RelativeLink>
@@ -48,5 +48,6 @@ export const PremiumFeature = ({children}) => {
 };
 
 PremiumFeature.propTypes = {
-  children: PropTypes.node
+  children: PropTypes.node,
+  linkWithAnchor: PropTypes.string
 };
