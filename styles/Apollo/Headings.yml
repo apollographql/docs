@@ -23,6 +23,7 @@ exceptions:
   - CI(/CD)?
   - CLI
   - Cloud Dedicated
+  - CNAME
   - "Configur(e|ation|ing)"
   - Connect APIs
   - CORS
