@@ -1,7 +1,7 @@
 ---
 title: Cloud routing for supergraphs
 subtitle: Learn about Apollo-managed cloud routers
-description: Learn more about Apollo-managed cloud routers that route requests to your GraphQL APIs.
+description: Learn about Apollo's managed cloud routers designed to efficiently route requests to your GraphQL APIs, ensuring optimal performance and scalability.
 ---
 
 When you create a cloud supergraph with GraphOS Studio, GraphOS automatically provisions and manages a **router** that acts as an entry point to your GraphQL APIs. In this architecture, individual GraphQL APIs are called **subgraphs**. Clients send operations to your router's public endpoint, instead of sending them directly to your subgraphs.
@@ -39,7 +39,7 @@ GraphOS only hosts the runtime for your supergraph's cloud router. GraphQL serve
 <Note>
 
 Cloud supergraphs are only available to organizations with Serverless and Dedicated plans.
-They aren't available with an Enterprise plan or a legacy Free or Team plan. [See plan details.](https://www.apollographql.com/pricing/)
+They aren't available with an Enterprise plan or a legacy Free or Team plan.
 
 </Note>
 
@@ -66,7 +66,7 @@ Once initialized, you can [configure  your cloud router](./configuration).
 
 Cloud routing for Serverless plans is only available in Chicago, USA. Apollo's infrastructure has interconnects with major public cloud providers, so latency is minimal. For example, latency between Chicago and AWS in Virginia is approximately 10 ms.
 
-Cloud routing on the Dedicated plan has a wider [variety of options](./dedicated#runs-on-aws). <TrackableLink href="https://www.apollographql.com/contact-sales?type=dedicated&referrer=docs" eventName="content_contact_cloud">Get in touch</TrackableLink> to learn more. Region selection for cloud routers is only available on the Dedicated plan.
+Cloud routing on the Dedicated plan has a wider [variety of options](./dedicated#runs-on-aws). Region selection for cloud routers is only available on the Dedicated plan. <TrackableLink href="https://www.apollographql.com/contact-sales?type=dedicated&referrer=docs" eventName="content_contact_cloud">Contact Sales</TrackableLink> to learn more. 
 
 ## Cloud launches
 
@@ -86,7 +86,7 @@ Router releases go through rigorous testing before deployment on GraphOS Cloud. 
 
 <Note>
 
-Opting out of router updates to cloud routers is currently not supported. Advanced version management will become available in [Cloud Dedicated](./dedicated) in 2024.
+Opting out of router updates to cloud routers isn't currently supported. Advanced version management will be available in [Cloud Dedicated](./dedicated) in 2024.
 
 </Note>
 
@@ -96,7 +96,6 @@ Opting out of router updates to cloud routers is currently not supported. Advanc
 
 Only cloud routers on the Serverless plan are automatically deleted.
 This doesn't apply cloud routers on the Dedicated plan.
-[See details about plans.](https://www.apollographql.com/pricing/)
 
 </Note>
 
@@ -111,7 +110,7 @@ You may receive out of memory errors when using cloud routers on the [Serverless
 
 Complex schemas may exceed available machine memory for Serverless cloud routers. For example, Serverless cloud routers don't support schemas with over 1,000 input types. Additionally, complex queries that return too much data or query too many subgraphs simultaneously may fail.
 
-You can upgrade to [Cloud Dedicated](./dedicated) for control over scaling and performance. <TrackableLink href="https://www.apollographql.com/contact-sales?type=dedicated&referrer=docs" eventName="content_contact_cloud">Get in touch</TrackableLink> for a free trial.
+You can upgrade to [Cloud Dedicated](./dedicated) for control over scaling and performance. <TrackableLink href="https://www.apollographql.com/contact-sales?type=dedicated&referrer=docs" eventName="content_contact_cloud">Contact Sales</TrackableLink> for a free trial.
 
 ## Security and compliance
 
