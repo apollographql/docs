@@ -109,7 +109,7 @@ export const useMemberships = () => {
 
 export const hasMembership = memberships => {
   const APOLLO_ORGS = ['gh.apollographql', 'apollo-private', 'apollo'];
-  return memberships.some(membership =>
+  return memberships?.some(membership =>
     APOLLO_ORGS.includes(membership.account.id)
   );
 };

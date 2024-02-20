@@ -5,7 +5,7 @@ import Search from './Search';
 import {Box, Flex, Text} from '@chakra-ui/react';
 import {Note} from '../Note';
 import {PrimaryLink} from '../RelativeLink';
-import {useUser} from '../../utils';
+import {hasMembership, useMemberships} from '../../utils';
 
 import algoliasearch from 'algoliasearch/lite';
 import {Configure, InstantSearch, useInstantSearch} from 'react-instantsearch';
@@ -66,8 +66,8 @@ function HashScroll() {
 }
 
 export function GlossaryPage() {
-  const {user} = useUser();
-  const isApollonaut = user?.name.includes('@apollographql.com');
+  const {memberships} = useMemberships;
+  const isApollonaut = hasMembership(memberships);
 
   const appId = process.env.ALGOLIA_APP_ID;
   const apiKey = isApollonaut
