@@ -22,6 +22,11 @@
       "Apollo Router Features": {
         "Overview": "https://www.apollographql.com/docs/router/enterprise-features",
         "GraphQL subscriptions": "https://www.apollographql.com/docs/router/executing-operations/subscription-support",
+        "File uploads": [ "https://www.apollographql.com/docs/router/executing-operations/file-uploads",
+          [
+            "preview"
+          ]
+        ],
         "Distributed caching": "https://www.apollographql.com/docs/router/configuration/distributed-caching",
         "Entity caching": [ "https://www.apollographql.com/docs/router/configuration/entity-caching",
         [
