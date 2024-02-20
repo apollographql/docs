@@ -219,11 +219,21 @@ Additionally, the router provides essential GraphOS functionality beyond support
 
 ## Creating graphs
 
-**To create a cloud supergraph,** see the [GraphOS quickstart](../quickstart/cloud/).
+You can create a cloud supergraph or a _non_-cloud supergraph (self-hosted or monograph).
 
-**To create a non-cloud graph** (a self-hosted supergraph or a monograph), follow these steps:
+<Tabs labels={['Cloud','Non-cloud']}>
 
-<EnterpriseFeature />
+<Tab label="Cloud">
+
+To create a cloud supergraph, see the [GraphOS quickstart](../quickstart/cloud/).
+
+</Tab>
+
+<Tab label="Non-cloud">
+
+To create a non-cloud graph, follow these steps:
+
+<EnterpriseFeature linkWithAnchor="https://www.apollographql.com/pricing#graphos-router" />
 
 1. Go to your organization's **Graphs** tab in [GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content).
 
@@ -245,6 +255,9 @@ Additionally, the router provides essential GraphOS functionality beyond support
 6. **If you're creating a self-hosted supergraph,** select the version of Apollo Federation you're using from the **Supergraph Pipeline Track** dropdown.
 
 Your graph has been created.
+
+</Tab>
+</Tabs>
 
 Next, you need to publish your graph's schema(s) to Apollo using the Rover CLI. For details, see [Publishing schemas to GraphOS](../delivery/publishing-schemas/).
 
