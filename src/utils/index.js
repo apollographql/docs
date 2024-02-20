@@ -70,6 +70,25 @@ const GET_USER = gql`
   }
 `;
 
+const GET_MEMBERSHIPS = gql`
+  query GetMemberships {
+    me {
+      id
+      ... on User {
+        memberships {
+          account {
+            id
+            name
+            currentPlan {
+              tier
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
 export const useUser = () => {
   const {data, loading, error} = useQuery(GET_USER);
   return {
@@ -77,4 +96,20 @@ export const useUser = () => {
     loading,
     error
   };
+};
+
+export const useMemberships = () => {
+  const {data, loading, error} = useQuery(GET_MEMBERSHIPS);
+  return {
+    memberships: data?.me?.memberships,
+    loading,
+    error
+  };
+};
+
+export const hasMembership = memberships => {
+  const APOLLO_ORGS = ['gh.apollographql', 'apollo-private', 'apollo'];
+  return memberships.some(membership =>
+    APOLLO_ORGS.includes(membership.account.id)
+  );
 };
