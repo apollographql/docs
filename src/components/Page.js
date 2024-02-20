@@ -50,6 +50,7 @@ import {
   MultiCodeBlockContext
 } from '@apollo/chakra-helpers';
 import {EnterpriseFeature} from './EnterpriseFeature';
+import { PremiumFeature } from './PremiumFeature';
 import {ExperimentalFeature} from './ExperimentalFeature';
 import {Link as GatsbyLink} from 'gatsby';
 import {Global} from '@emotion/react';
@@ -67,6 +68,8 @@ import {
 } from './PageLayout';
 import {PreviewFeature} from './PreviewFeature';
 import {TOTAL_HEADER_HEIGHT} from './Header';
+import {Tab} from './Tab';
+import {Tabs} from './Tabs';
 import {Tip} from './Tip';
 import {WistiaEmbed} from './WistiaEmbed';
 import {YouTube} from './YouTube';
@@ -195,6 +198,8 @@ const mdxComponents = {
   MultiCodeBlock,
   Note,
   YouTube,
+  Tab,
+  Tabs,
   WistiaEmbed,
   CodeColumns,
   TypeScriptApiBox,
@@ -207,6 +212,7 @@ const mdxComponents = {
   MinVersionTag,
   EnterpriseFeature,
   ExperimentalFeature,
+  PremiumFeature,
   PreviewFeature,
   ApolloLogo,
   ApolloMark,

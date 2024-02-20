@@ -44,6 +44,7 @@ The central piece of this repo, the docs infrastructure, is a [Gatsby](https://w
       - [Release stage components](#release-stage-components)
       - [Plan components](#plan-components)
       - [Admonitions](#admonitions)
+      - [Tabs](#tabs)
 - [History](#history)
   - [Benefits](#benefits)
   - [Drawbacks](#drawbacks)
@@ -491,7 +492,7 @@ A Chakra UI `Button` component that behaves as a link. These links follow the sa
   View older version
 </ButtonLink>
 
-<ButtonLink colorScheme="indigo" href="./get-started">
+<ButtonLink colorScheme="navy" href="./get-started">
   Get started
 </ButtonLink>
 ```
@@ -614,25 +615,44 @@ This completely replaces the text within the component.
 
 ##### Plan components
 
-Currently, the only plan component is `<EnterpriseFeature />`.
-Like the release stage components, this component should be put at the top of the relevant page or section.
-If a feature has both a release stage component and the `<EnterpriseFeature />`, the `<EnterpriseFeature />` should come first.
+There are two plan components: `<EnterpriseFeature />` and `<PremiumFeature />`.
+The `<EnterpriseFeature />` component denotes a feature is only available with an Enterprise plan.
+The `<PremiumFeature />` component denotes a feature is available with either the Dedicated or Enterprise plan.
 
-Custom text for `<EnterpriseFeature />` can be provided by nesting Markdown within the component.
+Like the release stage components, these components should be put at the top of the relevant page or section.
+If a feature has both a release stage component and a plan component put the plan component first.
+
+Custom text for plan components can be provided by nesting Markdown within the component.
 
 By default, without any children, `<EnterpriseFeature />` renders this text:
 
-> **This feature is only available with a [**GraphOS Enterprise plan\*\*](http://apollographql.com/graphos/enterprise/). If your organization doesn't currently have an Enterprise plan, you can test this functionality by signing up for a free [Enterprise trial](https://studio.apollographql.com/signup?type=enterprise-trial&referrer=docs-content).
+> **This feature is only available with a [**GraphOS Enterprise plan\*\*](http://apollographql.com/pricing/). You can test it out by signing up for a free [Enterprise trial](https://studio.apollographql.com/signup?type=enterprise-trial&referrer=docs-content).
 
-If you include custom text, it completely replaces this text. Please make sure to include links to the Enterprise plan docs and Enterprise trial accordingly.
+By default, the link to the pricing page is `http://apollographql.com/pricing/`, if possible, direct users to the most appropriate part of the pricing page using the `linkWithAnchor` property:
+
+`<EnterpriseFeature linkWithAnchor="https://www.apollographql.com/pricing#graphos-router" />`
+
+If you include custom text, it completely replaces this text. Please make sure to include links to the pricing page and Enterprise trial accordingly.
 
 ```mdx
 <EnterpriseFeature>
 
-This is some custom markdown text that still includes a link to the [GraphOS Enterprise plan\*\*](http://apollographql.com/graphos/enterprise/) and [Enterprise trial](https://studio.apollographql.com/signup?type=enterprise-trial&referrer=docs-content) docs.
+This is some custom markdown text that still includes a link to the [pricing page](http://apollographql.com/pricing/) and [Enterprise trial](https://studio.apollographql.com/signup?type=enterprise-trial&referrer=docs-content) docs.
 
 </EnterpriseFeature>
 ```
+
+By default, without any children, `<PremiumFeature />` renders this text:
+
+> **This feature is only available with a GraphOS Dedicated or Enterprise plan.** To compare GraphOS feature support across all plan types, see the [pricing page](http://apollographql.com/pricing/).
+
+By default, the link to the pricing page is `http://apollographql.com/pricing/`, if possible, direct users to the most appropriate part of the pricing page using the `linkWithAnchor` property:
+
+`<PremiumFeature linkWithAnchor="https://www.apollographql.com/pricing#graphos-router" />`
+
+If you include custom text, it completely replaces this text. Please make sure to include links to the pricing page and Enterprise trial accordingly.
+
+Like `<EnterpriseFeature>`, you can provide custom text by nesting Markdown.
 
 ##### Admonitions
 
@@ -674,6 +694,33 @@ The above code block renders like so:
 
 > [!TIP]
 > Be sure to include two newlines between the admonition components and content and as shown in the examples above. MDX parsing for MDX v1 requires this extra separation between JSX and Markdown.
+
+##### Tabs
+
+Tabs enable context-specific content to be user-selectable and dynamically updatable within a page.
+
+You can use tabs to present multiple options within a single step or section. A reader selects the option they're interested in, and the content is presented within the flow of the page. With prudent use of tabs, a reader can avoid scrolling over irrelevant content or navigating external links. For example, a guide that has unique prerequisites for different operating systems can have a single prerequisite section with a tab for each OS.
+
+Using the `<Tabs>` component requires:
+
+- Setting the `labels` array argument with the labels of all contained tabs.
+- Nesting a `<Tab>` component for each contained tab, with its `label` argument set to match one of the `labels` of the parent `<Tabs>`.
+
+For example:
+
+```mdx
+<Tabs labels={['one','two']}>
+
+<Tab label="one">
+Body of tab labeled one.
+</Tab>
+
+<Tab label="two">
+Body of tab labeled two.
+</Tab>
+
+</Tabs>
+```
 
 ## Content linting
 
@@ -808,7 +855,7 @@ import {Link} from 'gatsby';
 <Button
 -  color={colors.primary}
 -  as={<Link to="./get-started" />}
-+  colorScheme="indigo"
++  colorScheme="navy"
 +  as={Link}
 +  to="./get-started"
 >

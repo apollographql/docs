@@ -9,7 +9,7 @@ export const ClearFilters = props => {
       onClick={() => refine()}
       disabled={!canRefine}
       visibility={canRefine ? 'visible' : 'hidden'}
-      colorScheme="indigo"
+      colorScheme="navy"
       variant="link"
       fontWeight="bold"
       _hover={{textDecoration: 'underline'}}

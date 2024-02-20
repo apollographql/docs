@@ -22,8 +22,8 @@ const linkIcon = path => {
 };
 
 export function GradientCard({icon, title, description, path, cta}) {
-  const lightGradient = useToken('colors', ['blue.100', 'indigo.300']);
-  const darkGradient = useToken('colors', ['indigo.400', 'indigo.500']);
+  const lightGradient = useToken('colors', ['blue.100', 'navy.300']);
+  const darkGradient = useToken('colors', ['navy.400', 'navy.500']);
   return (
     <Grid
       gap={{base: 6, lg: 10}}
@@ -46,7 +46,7 @@ export function GradientCard({icon, title, description, path, cta}) {
         <Text fontSize="lg">{description}</Text>
       </div>
       <div>
-        <ButtonLink href={path} colorScheme="indigo" leftIcon={linkIcon(path)}>
+        <ButtonLink href={path} colorScheme="navy" leftIcon={linkIcon(path)}>
           {cta}
         </ButtonLink>
       </div>
@@ -67,7 +67,13 @@ export function Docset({
   cta = 'Explore %s docs'
 }) {
   return (
-    <Flex align="flex-start" p="6" rounded="md" borderWidth="1px" overflow="auto">
+    <Flex
+      align="flex-start"
+      p="6"
+      rounded="md"
+      borderWidth="1px"
+      overflow="auto"
+    >
       <Flex align="flex-start" direction="column" h="full" maxWidth="100%">
         <Heading as="h3" size="lg" mb="4">
           <HStack spacing="3">
@@ -79,7 +85,7 @@ export function Docset({
         <ButtonLink
           variant="link"
           _dark={{
-            color: 'indigo.100'
+            color: 'navy.100'
           }}
           mt="auto"
           fontWeight="semibold"

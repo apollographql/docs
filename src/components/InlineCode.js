@@ -12,7 +12,7 @@ export default function InlineCode(props) {
       color="blue.400"
       bgColor="silver.400"
       _dark={{
-        color: 'indigo.100',
+        color: 'navy.100',
         bgColor: 'black.200'
       }}
       {...props}

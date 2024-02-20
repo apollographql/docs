@@ -13,10 +13,13 @@ exceptions:
   - ASP
   - AWS
   - CLI
+  - CNAME
+  - CORS
   - CPU
   - CSS
   - CSV
   - DEBUG
+  - DNS
   - DOM
   - DPI
   - FAQ
@@ -57,7 +60,9 @@ exceptions:
   - SVG
   - TBD
   - TCP
+  - TLS
   - TODO
+  - TXT
   - URI
   - URL
   - USB
