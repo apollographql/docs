@@ -18,7 +18,6 @@
   "sidebar": {
     "Overview": "/",
     "Configuration": "/configuration",
-    "Security": "/security",
     "Cloud Dedicated": {
       "Overview": ["/dedicated",
       [

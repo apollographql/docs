@@ -40,9 +40,7 @@ exceptions:
   - GDPR
   - GitHub
   - GraphOS
-  - GraphOS Cloud
-  - GraphOS Cloud compliance
-  - GraphOS Cloud security
+  - GraphOS Cloud on AWS
   - GraphOS Studio
   - GraphQL Summit
   - Go live
