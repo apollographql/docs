@@ -10,3 +10,5 @@ jobs:
       - uses: errata-ai/vale-action@reviewdog
         with: 
             files: src/content
+            version: 3.1.0
+            fail_on_error: true
