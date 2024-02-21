@@ -8,7 +8,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: errata-ai/vale-action@reviewdog
-        with: 
+        with:
             files: src/content
             version: 3.1.0
+            filter_mode: added
             fail_on_error: true
