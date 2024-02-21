@@ -11,5 +11,4 @@ jobs:
         with:
             files: src/content
             version: 3.0.0
-            filter_mode: added
             fail_on_error: true
