@@ -1,7 +1,0 @@
-extends: existence
-message: "Link text should be descriptive and not generic like 'here' or 'this page'."
-level: error
-link: https://developers.google.com/style/link-text
-raw: 
-  - \[here\]\(([^)]+)\)
-  - \[this page\]\(([^)]+)\)

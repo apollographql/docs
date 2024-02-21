@@ -1,7 +1,0 @@
-extends: occurrence
-message: "Don't overuse exclamation points in text."
-link: 'https://developers.google.com/style/exclamation-points'
-level: error
-max: 1
-scope: paragraph
-token: "!"

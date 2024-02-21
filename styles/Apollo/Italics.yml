@@ -1,5 +1,0 @@
-extends: existence
-message: "Avoid using italics except for the first instance of a new term."
-level: warning
-raw:
-  - ' _.*?_ '
