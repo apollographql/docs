@@ -8,14 +8,18 @@ export default function AuthCheck({
   // TODO: more granular message like "access denied" or "please log in"
   fallback = <NotFound />
 }) {
-  const {loading, isInternal} = useUser();
+  const {isInternal, loading, error} = useUser();
 
-   if (loading) {
+  if (loading) {
     return (
       <Center h="100vh">
         <Spinner size="lg" />
       </Center>
     );
+  }
+
+  if (error) {
+    return <div>{error.message}</div>
   }
 
   return isInternal ? children : fallback;
