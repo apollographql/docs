@@ -10,5 +10,6 @@ jobs:
       - uses: errata-ai/vale-action@reviewdog
         with:
           version: 3.1.0
+          vale_flags: "--config=.github/vale.ini"
           files: src/content
           fail_on_error: true
