@@ -2,15 +2,15 @@ import NotFound from '../pages/404';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {Center, Spinner} from '@chakra-ui/react';
-import {hasMembership, useMemberships} from '../utils';
+import {useIsInternal} from '../utils';
 export default function AuthCheck({
   children,
   // TODO: more granular message like "access denied" or "please log in"
   fallback = <NotFound />
 }) {
-  const {memberships, loading, error} = useMemberships();
+  const isInternal = useIsInternal();
 
-  if (loading) {
+   if (isInternal === null) {
     return (
       <Center h="100vh">
         <Spinner size="lg" />
@@ -18,21 +18,7 @@ export default function AuthCheck({
     );
   }
 
-  if (error) {
-    return <div>{error.message}</div>;
-  }
-
-  if (!memberships) {
-    return null;
-  }
-
-  const hasAccess = hasMembership(memberships);
-
-  if (!hasAccess) {
-    return fallback;
-  }
-
-  return children;
+  return isInternal ? children : fallback;
 }
 
 AuthCheck.propTypes = {

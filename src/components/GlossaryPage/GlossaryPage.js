@@ -5,7 +5,7 @@ import Search from './Search';
 import {Box, Flex, Text} from '@chakra-ui/react';
 import {Note} from '../Note';
 import {PrimaryLink} from '../RelativeLink';
-import {hasMembership, useMemberships} from '../../utils';
+import {useIsInternal} from '../../utils';
 
 import algoliasearch from 'algoliasearch/lite';
 import {Configure, InstantSearch, useInstantSearch} from 'react-instantsearch';
@@ -66,15 +66,14 @@ function HashScroll() {
 }
 
 export function GlossaryPage() {
-  const {memberships} = useMemberships;
-  const isApollonaut = hasMembership(memberships);
+  const isInternal = useIsInternal();
 
   const appId = process.env.ALGOLIA_APP_ID;
-  const apiKey = isApollonaut
+  const apiKey = isInternal
     ? process.env.ALGOLIA_SEARCH_KEY
     : process.env.GATSBY_ALGOLIA_EXTERNAL_APOLLOPEDIA_SEARCH_KEY;
 
-  const attributesToRetrieve = isApollonaut
+  const attributesToRetrieve = isInternal
     ? ['*']
     : [
         '*',
@@ -88,7 +87,7 @@ export function GlossaryPage() {
   const searchClient = algoliasearch(appId, apiKey);
   return (
     <>
-      {isApollonaut && (
+      {isInternal && (
         <Note>
           The 🔒 in front of a term denotes it&apos;s only visible to logged in
           Apollonauts. The same applies for the{' '}

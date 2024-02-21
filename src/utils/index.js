@@ -98,18 +98,15 @@ export const useUser = () => {
   };
 };
 
-export const useMemberships = () => {
-  const {data, loading, error} = useQuery(GET_MEMBERSHIPS);
-  return {
-    memberships: data?.me?.memberships,
-    loading,
-    error
-  };
-};
+const APOLLO_ORGS = ['gh.apollographql', 'apollo-private', 'apollo'];
 
-export const hasMembership = memberships => {
-  const APOLLO_ORGS = ['gh.apollographql', 'apollo-private', 'apollo'];
-  return memberships?.some(membership =>
-    APOLLO_ORGS.includes(membership.account.id)
-  );
-};
+export const useIsInternal = () => {
+  const {data, loading} = useQuery(GET_MEMBERSHIPS);
+  if (loading) {
+    return null;
+  }
+  const hasMembership = data?.me?.memberships.some(membership =>
+    APOLLO_ORGS.includes(membership.account.id) );
+  
+  return hasMembership === true;
+}

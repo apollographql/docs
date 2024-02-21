@@ -20,7 +20,7 @@ import {
 } from '@chakra-ui/react';
 import {Highlight, useHits} from 'react-instantsearch';
 import {MarkdownCodeBlock} from '@apollo/chakra-helpers';
-import {useUser} from '../../utils';
+import { useIsInternal } from '../../utils';
 
 const PaddedMarkdownCodeBlock = ({children}) => {
   return (
@@ -90,8 +90,7 @@ const updateHost = url => {
 
 const Results = () => {
   const {hits} = useHits();
-  const {user} = useUser();
-  const isApollonaut = user?.name.includes('@apollographql.com');
+  const isInternal = useIsInternal();
 
   return (
     <Stack divider={<StackDivider borderColor="border" />} spacing={1}>
@@ -154,7 +153,7 @@ const Results = () => {
               </HStack>
             </Box>
           )}
-          {isApollonaut &&
+          {isInternal &&
             (hit.usageInstructions ||
               hit.businessContext ||
               hit.exampleUsage) && (
@@ -237,10 +236,10 @@ const Results = () => {
                 </Text>
                 <ArrowRightIcon />
               </PrimaryLink>
-              {isApollonaut && <EditOnGitHub term={hit.objectID} />}
+              {isInternal && <EditOnGitHub term={hit.objectID} />}
             </Flex>
           ) : (
-            <Box>{isApollonaut && <EditOnGitHub term={hit.objectID} />}</Box>
+            <Box>{isInternal && <EditOnGitHub term={hit.objectID} />}</Box>
           )}
         </Box>
       ))}
