@@ -19,7 +19,7 @@ export default function AuthCheck({
   }
 
   if (error) {
-    return <div>{error.message}</div>
+    return <div>{error.message}</div>;
   }
 
   return isInternal ? children : fallback;

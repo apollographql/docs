@@ -20,7 +20,7 @@ import {
 } from '@chakra-ui/react';
 import {Highlight, useHits} from 'react-instantsearch';
 import {MarkdownCodeBlock} from '@apollo/chakra-helpers';
-import { useUser } from '../../utils';
+import {useUser} from '../../utils';
 
 const PaddedMarkdownCodeBlock = ({children}) => {
   return (
