@@ -20,7 +20,7 @@ import {
 } from '@chakra-ui/react';
 import {Highlight, useHits} from 'react-instantsearch';
 import {MarkdownCodeBlock} from '@apollo/chakra-helpers';
-import { useIsInternal } from '../../utils';
+import { useUser } from '../../utils';
 
 const PaddedMarkdownCodeBlock = ({children}) => {
   return (
@@ -90,7 +90,7 @@ const updateHost = url => {
 
 const Results = () => {
   const {hits} = useHits();
-  const isInternal = useIsInternal();
+  const {isInternal} = useUser();
 
   return (
     <Stack divider={<StackDivider borderColor="border" />} spacing={1}>

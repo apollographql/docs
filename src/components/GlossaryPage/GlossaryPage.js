@@ -5,7 +5,7 @@ import Search from './Search';
 import {Box, Flex, Text} from '@chakra-ui/react';
 import {Note} from '../Note';
 import {PrimaryLink} from '../RelativeLink';
-import {useIsInternal} from '../../utils';
+import {useUser} from '../../utils';
 
 import algoliasearch from 'algoliasearch/lite';
 import {Configure, InstantSearch, useInstantSearch} from 'react-instantsearch';
@@ -66,7 +66,7 @@ function HashScroll() {
 }
 
 export function GlossaryPage() {
-  const isInternal = useIsInternal();
+  const {isInternal} = useUser();
 
   const appId = process.env.ALGOLIA_APP_ID;
   const apiKey = isInternal
