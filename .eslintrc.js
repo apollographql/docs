@@ -51,8 +51,7 @@ module.exports = {
         StudioPages: 'readonly',
         HowSubscriptionsWork: 'readonly',
         WhatSubscriptionsAreFor: 'readonly',
-        TopLevelAwait: 'readonly',
-        UnavailableForMonographs: 'readonly'
+        TopLevelAwait: 'readonly'
       },
       rules: {
         'react/no-unescaped-entities': 'off'
