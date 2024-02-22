@@ -121,6 +121,8 @@ URI(s)?
 urql
 Uplink
 [Vv]alidator
+[Vv]irtualized?
+VPCs?
 Vue
 walkthrough
 [Ww]ebhook
