@@ -118,6 +118,7 @@ typings
 [Uu]ntracked
 [Uu]ntrusted
 URI(s)?
+urql
 Uplink
 [Vv]alidator
 [Vv]irtualized?
