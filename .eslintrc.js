@@ -1,5 +1,3 @@
-const { UnavailableForMonographs } = require("./src/components/UnavailableForMonographs");
-
 module.exports = {
   extends: ['@trevorblades/eslint-config/react', 'plugin:mdx/recommended'],
   overrides: [
