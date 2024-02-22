@@ -49,6 +49,8 @@ module.exports = {
         SchemaProposalPublicationMermaid: 'readonly',
         SetApolloVCSCommit: 'readonly',
         StudioPages: 'readonly',
+        HowSubscriptionsWork: 'readonly',
+        WhatSubscriptionsAreFor: 'readonly',
         TopLevelAwait: 'readonly'
       },
       rules: {

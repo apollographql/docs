@@ -50,7 +50,6 @@ import {
   MultiCodeBlockContext
 } from '@apollo/chakra-helpers';
 import {EnterpriseFeature} from './EnterpriseFeature';
-import { PremiumFeature } from './PremiumFeature';
 import {ExperimentalFeature} from './ExperimentalFeature';
 import {Link as GatsbyLink} from 'gatsby';
 import {Global} from '@emotion/react';
@@ -66,6 +65,7 @@ import {
   PageContent,
   PageSeo
 } from './PageLayout';
+import {PremiumFeature} from './PremiumFeature';
 import {PreviewFeature} from './PreviewFeature';
 import {TOTAL_HEADER_HEIGHT} from './Header';
 import {Tab} from './Tab';
