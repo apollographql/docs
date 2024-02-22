@@ -7,9 +7,9 @@ description: Learn how to calculate and scale the throughput capacity of your cl
 <DedicatedPreview />
 
 This guide covers:
-- An [overview of **Graph Compute Units** (GCUs)](#overview) and their performance expectations
-- How to [calculate the number of GCUs](#gcu-calculation) your supergraph needs
-- How to [manage your supergraph's throughput capacity](#manage-capacity) as needs change
+- An overview of **Graph Compute Units** (GCUs) and their performance expectations
+- How to calculate the number of GCUs your supergraph needs
+- How to manage your supergraph's throughput capacity as needs change
 
 ## Overview
 
@@ -100,9 +100,23 @@ Dedicated trials are available to help you run a load test for free. <TrackableL
 
 ## Manage capacity
 
-Cloud Dedicated supports mission-critical production workloads, and you can scale performance to meet the needs of your GraphQL APIs. Dedicated supports up to 40 GCUs per GraphOS variant.
+Cloud Dedicated supports mission-critical production workloads, and you can scale performance to meet the needs of your GraphQL APIs.
+Dedicated supports up to 10 GCUs per GraphOS variant.
 
-Dedicated starts with 1 GCU per variant. You can add GCUs from the **Cloud Router** page in Studio. Click **Manage Capacity** to the right of **Router Capacity**.
+Dedicated starts with 1 GCU per variant. You can change a variant's GCUs via either:
+* [GraphOS Studio](#edit-gcus-in-studio)
+* [The Platform API](#edit-gcus-via-api)
+
+<Note>
+
+GCU updates takes about one minute to provision.
+
+</Note>
+
+### Edit GCUs in Studio
+
+You can change a graph variant's GCUs from the **Cloud Router** page in Studio.
+Click **Manage Capacity** to the right of **Router Capacity**.
 
 <img
   className="screenshot"
@@ -117,3 +131,33 @@ Then, select the number of GCUs required and click **Save changes**.
   alt="GraphOS Studio edit GCUs"
   src="../../img/cloud-dedicated/gcus-scale.png"
 />
+
+### Edit GCUs via API
+
+You can change a graph variant's GCUs with the following mutation from the [GraphOS Platform API](/graphos/platform-api/).
+
+```graphql
+mutation Graph($graphId: ID!, $name: String!, $gcus: Int!) {
+  graph(id: $graphId) {
+    variant(name: $name) {
+      router {
+        setGcus(gcus: $gcus) {
+          ... on RouterGcusSuccess {
+            order {
+              id
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+This mutation requires setting the following variables:
+
+- `graphId`: a graph's ID is the first part of the graph's graph ref
+  - You can a graph's ID in GraphOS Studio under **Settings** > **This Graph**
+- `name`: the variant name
+  - If you haven't set a variant name, the default is `current`
+- `gcus`: the number of GCUs to provision for the variant

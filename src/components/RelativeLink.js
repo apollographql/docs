@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 import {Button, Link} from '@chakra-ui/react';
 import {Link as GatsbyLink, graphql, useStaticQuery} from 'gatsby';
+import {OutlinkIcon} from './Icons';
 import {PathContext, isUrl} from '../utils';
 import {isAbsolute, resolve} from 'path';
 
@@ -61,7 +62,8 @@ function useLinkProps(href) {
   if (isExternal || isHash || isFile) {
     return {
       href,
-      target: isExternal || (isFile && !isHash) ? '_blank' : null
+      target: isExternal || (isFile && !isHash) ? '_blank' : null,
+      rightIcon: <OutlinkIcon />
     };
   }
 

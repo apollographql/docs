@@ -14,7 +14,7 @@ export default function Highlight({value}) {
           return (
             <chakra.mark
               bg="none"
-              color="indigo.500"
+              color="navy.500"
               _dark={{
                 color: 'inherit'
               }}

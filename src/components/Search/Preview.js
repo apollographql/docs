@@ -114,7 +114,7 @@ export default function Preview({preview}) {
         {categories && (
           <HStack mt="4">
             {categories.map((category, index) => (
-              <Tag variant="outline" colorScheme="indigo" key={index}>
+              <Tag variant="outline" colorScheme="navy" key={index}>
                 {category}
               </Tag>
             ))}
