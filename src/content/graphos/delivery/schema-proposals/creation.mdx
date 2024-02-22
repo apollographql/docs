@@ -12,7 +12,8 @@ This article describes actions in the **Proposal creation** stage of the [schema
 
 ## Start a proposal
 
-You can create a new proposal in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content) from a graph's proposals page. To access the page, either:
+You can create a new proposal in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content) from a graph's proposals page.
+To access the page, either:
 
   - Open the **Proposals** page from the left navigation from a particular graph.
 
@@ -21,6 +22,12 @@ You can create a new proposal in [GraphOS Studio](https://studio.apollographql.c
       className="screenshot"
       alt="Opening the Proposals page from the left nav in GraphOS Studio"
     />
+
+    <Note>
+
+    If you don't see **Proposals** in the left nav of a particular graph, it may be because the graph is a monograph. Schema proposals are designed for use with supergraphs and aren't available for monographs. Convert your monograph to a supergraph using the Rover CLI [`subgraph publish` command](/rover/commands/subgraphs/#subgraph-publish) with the [`--convert` flag](/rover/commands/subgraphs/#--convert).
+
+    </Note>
 
   - On the **Graphs** page, click the pencil icon with the tooltip that says **Go to schema change proposals** for a particular graph.
 
