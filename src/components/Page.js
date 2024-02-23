@@ -65,6 +65,7 @@ import {
   PageContent,
   PageSeo
 } from './PageLayout';
+import {PremiumFeature} from './PremiumFeature';
 import {PreviewFeature} from './PreviewFeature';
 import {Property} from './Property';
 import {PropertyList} from './PropertyList';
@@ -215,6 +216,7 @@ const mdxComponents = {
   MinVersionTag,
   EnterpriseFeature,
   ExperimentalFeature,
+  PremiumFeature,
   PreviewFeature,
   ApolloLogo,
   ApolloMark,
