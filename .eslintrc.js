@@ -10,6 +10,8 @@ module.exports = {
         ExpansionPanel: 'readonly',
         MultiCodeBlock: 'readonly',
         YouTube: 'readonly',
+        PropertyList: 'readonly',
+        Property: 'readonly',
         Tabs: 'readonly',
         Tab: 'readonly',
         EmbeddableExplorer: 'readonly',
