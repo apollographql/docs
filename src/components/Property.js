@@ -54,11 +54,6 @@ export function Property({name, short, long, type, children}) {
                 <code>{name}</code>
               </Link>
             </CustomHeading>
-            {type && (
-              <p>
-                <strong>{short}</strong>
-              </p>
-            )}
           </span>
         </Td>
         <Td>
