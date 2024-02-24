@@ -26,11 +26,13 @@ module.exports = {
         DirectiveCompositionRules: 'readonly',
         Disclaimer: 'readonly',
         EnterpriseFeature: 'readonly',
+        PremiumFeature: 'readonly',
         Caution: 'readonly',
         Note: 'readonly',
         Tip: 'readonly',
         ExperimentalFeature: 'readonly',
         GraphOSEnterpriseRequired: 'readonly',
+        GraphOSRouterFeatures: 'readonly',
         InconsistentCompositionRules: 'readonly',
         ObtainGraphApiKey: 'readonly',
         ObtainPersonalApiKey: 'readonly',
@@ -49,6 +51,8 @@ module.exports = {
         SchemaProposalPublicationMermaid: 'readonly',
         SetApolloVCSCommit: 'readonly',
         StudioPages: 'readonly',
+        HowSubscriptionsWork: 'readonly',
+        WhatSubscriptionsAreFor: 'readonly',
         TopLevelAwait: 'readonly'
       },
       rules: {

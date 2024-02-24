@@ -4,7 +4,7 @@ import {Box, Center, Flex, Text, chakra} from '@chakra-ui/react';
 import RelativeLink from './RelativeLink';
 import {EnterpriseIcon} from './Icons';
 
-export const EnterpriseFeature = ({linkWithAnchor, children}) => {
+export const PremiumFeature = ({linkWithAnchor, children}) => {
   return (
     <Box
       pl="2"
@@ -31,21 +31,13 @@ export const EnterpriseFeature = ({linkWithAnchor, children}) => {
           <Text pl="1">{children}</Text>
         ) : (
           <Text pl="1">
-            <strong>
-              This feature is only available with a{' '}
-              <RelativeLink
-                color={'tertiary'}
-                href={linkWithAnchor ? linkWithAnchor : "https://www.apollographql.com/pricing/"}>
-                GraphOS Enterprise plan
-              </RelativeLink>
-              .{' '}
-            </strong>
-            <br/> You can test it out by signing up for a free{' '}
+              <strong>This feature is only available with a GraphOS Dedicated or Enterprise plan.</strong>
+              <br/>To compare GraphOS feature support across all plan types, see the{' '}
             <RelativeLink
               color={'tertiary'}
-              href="https://studio.apollographql.com/signup?type=enterprise-trial&referrer=docs-content"
+              href={linkWithAnchor ? linkWithAnchor : "https://www.apollographql.com/pricing/"}
             >
-              Enterprise trial
+              pricing page
             </RelativeLink>
             .
           </Text>
@@ -55,7 +47,7 @@ export const EnterpriseFeature = ({linkWithAnchor, children}) => {
   );
 };
 
-EnterpriseFeature.propTypes = {
+PremiumFeature.propTypes = {
   children: PropTypes.node,
   linkWithAnchor: PropTypes.string
 };

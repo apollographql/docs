@@ -1,0 +1,15 @@
+
+GraphQL subscriptions enable clients to receive continual, real-time updates whenever new data becomes available. Unlike queries and mutations, subscriptions are long-lasting. That means a client can receive multiple updates from a single subscription:
+
+```mermaid
+sequenceDiagram
+    participant Client as GraphQL Client
+    participant Router as GraphOS Router
+    Client->>Router: Initiates subscription
+    Note over Router: New data available
+    Router->>Client: Sends new data
+    Note over Router: New data available
+    Router->>Client: Sends new data
+```
+
+Subscriptions are best suited to apps that rely on frequently changing, time-sensitive data such as stock prices, IoT sensor readings, live chat, or sports scores.
