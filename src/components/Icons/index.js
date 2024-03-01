@@ -78,7 +78,7 @@ const CustomIcon = ({icon, isSolid, ...props}) => {
 
 CustomIcon.propTypes = {
   icon: PropTypes.elementType.isRequired,
-  isSolid: PropTypes.boolean
+  isSolid: PropTypes.bool
 };
 
 export const ApolloKotlinIcon = () => <CustomIcon icon={Kotlin} />;
