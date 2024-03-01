@@ -12,6 +12,7 @@ export const PrimaryLink = props => {
       variant="link"
       iconSpacing="3px"
       marginRight="4px"
+      fontSize="lg"
       color="tertiary"
       sx={{
         code: {
