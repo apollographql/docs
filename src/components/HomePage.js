@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {ArrowRightIcon, OutlinkIcon} from './Icons';
+import {ArrowRightIcon} from './Icons';
 import {ButtonLink} from './RelativeLink';
 import {
   Flex,
@@ -13,13 +13,6 @@ import {
   Text,
   useToken
 } from '@chakra-ui/react';
-
-const linkIcon = path => {
-  if (/^https:\/\//.test(path)) {
-    return <OutlinkIcon />;
-  }
-  return <ArrowRightIcon />;
-};
 
 export function GradientCard({icon, title, description, path, cta}) {
   const lightGradient = useToken('colors', ['blue.100', 'navy.300']);
@@ -46,7 +39,11 @@ export function GradientCard({icon, title, description, path, cta}) {
         <Text fontSize="lg">{description}</Text>
       </div>
       <div>
-        <ButtonLink href={path} colorScheme="navy" leftIcon={linkIcon(path)}>
+        <ButtonLink
+          href={path}
+          colorScheme="navy"
+          leftIcon={<ArrowRightIcon />}
+        >
           {cta}
         </ButtonLink>
       </div>
@@ -92,7 +89,7 @@ export function Docset({
           fontSize="lg"
           href={path}
           whiteSpace="normal"
-          leftIcon={linkIcon(path)}
+          leftIcon={<ArrowRightIcon />}
         >
           {cta.replace('%s', title)}
         </ButtonLink>
