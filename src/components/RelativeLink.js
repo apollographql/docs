@@ -15,7 +15,8 @@ export const PrimaryLink = props => {
       color="tertiary"
       sx={{
         code: {
-          color: 'inherit'
+          color: 'inherit',
+          textDecoration: 'underline'
         }
       }}
       {...props}
@@ -25,7 +26,8 @@ export const PrimaryLink = props => {
       color="tertiary"
       sx={{
         code: {
-          color: 'inherit'
+          color: 'inherit',
+          textDecoration: 'underline'
         }
       }}
       {...props}
