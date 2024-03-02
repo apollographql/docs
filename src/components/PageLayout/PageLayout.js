@@ -12,6 +12,7 @@ import Sidebar, {
 import useLocalStorage from 'react-use/lib/useLocalStorage';
 import {Box, Fade, IconButton, Tooltip} from '@chakra-ui/react';
 import {DoubleChevronRightIcon} from '../Icons';
+import {PageTocProvider} from '../PageTocContext';
 import {PageWidthProvider} from '../PageWidthContext';
 import {PathContext} from '../../utils';
 import {dirname} from 'path';
@@ -68,61 +69,63 @@ export function PageLayout({pageContext, children, location, data}) {
 
   return (
     <PageWidthProvider key={now}>
-      <PathContext.Provider
-        value={{
-          uri: pathname,
-          basePath,
-          path: data?.file?.name === 'index' ? pathname : dirname(pathname)
-        }}
-      >
-        <Header algoliaFilters={algoliaFilters}>
-          <MobileNav isInternal={internal} />
-        </Header>
-        <Sidebar
-          isHidden={sidebarHidden}
-          hideSidebar={hideSidebar}
-          {...lockProps}
-        >
-          {internal ? (
-            <AuthCheck
-              fallback={
-                <DefaultSidebarNav hideSidebar={hideSidebar} {...lockProps} />
-              }
-            >
-              {sidebarNav}
-            </AuthCheck>
-          ) : (
-            sidebarNav
-          )}
-        </Sidebar>
-        <Box
-          marginLeft={{
-            base: 0,
-            md: sidebarHidden ? 0 : PAGE_SIDEBAR_MARGIN
+      <PageTocProvider>
+        <PathContext.Provider
+          value={{
+            uri: pathname,
+            basePath,
+            path: data?.file?.name === 'index' ? pathname : dirname(pathname)
           }}
-          transitionProperty="margin-left"
-          transitionDuration="normal"
         >
-          {children}
-          <Footer />
-        </Box>
-        <Fade in={sidebarHidden} unmountOnExit delay={0.25}>
-          <Tooltip placement="right" label="Show navigation">
-            <IconButton
-              d={{base: 'none', md: 'flex'}}
-              pos="fixed"
-              css={{bottom: PAGE_FOOTER_HEIGHT / 2}}
-              transform="translateY(50%)"
-              left="3"
-              size="sm"
-              variant="outline"
-              fontSize="lg"
-              icon={<DoubleChevronRightIcon />}
-              onClick={() => setSidebarHidden(false)}
-            />
-          </Tooltip>
-        </Fade>
-      </PathContext.Provider>
+          <Header algoliaFilters={algoliaFilters}>
+            <MobileNav isInternal={internal} />
+          </Header>
+          <Sidebar
+            isHidden={sidebarHidden}
+            hideSidebar={hideSidebar}
+            {...lockProps}
+          >
+            {internal ? (
+              <AuthCheck
+                fallback={
+                  <DefaultSidebarNav hideSidebar={hideSidebar} {...lockProps} />
+                }
+              >
+                {sidebarNav}
+              </AuthCheck>
+            ) : (
+              sidebarNav
+            )}
+          </Sidebar>
+          <Box
+            marginLeft={{
+              base: 0,
+              md: sidebarHidden ? 0 : PAGE_SIDEBAR_MARGIN
+            }}
+            transitionProperty="margin-left"
+            transitionDuration="normal"
+          >
+            {children}
+            <Footer />
+          </Box>
+          <Fade in={sidebarHidden} unmountOnExit delay={0.25}>
+            <Tooltip placement="right" label="Show navigation">
+              <IconButton
+                d={{base: 'none', md: 'flex'}}
+                pos="fixed"
+                css={{bottom: PAGE_FOOTER_HEIGHT / 2}}
+                transform="translateY(50%)"
+                left="3"
+                size="sm"
+                variant="outline"
+                fontSize="lg"
+                icon={<DoubleChevronRightIcon />}
+                onClick={() => setSidebarHidden(false)}
+              />
+            </Tooltip>
+          </Fade>
+        </PathContext.Provider>
+      </PageTocProvider>
     </PageWidthProvider>
   );
 }

@@ -3,6 +3,7 @@ import React from 'react';
 import {Box, Divider, Flex, Heading, Tag} from '@chakra-ui/react';
 import {DOCS_PAGE_WIDTH_VAR, usePageWidthContext} from '../PageWidthContext';
 import {PAGE_PADDING_BOTTOM, PAGE_PADDING_TOP} from './PageLayout';
+import {usePageTocContext} from '../PageTocContext';
 
 export function PageContent({
   title,
@@ -14,6 +15,7 @@ export function PageContent({
   ...props
 }) {
   const {pageRefCallback} = usePageWidthContext();
+  const {showPageToc} = usePageTocContext();
   return (
     <Flex
       ref={pageRefCallback}
@@ -39,7 +41,7 @@ export function PageContent({
         </Box>
         {pagination}
       </Box>
-      {aside}
+      {showPageToc && aside}
     </Flex>
   );
 }

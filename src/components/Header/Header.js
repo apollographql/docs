@@ -16,13 +16,16 @@ import {
   useColorMode,
   useColorModeValue
 } from '@chakra-ui/react';
-import {Link as GatsbyLink} from 'gatsby';
 import {
+  DoubleChevronLeftIcon,
+  DoubleChevronRightIcon,
   MoonIcon,
   NarrowViewportIcon,
   SunIcon,
   WidenViewportIcon
 } from '../Icons';
+import {Link as GatsbyLink} from 'gatsby';
+import {usePageTocContext} from '../PageTocContext';
 import {usePageWidthContext} from '../PageWidthContext';
 
 const EYEBROW_HEIGHT = 32; // 0;
@@ -66,6 +69,7 @@ Header.propTypes = {
 
 export function Header({children, algoliaFilters}) {
   const {toggleColorMode} = useColorMode();
+  const {togglePageToc, showPageToc, showPageTocButton} = usePageTocContext();
   const {pageWidth, togglePageWidth, showExpandButton} = usePageWidthContext();
 
   return (
@@ -154,6 +158,43 @@ export function Header({children, algoliaFilters}) {
             />
           </Tooltip>
         )}
+        <Tooltip
+          label={
+            showPageToc
+              ? 'Hide page table of contents'
+              : 'Show page table of contents'
+          }
+        >
+          <IconButton
+            aria-label="Toggle page table of contents"
+            fontSize="xl"
+            variant="ghost"
+            onClick={togglePageToc}
+            icon={
+              showPageToc ? (
+                <>
+                  <Icon
+                    as={DoubleChevronRightIcon}
+                    display="none"
+                    _dark={{
+                      display: 'block'
+                    }}
+                  />
+                </>
+              ) : (
+                <>
+                  <Icon
+                    as={DoubleChevronLeftIcon}
+                    display="block"
+                    _dark={{
+                      display: 'none'
+                    }}
+                  />{' '}
+                </>
+              )
+            }
+          />
+        </Tooltip>
         <Tooltip
           label={
             <Text>
