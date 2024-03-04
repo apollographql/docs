@@ -18,25 +18,25 @@ flowchart LR;
   end;
 ```
 
-- **The router** is powered by a particular version of the [Apollo Router](/router/).
+- The router is powered by a particular version of the [Apollo Router](/router/).
   - This is true for all supergraph types ([cloud](./#cloud-supergraphs) and [self-hosted](./#self-hosted-supergraphs)).
-- **The GraphOS build pipeline** uses a particular version of Apollo Federation to compose your router's supergraph schema.
+- The GraphOS build pipeline uses a particular version of Apollo Federation to compose your router's supergraph schema.
   - If you use the [Rover CLI](/rover/) to compose your supergraph schema, this is true for Rover as well. In this case, you effectively maintain your own build pipeline.
-- **Your subgraph schemas** might each use special directives that were first introduced in a particular version of Apollo Federation.
+- Your subgraph schemas might each use special directives that were first introduced in a particular version of Apollo Federation.
 
 These components each target support for a particular version of [Apollo Federation](/federation/), the architecture that underpins every supergraph. Because of this, it's important to make sure these various Federation versions remain compatible with each other as you make updates to individual components.
 
 ## Recommended update order
 
-**To avoid runtime or composition errors,** your supergraph's components should always maintain the following relationship between their targeted Apollo Federation versions:
+To avoid runtime or composition errors, your supergraph's components should always maintain the following relationship between their targeted Apollo Federation versions:
 
 <Note>
 
-(**Router** fed. version) ≥ (**Build Pipeline** fed. version) ≥ (**Subgraph** fed. version)
+(Router fed. version) ≥ (Build Pipeline fed. version) ≥ (Subgraph fed. version)
 
 </Note>
 
-To maintain this relationship, always update these supergraph components in order from **left to right**:
+To maintain this relationship, always update these supergraph components in order from left to right:
 
 ```mermaid
 graph LR;
@@ -49,9 +49,9 @@ graph LR;
 
 The method you use to update your router depends on which type of supergraph you have:
 
-- **If you have a [self-hosted supergraph](./#self-hosted-supergraphs),** you [download the latest Apollo Router binary](/router/quickstart#1-download-and-extract-the-apollo-router-binary) in every environment where your router runs.
+- If you have a [self-hosted supergraph](./#self-hosted-supergraphs), you [download the latest Apollo Router binary](/router/quickstart#1-download-and-extract-the-apollo-router-binary) in every environment where your router runs.
 
-- **If you have a [cloud supergraph](./#cloud-supergraphs),** GraphOS automatically updates your router to the latest supported version whenever that version changes.
+- If you have a [cloud supergraph](./#cloud-supergraphs), GraphOS automatically updates your router to the latest supported version whenever that version changes.
 
   - You can see which Apollo Router version you're running from the **Cloud Router** section of your variant's Settings page in [Studio](https://studio.apollographql.com/?referrer=docs-content):
 
@@ -66,7 +66,7 @@ For details on each Apollo Router version's corresponding Apollo Federation vers
 
 ## 2. Update your build pipeline
 
-Whenever you make an operational change to your graph (such as [publishing changes to a subgraph schema](../delivery/publishing-schemas/#publish-subgraph-schemas)), GraphOS initiates a **build** that composes your graph's new supergraph schema. From [GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content), you can configure which version of Apollo Federation the build pipeline uses to perform this composition.
+Whenever you make an operational change to your graph (such as [publishing changes to a subgraph schema](../delivery/publishing-schemas/#publish-subgraph-schemas)), GraphOS initiates a _build_ that composes your graph's new supergraph schema. From [GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content), you can configure which version of Apollo Federation the build pipeline uses to perform this composition.
 
 <Note>
 
@@ -104,7 +104,7 @@ If you host your own Apollo Router instance, you can use the [Rover CLI](/rover/
 
 <Note>
 
-**Performing composition with Rover is not recommended.** Instead, perform composition via the [GraphOS build pipeline](#2-update-your-build-pipeline) to help ensure a consistent schema delivery process across all your graph's environments.
+Performing composition with Rover is not recommended. Instead, perform composition via the [GraphOS build pipeline](#2-update-your-build-pipeline) to help ensure a consistent schema delivery process across all your graph's environments.
 
 </Note>
 
@@ -120,7 +120,7 @@ subgraphs:
   # ...
 ```
 
-This value **must** target a specific patch release (`2.3.1`, `2.3.2`, etc.), and it must start with an equals sign (`=`).
+This value must target a specific patch release (`2.3.1`, `2.3.2`, etc.), and it must start with an equals sign (`=`).
 
 <Caution>
 

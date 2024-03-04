@@ -22,7 +22,7 @@ The `persisted-queries publish` command assumes manifests are in the [format](/g
 
 </Note>
 
-**The `persisted-queries publish` command does the following:**
+The `persisted-queries publish` command does the following:
 
 1. Publishes all operations in the provided manifest file to the PQL linked to the specified variant, or to the specified PQL.
 
@@ -31,7 +31,7 @@ The `persisted-queries publish` command assumes manifests are in the [format](/g
 
 2. Updates any other variants that the PQL is applied to so that routers associated with those variants can fetch their updated PQL.
 
-As with [generating manifests](/graphos/operations/persisted-queries#31-generate-persisted-query-manifests), it's best to execute this command in your CI/CD pipeline to publish new operations as part of your app release process. The API key you supply to Rover must have the [role](/graphos/org/members#graph-api-key-roles) of **Graph Admin** or **Persisted Query Publisher**. **Persisted Query Publisher** is a special role designed for use with the `rover persisted-queries publish` command; API keys with this role have no other access to your graph's data in GraphOS, and are appropriate for sharing with trusted third party client developers who should be allowed to publish operations to your graph's PQL but should not otherwise have access to your graph.
+As with [generating manifests](/graphos/operations/persisted-queries#31-generate-persisted-query-manifests), it's best to execute this command in your CI/CD pipeline to publish new operations as part of your app release process. The API key you supply to Rover must have the [role](/graphos/org/members#graph-api-key-roles) of Graph Admin or Persisted Query Publisher. Persisted Query Publisher is a special role designed for use with the `rover persisted-queries publish` command; API keys with this role have no other access to your graph's data in GraphOS, and are appropriate for sharing with trusted third party client developers who should be allowed to publish operations to your graph's PQL but should not otherwise have access to your graph.
 
 #### Test operations
 

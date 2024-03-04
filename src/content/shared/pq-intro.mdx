@@ -1,4 +1,4 @@
-With [GraphOS Enterprise](/graphos/enterprise/), you can enhance your supergraph's security by maintaining a **persisted query list** (**PQL**) for your supergraph's self-hosted router. To create and update the PQL, first-party apps register trusted operations to the PQL at build time.
+With [GraphOS Enterprise](/graphos/enterprise/), you can enhance your supergraph's security by maintaining a _persisted query list_ (PQL) for your supergraph's self-hosted router. To create and update the PQL, first-party apps register trusted operations to the PQL at build time.
 
 ```mermaid
 flowchart LR
@@ -53,9 +53,9 @@ Router -.-|"❌ Router blocks <br/>unregistered operations"| Subgraphs
 class bad secondary;
 ```
 
-Your router can use its persisted query list (PQL) to both **protect your supergraph** and **speed up your clients' operations**:
+Your router can use its persisted query list (PQL) to both protect your supergraph and speed up your clients' operations:
 
-- When you enable **safelisting**, your router rejects any incoming operations not registered in its PQL.
+- When you enable _safelisting_, your router rejects any incoming operations not registered in its PQL.
 
 - Client apps can execute an operation by providing its PQL-specified ID instead of the entire operation string.
   - Requesting by ID can significantly reduce latency and bandwidth usage for large operation strings.

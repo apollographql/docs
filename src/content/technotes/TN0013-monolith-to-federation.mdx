@@ -15,7 +15,7 @@ For a complete, step-by-step tutorial, check out [Voyage II: Federating the mono
 
 As with any monolithic service, teams can struggle to change and maintain their GraphQL API as it grows larger and receives contributions from more developers.
 
-Breaking up the monolith into smaller GraphQL APIs might be the right strategy for your team. With Apollo Federation, you can break up a monolith without sacrificing the unified API that your client applications depend on. Each **subgraph** can be independently updated, deployed, and scaled while contributing to a single unified schema.
+Breaking up the monolith into smaller GraphQL APIs might be the right strategy for your team. With Apollo Federation, you can break up a monolith without sacrificing the unified API that your client applications depend on. Each _subgraph_ can be independently updated, deployed, and scaled while contributing to a single unified schema.
 
 Here are the steps we recommend to convert a monolithic GraphQL API into a federated GraphQL API.
 
@@ -178,7 +178,7 @@ After you've identified your entities, group them by their logical domain or con
 
 When you're deciding how to start migrating types to other subgraphs, it's helpful to consider a few things first:
 
-**How many related types will you have to migrate at the same time?**
+#### How many related types will you have to migrate at the same time?
 
 Count the number of value types associated with an entity. You'll need to copy all those types over to the new subgraph when you migrate the entity. Entities with fewer related scalars, enums, and non-entity object types will be a bit easier to migrate.
 
@@ -198,7 +198,7 @@ type Hotel @key(fields: "id", resolvable: false) {
 
 It might be safer and easier to move the entire `Room` type but only a "stub" of the `Hotel` type. The query planner can fetch the rest of the `Hotel` fields from the monolith until you move that type as well.
 
-**How complex will your query plans become during the migration?**
+#### How complex will your query plans become during the migration?
 
 If you start by moving a type that's deeply interconnected with other types, you might introduce unnecessary complexity to your router's query plans. For example, consider this query:
 

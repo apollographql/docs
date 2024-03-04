@@ -3,7 +3,7 @@ title: Deferring query response data with GraphOS
 description: Using the @defer directive
 ---
 
-With GraphOS, your supergraph's router can **defer** returning data for certain fields in your schema. This enables a querying client to receive non-deferred data more quickly, because the router can return it immediately instead of waiting for all response data to be ready:
+With GraphOS, your supergraph's router can _defer_ returning data for certain fields in your schema. This enables a querying client to receive non-deferred data more quickly, because the router can return it immediately instead of waiting for all response data to be ready:
 
 ```mermaid
 sequenceDiagram
@@ -20,7 +20,7 @@ Both [cloud supergraphs](../graphs/#cloud-supergraphs) and [self-hosted supergra
 
 <Note>
 
-**Deferring query fields requires a defer-compatible client library.** These libraries support receiving query data incrementally via multipart HTTP responses.
+Deferring query fields requires a defer-compatible client library. These libraries support receiving query data incrementally via multipart HTTP responses.
 
 Defer support is currently available in Apollo Client for [Web](/react/data/defer) and [Kotlin (experimental)](/kotlin/fetching/defer).
 
@@ -45,14 +45,14 @@ query GetTopProductsAndReviews {
 }
 ```
 
-When your supergraph's router receives this query, it defers every field in these fragments **[that it's able to](#which-fields-can-my-router-defer)**.
+When your supergraph's router receives this query, it defers every field in these fragments [that it's able to](#which-fields-can-my-router-defer).
 
 ## Which fields can my router defer?
 
 Your supergraph's router can defer the following fields in your schema:
 
 - Root fields of the `Query` type (along with their subfields)
-- Fields of any **entity** type (along with their subfields)
+- Fields of any entity type (along with their subfields)
   - Deferring entity fields is extremely powerful but requires some setup if you aren't using entities already. This is covered in more detail [below](#entity-fields).
 
 See below for more information on each of these.
@@ -80,7 +80,7 @@ With the query above, the router first returns a list of `User` IDs, then later 
 
 ### Entity fields
 
-Your router supports deferring fields of the special object types in your supergraph called [**entities**](/federation/entities/).
+Your router supports deferring fields of the special object types in your supergraph called entities.
 
 Entities are object types that often define their fields across multiple subgraphs (but they don't have to). You can identify an entity by its use of the `@key` directive. In the example subgraph schemas below, the `Product` type is an entity:
 

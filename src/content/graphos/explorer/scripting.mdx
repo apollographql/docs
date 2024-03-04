@@ -12,11 +12,11 @@ Preflight scripts are useful for managing authentication flows like OAuth, for e
 
 The Explorer lets you define two different types of scripts:
 
-- [**Preflight scripts**](#preflight-scripts): You can define a single preflight script per variant of a graph. This script runs **before every Explorer operation that's executed against the associated variant**.
+- [Preflight scripts](#preflight-scripts): You can define a single preflight script per variant of a graph. This script runs before every Explorer operation that's executed against the associated variant.
   - Preflight scripts are helpful for enabling organization-wide Explorer authentication to your graph.
-- [**Operation scripts**](#operation-scripts): If you use [operation collections](./operation-collections/), you can define one pre- and one post-operation script for each saved operation in a collection.
-  - Pre-operation scripts run before the operation executes. **They act as additional, per-operation preflight scripts.**
-  - Post-operation scripts run after the operation executes. **They act as per-operation postflight scripts.**
+- [Operation scripts](#operation-scripts): If you use [operation collections](./operation-collections/), you can define one pre- and one post-operation script for each saved operation in a collection.
+  - Pre-operation scripts run before the operation executes. They act as additional, per-operation, preflight scripts.
+  - Post-operation scripts run after the operation executes. They act as per-operation postflight scripts.
   - Operation scripts are helpful for testing or debugging the behavior of individual operations or [operation chains](#chaining-operations).
 
 ### Script execution order
@@ -36,11 +36,11 @@ graph LR
 
 ## Important considerations for Explorer scripts
 
-- Scripts are stored in the Apollo cloud **in plaintext**.
+- Scripts are stored in the Apollo cloud in plaintext.
 
   <Caution>
 
-  **Do not include secret credentials in scripts.** Instead, team members can provide their individual credentials to the Explorer via [environment variables](./connecting-authenticating/#environment-variables).
+  Do not include secret credentials in scripts. Instead, team members can provide their individual credentials to the Explorer via [environment variables](./connecting-authenticating/#environment-variables).
 
   </Caution>
 

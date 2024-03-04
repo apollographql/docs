@@ -3,13 +3,13 @@ title: API keys
 description: For Apollo GraphOS
 ---
 
-Every system that communicates with Apollo GraphOS must use an **API key** to do so. [GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content) enables you to create and manage two types of API keys: **graph API keys** and **personal API keys**.
+Every system that communicates with Apollo GraphOS must use an _API key_ to do so. [GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content) enables you to create and manage two types of API keys: _graph API keys_ and _personal API keys_.
 
 Any system that isn't running as part of your local development setup should always use a graph API key.
 
 ## Graph API keys
 
-A graph API key provides access to interacting with a **single graph** in GraphOS.
+A graph API key provides access to interacting with a _single graph_ in GraphOS.
 
 Create a unique graph API key for each non-development system that communicates with GraphOS. Doing so enables you to revoke access to a single system without affecting others.
 
@@ -17,7 +17,7 @@ Create a unique graph API key for each non-development system that communicates 
 
 ### Setting permissions
 
-Unless you have an Enterprise plan, every graph API key provides **full access** to its associated graph.
+Unless you have an Enterprise plan, every graph API key provides full access to its associated graph.
 
 If you have an Enterprise plan, you can [assign a role](./org/members/#graph-api-key-roles) to each graph API key you create. If you do, the API key's permissions are limited to that role's permissions.
 
@@ -25,7 +25,7 @@ You can't change a graph API key's role after it's created. Instead, create a ne
 
 ## Personal API keys
 
-A personal API key provides partial access to **every graph in every organization you belong to**. Specifically, it has the same permissions that your user account has in each of those organizations.
+A personal API key provides partial access to every graph in every organization you belong to. Specifically, it has the same permissions that your user account has in each of those organizations.
 
 Personal API keys are useful for local development tools (like the [Rover CLI](/rover/) and the Apollo [VS Code extension](/devtools/editor-plugins/)) to load schemas and other data from GraphOS.
 

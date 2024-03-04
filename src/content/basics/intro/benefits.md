@@ -11,7 +11,7 @@ Managing data in modern applications is challenging. Most applications require:
 
 By adopting GraphQL and Apollo, you can reduce these challenges considerably. GraphQL's declarative model helps you create a consistent, predictable API you can use across all your clients. As you add, remove, and migrate backend data stores, that API doesn't change from the client's perspective.
 
-Even with many other advantages, **GraphQL's single greatest benefit is the developer experience it provides.** It's straightforward to add new types and fields to your API, and similarly straightforward for your clients to begin using those fields. This helps you design, develop, and deploy features quickly.
+Even with many other advantages, GraphQL's single greatest benefit is the developer experience it provides. It's straightforward to add new types and fields to your API, and similarly straightforward for your clients to begin using those fields. This helps you design, develop, and deploy features quickly.
 
 Combined with Apollo open-source libraries, complex considerations like caching, data normalization, and optimistic UI rendering become straightforward as well.
 
@@ -21,14 +21,18 @@ GraphQL's declarative approach to data fetching provides significant performance
 
 Consider a webpage that displays a list of adorable pets that are available for adoption at local animal shelters. 🐶
 
-**Using REST**, the page might need to:
+### Using REST
+
+Using REST, the page might need to:
 
 1. `GET` a list of shelters and their corresponding `pet_id`s from the `/api/shelters` endpoint
 2. `GET` each individual pet's details (name, photo URL, etc.) with a separate request to `/api/pets/PET_ID`
 
 This solution requires multiple dependent network requests, which can result in slower page loads and additional battery consumption on mobile devices. This logic is also difficult to reuse on other pages that display slightly different data.
 
-**Using GraphQL**, the page can obtain all this data with a single query to a single endpoint. That query looks like this:
+### Using GraphQL
+
+Using GraphQL, the page can obtain all this data with a single query to a single endpoint. That query looks like this:
 
 ```graphql
 query GetPetsByShelter {
@@ -84,9 +88,9 @@ Thanks to GraphQL's [strong typing](https://graphql.org/learn/schema) and built-
 
 ### What is Apollo GraphOS?
 
-Apollo provides a cloud-hosted collection of tools that help you build your graph, measure its performance, and grow it safely. These tools are together known as [**Apollo GraphOS**](/graphos/).
+Apollo provides a cloud-hosted collection of tools that help you build your graph, measure its performance, and grow it safely. These tools are together known as [Apollo GraphOS](/graphos/).
 
-After registering your schema with GraphOS, you can use the **GraphOS Studio Explorer** to inspect all its types and fields. You can also build and run queries against your running server:
+After registering your schema with GraphOS, you can use the GraphOS Studio Explorer to inspect all its types and fields. You can also build and run queries against your running server:
 
 <img src="../img/explorer-tab.jpg" alt="Studio Explorer tab" class="screenshot" />
 
@@ -102,7 +106,7 @@ GraphQL's adoption has risen steadily since Facebook published the original [spe
 
 GraphQL scales with the requirements of even the largest organizations, largely because of its [powerful tooling](#graphql-enables-powerful-tooling) and its compatibility with a [federated architecture](/federation/).
 
-In a federated architecture (also known as a **supergraph**), a single GraphQL schema is split across multiple backend services. Each team in an organization can then own exactly the services (and the corresponding parts of the schema) that they should.
+In a federated architecture, also known as a _supergraph_, a single GraphQL schema is split across multiple backend services. Each team in an organization can then own exactly the services (and the corresponding parts of the schema) that they should.
 
 ### Organizations using GraphQL
 

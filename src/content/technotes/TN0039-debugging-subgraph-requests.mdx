@@ -43,7 +43,7 @@ The above uses an inline closure within the `map_request` function of the `subgr
 
 To enable query plans, you must run the Apollo Router with the `--dev` flag and leverage [Apollo Sandbox](https://studio.apollographql.com/sandbox) to [display your query plans](/graphos/explorer/additional-features/#query-plans-for-supergraphs).
 
-As an alternative to using `--dev`, you can also enable query plans via the below configuration option, however, Apollo **strongly** discourages this as the feature may be removed or renamed in the future.
+As an alternative to using `--dev`, you can also enable query plans via the below configuration option, however, Apollo strongly discourages this as the feature may be removed or renamed in the future.
 
 ```yaml
 plugins:
@@ -63,7 +63,11 @@ doing so to avoid leaking sensitive information into your logs.
 
 ```ts
 class DebugDataSource extends RemoteGraphQLDataSource {
-  willSendRequest({ request }: GraphQLDataSourceProcessOptions<Record<string, any>>): void | Promise<void> {
+  willSendRequest({
+    request
+  }: GraphQLDataSourceProcessOptions<
+    Record<string, any>
+  >): void | Promise<void> {
     console.log(`Operation name: ${request.operationName}`);
     console.log(`Query body: ${request.query}`);
   }
@@ -71,9 +75,9 @@ class DebugDataSource extends RemoteGraphQLDataSource {
 const gateway = new ApolloGateway({
   debug: true,
   supergraphSdl,
-  buildService({ url }) {
-    return new DebugDataSource({ url });
-  },
+  buildService({url}) {
+    return new DebugDataSource({url});
+  }
 });
 ```
 
