@@ -9,6 +9,7 @@ import {
   Center,
   Flex,
   HStack,
+  Hide,
   Icon,
   IconButton,
   Text,
@@ -158,43 +159,41 @@ export function Header({children, algoliaFilters}) {
             />
           </Tooltip>
         )}
-        <Tooltip
-          label={
-            showPageToc
-              ? 'Hide page table of contents'
-              : 'Show page table of contents'
-          }
-        >
-          <IconButton
-            aria-label="Toggle page table of contents"
-            fontSize="xl"
-            variant="ghost"
-            onClick={togglePageToc}
-            icon={
-              showPageToc ? (
-                <>
-                  <Icon
-                    as={DoubleChevronRightIcon}
-                    display="none"
-                    _dark={{
-                      display: 'block'
-                    }}
-                  />
-                </>
-              ) : (
-                <>
-                  <Icon
-                    as={DoubleChevronLeftIcon}
-                    display="block"
-                    _dark={{
-                      display: 'none'
-                    }}
-                  />{' '}
-                </>
-              )
-            }
-          />
-        </Tooltip>
+        <Hide below="xl">
+          <Tooltip
+            label={showPageToc ? 'Hide page contents' : 'Show page contents'}
+          >
+            <IconButton
+              aria-label="Toggle page table of contents"
+              fontSize="xl"
+              variant="ghost"
+              onClick={togglePageToc}
+              icon={
+                showPageToc ? (
+                  <>
+                    <Icon
+                      as={DoubleChevronRightIcon}
+                      display="none"
+                      _dark={{
+                        display: 'block'
+                      }}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <Icon
+                      as={DoubleChevronLeftIcon}
+                      display="block"
+                      _dark={{
+                        display: 'none'
+                      }}
+                    />{' '}
+                  </>
+                )
+              }
+            />
+          </Tooltip>
+        </Hide>
         <Tooltip
           label={
             <Text>
