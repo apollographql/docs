@@ -81,11 +81,10 @@ export function Docset({
         {description && <Text mb="4">{description}</Text>}
         <ButtonLink
           variant="link"
-          _dark={{
-            color: 'navy.100'
-          }}
+          textDecor="underline"
+          color="tertiary"
           mt="auto"
-          fontWeight="semibold"
+          fontWeight="normal"
           fontSize="lg"
           href={path}
           whiteSpace="normal"

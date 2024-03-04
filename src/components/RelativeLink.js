@@ -25,10 +25,11 @@ export const PrimaryLink = props => {
   ) : (
     <Link
       color="tertiary"
+      fontWeight="normal"
+      textDecor="underline"
       sx={{
         code: {
-          color: 'inherit',
-          textDecoration: 'underline'
+          color: 'inherit'
         }
       }}
       {...props}
