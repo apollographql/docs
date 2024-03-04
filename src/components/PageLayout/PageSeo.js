@@ -30,7 +30,7 @@ export function PageSeo({title, description, noindex}) {
       noindex={noindex}
       title={title}
       description={description}
-      canonical={siteUrl + uri}
+      canonical={siteUrl + uri.replace(/\/$/, '')}
       openGraph={{
         title,
         description,
@@ -48,7 +48,6 @@ export function PageSeo({title, description, noindex}) {
               textAreaWidth: 1120,
               cloudName: 'apollographql',
               imagePublicID: 'docs-thumbnail_z8ifvw'
-
             })
           }
         ]
@@ -59,7 +58,6 @@ export function PageSeo({title, description, noindex}) {
 
 PageSeo.propTypes = {
   title: PropTypes.string.isRequired,
-  docset: PropTypes.string.isRequired,
   description: PropTypes.string,
   noindex: PropTypes.bool
 };
