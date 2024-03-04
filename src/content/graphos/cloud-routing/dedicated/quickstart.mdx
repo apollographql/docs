@@ -43,16 +43,14 @@ To provision a new Dedicated cloud router, you must first create a new graph in 
 
 1. Next, connect your GraphQL API to Apollo.
 
-- If your API URL is publicly accessible, enter the API URL. This URL is the URL that client applications currently use to query your API.
-- If your API isn't publicly accessible and requires private networking, you can connect to it with [AWS VPC Lattice](../lattice). Select **My endpoint isn't publicly accessible** to connect a VPC. Follow the prompts to complete private subgraph setup.
+   - If your API URL is publicly accessible, enter the API URL. This URL is the URL that client applications currently use to query your API.
+   - If your API isn't publicly accessible and requires private networking, you can connect to it with [AWS VPC Lattice](../lattice). Select **My endpoint isn't publicly accessible** to connect a VPC. Follow the prompts to complete private subgraph setup.
 
-{' '}
-
-<img
-  className="screenshot"
-  alt="Cloud router configuration screen"
-  src="../../img/cloud-dedicated//my-endpoint-not-publicly-accessible.png"
-/>
+   <img
+     className="screenshot"
+     alt="Cloud router configuration screen"
+     src="../../img/cloud-dedicated//my-endpoint-not-publicly-accessible.png"
+   />
 
 2. Enter a **Subgraph name**. The name should reflect your API's data or capabilities and uniquely identify your API among any other APIs you might add to the supergraph later.
 

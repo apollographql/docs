@@ -8,7 +8,7 @@ description: Learn how to use the @tag directive in subgraph schemas andwhot to 
 
 <Note>
 
-The GraphOS Studio steps below require an organization member with the Org Admin or Graph Admin role. [Learn about member roles.](../org/members/)
+The GraphOS Studio steps below require an organization member with the **Org Admin** or **Graph Admin** role. [Learn about member roles.](../org/members/)
 
 </Note>
 
@@ -53,7 +53,7 @@ This step is required for Federation 1 supergraphs only. If you have a Federatio
 
 </Note>
 
-A contract uses one of your graph's existing [variants](/graphos/graphs/#variants) (called the source variant) to generate its contract schema. If your source variant uses Federation 1, you need to enable its support for the `@tag` directive in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content):
+A contract uses one of your graph's existing [variants](/graphos/graphs/#variants) (called the _source variant_) to generate its contract schema. If your source variant uses Federation 1, you need to enable its support for the `@tag` directive in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content):
 
 1. Open the Settings page for the variant you want to use as your source variant, then select the **This Variant** tab:
 
@@ -200,8 +200,8 @@ After publishing, if Studio doesn't reflect the `@tags` you've added in your sub
 
 A contract filters types and fields from its source variant according to the following rules:
 
-- If the Included Tags list is empty, the contract schema includes each type and object/interface field unless it's tagged with an excluded tag.
-- If the Included Tags list is non-empty, the contract schema excludes each union type and object/interface field unless it's tagged with an included tag.
+- If the **Included Tags** list is empty, the contract schema includes each type and object/interface field unless it's tagged with an excluded tag.
+- If the **Included Tags** list is non-empty, the contract schema excludes each union type and object/interface field unless it's tagged with an included tag.
   - Each object and interface type is included as long as at least one of its fields is included (unless the type is explicitly excluded)
   - The contract schema excludes a type or field if it's tagged with both an included tag and an excluded tag.
 - If you enable the option to hide unreachable types, the contract schema excludes each unreachable object, interface, union, input, enum, and scalar unless it's tagged with an included tag.
