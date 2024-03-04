@@ -82,7 +82,8 @@ export function Docset({
         <ButtonLink
           variant="link"
           textDecor="underline"
-          color="tertiary"
+          color="text"
+          _hover={{color: 'tertiary'}}
           mt="auto"
           fontWeight="normal"
           fontSize="lg"

@@ -10,23 +10,26 @@ export const PrimaryLink = props => {
   return props?.target === '_blank' ? (
     <ButtonLink
       variant="link"
+      color="text"
+      fontWeight="normal"
+      fontSize="lg"
+      textDecor="underline"
       iconSpacing="3px"
       marginRight="4px"
-      fontSize="lg"
-      color="tertiary"
+      _hover={{color: 'tertiary'}}
       sx={{
         code: {
-          color: 'inherit',
-          textDecoration: 'underline'
+          color: 'inherit'
         }
       }}
       {...props}
     />
   ) : (
     <Link
-      color="tertiary"
+      color="text"
       fontWeight="normal"
-      textDecor="underline"
+      textDecor={props?.href?.startsWith('#') ? 'none' : 'underline'}
+      _hover={{color: 'tertiary'}}
       sx={{
         code: {
           color: 'inherit'
