@@ -15,7 +15,6 @@ export function PageContent({
   ...props
 }) {
   const {pageRefCallback} = usePageWidthContext();
-  const {showPageToc} = usePageTocContext();
   return (
     <Flex
       ref={pageRefCallback}
@@ -41,7 +40,7 @@ export function PageContent({
         </Box>
         {pagination}
       </Box>
-      {showPageToc && aside}
+      {aside}
     </Flex>
   );
 }
