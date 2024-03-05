@@ -50,9 +50,7 @@ function useLinkProps(href) {
     if (
       url.host === window.location.host &&
       href.startsWith('https://www.apollographql.com/docs/') &&
-      !href.startsWith(
-        'https://www.apollographql.com/docs/ios/docc/documentation/'
-      )
+      !href.includes('/ios/docc/')
     ) {
       href = url.pathname;
     }
