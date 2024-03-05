@@ -9,7 +9,13 @@ import InlineCode from './InlineCode';
 import Pagination from './Pagination';
 import Prism from 'prismjs';
 import PropTypes from 'prop-types';
-import React, {Fragment, createElement, useMemo} from 'react';
+import React, {
+  Fragment,
+  createElement,
+  useCallback,
+  useMemo,
+  useState
+} from 'react';
 import RelativeLink, {ButtonLink, PrimaryLink} from './RelativeLink';
 import RuleExpansionPanel from './RuleExpansionPanel';
 import TableOfContents from './TableOfContents';
@@ -91,7 +97,6 @@ import {useApiDocContext} from './ApiDoc';
 import {useConfig} from '../utils/config';
 import {useFieldTableStyles} from '../utils';
 import {useMermaidStyles} from '../utils/mermaid';
-import {usePageTocContext} from './PageTocContext';
 
 // these must be imported after MarkdownCodeBlock
 import 'prismjs/components/prism-bash';
@@ -254,7 +259,11 @@ export default function Page({file}) {
 
   const mermaidStyles = useMermaidStyles();
   const fieldTableStyles = useFieldTableStyles();
-  const {togglePageToc, showPageToc} = usePageTocContext();
+  const [isTocHidden, setIsTocHidden] = useState(false);
+
+  const toggleTocHidden = useCallback(() => {
+    setIsTocHidden(!isTocHidden);
+  }, [isTocHidden]);
 
   const {childMdx, childMarkdownRemark, basePath, gitRemote, relativePath} =
     file;
@@ -484,7 +493,7 @@ export default function Page({file}) {
         pagination={<Pagination navItems={navItems} />}
         aside={
           toc !== false && headings.length ? (
-            showPageToc ? (
+            !isTocHidden ? (
               // hide the table of contents on the home page
               <chakra.aside
                 d={{base: 'none', xl: 'flex'}}
@@ -503,7 +512,7 @@ export default function Page({file}) {
                       aria-label="Hide sidebar"
                       fontSize="md"
                       variant="ghost"
-                      onClick={togglePageToc}
+                      onClick={toggleTocHidden}
                       icon={
                         <>
                           <Icon
@@ -542,7 +551,7 @@ export default function Page({file}) {
                     aria-label="Show sidebar"
                     fontSize="md"
                     variant="outline"
-                    onClick={togglePageToc}
+                    onClick={toggleTocHidden}
                     icon={
                       <>
                         <Icon
