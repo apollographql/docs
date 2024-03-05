@@ -498,16 +498,16 @@ export default function Page({file}) {
               >
                 <Heading size="md" mb="3">
                   On this page
-                  <Tooltip label="Collapse sidebar">
+                  <Tooltip label="Hide sidebar">
                     <IconButton
-                      aria-label="Collapse sidebar"
+                      aria-label="Hide sidebar"
                       fontSize="md"
                       variant="ghost"
                       onClick={togglePageToc}
                       icon={
                         <>
                           <Icon
-                            as={DoubleChevronLeftIcon}
+                            as={DoubleChevronRightIcon}
                             display="none"
                             _dark={{
                               display: 'block'
@@ -537,16 +537,16 @@ export default function Page({file}) {
                 css={{top: SCROLL_MARGIN_TOP}}
                 maxH={`calc(100vh - ${SCROLL_MARGIN_TOP}px - ${PAGE_PADDING_BOTTOM}px - ${PAGE_FOOTER_HEIGHT}px)`}
               >
-                <Tooltip label="Expand sidebar" placement="left">
+                <Tooltip label="Show sidebar" placement="left">
                   <IconButton
-                    aria-label="Expand sidebar"
+                    aria-label="Show sidebar"
                     fontSize="md"
                     variant="outline"
                     onClick={togglePageToc}
                     icon={
                       <>
                         <Icon
-                          as={DoubleChevronRightIcon}
+                          as={DoubleChevronLeftIcon}
                           display="none"
                           _dark={{
                             display: 'block'
