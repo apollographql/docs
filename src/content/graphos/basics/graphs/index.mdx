@@ -5,12 +5,12 @@ description: The heart of Apollo GraphOS
 
 GraphOS is a platform for building and managing _graphs_. Each graph corresponds to a GraphQL service in your organization.
 
-A GraphQL service usually runs in more than one environment (such as staging or production), so every graph in GraphOS has one or more _variants_ that each correspond to one environment:
+A GraphQL service usually runs in more than one environment—for example, staging or production—so every graph in GraphOS has one or more _variants_ that each correspond to one environment:
 
 ```mermaid
-graph TB;
+graph LR;
   subgraph "A graph in GraphOS";
-    direction LR
+    direction TB
     staging(Staging<br/>variant);
     production(Production<br/>variant);
   end;
@@ -84,9 +84,9 @@ Recommended for enterprise organizations that require full customization of thei
 </td>
 <td>
 
-_Not recommended._
-
 A single GraphQL service hosted in your infrastructure with no router.
+
+⚠️ Not recommended.
 
 </td>
 </tr>
@@ -99,7 +99,7 @@ A single GraphQL service hosted in your infrastructure with no router.
 
 <Note>
 
-Cloud supergraphs require an Apollo organization on the Serverless (free or paid) or Dedicated plan. [Learn more about plans.](../org/plans/#current-plans)
+Cloud supergraphs require an Apollo organization on the Serverless (free or paid) or Dedicated plan.
 
 </Note>
 
@@ -146,11 +146,16 @@ flowchart LR;
 
 Even if your API currently uses only one GraphQL server, a cloud supergraph helps you add more subgraphs later as your organization grows.
 
-<Tip>
-
-[Get started with a cloud supergraph.](../quickstart/cloud/)
-
-</Tip>
+<p>
+  <ButtonLink
+    href="/../quickstart/cloud/"
+    style={{
+      marginRight: '10px'
+    }}
+  >
+    Get started with a cloud supergraph
+  </ButtonLink>
+</p>
 
 ### Self-hosted supergraphs
 
@@ -177,25 +182,24 @@ flowchart LR;
 
 Your self-hosted router is an instance of [the Apollo Router](/router/) (cloud supergraphs use the Apollo Router under the hood).
 
-<Tip>
-
-[See the Apollo Router docs.](/router/)
-
-</Tip>
-
 Self-hosted supergraphs provide full control over your router, but they also require handling its deployment and management. Before you adopt this graph type, make sure you have the necessary team structure to properly manage an additional service in your infrastructure.
 
-<Tip>
-
-[Get started with a self-hosted supergraph.](../quickstart/self-hosted/)
-
-</Tip>
+<p>
+  <ButtonLink
+    href="../quickstart/self-hosted/"
+    style={{
+      marginRight: '10px'
+    }}
+  >
+    Get started with a self-hosted supergraph
+  </ButtonLink>
+</p>
 
 ### Monographs
 
 <EnterpriseFeature>
 
-Monographs require an Apollo organization on the Enterprise plan. [Learn more about plans.](../org/plans/)
+Monographs require an Apollo organization on the Enterprise plan.
 
 </EnterpriseFeature>
 

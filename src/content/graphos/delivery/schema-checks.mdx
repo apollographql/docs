@@ -21,15 +21,15 @@ With the exception of [contract checks](#types-of-checks), schema checks are fre
 
 GraphOS can perform the following types of schema checks:
 
-- [_Composition checks_](#composition-checks): For supergraphs, verify whether your proposed changes to a subgraph schema will successfully compose with your other subgraph schemas.
+- [Composition checks](#composition-checks): For supergraphs, verify whether your proposed changes to a subgraph schema will successfully compose with your other subgraph schemas.
 
-- [_Operation checks_](#operation-checks): Compare your proposed schema changes against historical operations to verify whether the changes will break any of your graph's active clients.
+- [Operation checks](#operation-checks): Compare your proposed schema changes against historical operations to verify whether the changes will break any of your graph's active clients.
 
-- [_Linter checks_](./schema-linter/): Analyze your proposed schema changes for violations of formatting rules and other GraphQL best practices.
+- [Linter checks](./schema-linter/): Analyze your proposed schema changes for violations of formatting rules and other GraphQL best practices.
 
-- [_Proposals checks_](./schema-proposals/configuration#configure-schema-checks) (Enterprise only): Check whether your proposed schema changes have matching and approved [schema proposals](./schema-proposals).
+- [Proposals checks](./schema-proposals/configuration#configure-schema-checks) (Enterprise only): Check whether your proposed schema changes have matching and approved [schema proposals](./schema-proposals).
 
-- [_Contract checks_](./contract-setup/#run-contract-checks) (Enterprise only): When running schema checks on a source variant, also check whether your proposed schema changes will break any downstream contract variants.
+- [Contract checks](./contract-setup/#run-contract-checks) (Enterprise only): When running schema checks on a source variant, also check whether your proposed schema changes will break any downstream contract variants.
 
 Most of this article covers composition and operation checks.
 

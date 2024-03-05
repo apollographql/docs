@@ -18,11 +18,11 @@ flowchart LR;
   end;
 ```
 
-- The router is powered by a particular version of the [Apollo Router](/router/).
+- **The router** is powered by a particular version of the [Apollo Router](/router/).
   - This is true for all supergraph types ([cloud](./#cloud-supergraphs) and [self-hosted](./#self-hosted-supergraphs)).
-- The GraphOS build pipeline uses a particular version of Apollo Federation to compose your router's supergraph schema.
+- **The GraphOS build pipeline** uses a particular version of Apollo Federation to compose your router's supergraph schema.
   - If you use the [Rover CLI](/rover/) to compose your supergraph schema, this is true for Rover as well. In this case, you effectively maintain your own build pipeline.
-- Your subgraph schemas might each use special directives that were first introduced in a particular version of Apollo Federation.
+- **Your subgraph schemas** might each use special directives that were first introduced in a particular version of Apollo Federation.
 
 These components each target support for a particular version of [Apollo Federation](/federation/), the architecture that underpins every supergraph. Because of this, it's important to make sure these various Federation versions remain compatible with each other as you make updates to individual components.
 

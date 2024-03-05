@@ -15,8 +15,8 @@ The Explorer lets you define two different types of scripts:
 - [Preflight scripts](#preflight-scripts): You can define a single preflight script per variant of a graph. This script runs before every Explorer operation that's executed against the associated variant.
   - Preflight scripts are helpful for enabling organization-wide Explorer authentication to your graph.
 - [Operation scripts](#operation-scripts): If you use [operation collections](./operation-collections/), you can define one pre- and one post-operation script for each saved operation in a collection.
-  - Pre-operation scripts run before the operation executes. They act as additional, per-operation, preflight scripts.
-  - Post-operation scripts run after the operation executes. They act as per-operation postflight scripts.
+  - _Pre-operation scripts_ run before the operation executes. They act as additional, per-operation, preflight scripts.
+  - _Post-operation scripts_ run after the operation executes. They act as per-operation postflight scripts.
   - Operation scripts are helpful for testing or debugging the behavior of individual operations or [operation chains](#chaining-operations).
 
 ### Script execution order

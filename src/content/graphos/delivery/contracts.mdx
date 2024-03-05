@@ -6,7 +6,7 @@ description: Use Apollo GraphOS contracts to tailor access to your federated Gra
 
 <EnterpriseFeature linkWithAnchor="https://www.apollographql.com/pricing#collaboration" />
 
-A unified supergraph provides a single source of truth for your organization's data. That data likely has different consumers with different needs and permissions. GraphOS contracts enable you to deliver different subsets of your supergraph to different consumers.
+A unified supergraph provides a single source of truth for your organization's data. That data likely has different consumers with different needs and permissions. GraphOS _contracts_ enable you to deliver different subsets of your supergraph to different consumers.
 
 ```mermaid
 graph LR;
@@ -28,15 +28,15 @@ Each contract can include different fields and types from each subgraph.
 
 Contracts offer these benefits:
 
-- Selective data access: Supergraphs often contain a wide range of data, including information that's irrelevant to specific audiences. Contracts declaratively grant access to specific subsets of the supergraph, so graph consumers only access relevant data.
+- **Selective data access**: Supergraphs often contain a wide range of data, including information that's irrelevant to specific audiences. Contracts declaratively grant access to specific subsets of the supergraph, so graph consumers only access relevant data.
 
-- Data security and privacy: Contracts bolster data security and privacy by enabling the exclusion of confidential data from certain consumers. This ensures that only authorized parties can access sensitive data.
+- **Data security and privacy**: Contracts bolster data security and privacy by enabling the exclusion of confidential data from certain consumers. This ensures that only authorized parties can access sensitive data.
 
-- Documentation and guidance: Contracts provide [documentation](#contract-documentation) to client developers. Contract-specific documentation helps developers better understand and more easily interact with the data they are authorized to access.
+- **Documentation and guidance**: Contracts provide [documentation](#contract-documentation) to client developers. Contract-specific documentation helps developers better understand and more easily interact with the data they are authorized to access.
 
 ## How contracts work
 
-Each contract filters specific portions of your supergraph's schema into a different GraphOS [variant](/graphos/graphs/federated-graphs/#supergraph-variants):
+Each contract filters specific portions of your supergraph's schema into a different GraphOS variant:
 
 ```mermaid
 graph LR;
