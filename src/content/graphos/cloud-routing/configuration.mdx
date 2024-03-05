@@ -22,7 +22,6 @@ After you create a cloud supergraph, you can view and manage its router's config
     src="../img/cloud-dedicated/dedicated-configuration.png"
   />
 
-
 This page shows the following information:
 
 - The URL of your router's GraphQL endpoint
@@ -44,7 +43,7 @@ To add a new secret, click **Save a secret**. The following dialog appears:
   width="500"
 />
 
-Enter a name and value for your secret. **You can't view a secret's value after you save it**, so make sure that the value is correct before saving. When you're ready, click **Save secret**.
+Enter a name and value for your secret. You can't view a secret's value after you save it, so make sure that the value is correct before saving. When you're ready, click **Save secret**.
 
 Your secret is encrypted and stored. You can then use the secret's value in your router's YAML configuration.
 
@@ -63,14 +62,13 @@ headers:
 
 You can configure your router's behavior in **Router configuration YAML** on the **Cloud Router** tab or page.
 
-On the [**Serverless** plan](../org/plans/), you can configure:
+On the [Serverless plan](../org/plans/), you can configure:
 
 - [HTTP headers](#http-header-rules) that the router sends to your subgraphs
 - [CORS rules](#cors-settings) for browser-based applications connecting to the router
 - [Subgraph error inclusion](#subgraph-error-inclusion) to expose subgraph errors to querying clients (including the Apollo Explorer)
 
 * [Introspection](#introspection) to allow resolving introspection queries.
-
 
 [Dedicated and Enterprise plans](../org/plans/) offer a [wider variety of configurations](/router/configuration/overview#yaml-config-file).
 
@@ -294,7 +292,7 @@ You can enable credentials with CORS by setting the [`Access-Control-Allow-Crede
 
 <Note>
 
-**Your router must specify individual `origins` to support credentialed requests.** If your router enables `allow_any_origin`, your browser will refuse to send credentials.
+Your router must specify individual `origins` to support credentialed requests. If your router enables `allow_any_origin`, your browser will refuse to send credentials.
 
 </Note>
 

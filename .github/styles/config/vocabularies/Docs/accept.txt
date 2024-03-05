@@ -43,8 +43,6 @@ Dynatrace
 GCUs?
 Gradle
 Grafana
-graphql
-GraphQL
 gzipped
 heatmaps?
 [Ii]nitialisms?

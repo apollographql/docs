@@ -1,4 +1,3 @@
-
 ```mermaid
 flowchart LR;
   client(Client);
@@ -13,14 +12,14 @@ flowchart LR;
 
 1. A client executes a GraphQL subscription operation against your router over HTTP:
 
-    ```graphql title="Example subscription"
-    subscription OnStockPricesChanged {
-      stockPricesChanged {
-        symbol
-        price
-      }
-    }
-    ```
+   ```graphql title="Example subscription"
+   subscription OnStockPricesChanged {
+     stockPricesChanged {
+       symbol
+       price
+     }
+   }
+   ```
 
    - The client doesn't use a WebSocket protocol. Instead, it receives updates via [multipart HTTP responses](https://www.apollographql.com/docs/router/executing-operations/subscription-multipart-protocol/).
    - By using HTTP for subscriptions, clients can execute all GraphQL operation types over HTTP instead of using two different protocols.

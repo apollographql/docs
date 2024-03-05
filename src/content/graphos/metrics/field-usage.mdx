@@ -161,7 +161,7 @@ query GetFavoriteMedia {
 }
 ```
 
-If `Query.favoriteMedia` returns a `Book` object here, then `Book.title` is resolved one time. However, the original query does not reference `Book.title`. Instead, it references **`Media.title`**, because `Query.favoriteMedia` has a return type of `Media`.
+If `Query.favoriteMedia` returns a `Book` object here, then `Book.title` is resolved one time. However, the original query does not reference `Book.title`. Instead, it references `Media.title`, because `Query.favoriteMedia` has a return type of `Media`.
 
 Therefore, this query contributes zero requests and one execution for `Book.title`. It also contributes one request for `Media.title`. Note that interface fields always have zero executions.
 

@@ -73,7 +73,7 @@ type Movie implements Product {
 }
 ```
 
-The query planner deterministically chooses **one** subgraph to resolve the `Query.search` field. (It calculates all valid query plans for the operation and chooses the "cheapest" one.)
+The query planner deterministically chooses one subgraph to resolve the `Query.search` field. (It calculates all valid query plans for the operation and chooses the "cheapest" one.)
 
 If the query planner chooses `Query.search` within the Books subgraph, that subgraph can provide only books, not movies.
 
@@ -90,7 +90,7 @@ Now the Books subgraph can return `Movie` instances, but that means it needs acc
 
 ## Solution: Create a new subgraph
 
-When product requirements don't fit cleanly into a single domain, it often indicates that we need a new domain. Let's design a system that includes a new **search domain**. This includes a search index and a Search subgraph that provides the `Query.search` root field.
+When product requirements don't fit cleanly into a single domain, it often indicates that we need a new domain. Let's design a system that includes a new search domain. This includes a search index and a Search subgraph that provides the `Query.search` root field.
 
 ```mermaid
 graph LR
@@ -109,10 +109,10 @@ graph LR
 
 This pattern works for all the use cases listed above:
 
-- **Search**: A search index (such as Elasticsearch) is the most efficient way to search through a variety of data types and return only the most relevant results.
-- **Combining lists**: A combined index is the most efficient way to list and paginate through a variety of data types. Fetching multiple lists and combining them on the fly usually means overfetching pages of data and throwing data away when it isn't part of the result.
-- **Filtering**: A data store can contain indices on various attributes of a variety of data types and efficiently filter results on those attributes.
-- **Derived aggregates**: Many data stores can efficiently compute a derived value such as `AVG(products.rating)`, or we can write precomputed derived value to a data store.
+- Search: A search index (such as Elasticsearch) is the most efficient way to search through a variety of data types and return only the most relevant results.
+- Combining lists: A combined index is the most efficient way to list and paginate through a variety of data types. Fetching multiple lists and combining them on the fly usually means overfetching pages of data and throwing data away when it isn't part of the result.
+- Filtering: A data store can contain indices on various attributes of a variety of data types and efficiently filter results on those attributes.
+- Derived aggregates: Many data stores can efficiently compute a derived value such as `AVG(products.rating)`, or we can write precomputed derived value to a data store.
 
 We can remove the `Query.search` root field from both the Books and Movies subgraphs and instead add it to our new Search subgraph:
 
@@ -137,7 +137,7 @@ type Movie implements Product @key(fields: "id") {
 }
 ```
 
-The query plan first uses the **Search** subgraph to return a polymorphic list of `Book`s and `Movie`s with their `id` and `title` fields. Then in parallel, it joins with the Books subgraph to fetch `Book.authors` and joins with the Movies subgraph to fetch `Movie.directors`.
+The query plan first uses the Search subgraph to return a polymorphic list of `Book`s and `Movie`s with their `id` and `title` fields. Then in parallel, it joins with the Books subgraph to fetch `Book.authors` and joins with the Movies subgraph to fetch `Movie.directors`.
 
 <ExpansionPanel title="Click to expand query plan">
 

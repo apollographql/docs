@@ -7,13 +7,14 @@ description: Learn how to calculate and scale the throughput capacity of your cl
 <DedicatedPreview />
 
 This guide covers:
-- An overview of **Graph Compute Units** (GCUs) and their performance expectations
+
+- An overview of _Graph Compute Units_ (GCUs) and their performance expectations
 - How to calculate the number of GCUs your supergraph needs
 - How to manage your supergraph's throughput capacity as needs change
 
 ## Overview
 
-Cloud Dedicated pricing is based on the amount of **Graph Compute Units** (GCUs) needed to run your graph. A GCU is a unit of throughput capacity that takes into account:
+Cloud Dedicated pricing is based on the amount of Graph Compute Units (GCUs) needed to run your graph. A GCU is a unit of throughput capacity that takes into account:
 
 - Processing incoming GraphQL requests
 - Making a query plan across subgraphs
@@ -71,7 +72,7 @@ If you already use GraphOS, you can calculate your required GCUs using the opera
   src="../../img/cloud-dedicated/insights-page.png"
 />
 
-2. Scroll down to the **Request Rate** chart. This chart shows the request rate in requests per minute (RPM). 
+2. Scroll down to the **Request Rate** chart. This chart shows the request rate in requests per minute (RPM).
 3. To calculate your required requests per second (RPS), find the peak RPM and divide it by 60.
 4. Since, as [a baseline](#performance-expectations), 1 GCU can serve 25 RPS, divide your peak RPS by 25 to calculate your required GCUs.
 
@@ -82,8 +83,8 @@ If you already use GraphOS, you can calculate your required GCUs using the opera
 />
 
 - In the example above, the peak is **19,000 RPM**.
-- _19,000 / 60 = 317_, so the graph has a peak of **317 RPS**.
-- _317 / 25 = 13_, so this workload requires at least **13 GCUs** to operate.
+- `19,000 / 60 = 317`, so the graph has a peak of **317 RPS**.
+- `317 / 25 = 13`, so this workload requires at least **13 GCUs** to operate.
 
 <Note>
 
@@ -104,8 +105,9 @@ Cloud Dedicated supports mission-critical production workloads, and you can scal
 Dedicated supports up to 10 GCUs per GraphOS variant.
 
 Dedicated starts with 1 GCU per variant. You can change a variant's GCUs via either:
-* [GraphOS Studio](#edit-gcus-in-studio)
-* [The Platform API](#edit-gcus-via-api)
+
+- [GraphOS Studio](#edit-gcus-in-studio)
+- [The Platform API](#edit-gcus-via-api)
 
 <Note>
 

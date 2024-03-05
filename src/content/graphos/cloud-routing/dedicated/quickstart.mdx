@@ -23,7 +23,7 @@ If you have multiple subgraphs, each needs to be exposed to Apollo. Your supergr
 
 <Note>
 
-In a supergraph, each GraphQL API is called a **subgraph**. Apollo refers to these GraphQL APIs as subgraphs, even if you only connect one GraphQL API.
+In a supergraph, each GraphQL API is called a _subgraph_. Apollo refers to these GraphQL APIs as subgraphs, even if you only connect one GraphQL API.
 
 The Apollo Router doesn't supported nested federation—that is, a subgraph cannot act as a supergraph for another set of subgraphs.
 
@@ -42,14 +42,15 @@ To provision a new Dedicated cloud router, you must first create a new graph in 
 ## Step 2. Connect APIs
 
 1. Next, connect your GraphQL API to Apollo.
-  - If your API URL is publicly accessible, enter the API URL. This URL is the URL that client applications currently use to query your API.
-  - If your API isn't publicly accessible and requires private networking, you can connect to it with [AWS VPC Lattice](../lattice). Select **My endpoint isn't publicly accessible** to connect a VPC. Follow the prompts to complete private subgraph setup.
 
-  <img
-    className="screenshot"
-    alt="Cloud router configuration screen"
-    src="../../img/cloud-dedicated//my-endpoint-not-publicly-accessible.png"
-  />
+   - If your API URL is publicly accessible, enter the API URL. This URL is the URL that client applications currently use to query your API.
+   - If your API isn't publicly accessible and requires private networking, you can connect to it with [AWS VPC Lattice](../lattice). Select **My endpoint isn't publicly accessible** to connect a VPC. Follow the prompts to complete private subgraph setup.
+
+   <img
+     className="screenshot"
+     alt="Cloud router configuration screen"
+     src="../../img/cloud-dedicated//my-endpoint-not-publicly-accessible.png"
+   />
 
 2. Enter a **Subgraph name**. The name should reflect your API's data or capabilities and uniquely identify your API among any other APIs you might add to the supergraph later.
 
@@ -62,6 +63,7 @@ To provision a new Dedicated cloud router, you must first create a new graph in 
 3. Select the backend **provider** and **region** to deploy your cloud router in.
 4. Optionally, configure headers, secrets, CORS rules, or other configurations. You can always [update your router configuration](#step-3-inspect-and-configure-your-cloud-router) as needed.
 5. Provide a **Supergraph name** and **ID**.
+
    - The supergraph name is displayed throughout Studio and helps your team distinguish between your graphs. You can change your graph's name at any time.
    - The ID is immutable and must be unique across all of Apollo. Ensure it starts with a letter and contains only letters, numbers, and dashes. You'll use the ID to reference your graph from various tools, such as the Rover CLI.
 
@@ -81,7 +83,7 @@ Every router configuration or supergraph schema change—including adding a subg
 
 <Note>
 
-The launch process typically takes 1-2 minutes but may take up to 5 minutes. During the process, Apollo provisions new GCUs and swaps them in once they're online. Deployments minimize API degradation and downtime. 
+The launch process typically takes 1-2 minutes but may take up to 5 minutes. During the process, Apollo provisions new GCUs and swaps them in once they're online. Deployments minimize API degradation and downtime.
 
 </Note>
 
