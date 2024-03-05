@@ -537,9 +537,9 @@ export default function Page({file}) {
                 css={{top: SCROLL_MARGIN_TOP}}
                 maxH={`calc(100vh - ${SCROLL_MARGIN_TOP}px - ${PAGE_PADDING_BOTTOM}px - ${PAGE_FOOTER_HEIGHT}px)`}
               >
-                <Tooltip label="Show sidebar" placement="left">
+                <Tooltip label="Expand sidebar" placement="left">
                   <IconButton
-                    aria-label="Show sidebar"
+                    aria-label="Expand sidebar"
                     fontSize="md"
                     variant="outline"
                     onClick={togglePageToc}
