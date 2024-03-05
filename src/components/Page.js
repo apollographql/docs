@@ -9,7 +9,13 @@ import InlineCode from './InlineCode';
 import Pagination from './Pagination';
 import Prism from 'prismjs';
 import PropTypes from 'prop-types';
-import React, {Fragment, createElement, useMemo} from 'react';
+import React, {
+  Fragment,
+  createElement,
+  useCallback,
+  useMemo,
+  useState
+} from 'react';
 import RelativeLink, {ButtonLink, PrimaryLink} from './RelativeLink';
 import RuleExpansionPanel from './RuleExpansionPanel';
 import TableOfContents from './TableOfContents';
@@ -27,6 +33,8 @@ import {
   Button,
   HStack,
   Heading,
+  Icon,
+  IconButton,
   ListItem,
   OrderedList,
   Table,
@@ -36,13 +44,20 @@ import {
   Text,
   Th,
   Thead,
+  Tooltip,
   Tr,
   UnorderedList,
   chakra
 } from '@chakra-ui/react';
 import {Caution} from './Caution';
 import {CustomHeading, MinVersionTag} from './CustomHeading';
-import {DiscordIcon, GitHubIcon, QuoteIcon} from './Icons';
+import {
+  DiscordIcon,
+  DoubleChevronLeftIcon,
+  DoubleChevronRightIcon,
+  GitHubIcon,
+  QuoteIcon
+} from './Icons';
 import {
   EmbeddableExplorer,
   MarkdownCodeBlock,
@@ -244,6 +259,11 @@ export default function Page({file}) {
 
   const mermaidStyles = useMermaidStyles();
   const fieldTableStyles = useFieldTableStyles();
+  const [isTocHidden, setIsTocHidden] = useState(false);
+
+  const toggleTocHidden = () => {
+    setIsTocHidden(isTocHidden => !isTocHidden);
+  };
 
   const {childMdx, childMarkdownRemark, basePath, gitRemote, relativePath} =
     file;
@@ -473,27 +493,80 @@ export default function Page({file}) {
         pagination={<Pagination navItems={navItems} />}
         aside={
           toc !== false && headings.length ? (
-            // hide the table of contents on the home page
-            <chakra.aside
-              d={{base: 'none', xl: 'flex'}}
-              flexDirection="column"
-              ml={{base: 10, xl: 16}}
-              w={250}
-              flexShrink="0"
-              pos="sticky"
-              css={{top: SCROLL_MARGIN_TOP}}
-              maxH={`calc(100vh - ${SCROLL_MARGIN_TOP}px - ${PAGE_PADDING_BOTTOM}px - ${PAGE_FOOTER_HEIGHT}px)`}
-            >
-              <Heading size="md" mb="3">
-                On this page
-              </Heading>
-              <TableOfContents
-                headings={headings}
-                // jc: passing undefined here as headingDepth returns null if it doesn't exist in the frontmatter
-                // and we need undefined in order to make use of default props
-                headingDepth={headingDepth ?? undefined}
-              />
-            </chakra.aside>
+            !isTocHidden ? (
+              // hide the table of contents on the home page
+              <chakra.aside
+                d={{base: 'none', xl: 'flex'}}
+                flexDirection="column"
+                ml={{base: 10, xl: 16}}
+                w={250}
+                flexShrink="0"
+                pos="sticky"
+                css={{top: SCROLL_MARGIN_TOP}}
+                maxH={`calc(100vh - ${SCROLL_MARGIN_TOP}px - ${PAGE_PADDING_BOTTOM}px - ${PAGE_FOOTER_HEIGHT}px)`}
+              >
+                <Heading size="md" mb="3">
+                  On this page
+                  <Tooltip label="Hide sidebar">
+                    <IconButton
+                      aria-label="Hide sidebar"
+                      fontSize="md"
+                      variant="ghost"
+                      onClick={toggleTocHidden}
+                      icon={
+                        <>
+                          <Icon
+                            as={DoubleChevronRightIcon}
+                            display="none"
+                            _dark={{
+                              display: 'block'
+                            }}
+                          />
+                        </>
+                      }
+                    />
+                  </Tooltip>
+                </Heading>
+
+                <TableOfContents
+                  headings={headings}
+                  // jc: passing undefined here as headingDepth returns null if it doesn't exist in the frontmatter
+                  // and we need undefined in order to make use of default props
+                  headingDepth={headingDepth ?? undefined}
+                />
+              </chakra.aside>
+            ) : (
+              <chakra.aside
+                d={{base: 'none', xl: 'flex'}}
+                flexDirection="column"
+                ml={{base: 10, xl: 16}}
+                w={'1em'}
+                flexShrink="0"
+                pos="sticky"
+                css={{top: SCROLL_MARGIN_TOP}}
+                maxH={`calc(100vh - ${SCROLL_MARGIN_TOP}px - ${PAGE_PADDING_BOTTOM}px - ${PAGE_FOOTER_HEIGHT}px)`}
+              >
+                <Tooltip label="Show sidebar" placement="left">
+                  <IconButton
+                    aria-label="Show sidebar"
+                    fontSize="md"
+                    variant="outline"
+                    onClick={toggleTocHidden}
+                    icon={
+                      <>
+                        <Icon
+                          as={DoubleChevronLeftIcon}
+                          display="none"
+                          _dark={{
+                            display: 'block'
+                          }}
+                        />
+                      </>
+                    }
+                  />
+                </Tooltip>
+              </chakra.aside>
+            )
           ) : null
         }
       >
