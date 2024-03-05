@@ -4,7 +4,7 @@ subtitle: Validate all proposed changes to your schema are safe
 description: Use GraphOS Schema checks to identify and validate potential breaking changes in your GraphQL schema before deployment.
 ---
 
-Certain changes to your graph's schema (such as removing a field or type) might break one of your application's clients. GraphOS provides **schema checks** to help you identify breaking changes before you make them, and to help you identify when a potentially dangerous change is in fact safe.
+Certain changes to your graph's schema (such as removing a field or type) might break one of your application's clients. GraphOS schema checks help you identify breaking changes before you make them. They can also help you identify when a potentially dangerous change is in fact safe.
 
 You can review the results of schema checks inside GraphOS Studio from your graph's Checks page, helping you make informed decisions about evolving your graph:
 
@@ -15,21 +15,21 @@ You can review the results of schema checks inside GraphOS Studio from your grap
   width="300"
 />
 
-With the exception of [contract checks](#types-of-checks), schema checks are **free** as part of [all Apollo plans](https://www.apollographql.com/pricing/).
+With the exception of [contract checks](#types-of-checks), schema checks are free as part of [all Apollo plans](https://www.apollographql.com/pricing/).
 
 ## Types of checks
 
 GraphOS can perform the following types of schema checks:
 
-- [**Composition checks**](#composition-checks): For supergraphs, verify whether your proposed changes to a subgraph schema will successfully compose with your other subgraph schemas.
+- [Composition checks](#composition-checks): For supergraphs, verify whether your proposed changes to a subgraph schema will successfully compose with your other subgraph schemas.
 
-- [**Operation checks**](#operation-checks): Compare your proposed schema changes against historical operations to verify whether the changes will break any of your graph's active clients.
+- [Operation checks](#operation-checks): Compare your proposed schema changes against historical operations to verify whether the changes will break any of your graph's active clients.
 
-- [**Linter checks**](./schema-linter/): Analyze your proposed schema changes for violations of formatting rules and other GraphQL best practices.
+- [Linter checks](./schema-linter/): Analyze your proposed schema changes for violations of formatting rules and other GraphQL best practices.
 
-- [**Proposals checks**](./schema-proposals/configuration#configure-schema-checks) (Enterprise only): Check whether your proposed schema changes have matching and approved [schema proposals](./schema-proposals).
+- [Proposals checks](./schema-proposals/configuration#configure-schema-checks) (Enterprise only): Check whether your proposed schema changes have matching and approved [schema proposals](./schema-proposals).
 
-- **[Contract checks](./contract-setup/#run-contract-checks)** (Enterprise only): When running schema checks on a source variant, also check whether your proposed schema changes will break any downstream contract variants.
+- [Contract checks](./contract-setup/#run-contract-checks) (Enterprise only): When running schema checks on a source variant, also check whether your proposed schema changes will break any downstream contract variants.
 
 Most of this article covers composition and operation checks.
 
@@ -74,7 +74,7 @@ rover subgraph check docs-example-graph@main --name products --schema ./schema.g
 
 It requires the following:
 
-- Your registered graph's **graph ref**, which a string with the format `graph-id@variant-name` (for example, `docs-example-graph@main`). This is available from your supergraph's README page in GraphOS Studio.
+- Your registered graph's _graph ref_, which a string with the format `graph-id@variant-name` (for example, `docs-example-graph@main`). This is available from your supergraph's README page in GraphOS Studio.
 
 - The locally modified version of your schema. In the command above, the schema is provided via a `.graphql` file.
 
@@ -117,7 +117,7 @@ Each change to the schema is labeled either `PASS` or `FAIL`.
 
 <Note>
 
-Because breaking changes are detected by analyzing recent operations, your graph must [report metrics to GraphOS](#prerequisites) for schema checks to work. **If there are no operation metrics to compare against, all potentially dangerous schema changes are labeled `FAIL`.**
+Because breaking changes are detected by analyzing recent operations, your graph must [report metrics to GraphOS](#prerequisites) for schema checks to work. If there are no operation metrics to compare against, all potentially dangerous schema changes are labeled `FAIL`.
 
 </Note>
 
@@ -157,21 +157,21 @@ If you've [integrated schema checks with your GitHub PRs](#integrating-with-gith
 
 ## Composition checks
 
-When you run `rover subgraph check`, GraphOS performs a **composition check** before it performs any other checks. A composition check verifies that changes you make to a subgraph schema are valid GraphQL definitions and are compatible with your other subgraph schemas, enabling them to compose into a supergraph schema for your router ([learn more](/federation/federated-types/composition/)).
+When you run `rover subgraph check`, GraphOS performs a _composition check_ before it performs any other checks. A composition check verifies that changes you make to a subgraph schema are valid GraphQL definitions and are compatible with your other subgraph schemas, enabling them to compose into a supergraph schema for your router ([learn more](/federation/federated-types/composition/)).
 
-**If a composition check fails, Studio does not then perform additional checks for the provided schema.**
+If a composition check fails, Studio does not then perform additional checks for the provided schema.
 
 From your graph's Checks page in GraphOS Studio, you can click a particular composition check to view its result. If composition succeeded, you can view the composed supergraph schema. Regardless of success, you can view the proposed subgraph schema.
 
 ## Operation checks
 
-If a [composition check](#composition-checks) succeeds, GraphOS then validates schema changes with **operation checks**. These checks use your graph's historical client operation data to determine whether any clients would be negatively affected by the proposed schema changes. For example, the changes might include removing a field that multiple clients currently include in their queries.
+If a [composition check](#composition-checks) succeeds, GraphOS then validates schema changes with _operation checks_. These checks use your graph's historical client operation data to determine whether any clients would be negatively affected by the proposed schema changes. For example, the changes might include removing a field that multiple clients currently include in their queries.
 
 ### Overriding flagged changes
 
 Occasionally, schema checks might flag a change that you know is safe. For example, you might change an input type's field from nullable to non-nullable (usually a breaking change) when you're certain that your clients never provide a null value for the field.
 
-In cases like this, you can **override** a flagged change in GraphOS Studio from the associated check's details page:
+In cases like this, you can override a flagged change in GraphOS Studio from the associated check's details page:
 
 <img
   className="screenshot"
@@ -193,13 +193,13 @@ For more info on linter checks, see [Schema linting](./schema-linter/).
 
 ## Proposals checks
 
-<EnterpriseFeature linkWithAnchor="https://www.apollographql.com/pricing#delivery-pipeline"/>
+<EnterpriseFeature linkWithAnchor="https://www.apollographql.com/pricing#delivery-pipeline" />
 
 For more info on proposals checks, see the [schema proposals documentation](./schema-proposals/).
 
 ## Contract checks
 
-<EnterpriseFeature linkWithAnchor="https://www.apollographql.com/pricing#delivery-pipeline"/>
+<EnterpriseFeature linkWithAnchor="https://www.apollographql.com/pricing#delivery-pipeline" />
 
 For more info on contract checks, see the [contracts documentation](./contracts/).
 
@@ -277,15 +277,15 @@ Not every change to a schema is a potentially breaking change. Additive changes 
 
 These changes remove a schema element. If a removed element is actively being used by an operation, that operation will start returning an error.
 
-| Name                          | Description                                                                                                                               |
-| ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| `FIELD_REMOVED`               | A field used by at least one operation was removed.                                                                                       |
-| `TYPE_REMOVED`                | A scalar or object used by at least one operation was removed.                                                                            |
-| `ARG_REMOVED`                 | An argument used by at least one operation was removed from a field.                                                                      |
-| `TYPE_REMOVED_FROM_UNION`     | A type was removed from a union used by at least one operation.                                                                           |
+| Name                          | Description                                                                                                                             |
+| ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `FIELD_REMOVED`               | A field used by at least one operation was removed.                                                                                     |
+| `TYPE_REMOVED`                | A scalar or object used by at least one operation was removed.                                                                          |
+| `ARG_REMOVED`                 | An argument used by at least one operation was removed from a field.                                                                    |
+| `TYPE_REMOVED_FROM_UNION`     | A type was removed from a union used by at least one operation.                                                                         |
 | `INPUT_FIELD_REMOVED`         | A field was removed from an input type. That field is referenced by an argument on another field that's used by at least one operation. |
-| `VALUE_REMOVED_FROM_ENUM`     | A value was removed from an enum used by at least one operation.                                                                          |
-| `TYPE_REMOVED_FROM_INTERFACE` | An object was removed from an interface used by at least one operation.                                                                   |
+| `VALUE_REMOVED_FROM_ENUM`     | A value was removed from an enum used by at least one operation.                                                                        |
+| `TYPE_REMOVED_FROM_INTERFACE` | An object was removed from an interface used by at least one operation.                                                                 |
 
 #### Addition of required arguments
 
@@ -306,12 +306,12 @@ In some cases, in-place updates are compatible with affected clients at runtime 
 
 </Note>
 
-| Name                       | Description                                                                                                                                              |
-| -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `FIELD_CHANGED_TYPE`       | An existing field used by at least one operation changed its type.                                                                                       |
+| Name                       | Description                                                                                                                                            |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `FIELD_CHANGED_TYPE`       | An existing field used by at least one operation changed its type.                                                                                     |
 | `INPUT_FIELD_CHANGED_TYPE` | An existing field of an input object changed its type. That field is referenced by an argument on another field that's used by at least one operation. |
-| `TYPE_CHANGED_KIND`        | An existing type used by at least one operation changed its "kind." For example, an object type was changed to a union type.                             |
-| `ARG_CHANGED_TYPE`         | An existing argument on a field used by at least one operation changed its type.                                                                         |
+| `TYPE_CHANGED_KIND`        | An existing type used by at least one operation changed its "kind." For example, an object type was changed to a union type.                           |
+| `ARG_CHANGED_TYPE`         | An existing argument on a field used by at least one operation changed its type.                                                                       |
 
 #### Default arguments
 

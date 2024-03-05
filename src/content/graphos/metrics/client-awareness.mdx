@@ -4,7 +4,7 @@ subtitle: Understand how different clients use your graph
 description: Leverage client awareness in GraphOS Studio to view GraphQL operation metrics segmented by clients, including client versions.
 ---
 
-In GraphOS Studio, you can view GraphQL operation metrics broken down by the different clients—such as your web, iOS, and Android apps—that execute those operations. This feature, called **client awareness**, becomes increasingly useful as you create additional clients that consume your supergraph.
+In GraphOS Studio, you can view GraphQL operation metrics broken down by the different clients—such as your web, iOS, and Android apps—that execute those operations. This feature, called _client awareness_, becomes increasingly useful as you create additional clients that consume your supergraph.
 
 <Note>
 
@@ -39,7 +39,7 @@ Your supergraph's router checks for the presence of the following HTTP headers i
 
 If one or both of these headers are present, your router automatically extracts their values and includes them in the metrics data it sends to GraphOS.
 
-**If you're using Apollo Client**, you can populate these headers automatically for every operation request by providing the `name` and `version` options to the `ApolloClient` constructor, like so:
+If you're using Apollo Client, you can populate these headers automatically for every operation request by providing the `name` and `version` options to the `ApolloClient` constructor, like so:
 
 ```js {8-9}
 import {ApolloClient} from 'apollo-client';
@@ -54,7 +54,7 @@ const client = new ApolloClient({
 });
 ```
 
-**If you're using another GraphQL client,** consult its documentation to learn how to add custom HTTP headers to every outgoing request.
+If you're using another GraphQL client, consult its documentation to learn how to add custom HTTP headers to every outgoing request.
 
 ## Common use cases
 
@@ -64,7 +64,7 @@ By filtering your graph's metrics by client (and client version with Enterprise)
 
 ### Deprecate, change, and remove fields safely
 
-Modifying or removing an existing field in your schema is often a **breaking change** for the clients that use that field. Client awareness gives you a breakdown of which clients use which fields in your schema, enabling you to determine the impact of such a change:
+Modifying or removing an existing field in your schema is often a breaking change for the clients that use that field. Client awareness gives you a breakdown of which clients use which fields in your schema, enabling you to determine the impact of such a change:
 
 <img
   src="../img/client-awareness/field-usage.png"

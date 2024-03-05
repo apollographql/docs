@@ -124,8 +124,8 @@ These levels allow you to [incrementally adopt](#incremental-adoption-path) pers
 
 Persisted queries provide benefits to different teams:
 
-- Safelisting helps **platform teams** secure the graph and optimize its performance.
-- **Application developers** can use registered operation IDs to write performant client code.
+- Safelisting helps platform teams secure the graph and optimize its performance.
+- Application developers can use registered operation IDs to write performant client code.
 
 Implementation also requires collaboration among these parties. These are the main steps for implementing persisted queries for safelisting, along with the team that usually performs them:
 
@@ -181,7 +181,7 @@ Continue reading for each step's details, or skip to the [incremental adoption s
 
 ### 1. PQL creation and linking
 
-To use persisted queries, you first need a **persisted query list** (**PQL**) in GraphOS Studio.
+To use persisted queries, you first need a _persisted query list_ (PQL) in GraphOS Studio.
 Platform teams create an empty PQL in GraphOS Studio so that client teams can register operations to it.
 
 Each PQL is associated or "linked" with a single graph in GraphOS. A graph, however, can have several PQLs. For example, one graph may need multiple PQLs if you want a separate PQL for each [contract variant](../delivery/contracts/). You can link a PQL to any variants of its graph. And although many variants may use the same PQL, each variant can only have one linked PQL at a time.
@@ -302,7 +302,7 @@ Building both of these into your CI/CD pipeline incorporates new operations auto
 
 #### 3.1 Generate persisted query manifests
 
-Once a PQL exists in GraphOS, client teams can start publishing operations to it. To do so, you must generate JSON **manifests** of the operations to publish. You generate a separate manifest for each of your client apps.
+Once a PQL exists in GraphOS, client teams can start publishing operations to it. To do so, you must generate JSON manifests of the operations to publish. You generate a separate manifest for each of your client apps.
 
 <ExpansionPanel title="See an example manifest file with two operations">
 
@@ -359,8 +359,8 @@ See the instructions for your client library:
    npx generate-persisted-query-manifest
    ```
 
-   - **If the command succeeds,** your manifest is written to `persisted-query-manifest.json`.
-   - **If the command fails** (or if your manifest doesn't include all the operations you expect it to), you can configure the command's behavior using the options described in the [package README](https://www.npmjs.com/package/@apollo/generate-persisted-query-manifest).
+   - If the command succeeds, your manifest is written to `persisted-query-manifest.json`.
+   - If the command fails (or if your manifest doesn't include all the operations you expect it to), you can configure the command's behavior using the options described in the [package README](https://www.npmjs.com/package/@apollo/generate-persisted-query-manifest).
 
 [See the full Apollo Client persisted queries guide for detailed instructions](/react/api/link/persisted-queries/).
 
@@ -656,9 +656,9 @@ Each operation object has the following properties:
 
 The unique ID to use for the operation in your PQL.
 
-**This value must be unique among operations in the PQL.** It can match a previously published operation as long as the operation's [`body`](#body) remains the same. If you try to publish an operation with the same `id` as an existing operation but a different body, manifest publication throws an error. GraphOS interprets this as an attempt to overwrite the existing PQL entry with a new [`body`](#body), which would change the behavior of existing deployed clients.
+This value must be unique among operations in the PQL. It can match a previously published operation as long as the operation's [`body`](#body) remains the same. If you try to publish an operation with the same `id` as an existing operation but a different body, manifest publication throws an error. GraphOS interprets this as an attempt to overwrite the existing PQL entry with a new [`body`](#body), which would change the behavior of existing deployed clients.
 
-**To ensure uniqueness,** tooling should generate this value based on the operation `body`. For details, see [Generating IDs](#generating-ids).
+To ensure uniqueness, tooling should generate this value based on the operation `body`. For details, see [Generating IDs](#generating-ids).
 
 </td>
 </tr>
@@ -721,7 +721,7 @@ By generating identifiers based on query documents this way, you ensure that dif
 
 <Caution>
 
-**Never use an operation's name for its PQL ID.** Different clients (or even different versions of the same client) might execute different operations with the same name, and all those distinct operations should be present in your PQL.
+Never use an operation's name for its PQL ID. Different clients (or even different versions of the same client) might execute different operations with the same name, and all those distinct operations should be present in your PQL.
 
 </Caution>
 
@@ -732,9 +732,9 @@ Whenever a client sends an operation string to a router with safelisting enabled
 When comparing an incoming freeform GraphQL document to the registered operations in its PQL, the router **ignores some aspects** of the document that have no semantic impact:
 
 - [Ignored tokens](http://spec.graphql.org/draft/#sec-language.source-text.ignored-tokens) such as white space, comments, and commas are ignored.
-- The order of **top-level** definitions (operation and fragment definitions) is ignored. This means that when assembling a full GraphQL document from its operation and fragments, there's no need to ensure that fragments are put in the same order at build time and at run time.
+- The order of top-level definitions (operation and fragment definitions) is ignored. This means that when assembling a full GraphQL document from its operation and fragments, there's no need to ensure that fragments are put in the same order at build time and at run time.
 
-However, **all other details of the document must match**. For example, field order, argument order, `$variable` names, alias names, string and numeric literals, and the presence of `__typename` fields must match between the incoming freeform GraphQL document and the document in the persisted query list.
+However, all other details of the document must match. For example, field order, argument order, `$variable` names, alias names, string and numeric literals, and the presence of `__typename` fields must match between the incoming freeform GraphQL document and the document in the persisted query list.
 
 <Note>
 

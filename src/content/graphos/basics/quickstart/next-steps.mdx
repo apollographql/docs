@@ -15,7 +15,7 @@ You should always start by [installing the Rover CLI](#first-install-the-rover-c
 
 The Rover CLI is the primary command-line interface for interacting with GraphOS. You'll use Rover both locally and in CI environments to perform a variety of actions on your supergraph and its individual subgraphs.
 
-[**Install Rover**](/rover/getting-started), then return to this article.
+[Install Rover](/rover/getting-started), then return to this article.
 
 ## Run your supergraph locally
 
@@ -25,7 +25,7 @@ See [this article](../graphs/local-development/).
 
 ### Update a subgraph schema
 
-When you first set up your cloud supergraph, GraphOS Studio fetches your existing GraphQL API's schema. Your existing API becomes the first **subgraph** in your supergraph:
+When you first set up your cloud supergraph, GraphOS Studio fetches your existing GraphQL API's schema. Your existing API becomes the first subgraph in your supergraph:
 
 ```mermaid
 flowchart LR;
@@ -43,7 +43,7 @@ flowchart LR;
 
 This initial schema fetch is a one-time action to help you get started. Whenever your API's schema changes, Studio doesn't automatically fetch it again. This means your router doesn't know about those changes. Clients can't include any new schema fields in their queries until your router does know about the changes!
 
-Whenever you update your subgraph's schema, you need to **publish** those changes with the Rover CLI. [Learn about publishing subgraph schemas.](../delivery/publishing-schemas/#publish-subgraph-schemas)
+Whenever you update your subgraph's schema, you need to publish those changes with the Rover CLI. [Learn about publishing subgraph schemas.](../delivery/publishing-schemas/#publish-subgraph-schemas)
 
 After learning about the publishing process, you should [integrate it into your CI workflow](#set-up-continuous-delivery).
 
@@ -79,7 +79,7 @@ See [Adding a new subgraph](../graphs/federated-graphs#adding-a-new-subgraph).
 
 ### Add another variant
 
-Most supergraphs have multiple **variants**, each of which represents that supergraph running in a different environment (for example, production, staging, development).
+Most supergraphs have multiple variants, each of which represents that supergraph running in a different environment (for example, production, staging, development).
 
 If your supergraph runs in multiple environments, you should create a different variant for each.
 
@@ -87,7 +87,7 @@ If your supergraph runs in multiple environments, you should create a different 
 
 ### Enable federation features
 
-Supergraphs use an architecture called **Apollo Federation**. Federation is at its most powerful when your subgraphs share responsibility for some of your schema's types, instead of defining mutually exclusive types and fields.
+Supergraphs use an architecture called Apollo Federation. Federation is at its most powerful when your subgraphs share responsibility for some of your schema's types, instead of defining mutually exclusive types and fields.
 
 <Tip>
 
@@ -95,7 +95,7 @@ Supergraphs use an architecture called **Apollo Federation**. Federation is at i
 
 </Tip>
 
-To take full advantage of federation features, each of your subgraphs needs to use a GraphQL server library that conforms to the **Apollo Federation subgraph specification**. Fortunately, many popular server libraries do!
+To take full advantage of federation features, each of your subgraphs needs to use a GraphQL server library that conforms to the Apollo Federation subgraph specification. Fortunately, many popular server libraries do!
 
 1. To check whether your current GraphQL server library supports the subgraph specification, see [this article](/federation/building-supergraphs/supported-subgraphs).
    - If your library does support the spec, consult its documentation to learn how to enable its federation support. For Apollo Server, see [this article](/apollo-server/using-federation/apollo-subgraph-setup).

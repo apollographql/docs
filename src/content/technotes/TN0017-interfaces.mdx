@@ -58,7 +58,11 @@ type Query {
 }
 ```
 
-**This is not a recommended use for interfaces!** Note that in this schema, `Nameable` is never used as the return type for a field. This means that clients have no way to take advantage of this polymorphic relationship in their operations.
+<Caution>
+
+This is not a recommended use for interfaces! Note that in this schema, `Nameable` is never used as the return type for a field. This means that clients have no way to take advantage of this polymorphic relationship in their operations.
+
+</Caution>
 
 The lack of valid client use cases indicates a code smell. The `Nameable` interface is unnecessary, and it might cause problems when making changes to your schema in the future. And because distributing an interface across subgraphs presents its own challenges, removing unnecessary interfaces usually makes life simpler.
 

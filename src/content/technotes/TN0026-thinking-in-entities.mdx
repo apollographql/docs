@@ -19,7 +19,7 @@ Not an enterprise customer? [Learn about GraphOS for Enterprise.](/graphos/enter
 
 ## Define, reference, and extend entities as needed
 
-The [Apollo Federation specification](/federation/subgraph-spec/) indicates that an Object or Interface type can be made into an entity by adding the `@key` directive to its definition in a subgraph schema. The `@key` directive defines a **primary key** for the entity and its `fields` argument will contain one or more of the type's fields. In the following example, the `Product` entity's primary key would be its `upc` field:
+The [Apollo Federation specification](/federation/subgraph-spec/) indicates that an Object or Interface type can be made into an entity by adding the `@key` directive to its definition in a subgraph schema. The `@key` directive defines a unique key for the entity and its `fields` argument will contain one or more of the type's fields. In the following example, the `Product` entity's primary key would be its `upc` field:
 
 ```graphql title="Products Subgraph"
 type Product @key(fields: "upc") {
@@ -60,7 +60,7 @@ type Product @key(fields: "upc") {
 }
 ```
 
-When extending entities, it's important to keep in mind that **the entity's originating subgraph will not be aware of the added fields**. Additionally, each field in an entity must only be defined once or the gateway will encounter schema composition errors.
+When extending entities, it's important to keep in mind that _the entity's originating subgraph will not be aware of the added fields_. Additionally, each field in an entity must only be defined once or the gateway will encounter schema composition errors.
 
 ## Work from the entities outward
 

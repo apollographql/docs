@@ -10,20 +10,20 @@ description: Reference for valid @tag locations, naming conventions, dependent t
 
 ### Valid `@tag` locations
 
-**In both Federation 1 and Federation 2,** you can apply tags to the following schema elements to filter your contract schema:
+In both Federation 1 and Federation 2, you can apply tags to the following schema elements to filter your contract schema:
 
 - Object, interface, and union type definitions
 - Fields of object types
   - Federation 1 doesn't support tagging fields of interface types.
   - In Federation 1, you can still make an interface field inaccessible by tagging the interface definition or by ensuring that object fields that implement the interface field are removed.
 
-**In Federation 2 only,** you can also apply tags to the following:
+In Federation 2 only, you can also apply tags to the following:
 
 - Fields of interface types
 - Enum types and their values
 - Input types and their fields
 - Definitions of custom scalar types
-- Arguments of fields, **but not directive arguments**
+- Arguments of fields, but not directive arguments
 
 ### Valid `@tag` names
 
@@ -47,7 +47,7 @@ type User {
   }
   ```
 
-- Whenever you tag the definition of an object, interface, or union type, **you should always** apply that same tag to every field that returns that type:
+- Whenever you tag the definition of an object, interface, or union type, you should always apply that same tag to every field that returns that type:
 
   ```graphql {1,7}
   type BillingAccount @tag(name: "internal") {

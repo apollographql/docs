@@ -17,7 +17,7 @@ Not an enterprise customer? [Learn about GraphOS for Enterprise.](/graphos/enter
 
 Union types in GraphQL are an excellent way to represent multiple types of data in a single field. This can be extremely useful when dealing with different types of responses, such as success and error cases. By leveraging union types, developers can create a flexible and expressive API that handles different scenarios elegantly and efficiently.
 
-One of the core features of GraphQL is its built-in error handling mechanism, which uses an **`errors`** array in the response to represent any errors that occurred during the request. However, not all errors may want to be included in this array. If we are following the Errors as Data pattern, the **`errors`** array should be used for system errors—those that would typically result in an HTTP 500 error.
+One of the core features of GraphQL is its built-in error handling mechanism, which uses an `errors` array in the response to represent any errors that occurred during the request. However, not all errors may want to be included in this array. If we are following the Errors as Data pattern, the `errors` array should be used for system errors—those that would typically result in an HTTP 500 error.
 
 System errors can include situations like:
 
@@ -77,7 +77,7 @@ type InvalidPaymentMethodError implements CheckoutError {
 }
 ```
 
-In the schema above, the **`checkout`** mutation returns a **`CheckoutResponse`** union type that can be one of the following types: **`Order`**, **`InsufficientStockError`**, or **`InvalidPaymentMethodError`**. The client can handle each of these cases explicitly, ensuring a clear and expressive API design.
+In the schema above, the `checkout` mutation returns a `CheckoutResponse` union type that can be one of the following types: `Order`, `InsufficientStockError`, or `InvalidPaymentMethodError`. The client can handle each of these cases explicitly, ensuring a clear and expressive API design.
 
 Now, let's look at a sample operation and the possible response handling:
 
@@ -113,8 +113,8 @@ mutation OrderCheckout($payment: ID!) {
 
 In this mutation, the client requests different fields for each possible response type:
 
-1. For a successful order creation (**`Order`**), the client retrieves the order details, including the items, total price, and status.
-2. For an insufficient stock error (**`InsufficientStockError`**), the client retrieves the error message, the affected product, and the available stock information. This information can be used to display a user-friendly error message and suggest alternative actions, such as updating the cart.
-3. For an invalid payment method error (**`InvalidPaymentMethodError`**), the client retrieves the error message and the problematic payment method ID. This can be used to inform the user about the issue and prompt them to update their payment information.
+1. For a successful order creation (`Order`), the client retrieves the order details, including the items, total price, and status.
+2. For an insufficient stock error (`InsufficientStockError`), the client retrieves the error message, the affected product, and the available stock information. This information can be used to display a user-friendly error message and suggest alternative actions, such as updating the cart.
+3. For an invalid payment method error (`InvalidPaymentMethodError`), the client retrieves the error message and the problematic payment method ID. This can be used to inform the user about the issue and prompt them to update their payment information.
 
-By using the union type **`CheckoutResponse`**, the API provides a clean and flexible way to handle the different response scenarios that can occur during the checkout process. This allows the client to handle each case explicitly, provides strong typing for operation responses and enhances the developer experience.
+By using the union type `CheckoutResponse`, the API provides a clean and flexible way to handle the different response scenarios that can occur during the checkout process. This allows the client to handle each case explicitly, provides strong typing for operation responses and enhances the developer experience.

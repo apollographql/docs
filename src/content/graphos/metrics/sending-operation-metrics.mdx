@@ -25,11 +25,11 @@ How you report operation metrics to GraphOS depends on whether you're [using Apo
 
 Both the Apollo Router and Apollo Server use the same mechanism to enable operation metrics reporting to GraphOS:
 
-1. Obtain a **graph API key** from GraphOS Studio.
+1. Obtain a _graph API key_ from GraphOS Studio.
 
    <ObtainGraphApiKey />
 
-2. Obtain the **graph ref** for the graph and variant you want to report metrics for. You can find your variant's graph ref at the top of the variant's README page in Studio. It has the format `graph-id@variant-name` (such as `my-graph@staging`).
+2. Obtain the _graph ref_ for the graph and variant you want to report metrics for. You can find your variant's graph ref at the top of the variant's README page in Studio. It has the format `graph-id@variant-name` (such as `my-graph@staging`).
 
 3. Use the obtained values to set the following environment variables in your environment before starting up your router/server:
 
@@ -51,7 +51,7 @@ Now, when your router or server starts up, it automatically begins reporting ope
 You can set up a reporting agent in your GraphQL server to push metrics to GraphOS. The agent is responsible for:
 
 - Translating operation details into the correct [reporting format](#reporting-format)
-- Implementing a default **signature function** to identify each executed operation
+- Implementing a default signature function to identify each executed operation
 - Emitting batches of traces and metrics to the GraphOS reporting endpoint
 - Optionally defining plugins to enable advanced reporting features
 
@@ -59,19 +59,19 @@ Apollo Server defines its agent for performing these tasks in [the usage reporti
 
 <Note>
 
-If you're interested in collaborating with Apollo on creating a dedicated integration for your GraphQL server, please contact us at **support@apollographql.com**.
+If you're interested in collaborating with Apollo on creating a dedicated integration for your GraphQL server, please contact us at support@apollographql.com.
 
 </Note>
 
 #### Reporting format
 
-The GraphOS reporting endpoint accepts batches of traces and metrics that are encoded in **protocol buffer** format. Each trace corresponds to the execution of a single GraphQL operation, including a breakdown of the timing and error information for each field that's resolved as part of the operation. The schema for this protocol buffer is defined as the `Report` message in [the protobuf schema](https://usage-reporting.api.apollographql.com/proto/reports.proto).
+The GraphOS reporting endpoint accepts batches of traces and metrics that are encoded in _protocol buffer_ format. Each trace corresponds to the execution of a single GraphQL operation, including a breakdown of the timing and error information for each field that's resolved as part of the operation. The schema for this protocol buffer is defined as the `Report` message in [the protobuf schema](https://usage-reporting.api.apollographql.com/proto/reports.proto).
 
 [The protobuf schema](https://usage-reporting.api.apollographql.com/proto/reports.proto) document describes how to create a report whose `tracesPerQuery` objects consist solely of a list of detailed execution traces in the `trace` array. GraphOS now allows your server to describe usage as a mix of detailed execution traces and pre-aggregated metrics (released in Apollo Server 2.24), which leads to much more efficient reports. This document doesn't describe how to generate these metrics. Nor does it describe how to report the number of requests for a particular operation shown in the [**Clients & Operations** table](./field-usage#field-details) on the Insights page.
 
 <Note>
 
-We strongly encourage developers to contact Apollo support at **support@apollographql.com** to discuss their use case before building their own reporting agent using this module.
+We strongly encourage developers to contact Apollo support at support@apollographql.com to discuss their use case before building their own reporting agent using this module.
 
 </Note>
 
@@ -143,7 +143,7 @@ The request can also optionally include a `Content-Type` header with value `appl
 
 <Caution>
 
-**The reporting endpoint rejects reports that are older than 50 minutes.** If you see an error like `Rejecting report from service {your service} with skewed timestamp`, ensure your traces are current and that your timestamp calculations are accurate.
+The reporting endpoint rejects reports that are older than 50 minutes. If you see an error like `Rejecting report from service {your service} with skewed timestamp`, ensure your traces are current and that your timestamp calculations are accurate.
 
 </Caution>
 

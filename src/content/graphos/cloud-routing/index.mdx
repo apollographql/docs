@@ -4,7 +4,7 @@ subtitle: Learn about Apollo-managed cloud routers
 description: Learn about Apollo's managed cloud routers designed to efficiently route requests to your GraphQL APIs, ensuring optimal performance and scalability.
 ---
 
-When you create a cloud supergraph with GraphOS Studio, GraphOS automatically provisions and manages a **router** that acts as an entry point to your GraphQL APIs. In this architecture, individual GraphQL APIs are called **subgraphs**. Clients send operations to your router's public endpoint, instead of sending them directly to your subgraphs.
+When you create a cloud supergraph with GraphOS Studio, GraphOS automatically provisions and manages a _router_ that acts as an entry point to your GraphQL APIs. In this architecture, individual GraphQL APIs are called _subgraphs_. Clients send operations to your router's public endpoint, instead of sending them directly to your subgraphs.
 
 ```mermaid
 flowchart LR;
@@ -60,13 +60,13 @@ When you first create a variant, the router provisioning process can take a few 
   width="500"
 />
 
-Once initialized, you can [configure  your cloud router](./configuration).
+Once initialized, you can [configure your cloud router](./configuration).
 
 ### Cloud router regions
 
 Cloud routing for Serverless plans is only available in Chicago, USA. Apollo's infrastructure has interconnects with major public cloud providers, so latency is minimal. For example, latency between Chicago and AWS in Virginia is approximately 10 ms.
 
-Dedicated cloud routers have a wider [variety of options](./dedicated#runs-on-aws). Region selection for cloud routers is only available on the Dedicated plan. <TrackableLink href="https://www.apollographql.com/contact-sales?type=dedicated&referrer=docs" eventName="content_contact_cloud">Contact Sales</TrackableLink> to learn more. 
+Dedicated cloud routers have a wider [variety of options](./dedicated#runs-on-aws). Region selection for cloud routers is only available on the Dedicated plan. <TrackableLink href="https://www.apollographql.com/contact-sales?type=dedicated&referrer=docs" eventName="content_contact_cloud">Contact Sales</TrackableLink> to learn more.
 
 ## Cloud launches
 
@@ -99,7 +99,7 @@ This doesn't apply cloud routers on the Dedicated plan.
 
 </Note>
 
-**Apollo automatically deletes variants of Serverless cloud supergraphs that receive zero operations for 60 consecutive days.** This deletes the router, along with all the variant's historical metrics.
+Apollo automatically deletes variants of Serverless cloud supergraphs that receive zero operations for 60 consecutive days. This deletes the router, along with all the variant's historical metrics.
 
 - Apollo will notify you via email whenever a Serverless variant is approaching this 60-day limit.
 - To prevent deletion, execute at least one GraphQL operation on the variant's router before the 60-day limit.

@@ -19,23 +19,23 @@ For more information on SDUI in general, see [Server-driven UI basics](/technote
 
 ## Component registry
 
-Once your API has more control over which components apps should render, you need to define the mapping from GraphQL types to the UI equivalent components (for example, in React, SwiftUI, Jetpack, etc.). This mapping is called a **component registry**.
+Once your API has more control over which components apps should render, you need to define the mapping from GraphQL types to the UI equivalent components (for example, in React, SwiftUI, Jetpack, etc.). This mapping is called a _component registry_.
 
 The snippet below includes a simplified version of a React component registry:
 
 ```jsx
-const { data } = useQuery(FeaturedProductsCollection);
+const {data} = useQuery(FeaturedProductsCollection);
 
 // Maps GraphQL __typename to UI component
 const TYPE_COMPONENTS = {
   ProductList: ListComponent,
   ProductCarousel: CarouselComponent,
-  ProductError: ErrorComponent,
+  ProductError: ErrorComponent
 };
 
 const component = TYPE_COMPONENTS[data.featuredProducts.__typename];
 if (!component) {
-  throw new Error("Unknown Type Returned!");
+  throw new Error('Unknown Type Returned!');
 }
 
 renderComponent(component, data);
