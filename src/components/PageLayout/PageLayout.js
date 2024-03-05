@@ -126,3 +126,10 @@ export function PageLayout({pageContext, children, location, data}) {
     </PageWidthProvider>
   );
 }
+
+PageLayout.propTypes = {
+  children: PropTypes.node.isRequired,
+  data: PropTypes.object.isRequired,
+  pageContext: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired
+};

@@ -261,9 +261,9 @@ export default function Page({file}) {
   const fieldTableStyles = useFieldTableStyles();
   const [isTocHidden, setIsTocHidden] = useState(false);
 
-  const toggleTocHidden = useCallback(() => {
-    setIsTocHidden(!isTocHidden);
-  }, [isTocHidden]);
+  const toggleTocHidden = () => {
+    setIsTocHidden(isTocHidden => !isTocHidden);
+  };
 
   const {childMdx, childMarkdownRemark, basePath, gitRemote, relativePath} =
     file;
