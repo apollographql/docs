@@ -4,13 +4,7 @@ subtitle: Edit schemas, lint and check changes, and request reviews in GraphOS
 description: Propose GraphQL schema changes in GraphOS Studio. Edit and lint schemas, save and check revisions, and request reviews for async collaboration.
 ---
 
-<EnterpriseFeature />
-
-<PreviewFeature>
-
-Schema proposals are currently in invite-only [preview](/resources/product-launch-stages/#preview). Get in touch with your account team if you'd like to request access or have any questions or feedback.
-
-</PreviewFeature>
+<EnterpriseFeature linkWithAnchor="https://www.apollographql.com/pricing#collaboration"/>
 
 This article describes actions in the **Proposal creation** stage of the [schema proposal workflow](./#proposal-workflow).
 
@@ -18,7 +12,8 @@ This article describes actions in the **Proposal creation** stage of the [schema
 
 ## Start a proposal
 
-You can create a new proposal in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content) from a graph's proposals page. To access the page, either:
+You can create a new proposal in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content) from a graph's proposals page.
+To access the page, either:
 
   - Open the **Proposals** page from the left navigation from a particular graph.
 
@@ -27,6 +22,12 @@ You can create a new proposal in [GraphOS Studio](https://studio.apollographql.c
       className="screenshot"
       alt="Opening the Proposals page from the left nav in GraphOS Studio"
     />
+
+    <Note>
+
+    If you don't see **Proposals** in the left nav of a particular graph, it may be because the graph is a monograph. Schema proposals are designed for use with supergraphs and aren't available for monographs. Convert your monograph to a supergraph using the Rover CLI [`subgraph publish` command](/rover/commands/subgraphs/#subgraph-publish) with the [`--convert` flag](/rover/commands/subgraphs/#--convert).
+
+    </Note>
 
   - On the **Graphs** page, click the pencil icon with the tooltip that says **Go to schema change proposals** for a particular graph.
 
@@ -63,11 +64,11 @@ Follow the steps below to create a new proposal:
 
    </Tip>
 
-4. Optionally, enter the rationale for the proposed changes. This rationale appears as your proposal's README on the proposal's overview and gives collaborators and reviewers context for the proposed changes. This input accepts [Markdown](https://www.markdownguide.org/getting-started/).
+4. Optionally, enter the rationale for the proposed changes. This rationale appears as your proposal's **Description** on the proposal's overview and gives collaborators and reviewers context for the proposed changes. This input accepts [Markdown](https://www.markdownguide.org/getting-started/).
 
     <Note>
 
-    If you want to edit the proposal's README later, you can do so from its **Overview** tab.
+    If you want to edit the proposal's description later, you can do so from its **Overview** tab.
 
     </Note>
 

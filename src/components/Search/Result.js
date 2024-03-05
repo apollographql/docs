@@ -9,8 +9,7 @@ export default function Result({item, ...props}) {
   const {'aria-selected': isSelected} = props;
 
   const {colorMode} = useColorMode();
-  const activeBg = colorMode === 'light' ? 'silver.400' : 'indigo.400';
-
+  const activeBg = colorMode === 'light' ? 'silver.400' : 'navy.400';
 
   const url =
     item.__autocomplete_indexName === 'staging_docs'

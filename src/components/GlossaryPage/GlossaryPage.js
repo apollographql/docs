@@ -66,15 +66,14 @@ function HashScroll() {
 }
 
 export function GlossaryPage() {
-  const {user} = useUser();
-  const isApollonaut = user?.name.includes('@apollographql.com');
+  const {isInternal} = useUser();
 
   const appId = process.env.ALGOLIA_APP_ID;
-  const apiKey = isApollonaut
+  const apiKey = isInternal
     ? process.env.ALGOLIA_SEARCH_KEY
     : process.env.GATSBY_ALGOLIA_EXTERNAL_APOLLOPEDIA_SEARCH_KEY;
 
-  const attributesToRetrieve = isApollonaut
+  const attributesToRetrieve = isInternal
     ? ['*']
     : [
         '*',
@@ -88,7 +87,7 @@ export function GlossaryPage() {
   const searchClient = algoliasearch(appId, apiKey);
   return (
     <>
-      {isApollonaut && (
+      {isInternal && (
         <Note>
           The 🔒 in front of a term denotes it&apos;s only visible to logged in
           Apollonauts. The same applies for the{' '}

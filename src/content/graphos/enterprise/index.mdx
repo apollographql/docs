@@ -3,24 +3,20 @@ title: GraphOS Enterprise features
 description: Overview
 ---
 
-**With an Apollo GraphOS Enterprise plan,** you gain access to powerful routing, delivery, and governance features for your supergraph. This article summarizes the most notable of these features and provides links to the full documentation for each.
+**With an Apollo GraphOS Enterprise plan,** you gain access to powerful routing, delivery, governance, and reporting features for your supergraph. This article summarizes the most notable of these features and provides links to the full documentation for each.
 
 See the left navigation for a list of all Enterprise-specific articles from across the GraphOS documentation.
 
-<Tip>
-
-To compare GraphOS feature support across all plan types, see our [pricing page](https://www.apollographql.com/pricing/).
-
-</Tip>
+To compare GraphOS feature support across all plan types, see the [pricing page](https://www.apollographql.com/pricing/).
 
 ## Enterprise trial
 
-You can sign up for a GraphOS Enterprise trial to freely test out most Enterprise features for the duration of the trial period.
+You can sign up for a GraphOS Enterprise trial to test out most Enterprise features for the duration of the trial period.
 
 <p>
   <ButtonLink
     size="lg"
-    colorScheme="indigo"
+    colorScheme="navy"
     href="https://studio.apollographql.com/signup?type=enterprise-trial&referrer=docs-content"
     style={{
       marginRight: '10px'
@@ -52,7 +48,7 @@ flowchart LR;
 
 These router instances connect to GraphOS to fetch their managed configuration and report fine-grained operation metrics.
 
-This architecture helps you satisfy sophisticated requirements around data compliance and performance, and it also enables you to further customize your router's behavior with Enterprise-specific functionality (described [below](#apollo-router-features)).
+This architecture helps you satisfy sophisticated requirements around data compliance and performance, and it also enables you to further customize your router's behavior with Enterprise-specific functionality described below.
 
 <Tip>
 
@@ -60,22 +56,11 @@ This architecture helps you satisfy sophisticated requirements around data compl
 
 </Tip>
 
-### Apollo Router features
+### Premium GraphOS Router features
 
-[The Apollo Router](/router/) supports a collection of features specific to GraphOS Enterprise organizations. These include:
+<GraphOSRouterFeatures />
 
-- **Real-time updates** via [GraphQL subscriptions](/router/executing-operations/subscription-support/)
-- **Authentication of inbound requests** via [JSON Web Token (JWT)](/router/configuration/authn-jwt/)
-- [**Authorization** of specific fields and types](/router/configuration/authorization) through the [`@requiresScopes`](/router/configuration/authorization#requiresscopes) and [`@authenticated`](/router/configuration/authorization#authenticated) directives
-- Redis-backed [**distributed caching** of query plans and persisted queries](/router/configuration/distributed-caching/)
-- **Custom request handling** in any language via [external coprocessing](/router/customizations/coprocessor/)
-- **Mitigation of potentially malicious requests** via [operation limits](/router/configuration/operation-limits) and [safelisting](../operations/persisted-queries/)
-
-<Tip>
-
-[Learn more about Enterprise features in the Apollo Router.](/router/enterprise-features/)
-
-</Tip>
+[Learn more about premium GraphOS features.](/router/enterprise-features/)
 
 ## Schema pipeline
 
@@ -92,11 +77,9 @@ The centralized proposal process fosters collaboration and strengthens schema go
 
 This increased coordination improves design decisions and accountability, streamlining development cycles.
 
-> [Learn more about schema proposals.](../delivery/schema-proposals/)
-
 ### Schema filtering with contracts
 
-GraphOS [**Contracts**](../delivery/contracts/) enable you to filter your supergraph schema's types and fields according to different inclusion and exclusion rules you define:
+GraphOS [Contracts](../delivery/contracts/) enable you to filter your supergraph schema's types and fields according to different inclusion and exclusion rules you define:
 
 ```mermaid
 graph LR;
@@ -132,12 +115,6 @@ graph LR;
 
 Contracts are especially useful if you want to expose a subset of your supergraph as a public API.
 
-<Tip>
-
-[Learn more about GraphOS contracts.](../delivery/contracts/)
-
-</Tip>
-
 ## Organization management
 
 You can integrate GraphOS with your organization's identity provider (IdP) to enable single sign-on (SSO) for [GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content).
@@ -148,4 +125,24 @@ SSO configuration is available for the following:
 - [Azure AD](../org/sso/azure-ad-integration-guide/)
 - [Generic SAML](../org/sso/saml-integration-guide/)
 
+<Note>
+
+SSO is also available on the [Dedicated plan](https://www.apollographql.com/pricing/).
+
+</Note>
+
 Additionally, Enterprise organizations can export an [audit log](../org/audit-log/) of material actions taken by organization members.
+
+## Metrics and reporting
+
+GraphOS Studio offers a performant and intuitive UI to help all GraphOS users monitor and understand their supergraph's usage and performance.
+The following features are only available to GraphOS Enterprise organizations:
+
+- The [Apollo Datadog integration](../metrics/datadog-integration) lets you forward performance metrics to your Datadog account. Datadog supports an advanced function API, which enables you to create sophisticated visualizations and alerts for GraphQL metrics.
+- [Build status notifications](../metrics/notifications/build-status-notification) let you notify your team via webhook whenever GraphOS attempts to build a new supergraph schema for your federated graph.
+
+  <Note>
+
+  Build status notifications are also available on the [Dedicated plan](https://www.apollographql.com/pricing/).
+
+  </Note>

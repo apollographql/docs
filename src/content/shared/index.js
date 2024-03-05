@@ -7,6 +7,7 @@ export {default as CreateSelfHostedSupergraph} from './create-self-hosted-superg
 export {default as DedicatedPreview} from './dedicated-preview.mdx';
 export {default as DirectiveCompositionRules} from './directive-composition-rules.mdx';
 export {default as Disclaimer} from './disclaimer.mdx';
+export {default as GraphOSRouterFeatures} from './graphos-router-features.mdx'
 export {default as GraphOSEnterpriseRequired} from './graphos-enteprise-required.mdx';
 export {default as InconsistentCompositionRules} from './inconsistent-composition-rules.mdx';
 export {default as ObtainGraphApiKey} from './obtain-graph-api-key.mdx';
@@ -25,4 +26,6 @@ export {default as SchemaProposalPublicationMermaid} from './schema-proposal-pub
 export {default as SchemaProposalReviewMermaid} from './schema-proposal-review-mermaid.mdx';
 export {default as SetApolloVCSCommit} from './set-apollo-vcs-commit.mdx';
 export {default as StudioPages} from './studio-pages.mdx';
+export {default as HowSubscriptionsWork} from './how-subscriptions-work.mdx'
+export {default as WhatSubscriptionsAreFor} from './what-subscriptions-are-for.mdx';
 export {default as TopLevelAwait} from './top-level-await.mdx';

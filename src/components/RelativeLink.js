@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 import {Button, Link} from '@chakra-ui/react';
 import {Link as GatsbyLink, graphql, useStaticQuery} from 'gatsby';
+import {OutlinkIcon} from './Icons';
 import {PathContext, isUrl} from '../utils';
 import {isAbsolute, resolve} from 'path';
 
@@ -10,7 +11,8 @@ export const PrimaryLink = props => (
     color="tertiary"
     sx={{
       code: {
-        color: 'inherit'
+        color: 'inherit',
+        textDecoration: 'underline'
       }
     }}
     {...props}
@@ -47,12 +49,10 @@ function useLinkProps(href) {
     const url = new URL(href);
     if (
       url.host === window.location.host &&
-      !href.startsWith("https://www.apollographql.com/tutorials/") &&
-      !href.startsWith("https://www.apollographql.com/blog/")
+      href.startsWith('https://www.apollographql.com/docs/')
     ) {
       href = url.pathname;
     }
-
   } catch {
     // it's okay if this fails, then it probably wasn't a full url
   }
@@ -63,7 +63,8 @@ function useLinkProps(href) {
   if (isExternal || isHash || isFile) {
     return {
       href,
-      target: isExternal || (isFile && !isHash) ? '_blank' : null
+      target: isExternal || (isFile && !isHash) ? '_blank' : null,
+      rightIcon: <OutlinkIcon />
     };
   }
 
