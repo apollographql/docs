@@ -4,7 +4,7 @@ subtitle: Enforce GraphQL formatting conventions and best practices
 description: Enforce GraphQL formatting conventions and best practices with Apollo GraphOS schema linting.
 ---
 
-GraphOS provides **schema linting** to help you enforce formatting conventions and other GraphQL best practices with every proposed change to your graph's schema.
+GraphOS provides _schema linting_ to help you enforce formatting conventions and other GraphQL best practices with every proposed change to your graph's schema.
 
 <img
   src="../img/linter-violations.jpg"
@@ -13,7 +13,7 @@ GraphOS provides **schema linting** to help you enforce formatting conventions a
   width="500"
 />
 
-- **If you set up [schema checks](./schema-checks/) for your graph,** linting runs as a separate check type alongside build and operation checks.
+- If you set up [schema checks](./schema-checks/) for your graph, linting runs as a separate check type alongside build and operation checks.
 - You can also perform [one-off linting with the Rover CLI](#one-off-linting-with-the-rover-cli).
 
 <Note>
@@ -25,7 +25,7 @@ GraphOS schema linting only analyzes parts of your modified schema that differ f
 ## Linter configuration
 
 The GraphOS schema linter uses a [predefined collection of rules](./linter-rules/) to identify issues with proposed schema changes.
-The predefined collection includes [schema composition](/federation/federated-types/composition) rules. The **graph-wide linter defaults** you define apply to all variants of a particular graph.
+The predefined collection includes [schema composition](/federation/federated-types/composition) rules. The graph-wide linter defaults you define apply to all variants of a particular graph.
 
 To navigate to your linter configuration:
 
@@ -63,10 +63,10 @@ The **Rules Severity Configuration** category of your linter configuration displ
 
 Click a rule's severity to set it to any of the following:
 
-- **Error.** Any violation of this rule causes the associated linter check to fail.
+- **Error**: Any violation of this rule causes the associated linter check to fail.
     - This in turn causes the entire schema checks run to fail, which is useful for failing builds in CI.
-- **Warn.** Violations of this rule are flagged in checks reports, but they don't cause the associated linter check to fail.
-- **Ignore.** Violations of this rule are ignored entirely.
+- **Warn**: Violations of this rule are flagged in checks reports, but they don't cause the associated linter check to fail.
+- **Ignore**: Violations of this rule are ignored entirely.
 
 For information on specific rules, see the [reference list of rules](./linter-rules).
 
@@ -88,7 +88,7 @@ If you set up [schema checks](./schema-checks) for your graph, schema linting au
 
 <Tip>
 
-**For the best experience running linter checks, install v0.16 or later of the Rover CLI.** Earlier versions of Rover can't correctly output the results of linter checks, but they do correctly exit with a nonzero code if a linter check fails.
+For the best experience running linter checks, install v0.16 or later of the Rover CLI. Earlier versions of Rover can't correctly output the results of linter checks, but they do correctly exit with a nonzero code if a linter check fails.
 
 </Tip>
 
@@ -96,7 +96,7 @@ If you set up [schema checks](./schema-checks) for your graph, schema linting au
 
 <Note>
 
-**One-off linting requires v0.16 or later of the Rover CLI.** [Install the latest version.](/rover/getting-started)
+One-off linting requires v0.16 or later of the Rover CLI. [Install the latest version.](/rover/getting-started)
 
 </Note>
 
@@ -111,7 +111,7 @@ The `rover subgraph lint` and `rover graph lint` commands validate all [linter r
 rover subgraph lint --name products --schema ./products-schema.graphql my-graph@my-variant
 ```
 
-The argument `my-graph@my-variant` in the example above is a **graph ref** that specifies the ID of the graph you're comparing your schema changes against, along with which [variant](../graphs/#variants) you're comparing against.
+The argument `my-graph@my-variant` in the example above is a graph ref that specifies the ID of the graph you're comparing your schema changes against, along with which [variant](../graphs/#variants) you're comparing against.
 
 Command options include:
 
@@ -147,7 +147,7 @@ Alternatively, you can provide `-`, in which case the command uses an SDL string
 
 <td>
 
-**Required** for `subgraph lint`. **Omit** for `graph lint`. The name of the published subgraph to compare schema changes against.
+**Required** for `subgraph lint`. Omit for `graph lint`. The name of the published subgraph to compare schema changes against.
 
 </td>
 </tr>

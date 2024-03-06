@@ -6,9 +6,8 @@ This article describes GraphOS Studio features for all [graph types](./#graph-ty
 
 ## Creating graphs
 
-**To create a cloud supergraph,** see the [GraphOS quickstart](../quickstart/cloud/).
-
-**To create a non-cloud graph** (that is, a self-hosted supergraph or a monograph), see [this section](./#creating-graphs).
+- To create a cloud supergraph, see the [GraphOS quickstart](../quickstart/cloud/).
+- To create a non-cloud graph (that is, a self-hosted supergraph or a monograph), see [this section](./#creating-graphs).
 
 ## Viewing graph details
 
@@ -22,7 +21,7 @@ Enterprise accounts can set [member roles](../org/members/#organization-wide-mem
 
 ### The README page
 
-When a user opens one of your graph's variants in GraphOS Studio, its **README page** is shown:
+When a user opens one of your graph's variants in GraphOS Studio, its **README** page is shown:
 
 <img className="screenshot" alt="GraphQL codeblock in README" src="../../img/readme-example.jpg" width="500" />
 
@@ -30,11 +29,11 @@ Like the typical homepage for a Git repository, this page displays a Markdown-ba
 
 <Note>
 
-Only organization members with the [**Org Admin**, **Graph Admin**, **Contributor**, or **Documenter** role](../org/members/) can edit a variant's README. If a variant is [protected](#protected-variants-enterprise-only), **Contributor**s cannot edit its README.
+Only organization members with the [**Org Admin**, **Graph Admin**, **Contributor**, or **Documenter** role](../org/members/) can edit a variant's README. If a variant is [protected](#protected-variants-enterprise-only), **Contributors** cannot edit its README.
 
 </Note>
 
-**Each variant has its own README.** If you edit one variant's README, those edits are not applied to other variants. Among other uses, this enables you to provide different information to external consumers in a [public variant](#public-variants).
+Each variant has its own README. If you edit one variant's README, those edits are not applied to other variants. Among other uses, this enables you to provide different information to external consumers in a [public variant](#public-variants).
 
 #### Supported Markdown
 
@@ -76,7 +75,7 @@ GraphOS Studio provides helpful views for exploring your registered schema:
 
 #### The Explorer
 
-GraphOS Studio provides a powerful **Explorer** IDE that helps you visualize your graph and run queries against it. It's available from your graph's Explorer tab in Studio.
+GraphOS Studio provides a powerful Explorer IDE that helps you visualize your graph and run queries against it. It's available from your graph's Explorer tab in Studio.
 
 <Tip>
 
@@ -263,13 +262,13 @@ The Changelog page in Studio displays a timeline of changes made to your graph's
 
 <img src="../../img/changelog-page.jpg" className="screenshot" alt="Schema Changelog tab" width="450" />
 
-**Only schema changes that you publish to Studio are included in this timeline**, which is one of the most important reasons to [include schema publishing in your continuous delivery pipeline](../delivery/publishing-schemas/#publish-with-continuous-delivery).
+Only schema changes that you publish to Studio are included in this timeline, which is one of the most important reasons to [include schema publishing in your continuous delivery pipeline](../delivery/publishing-schemas/#publish-with-continuous-delivery).
 
 ## Managing access permissions
 
 ### Public variants
 
-You can enable public access for individual variants of your graph. If you do, **anyone with that variant's public link** can view the following pages for that variant in Studio:
+You can enable public access for individual variants of your graph. If you do, anyone with that variant's public link can view the following pages for that variant in Studio:
 
 - Home
   - This shows the variant's README.
@@ -309,13 +308,13 @@ After you make a variant public, you can click the variant's **PUBLIC** label at
 
 ### Protected variants (Enterprise only)
 
-If you have a [GraphOS Enterprise plan](../enterprise/), you can designate particular variants of a graph as **protected variants**. A protected variant limits the capabilities of users with the [**Contributor** role](../org/members/#organization-wide-member-roles) to make certain changes to the variant:
+If you have a [GraphOS Enterprise plan](../enterprise/), you can designate particular variants of a graph as _protected variants_. A protected variant limits the capabilities of users with the [**Contributor** role](../org/members/#organization-wide-member-roles) to make certain changes to the variant:
 
-- **Contributor**s cannot push schema updates to a protected variant.
-- **Contributor**s cannot manage Explorer-related settings for a protected variant, such as setting the variant's endpoint URL.
+- **Contributors** cannot push schema updates to a protected variant.
+- **Contributors** cannot manage Explorer-related settings for a protected variant, such as setting the variant's endpoint URL.
 - Graph API Keys with the **Contributor** role cannot report usage metrics for a protected variant.
 
-**Graph Admin**s and **Org Admin**s can configure whether a variant is protected from the **This Variant** tab of the variant's Settings page.
+**Graph Admins** and **Org Admins** can configure whether a variant is protected from the **This Variant** tab of the variant's Settings page.
 
 ### Internal graph visibility (Enterprise only)
 
@@ -329,22 +328,26 @@ By default, graphs are visible to all members of your organization. If you have 
 
 You can configure visibility and grant your organization's members explicit access to your graph from the Permissions tab of your graph's Settings page.
 
-Note that **Org Admin**s can always see all graphs in your organization.
+<Note>
+
+**Org Admins** can always see all graphs in your organization.
+
+</Note>
 
 ## Dangerous actions
 
 ### Transferring graph ownership
 
 You can transfer a graph to a different GraphOS organization you belong to
-by visiting the graph's Settings page in Studio and changing the **graph owner**.
+by visiting the graph's Settings page in Studio and changing the graph owner.
 
 ### Deleting a graph
 
 <Caution>
 
-**Deleting a graph cannot be undone!**
+Deleting a graph cannot be undone!
 
-If you delete a cloud supergraph, all its GraphOS-hosted routers are **deprovisioned**.
+If you delete a cloud supergraph, all its GraphOS-hosted routers are deprovisioned.
 
 </Caution>
 

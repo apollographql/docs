@@ -3,7 +3,7 @@ title: Apollo Sandbox
 description: Use Studio tools without an Apollo account
 ---
 
-**Apollo Sandbox** is a special mode of GraphOS Studio that helps with local development. Sandbox loads a running GraphQL server's schema via introspection, instead of fetching published schemas from the Apollo registry.
+_Apollo Sandbox_ is a special mode of GraphOS Studio that helps with local development. Sandbox loads a running GraphQL server's schema via introspection, instead of fetching published schemas from the Apollo registry.
 
 Sandbox provides access to the following GraphOS Studio features:
 
@@ -15,7 +15,7 @@ You can use Sandbox offline and without an Apollo account. You also [embed Sandb
 
 <Button
   size="lg"
-  colorScheme="indigo"
+  colorScheme="navy"
   as="a"
   target="_blank"
   rel="noopener noreferrer"
@@ -207,99 +207,39 @@ The `EmbeddedSandbox` object takes an options object with the following structur
 
 These are the optional options you can include in the object you pass to `new EmbeddedSandbox`:
 
-<table class="field-table api-ref">
-
-<thead>
-  <tr>
-    <th>
-      Name /<br />
-      Type
-    </th>
-    <th>Description</th>
-  </tr>
-</thead>
-
-<tbody>
-<tr>
-<td>
-
-##### `initialEndpoint`
-
-`string`
-
-</td>
-<td>
+<PropertyList kind="fieldTable">
+<Property name="initialEndpoint" type="string">
 
 The URL of the GraphQL endpoint that Sandbox introspects on initial load. Sandbox populates its pages using the schema obtained from this endpoint.
 
 The default value is `http://localhost:4000`.
 
-**You should only pass non-production endpoints to Sandbox**. Sandbox is powered by schema introspection, and we recommend [disabling introspection in production](https://www.apollographql.com/blog/graphql/security/why-you-should-disable-graphql-introspection-in-production/).
+You should only pass non-production endpoints to Sandbox. Sandbox is powered by schema introspection, and we recommend [disabling introspection in production](https://www.apollographql.com/blog/graphql/security/why-you-should-disable-graphql-introspection-in-production/).
 To provide a "Sandbox-like" experience for production endpoints, we recommend using either a [public variant](../graphs/studio-features/#public-variants) or the [embedded Explorer](./embed-explorer).
 
-</td>
-</tr>
-
-<tr>
-<td>
-
-##### `handleRequest`
-
-`(url, options) => Promise`
-
-</td>
-<td>
+</Property>
+<Property name="handleRequest" type="(url, options) => Promise">
 
 By default, the embedded Sandbox uses the `fetch` API to send requests from your webpage to your specified GraphQL endpoint. If you provide a custom `handleRequest` function, Sandbox uses it instead of `fetch` for all operations.
 
 You might want to do this if you need to include specific headers in every request made from your embedded Sandbox.
 
-</td>
-</tr>
-
-<tr>
-<td>
-
-##### `hideCookieToggle`
-
-`boolean`
-
-</td>
-<td>
+</Property>
+<Property name="hideCookieToggle" type="boolean">
 
 By default, the embedded Sandbox does not show the **Include cookies** toggle in its connection settings.
 
 Set `hideCookieToggle` to `false` to enable users of your embedded Sandbox instance to toggle the **Include cookies** setting.
 
-</td>
-</tr>
-
-<tr>
-<td>
-
-##### `endpointIsEditable`
-
-`boolean`
-
-</td>
-<td>
+</Property>
+<Property name="endpointIsEditable" type="boolean">
 
 By default, the embedded Sandbox has a URL input box that is editable by users.
 
 Set `endpointIsEditable` to `false` to prevent users of your embedded Sandbox instance from changing the endpoint URL.
 
-</td>
-</tr>
-
-<tr>
-<td>
-
-##### `includeCookies`
-
-`boolean`
-
-</td>
-<td>
+</Property>
+<Property name="includeCookies" type="boolean">
 
 You can set `includeCookies` to `true` if you instead want Sandbox to pass `{ credentials: 'include' }` for its requests.
 
@@ -307,30 +247,17 @@ If you pass the `handleRequest` option, this option is ignored.
 
 Read more about the `fetch` API and credentials [here](https://developer.mozilla.org/en-US/docs/Web/API/fetch#credentials).
 
-This config option is **deprecated** in favor of using the connection settings cookie toggle in Sandbox and setting the default value via `initialState.includeCookies`.
+This config option is deprecated in favor of using the connection settings cookie toggle in Sandbox and setting the default value via `initialState.includeCookies`.
 
-</td>
-</tr>
-
-<tr>
-<td>
-
-##### `initialState`
-
-`Object`
-
-</td>
-<td>
+</Property>
+<Property name="initialState" type="Object">
 
 An object containing additional options related to the state of the embedded Sandbox on page load.
 
 For supported subfields, see [`initialState` options](#initialstate-options).
 
-</td>
-</tr>
-
-</tbody>
-</table>
+</Property>
+</PropertyList>
 
 ### `initialState` options
 

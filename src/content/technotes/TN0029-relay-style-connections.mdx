@@ -106,8 +106,8 @@ Consider the ["Zero, One, Infinity" rule](https://en.wikipedia.org/wiki/Zero_one
 
 Using a wrapper type for lists provides the following benefits:
 
-- **Avoid breaking changes.** You can initially return a wrapper type that doesn't use pagination, and then add pagination later without breaking existing clients. If you return a list directly, you can't add pagination metadata later.
-- **Represent entity relationships.** The `Connection` and `Edge` wrapper types support fields that model attributes of the relationship between entities that don't belong in the entities themselves.
+- Avoid breaking changes: You can initially return a wrapper type that doesn't use pagination, and then add pagination later without breaking existing clients. If you return a list directly, you can't add pagination metadata later.
+- Represent entity relationships: The `Connection` and `Edge` wrapper types support fields that model attributes of the relationship between entities that don't belong in the entities themselves.
 
   Consider this example of a many-to-many relationship between `Business` and `Customer`:
 

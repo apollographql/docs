@@ -66,15 +66,30 @@ const GET_USER = gql`
     me {
       id
       name
+      ... on User {
+        memberships {
+          account {
+            id
+            name
+            currentPlan {
+              tier
+            }
+          }
+        }
+      }
     }
   }
 `;
+
+const APOLLO_ORGS = ['gh.apollographql', 'apollo-private', 'apollo'];
 
 export const useUser = () => {
   const {data, loading, error} = useQuery(GET_USER);
   return {
     user: data?.me,
     loading,
+    isInternal: data?.me?.memberships.some(membership =>
+      APOLLO_ORGS.includes(membership.account.id) ),
     error
   };
 };

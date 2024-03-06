@@ -4,7 +4,7 @@ subtitle: Propose, review, and track changes to new and published schemas
 description: Use GraphOS's native GraphQL schema change management process propose, review, and track schema changes before and after publication.
 ---
 
-<EnterpriseFeature />
+<EnterpriseFeature linkWithAnchor="https://www.apollographql.com/pricing#collaboration"/>
 
 As your supergraph schema grows, managing changes becomes more difficult.
 Assessing the impact of subgraph schema changes on [composition](/federation/federated-types/composition/) and client operations becomes more complex.
@@ -15,7 +15,7 @@ Schema development can stall without the clear cross-team communication needed t
 
 ## Schema proposals for schema change management
 
-GraphOS **schema proposals** provide centralized schema change management.
+GraphOS schema proposals provide centralized schema change management.
 The centralized proposal process fosters collaboration and strengthens schema governance:
 
 - Subgraph developers can propose changes in the context of the supergraph using automated checks and reviewer feedback for validation.
@@ -31,10 +31,10 @@ Managing schema changes directly in GraphOS Studio provides the following benefi
 - The proposal process uses GraphOS [schema checks](../schema-checks)&mdash;including [schema linting](../schema-linter)&mdash;at every step.
   - This minimizes the likelihood of errors and inconsistencies.
   - It also offers an immediate understanding of the changes' impacts on composition and client operations.
-- Editing, reviewing, and approving changes in GraphOS allows for **GraphQL-aware schema diffing**.
+- Editing, reviewing, and approving changes in GraphOS allows for GraphQL-aware schema diffing.
   - For example, GraphOS diffs additions of new fields and types in the [proposals editor](./creation#edit-subgraph-schemas) as new fields and types, regardless of formatting.
   - In contrast, GraphQL-naive text diffing may not understand and diff changes unless they're conventionally formatted.
-- Centralizing the schema change process **consolidates a comprehensive audit trail** of discussions and schema changes.
+- Centralizing the schema change process consolidates a comprehensive audit trail of discussions and schema changes.
 
 ## How schema proposals work
 

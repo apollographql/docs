@@ -1,17 +1,16 @@
 ---
-title: GraphQL subscriptions with a cloud supergraph
-description: Real-time data delivery from across your services
+title: GraphQL subscriptions in cloud supergraphs
+subtitle: Real-time data delivery across your services
+description: Cloud routers support GraphQL subscriptions by default, enabling clients to receive real-time updates via WebSocket or HTTP callbacks.
 ---
-
 
 <PreviewFeature >
 
-**Cloud supergraph support for GraphQL subscriptions is currently in [preview](/resources/product-launch-stages#preview).**
+Cloud supergraph support for GraphQL subscriptions is currently in [preview](/resources/product-launch-stages#preview).
 
 You can also use subscriptions with an Enterprise self-hosted supergraph. See the [Apollo Router documentation](/router/executing-operations/subscription-support/).
 
 </PreviewFeature>
-
 
 Cloud supergraphs provide preview support for GraphQL subscription operations:
 
@@ -42,60 +41,11 @@ To use subscriptions with your cloud supergraph, you must first complete certain
 
 ## What are subscriptions for?
 
-GraphQL subscriptions enable clients to receive continual, real-time updates whenever new data becomes available. Unlike queries and mutations, subscriptions are long-lasting. This means a client can receive multiple updates from a single subscription:
+<WhatSubscriptionsAreFor />
 
-```mermaid
-sequenceDiagram
-    participant Client as GraphQL Client
-    participant Router as Cloud Router
-    Client->>Router: Initiates subscription
-    Note over Router: New data available
-    Router->>Client: Sends new data
-    Note over Router: New data available
-    Router->>Client: Sends new data
-```
+## How subscriptions work
 
-Subscriptions are best suited to apps that rely on frequently changing, time-sensitive data (such as stock prices, IoT sensor readings, live chat, or sports scores).
-
-## How it works
-
-```mermaid
-flowchart LR;
-  client(Client);
-  subgraph "<b>GraphOS</b>";
-  router(["Cloud<br/>Router"]);
-  end;
-  subgraph "<b>Your infrastructure</b>";
-  subgraphA[Stocks<br/>subgraph];
-  subgraphB[Portfolios<br/>subgraph];
-  router-->|"Subscribes<br/>over WebSocket"|subgraphA;
-  router-.->|Can query for<br/>entity fields<br/>as needed|subgraphB;
-  end;
-  client-->|Subscribes<br/>over HTTP|router;
-  class client secondary;
-```
-
-1. A client executes a GraphQL subscription operation against your cloud router over HTTP:
-
-   ```graphql title="Example subscription"
-   subscription OnStockPricesChanged {
-     stockPricesChanged {
-       symbol
-       price
-     }
-   }
-   ```
-
-   - **The client does not use a WebSocket protocol!** Instead, it receives updates via [multipart HTTP responses](/router/executing-operations/subscription-multipart-protocol/).
-   - By using HTTP for subscriptions, clients can execute all GraphQL operation types over HTTP instead of using two different protocols.
-   - Apollo Client for [Web](/react/data/subscriptions#http), [Kotlin](/kotlin/essentials/subscriptions#configuring-http-subscriptions), and [iOS](/ios/fetching/subscriptions#http) all support GraphQL subscriptions over HTTP with minimal configuration. See each library's documentation for details.
-
-2. When your cloud router receives a subscription, it executes that same subscription against whichever subgraph defines the requested field (`stockPricesChanged` in the example above).
-
-   - This communication does use a WebSocket subprotocol (specifically, [`graphql-transport-ws`](https://github.com/enisdenjo/graphql-ws/blob/master/PROTOCOL.md)).
-
-3. The subgraph periodically sends new data to your router. Whenever it does, the router returns that data to the client in an additional HTTP response part.
-   - A subscription can include federated entity fields that are defined in other subgraphs. If it does, the router first fetches those fields by querying the corresponding subgraphs (such as **Portfolios** in the diagram above). These queries use HTTP as usual.
+<HowSubscriptionsWork />
 
 <Tip>
 
@@ -105,7 +55,7 @@ flowchart LR;
 
 ## Prerequisites
 
-⚠️ **Before you add `Subscription` fields to your subgraphs,** do all the following in the order shown to prevent errors:
+Before you add `Subscription` fields to your subgraphs, do all the following in the order shown to prevent errors:
 
 1. Make sure you've [created a cloud supergraph](../quickstart/cloud) and connected your GraphQL API to it!
 
@@ -136,6 +86,19 @@ flowchart LR;
 6. Deploy your updated subgraphs.
 
 After you complete these prerequisites, you begin [executing subscriptions](#example-execution) on your cloud router.
+
+## Default configuration
+
+Subscriptions are enabled automatically for GraphOS Cloud with the following default router configuration:
+
+```yaml
+subscription:
+  enabled: true
+  mode:
+    passthrough:
+      all:
+        path: /ws
+```
 
 ## Example execution
 
@@ -174,7 +137,7 @@ A client can execute the following subscription against our router:
 
 <Note>
 
-**Remember, clients execute subscriptions against your router [over HTTP!](#how-it-works)**
+Remember, clients execute subscriptions against your router [over HTTP!](#how-it-works)
 
 Apollo Client for [Web](/react/data/subscriptions#http), [Kotlin](/kotlin/essentials/subscriptions#configuring-http-subscriptions), and [iOS](/ios/fetching/subscriptions#http) all support HTTP-based subscriptions.
 

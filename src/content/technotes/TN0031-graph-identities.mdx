@@ -75,7 +75,7 @@ type Query {
 
 <Caution>
 
-In the previous example **none** of the query response types are nullable, meaning the request will fail if the server is unable to provide some kind of Identity. Alternatively we could allow nullable responses which could be used to represent the anonymous or unauthenticated use-case.
+In the previous example, none of the query response types are nullable, meaning the request will fail if the server is unable to provide some kind of Identity. Alternatively we could allow nullable responses which could be used to represent the anonymous or unauthenticated use-case.
 
 Additionally, by providing a NotAuthenticatedError as part of the response union, we can inform the client applications when to serve specific experiences to the user.
 
