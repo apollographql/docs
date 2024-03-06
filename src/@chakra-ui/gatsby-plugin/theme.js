@@ -86,8 +86,7 @@ const theme = extendTheme({
     },
     Text: {
       baseStyle: {
-        lineHeight: '1.8rem',
-        fontSize: 'lg'
+        lineHeight: '1.8rem'
       }
     },
     Table: {

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {Box, Center, Flex, Text, chakra} from '@chakra-ui/react';
 import RelativeLink from './RelativeLink';
+import {Box, Center, Flex, Text, chakra} from '@chakra-ui/react';
 import {PreviewIcon} from './Icons';
 
 import {MarkdownInAdmonitions} from './MarkdownInAdmonitions';
@@ -17,7 +17,6 @@ export const PreviewFeature = ({
       py="1"
       borderLeftWidth="2px"
       borderColor="primary"
-      fontSize="lg"
       sx={{
         '>': {
           ':not(:last-child)': {

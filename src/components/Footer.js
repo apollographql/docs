@@ -96,7 +96,7 @@ export default function Footer() {
             <Heading mb="2" size="md">
               {title}
             </Heading>
-            <List spacing="1" fontSize="lg">
+            <List spacing="1">
               {links.map(({href, text}, index) => (
                 <ListItem key={index}>
                   <Link href={href} target="_blank">

@@ -163,7 +163,6 @@ const Results = () => {
                 my="4"
                 borderLeftWidth="2px"
                 borderColor="primary"
-                fontSize="lg"
                 sx={{
                   '>': {
                     ':not(:last-child)': {
