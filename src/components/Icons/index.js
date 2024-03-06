@@ -65,11 +65,11 @@ import {ReactComponent as Unlock} from '@apollo/icons/default/IconUnlock.svg';
 import {ReactComponent as WidenViewport} from '@apollo/icons/default/IconWidenViewport.svg';
 import {ReactComponent as Youtube} from '@apollo/icons/default/IconYouTubeSolid.svg';
 
-const CustomIcon = ({icon, isSolid, ...props}) => {
+const CustomIcon = ({icon, isSolid, boxSize, ...props}) => {
   return (
     <Box
       as={icon}
-      boxSize="1em"
+      boxSize={boxSize ? boxSize : '1em'}
       fill={isSolid ? 'current' : 'none'}
       {...props}
     />
@@ -78,7 +78,8 @@ const CustomIcon = ({icon, isSolid, ...props}) => {
 
 CustomIcon.propTypes = {
   icon: PropTypes.elementType.isRequired,
-  isSolid: PropTypes.bool
+  isSolid: PropTypes.bool,
+  boxSize: PropTypes.string
 };
 
 export const ApolloKotlinIcon = () => <CustomIcon icon={Kotlin} />;
@@ -129,12 +130,15 @@ export const JavaIcon = () => <CustomIcon icon={Java} />;
 export const LockIcon = () => <CustomIcon icon={Lock} />;
 export const MenuIcon = () => <CustomIcon icon={Menu} />;
 export const MetricsIcon = () => <CustomIcon icon={Insights} />;
-export const MoonIcon = props => <CustomIcon icon={Moon} {...props} />;
+export const MoonIcon = () => <CustomIcon icon={Moon} />;
 export const NarrowViewportIcon = () => <CustomIcon icon={NarrowViewport} />;
 export const NodeJsIcon = () => <CustomIcon icon={NodeJs} />;
 export const OdysseyIcon = () => <CustomIcon icon={Education} />;
 export const OrgIcon = () => <CustomIcon icon={Team} />;
 export const OutlinkIcon = () => <CustomIcon icon={Outlink} />;
+export const OutlinkSmallIcon = () => (
+  <CustomIcon boxSize="0.75em" icon={Outlink} />
+);
 export const PaperclipIcon = () => <CustomIcon icon={Paperclip} />;
 export const PipelineIcon = () => <CustomIcon icon={Pipeline} />;
 export const PreviewIcon = () => <CustomIcon icon={Preview} />;
@@ -145,7 +149,7 @@ export const RoverIcon = () => <CustomIcon icon={Terminal} />;
 export const RouterIcon = () => <CustomIcon icon={Router} />;
 export const SearchIcon = () => <CustomIcon icon={Search} />;
 export const StarIcon = () => <CustomIcon icon={Star} />;
-export const SunIcon = props => <CustomIcon icon={Sun} {...props} />;
+export const SunIcon = () => <CustomIcon icon={Sun} />;
 export const TechnotesIcon = () => <CustomIcon icon={Document} />;
 export const TwitterIcon = () => <CustomIcon isSolid icon={Twitter} />;
 export const UnlockIcon = () => <CustomIcon icon={Unlock} />;

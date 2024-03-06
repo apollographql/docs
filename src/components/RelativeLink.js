@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 import {Button, Link} from '@chakra-ui/react';
 import {Link as GatsbyLink, graphql, useStaticQuery} from 'gatsby';
-import {OutlinkIcon} from './Icons';
+import {OutlinkSmallIcon} from './Icons';
 import {PathContext, isUrl} from '../utils';
 import {isAbsolute, resolve} from 'path';
 
@@ -12,10 +12,10 @@ export const PrimaryLink = props => {
       variant="link"
       color="tertiary"
       fontSize="lg"
-      fontWeight="semibold"
+      fontWeight="medium"
       _hover={{color: 'text'}}
-      iconSpacing="3px"
-      marginRight="4px"
+      iconSpacing="5px"
+      marginRight="5px"
       sx={{
         code: {
           color: 'inherit',
@@ -27,7 +27,7 @@ export const PrimaryLink = props => {
   ) : (
     <Link
       color="tertiary"
-      fontWeight="semibold"
+      fontWeight="medium"
       _hover={{color: 'text'}}
       sx={{
         code: {
@@ -116,7 +116,7 @@ export function ButtonLink({href, ...props}) {
       as="a"
       {...linkProps}
       {...props}
-      rightIcon={isExternal && <OutlinkIcon />}
+      rightIcon={isExternal && <OutlinkSmallIcon />}
     />
   );
 }

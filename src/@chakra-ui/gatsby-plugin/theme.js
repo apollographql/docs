@@ -86,6 +86,7 @@ const theme = extendTheme({
     },
     Text: {
       baseStyle: {
+        fontWeight: 'normal',
         lineHeight: '1.8rem',
         fontSize: 'lg'
       }
