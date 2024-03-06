@@ -85,8 +85,8 @@ export function Docset({
           variant="link"
           color="tertiary"
           fontSize="lg"
-          fontWeight="mediume"
-          _hover={{color: 'text'}}
+          fontWeight="medium"
+          _hover={{color: 'link'}}
           mt="auto"
           href={path}
           whiteSpace="normal"
