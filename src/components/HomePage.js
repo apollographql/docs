@@ -43,7 +43,7 @@ export function GradientCard({icon, title, description, path, cta}) {
           href={path}
           colorScheme="navy"
           fontSize="lg"
-          fontWeight="mediume"
+          fontWeight="semibold"
           leftIcon={<ArrowRightIcon />}
         >
           {cta}

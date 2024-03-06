@@ -18,8 +18,7 @@ export const PrimaryLink = props => {
       marginRight="5px"
       sx={{
         code: {
-          color: 'inherit',
-          textDecor: 'underline'
+          color: 'inherit'
         }
       }}
       {...props}
@@ -31,8 +30,7 @@ export const PrimaryLink = props => {
       _hover={{color: 'link'}}
       sx={{
         code: {
-          color: 'inherit',
-          textDecor: 'underline'
+          color: 'inherit'
         }
       }}
       {...props}
