@@ -73,6 +73,10 @@ const theme = extendTheme({
       tertiary: {
         default: 'blue.400',
         _dark: 'navy.100'
+      },
+      link: {
+        default: 'gray.800',
+        _dark: 'gray.100'
       }
     }
   },

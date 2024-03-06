@@ -13,7 +13,7 @@ export const PrimaryLink = props => {
       color="tertiary"
       fontSize="lg"
       fontWeight="medium"
-      _hover={{color: 'text'}}
+      _hover={{color: 'link'}}
       iconSpacing="5px"
       marginRight="5px"
       sx={{
@@ -28,7 +28,7 @@ export const PrimaryLink = props => {
     <Link
       color="tertiary"
       fontWeight="medium"
-      _hover={{color: 'text'}}
+      _hover={{color: 'link'}}
       sx={{
         code: {
           color: 'inherit',
