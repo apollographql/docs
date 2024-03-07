@@ -6,7 +6,7 @@ description: Use a custom domain for your cloud router endpoint to minimize clie
 
 <DedicatedPreview />
 
-The _custom domains_ feature lets you replace the default `apollographos.net` [router endpoint URL](./quickstart#router-endpoint-url) with your own subdomain, for example `api.apollographql.com`.
+The _custom domains_ feature lets you replace the default `apollographos.net` router endpoint URL with your own subdomain, for example, `api.apollographql.com`.
 
 Custom domains can help to:
 
@@ -14,28 +14,34 @@ Custom domains can help to:
 - Use your existing CORS policies and security controls
 - Protect your cloud routers from DDoS attacks
 
-## How custom domains works
+## How custom domains work
 
+Custom domains use CNAME records, which are assigned at the variant level, to use a custom domain in place of the default `apollographos.net` [router endpoint URL](./quickstart#router-endpoint-url).
 Custom domains run on [Cloudflare's](https://www.cloudflare.com/) global network.
 Using a custom domain provides DDoS protections and TLS termination to your cloud routers.
-Custom domains support CNAME records which are assigned at the variant level.
+
+### Zero downtime migrations
+
+Custom domains support zero downtime migrations when you want you want to move `api.mycompany.com` from a different host to GraphOS Cloud.
 
 ## Custom domains setup
 
 Setup includes two steps:
 
 1. Setting up a new CNAME record in your DNS provider.
-2. Open a support ticke with Apollo support
+2. Opening a ticket with Apollo support to enable your new CNAME.
 
 <Note>
 
-Later in 2024, custom domains will be available self service through GraphOS Studio. In the meantime, you need to open a support request to verify your CNAME with Apollo.
+Custom domains will be available through self-service in GraphOS Studio later in 2024. In the meantime, you must open a support request to enable your CNAME with Apollo.
 
 </Note>
 
 ### Setup a CNAME
 
-To get started with custom domains, create a [CNAME record](https://www.cloudflare.com/learning/dns/dns-records/dns-cname-record/) in your DNS provider that points at your Dedicated variant's [existing subdomain](./quickstart#router-endpoint-url). For example, create a CNAME for `api.mydomain.com` that points to `current--docs-example.apollographos.net`.
+To get started with custom domains, create a [CNAME record](https://www.cloudflare.com/learning/dns/dns-records/dns-cname-record/) in your DNS provider that points to your Dedicated variant's [existing subdomain](./quickstart#router-endpoint-url). For example, create a CNAME for `api.mydomain.com` that points to `current--docs-example.apollographos.net`.
+
+You can find your Dedicated variant's subdomain in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content) on the **Cloud Router** page under **API Endpoint**.
 
 <img
   className="screenshot"
@@ -54,14 +60,11 @@ You can open a ticket by clicking the **?** icon in the top right of [GraphOS St
   src="../../img/cloud-dedicated/support-ticket.png"
 />
 
-Your request may take up to 2 business days to process. Once Apollo has processed your custom domain request, your new CNAME will be live.
-
-### Zero downtime migrations
-Custom domains supports zero downtime migrations where you want to move `api.mycompany.com` from a different host to GraphOS Cloud. To do this, create a support ticket first and we'll guide you through the process of getting ready for a zero downtime migration using an existing CNAME.
+Your request may take up to two business days to process. Apollo will notify you when your new CNAME is live.
 
 ## Limitations
 
-Custom domains doesn't support:
+The custom domains feature doesn't support the following:
 
 - [Apex records](https://learn.microsoft.com/en-us/azure/dns/dns-zones-records#record-names) or [A records](https://learn.microsoft.com/en-us/azure/dns/dns-zones-records#record-types)
 - Multiple custom domains per variant
