@@ -1,0 +1,34 @@
+---
+title: Reliability
+description: Efficiently operate, monitor, and manage your supergraph
+---
+
+The **Reliability** pillar is focused on ensuring that your graph is observable, appropriately resourced and scaled,
+resilient to change, monitored, and generally production ready. The best practices in this pillar lay a foundation to
+build confidence that your supergraph will be available for your consumers and a trusted source of data in your organization.
+
+## Principles
+
+### Understand graph usage
+
+Understanding which clients are using which fields and how their operations use upstream resources is crucial for ensuring the reliability of a system. By requiring clients to identify themselves, and collecting metrics on field references, we can gain visibility into how different clients are using the system and how their usage patterns may be impacting performance. Additionally, by associating traces in different systems using correlation IDs, we can more easily track how upstream resources are being used and identify potential bottlenecks or issues. All of these practices help us better understand how our system is being used in practice and allow us to make informed decisions about how to optimize and improve reliability.
+
+### Enable effective testing in the supergraph
+
+To enable contributors to effectively test their changes in the supergraph, it is important to provide clear guidance on testing best practices for both subgraphs and entity resolvers. For subgraphs, documenting best practices for testing can help ensure that changes to isolated subgraphs are properly tested before they are integrated into the larger supergraph. Additionally, using variants for lower testing or development environments can help catch issues before they make it into production. End-to-end testing of the supergraph is also crucial for ensuring reliability, so providing clear instructions on how to test changes to entity resolvers and other components of the supergraph can help contributors catch potential issues before they can impact users.
+
+### Use compute resources efficiently
+
+When using Apollo Router and subgraph services, it's important to balance performance with efficiency. To achieve this balance, consider adjusting the cache size and cache time-to-live (TTL) to optimize performance. Additionally, you can use distributed caches to improve query execution times and reduce the load on individual servers. By monitoring pod metrics alongside graph execution metrics, you can identify areas for optimization and ensure that your system is performing efficiently.
+
+### Catch problems before they go into production
+
+One of the best ways to avoid production outages is to catch potential problems early in the development lifecycle. This can be done by implementing best practices such as automating breaking change detection and composition error detection on subgraph changes, configuring schema checks for different variants, and automating subgraph deployment and schema publishing. By doing so, you can catch issues before they make it into production and ensure that your system is reliable and stable. Taking these proactive measures can save you time and resources in the long run and help you avoid costly downtime and unhappy customers.
+
+### Identify issues in production
+
+Lowering mean-time-to-recover (MTTR) in your supergraph is crucial for maintaining the reliability of your system. One way to achieve this is to implement automated recovery processes that can quickly and efficiently address issues as they arise. Additionally, tracking and analyzing metrics such as error rates and response times can help identify potential issues before they become critical problems. By proactively monitoring and addressing issues, you can minimize the impact of downtime on your users and ensure that your system is always available and performing as expected.
+
+### Prevent issues in production
+
+When it comes to preventing production outages, making the right infrastructure and process choices is key. Deploying to multiple availability zones, preventing invalid schema deployments, documenting a process for reverting broken subgraphs, and updating components regularly are all important best practices to follow. However, it's also important to consider any other potential issues that could arise and take steps to prevent them. This may involve performing risk assessments, conducting regular audits, and staying up-to-date with the latest industry trends and best practices. By taking a proactive approach to infrastructure and process choices, teams can minimize the risk of production outages and ensure that their systems remain reliable and available.
