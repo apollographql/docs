@@ -1,25 +1,16 @@
 ---
 title: Cloud routing for supergraphs
 subtitle: Learn about Apollo-managed cloud routers
-description: Learn more about Apollo-managed cloud routers that route requests to your GraphQL APIs.
+description: Learn about Apollo's managed cloud routers designed to efficiently route requests to your GraphQL APIs, ensuring optimal performance and scalability.
 ---
 
-<Note>
-
-Cloud supergraphs are only available to organizations with Serverless and Dedicated plans.
-They are not available with an Enterprise plan or a legacy Free or Team plan.
-
-[See plan details.](https://www.apollographql.com/pricing/)
-
-</Note>
-
-When you [create a cloud supergraph](../quickstart/cloud/#2-create-your-first-supergraph) with GraphOS Studio, GraphOS automatically provisions and manages a **router** that acts as an entry point to your GraphQL APIs. In this architecture, individual GraphQL APIs are called **subgraphs**. Clients send operations to your router's public endpoint, instead of sending them directly to your subgraphs.
+When you create a cloud supergraph with GraphOS Studio, GraphOS automatically provisions and manages a _router_ that acts as an entry point to your GraphQL APIs. In this architecture, individual GraphQL APIs are called _subgraphs_. Clients send operations to your router's public endpoint, instead of sending them directly to your subgraphs.
 
 ```mermaid
 flowchart LR;
   clients(Clients);
-  subgraph "Apollo Cloud"
-    router(["Router"]);
+  subgraph "GraphOS Cloud"
+    router(["Cloud router"]);
   end;
   subgraph YourInfra["Your infrastructure"];
     subgraphA[Subgraph A];
@@ -32,9 +23,33 @@ flowchart LR;
   class clients secondary;
 ```
 
+GraphOS only hosts the runtime for your supergraph's cloud router. GraphQL servers for your individual subgraphs are still hosted in your infrastructure.
+
+<p>
+  <ButtonLink
+    href="/graphos/quickstart/cloud/"
+    style={{
+      marginRight: '10px'
+    }}
+  >
+    Create your first cloud supergraph
+  </ButtonLink>
+</p>
+
+<Note>
+
+Cloud supergraphs are only available to organizations with Serverless and Dedicated plans.
+They aren't available with an Enterprise plan or a legacy Free or Team plan.
+
+</Note>
+
+## Federation and subgraph compatibility
+
+Cloud supergraphs use [Apollo Federation 2](/federation/) for their core architecture. [Many GraphQL server libraries](/federation/building-supergraphs/supported-subgraphs/) support Federation 2. Your GraphQL API doesn't already need to be using Apollo Federation to add it to a cloud supergraph.
+
 ## Initializing your router
 
-Your router is provisioned automatically whenever you [create a cloud supergraph in GraphOS Studio](../quickstart/cloud), or whenever you create a new [variant](../graphs/#variants) for an existing cloud supergraph. Each variant has its own distinct router.
+Your router is provisioned automatically whenever you create a cloud supergraph in GraphOS Studio, or whenever you create a new variant for an existing cloud supergraph. Each variant has its own distinct router.
 
 When you first create a variant, the router provisioning process can take a few minutes. If this process hasn't completed yet for a particular variant, an **INITIATING ENDPOINT** label is shown at the top of the variant's page in Studio:
 
@@ -45,11 +60,15 @@ When you first create a variant, the router provisioning process can take a few 
   width="500"
 />
 
-## Configuring your router
+Once initialized, you can [configure your cloud router](./configuration).
 
-See [Cloud router configuration](./configuration).
+### Cloud router regions
 
-### Cloud launches
+Cloud routing for Serverless plans is only available in Chicago, USA. Apollo's infrastructure has interconnects with major public cloud providers, so latency is minimal. For example, latency between Chicago and AWS in Virginia is approximately 10 ms.
+
+Dedicated cloud routers have a wider [variety of options](./dedicated#runs-on-aws). Region selection for cloud routers is only available on the Dedicated plan. <TrackableLink href="https://www.apollographql.com/contact-sales?type=dedicated&referrer=docs" eventName="content_contact_cloud">Contact Sales</TrackableLink> to learn more.
+
+## Cloud launches
 
 Publishing a new subgraph schema or editing a cloud router's configuration triggers a new [launch](/graphos/delivery/launches/). Every launch automatically deploys new router instances for your supergraph.
 
@@ -67,7 +86,7 @@ Router releases go through rigorous testing before deployment on GraphOS Cloud. 
 
 <Note>
 
-Opting out of router updates to cloud routers is currently not possible. Advanced version management will be available in [Cloud Dedicated](./dedicated) in 2024.
+Opting out of router updates to cloud routers isn't currently supported. Advanced version management will be available in Dedicated in 2024.
 
 </Note>
 
@@ -76,56 +95,34 @@ Opting out of router updates to cloud routers is currently not possible. Advance
 <Note>
 
 Only cloud routers on the Serverless plan are automatically deleted.
-This does not apply cloud routers on the Dedicated plan.
-[See details about plans.](https://www.apollographql.com/pricing/)
+This doesn't apply cloud routers on the Dedicated plan.
 
 </Note>
 
-**Apollo automatically deletes variants of Serverless cloud supergraphs that receive zero operations for 60 consecutive days.** This deletes the router, along with all the variant's historical metrics.
+Apollo automatically deletes variants of Serverless cloud supergraphs that receive zero operations for 60 consecutive days. This deletes the router, along with all the variant's historical metrics.
 
 - Apollo will notify you via email whenever a Serverless variant is approaching this 60-day limit.
 - To prevent deletion, execute at least one GraphQL operation on the variant's router before the 60-day limit.
 
 ## Out of memory errors
 
-You may receive out of memory errors when using cloud routers on the [Serverless plan](/graphos/routing#router-comparison). Since the Serverless plan offers limited underlying compute resources, Serverless cloud routing offers a fixed amount of throughput capacity.
+You may receive out of memory errors when using cloud routers on the Serverless plan. Since the Serverless plan offers limited underlying compute resources, Serverless cloud routing offers a fixed amount of throughput capacity.
 
 Complex schemas may exceed available machine memory for Serverless cloud routers. For example, Serverless cloud routers don't support schemas with over 1,000 input types. Additionally, complex queries that return too much data or query too many subgraphs simultaneously may fail.
 
-You can upgrade to [Cloud Dedicated](./dedicated) for control over scaling and performance. <TrackableLink href="https://www.apollographql.com/contact-sales?type=dedicated&referrer=docs" eventName="content_contact_cloud">Get in touch</TrackableLink> for a free trial.
+You can upgrade to Dedicated for control over scaling and performance. <TrackableLink href="https://www.apollographql.com/contact-sales?type=dedicated&referrer=docs" eventName="content_contact_cloud">Contact Sales</TrackableLink> for a free trial.
 
-## Cloud routing FAQ
+## Security and compliance
 
-#### What happens if my cloud router goes down?
+The entire GraphOS platform, including its cloud routing infrastructure, is SOC2 Type 2 certified.
+Secrets are encrypted both in transit and at rest.
+Secrets are only available inside the runtime environment, and you have total control over when those secrets are resolved in configuration.
 
-If your supergraph's cloud router goes down, queries sent to it will fail until service is restored. However, every cloud router has redundant machines in place to help prevent this.
+The Apollo Router (the underlying technology for cloud routing) has been [tested and audited by Doyensec](https://doyensec.com/resources/Doyensec_Apollo_Report_Q22022_v4_AfterRetest.pdf).
 
-#### How is my data protected with cloud routing?
+### GraphOS Cloud on AWS
 
-The entire GraphOS platform (including its cloud routing infrastructure) is SOC 2 Type 2 certified. Secrets are encrypted both in transit and at rest, and they are available only inside the runtime environment where users have total control over when those secrets are resolved in configuration.
+GraphOS Cloud on AWS is a managed API solution. It runs the Apollo Router on AWS infrastructure to provide a high-performance, configurable GraphQL router. All Dedicated cloud routers run on AWS.
 
-The Apollo Router (the underlying technology for cloud routing) has been [tested and audited by Doyensec](https://doyensec.com/resources/Doyensec_Apollo_Report_Q22022_v4_AfterRetest.pdf), with no issues.
-
-#### How are cloud routers hosted?
-
-Apollo works with major public cloud providers to deliver GraphOS cloud routing.
-
-#### Which regions are available for cloud routers?
-
-Cloud routing for Serverless plans is only available in Chicago, USA. Our infrastructure has interconnects with major public cloud providers, so latency is minimal. For example, latency between Chicago and AWS in Virginia is approximately 10 ms. If there's a specific region you'd like us to support please [request a region](https://docs.google.com/forms/d/e/1FAIpQLSeLfIHulp-45VYzZspkOslFMzd1pPnMtVgIj_pVyJbox5DCKw/viewform).
-
-Cloud routing on the Dedicated plan has a wider [variety of options](./dedicated#runs-on-aws). <TrackableLink href="https://www.apollographql.com/contact-sales?type=dedicated&referrer=docs" eventName="content_contact_cloud">Get in touch</TrackableLink> to learn more.
-
-#### Can I choose my cloud router's region?
-
-Choice of region for cloud routers is only available on the Dedicated plan.
-
-#### Does GraphOS also host my individual subgraphs?
-
-No. GraphOS only hosts the runtime for your supergraph's cloud router. GraphQL servers for your individual subgraphs are still hosted in your infrastructure.
-
-#### Which GraphQL server libraries are compatible with cloud routers?
-
-Cloud supergraphs use [Apollo Federation 2](/federation/) for their core architecture. [Many GraphQL server libraries](/federation/building-supergraphs/supported-subgraphs/) support Federation 2.
-
-Your GraphQL API does not already need to be using Apollo Federation to add it to a cloud supergraph.
+[Download an overview of GraphOS Cloud on AWS security and compliance practices](https://www.apollographql.com/trust/request-security-report).
+For more information on Apollo's compliance and security measures, visit the [Trust Center](https://www.apollographql.com/trust/compliance-and-security).

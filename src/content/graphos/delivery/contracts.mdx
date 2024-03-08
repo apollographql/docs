@@ -4,9 +4,9 @@ subtitle: Deliver different subsets of your supergraph to different consumers
 description: Use Apollo GraphOS contracts to tailor access to your federated GraphQL supergraph for different consumers.
 ---
 
-<EnterpriseFeature />
+<EnterpriseFeature linkWithAnchor="https://www.apollographql.com/pricing#collaboration" />
 
-A unified supergraph provides a single source of truth for your organization's data. That data likely has different consumers with different needs and permissions. GraphOS **contracts** enable you to deliver different subsets of your supergraph to different consumers.
+A unified supergraph provides a single source of truth for your organization's data. That data likely has different consumers with different needs and permissions. GraphOS _contracts_ enable you to deliver different subsets of your supergraph to different consumers.
 
 ```mermaid
 graph LR;
@@ -36,7 +36,7 @@ Contracts offer these benefits:
 
 ## How contracts work
 
-Each contract filters specific portions of your supergraph's schema into a **different GraphOS [variant](/graphos/graphs/federated-graphs/#supergraph-variants)**:
+Each contract filters specific portions of your supergraph's schema into a different GraphOS variant:
 
 ```mermaid
 graph LR;
@@ -75,7 +75,7 @@ In the above example, a contract excludes types and fields marked with the `inte
 
 ## How to use contracts
 
-You usually create a contract to support a **contract router**, **contract documentation**, or both.
+You usually create a contract to support a _contract router_, _contract documentation_, or both.
 
 ### Contract routers
 
@@ -126,7 +126,7 @@ To create a contract variant that uses Federation 2, the contract's source varia
 
 ### Moving an existing contract to Federation 2
 
-If a Federation 1 source variant already has one or more associated contracts, it isn't possible to move that variant or its contract variants to Federation 2. Instead, you need to **delete and recreate** your contract variants with the following steps:
+If a Federation 1 source variant already has one or more associated contracts, it isn't possible to move that variant or its contract variants to Federation 2. Instead, you need to delete and recreate your contract variants with the following steps:
 
 <ExpansionPanel>
 

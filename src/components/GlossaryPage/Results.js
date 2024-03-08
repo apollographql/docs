@@ -90,8 +90,7 @@ const updateHost = url => {
 
 const Results = () => {
   const {hits} = useHits();
-  const {user} = useUser();
-  const isApollonaut = user?.name.includes('@apollographql.com');
+  const {isInternal} = useUser();
 
   return (
     <Stack divider={<StackDivider borderColor="border" />} spacing={1}>
@@ -154,7 +153,7 @@ const Results = () => {
               </HStack>
             </Box>
           )}
-          {isApollonaut &&
+          {isInternal &&
             (hit.usageInstructions ||
               hit.businessContext ||
               hit.exampleUsage) && (
@@ -237,10 +236,10 @@ const Results = () => {
                 </Text>
                 <ArrowRightIcon />
               </PrimaryLink>
-              {isApollonaut && <EditOnGitHub term={hit.objectID} />}
+              {isInternal && <EditOnGitHub term={hit.objectID} />}
             </Flex>
           ) : (
-            <Box>{isApollonaut && <EditOnGitHub term={hit.objectID} />}</Box>
+            <Box>{isInternal && <EditOnGitHub term={hit.objectID} />}</Box>
           )}
         </Box>
       ))}

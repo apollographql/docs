@@ -4,7 +4,7 @@ subtitle: Learn how to create, use, and edit contracts in GraphOS
 description: Learn how to use the @tag directive in subgraph schemas andwhot to create, edit, and validate contracts in GraphOS Studio.
 ---
 
-<EnterpriseFeature />
+<EnterpriseFeature linkWithAnchor="https://www.apollographql.com/pricing#collaboration" />
 
 <Note>
 
@@ -53,7 +53,7 @@ This step is required for Federation 1 supergraphs only. If you have a Federatio
 
 </Note>
 
-A contract uses one of your graph's existing [variants](/graphos/graphs/#variants) (called the **source variant**) to generate its contract schema. If your source variant uses Federation 1, you need to enable its support for the `@tag` directive in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content):
+A contract uses one of your graph's existing [variants](/graphos/graphs/#variants) (called the _source variant_) to generate its contract schema. If your source variant uses Federation 1, you need to enable its support for the `@tag` directive in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content):
 
 1. Open the Settings page for the variant you want to use as your source variant, then select the **This Variant** tab:
 
@@ -68,7 +68,7 @@ A contract uses one of your graph's existing [variants](/graphos/graphs/#variant
 
 ### 1. Add `@tag`s to subgraph schemas
 
-With contracts, you apply the `@tag` directive to types and fields in your subgraph schemas to indicate whether to include or exclude them from your **contract schema**.
+With contracts, you apply the `@tag` directive to types and fields in your subgraph schemas to indicate whether to include or exclude them from your _contract schema_.
 
 Before you can add `@tag`s, you need to define the directive in your subgraph schema. The way you do this depends on which federation version you're using:
 
@@ -200,12 +200,12 @@ After publishing, if Studio doesn't reflect the `@tags` you've added in your sub
 
 A contract filters types and fields from its source variant according to the following rules:
 
-- **If the Included Tags list is empty**, the contract schema includes each type and object/interface field unless it's tagged with an excluded tag.
-- **If the Included Tags list is non-empty**, the contract schema excludes each union type and object/interface field unless it's tagged with an included tag.
+- If the **Included Tags** list is empty, the contract schema includes each type and object/interface field unless it's tagged with an excluded tag.
+- If the **Included Tags** list is non-empty, the contract schema excludes each union type and object/interface field unless it's tagged with an included tag.
   - Each object and interface type is included as long as at least one of its fields is included (unless the type is explicitly excluded)
   - The contract schema excludes a type or field if it's tagged with both an included tag and an excluded tag.
-- **If you enable the option to hide unreachable types**, the contract schema excludes each unreachable object, interface, union, input, enum, and scalar unless it's tagged with an included tag.
-  - A type is considered **unreachable** in a schema if there exists no path to that type from either a [root operation type](https://spec.graphql.org/October2021/#sec-Root-Operation-Types) or an [executable-directive](https://spec.graphql.org/October2021/#ExecutableDirectiveLocation).
+- If you enable the option to hide unreachable types, the contract schema excludes each unreachable object, interface, union, input, enum, and scalar unless it's tagged with an included tag.
+  - A type is considered _unreachable_ in a schema if there exists no path to that type from either a [root operation type](https://spec.graphql.org/October2021/#sec-Root-Operation-Types) or an [executable-directive](https://spec.graphql.org/October2021/#ExecutableDirectiveLocation).
 
 </ExpansionPanel>
 
@@ -289,14 +289,14 @@ After you create a contract, you can edit its lists of included and excluded tag
 
 ## Run contract checks
 
-If you run [schema checks](./schema-checks/) in GraphOS Studio (which we recommend for all graphs), those checks include **contract checks** for any variant that acts as a source variant for contracts. Contract checks help your team identify when proposed changes to a source variant will negatively affect one or more downstream contracts.
+If you run [schema checks](./schema-checks/) in GraphOS Studio (which we recommend for all graphs), those checks include _contract checks_ for any variant that acts as a source variant for contracts. Contract checks help your team identify when proposed changes to a source variant will negatively affect one or more downstream contracts.
 
 <Note>
 
 To run contract checks via `rover subgraph check`, you must [update the Rover CLI](/rover/getting-started/#installation-methods) to v0.8.2 or later.
 
-- **If you use Rover v0.8.0 or v0.8.1,** contract checks run, but Rover ignores any contract check failures in [blocking downstream variants](#failing-contract-checks) you've set.
-- **If you use a version prior to v0.8.0,** `rover subgraph check` does not run contract checks at all.
+- If you use Rover v0.8.0 or v0.8.1, contract checks run, but Rover ignores any contract check failures in [blocking downstream variants](#failing-contract-checks) you've set.
+- If you use a version prior to v0.8.0, `rover subgraph check` does not run contract checks at all.
 
 </Note>
 
@@ -304,7 +304,7 @@ When you run schema checks on a source variant, contract checks execute alongsid
 
 Contract checks rely on the supergraph schema generated by composition, so they don't execute if composition checks fail.
 
-Contract checks do the following for **each** of a source variant's associated contracts:
+Contract checks do the following for each of a source variant's associated contracts:
 
 1. Use the source variant's proposed supergraph schema (validated by composition checks) to generate and validate an updated contract schema.
 2. Run operation checks against the updated contract schema.
@@ -327,9 +327,9 @@ You can click the **Downstream** item in the Tasks column to view a summary of a
 
 ### Failing contract checks
 
-Unlike other types of checks, failing contract checks **don't** cause their associated schema checks workflow to fail by default. This means that the `rover subgraph check` command doesn't return an error state that would prevent a CI task from merging or deploying changes to the source variant.
+Unlike other types of checks, failing contract checks don't cause their associated schema checks workflow to fail by default. This means that the `rover subgraph check` command doesn't return an error state that would prevent a CI task from merging or deploying changes to the source variant.
 
-If you want failing contract checks to fail your entire checks workflow, you can set the **blocking downstream variants** configuration for your source variant. If contract checks fail for any of these specified contract variants, the source variant's checks workflow does fail.
+If you want failing contract checks to fail your entire checks workflow, you can set the _blocking downstream variants_ configuration for your source variant. If contract checks fail for any of these specified contract variants, the source variant's checks workflow does fail.
 
 To set blocking downstream variants:
 

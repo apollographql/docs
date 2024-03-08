@@ -31,6 +31,10 @@
       [
         "preview"
       ]],
+      "Custom domains":[ "/dedicated/custom-domains",
+      [
+        "preview"
+      ]],
       "AWS Lattice configuration":[ "/dedicated/lattice",
       [
         "preview"

@@ -9,7 +9,7 @@ tags: [server, router, auth]
 
 <EnterpriseFeature>
 
-Self-hosting the Apollo Router is limited to [GraphOS Enterprise plans](/graphos/enterprise/). Other plan types use [managed cloud routing with GraphOS](/graphos/cloud-routing). Check out the [pricing page](https://www.apollographql.com/pricing/) to learn more.
+Self-hosting the Apollo Router is limited to [GraphOS Enterprise plans](/graphos/enterprise/). Other plan types use [managed cloud routing with GraphOS](/graphos/cloud-routing). Check out the [pricing page](https://www.apollographql.com/pricing#graphos-router) to learn more.
 
 </EnterpriseFeature>
 
@@ -97,12 +97,12 @@ headers:
           named: authorization
 ```
 
-**Pros**
+#### Pros
 
 - Requires minimal changes to your router configuration.
 - Can take advantage of existing authentication code in subgraphs, which is often tied to authorization logic for data sources.
 
-**Cons**
+#### Cons
 
 - Each subgraph that contributes to resolving a request needs to authenticate that request.
 - If subgraphs are written in different languages, maintaining consistent authentication code for each is complex.
@@ -111,12 +111,7 @@ headers:
 
 As of Apollo Router v1.13, you can use the [JWT Authentication plugin](/router/configuration/authn-jwt) to validate JWT-based authentication tokens in your supergraph.
 
-<EnterpriseFeature>
-
-This is an [Enterprise feature](/router/enterprise-features) of the Apollo Router.
-It requires an organization with a [GraphOS Enterprise plan](https://www.apollographql.com/pricing/).
-
-</EnterpriseFeature>
+<PremiumFeature linkWithAnchor="https://www.apollographql.com/pricing#graphos-router" />
 
 ```mermaid
 sequenceDiagram
@@ -149,12 +144,7 @@ Cons:
 
 If you have a custom authentication strategy, you can use a [coprocessor](/router/customizations/coprocessor) to implement it.
 
-<EnterpriseFeature>
-
-This is an [Enterprise feature](/router/enterprise-features) of the Apollo Router.
-It requires an organization with a [GraphOS Enterprise plan](https://www.apollographql.com/pricing/).
-
-</EnterpriseFeature>
+<PremiumFeature linkWithAnchor="https://www.apollographql.com/pricing#graphos-router" />
 
 ```mermaid
 sequenceDiagram

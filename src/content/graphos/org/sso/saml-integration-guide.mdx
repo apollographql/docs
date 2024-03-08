@@ -2,19 +2,18 @@
 title: Setting up Apollo SSO with a SAML-based IdP
 ---
 
-<EnterpriseFeature>
+<PremiumFeature>
 
-**Single sign-on (SSO) is available only for [Enterprise plans](https://www.apollographql.com/pricing/).**
+Single sign-on (SSO) is available only for [Dedicated and Enterprise plans](https://www.apollographql.com/pricing#security).
+This feature is not available as part of an [Enterprise trial](../plans/#enterprise-trials).
 
-Unlike most Enterprise features, this feature is not available as part of an [Enterprise trial](../plans/#enterprise-trials).
-
-</EnterpriseFeature>
+</PremiumFeature>
 
 This guide walks through configuring a generic SAML-based identity provider (IdP) for use with Apollo single sign-on (SSO). These steps require administrative access to your IdP.
 
 <Note>
 
-**If you use Okta or Azure Active Directory as your identity provider**, instead see the corresponding guide for your tool:
+If you use Okta or Azure Active Directory as your identity provider, instead see the corresponding guide for your tool:
 
 - [Okta](./okta-integration-guide/)
 - [Azure AD](./azure-ad-integration-guide/)
@@ -28,9 +27,9 @@ This guide walks through configuring a generic SAML-based identity provider (IdP
 
 2. If possible, upload the appropriate Apollo SAML metadata for your organization:
 
-   - If your organization **does not** already use the Entity ID `PingConnect`: [apollo_studio_pingconnect_metadata.xml](apollo_studio_pingconnect_metadata.xml)
+   - If your organization does not already use the Entity ID `PingConnect`: [apollo_studio_pingconnect_metadata.xml](apollo_studio_pingconnect_metadata.xml)
      - If authentication requests need to be signed use: [apollo_studio_pingconnect_signed_metadata.xml](apollo_studio_pingconnect_signed_metadata.xml)
-   - If your organization **does** already use `PingConnect`: [apollo_studio_guid_metadata.xml](apollo_studio_guid_metadata.xml)
+   - If your organization does already use `PingConnect`: [apollo_studio_guid_metadata.xml](apollo_studio_guid_metadata.xml)
      - If authentication requests need to be signed use: [apollo_studio_guid_signed_metadata.xml](apollo_studio_guid_signed_metadata.xml)
 
 3. Set your **Single Sign on URL** or **ACS URL** to the following:
@@ -45,8 +44,8 @@ This guide walks through configuring a generic SAML-based identity provider (IdP
 
 4. Set your **Entity ID** according to the following:
 
-   - If your organization **does not** already use `PingConnect` as an Entity ID, use `PingConnect`.
-   - If your organization **does** already use `PingConnect`, use the following value:
+   - If your organization does not already use `PingConnect` as an Entity ID, use `PingConnect`.
+   - If your organization does already use `PingConnect`, use the following value:
      `fd76e619-6c0a-461c-912d-418278929d60`
 
 5. Set your **RelayState** to the following value:
@@ -67,7 +66,7 @@ This guide walks through configuring a generic SAML-based identity provider (IdP
 
 8. Send your Apollo contact your identity provider (IdP) SAML XML metadata file.
 
-   **If you can't send this file,** send one of the following instead:
+   If you can't send this file, send one of the following instead:
 
    - IdP entity ID
    - IdP single sign-on URL / SSO URL

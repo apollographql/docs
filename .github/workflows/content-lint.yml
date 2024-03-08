@@ -3,10 +3,13 @@ on: [pull_request]
 
 jobs:
   vale:
-    name: runner / vale
+    name: lint docs
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: errata-ai/vale-action@reviewdog
-        with: 
-            files: src/content
+        with:
+          version: 3.1.0
+          vale_flags: "--config=.github/.vale.ini"
+          files: src/content
+          fail_on_error: true

@@ -19,7 +19,7 @@ GraphOS provides the following schema governance tools:
 
 <EnterpriseFeature>
 
-Schema proposals are only available with a [GraphOS Enterprise plan](https://www.apollographql.com/docs/graphos/enterprise/).
+Schema proposals are only available with a [GraphOS Enterprise plan](https://www.apollographql.com/pricing#collaboration).
 
 </EnterpriseFeature>
 
@@ -27,7 +27,7 @@ Schema proposals are only available with a [GraphOS Enterprise plan](https://www
 
 Schema delivery refers to the process of making your supergraph schema available to clients. You can publish schema changes [using the Rover CLI](./publishing-schemas) or [GraphOS Platform API](/graphos/platform-api). Using the Rover CLI command lets you integrate publication into your continuous delivery pipeline.
 
-To integrate other aspects of your supergraph configuration, such as your router configuration or federation version, GraphOS uses the concept of [**launches**](./launches). Schema publications trigger launches which you can monitor them from the **Launches** page in GraphOS Studio.
+To integrate other aspects of your supergraph configuration, such as your router configuration or federation version, GraphOS uses the concept of [launches](./launches). Schema publications trigger launches which you can monitor them from the **Launches** page in GraphOS Studio.
 
 <img className="screenshot" src="../img/launches-page.jpg" width="500" />
 
@@ -35,11 +35,11 @@ To integrate other aspects of your supergraph configuration, such as your router
 
 <EnterpriseFeature>
 
-Contracts are only available with a [GraphOS Enterprise plan](https://www.apollographql.com/docs/graphos/enterprise/).
+Contracts are only available with a [GraphOS Enterprise plan](https://www.apollographql.com/pricing#collaboration).
 
 </EnterpriseFeature>
 
-GraphOS [**contracts**](./contracts) let you deliver different subsets of your supergraph to different consumers. Contracts rely on [`@tags`](./contract-setup#1-add-tags-to-subgraph-schemas) in subgraph schemas to denote which types and fields are accessible to different consumers.
+GraphOS [contracts](./contracts) let you deliver different subsets of your supergraph to different consumers. Contracts rely on [`@tags`](./contract-setup#1-add-tags-to-subgraph-schemas) in subgraph schemas to denote which types and fields are accessible to different consumers.
 
 ## Client operation validation
 

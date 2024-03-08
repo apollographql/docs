@@ -182,7 +182,7 @@ query {
 
 Without any restrictions in place, clients could effectively enumerate through all nodes in a single request like the one above while slipping past other brute force protections. Limiting query breadth or using query cost analysis can help protect a GraphQL API from this type of abuse.
 
-Another form of batching occurs when a client sends batches of full operations in a single request, which can be helpful for performance reasons in some scenarios. **The Apollo Router does not support this form of batching.** When operations are batched, Apollo Server receives an array of operations and sends back an array of responses to be parsed by the client (there's a batch link directly available in Apollo Client to facilitate this):
+Another form of batching occurs when a client sends batches of full operations in a single request, which can be helpful for performance reasons in some scenarios. The Apollo Router does not support this form of batching. When operations are batched, Apollo Server receives an array of operations and sends back an array of responses to be parsed by the client (there's a batch link directly available in Apollo Client to facilitate this):
 
 ```graphql
 [

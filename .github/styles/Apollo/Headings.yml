@@ -7,6 +7,7 @@ match: $sentence
 indicators:
   - ":"
 exceptions:
+  - About Apollo's reference
   - API
   - Apollo Client DevTools
   - Apollo Client Web
@@ -23,10 +24,13 @@ exceptions:
   - CI(/CD)?
   - CLI
   - Cloud Dedicated
+  - CNAME
   - "Configur(e|ation|ing)"
   - Connect APIs
+  - Contribute to Apollo
   - CORS
   - Cosmos
+  - Create an Apollo account
   - Datadog Metrics Explorer
   - Docker
   - Emmet
@@ -40,10 +44,13 @@ exceptions:
   - GDPR
   - GitHub
   - GraphOS
+  - GraphOS Cloud on AWS
   - GraphOS Studio
+  - GraphQL
   - GraphQL Summit
   - Go live
   - gRPC
+  - How can Apollo help address requests from Data Subjects?
   - HTTP
   - I
   - IAM
@@ -54,10 +61,12 @@ exceptions:
   - Markdown
   - Marketplace
   - MongoDB
+  - Notify Apollo
   - OpenTelemetry Collector
   - PingOne
   - PRs?
   - REPL
+  - REST
   - "[Rr]eport(ing)?"
   - Rover
   - SAF
@@ -66,6 +75,7 @@ exceptions:
   - Sandbox
   - SDL
   - SDUI
+  - Send SAML metadata
   - Studio
   - TypeScript
   - UI

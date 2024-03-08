@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {Box, Center, Flex, Link, Text, chakra} from '@chakra-ui/react';
+import {Box, Center, Flex, Text, chakra} from '@chakra-ui/react';
+import RelativeLink from './RelativeLink';
 import {FlaskIcon} from './Icons';
 
 import {MarkdownInAdmonitions} from './MarkdownInAdmonitions';
@@ -38,21 +39,21 @@ export const ExperimentalFeature = ({
             <>
               <b>
                 This feature is{' '}
-                <Link
+                <RelativeLink
                   color={'tertiary'}
                   href="https://www.apollographql.com/docs/resources/product-launch-stages#experimental-features"
                 >
                   experimental
-                </Link>
+                </RelativeLink>
                 .
               </b>{' '}
               Your questions and feedback are highly valued{'—'}don&apos;t
               hesitate to get in touch with your Apollo contact or on the
               official
-              <Link color={'tertiary'} href={discordLink}>
+              <RelativeLink color={'tertiary'} href={discordLink}>
                 {' '}
                 Apollo GraphQL Discord
-              </Link>
+              </RelativeLink>
               .{' '}
               {appendText.length > 0 && (
                 <MarkdownInAdmonitions>{appendText}</MarkdownInAdmonitions>

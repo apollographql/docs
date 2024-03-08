@@ -25,7 +25,11 @@ Client teams that are eager take advantage of GraphQL's client-centric data-fetc
 
 To illustrate this approach, a client-only GraphQL architecture might look like this:
 
-<img src="./images/enterprise-guide/pattern-client-only.jpg" alt="Client-only GraphQL pattern" width="550" />
+<img
+  src="./images/enterprise-guide/pattern-client-only.jpg"
+  alt="Client-only GraphQL pattern"
+  width="550"
+/>
 
 ### Pattern 2: Backend for frontend
 
@@ -35,7 +39,11 @@ As a solution, BFFs add a new layer where each client has a dedicated BFF servic
 
 In practice, the BFF pattern with GraphQL might look like this:
 
-<img src="./images/enterprise-guide/pattern-bff.jpg" alt="Backends for frontends pattern" width="550" />
+<img
+  src="./images/enterprise-guide/pattern-bff.jpg"
+  alt="Backends for frontends pattern"
+  width="550"
+/>
 
 ### Pattern 3: The monolith
 
@@ -49,7 +57,11 @@ As with GraphQL-based BFFs, maintaining a single, monolithic GraphQL API can hel
 
 For either monolithic scenario, its high-level architecture looks like this:
 
-<img src="./images/enterprise-guide/pattern-monolith.jpg" alt="Monolith pattern" width="550" />
+<img
+  src="./images/enterprise-guide/pattern-monolith.jpg"
+  alt="Monolith pattern"
+  width="550"
+/>
 
 ### Pattern 4: Multiple overlapping graphs
 
@@ -89,34 +101,34 @@ Finally, when multiple graphs exist within an enterprise it often indicates that
 
 ## Inconsistency: The common shortcoming
 
-All patterns [described above](#how-graphql-gains-traction) have a shared shortcoming: their implementations result in a **lack of consistency.** A more productive way forward for teams searching for better efficiency and understandability from their GraphQL-based architectures typically have two requirements:
+All patterns [described above](#how-graphql-gains-traction) have a shared shortcoming: their implementations result in a lack of consistency. A more productive way forward for teams searching for better efficiency and understandability from their GraphQL-based architectures typically have two requirements:
 
-- **Consumers should be able to expect consistency in how they fetch data.** A single endpoint should be exposed to client applications and, regardless of what underlying services supply the data, clients should be able to use consistent workflows to consume the data.
+- Consumers should be able to expect consistency in how they fetch data. A single endpoint should be exposed to client applications and, regardless of what underlying services supply the data, clients should be able to use consistent workflows to consume the data.
 
-- **Providers should consistently represent common entities in a consumption-friendly way.** Teams might be empowered to use any underlying technology at the data layer, but access to this data should be consolidated through the GraphQL API and exposed in a way that complements client use cases. Additionally, teams should be able to delineate service boundaries based on separation of concerns (as opposed to separation by types) without interfering with each other.
+- Providers should consistently represent common entities in a consumption-friendly way. Teams might be empowered to use any underlying technology at the data layer, but access to this data should be consolidated through the GraphQL API and exposed in a way that complements client use cases. Additionally, teams should be able to delineate service boundaries based on separation of concerns (as opposed to separation by types) without interfering with each other.
 
 ## How the supergraph addresses these challenges
 
 Consolidating your graph into a supergraph is the key to moving beyond these architectural pitfalls, achieving consistency, and realizing the full potential of GraphQL in an enterprise.
 
-At a fundamental level, moving toward the supergraph requires that your organization has **one unified graph** instead of multiple graphs created and managed by each team. However, the implementation of that common graph should be **federated across multiple teams**. These are the first two "integrity principles" outlined in [Principled GraphQL](https://principledgraphql.com/).
+At a fundamental level, moving toward the supergraph requires that your organization has one unified graph instead of multiple graphs created and managed by each team. However, the implementation of that common graph should be federated across multiple teams. These are the first two "integrity principles" outlined in [Principled GraphQL](https://principledgraphql.com/).
 
 Specifically, moving toward this kind of consolidated graph allows teams across the enterprise to:
 
-- **Scale GraphQL APIs effectively.** Implementing uniform practices allows the benefits of GraphQL to be realized at scale in a company. For example, teams have a better understanding of the workflows and policies that they must follow to contribute to the graph. Similarly, they also benefit from improved standardization when consuming data from the common graph.
+- Scale GraphQL APIs effectively: Implementing uniform practices allows the benefits of GraphQL to be realized at scale in a company. For example, teams have a better understanding of the workflows and policies that they must follow to contribute to the graph. Similarly, they also benefit from improved standardization when consuming data from the common graph.
 
-- **Obtain a unified view of your data.** Your graph is a representation of your product's data. A consolidated view of this data provides you with fresh perspective into how that data is currently used, while also inspiring new creative uses for it in the future. Additionally, it helps you enforce a measure of consistency on how client applications consume that data.
+- Obtain a unified view of your data: Your graph is a representation of your product's data. A consolidated view of this data provides you with fresh perspective into how that data is currently used, while also inspiring new creative uses for it in the future. Additionally, it helps you enforce a measure of consistency on how client applications consume that data.
 
-- **Leverage existing infrastructure.** GraphQL consolidation enables teams to reuse existing infrastructure in an organization and eliminate duplicated efforts where teams interact with data. Consolidation also enables you to take a broad view of the practices and tooling developed by each team that touches your graph and leverages the best of those individual efforts across the company as a whole.
+- Leverage existing infrastructure: GraphQL consolidation enables teams to reuse existing infrastructure in an organization and eliminate duplicated efforts where teams interact with data. Consolidation also enables you to take a broad view of the practices and tooling developed by each team that touches your graph and leverages the best of those individual efforts across the company as a whole.
 
-- **Ship code faster.** Companies adopt GraphQL to build and iterate on their products faster. As GraphQL gains traction across teams, these benefits might be partially offset by time spent developing tooling to help support that growth. Consolidation helps reclaim that lost momentum by providing a clearly defined set of practices for teams to follow when contributing to or consuming data from the graph.
+- Ship code faster: Companies adopt GraphQL to build and iterate on their products faster. As GraphQL gains traction across teams, these benefits might be partially offset by time spent developing tooling to help support that growth. Consolidation helps reclaim that lost momentum by providing a clearly defined set of practices for teams to follow when contributing to or consuming data from the graph.
 
 ## What does a supergraph look like?
 
 A consolidated, federation-driven supergraph architecture consists of:
 
-- A collection of **subgraph** services that each define a distinct GraphQL schema
-- A **router** that composes the distinct schemas into a **supergraph** and executes queries across the services in the graph
+- A collection of _subgraph_ services that each define a distinct GraphQL schema
+- A _router_ that composes the distinct schemas into a _supergraph_ and executes queries across the services in the graph
 
 ```mermaid
 flowchart TB;

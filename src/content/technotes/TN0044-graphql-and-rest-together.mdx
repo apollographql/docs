@@ -31,9 +31,9 @@ This page outlines:
 
 In a traditional [N-tier architecture](https://en.wikipedia.org/wiki/Multitier_architecture), at least three layers comprise the stack: Presentation, Application, and Data. Each of these has a distinct purpose:
 
-- The **Presentation** layer is where customers interact with products, experiences, and API marketplaces.
-- The **Application** layer is where services and business logic live and through which **Presentation** apps access data.
-- The **Data** layer stores data about your company, customers, products, etc.
+- The _Presentation_ layer is where customers interact with products, experiences, and API marketplaces.
+- The _Application_ layer is where services and business logic live and through which _Presentation_ apps access data.
+- The _Data_ layer stores data about your company, customers, products, etc.
 
 ```mermaid
 flowchart LR
@@ -307,8 +307,10 @@ BFFs can offer a viable solution for addressing certain issues associated with t
 - While an API Gateway can provide some governance of BFFs, it still doesn't provide much governance of data retrieval
 
 <Note>
-  You may still need a BFF in addition to GraphQL for "Utility" endpoints specific to your application. In this case,
-  you could use a passthrough pattern to direct data fetching and mutations through your BFF to your GraphQL layer.
+  You may still need a BFF in addition to GraphQL for "Utility" endpoints
+  specific to your application. In this case, you could use a passthrough
+  pattern to direct data fetching and mutations through your BFF to your GraphQL
+  layer.
 </Note>
 
 ## Using GraphQL
@@ -373,7 +375,7 @@ GraphQL enables organizations to centralize all core domain entities into a unif
 
 ## Conclusion
 
-GraphQL is not in competition with REST. Rather, it is best suited as a new layer in the stack with a different purpose&mdash;**to bridge the gap between the Presentation and Application layers**.
+GraphQL is not in competition with REST. Rather, it is best suited as a new layer in the stack with a different purpose&mdash;to bridge the gap between the Presentation and Application layers.
 
 GraphQL enables organizations to drive a resilient API strategy that provides governance and ownership while reducing friction and allowing API consumers to increase their velocity through self-service.
 

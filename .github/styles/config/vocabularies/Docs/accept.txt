@@ -43,8 +43,6 @@ Dynatrace
 GCUs?
 Gradle
 Grafana
-graphql
-GraphQL
 gzipped
 heatmaps?
 [Ii]nitialisms?
@@ -118,8 +116,11 @@ typings
 [Uu]ntracked
 [Uu]ntrusted
 URI(s)?
+urql
 Uplink
 [Vv]alidator
+[Vv]irtualized?
+VPCs?
 Vue
 walkthrough
 [Ww]ebhook

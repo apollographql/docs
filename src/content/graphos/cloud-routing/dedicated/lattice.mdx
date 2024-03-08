@@ -33,7 +33,7 @@ flowchart LR;
 
 <Note>
 
-- You can only use Lattice for subgraphs in the **same AWS region as your cloud router**. If you need to run subgraphs in different AWS regions or run your workloads in a region not yet supported by Cloud Dedicated, please <TrackableLink href="https://www.apollographql.com/contact-sales?type=dedicated&referrer=docs" eventName="content_contact_cloud">let us know</TrackableLink>.
+- You can only use Lattice for subgraphs in the same AWS region as your cloud router. If you need to run subgraphs in different AWS regions or run your workloads in a region not yet supported by Cloud Dedicated, please <TrackableLink href="https://www.apollographql.com/contact-sales?type=dedicated&referrer=docs" eventName="content_contact_cloud">let us know</TrackableLink>.
 - Using AWS VPC Lattice incurs costs outside of your Cloud Dedicated spend. Refer to the [Lattice pricing page](https://aws.amazon.com/vpc/lattice/pricing/) to learn more.
 
 </Note>
@@ -57,7 +57,7 @@ The AWS Console interface may differ slightly from the screenshots in this guide
 
 ### Step 1. Create AWS VPC Lattice target groups
 
-A Lattice **target group** is a collection of targets, or compute resources, that run your application or service. You must set these up so your Lattice services can route requests accurately. Check out the [AWS documentation](https://docs.aws.amazon.com/vpc-lattice/latest/ug/target-groups.html) to learn more.
+A Lattice _target group_ is a collection of targets, or compute resources, that run your application or service. You must set these up so your Lattice services can route requests accurately. Check out the [AWS documentation](https://docs.aws.amazon.com/vpc-lattice/latest/ug/target-groups.html) to learn more.
 
 1. In the AWS Console for your region of choice, go to the VPC service page:
 
@@ -434,7 +434,7 @@ Setup from this point differs based on whether this is [your first private subgr
     width="500"
 />
 
-7. From the dropdown menu, select the Lattice service that you would like to connect to your GraphOS Router. A default path of `/api/graphql` is automatically added to the URL. You can change this path if you want to.
+7. From the dropdown menu, select the Lattice service that you would like to connect to your GraphOS router. A default path of `/api/graphql` is automatically added to the URL. You can change this path if you want to.
 
   <img
     className="screenshot"
