@@ -1,5 +1,5 @@
 ---
-title: Understanding your graph
+title: Graph exploration
 subtitle: Explore and visualize your graph's types, fields, and relationships
 description: Enhance GraphQL schema comprehension and design with Apollo GraphOS Studio, including the schema visualization, the Explorer, and schema changelog. 
 ---
@@ -15,7 +15,6 @@ GraphOS Studio provides several ways of understanding and exploring your organiz
 - The **Schema** page, which includes three distinct views, including schema visualization
 - The **Explorer**, which helps you build new operations against your graph
 - The **Changelog**, which displays all published changes
-- The **Insights** page, which displays operation and field metrics
 
 <Note>
 
@@ -33,7 +32,7 @@ With Serverless and Dedicated plans, all Studio organization members have access
 
 ## The README page
 
-When a user opens one of your graph's variants in GraphOS Studio, its **README** page is shown:
+When a user opens one of your graph's variants in GraphOS Studio, its **README** page appears:
 
 <img className="screenshot" alt="GraphQL codeblock in README" src="../../img/readme-example.jpg" width="500" />
 
@@ -49,7 +48,7 @@ Each variant has its own README. If you edit one variant's README, those edits a
 
 ### Supported Markdown
 
-The README supports all [basic Markdown syntax](https://www.markdownguide.org/cheat-sheet/#basic-syntax) and most [extended syntax](https://www.markdownguide.org/cheat-sheet/#extended-syntax) (including tables, code blocks, and footnotes).
+The README supports all [basic Markdown syntax](https://www.markdownguide.org/cheat-sheet/#basic-syntax) and most [extended syntax](https://www.markdownguide.org/cheat-sheet/#extended-syntax), including tables, code blocks, and footnotes.
 
 You can define a GraphQL code block with the following syntax:
 
@@ -78,7 +77,6 @@ Graph ref: {{ graph.ref }}
 
 For a list of all supported shortcodes, click **Graph shortcodes** in the bottom-left corner of the README editor.
 
-
 <!-- vale Apollo.Headings = NO -->
 
 ## The Schema page
@@ -91,7 +89,7 @@ A graph variant's **schema** page has three distinct views:
   - The **SDL** tab displays your schema's raw SDL
   - The ** Visualization** tab provides a filterable, navigable, graphical representation of your schema
 
-### Reference
+### Schema reference
 
 The **Reference** tab on the **Schema** page lists the different kinds of definitions in your schema, for example, objects, scalars, etc.:
 
@@ -132,11 +130,12 @@ The top of the **Schema** page provides a **Filter Schema** box you can use to f
 <Tip>
 
 - Click the arrow button to the left of the filter box to show/hide the filter selection dropdowns.
-- Click the button to the right of the filter box to copy a shareable URL of your currently active set of filters (you can also copy your browser's address bar directly).
+- Click the button to the right of the filter box to copy a shareable URL of your currently active set of filters.
+  - You can also copy your browser's address bar directly.
 
 </Tip>
 
-Any filters you set remain active as you move between definitions on the Schema page.
+Any filters you set remain active as you move between definitions on the **Schema** page.
 
 You can filter your schema definitions by type/field name, as shown above, along with any combination of the following:
 
@@ -260,14 +259,16 @@ Include results that take a GraphQL argument with any of the specified names. If
 - Currently, it isn't possible to use **AND** logic for multiple filters of the same type.
   - For example, it isn't possible to filter by `subgraph:products` **AND** `subgraph:reviews` to include only definitions that are present in both subgraphs.
 
-### SDL
+### Schema definition language
+
+The **SDL** tab displays the raw schema definition language (SDL) for each schema associated with your graph. For a monograph, this is simply the graph's **API Schema**. Supergraphs also include a supergraph schema and subgraph schemas. See [Viewing subgraph SDL](./federated-graphs#viewing-subgraph-sdl) for more information.
+
+Regardless of the SDL type you're viewing, you can **Copy** the SDL or download it in **Raw** or **JSON** format from this tab.
 
 ### Schema visualization
 
-_Schema visualization_ provides a clear graphical representation of your schema's structure, including types, fields, and relationships.
+The **Visualization** tab provides a clear graphical representation of your schema's structure, including types, fields, and relationships.
 It can help identify potential issues in your data model, allowing for more effective schema design.
-
-Every member of a Studio organization can access all their organization's graphs' visualizations. Click the **Visualization** tab on the **Schema** page to open a graph's visualization.
 
 <img
   src="../../img/schema-visualization.png"
@@ -275,24 +276,25 @@ Every member of a Studio organization can access all their organization's graphs
   alt="Schema visualization in Studio"
 />
 
-Click the double right arrow to expand a searchable list of types.
+The bottom of the visualization has buttons for:
+- Zooming in and out of the visualization
+- Copying a link to the visualization to share with organization members
+- Downloading an SVG or PNG of the visualization
+- Opening and closing the visualization **Legend**
 
-<img
-  src="../../img/schema-visualization-filters.png"
-  className="screenshot"
-  alt="Searching for 'Billing' types in a schema visualization"
-/>
+On the top of the page, you can:
+- Click the double arrow to collapse or expand a searchable list of **Types**.
+- Click **Show Filters** to filter your visualization by root type, subgraph, or tag.
+- Click the **Highlight** dropdown to select particular types, tags, or directives to highlight.
+  - Highlighting **Unused** types, **Errors**, **Usage*, or **Latency**, the visualization displays a heatmap whose **Time range** you can adjust in the bottom right of the screen.
 
-Click **Filters** to filter your visualization by root type, subgraph, or tag.
-Click **Highlight** to highlight particular types, tags, or directives.
+    <img
+      src="../../img/schema-visualization-heatmap.png"
+      className="screenshot"
+      alt="Visualization heatmap showing unused types and fields in a schema visualization"
+    />
 
-<img
-  src="../../img/schema-visualization-highlight.png"
-  className="screenshot"
-  alt="Highlighting unused types and fields in a schema visualization"
-/>
-
-Click **More** to **Collapse all fields** or hide particular fields, types, and nodes.
+- Click **More** to **Collapse all fields** or **Hide** particular fields, types, and nodes.
 
 ## The Explorer
 
@@ -305,7 +307,3 @@ The **Changelog** page in Studio displays a timeline of changes made to your gra
 <img src="../../img/changelog-page.jpg" className="screenshot" alt="Schema Changelog tab" width="450" />
 
 Only schema changes that you publish to Studio are in this timeline, which is one of the most important reasons to [include schema publishing in your continuous delivery pipeline](../delivery/publishing-schemas/#publish-with-continuous-delivery).
-
-## Viewing graph metrics
-
-Refer to the [Metrics and reporting documentation](../metrics/#insights-and-analysis) for an overview of the **Insights** page's capabilities.

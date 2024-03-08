@@ -35,7 +35,7 @@
       "Updating your graph": "/graphs/updating"
     },
     "GraphOS Studio features": {
-      "Understanding your graph": "/graphs/studio-features",
+      "Graph exploration": "/graphs/studio-features",
       "Supergraph-specific Studio features": "/graphs/federated-graphs"
     },
     "Graph Administration": {
