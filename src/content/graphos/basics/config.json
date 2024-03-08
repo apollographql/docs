@@ -19,7 +19,6 @@
     "Intro to GraphOS": "/",
     "Graphs and variants": "/graphs",
     "Routing": "/routing",
-    "API keys": "/api-keys",
     "Get Started": {
       "Cloud setup": "/quickstart/cloud",
       "Self-hosted setup": [
@@ -30,15 +29,18 @@
       ],
       "Next steps": "/quickstart/next-steps"
     },
-    "Building Subgraphs": {
+    "Graph Development": {
       "Creating a new subgraph": "/graphs/creating-a-subgraph",
-      "Local development": "/graphs/local-development"
+      "Local subgraph development": "/graphs/local-development",
+      "Updating your graph": "/graphs/updating"
+    },
+    "GraphOS Studio features": {
+      "Understanding your graph": "/graphs/studio-features",
+      "Supergraph-specific Studio features": "/graphs/federated-graphs"
     },
     "Graph Administration": {
-      "Updating your graph": "/graphs/updating",
-      "Understanding your graph": "/graphs/visualization",
-      "Graph management": "/graphs/management",
-      "Supergraph-specific Studio features": "/graphs/federated-graphs"
+      "API keys": "/api-keys",
+      "Graph management": "/graphs/management"
     },
     "Graph Security": {
       "Securing subgraphs": "/graphs/securing-a-subgraph",
