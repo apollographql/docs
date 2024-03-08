@@ -9,6 +9,12 @@ tags: [schema-design]
 
 Most GraphQL APIs provide their capabilities as root-level fields of the `Query` and `Mutation` types, resulting in a flat structure. For example, the GitHub GraphQL API has approximately 200 of these root-level fields! Even with tools like the Apollo Explorer, navigating and understanding larger "flat" graphs can be difficult.
 
+<Note>
+
+Make sure to read the [Caveats](#Caveats) section below. While the name spacing pattern works well for queries, mutations can have side-effects that may not be inline with the GraphQL spec.
+
+</Note>
+
 To improve the logical organization of our graph's capabilities, we can define _namespaces_ for our root-level operation fields. These are object types that in turn define query and mutation fields that are all related to a particular concern.
 
 For example, we can define all the mutation fields related to `User` objects in a `UsersMutations` namespace object:
