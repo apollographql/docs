@@ -1,0 +1,73 @@
+---
+title: Using HTTP Subscriptions with an API Gateway
+subtitle: Enable HTTP multipart subscriptions when using an API Gateway infront of the Router
+description: Enable HTTP multipart subscriptions when using an API Gateway infront of the Router.
+published: 2024-03-11
+id: TN0047
+tags: [router]
+---
+
+Organizations commonly require that all APIs be fronted by an API Gateway [including the Apollo Router](/technotes/TN0037-api-gateways).
+These API Gateways often are not configured by default to send multipart HTTP requests chunks as they are available which leads to unexpected behavior
+when using [subscriptions over HTTP Multipart](/router/executing-operations/subscription-support#http-callback-setup).
+
+To allow HTTP multipart subscriptions to work correctly, the API Gateway must send the response as it comes and not "buffer" the response.
+
+## Azure API Management (APIM)
+
+By default, an HTTP API endpoint setup in APIM "buffers" the response from a downstream service. What this means is that it will "wait" to receive all
+the chunks from the HTTP request before returning it to the client.
+
+To enable HTTP subscriptions, the `forward-request` policy on the `backend` should be updated with `buffer-response="false"`. This will result in the
+endpoint sending the chunks to the requesting client as they are received.
+
+```xml
+<policies>
+    <backend>
+        <forward-request http-version="2or1" buffer-response="false" />
+    </backend>
+</policies>
+```
+
+<Note>
+
+For more information, see [Azure API Management policy reference -
+forward-request](https://learn.microsoft.com/en-us/azure/api-management/forward-request-policy#attributes).
+
+</Note>
+
+## Google Apigee
+
+By default, an HTTP API endpoint in Apigee "buffers" the response from a downstream service. What this means is that it will "wait" to receive all
+the chunks from the HTTP request before returning it to the client.
+
+To enable HTTP subscriptions, the `response.streaming.enabled` property should be set to `true` in both your ProxyEndpoint and TargetEndpoint definitions in the proxy bundle.
+This will result in the endpoint sending the chunks to the requesting client as they are received.
+
+```xml
+<TargetEndpoint name="default">
+  <HTTPTargetConnection>
+    <URL>http://mocktarget.apigee.net</URL>
+    <Properties>
+      <Property name="response.streaming.enabled">true</Property>
+    </Properties>
+  </HTTPTargetConnection>
+</TargetEndpoint>
+```
+
+```xml
+<ProxyEndpoint name="default">
+  <HTTPProxyConnection>
+    <BasePath>/v1/weather</BasePath>
+    <Properties>
+      <Property name="response.streaming.enabled">true</Property>
+    </Properties>
+  </HTTPProxyConnection>
+</ProxyEndpoint>
+```
+
+<Note>
+
+For more information, see [Streaming requests and responses](https://cloud.google.com/apigee/docs/api-platform/develop/enabling-streaming?hl=en).
+
+</Note>
