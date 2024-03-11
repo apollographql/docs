@@ -104,11 +104,11 @@ Apollo automatically deletes variants of Serverless cloud supergraphs that recei
 - Apollo will notify you via email whenever a Serverless variant is approaching this 60-day limit.
 - To prevent deletion, execute at least one GraphQL operation on the variant's router before the 60-day limit.
 
-## Out of memory errors
+## Limited compute on Serverless
 
-You may receive out of memory errors when using cloud routers on the Serverless plan. Since the Serverless plan offers limited underlying compute resources, Serverless cloud routing offers a fixed amount of throughput capacity.
-
-Complex schemas may exceed available machine memory for Serverless cloud routers. For example, Serverless cloud routers don't support schemas with over 1,000 input types. Additionally, complex queries that return too much data or query too many subgraphs simultaneously may fail.
+Serverless has limited underlying compute resources and certain types of workloads may require you upgrade to Dedicated. Serverless capacity may be exhausted in the following circumstances:
+- Complex schemas may exceed available machine memory for Serverless cloud routers. For example, Serverless cloud routers don't support schemas with over 1,000 input types.
+- Processing too many simulatenous requests may cause your cloud router to error and return 429 errors to your clients.
 
 You can upgrade to Dedicated for control over scaling and performance. <TrackableLink href="https://www.apollographql.com/contact-sales?type=dedicated&referrer=docs" eventName="content_contact_cloud">Contact Sales</TrackableLink> for a free trial.
 
