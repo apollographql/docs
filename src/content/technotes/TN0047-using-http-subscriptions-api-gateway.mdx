@@ -8,18 +8,15 @@ tags: [router]
 ---
 
 Organizations commonly require that all APIs be fronted by an API Gateway [including the Apollo Router](/technotes/TN0037-api-gateways).
-These API Gateways often are not configured by default to send multipart HTTP requests chunks as they are available which leads to unexpected behavior
-when using [subscriptions over HTTP Multipart](/router/executing-operations/subscription-support#http-callback-setup).
+These API Gateways often are not configured by default to send multipart HTTP requests chunks as they are available which leads to unexpected behavior when using [subscriptions over HTTP Multipart](/router/executing-operations/subscription-support#http-callback-setup).
 
 To allow HTTP multipart subscriptions to work correctly, the API Gateway must send the response as it comes and not "buffer" the response.
 
 ## Azure API Management (APIM)
 
-By default, an HTTP API endpoint setup in APIM "buffers" the response from a downstream service. What this means is that it will "wait" to receive all
-the chunks from the HTTP request before returning it to the client.
+By default, an HTTP API endpoint setup in APIM "buffers" the response from a downstream service. What this means is that it will "wait" to receive all the chunks from the HTTP request before returning it to the client.
 
-To enable HTTP subscriptions, the `forward-request` policy on the `backend` should be updated with `buffer-response="false"`. This will result in the
-endpoint sending the chunks to the requesting client as they are received.
+To enable HTTP subscriptions, the `forward-request` policy on the `backend` should be updated with `buffer-response="false"`. This will result in the endpoint sending the chunks to the requesting client as they are received.
 
 ```xml
 <policies>
@@ -31,18 +28,15 @@ endpoint sending the chunks to the requesting client as they are received.
 
 <Note>
 
-For more information, see [Azure API Management policy reference -
-forward-request](https://learn.microsoft.com/en-us/azure/api-management/forward-request-policy#attributes).
+For more information, see the [Azure API Management policy reference - forward-request](https://learn.microsoft.com/en-us/azure/api-management/forward-request-policy#attributes).
 
 </Note>
 
 ## Google Apigee
 
-By default, an HTTP API endpoint in Apigee "buffers" the response from a downstream service. What this means is that it will "wait" to receive all
-the chunks from the HTTP request before returning it to the client.
+By default, an HTTP API endpoint in Apigee "buffers" the response from a downstream service. What this means is that it will "wait" to receive all the chunks from the HTTP request before returning it to the client.
 
-To enable HTTP subscriptions, the `response.streaming.enabled` property should be set to `true` in both your ProxyEndpoint and TargetEndpoint definitions in the proxy bundle.
-This will result in the endpoint sending the chunks to the requesting client as they are received.
+To enable HTTP subscriptions, the `response.streaming.enabled` property should be set to `true` in both your ProxyEndpoint and TargetEndpoint definitions in the proxy bundle. This will result in the endpoint sending the chunks to the requesting client as they are received.
 
 ```xml
 <TargetEndpoint name="default">
@@ -68,6 +62,6 @@ This will result in the endpoint sending the chunks to the requesting client as 
 
 <Note>
 
-For more information, see [Streaming requests and responses](https://cloud.google.com/apigee/docs/api-platform/develop/enabling-streaming?hl=en).
+For more information, see [Streaming requests and responses in the Apigee documentation](https://cloud.google.com/apigee/docs/api-platform/develop/enabling-streaming?hl=en).
 
 </Note>
