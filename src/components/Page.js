@@ -9,13 +9,7 @@ import InlineCode from './InlineCode';
 import Pagination from './Pagination';
 import Prism from 'prismjs';
 import PropTypes from 'prop-types';
-import React, {
-  Fragment,
-  createElement,
-  useCallback,
-  useMemo,
-  useState
-} from 'react';
+import React, {Fragment, createElement, useMemo, useState} from 'react';
 import RelativeLink, {ButtonLink, PrimaryLink} from './RelativeLink';
 import RuleExpansionPanel from './RuleExpansionPanel';
 import TableOfContents from './TableOfContents';
@@ -84,6 +78,7 @@ import {PremiumFeature} from './PremiumFeature';
 import {PreviewFeature} from './PreviewFeature';
 import {Property} from './Property';
 import {PropertyList} from './PropertyList';
+import {RouterErrorCodes} from './RouterErrorCodes';
 import {TOTAL_HEADER_HEIGHT} from './Header';
 import {Tab} from './Tab';
 import {Tabs} from './Tabs';
@@ -239,7 +234,8 @@ const mdxComponents = {
   TrackableLink,
   useApiDocContext,
   PrimaryLink,
-  MDXRenderer
+  MDXRenderer,
+  RouterErrorCodes
 };
 
 const {processSync} = rehype()
