@@ -10,11 +10,15 @@ tags: [router]
 Organizations commonly require that all APIs be fronted by an API Gateway [including the Apollo Router](/technotes/TN0037-api-gateways).
 These API Gateways often are not configured by default to send multipart HTTP requests chunks as they are available which leads to unexpected behavior when using [subscriptions over HTTP Multipart](/router/executing-operations/subscription-support#http-callback-setup).
 
-To allow HTTP multipart subscriptions to work correctly, the API Gateway must send the response as it comes and not "buffer" the response.
+To allow HTTP multipart subscriptions to work correctly, the API Gateway must send the response as it comes and not buffer the response.
+
+<!-- vale Apollo.Headings = NO -->
 
 ## Azure API Management (APIM)
 
-By default, an HTTP API endpoint setup in APIM "buffers" the response from a downstream service. What this means is that it will "wait" to receive all the chunks from the HTTP request before returning it to the client.
+<!-- vale Apollo.Headings = YES -->
+
+By default, an HTTP API endpoint setup in APIM buffers the response from a downstream service. What this means is that it will "wait" to receive all the chunks from the HTTP request before returning it to the client.
 
 To enable HTTP subscriptions, the `forward-request` policy on the `backend` should be updated with `buffer-response="false"`. This will result in the endpoint sending the chunks to the requesting client as they are received.
 
@@ -32,9 +36,13 @@ For more information, see the [Azure API Management policy reference - forward-r
 
 </Note>
 
+<!-- vale Apollo.Headings = NO -->
+
 ## Google Apigee
 
-By default, an HTTP API endpoint in Apigee "buffers" the response from a downstream service. What this means is that it will "wait" to receive all the chunks from the HTTP request before returning it to the client.
+<!-- vale Apollo.Headings = YES -->
+
+By default, an HTTP API endpoint in Apigee buffers the response from a downstream service. What this means is that it will "wait" to receive all the chunks from the HTTP request before returning it to the client.
 
 To enable HTTP subscriptions, the `response.streaming.enabled` property should be set to `true` in both your ProxyEndpoint and TargetEndpoint definitions in the proxy bundle. This will result in the endpoint sending the chunks to the requesting client as they are received.
 
