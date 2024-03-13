@@ -37,6 +37,7 @@ dba
 Dockerfile
 Docset
 docstrings?
+Documenters
 Doyensec
 Dynatrace
 (?i)enums?
