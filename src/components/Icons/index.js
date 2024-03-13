@@ -44,6 +44,7 @@ import {ReactComponent as Moon} from '@apollo/icons/small/IconMoon.svg';
 import {ReactComponent as NarrowViewport} from '@apollo/icons/default/IconNarrowViewport.svg';
 import {ReactComponent as NodeJs} from '@apollo/icons/default/IconNodeJs.svg';
 import {ReactComponent as Outlink} from '@apollo/icons/default/IconOutlink.svg';
+import {ReactComponent as OutlinkSmall} from '@apollo/icons/small/IconOutlink.svg';
 import {ReactComponent as Paperclip} from '@apollo/icons/default/IconAttach.svg';
 import {ReactComponent as Pipeline} from '@apollo/icons/default/IconPipeline.svg';
 import {ReactComponent as Preview} from '@apollo/icons/default/IconPreview.svg';
@@ -137,7 +138,7 @@ export const OdysseyIcon = () => <CustomIcon icon={Education} />;
 export const OrgIcon = () => <CustomIcon icon={Team} />;
 export const OutlinkIcon = () => <CustomIcon icon={Outlink} />;
 export const OutlinkSmallIcon = () => (
-  <CustomIcon boxSize="0.75em" icon={Outlink} />
+  <CustomIcon icon={OutlinkSmall} boxSize="0.75em" />
 );
 export const PaperclipIcon = () => <CustomIcon icon={Paperclip} />;
 export const PipelineIcon = () => <CustomIcon icon={Pipeline} />;
