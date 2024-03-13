@@ -1,5 +1,7 @@
 import React from 'react';
 import yaml from 'js-yaml';
+import {ErrorCode} from './ErrorCode';
+import {PropertyList} from './PropertyList';
 import {graphql, useStaticQuery} from 'gatsby';
 
 export const RouterErrorCodes = () => {
@@ -30,16 +32,23 @@ export const RouterErrorCodes = () => {
 
         return (
           <div key={index}>
-            <h1>{decodeURIComponent(file.name)}</h1>
-            {errors.map((error, index) => {
-              console.log(error);
-              return (
-                <div key={index}>
-                  <h2>{error.code}</h2>
-                  <p>{error.detail}</p>
-                </div>
-              );
-            })}
+            <PropertyList kind="errCodes">
+              {errors.map((error, index) => {
+                console.log(error);
+                return (
+                  <>
+                    <ErrorCode
+                      key={index}
+                      code={error.code}
+                      detail={error.detail}
+                      type={error.type}
+                      origin={error.origin}
+                      level={error.level}
+                    />
+                  </>
+                );
+              })}
+            </PropertyList>
           </div>
         );
       })}

@@ -11,6 +11,7 @@ module.exports = {
         MultiCodeBlock: 'readonly',
         YouTube: 'readonly',
         PropertyList: 'readonly',
+        ErrorCode: 'readonly',
         Property: 'readonly',
         Tabs: 'readonly',
         Tab: 'readonly',

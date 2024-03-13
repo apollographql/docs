@@ -59,6 +59,7 @@ import {
   MultiCodeBlockContext
 } from '@apollo/chakra-helpers';
 import {EnterpriseFeature} from './EnterpriseFeature';
+import {ErrorCode} from './ErrorCode';
 import {ExperimentalFeature} from './ExperimentalFeature';
 import {Link as GatsbyLink} from 'gatsby';
 import {Global} from '@emotion/react';
@@ -212,6 +213,7 @@ const mdxComponents = {
   YouTube,
   Property,
   PropertyList,
+  ErrorCode,
   Tab,
   Tabs,
   WistiaEmbed,
