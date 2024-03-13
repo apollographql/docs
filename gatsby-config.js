@@ -75,23 +75,6 @@ const plugins = [
     }
   },
   {
-    resolve: 'gatsby-plugin-webfonts',
-    options: {
-      fonts: {
-        google: [
-          {
-            family: 'Inter',
-            variants: ['400', '600', '700']
-          },
-          {
-            family: 'Fira Code',
-            variants: ['400', '600']
-          }
-        ]
-      }
-    }
-  },
-  {
     resolve: 'gatsby-plugin-mdx',
     options: {
       gatsbyRemarkPlugins,
