@@ -43,7 +43,6 @@ export function GradientCard({icon, title, description, path, cta}) {
           href={path}
           colorScheme="navy"
           fontSize="lg"
-          fontWeight="semibold"
           leftIcon={<ArrowRightIcon />}
         >
           {cta}
@@ -84,8 +83,9 @@ export function Docset({
         <ButtonLink
           variant="link"
           color="tertiary"
-          fontSize="lg"
-          fontWeight="medium"
+          textDecor="underline"
+          fontWeight="normal"
+          fontSize="inherit"
           _hover={{color: 'link'}}
           mt="auto"
           href={path}
