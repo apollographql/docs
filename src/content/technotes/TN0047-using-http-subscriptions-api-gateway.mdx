@@ -44,7 +44,7 @@ For more information, see the [Azure API Management policy reference - forward-r
 
 By default, an HTTP API endpoint in Apigee buffers the response from a downstream service. What this means is that it will "wait" to receive all the chunks from the HTTP request before returning it to the client.
 
-To enable HTTP subscriptions, the `response.streaming.enabled` property should be set to `true` in both your ProxyEndpoint and TargetEndpoint definitions in the proxy bundle. This will result in the endpoint sending the chunks to the requesting client as they are received.
+To enable HTTP subscriptions, the `response.streaming.enabled` property should be set to `true` in both your `ProxyEndpoint` and `TargetEndpoint` definitions in the proxy bundle. This will result in the endpoint sending the chunks to the requesting client as they are received.
 
 ```xml
 <TargetEndpoint name="default">
