@@ -38,7 +38,7 @@ export function PageSeo({title, description, noindex}) {
           {
             url: getShareImage({
               title,
-              tagline: truncate(description, {length: 100, separator: /,? +/}),
+              tagline: truncate(description, {length: 158, separator: /,? +/}),
               taglineFont: 'odyssey:fonts:InterRegular.ttf',
               taglineColor: 'B4C0BF',
               titleFont: 'odyssey:fonts:AeonikBold.otf',
