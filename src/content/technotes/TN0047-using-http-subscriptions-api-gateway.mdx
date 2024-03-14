@@ -76,19 +76,31 @@ For more information, see [Streaming requests and responses in the Apigee docume
 
 ## Mulesoft
 
-### Flex-gateway
+<!-- vale Apollo.Headings = NO -->
+
+### Flex Gateway
+
+<!-- vale Apollo.Headings = YES -->
 
 Streaming of HTTP multipart is supported out of the box with no additional configuration required.
 
-### Proxy
+<!-- vale Apollo.Headings = NO -->
 
-...
+### Proxy (Mule 4, CloudHub 2.0)
+
+<!-- vale Apollo.Headings = YES -->
+
+Streaming is not supported and it is recommended to use a Flex Gateway.
 
 ## Kong
 
 Streaming of HTTP multipart is supported out of the box with no additional configuration required.
 
+<!-- vale Apollo.Headings = NO -->
+
 ## AWS API Gateway
+
+<!-- vale Apollo.Headings = YES -->
 
 At this time, AWS API Gateway does not support streaming of HTTP data. An possible workaround is to use a Lambda expression which does support streaming.
 
