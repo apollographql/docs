@@ -38,12 +38,14 @@ export function PageSeo({title, description, noindex}) {
           {
             url: getShareImage({
               title,
-              tagline: truncate(description, {length: 140, separator: /,? +/}),
+              tagline: truncate(description, {length: 170, separator: /,? +/}),
               taglineFont: 'odyssey:fonts:InterRegular.ttf',
               taglineColor: 'B4C0BF',
               titleFont: 'odyssey:fonts:AeonikBold.otf',
               textColor: 'CFD7D6',
               titleFontSize: 80,
+              titleBottomOffset: 300,
+              taglineTopOffset: 400,
               textLeftOffset: 90,
               textAreaWidth: 1120,
               cloudName: 'apollographql',
