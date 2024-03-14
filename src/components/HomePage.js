@@ -86,7 +86,6 @@ export function Docset({
           }}
           mt="auto"
           fontWeight="semibold"
-          fontSize="lg"
           href={path}
           whiteSpace="normal"
           leftIcon={<ArrowRightIcon />}
