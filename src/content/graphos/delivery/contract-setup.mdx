@@ -22,8 +22,8 @@ Before you create any contracts:
 
 1. If you're using Apollo Server:
 
-   - For Federation 2 contract variants, update your Apollo Server subgraphs to version 2.0.0 or later of the `@apollo/subgraph` library.
-   - For Federation 1 contract variants, update `@apollo/subgraph` to version 0.1.1 or later.
+   - For Federation 2 contract variants, update your Apollo Server subgraphs to v2.0.0 or later of the `@apollo/subgraph` library.
+   - For Federation 1 contract variants, update `@apollo/subgraph` to v0.1.1 or later.
 
 <Note>
 
@@ -33,8 +33,8 @@ Before you create any contracts:
 
 2. If you're using the `@apollo/gateway` library instead of the Apollo Router:
 
-   - For Federation 2 contract variants, update your gateway's `@apollo/gateway` library to version 2.0.2 or later.
-   - For Federation 1 contract variants, update your gateway's `@apollo/gateway` library to version 0.34.0 or later.
+   - For Federation 2 contract variants, update your gateway's `@apollo/gateway` library to v2.0.2 or later.
+   - For Federation 1 contract variants, update your gateway's `@apollo/gateway` library to v0.34.0 or later.
 
 <Note>
 
@@ -55,7 +55,7 @@ This step is required for Federation 1 supergraphs only. If you have a Federatio
 
 A contract uses one of your graph's existing [variants](/graphos/graphs/#variants) (called the _source variant_) to generate its contract schema. If your source variant uses Federation 1, you need to enable its support for the `@tag` directive in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content):
 
-1. Open the Settings page for the variant you want to use as your source variant, then select the **This Variant** tab:
+1. Open the **Settings** page for the variant you want to use as your source variant, then select the **This Variant** tab:
 
    <img
      className="screenshot"
@@ -161,15 +161,7 @@ After publishing, if Studio doesn't reflect the `@tags` you've added in your sub
      width="550"
    />
 
-2. Click **Create Contract** to open the following dialog:
-
-   <img
-     className="screenshot"
-     alt="Create contract dialog"
-     src="../img/contracts-dialog.jpg"
-     width="550"
-   />
-
+2. Click **Create Contract** to open the contact creation dialog.
 3. In the first step of the dialog, provide the following:
 
    - A name for your new contract variant
@@ -183,14 +175,7 @@ After publishing, if Studio doesn't reflect the `@tags` you've added in your sub
 
 4. Click **Continue**.
 
-5. Specify tag-based filters for your contract:
-
-   <img
-     className="screenshot"
-     alt="Create contract dialog"
-     src="../img/contract-tags.jpg"
-     width="550"
-   />
+5. Specify tag-based filters for your contract.
 
    - The dialog detects all tag names used in your source variant's schema and populates the **Excluded Tags** and **Included Tags** dropdown lists with those names. You can add any number of tag names to each list.
 
@@ -217,23 +202,7 @@ In Apollo Federation 2, if you want to exclude a type or field from your source 
 
 6. When you're finished adding tag names, click **Generate Preview**. Studio attempts to generate a contract schema based on the filters you provided and displays the result. After you generate the preview, click **Review** to continue to the next step.
 
-   <img
-     className="screenshot"
-     alt="Result of contract preview generation"
-     src="../img/contract-generate-preview.jpg"
-     width="300"
-   />
-
-7. Review all the details of your contract:
-
-   <img
-     className="screenshot"
-     alt="Create contract dialog"
-     src="../img/contract-review.jpg"
-     width="550"
-   />
-
-8. If everything looks right, click **Create**. This kicks off the generation of your contract variant and its initial contract schema as a [launch](./launches).
+7. Review all the details of your contract. If everything looks right, click **Create**. This kicks off the generation of your contract variant and its initial contract schema as a [launch](./launches).
 
 <Note>
 
@@ -266,7 +235,7 @@ You can't change an existing contract's name or source variant. Instead, you can
 
 After you create a contract, you can edit its lists of included and excluded tags:
 
-1. From the Contracts list in your graph's Settings page, click **Edit Contract** where shown:
+1. From the **Contracts** list in your graph's **Settings** page, click the **•••** button on the right of the contract you want to edit. Then click **Edit Contract**:
 
    <img
      className="screenshot"
@@ -317,13 +286,8 @@ On your graph's **Checks** page in Studio, contract checks appear as **Downstrea
   src="../img/contract-check-ui.jpg"
 />
 
-You can click the **Downstream** item in the Tasks column to view a summary of all contract checks that ran and click a particular check to view more details:
-
-<img
-  className="screenshot"
-  alt="Downstream checks shown in Studio UI"
-  src="../img/contract-downstream-workflows.jpg"
-/>
+Click the **Downstream** item in the **Tasks** column to view a summary of all contract checks that ran.
+Click a particular check to view more details.
 
 ### Failing contract checks
 
