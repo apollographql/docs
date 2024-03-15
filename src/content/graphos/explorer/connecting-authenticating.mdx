@@ -49,14 +49,9 @@ If your graph has authentication requirements that aren't covered by these optio
 
 The bottom panel of the Explorer includes a Headers tab where you can set headers that are included in your operation's HTTP request.
 
-Headers can include the values of [environment variables](#environment-variables), which are injected using double curly braces as shown:
+Headers can include the values of [environment variables](#environment-variables), which are injected using double curly braces.
 
-<img
-  className="screenshot"
-  src="../img/explorer-headers.jpg"
-  alt="Setting Explorer headers with environment variables"
-  width="500"
-/>
+For example, a header with the key `Authorization` could have the value `Bearer {{token}}`.
 
 ### Cookies
 
@@ -84,12 +79,11 @@ This lets you share operations (including their headers) with other team members
 
 You define environment variables in the Explorer's Settings tab, like so:
 
-<img
-  className="screenshot"
-  src="../img/explorer-environment-variables.jpg"
-  alt="Setting Explorer environment variables"
-  width="400"
-/>
+```json
+{
+  "exampleToken": "tokenValue"
+}
+```
 
 If you share an operation that uses environment variables with your team members, your values for those environment variables are not shared, and other users can provide their own values.
 
@@ -103,25 +97,17 @@ You can inject your Explorer environment variables into any of the following:
 
 ##### Header values
 
-Inject an environment variable into an HTTP header value by surrounding the variable's name with double curly braces, as shown:
-
-<img
-  className="screenshot"
-  src="../img/explorer-use-environment-variable.jpg"
-  alt="Setting Explorer headers with environment variables"
-  width="400"
-/>
+Inject an environment variable into an HTTP header value by surrounding the variable's name with double curly braces. For example, a header with the key `Authorization` could have the value `Bearer {{token}}`.
 
 ##### GraphQL variables
 
-Inject an environment variable into a GraphQL variable value by surrounding the variable's name with double curly braces, as shown:
+Inject an environment variable into a GraphQL variable value by surrounding the variable's name with double curly braces, like so:
 
-<img
-  className="screenshot"
-  src="../img/explorer-environment-variables-graphql-variables.png"
-  alt="Setting Explorer GraphQL variables with environment variables"
-  width="600"
-/>
+```json
+{
+  "token": "{{token}}"
+}
+```
 
 ##### Custom scripts
 
