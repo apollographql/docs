@@ -163,7 +163,7 @@ Congratulations! You've created an AWS VPC Lattice target group. Repeat this pro
     src="../../img/cloud-dedicated/custom-domain.jpg"
   />
 
-6. In the **Service access** section, select the AWS IAM authentication type and paste the following authorization policy. This policy ensures that only the AWS Organization for Cloud Dedicated can send traffic to your subgraphs.
+6. In the **Service access** section, select the **AWS IAM** authentication type and paste the following authorization policy. This policy ensures that only the AWS Organization for Cloud Dedicated can send traffic to your subgraphs.
 
   ```json showLineNumbers=false
   {
@@ -183,12 +183,6 @@ Congratulations! You've created an AWS VPC Lattice target group. Repeat this pro
     ]
   }
   ```
-
-  <img
-    className="screenshot"
-    alt="AWS VPC service page"
-    src="../../img/cloud-dedicated/service-access-policy.jpg"
-  />
 
 7. (Optional) For extra security, you can audit all the traffic coming to your subgraph by enabling access logs in the **Monitoring** section.
 
@@ -281,13 +275,6 @@ Congratulations! You've now created a Lattice service for your subgraphs.
   />
 
 5. In the **Resources section**, select the resource type **VPC Lattice Services**.
-
-  <img
-    className="screenshot"
-    alt="AWS VPC shared resources page"
-    src="../../img/cloud-dedicated/resource-share-name.jpg"
-  />
-
 6. Select all the Lattice services that contain your subgraphs.
 
   <img
@@ -305,13 +292,6 @@ Congratulations! You've now created a Lattice service for your subgraphs.
   />
 
 8. Click the **Next** button at the bottom right corner of the page.
-
-  <img
-    className="screenshot"
-    alt="AWS VPC shared resources page"
-    src="../../img/cloud-dedicated/resource-tags-next.jpg"
-  />
-
 9. Verify that the managed permissions give access to associate the Lattice services with a service network (`vpc-lattice:CreateServiceNetworkServiceAssociation and vpc-lattice:GetService`). Then click the **Next** button at the bottom right of the page.
 
   <img
@@ -387,23 +367,7 @@ Setup from this point differs based on whether this is [your first private subgr
 1. Go to [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content).
 2. Click the **Create New Graph** tab at the top right of the screen.
 3. Follow Studio's onboarding steps to create a graph with a new private subgraph.
-
-  <img
-    className="screenshot"
-    alt="Onboarding a new private supergraph"
-    src="../../img/cloud-dedicated/onboard-private-supergraph.jpg"
-    width="500"
-/>
-
 4. When prompted to **Provide your GraphQL API endpoint**, select **My endpoint is not directly accessible** at the bottom of the page.
-
-  <img
-    className="screenshot"
-    alt="Select private subgraph option"
-    src="../../img/cloud-dedicated/select-private-subgraph-option.jpg"
-    width="500"
-/>
-
 5. Choose the backend provider you want to use for your private subgraph and the region where your subgraph should be provisioned.
 
   <Note>
@@ -433,13 +397,6 @@ Setup from this point differs based on whether this is [your first private subgr
 8. Add a **Service Name** to describe your Lattice service. This name will be used to identify your Lattice service in GraphOS Studio.
 9. Paste the GraphQL schema for this subgraph in the **Schema** field. You can also upload a schema file by clicking the **Upload Schema** button.
 
-  <img
-    className="screenshot"
-    alt="Adding a private schema"
-    src="../../img/cloud-dedicated/upload-private-schema.jpg"
-    width="500"
-/>
-
 <ExpansionPanel title="Why do I need to provide a GraphQL Schema?">
 
 When your AWS resource is set to private, it isn't accessible by external services by default. This ensures a high level of security for your data, but it also means extra steps are needed to enable communication between your resource and our system. We need to know the schema of your GraphQL API so that we can generate the correct queries and mutations to send to your subgraph.
@@ -456,7 +413,7 @@ Congratulations! You've now created a GraphOS cloud router with a private subgra
 1. Go to the graph you want to connect in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content).
 2. From the left sidebar, open the **Subgraphs** tab of your graph.
 3. Click **Add a Subgraph** on the right of the page.
-4. In the modal, select the **Private** option, then select the AWS service you want to add from the dropdown menu. A default path of `/api/graphql` is automatically added to the URL. You can change this path if you like.
+4. In the dialog, select the **Private** option, then select the AWS service you want to add from the dropdown menu. A default path of `/api/graphql` is automatically added to the URL. You can change this path if you like.
 
   <img
     className="screenshot"
@@ -468,13 +425,6 @@ Congratulations! You've now created a GraphOS cloud router with a private subgra
 5. Add a **Service Name** to describe your Lattice service. This name will be used to identify your Lattice service in GraphOS Studio.
 
 6. Paste the GraphQL schema for this subgraph in the **Schema** field. You can also upload a schema file by clicking the **Upload Schema** button.
-
-  <img
-    className="screenshot"
-    alt="Adding a private schema"
-    src="../../img/cloud-dedicated/upload-private-schema.jpg"
-    width="500"
-/>
 
 <ExpansionPanel title="Why do I need to provide a GraphQL Schema?">
 
@@ -619,13 +569,7 @@ To remove Cloud Dedicated access to private subgraphs, you need to remove both r
     src="../../img/cloud-dedicated/create-resource-share.jpg"
   />
 
-4. Click **Delete** in the popup modal.
-
-  <img
-    className="screenshot"
-    alt="AWS VPC resource share page"
-    src="../../img/cloud-dedicated/delete-resource-share.jpg"
-  />
+4. Click **Delete** in the dialog that appears.
 
 ### Remove service network associations
 
