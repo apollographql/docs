@@ -44,6 +44,7 @@ import {ReactComponent as Moon} from '@apollo/icons/small/IconMoon.svg';
 import {ReactComponent as NarrowViewport} from '@apollo/icons/default/IconNarrowViewport.svg';
 import {ReactComponent as NodeJs} from '@apollo/icons/default/IconNodeJs.svg';
 import {ReactComponent as Outlink} from '@apollo/icons/default/IconOutlink.svg';
+import {ReactComponent as OutlinkSmall} from '@apollo/icons/small/IconOutlink.svg';
 import {ReactComponent as Paperclip} from '@apollo/icons/default/IconAttach.svg';
 import {ReactComponent as Pipeline} from '@apollo/icons/default/IconPipeline.svg';
 import {ReactComponent as Preview} from '@apollo/icons/default/IconPreview.svg';
@@ -65,11 +66,11 @@ import {ReactComponent as Unlock} from '@apollo/icons/default/IconUnlock.svg';
 import {ReactComponent as WidenViewport} from '@apollo/icons/default/IconWidenViewport.svg';
 import {ReactComponent as Youtube} from '@apollo/icons/default/IconYouTubeSolid.svg';
 
-const CustomIcon = ({icon, isSolid, ...props}) => {
+const CustomIcon = ({icon, isSolid, boxSize, ...props}) => {
   return (
     <Box
       as={icon}
-      boxSize="1em"
+      boxSize={boxSize ? boxSize : '1em'}
       fill={isSolid ? 'current' : 'none'}
       {...props}
     />
@@ -78,7 +79,8 @@ const CustomIcon = ({icon, isSolid, ...props}) => {
 
 CustomIcon.propTypes = {
   icon: PropTypes.elementType.isRequired,
-  isSolid: PropTypes.boolean
+  isSolid: PropTypes.bool,
+  boxSize: PropTypes.string
 };
 
 export const ApolloKotlinIcon = () => <CustomIcon icon={Kotlin} />;
@@ -135,6 +137,9 @@ export const NodeJsIcon = () => <CustomIcon icon={NodeJs} />;
 export const OdysseyIcon = () => <CustomIcon icon={Education} />;
 export const OrgIcon = () => <CustomIcon icon={Team} />;
 export const OutlinkIcon = () => <CustomIcon icon={Outlink} />;
+export const OutlinkSmallIcon = () => (
+  <CustomIcon icon={OutlinkSmall} boxSize="0.75em" />
+);
 export const PaperclipIcon = () => <CustomIcon icon={Paperclip} />;
 export const PipelineIcon = () => <CustomIcon icon={Pipeline} />;
 export const PreviewIcon = () => <CustomIcon icon={Preview} />;
