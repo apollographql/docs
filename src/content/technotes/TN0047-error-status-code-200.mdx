@@ -1,0 +1,51 @@
+---
+title: Error! Status Code 200?
+subtitle: Granular error handling in your API
+description: Learn how GraphQL uniquely handles errors and how that compares to traditional REST APIs.
+published: 2024-02-09
+id: TN0047
+tags: [best-practices, error-handling]
+---
+
+In the realm of API development, HTTP status codes serve as crucial indicators of request success or failure.
+However, when it comes to GraphQL, the traditional approach of using REST/HTTP error codes becomes inadequate.
+GraphQL introduces a paradigm shift in how APIs are designed and operated, rendering conventional status codes insufficient for capturing the nuances of GraphQL operations, especially in the context of parallel operations.
+
+>
+> **TLDR;** In GraphQL, the presence of a 200 status code indicates that the request was successful from the Apollo Router's perspective, but it doesn't necessarily mean that the client received all the data it requested without any errors.
+
+The GraphQL 200 status codes don't encapsulate the outcome of individual fields or the presence of errors within the GraphQL response. Rather, they signify that the client has sent a request, the operation is valid GraphQL against the schema, and the GraphQL server was able to return a spec-compliant GraphQL response. 
+>
+> Shoehorning HTTP error codes into the GraphQL paradigm overlooks the unique characteristics and capabilities of GraphQL, such as granular error handling, parallel execution, and asynchronous patterns.
+> 
+> To learn more about GraphQL status codes, see the [GraphQL-over-HTTP](https://graphql.github.io/graphql-over-http/draft/) specification.
+>
+
+## Nature of GraphQL operations
+
+In a typical REST API, each endpoint corresponds to a specific resource or action, making it straightforward to map HTTP status codes to the outcome of each request.
+However, GraphQL operates differently. Instead of multiple endpoints, GraphQL has a single endpoint that serves as an entry point for executing many different queries, mutations, and subscriptions. You can even execute more then one query in a single request.
+This unified approach allows clients to request precisely the data they need in a single round trip to the server.
+
+## Granular Error Handling
+
+GraphQL offers granular error handling through its response structure.
+A GraphQL response contains two key fields: 
+- The `data` field represents all the information the server could respond with that matches the clients request.
+- The `errors` field is an array containing detailed information about what may have gone wrong when making the request. 
+
+A server returns a response in this shape, even if it only contains the `errors` field.
+This level of granularity enables clients to understand and react to errors more effectively than traditional HTTP status codes would allow.
+
+## Parallel execution and partial results
+
+One of the most powerful features of GraphQL is its ability to execute multiple operations in parallel: if one part of a GraphQL operation fails, other parts may still succeed.
+In contrast, REST APIs typically follow a serial execution model, where one failed request can halt the entire process.
+
+Therefore, using HTTP status codes to convey the outcome of parallel GraphQL operations would be impractical and misleading.
+
+## Summary
+
+In GraphQL, the presence of a 200 status code indicates that the request was successful from the Apollo Router's perspective.
+This doesn't necessarily mean that the client received all the data it requested without any errors.
+Instead, it signifies that the GraphQL operation as a whole was processed without encountering any issues, regardless of the outcome of individual field resolvers.
