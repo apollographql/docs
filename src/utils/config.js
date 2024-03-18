@@ -1,4 +1,5 @@
 import {graphql, useStaticQuery} from 'gatsby';
+import {useMemo} from 'react';
 import {v5} from 'uuid';
 
 // turn a sidebar configuration object to an array of nav items
@@ -72,53 +73,57 @@ export const useConfigs = () => {
     }
   `);
 
-  return data.configs.nodes.reduce((acc, config, _, nodes) => {
-    // TODO: convert configs to YAML
-    const content = JSON.parse(config.fields.content);
-    const {
-      title,
-      link,
-      version,
-      sidebar,
-      algoliaFilters,
-      internal,
-      versionBanner
-    } = content;
+  return useMemo(
+    () =>
+      data.configs.nodes.reduce((acc, config, _, nodes) => {
+        // TODO: convert configs to YAML
+        const content = JSON.parse(config.fields.content);
+        const {
+          title,
+          link,
+          version,
+          sidebar,
+          algoliaFilters,
+          internal,
+          versionBanner
+        } = content;
 
-    const slug = configToSlug(config);
-    const parent = getParentDocset(slug);
+        const slug = configToSlug(config);
+        const parent = getParentDocset(slug);
 
-    const versions = [];
+        const versions = [];
 
-    for (const node of nodes) {
-      const nodeSlug = configToSlug(node);
-      if (getParentDocset(nodeSlug) === parent) {
-        const {version} = JSON.parse(node.fields.content);
-        if (version) {
-          versions.push({
-            label: version,
-            slug: nodeSlug
-          });
+        for (const node of nodes) {
+          const nodeSlug = configToSlug(node);
+          if (getParentDocset(nodeSlug) === parent) {
+            const {version} = JSON.parse(node.fields.content);
+            if (version) {
+              versions.push({
+                label: version,
+                slug: nodeSlug
+              });
+            }
+          }
         }
-      }
-    }
 
-    versions.sort((a, b) => b.label.localeCompare(a.label));
+        versions.sort((a, b) => b.label.localeCompare(a.label));
 
-    return {
-      ...acc,
-      [slug]: {
-        docset: title,
-        currentVersion: version,
-        navItems: getNavItems(sidebar),
-        algoliaFilters,
-        internal,
-        versions,
-        versionBanner,
-        link
-      }
-    };
-  }, {});
+        return {
+          ...acc,
+          [slug]: {
+            docset: title,
+            currentVersion: version,
+            navItems: getNavItems(sidebar),
+            algoliaFilters,
+            internal,
+            versions,
+            versionBanner,
+            link
+          }
+        };
+      }, {}),
+    [data]
+  );
 };
 
 export const useConfig = slug => {

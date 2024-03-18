@@ -3,7 +3,7 @@ import Footer from '../Footer';
 import Header from '../Header';
 import MobileNav from '../MobileNav';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import Sidebar, {
   DefaultSidebarNav,
   PAGE_SIDEBAR_MARGIN,
@@ -31,12 +31,18 @@ export function PageLayout({pageContext, children, location, data}) {
     false
   );
 
-  const lockProps = {
-    isLocked: sidebarLocked,
-    onLockToggle: () => setSidebarLocked(!sidebarLocked)
-  };
+  const lockProps = useMemo(
+    () => ({
+      isLocked: sidebarLocked,
+      onLockToggle: () => setSidebarLocked(!sidebarLocked)
+    }),
+    [setSidebarLocked, sidebarLocked]
+  );
 
-  const hideSidebar = () => setSidebarHidden(true);
+  const hideSidebar = useCallback(
+    () => setSidebarHidden(true),
+    [setSidebarHidden]
+  );
 
   const {pathname} = location;
   const {basePath = '/'} = pageContext;
@@ -44,18 +50,21 @@ export function PageLayout({pageContext, children, location, data}) {
   const {docset, versions, currentVersion, navItems, algoliaFilters, internal} =
     useConfig(basePath);
 
-  const sidebarNav = (
-    <SidebarNav
-      versions={versions}
-      currentVersion={currentVersion}
-      docset={docset}
-      navItems={navItems}
-      hideSidebar={hideSidebar}
-      onVersionChange={version => {
-        navigate(`/${version.slug}`);
-      }}
-      {...lockProps}
-    />
+  const sidebarNav = useMemo(
+    () => (
+      <SidebarNav
+        versions={versions}
+        currentVersion={currentVersion}
+        docset={docset}
+        navItems={navItems}
+        hideSidebar={hideSidebar}
+        onVersionChange={version => {
+          navigate(`/${version.slug}`);
+        }}
+        {...lockProps}
+      />
+    ),
+    [currentVersion, docset, hideSidebar, lockProps, navItems, versions]
   );
 
   const [now, setNow] = useState(Date.now());
@@ -66,15 +75,18 @@ export function PageLayout({pageContext, children, location, data}) {
     signupTracer('docs');
   }, []);
 
+  const pathContextValue = useMemo(
+    () => ({
+      uri: pathname,
+      basePath,
+      path: data?.file?.name === 'index' ? pathname : dirname(pathname)
+    }),
+    [basePath, data?.file?.name, pathname]
+  );
+
   return (
     <PageWidthProvider key={now}>
-      <PathContext.Provider
-        value={{
-          uri: pathname,
-          basePath,
-          path: data?.file?.name === 'index' ? pathname : dirname(pathname)
-        }}
-      >
+      <PathContext.Provider value={pathContextValue}>
         <Header algoliaFilters={algoliaFilters}>
           <MobileNav isInternal={internal} />
         </Header>

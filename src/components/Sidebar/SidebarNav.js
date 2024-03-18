@@ -93,6 +93,14 @@ const SidebarNav = forwardRef(
       [navGroups, nav]
     );
 
+    const navContextValue = useMemo(
+      () => ({
+        nav,
+        setNav: setLocalNavState
+      }),
+      [nav, setLocalNavState]
+    );
+
     return (
       <Flex
         direction="column"
@@ -151,12 +159,7 @@ const SidebarNav = forwardRef(
             </Menu>
           )}
         </Flex>
-        <NavContext.Provider
-          value={{
-            nav,
-            setNav: setLocalNavState
-          }}
-        >
+        <NavContext.Provider value={navContextValue}>
           <chakra.nav px="4" pb="3" ref={navRef}>
             <NavItems items={navItems} />
           </chakra.nav>

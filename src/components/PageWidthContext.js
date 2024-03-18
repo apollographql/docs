@@ -4,6 +4,7 @@ import React, {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useRef,
   useState
 } from 'react';
@@ -117,18 +118,28 @@ export const PageWidthProvider = ({children}) => {
     root.style.setProperty(DOCS_PAGE_WIDTH_VAR, pageWidthPx + 'px');
   }, [pageWidthPx]);
 
+  const pageWidthContextValue = useMemo(
+    () => ({
+      pageWidthPx,
+      pageWidth,
+      setPageWidth,
+      togglePageWidth,
+      pageRefCallback,
+      showExpandButton
+    }),
+    [
+      pageRefCallback,
+      pageWidth,
+      pageWidthPx,
+      setPageWidth,
+      showExpandButton,
+      togglePageWidth
+    ]
+  );
+
   // Create a context provider with values
   return (
-    <PageWidthContext.Provider
-      value={{
-        pageWidthPx,
-        pageWidth,
-        setPageWidth,
-        togglePageWidth,
-        pageRefCallback,
-        showExpandButton
-      }}
-    >
+    <PageWidthContext.Provider value={pageWidthContextValue}>
       {children}
     </PageWidthContext.Provider>
   );
