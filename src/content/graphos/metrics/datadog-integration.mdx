@@ -68,16 +68,9 @@ To integrate Apollo with Datadog, you provide your Datadog API key and region to
 
    </Note>
 
-5. In the Datadog Forwarding section, click **Configure**. Provide your API key and region, then click **Enable**.
+5. In the **Datadog Forwarding** section, click **Configure**. Provide your API key and region, then click **Enable**.
 
-   <img
-     src="../img/datadog/settings-toggle.png"
-     alt="Datadog configuration dialog"
-     class="screenshot"
-     width="500"
-   />
-
-   You can use the same Datadog API key for all your graphs because all forwarded metrics are tagged with the corresponding graph's ID (`graph:<graph-id>`).
+  - You can use the same Datadog API key for all your graphs because all forwarded metrics are tagged with the corresponding graph's ID (`graph:<graph-id>`).
 
 That's it! After about five minutes, your Datadog Metrics Explorer will begin showing metrics forwarded from GraphOS Studio.
 
