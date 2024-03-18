@@ -36,7 +36,7 @@ export function GradientCard({icon, title, description, path, cta}) {
             <span>{title}</span>
           </HStack>
         </Heading>
-        <Text fontSize="lg">{description}</Text>
+        <Text>{description}</Text>
       </div>
       <div>
         <ButtonLink

@@ -28,7 +28,7 @@ import {PAGE_FOOTER_HEIGHT} from '../PageLayout';
 import {flattenNavItems} from '../../utils';
 
 const SidebarButton = props => (
-  <IconButton size="sm" fontSize="lg" variant="ghost" {...props} />
+  <IconButton size="sm" variant="ghost" {...props} />
 );
 
 const SidebarNav = forwardRef(
