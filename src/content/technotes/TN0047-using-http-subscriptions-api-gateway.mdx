@@ -1,16 +1,18 @@
 ---
-title: Using HTTP Subscriptions with an API Gateway
-subtitle: Enable HTTP multipart subscriptions when using an API Gateway infront of the Router
-description: Enable HTTP multipart subscriptions when using an API Gateway infront of the Router.
+title: Enabling HTTP subscriptions with the Apollo Router and an API gateway
+subtitle: Enable HTTP multipart subscriptions when using an API gateway in front of the router
+description: Enable HTTP multipart subscriptions when using an API gateway in front of the router.
 published: 2024-03-11
 id: TN0047
 tags: [router]
 ---
 
-Organizations commonly require that all APIs be fronted by an API Gateway [including the Apollo Router](/technotes/TN0037-api-gateways).
-These API Gateways often are not configured by default to send multipart HTTP requests chunks as they are available which leads to unexpected behavior when using [subscriptions over HTTP Multipart](/router/executing-operations/subscription-support#http-callback-setup).
+Learn how to configure an API gateway to support HTTP multipart subscriptions with the Apollo Router.
 
-To allow HTTP multipart subscriptions to work correctly, the API Gateway must send the response as it comes and not buffer the response.
+Organizations can require their APIs—including [the Apollo Router](/technotes/TN0037-api-gateways)—to be fronted by an API gateway. API gateways often aren't configured to support [subscriptions over HTTP multipart](/router/executing-operations/subscription-support#http-callback-setup): API gateways by default usually buffer HTTP responses, but subscriptions over HTTP multipart require multipart responses to be streamed, not buffered.
+
+The rest of this article describes how to configure API gateways from different vendors to stream and not buffer HTTP responses, therefore supporting subscriptions over HTTP multipart.   
+
 
 <!-- vale Apollo.Headings = NO -->
 
@@ -18,9 +20,9 @@ To allow HTTP multipart subscriptions to work correctly, the API Gateway must se
 
 <!-- vale Apollo.Headings = YES -->
 
-By default, an HTTP API endpoint setup in APIM buffers the response from a downstream service. What this means is that it will "wait" to receive all the chunks from the HTTP request before returning it to the client.
+By default, an HTTP API endpoint in APIM buffers each response from a downstream service, where the endpoint must receive all chunks of an HTTP response before it sends the response to the client.
 
-To enable HTTP subscriptions, the `forward-request` policy on the `backend` should be updated with `buffer-response="false"`. This will result in the endpoint sending the chunks to the requesting client as they are received.
+To enable HTTP subscriptions, the `forward-request` policy on the `backend` must be updated with `buffer-response="false"`. This configures the HTTP API endpoint to send the chunks of a response to the requesting client as they are received.
 
 ```xml
 <policies>
@@ -42,9 +44,9 @@ For more information, see the [Azure API Management policy reference - forward-r
 
 <!-- vale Apollo.Headings = YES -->
 
-By default, an HTTP API endpoint in Apigee buffers the response from a downstream service. What this means is that it will "wait" to receive all the chunks from the HTTP request before returning it to the client.
+By default, an HTTP API endpoint in Apigee buffers each response from a downstream service, where the endpoint must receive all chunks of an HTTP response before it sends the response to the client.
 
-To enable HTTP subscriptions, the `response.streaming.enabled` property should be set to `true` in both your `ProxyEndpoint` and `TargetEndpoint` definitions in the proxy bundle. This will result in the endpoint sending the chunks to the requesting client as they are received.
+To enable HTTP subscriptions, the `response.streaming.enabled` property must be set to `true` in both your `ProxyEndpoint` and `TargetEndpoint` definitions in the proxy bundle. This configures the HTTP API endpoint to send the chunks of a response to the requesting client as they are received.
 
 ```xml
 <TargetEndpoint name="default">
@@ -90,7 +92,7 @@ Streaming of HTTP multipart is supported out of the box with no additional confi
 
 <!-- vale Apollo.Headings = YES -->
 
-Streaming is not supported and it is recommended to use a Flex Gateway.
+Streaming of HTTP multipart isn't supported. Use Flex Gateway instead.
 
 ## Kong
 
@@ -102,10 +104,7 @@ Streaming of HTTP multipart is supported out of the box with no additional confi
 
 <!-- vale Apollo.Headings = YES -->
 
-At this time, AWS API Gateway does not support streaming of HTTP data. An possible workaround is to use a Lambda expression which does support streaming.
+AWS API Gateway doesn't support streaming of HTTP data. 
 
-<Note>
+A possible workaround is to use a Lambda expression which does support streaming. To learn more, see [AWS Lambda response streaming](https://aws.amazon.com/blogs/compute/introducing-aws-lambda-response-streaming/).
 
-For more information, see [AWS Lambda response streaming](https://aws.amazon.com/blogs/compute/introducing-aws-lambda-response-streaming/).
-
-</Note>
