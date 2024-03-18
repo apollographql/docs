@@ -34,16 +34,7 @@ Some legacy organizations can upgrade to a current plan. [See details.](../org/p
 
 1. Go to [studio.apollographql.com](https://studio.apollographql.com/?referrer=docs-content) and click **Let's get started**.
 
-2. Choose a signup method—either using GitHub or with an email and password.
-
-   Studio then shows a signup form. Its details vary depending on your signup method:
-
-   <img
-     src="../../img/signup-form.jpg"
-     class="screenshot"
-     alt="Studio signup form"
-     width="300"
-   />
+2. Choose a signup method—either using GitHub or with an email and password. Studio then shows a signup form. Its details vary depending on your signup method.
 
 3. Complete the form, and click **Create Account**. By default, your account is on the [Serverless (Free) plan](../org/plans/#current-plans).
 
@@ -80,13 +71,6 @@ Otherwise, continue with the steps below.
 
 1. Studio prompts you to **Connect your API** or **Try a demo graph**. If you have the URL of your running GraphQL server, select **Connect API**. Otherwise, you can select **Try a demo graph**, and Apollo creates a demo graph for you to play with.
 
-   <img
-     src="../../img/start-building-with-graphos.jpg"
-     className="screenshot"
-     alt="Studio signup form"
-     width="500"
-   />
-
 2. Provide your **GraphQL API's Endpoint URL**. This is the same URL that client applications currently use to query your API. After you provide the URL, Studio attempts to fetch your API's schema from it via introspection. The result of that fetch is shown beneath the text box:
 
    <img
@@ -111,13 +95,6 @@ Otherwise, continue with the steps below.
    - If the **Continue** button is inactive, Studio hasn't obtained your API's schema. If necessary you can bypass introspection by **uploading your schema**. By selecting this option, you can manually copying and pasting your schema, or dragging and dropping a `.gql` or `.graphql` file.
 
 5. Provide a name and ID for your new graph.
-
-   <img
-     src="../../img/supergraph-name-id.jpg"
-     class="screenshot"
-     alt="Entering a name and id"
-     width="500"
-   />
 
    - The name is displayed throughout Studio and helps your team distinguish between your different graphs. You can change your graph's name at any time.
    - The ID is immutable and must be unique across all of Apollo. Make sure it starts with a letter and contains only letters, numbers, and dashes. You'll use the ID to reference your graph from various tools, such as the Rover CLI.
@@ -147,16 +124,9 @@ Skip to [the next step](#3-learn-about-your-variant) to learn about **variants**
   width="700"
 />
 
-2. Click **Connect your GraphQL API**. The following dialog appears:
+2. Click **Connect your GraphQL API**.
 
-   <img
-     src="../../img/supergraph-create-dialog.jpg"
-     class="screenshot"
-     alt="Supergraph creation dialog"
-     width="400"
-   />
-
-3. Provide your GraphQL API's **Endpoint URL**.
+3. In the dialog that appears, provide your GraphQL API's **Endpoint URL**.
 
    - This is the same URL that client applications currently use to query your API.
    - If you don't have a URL, you can use `https://flyby-locations-sub.herokuapp.com/` as an example.
@@ -190,16 +160,7 @@ Skip to [the next step](#3-learn-about-your-variant) to learn about **variants**
 
    - If the **Next** button is inactive, Studio hasn't obtained your API's schema! Make sure to provide it using one of the methods described in steps 3 and 4.
 
-   The following dialog appears:
-
-   <img
-     src="../../img/supergraph-id-name-existing.jpg"
-     class="screenshot"
-     alt="Setting a name and ID for a new supergraph"
-     width="400"
-   />
-
-7. Provide a name and ID for your new supergraph.
+7. In the dialog that appears, provide a name and ID for your new supergraph.
 
    - The name is displayed throughout Studio and helps your team distinguish between your different graphs. You can change your graph's name at any time.
    - The ID is immutable and must be unique across all of Apollo. Make sure it starts with a letter and contains only letters, numbers, and dashes. You'll use the ID to reference your graph from various tools, such as the Rover CLI.
@@ -227,15 +188,7 @@ From your **Graphs** tab, click your graph's `current` variant. This opens the v
 
 The README is great for documenting your supergraph so team members can learn the basics of how to work with it. It supports Markdown syntax like a typical README in a Git repository.
 
-While you're viewing any page for a variant, the following navigation is shown on the left side:
-
-<img
-  src="../../img/variant-pages.jpg"
-  className="screenshot"
-  alt="List of pages for a graph variant in Studio"
-  width="100"
-/>
-
+When viewing any page for a variant, you can navigate to other pages from the navigation on the left side.
 You can collapse this navigation to show only icons.
 
 We'll cover some of these pages in later steps, but feel free to click around and see what each provides. You can also expand the summary table below.
