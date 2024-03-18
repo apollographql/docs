@@ -77,7 +77,7 @@ export default function GlossaryResult({item}) {
           <Icon as={RepositoryIcon} />
         </Box>
         <Box lineHeight="shorter" w="0" flexGrow="1">
-          <Box fontSize="lg">
+          <Box>
             <Highlight value={item._highlightResult.term.value} />
           </Box>
           <Markdown

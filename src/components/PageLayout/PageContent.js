@@ -34,7 +34,7 @@ export function PageContent({
         </Heading>
         {subtitle}
         <Divider my="8" />
-        <Box fontSize={{md: 'lg'}} lineHeight={{md: 1.7}} {...props}>
+        <Box fontSize={{md: 'md'}} lineHeight={{md: 1.5}} {...props}>
           {children}
         </Box>
         {pagination}
