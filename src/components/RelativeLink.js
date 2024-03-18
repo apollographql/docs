@@ -2,43 +2,22 @@ import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 import {Button, Link} from '@chakra-ui/react';
 import {Link as GatsbyLink, graphql, useStaticQuery} from 'gatsby';
-import {OutlinkSmallIcon} from './Icons';
+import {OutlinkIcon} from './Icons';
 import {PathContext, isUrl} from '../utils';
 import {isAbsolute, resolve} from 'path';
 
-export const PrimaryLink = props => {
-  return props?.target === '_blank' ? (
-    <ButtonLink
-      variant="link"
-      color="tertiary"
-      textDecor="underline"
-      fontWeight="normal"
-      fontSize="inherit"
-      _hover={{color: 'link'}}
-      iconSpacing="5px"
-      marginRight="5px"
-      sx={{
-        code: {
-          color: 'inherit'
-        }
-      }}
-      {...props}
-    />
-  ) : (
-    <Link
-      color="tertiary"
-      textDecor="underline"
-      fontWeight="normal"
-      _hover={{color: 'link'}}
-      sx={{
-        code: {
-          color: 'inherit'
-        }
-      }}
-      {...props}
-    />
-  );
-};
+export const PrimaryLink = props => (
+  <Link
+    color="tertiary"
+    sx={{
+      code: {
+        color: 'inherit',
+        textDecoration: 'underline'
+      }
+    }}
+    {...props}
+  />
+);
 
 function useLinkProps(href) {
   const {path} = useContext(PathContext);
@@ -85,7 +64,8 @@ function useLinkProps(href) {
   if (isExternal || isHash || isFile) {
     return {
       href,
-      target: isExternal || (isFile && !isHash) ? '_blank' : null
+      target: isExternal || (isFile && !isHash) ? '_blank' : null,
+      rightIcon: <OutlinkIcon />
     };
   }
 
@@ -111,15 +91,7 @@ RelativeLink.propTypes = {
 
 export function ButtonLink({href, ...props}) {
   const linkProps = useLinkProps(href);
-  const isExternal = isUrl(href);
-  return (
-    <Button
-      as="a"
-      {...linkProps}
-      {...props}
-      rightIcon={isExternal && <OutlinkSmallIcon />}
-    />
-  );
+  return <Button as="a" {...linkProps} {...props} />;
 }
 
 ButtonLink.propTypes = {
