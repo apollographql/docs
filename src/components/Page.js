@@ -90,6 +90,7 @@ import {Tabs} from './Tabs';
 import {Tip} from './Tip';
 import {WistiaEmbed} from './WistiaEmbed';
 import {YouTube} from './YouTube';
+import {ZoomableImage} from './ZoomableImage';
 import {join} from 'path';
 import {kebabCase} from 'lodash';
 import {rehype} from 'rehype';
@@ -215,6 +216,7 @@ const mdxComponents = {
   MultiCodeBlock,
   Note,
   YouTube,
+  ZoomableImage,
   Property,
   PropertyList,
   Tab,
