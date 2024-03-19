@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {Box, Center, Flex, Text, chakra} from '@chakra-ui/react';
 import RelativeLink from './RelativeLink';
+import {Box, Center, Flex, Text, chakra} from '@chakra-ui/react';
 import {EnterpriseIcon} from './Icons';
 
 export const EnterpriseFeature = ({linkWithAnchor, children}) => {
@@ -11,7 +11,6 @@ export const EnterpriseFeature = ({linkWithAnchor, children}) => {
       py="1"
       borderLeftWidth="2px"
       borderColor="primary"
-      fontSize="lg"
       sx={{
         '>': {
           ':not(:last-child)': {
@@ -35,12 +34,17 @@ export const EnterpriseFeature = ({linkWithAnchor, children}) => {
               This feature is only available with a{' '}
               <RelativeLink
                 color={'tertiary'}
-                href={linkWithAnchor ? linkWithAnchor : "https://www.apollographql.com/pricing/"}>
+                href={
+                  linkWithAnchor
+                    ? linkWithAnchor
+                    : 'https://www.apollographql.com/pricing/'
+                }
+              >
                 GraphOS Enterprise plan
               </RelativeLink>
               .{' '}
             </strong>
-            <br/> You can test it out by signing up for a free{' '}
+            <br /> You can test it out by signing up for a free{' '}
             <RelativeLink
               color={'tertiary'}
               href="https://studio.apollographql.com/signup?type=enterprise-trial&referrer=docs-content"

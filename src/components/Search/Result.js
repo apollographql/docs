@@ -23,7 +23,7 @@ export default function Result({item, ...props}) {
           <ResultIcon result={item} />
         </Box>
         <Box lineHeight="shorter" w="0" flexGrow="1">
-          <Box fontSize="lg">
+          <Box>
             <Highlight value={title.value} />
           </Box>
           <Box

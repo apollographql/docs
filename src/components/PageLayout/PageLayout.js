@@ -116,7 +116,6 @@ export function PageLayout({pageContext, children, location, data}) {
               left="3"
               size="sm"
               variant="outline"
-              fontSize="lg"
               icon={<DoubleChevronRightIcon />}
               onClick={() => setSidebarHidden(false)}
             />

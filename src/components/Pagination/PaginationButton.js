@@ -24,7 +24,7 @@ export default function PaginationButton({item, label, ...props}) {
         >
           {label}
         </Box>
-        <Box fontSize="lg">{item.title}</Box>
+        <Box>{item.title}</Box>
       </div>
     </Button>
   );
