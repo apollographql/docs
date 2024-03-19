@@ -80,20 +80,12 @@ You can directly edit one or more subgraph schemas from a proposal's **Editor** 
   alt="Schema proposals editor in GraphOS Studio"
 />
 
-To start a new subgraph, click **+Add new** from the subgraph schema selector in the left nav.
+To start a new subgraph, click **+Add new** from the subgraph schema selector in the left navigation.
 You can also delete existing subgraphs and rename newly created ones by clicking the **•••** menu to the right of a subgraph's name.
 
 ### Lint changes
 
-To lint the schema changes you've made, click the broom icon in the top right of the editor.
-
-<img
-  src="../../img/schema-proposals/lint-changes.jpg"
-  className="screenshot"
-  alt="Linting changes in the schema proposals editor in GraphOS Studio"
-/>
-
-Clicking the button opens a panel where you can run the [schema linter](../schema-linter) on the current changes in the editor.
+To lint the schema changes you've made, click the broom icon in the top right of the editor. Clicking the button opens a panel where you can run the [schema linter](../schema-linter) on the current changes in the editor.
 After successfully running a lint on your schema, the panel displays any linter violations so you can fix them accordingly.
 
 If you are having trouble finding the exact location of where the lint violation occurred, click the line in the violations list to highlight it in the editor.
@@ -129,12 +121,6 @@ You can think of each revision as equal to a [commit](<https://en.wikipedia.org/
 
 [Schema checks](../schema-checks) automatically run each time you save a revision. These appear in a proposal's **Checks** tab.
 
-<img
-  src="../../img/schema-proposals/schema-checks.jpg"
-  className="screenshot"
-  alt="Failed schema check for a proposal in GraphOS Studio"
-/>
-
 Checks run proposal changes against the most recent version of the proposal's source variant schema.
 For example, if your proposal removes a field that was already removed in the latest published version of the source variant, the check doesn't consider the removal a change.
 This allows checks to detect breaking changes in the proposal as efficiently as possible.
@@ -150,28 +136,14 @@ You can change the proposal's status from the overview page by clicking **Edit s
 - **Draft**: default status upon creation
 - **Open for feedback**: signals the proposal is ready for review
 - **Closed**: signals the proposal is abandoned or suspended
-  - Closed proposals can't receive further revisions
-  - You can always reopen a proposal by resetting the status to Draft or Open for feedback
-
-<img
-  src="../../img/schema-proposals/edit-status.jpg"
-  className="screenshot"
-  alt="Changing a schema proposal's status in GraphOS Studio"
-/>
+  - **Closed** proposals can't receive further revisions
+  - You can always reopen a proposal by resetting the status to **Draft** or **Open for feedback**
 
 **Approved** and **Implemented** statuses are automatically set once [necessary conditions](./#proposal-statuses) have been met.
 
 ## Request review
 
-Add reviewers by clicking **Manage reviewers** on the proposal's overview tab:
-
-<img
-  src="../../img/schema-proposals/manage-reviewers.jpg"
-  className="screenshot"
-  alt="Selecting schema proposal reviewers in GraphOS Studio"
-/>
-
-If proposals have [default reviewers](./configuration#default-reviewers) configured, these are automatically selected once the proposal's status is **Open for feedback**.
+Add reviewers by clicking **Manage reviewers** on the proposal's overview tab. If proposals have [default reviewers](./configuration#default-reviewers) configured, these are automatically selected once the proposal's status is **Open for feedback**.
 
 ### Approvals
 

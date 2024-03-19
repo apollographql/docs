@@ -55,15 +55,7 @@ This step is required for Federation 1 supergraphs only. If you have a Federatio
 
 A contract uses one of your graph's existing [variants](/graphos/graphs/#variants) (called the _source variant_) to generate its contract schema. If your source variant uses Federation 1, you need to enable its support for the `@tag` directive in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content):
 
-1. Open the **Settings** page for the variant you want to use as your source variant, then select the **This Variant** tab:
-
-   <img
-     className="screenshot"
-     alt="Edit supported directives in Studio"
-     src="../img/contract-variant-settings.jpg"
-     width="600"
-   />
-
+1. Open the **Settings** page for the variant you want to use as your source variant, then select the **This Variant** tab.
 2. In the **Build Configuration** section, click **Edit Configuration** and enable support for `@tag`.
 
 ### 1. Add `@tag`s to subgraph schemas
@@ -152,15 +144,7 @@ After publishing, if Studio doesn't reflect the `@tags` you've added in your sub
 
 ### 3. Create a contract
 
-1. Open your source variant's **Settings** page and select the **This Variant** tab. Open **Contracts** in the left nav:
-
-   <img
-     className="screenshot"
-     alt="Contract settings in Studio"
-     src="../img/contract-create.jpg"
-     width="550"
-   />
-
+1. Open your source variant's **Settings** page and select the **This Variant** tab. Open **Contracts** in the left navigation.
 2. Click **Create Contract** to open the contact creation dialog.
 3. In the first step of the dialog, provide the following:
 
@@ -235,25 +219,8 @@ You can't change an existing contract's name or source variant. Instead, you can
 
 After you create a contract, you can edit its lists of included and excluded tags:
 
-1. From the **Contracts** list in your graph's **Settings** page, click the **•••** button on the right of the contract you want to edit. Then click **Edit Contract**:
-
-   <img
-     className="screenshot"
-     alt="Edit contract menu"
-     src="../img/contract-edit.jpg"
-     width="550"
-   />
-
-   This opens a dialog similar to the one you used to [create the contract](#3-create-a-contract). Make any required changes.
-
-2. If you change the contract's included or excluded tags, GraphOS automatically runs [contract checks](#run-contract-checks) to determine whether those changes will affect any clients using your contract variant. The result of these checks appears in the **Review Schema** step of the contract edit dialog:
-
-   <img
-     className="screenshot"
-     alt="Contract edit dialog with checks result"
-     src="../img/contract-edit-check.jpg"
-   />
-
+1. From the **Contracts** list in your graph's **Settings** page, click the **•••** button on the right of the contract you want to edit. Then click **Edit Contract**. This opens a dialog similar to the one you used to [create the contract](#3-create-a-contract). Make any required changes.
+2. If you change the contract's included or excluded tags, GraphOS automatically runs [contract checks](#run-contract-checks) to determine whether those changes will affect any clients using your contract variant. The result of these checks appears in the **Review Schema** step of the contract edit dialog.
 3. The dialog shows **Contract Updated** once the update is complete.
 
 ## Run contract checks
@@ -298,14 +265,7 @@ If you want failing contract checks to fail your entire checks workflow, you can
 To set blocking downstream variants:
 
 1. Open your source variant's Checks page and select the **This Variant** tab.
-2. Click **Configuration** and scroll down to the **Blocking Downstream Variants** section:
-
-   <img
-     class="screenshot"
-     alt="Blocking downstream variants for checks"
-     src="../img/contract-blocking-variants.jpg"
-   />
-
+2. Click **Configuration** and scroll to the **Blocking Downstream Variants** section.
 3. Select each contract variant that should be a blocking downstream variant.
 
 From now on, whenever schema checks run for your source variant, those checks fail if contract checks fail for any blocking downstream variant.

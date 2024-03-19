@@ -78,16 +78,7 @@ That's it! After you save your script, it's automatically loaded for any team me
 
 ### Turn off preflight scripts
 
-By default, a variant's preflight script runs automatically before every GraphQL operation that's executed in the Explorer. Team members can turn off the script for their individual Explorer usage from the **Personal Settings > Scripts** section of the Explorer's Settings tab:
-
-<img
-  class="screenshot"
-  src="../img/preflight-script-disable.png"
-  alt="Turn off preflight scripts in the Explorer"
-  width="500"
-/>
-
-To do so, toggle the **Preflight script** switch to **OFF**.
+By default, a variant's preflight script runs automatically before every GraphQL operation that's executed in the Explorer. Team members can turn off the script for their individual Explorer usage from the **Personal Settings > Scripts** section of the Explorer's Settings tab. To do so, toggle the **Preflight script** switch to **OFF**.
 
 ## Operation scripts
 
@@ -102,16 +93,7 @@ Only organization members [with edit access](../org/members/#role-permissions) t
 </Note>
 
 1. From the Explorer, open an operation from the **Operation Collections** menu:
-
-   <img
-     class="screenshot"
-     src="../img/select-operation.png"
-     alt="Selecting an operation"
-     width="400"
-   />
-
 2. From the Explorer's bottom panel, select the **Pre-Operation Script** or **Post-Operation Script** tab and click **+ Add Script**. A script creation dialog appears.
-
 3. Create, test, and save your script.
 
    - For details on script creation, see steps 4 and 5 of [Add preflight scripts](#add-preflight-scripts).
@@ -125,16 +107,7 @@ The operation script modal has a **Mocked Operation Response** area so you can t
 
 ### Turn on operation scripts
 
-By default, operation scripts are **off** for each individual team member. Team members can turn on operation scripts for their individual Explorer usage from the **Personal Settings > Scripts** section of the Explorer's Settings tab:
-
-<img
-  class="screenshot"
-  src="../img/op-switch.png"
-  alt="Editing operation scripts in the Explorer"
-  width="500"
-/>
-
-To do so, toggle the **Operation script** switch to **ON**.
+By default, operation scripts are **off** for each individual team member. Team members can turn on operation scripts for their individual Explorer usage from the **Personal Settings > Scripts** section of the Explorer's Settings tab. To do so, toggle the **Operation script** switch to **ON**.
 
 ## Chaining operations
 
@@ -437,6 +410,8 @@ const transformedShips = exampleTransform( allShips, filterFn, mapFn);
 // Log the result
 console.log(transformedShips);
 ```
+
+You can view the logged results in the **Console output** section of the Explorer.
 
 <img
   class="screenshot"
