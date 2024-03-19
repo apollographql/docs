@@ -61,9 +61,7 @@ You can define a GraphQL code block with the following syntax:
     }
     ```
 
-This renders the code block with buttons you can use to copy an operation or open it in the Explorer:
-
-<img className="screenshot" alt="GraphQL codeblock in README" src="../../img/readme-codeblock.jpg" width="300" />
+This renders the code block with buttons to copy an operation or open it in the [Explorer](../explorer).
 
 ### README shortcodes
 
@@ -91,14 +89,7 @@ A graph variant's **Schema** page has three distinct views:
 
 ### Schema reference
 
-The **Reference** tab on the **Schema** page lists the different kinds of definitions in your schema, for example, objects, scalars, etc.:
-
-<img
-  className="screenshot"
-  alt="Schema page list of type definitions in Studio"
-  src="../../img/schema-page-list.jpg"
-  width="300"
-/>
+The **Reference** tab on the **Schema** page lists the different kinds of definitions in your schema, for example, objects, scalars, interfaces, etc.
 
 Select a kind of definition to view a table of all corresponding types:
 
@@ -276,34 +267,11 @@ It can help clarify your understanding of your schema's design, so you can more 
   alt="Schema visualization in Studio"
 />
 
-Use the buttons on the bottom of the page to:
-- Zoom in and out of the visualization
-- Copy a link to the visualization to share with organization members
-- Download an SVG or PNG of the visualization
-- Open and close the visualization **Legend**
-
-On the top of the page, you can:
-- Click the double arrow to collapse or expand a searchable list of **Types**.
-- Click **Show Filters** to filter your visualization by root type, subgraph, or tag.
-- Click the **Highlight** dropdown to select particular types, tags, or directives to highlight.
-  - Highlighting **Unused** types, **Errors**, **Usage**, or **Latency**, the visualization displays a heatmap whose **Time range** you can adjust in the bottom right of the screen.
-
-    <img
-      src="../../img/schema-visualization-heatmap.png"
-      className="screenshot"
-      alt="Visualization heatmap showing unused types and fields in a schema visualization"
-    />
-
-- Click **More** to **Collapse all fields** or **Hide** particular fields, types, and nodes.
-
 ## The Explorer
 
 GraphOS Studio provides a powerful Explorer IDE that helps you visualize your graph and run queries against it. It's available from your graph's **Explorer** page in Studio. Refer to the [Explorer docs](../explorer/) to learn more.
 
 ## Tracking schema changes
 
-The **Changelog** page in Studio displays a timeline of changes made to your graph's schema:
-
-<img src="../../img/changelog-page.jpg" className="screenshot" alt="Schema Changelog tab" width="450" />
-
+The **Changelog** page in Studio displays a timeline of changes made to your graph's schema.
 Only schema changes that you publish to Studio are in this timeline, which is one of the most important reasons to [include schema publishing in your continuous delivery pipeline](../delivery/publishing-schemas/#publish-with-continuous-delivery).

@@ -206,18 +206,9 @@ You can also access a graph's PQLs from its settings page.
 2. From the PQL page:
 
    - If you haven't created any PQLs yet, click **Create a Persisted Query List**.
-   - If you already have at least one PQL, click **New List** in the upper right.
+   - If you already have at least one PQL, click **New List** in the upper right. 
 
-    The following dialog appears:
-
-    <img
-      className="screenshot"
-      alt="The first step of the PQL creation dialog in GraphOS studio"
-      src="../../img/pql-dialog-create.jpg"
-      width="450"
-    />
-
-3. Provide a name and (optional) description for your PQL, then click **Create**.
+3. In the dialog that appears, provide a name and (optional) description for your PQL, then click **Create**.
 
    - At this point, your empty PQL has been created. The remaining dialog steps help with additional setup.
 
@@ -232,14 +223,7 @@ You can also access a graph's PQLs from its settings page.
 
 6. The fourth and final dialog step (**Configure**) displays the configuration options you apply to your router to begin using your PQL. We'll cover these in a later step.
 
-7. Click **Finish** to close the dialog. Your newly created PQL appears in the table:
-
-   <img
-     className="screenshot"
-     alt="A newly created PQL in the table on the Studio PQL page"
-     src="../../img/pql-table.jpg"
-     width="450"
-   />
+7. Click **Finish** to close the dialog and save your newly created PQL.
 
 #### 1.2 Link the PQL to variants
 
@@ -251,25 +235,10 @@ It's safe to link an empty or incomplete PQL to a variant because your router do
 
 </Tip>
 
-1. From the table on your graph's PQL page, open the **•••** menu under the **Actions** column for the PQL you want to link:
+1. From the table on your graph's PQL page, open the **•••** menu under the **Actions** column for the PQL you want to link.
+Click **Link and Unlink Variants**.
 
-   <img
-     className="screenshot"
-     alt="The Actions menu for a PQL in Studio"
-     src="../../img/pql-table-actions.jpg"
-     width="250"
-   />
-
-2. Click **Link and Unlink Variants**. The following dialog appears:
-
-   <img
-     className="screenshot"
-     alt="Dialog for linking PQLs to variants in Studio"
-     src="../../img/pql-link-variants.jpg"
-     width="500"
-   />
-
-3. Use the dropdown menu to select any variants you want to link your PQL to.
+2. In the dialog that appears, use the dropdown menu to select any variants you want to link your PQL to.
 
 <Tip>
 
@@ -277,7 +246,7 @@ As a best practice, you can begin by linking your PQLs to a staging environment 
 
 </Tip>
 
-4. Click **Save**.
+3. Click **Save**.
 
 After you link a PQL to a variant, GraphOS makes the PQL available in [Uplink](/federation/managed-federation/uplink/), the service that delivers configurations to your router at runtime. Once [configured](#2-router-configuration), the router polls Uplink to ensure it uses the most up-to-date PQL for linked variants.
 
@@ -508,8 +477,6 @@ From the **Persisted Query Lists** page, you can perform the following actions b
 - Update the PQL's name and description
 - Link and unlink variants
 - Delete the PQL entirely
-
-  <img className="screenshot" alt="Persisted query list actions in Studio" src="../../img/pql-actions.jpg" />
 
 The **Publish operations** action provides the [Rover CLI command to do so](/rover/commands/persisted-queries/).
 

@@ -47,31 +47,11 @@ This method of adding a variant is available only to cloud supergraphs. For othe
 
 </Note>
 
-1. Go to your supergraph's Settings page in Studio and navigate to **This Graph > Variants**:
+1. Go to your supergraph's **Settings** page in Studio and navigate to **This Graph > Variants**.
 
-   <img
-     src="../../img/federated-graphs/variant-settings.jpg"
-     class="screenshot"
-     alt="Variant settings page in Studio"
-   />
+2. Click **Add a variant**.
 
-2. Click **Add a variant**. The following dialog appears:
-
-   <img
-     src="../../img/federated-graphs/add-variant-1.jpg"
-     class="screenshot"
-     alt="Step 1 for adding a variant in Studio"
-     width="450"
-   />
-
-3. Provide a **Variant Name** and click **Continue**. The next step in the dialog appears:
-
-   <img
-     src="../../img/federated-graphs/add-variant-2.jpg"
-     class="screenshot"
-     alt="Step 2 for adding a variant in Studio"
-     width="450"
-   />
+3. In the dialog that appears, provide a **Variant Name** and click **Continue**.
 
 4. Provide your first subgraph's **Routing URL** (this is the URL that your new variant's router will use to communicate with the subgraph), along with a **Subgraph Name**.
 
@@ -89,7 +69,7 @@ To add a new variant to your supergraph with Rover, you publish its first subgra
 
 ## Managing subgraphs
 
-After you create a [cloud supergraph](./#cloud-supergraphs) (or a new variant of one), you can view a list of its associated subgraphs from the variant's Subgraphs page:
+After you create a [cloud supergraph](./#cloud-supergraphs) (or a new variant of one), you can view a list of its associated subgraphs from the variant's **Subgraphs** page:
 
 <img
   class="screenshot"
@@ -115,25 +95,11 @@ This method of adding a subgraph is available only to cloud supergraphs. For oth
 
 </Note>
 
-1. Go to your variant's Subgraphs page in Studio:
+1. Go to your variant's **Subgraphs** page in Studio.
 
-   <img
-     src="../../img/federated-graphs/subgraphs-page.jpg"
-     class="screenshot"
-     alt="Variant subgraphs page in Studio"
-     width="550"
-   />
+2. Click **Add a subgraph**.
 
-2. Click **Add a subgraph**. The following dialog appears:
-
-   <img
-     src="../../img/federated-graphs/add-subgraph-dialog.jpg"
-     class="screenshot"
-     alt="Dialog for adding a subgraph in Studio"
-     width="450"
-   />
-
-3. Provide your subgraph's **Routing URL** (this is the URL that your supergraph's router will use to communicate with the subgraph), along with a **Subgraph Name**.
+3. In the dialog that appears, provide your subgraph's **Routing URL** (this is the URL that your supergraph's router will use to communicate with the subgraph), along with a **Subgraph Name**.
 
 4. If Studio can't fetch your subgraph's schema automatically from the routing URL, click **Advanced options** to provide the schema another way (such as by pasting the schema directly or introspecting a locally running server).
 
@@ -149,7 +115,7 @@ To add a subgraph to your supergraph with Rover, you publish the subgraph's sche
 
 From your variant's Subgraphs page, you can modify an existing subgraph's routing URL:
 
-1. Open the "◦◦◦" menu for the subgraph you want to modify:
+1. Open the **•••** menu for the subgraph you want to modify:
 
    <img
      class="screenshot"
@@ -194,7 +160,7 @@ You can delete an existing subgraph from a variant of your cloud supergraph. If 
 
 1. Go to the Subgraphs page for the subgraph's corresponding variant.
 
-2. Open the "◦◦◦" menu for the subgraph you want to delete:
+2. Click the **•••** button on the right of the subgraph you want to delete:
 
    <img
      class="screenshot"
@@ -205,16 +171,7 @@ You can delete an existing subgraph from a variant of your cloud supergraph. If 
 
 3. Click **Delete subgraph**. Studio attempts to compose a new supergraph schema that doesn't include the subgraph you want to delete.
 
-4. A confirmation dialog appears that displays any composition errors that occurred:
-
-   <img
-     class="screenshot"
-     alt="Dialog for confirming deletion of a subgraph"
-     src="../../img/delete-subgraph-dialog.jpg"
-     width="500"
-   />
-
-   If you're sure you want to delete the subgraph, enter its name and click **Delete subgraph**.
+4. A confirmation dialog appears that displays any composition errors that occurred. If you're sure you want to delete the subgraph, enter its name and click **Delete subgraph**.
 
 ## Viewing a field's originating subgraph
 
@@ -422,7 +379,7 @@ In the **Schema > Reference** tab, tags are shown inline with each type and fiel
   width="600"
 />
 
-Tags are also visible in the Explorer's Documentation tab:
+Tags are also visible in the Explorer's **Documentation** tab:
 
 <img
   class="screenshot"
@@ -449,17 +406,4 @@ If a supergraph's most recent set of subgraph schemas failed to compose, a **BUI
   width="500"
 />
 
-You can click this label to view the errors that must be resolved before composition can succeed:
-
-<img
-  class="screenshot"
-  src="../../img/composition-error.jpg"
-  alt="Studio screenshot showing the composition error modal that is opened by clicking the build failed label"
-  width="500"
-/>
-
-<Tip>
-
-[Learn more about composition errors.](/federation/errors/)
-
-</Tip>
+You can click this label to view the errors that must be resolved before composition can succeed. Refer to the [composition error reference](/federation/errors/) for more information.

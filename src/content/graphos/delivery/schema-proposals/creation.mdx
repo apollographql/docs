@@ -20,12 +20,12 @@ To access the page, either:
     <img
       src="../../img/schema-proposals/proposals-left-nav.jpg"
       className="screenshot"
-      alt="Opening the Proposals page from the left nav in GraphOS Studio"
+      alt="Opening the Proposals page from the left navigation in GraphOS Studio"
     />
 
     <Note>
 
-    If you don't see **Proposals** in the left nav of a particular graph, it may be because the graph is a monograph. Schema proposals are designed for use with supergraphs and aren't available for monographs. Convert your monograph to a supergraph using the Rover CLI [`subgraph publish` command](/rover/commands/subgraphs/#subgraph-publish) with the [`--convert` flag](/rover/commands/subgraphs/#--convert).
+    If you don't see **Proposals** in the left navigation of a particular graph, it may be because the graph is a monograph. Schema proposals are designed for use with supergraphs and aren't available for monographs. Convert your monograph to a supergraph using the Rover CLI [`subgraph publish` command](/rover/commands/subgraphs/#subgraph-publish) with the [`--convert` flag](/rover/commands/subgraphs/#--convert).
 
     </Note>
 
@@ -40,12 +40,6 @@ To access the page, either:
 Follow the steps below to create a new proposal:
 
 1. Click the **Propose changes** button in the top right. A dialog entitled **Propose schema changes** appears.
-   <img
-     src="../../img/schema-proposals/proposal-dialog.jpg"
-     className="screenshot"
-     alt="Schema proposal creation dialog in GraphOS Studio"
-     width="400"
-   />
 2. Enter a descriptive **proposal title** that outlines the schema changes you plan to propose.
 
    <Note>
@@ -86,27 +80,12 @@ You can directly edit one or more subgraph schemas from a proposal's **Editor** 
   alt="Schema proposals editor in GraphOS Studio"
 />
 
-To start a new subgraph, click **+Add new** from the subgraph schema selector in the left nav.
+To start a new subgraph, click **+Add new** from the subgraph schema selector in the left navigation.
 You can also delete existing subgraphs and rename newly created ones by clicking the **•••** menu to the right of a subgraph's name.
-
-<img
-  src="../../img/schema-proposals/subgraph-schema-selector.jpg"
-  className="screenshot"
-  alt="Subgraph selector in the schema proposals editor in GraphOS Studio"
-  width="200px"
-/>
 
 ### Lint changes
 
-To lint the schema changes you've made, click the Lint schema button in the top right of the editor.
-
-<img
-  src="../../img/schema-proposals/lint-changes.jpg"
-  className="screenshot"
-  alt="Linting changes in the schema proposals editor in GraphOS Studio"
-/>
-
-Clicking the button opens a panel where you can run the [schema linter](../schema-linter) on the current changes in the editor.
+To lint the schema changes you've made, click the broom icon in the top right of the editor. Clicking the button opens a panel where you can run the [schema linter](../schema-linter) on the current changes in the editor.
 After successfully running a lint on your schema, the panel displays any linter violations so you can fix them accordingly.
 
 If you are having trouble finding the exact location of where the lint violation occurred, click the line in the violations list to highlight it in the editor.
@@ -130,13 +109,6 @@ Once you've made changes in the editor, rerun the linter by clicking the rerun b
 Once you've made changes, click the **Save Revision** button in the bottom left of the editor to save them.
 A dialog appears where you can optionally include a summary of your changes. This input accepts Markdown.
 
-<img
-  src="../../img/schema-proposals/save-revision.jpg"
-  className="screenshot"
-  alt="Save revision dialog in GraphOS Studio"
-  width="400px"
-/>
-
 The revision summary appears in the activity your proposal's overview tab. A proposal can include as many revisions as necessary.
 
 <Tip>
@@ -148,12 +120,6 @@ You can think of each revision as equal to a [commit](<https://en.wikipedia.org/
 ## Schema checks
 
 [Schema checks](../schema-checks) automatically run each time you save a revision. These appear in a proposal's **Checks** tab.
-
-<img
-  src="../../img/schema-proposals/schema-checks.jpg"
-  className="screenshot"
-  alt="Failed schema check for a proposal in GraphOS Studio"
-/>
 
 Checks run proposal changes against the most recent version of the proposal's source variant schema.
 For example, if your proposal removes a field that was already removed in the latest published version of the source variant, the check doesn't consider the removal a change.
@@ -170,28 +136,14 @@ You can change the proposal's status from the overview page by clicking **Edit s
 - **Draft**: default status upon creation
 - **Open for feedback**: signals the proposal is ready for review
 - **Closed**: signals the proposal is abandoned or suspended
-  - Closed proposals can't receive further revisions
-  - You can always reopen a proposal by resetting the status to Draft or Open for feedback
-
-<img
-  src="../../img/schema-proposals/edit-status.jpg"
-  className="screenshot"
-  alt="Changing a schema proposal's status in GraphOS Studio"
-/>
+  - **Closed** proposals can't receive further revisions
+  - You can always reopen a proposal by resetting the status to **Draft** or **Open for feedback**
 
 **Approved** and **Implemented** statuses are automatically set once [necessary conditions](./#proposal-statuses) have been met.
 
 ## Request review
 
-Add reviewers by clicking **Manage reviewers** on the proposal's overview tab:
-
-<img
-  src="../../img/schema-proposals/manage-reviewers.jpg"
-  className="screenshot"
-  alt="Selecting schema proposal reviewers in GraphOS Studio"
-/>
-
-If proposals have [default reviewers](./configuration#default-reviewers) configured, these are automatically selected once the proposal's status is **Open for feedback**.
+Add reviewers by clicking **Manage reviewers** on the proposal's overview tab. If proposals have [default reviewers](./configuration#default-reviewers) configured, these are automatically selected once the proposal's status is **Open for feedback**.
 
 ### Approvals
 

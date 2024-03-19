@@ -46,12 +46,6 @@ To provision a new Dedicated cloud router, you must first create a new graph in 
    - If your API URL is publicly accessible, enter the API URL. This URL is the URL that client applications currently use to query your API.
    - If your API isn't publicly accessible and requires private networking, you can connect to it with [AWS VPC Lattice](../lattice). Select **My endpoint isn't publicly accessible** to connect a VPC. Follow the prompts to complete private subgraph setup.
 
-   <img
-     className="screenshot"
-     alt="Cloud router configuration screen"
-     src="../../img/cloud-dedicated//my-endpoint-not-publicly-accessible.png"
-   />
-
 2. Enter a **Subgraph name**. The name should reflect your API's data or capabilities and uniquely identify your API among any other APIs you might add to the supergraph later.
 
    <Note>
@@ -96,28 +90,16 @@ Use the **Configuration** tab to manage your cloud router's configuration, inclu
 <img
   className="screenshot"
   alt="The Cloud Router page in GraphOS Studio"
-  src="../../img/cloud-dedicated/cloud-router-configuration.png"
+  src="../../img/cloud-dedicated/dedicated-configuration.png"
 />
 
 ## Step 4. Test and validate
 
-To test whether your graph works as intended, run a sample query by clicking **Run in Explorer** from your graph's README.
-
-<img
-  className="screenshot"
-  alt="The 'Run in Explorer' button in GraphOS Studio"
-  src="../../img/cloud-dedicated/run-in-explorer.png"
-/>
+To test whether your graph works as intended, run a sample query by clicking **Run in Explorer** from your graph's **README** page.
 
 [Enable subgraph error reporting](./lattice-troubleshooting/#enable-subgraph-error-inclusion) if you run into issues.
 
 For further testing, you can add variants to your graph for development or staging environments. To do so, go to **Settings** > **This Graph** > **Variants** and click **Add a variant**.
-
-<img
-  className="screenshot"
-  alt="The 'Add a variant' button in GraphOS Studio"
-  src="../../img/cloud-dedicated/add-a-variant.png"
-/>
 
 Apollo recommends running a [load test](./throughput#loud-testing) to determine how much [throughput capacity](./throughput) you need to run your graph.
 
