@@ -83,8 +83,7 @@ export function Docset({
         <ButtonLink
           variant="link"
           color="tertiary"
-          textDecor="underline"
-          fontWeight="normal"
+          fontWeight="medium"
           fontSize="inherit"
           _hover={{color: 'link'}}
           mt="auto"
