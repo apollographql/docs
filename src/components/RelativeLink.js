@@ -11,8 +11,7 @@ export const PrimaryLink = props => {
     <ButtonLink
       variant="link"
       color="tertiary"
-      textDecor="underline"
-      fontWeight="normal"
+      fontWeight="medium"
       fontSize="inherit"
       _hover={{color: 'link'}}
       iconSpacing="5px"
@@ -27,8 +26,7 @@ export const PrimaryLink = props => {
   ) : (
     <Link
       color="tertiary"
-      textDecor="underline"
-      fontWeight="normal"
+      fontWeight="medium"
       _hover={{color: 'link'}}
       sx={{
         code: {
