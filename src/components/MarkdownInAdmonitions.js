@@ -42,7 +42,16 @@ export const MarkdownInAdmonitions = ({children}) => {
           />
         ),
         li: ({children, ...props}) => (
-          <ListItem {...props}>
+          <ListItem
+            sx={{
+              '>': {
+                ':not(a):not(:last-child)': {
+                  mb: 3
+                }
+              }
+            }}
+            {...props}
+          >
             <HighlightKeyTerms>{children}</HighlightKeyTerms>
           </ListItem>
         ),

@@ -127,8 +127,8 @@ const SCROLL_MARGIN_TOP = PAGE_PADDING_TOP + TOTAL_HEADER_HEIGHT;
 
 const NESTED_LIST_STYLES = {
   [['ul', 'ol']]: {
-    mt: 3
-    // lineHeight: 'normal'
+    mt: 4,
+    lineHeight: 'normal'
   }
 };
 
@@ -155,7 +155,16 @@ const components = {
     <OrderedList spacing={LIST_SPACING} sx={NESTED_LIST_STYLES} {...props} />
   ),
   li: ({children, ...props}) => (
-    <ListItem {...props}>
+    <ListItem
+      sx={{
+        '>': {
+          ':not(a):not(:last-child)': {
+            mb: 3
+          }
+        }
+      }}
+      {...props}
+    >
       <HighlightKeyTerms>{children}</HighlightKeyTerms>
     </ListItem>
   ),
@@ -392,7 +401,7 @@ export default function Page({file}) {
             }
           },
           '>': {
-            ':not(:last-child)': {
+            ':not(a):not(:last-child)': {
               mb: 6
             },
             ':not(style:first-child) +': {
@@ -411,6 +420,11 @@ export default function Page({file}) {
           },
           table: {
             td: {
+              '>': {
+                ':not(a):not(:last-child)': {
+                  mb: 3
+                }
+              },
               [['ul', 'ol']]: {
                 [['ul', 'ol']]: {
                   mt: 1

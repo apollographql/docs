@@ -12,7 +12,7 @@ export const Tip = ({children, ...props}) => {
       borderColor="green.400"
       sx={{
         '>': {
-          ':not(:last-child)': {
+          ':not(a):not(:last-child)': {
             mb: 2
           }
         }

@@ -165,7 +165,7 @@ const Results = () => {
                 borderColor="primary"
                 sx={{
                   '>': {
-                    ':not(:last-child)': {
+                    ':not(a):not(:last-child)': {
                       mb: 2
                     }
                   }
