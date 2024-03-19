@@ -52,7 +52,7 @@ export function useFieldTableStyles() {
         lineHeight: 'base',
         fontSize: 'md',
         p: {
-          ':not(:last-child)': {
+          ':not(a):not(:last-child)': {
             mb: 2
           }
         }
@@ -89,7 +89,8 @@ export const useUser = () => {
     user: data?.me,
     loading,
     isInternal: data?.me?.memberships.some(membership =>
-      APOLLO_ORGS.includes(membership.account.id) ),
+      APOLLO_ORGS.includes(membership.account.id)
+    ),
     error
   };
 };

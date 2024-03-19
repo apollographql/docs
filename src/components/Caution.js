@@ -12,7 +12,7 @@ export const Caution = ({children, ...props}) => {
       borderColor="yellow.400"
       sx={{
         '>': {
-          ':not(:last-child)': {
+          ':not(a):not(:last-child)': {
             mb: 2
           }
         }
