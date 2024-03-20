@@ -1,4 +1,3 @@
-import GlossaryPreview from './GlossaryPreview';
 import Highlight from './Highlight';
 import PropTypes from 'prop-types';
 import React, {Fragment} from 'react';
@@ -41,6 +40,7 @@ export default function Preview({preview}) {
     url,
     type,
     title,
+    term,
     docset,
     categories,
     sectionTitle,
@@ -58,9 +58,6 @@ export default function Preview({preview}) {
     searchByAlgoliaDark
   );
 
-  if (__autocomplete_indexName === 'apollopedia')
-    return <GlossaryPreview item={preview} />;
-
   return (
     <Flex borderLeftWidth="1px" direction="column" pos="relative">
       <Flex align="center" p="2">
@@ -74,15 +71,16 @@ export default function Preview({preview}) {
           </Box>
           <Heading ml="2" size="md">
             {!docset
-              ? upperFirst(type)
+              ? !type
+                ? 'Glossary'
+                : upperFirst(type)
               : docset === 'technotes'
               ? 'Tech notes'
               : `${getDocsetTitle(docset)} docs`}
           </Heading>
         </Flex>
-
         <Heading size="md" mb="2">
-          <Link href={url}>{title}</Link>
+          <Link href={url}>{title ? title : term}</Link>
         </Heading>
         {allAncestors.length > 0 && (
           <HStack
@@ -112,14 +110,30 @@ export default function Preview({preview}) {
             <Highlight value={_snippetResult.text.value} />
           </Text>
         )}
-        {categories && (
-          <HStack mt="4">
-            {categories.map((category, index) => (
+        <HStack mt="4">
+          {categories?.length > 0 ? (
+            categories.map((category, index) => (
               <Tag variant="outline" colorScheme="navy" key={index}>
                 {category}
               </Tag>
-            ))}
-          </HStack>
+            ))
+          ) : (
+            <Tag variant="outline" colorScheme="navy" key={`glossary-${term}`}>
+              glossary
+            </Tag>
+          )}
+        </HStack>
+        {__autocomplete_indexName === 'apollopedia' && (
+          <Link
+            aria-label="Go to the glossary"
+            fontWeight="medium"
+            as="a"
+            href={url}
+            mt="12px"
+            style={{display: 'flex', alignItems: 'center'}}
+          >
+            Go to the term in the glossary ⏎
+          </Link>
         )}
       </Box>
       <Img
@@ -135,73 +149,4 @@ export default function Preview({preview}) {
 
 Preview.propTypes = {
   preview: PropTypes.object.isRequired
-};
-
-const PreviewContent = ({
-  preview,
-  url,
-  title,
-  docset,
-  type,
-  _snippetResult,
-  categories,
-  allAncestors
-}) => {
-  return (
-    <Box px="5">
-      <Flex my="5">
-        <Box fontSize="2xl" color="primary">
-          <ResultIcon result={preview} />
-        </Box>
-        <Heading ml="2" size="md">
-          {!docset
-            ? upperFirst(type)
-            : docset === 'technotes'
-            ? 'Tech notes'
-            : `${getDocsetTitle(docset)} docs`}
-        </Heading>
-      </Flex>
-
-      <Heading size="md" mb="2">
-        <Link href={url}>{title}</Link>
-      </Heading>
-      {allAncestors.length > 0 && (
-        <HStack
-          as="nav"
-          aria-label="Breadcrumb"
-          mb="2"
-          px="2"
-          rounded="sm"
-          spacing="1"
-          whiteSpace="nowrap"
-          maxW="full"
-        >
-          {allAncestors.map((ancestor, index) => (
-            <Fragment key={index}>
-              {index > 0 && <Box as={ChevronRightIcon} flexShrink="0" />}
-              <Heading size="sm">
-                <Link isTruncated href={ancestor.url} title={ancestor.title}>
-                  {ancestor.title}
-                </Link>
-              </Heading>
-            </Fragment>
-          ))}
-        </HStack>
-      )}
-      {_snippetResult?.text && (
-        <Text>
-          <Highlight value={_snippetResult.text.value} />
-        </Text>
-      )}
-      {categories && (
-        <HStack mt="4">
-          {categories.map((category, index) => (
-            <Tag variant="outline" colorScheme="navy" key={index}>
-              {category}
-            </Tag>
-          ))}
-        </HStack>
-      )}
-    </Box>
-  );
 };

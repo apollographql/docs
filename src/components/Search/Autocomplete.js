@@ -95,8 +95,11 @@ export default function Autocomplete({onClose, optionalFilters}) {
                     params: {
                       optionalFilters,
                       clickAnalytics: true,
-                      hitsPerPage:
-                        indexName === QUERY_SUGGESTIONS_INDEX ? 4 : 2,
+                      hitsPerPage: !index
+                        ? 8
+                        : indexName === QUERY_SUGGESTIONS_INDEX
+                        ? 4
+                        : 2,
                       highlightPreTag: '<mark>',
                       highlightPostTag: '</mark>'
                     }

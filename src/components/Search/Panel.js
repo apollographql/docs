@@ -38,7 +38,7 @@ export default function Panel({sources, autocomplete, autocompleteState}) {
               if (source.sourceId === 'apollopedia') {
                 filteredItems =
                   autocompleteState.query.length > 2
-                    ? items.filter(item => !item.internalOnly)
+                    ? items.filter(item => !item.internalOnly).slice(0, 2)
                     : [];
               } else filteredItems = items;
               return (
