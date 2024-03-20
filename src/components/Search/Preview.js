@@ -49,8 +49,6 @@ export default function Preview({preview}) {
     __autocomplete_indexName
   } = preview;
 
-  console.log(__autocomplete_indexName);
-
   const allAncestors = sectionTitle
     ? [...ancestors, {url, title: sectionTitle}]
     : ancestors;

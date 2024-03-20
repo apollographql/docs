@@ -4,6 +4,7 @@ import React from 'react';
 import ResultIcon from './ResultIcon';
 import {Box, Flex, chakra, useColorMode} from '@chakra-ui/react';
 import {ChevronRightIcon} from '../Icons';
+import {makeGlossaryTermId} from '../GlossaryPage/Results';
 
 export default function Result({item, ...props}) {
   const {text, title, sectionTitle, description, term} = item._highlightResult;
@@ -12,10 +13,20 @@ export default function Result({item, ...props}) {
   const {colorMode} = useColorMode();
   const activeBg = colorMode === 'light' ? 'silver.400' : 'navy.400';
 
-  const url =
-    item.__autocomplete_indexName === 'staging_docs'
-      ? new URL(item.slug, process.env.DEPLOY_URL).toString()
-      : item.url;
+  let {url} = item;
+
+  switch (item.__autocomplete_indexName) {
+    case 'staging_docs':
+      url = new URL(item.slug, process.env.DEPLOY_URL).toString();
+      break;
+    case 'apollopedia':
+      url = new URL(
+        `/resources/glossary#${makeGlossaryTermId(item.term)}`,
+        process.env.DEPLOY_URL
+      ).toString();
+      break;
+    default:
+  }
 
   return (
     <chakra.li bg={isSelected && activeBg} {...props}>
