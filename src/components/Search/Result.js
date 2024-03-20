@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import ResultIcon from './ResultIcon';
 import {Box, Flex, chakra, useColorMode} from '@chakra-ui/react';
+import {ChevronRightIcon} from '../Icons';
 
 export default function Result({item, ...props}) {
-  const {text, title, description} = item._highlightResult;
+  const {text, title, sectionTitle, description} = item._highlightResult;
   const {'aria-selected': isSelected} = props;
 
   const {colorMode} = useColorMode();
@@ -23,9 +24,15 @@ export default function Result({item, ...props}) {
           <ResultIcon result={item} />
         </Box>
         <Box lineHeight="shorter" w="0" flexGrow="1">
-          <Box>
+          <Box fontWeight="medium">
             <Highlight value={title.value} />
           </Box>
+          {sectionTitle && sectionTitle.matchedWords.length > 0 && (
+            <Box my="1" display="flex">
+              <Box as={ChevronRightIcon} flexShrink="0" />
+              <Highlight value={sectionTitle.value} />
+            </Box>
+          )}
           <Box
             fontSize="sm"
             color="gray.500"
