@@ -45,6 +45,18 @@ function getEventName(index) {
   }
 }
 
+function getHitsPerPage(indexName, queryLength) {
+  switch (indexName) {
+    case QUERY_SUGGESTIONS_INDEX:
+      return 4;
+    case APOLLOPEDIA_INDEX:
+      if (queryLength > 0) return 2;
+      else return 0;
+    default:
+      return 2;
+  }
+}
+
 const algoliaInsightsPlugin = createAlgoliaInsightsPlugin({
   insightsClient,
   onSelect({insights, insightsEvents}) {
@@ -81,7 +93,7 @@ export default function Autocomplete({onClose, optionalFilters}) {
         plugins: [algoliaInsightsPlugin],
         onStateChange: ({state}) => setAutocompleteState(state),
         getSources: () =>
-          Object.keys(SOURCES).map((indexName, index) => ({
+          Object.keys(SOURCES).map(indexName => ({
             sourceId: indexName,
             getItemUrl: ({item}) => item.url,
             getItemInputValue: ({item}) => item.query,
@@ -94,12 +106,10 @@ export default function Autocomplete({onClose, optionalFilters}) {
                     query,
                     params: {
                       optionalFilters,
+                      filters:
+                        indexName === 'apollopedia' ? 'internalOnly:false' : '',
                       clickAnalytics: true,
-                      hitsPerPage: !index
-                        ? 8
-                        : indexName === QUERY_SUGGESTIONS_INDEX
-                        ? 4
-                        : 2,
+                      hitsPerPage: getHitsPerPage(indexName, query.length),
                       highlightPreTag: '<mark>',
                       highlightPostTag: '</mark>'
                     }

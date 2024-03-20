@@ -110,19 +110,15 @@ export default function Preview({preview}) {
             <Highlight value={_snippetResult.text.value} />
           </Text>
         )}
-        <HStack mt="4">
-          {categories?.length > 0 ? (
-            categories.map((category, index) => (
+        {categories && (
+          <HStack mt="4">
+            {categories.map((category, index) => (
               <Tag variant="outline" colorScheme="navy" key={index}>
                 {category}
               </Tag>
-            ))
-          ) : (
-            <Tag variant="outline" colorScheme="navy" key={`glossary-${term}`}>
-              glossary
-            </Tag>
-          )}
-        </HStack>
+            ))}
+          </HStack>
+        )}
         {__autocomplete_indexName === 'apollopedia' && (
           <Link
             aria-label="Go to the glossary"

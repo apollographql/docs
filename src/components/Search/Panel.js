@@ -34,16 +34,9 @@ export default function Panel({sources, autocomplete, autocompleteState}) {
             .filter(collection => collection.items.length > 0)
             .map((collection, index) => {
               const {source, items} = collection;
-              let filteredItems;
-              if (source.sourceId === 'apollopedia') {
-                filteredItems =
-                  autocompleteState.query.length > 2
-                    ? items.filter(item => !item.internalOnly).slice(0, 2)
-                    : [];
-              } else filteredItems = items;
               return (
                 <div key={index}>
-                  {filteredItems.length > 0 && (
+                  {items.length > 0 && (
                     <Flex align="center" p="2" pr="0">
                       <Heading size="sm">{sources[source.sourceId]}</Heading>
                       <Box borderBottomWidth="1px" flexGrow="1" ml="2" />
@@ -68,7 +61,7 @@ export default function Panel({sources, autocomplete, autocompleteState}) {
                     </Wrap>
                   ) : (
                     <ul {...autocomplete.getListProps()}>
-                      {filteredItems.map(item => (
+                      {items.map(item => (
                         <Result
                           key={item.objectID}
                           item={item}
