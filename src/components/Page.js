@@ -1,4 +1,4 @@
-import 'react-medium-image-zoom/dist/styles.css';
+import '../assets/image-zoom.css';
 import * as sharedContent from '../content/shared';
 import Blockquote from './Blockquote';
 import CodeColumns from './CodeColumns';
