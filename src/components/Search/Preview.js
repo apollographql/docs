@@ -87,11 +87,6 @@ export default function Preview({preview}) {
             mb="2"
             px="2"
             rounded="sm"
-            fontSize="sm"
-            bg="gray.100"
-            _dark={{
-              bg: 'gray.800'
-            }}
             spacing="1"
             whiteSpace="nowrap"
             maxW="full"
@@ -99,9 +94,11 @@ export default function Preview({preview}) {
             {allAncestors.map((ancestor, index) => (
               <Fragment key={index}>
                 {index > 0 && <Box as={ChevronRightIcon} flexShrink="0" />}
-                <Link isTruncated href={ancestor.url} title={ancestor.title}>
-                  {ancestor.title}
-                </Link>
+                <Heading size="sm">
+                  <Link isTruncated href={ancestor.url} title={ancestor.title}>
+                    {ancestor.title}
+                  </Link>
+                </Heading>
               </Fragment>
             ))}
           </HStack>
