@@ -21,20 +21,8 @@ export const APOLLOPEDIA_INDEX = 'apollopedia';
 export default function Panel({sources, autocomplete, autocompleteState}) {
   const scrollArea = useRef();
   const columns = useBreakpointValue({md: 2});
-  // const apollopediaResults = autocompleteState.collections.filter(
-  //   collection =>
-  //     collection.items.length > 0 &&
-  //     collection.source.sourceId === 'apollopedia'
-  // )[0]?.items;
-  // const filteredApollopediaResults = apollopediaResults
-  //   ?.filter(item => !item.internalOnly && item._rankingInfo?.nbTypos === 0)
-  //   .sort((a, b) => a.term.length - b.term.length);
   return (
     <Box>
-      {/* {autocompleteState.query.length > 2 &&
-        filteredApollopediaResults?.length > 0 && (
-          <GlossaryPreview item={filteredApollopediaResults[0]} />
-        )} */}
       <SimpleGrid
         h="md"
         columns={columns}
@@ -46,13 +34,21 @@ export default function Panel({sources, autocomplete, autocompleteState}) {
             .filter(collection => collection.items.length > 0)
             .map((collection, index) => {
               const {source, items} = collection;
-              // if (source.sourceId !== 'apollopedia')
+              let filteredItems;
+              if (source.sourceId === 'apollopedia') {
+                filteredItems =
+                  autocompleteState.query.length > 2
+                    ? items.filter(item => !item.internalOnly)
+                    : [];
+              } else filteredItems = items;
               return (
                 <div key={index}>
-                  <Flex align="center" p="2" pr="0">
-                    <Heading size="sm">{sources[source.sourceId]}</Heading>
-                    <Box borderBottomWidth="1px" flexGrow="1" ml="2" />
-                  </Flex>
+                  {filteredItems.length > 0 && (
+                    <Flex align="center" p="2" pr="0">
+                      <Heading size="sm">{sources[source.sourceId]}</Heading>
+                      <Box borderBottomWidth="1px" flexGrow="1" ml="2" />
+                    </Flex>
+                  )}
                   {source.sourceId === QUERY_SUGGESTIONS_INDEX ? (
                     <Wrap px="2">
                       {items.map(item => (
@@ -72,7 +68,7 @@ export default function Panel({sources, autocomplete, autocompleteState}) {
                     </Wrap>
                   ) : (
                     <ul {...autocomplete.getListProps()}>
-                      {items.map(item => (
+                      {filteredItems.map(item => (
                         <Result
                           key={item.objectID}
                           item={item}
