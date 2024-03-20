@@ -6,22 +6,8 @@ import {Box, Flex, chakra, useColorMode} from '@chakra-ui/react';
 import {ChevronRightIcon} from '../Icons';
 import {makeGlossaryTermId} from '../GlossaryPage/Results';
 
-const stripMarkdown = text => {
-  // Remove bold formatting (e.g., **bold**)
-  text = text.replace(/\*\*(.*?)\*\*/g, '$1');
-  // Remove italic formatting (e.g., *italic*)
-  text = text.replace(/\*(.*?)\*/g, '$1');
-  // Remove inline code formatting (e.g., `code`)
-  text = text.replace(/`(.*?)`/g, '$1');
-  // Remove links (e.g., [link text](url))
-  text = text.replace(/\[(.*?)\]\((.*?)\)/g, '$1');
-  return text;
-};
-
 export default function Result({item, ...props}) {
   const {text, title, sectionTitle, description, term} = item._highlightResult;
-  const definition = item.definition ? stripMarkdown(item.definition) : null;
-
   const {'aria-selected': isSelected} = props;
 
   const {colorMode} = useColorMode();
@@ -66,11 +52,7 @@ export default function Result({item, ...props}) {
             }}
             isTruncated
           >
-            <Highlight
-              value={
-                text || description ? (text || description).value : definition
-              }
-            />
+            <Highlight value={(text || description).value} />
           </Box>
         </Box>
         <Box
