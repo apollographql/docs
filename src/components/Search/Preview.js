@@ -68,13 +68,13 @@ export default function Preview({preview}) {
           <Box fontSize="2xl" color="primary">
             <ResultIcon result={preview} />
           </Box>
-          <chakra.span ml="2">
+          <Heading ml="2" size="md">
             {!docset
               ? upperFirst(type)
               : docset === 'technotes'
               ? 'Tech notes'
               : `${getDocsetTitle(docset)} docs`}
-          </chakra.span>
+          </Heading>
         </Flex>
 
         <Heading size="md" mb="2">
