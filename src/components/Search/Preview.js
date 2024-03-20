@@ -1,3 +1,4 @@
+import GlossaryPreview from './GlossaryPreview';
 import Highlight from './Highlight';
 import PropTypes from 'prop-types';
 import React, {Fragment} from 'react';
@@ -14,7 +15,6 @@ import {
   Link,
   Tag,
   Text,
-  chakra,
   useColorModeValue
 } from '@chakra-ui/react';
 import {ChevronRightIcon} from '../Icons';
@@ -45,8 +45,11 @@ export default function Preview({preview}) {
     categories,
     sectionTitle,
     ancestors = [],
-    _snippetResult
+    _snippetResult,
+    __autocomplete_indexName
   } = preview;
+
+  console.log(__autocomplete_indexName);
 
   const allAncestors = sectionTitle
     ? [...ancestors, {url, title: sectionTitle}]
@@ -56,6 +59,9 @@ export default function Preview({preview}) {
     searchByAlgoliaLight,
     searchByAlgoliaDark
   );
+
+  if (__autocomplete_indexName === 'apollopedia')
+    return <GlossaryPreview item={preview} />;
 
   return (
     <Flex borderLeftWidth="1px" direction="column" pos="relative">
@@ -131,4 +137,73 @@ export default function Preview({preview}) {
 
 Preview.propTypes = {
   preview: PropTypes.object.isRequired
+};
+
+const PreviewContent = ({
+  preview,
+  url,
+  title,
+  docset,
+  type,
+  _snippetResult,
+  categories,
+  allAncestors
+}) => {
+  return (
+    <Box px="5">
+      <Flex my="5">
+        <Box fontSize="2xl" color="primary">
+          <ResultIcon result={preview} />
+        </Box>
+        <Heading ml="2" size="md">
+          {!docset
+            ? upperFirst(type)
+            : docset === 'technotes'
+            ? 'Tech notes'
+            : `${getDocsetTitle(docset)} docs`}
+        </Heading>
+      </Flex>
+
+      <Heading size="md" mb="2">
+        <Link href={url}>{title}</Link>
+      </Heading>
+      {allAncestors.length > 0 && (
+        <HStack
+          as="nav"
+          aria-label="Breadcrumb"
+          mb="2"
+          px="2"
+          rounded="sm"
+          spacing="1"
+          whiteSpace="nowrap"
+          maxW="full"
+        >
+          {allAncestors.map((ancestor, index) => (
+            <Fragment key={index}>
+              {index > 0 && <Box as={ChevronRightIcon} flexShrink="0" />}
+              <Heading size="sm">
+                <Link isTruncated href={ancestor.url} title={ancestor.title}>
+                  {ancestor.title}
+                </Link>
+              </Heading>
+            </Fragment>
+          ))}
+        </HStack>
+      )}
+      {_snippetResult?.text && (
+        <Text>
+          <Highlight value={_snippetResult.text.value} />
+        </Text>
+      )}
+      {categories && (
+        <HStack mt="4">
+          {categories.map((category, index) => (
+            <Tag variant="outline" colorScheme="navy" key={index}>
+              {category}
+            </Tag>
+          ))}
+        </HStack>
+      )}
+    </Box>
+  );
 };

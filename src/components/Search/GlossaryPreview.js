@@ -60,52 +60,62 @@ function stripCodeExample(definition) {
   return definition;
 }
 
-export default function GlossaryResult({item}) {
+export default function GlossaryPreview({item}) {
   const host =
     process.env.CONTEXT === 'production'
       ? 'https://www.apollographql.com/docs'
       : process.env.DEPLOY_URL;
 
   return (
-    <Box key="Apollopedia" borderBottomWidth="1px" pb="16px">
-      <Flex align="center" p="2" pr="0">
-        <Heading size="sm">Glossary</Heading>
+    <Flex borderLeftWidth="1px" direction="column" pos="relative">
+      <Flex align="center" p="2">
+        <Heading size="sm">Content preview</Heading>
         <Box borderBottomWidth="1px" flexGrow="1" ml="2" />
       </Flex>
-      <Flex p="2">
-        <Box mr="3" fontSize="xl" color="primary" flexShrink="0">
-          <Icon as={RepositoryIcon} />
-        </Box>
-        <Box lineHeight="shorter" w="0" flexGrow="1">
-          <Box>
-            <Highlight value={item._highlightResult.term.value} />
+      <Box px="5">
+        <Flex my="5">
+          <Box fontSize="2xl" color="primary">
+            <Icon as={RepositoryIcon} />
           </Box>
-          <Markdown
-            components={{
-              p: DefinitionText,
-              a: PrimaryLink,
-              code: InlineCode
-            }}
-          >
-            {stripCodeExample(item.definition)}
-          </Markdown>
+          <Heading ml="2" size="md">
+            Glossary
+          </Heading>
+        </Flex>
+
+        <Box>
           <PrimaryLink
-            aria-label="Go to the glossary"
+            color="text"
             as="a"
             href={`${host}/resources/glossary#${makeGlossaryTermId(item.term)}`}
-            mt="12px"
-            style={{display: 'flex', alignItems: 'center'}}
           >
-            {item.definition === stripCodeExample(item.definition)
-              ? 'Go to the glossary ⏎'
-              : 'Explore an example in the glossary ⏎'}
+            <Highlight value={item._highlightResult.term.value} />
           </PrimaryLink>
         </Box>
-      </Flex>
-    </Box>
+        <Markdown
+          components={{
+            p: DefinitionText,
+            a: PrimaryLink,
+            code: InlineCode
+          }}
+        >
+          {stripCodeExample(item.definition)}
+        </Markdown>
+        <PrimaryLink
+          aria-label="Go to the glossary"
+          as="a"
+          href={`${host}/resources/glossary#${makeGlossaryTermId(item.term)}`}
+          mt="12px"
+          style={{display: 'flex', alignItems: 'center'}}
+        >
+          {item.definition === stripCodeExample(item.definition)
+            ? 'Go to the term in the glossary ⏎'
+            : 'Explore an example in the glossary ⏎'}
+        </PrimaryLink>
+      </Box>
+    </Flex>
   );
 }
 
-GlossaryResult.propTypes = {
+GlossaryPreview.propTypes = {
   item: PropTypes.object.isRequired
 };

@@ -15,8 +15,8 @@ import {createAutocomplete} from '@algolia/autocomplete-core';
 import {getAlgoliaResults} from '@algolia/autocomplete-preset-algolia';
 
 const SOURCES = {
+  [APOLLOPEDIA_INDEX]: 'Glossary',
   [DOCS_INDEX]: 'Documentation',
-  [APOLLOPEDIA_INDEX]: 'Apollopedia',
   blog: 'Blog',
   odyssey: 'Odyssey',
   [QUERY_SUGGESTIONS_INDEX]: "Can't find what you're looking for?"
@@ -98,7 +98,7 @@ export default function Autocomplete({onClose, optionalFilters}) {
                       hitsPerPage: !index
                         ? 8
                         : indexName === APOLLOPEDIA_INDEX
-                        ? 10
+                        ? 2
                         : indexName === QUERY_SUGGESTIONS_INDEX
                         ? 4
                         : 2,

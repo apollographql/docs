@@ -6,7 +6,7 @@ import {Box, Flex, chakra, useColorMode} from '@chakra-ui/react';
 import {ChevronRightIcon} from '../Icons';
 
 export default function Result({item, ...props}) {
-  const {text, title, sectionTitle, description} = item._highlightResult;
+  const {text, title, sectionTitle, description, term} = item._highlightResult;
   const {'aria-selected': isSelected} = props;
 
   const {colorMode} = useColorMode();
@@ -25,7 +25,7 @@ export default function Result({item, ...props}) {
         </Box>
         <Box lineHeight="shorter" w="0" flexGrow="1">
           <Box fontWeight="medium">
-            <Highlight value={title.value} />
+            <Highlight value={title ? title.value : term.value} />
           </Box>
           {sectionTitle && sectionTitle.matchedWords.length > 0 && (
             <Box my="1" display="flex">
@@ -41,7 +41,13 @@ export default function Result({item, ...props}) {
             }}
             isTruncated
           >
-            <Highlight value={(text || description).value} />
+            <Highlight
+              value={
+                text || description
+                  ? (text || description).value
+                  : item.definition
+              }
+            />
           </Box>
         </Box>
         <Box
