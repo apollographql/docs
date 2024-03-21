@@ -80,6 +80,15 @@ function useLinkProps(href) {
   const isExternal = isUrl(href);
   const isHash = href.startsWith('#');
   const isFile = /\.[a-z]+$/.test(href);
+  if (
+    isExternal &&
+    href.startsWith('https://www.apollographql.com/') &&
+    !href.includes('referrer')
+  ) {
+    href += href.includes('?')
+      ? '&referrer=docs-content'
+      : '?referrer=docs-content';
+  }
   if (isExternal || isHash || isFile) {
     return {
       href,
