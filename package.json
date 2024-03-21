@@ -91,6 +91,7 @@
     "react-instantsearch": "^7.3.0",
     "react-instantsearch-dom": "^6.40.4",
     "react-markdown": "^8.0.0",
+    "react-medium-image-zoom": "^5.1.10",
     "react-player": "^2.10.1",
     "react-use": "^17.3.2",
     "rehype": "^12.0.0",

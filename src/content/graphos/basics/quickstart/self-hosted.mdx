@@ -441,7 +441,7 @@ The exact details for deploying the router depend on which platform you use, but
 3. Set the `APOLLO_KEY` and `APOLLO_GRAPH_REF` environment variables in the router's deployment environment, as we did locally in [this step](#6-connect-the-router-to-graphos).
     - Keep in mind that `APOLLO_KEY` is a secret, so use an appropriate mechanism for storing it in your deployment environment.
 
-4. If your platform expects the router to listen on a particular port, set this port in the [`router.yaml`](https://github.com/dbanty/enterprise-router-test/blob/main/router.yaml) file included with the template:
+4. If your platform expects the router to listen on a particular port, set this port in the `router.yaml` file included with the template:
 
     ```yaml title="router.yaml"
     supergraph:

@@ -1,3 +1,4 @@
+import '../assets/image-zoom.css';
 import * as sharedContent from '../content/shared';
 import Blockquote from './Blockquote';
 import CodeColumns from './CodeColumns';
@@ -9,13 +10,7 @@ import InlineCode from './InlineCode';
 import Pagination from './Pagination';
 import Prism from 'prismjs';
 import PropTypes from 'prop-types';
-import React, {
-  Fragment,
-  createElement,
-  useCallback,
-  useMemo,
-  useState
-} from 'react';
+import React, {Fragment, createElement, useMemo, useState} from 'react';
 import RelativeLink, {ButtonLink, PrimaryLink} from './RelativeLink';
 import RuleExpansionPanel from './RuleExpansionPanel';
 import TableOfContents from './TableOfContents';
@@ -23,6 +18,7 @@ import TrackableButton from './TrackableButton';
 import TrackableLink from './TrackableLink';
 import TypeScriptApiBox from './TypeScriptApiBox';
 import VersionBanner from './VersionBanner';
+import Zoom from 'react-medium-image-zoom';
 import autolinkHeadings from 'rehype-autolink-headings';
 import rehypeReact from 'rehype-react';
 import useLocalStorage from 'react-use/lib/useLocalStorage';
@@ -200,6 +196,13 @@ const components = {
     />
   ),
   blockquote: Blockquote,
+  img: props => {
+    return (
+      <Zoom>
+        <img {...props} />
+      </Zoom>
+    );
+  },
   undefined: Fragment // because remark-a11y-emoji adds <undefined> around stuff
 };
 
