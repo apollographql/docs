@@ -49,6 +49,9 @@ function getHitsPerPage(indexName, queryLength) {
   switch (indexName) {
     case QUERY_SUGGESTIONS_INDEX:
       return 4;
+    case DOCS_INDEX:
+      if (queryLength > 0) return 2;
+      else return 8;
     case APOLLOPEDIA_INDEX:
       if (queryLength > 0) return 2;
       else return 0;
