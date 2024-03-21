@@ -39,13 +39,12 @@ export default function Preview({preview}) {
   const {
     url,
     type,
-    title,
-    term,
     docset,
     categories,
     sectionTitle,
     ancestors = [],
     _snippetResult,
+    _highlightResult,
     __autocomplete_indexName
   } = preview;
 
@@ -79,28 +78,40 @@ export default function Preview({preview}) {
               : `${getDocsetTitle(docset)} docs`}
           </Heading>
         </Flex>
-        <Heading size="md" mb="2">
-          <Link href={url}>{title ? title : term}</Link>
-        </Heading>
+        <Text fontSize="lg" fontWeight="medium" mb="2">
+          <Link href={url}>
+            <Highlight
+              value={
+                _highlightResult.title
+                  ? _highlightResult.title.value
+                  : _highlightResult.term.value
+              }
+            />
+          </Link>
+        </Text>
         {allAncestors.length > 0 && (
           <HStack
             as="nav"
             aria-label="Breadcrumb"
             mb="2"
-            px="2"
+            pr="2"
             rounded="sm"
             spacing="1"
-            whiteSpace="nowrap"
-            maxW="full"
+            wrap="wrap"
           >
             {allAncestors.map((ancestor, index) => (
               <Fragment key={index}>
                 {index > 0 && <Box as={ChevronRightIcon} flexShrink="0" />}
-                <Heading size="sm">
+                <Text fontSize="md" fontWeight="medium">
                   <Link isTruncated href={ancestor.url} title={ancestor.title}>
-                    {ancestor.title}
+                    {ancestor.title === sectionTitle &&
+                    _highlightResult.sectionTitle ? (
+                      <Highlight value={_highlightResult.sectionTitle.value} />
+                    ) : (
+                      ancestor.title
+                    )}
                   </Link>
-                </Heading>
+                </Text>
               </Fragment>
             ))}
           </HStack>
