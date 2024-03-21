@@ -13,6 +13,7 @@ import {
   Img,
   Link,
   Tag,
+  TagLabel,
   Text,
   useColorModeValue
 } from '@chakra-ui/react';
@@ -44,8 +45,7 @@ export default function Preview({preview}) {
     sectionTitle,
     ancestors = [],
     _snippetResult,
-    _highlightResult,
-    __autocomplete_indexName
+    _highlightResult
   } = preview;
 
   const allAncestors = sectionTitle
@@ -122,25 +122,19 @@ export default function Preview({preview}) {
           </Text>
         )}
         {categories && (
-          <HStack mt="4">
+          <Flex mt="4" flexWrap="wrap">
             {categories.map((category, index) => (
-              <Tag variant="outline" colorScheme="navy" key={index}>
-                {category}
+              <Tag
+                variant="outline"
+                colorScheme="navy"
+                key={index}
+                mb="2"
+                mr="2"
+              >
+                <TagLabel>{category}</TagLabel>
               </Tag>
             ))}
-          </HStack>
-        )}
-        {__autocomplete_indexName === 'apollopedia' && (
-          <Link
-            aria-label="Go to the glossary"
-            fontWeight="medium"
-            as="a"
-            href={url}
-            mt="12px"
-            style={{display: 'flex', alignItems: 'center'}}
-          >
-            Go to the term in the glossary ⏎
-          </Link>
+          </Flex>
         )}
       </Box>
       <Img
