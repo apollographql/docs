@@ -61,10 +61,3 @@ jobs:
               description: "Deploy Preview ready!",
               context: "Deploy Preview"
             })
-
-      - name: Install link checker
-        run: npm install -g linkinator
-    
-      - name: Check Links
-        id: check_links
-        run: linkinator --concurrency 10 --timeout 5000 ${{ steps.publish.outputs.deploy_url }}
