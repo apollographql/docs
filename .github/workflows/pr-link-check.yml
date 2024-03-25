@@ -1,4 +1,4 @@
-name: Check docs links
+name: Check PR links
 
 on: [pull_request]
 
@@ -6,7 +6,7 @@ env:
   DEPLOY_PREVIEW_URL: https://deploy-preview-${{ github.event.number }}--apollo-monodocs.netlify.app/
 
 jobs:
-  link_check:
+  pr-link-check:
     runs-on: ubuntu-latest
     steps:
       - name: Wait for deploy preview rebuild
