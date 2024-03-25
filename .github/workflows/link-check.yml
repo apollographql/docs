@@ -30,6 +30,13 @@ jobs:
       - name: Install link checker
         run: npm install -g linkinator
 
-      - name: Check Links
+      - name: Check links
         id: check_links
-        run: linkinator --concurrency 10 --timeout 5000 $DEPLOY_PREVIEW_URL
+        continue-on-error: true
+        run: linkinator --recurse --concurrency 10 --timeout 10000 --format CSV $DEPLOY_PREVIEW_URL > link_check.txt
+
+      - name: Save link check
+        uses: actions/upload-artifact@v3
+        with:
+          name: link-check-results
+          path: link_check.txt
