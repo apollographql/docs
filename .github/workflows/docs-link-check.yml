@@ -2,7 +2,7 @@ name: Check Apollo docs links
 
 on:
   schedule:
-    - cron: '0 5 * * 0' # Weekly on Sunday 5AM UTC 
+    - cron: '0 23 * * *' # Weekly on Sunday 5AM UTC 
   
 jobs:
   docs-link-check:
