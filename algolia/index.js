@@ -5,6 +5,51 @@ const {
   getMdxHeading,
   getChildrenText
 } = require('apollo-algolia-transform');
+const {BetaAnalyticsDataClient} = require('@google-analytics/data');
+
+const analyticsDataClient = new BetaAnalyticsDataClient({});
+
+const runReport = async () => {
+  const [response] = await analyticsDataClient.runReport({
+    property: 'properties/363627814',
+    dateRanges: [
+      {
+        startDate: '2024-01-01',
+        endDate: 'today'
+      }
+    ],
+    dimensions: [
+      {
+        name: 'pagePath'
+      }
+    ],
+    metrics: [
+      {
+        name: 'screenPageViews'
+      }
+    ]
+  });
+
+  const report = {};
+
+  for (const row of response.rows) {
+    const pagePathWithoutHash = decodeURIComponent(
+      row.dimensionValues[0].value
+    ).split('#')[0];
+
+    const pageViews = Number(row.metricValues[0].value);
+    if (pagePathWithoutHash in report) {
+      report[pagePathWithoutHash] += pageViews;
+      continue;
+    }
+
+    report[pagePathWithoutHash] = pageViews;
+  }
+
+  console.log(report);
+};
+
+runReport();
 
 function getMdHeading(child) {
   if (child.type === 'element') {
