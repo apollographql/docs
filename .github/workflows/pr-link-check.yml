@@ -1,0 +1,42 @@
+name: Check PR links
+
+on: [pull_request]
+
+env:
+  DEPLOY_PREVIEW_URL: https://deploy-preview-${{ github.event.number }}--apollo-monodocs.netlify.app/
+
+jobs:
+  pr-link-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for deploy preview rebuild
+        id: wait-deploy-preview
+        run: |
+          max_iters=12
+          counter=0
+          while [[ $counter -lt $max_iters ]]; do
+            sleep 60
+            response=$(curl -s -o /dev/null -w "%{http_code}" "$DEPLOY_PREVIEW_URL")
+            if [[ $response =~ ^[23] ]]; then
+              echo "$DEPLOY_PREVIEW_URL is accessible ($response)"
+              exit 0
+            fi
+            echo "Waiting for $DEPLOY_PREVIEW_URL ($response)"
+            counter=$((counter+1))
+          done
+          echo "Timeout reached. $DEPLOY_PREVIEW_URL is not accessible."
+          exit 1
+
+      - name: Install link checker
+        run: npm install -g linkinator
+
+      - name: Check links
+        id: check_links
+        continue-on-error: true
+        run: linkinator --recurse --concurrency 10 --timeout 10000 --format CSV $DEPLOY_PREVIEW_URL > link_check.txt
+
+      - name: Save link check
+        uses: actions/upload-artifact@v3
+        with:
+          name: link-check-results
+          path: link_check.txt
