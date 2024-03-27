@@ -14,7 +14,7 @@ export const PrimaryLink = props => {
       fontWeight="medium"
       fontSize="inherit"
       _hover={{color: 'link'}}
-      display="inline-flex"
+      display="inline"
       alignItems="center"
       whiteSpace="initial"
       wordBreak="break-word"
@@ -25,11 +25,11 @@ export const PrimaryLink = props => {
       }}
       {...props}
     >
-      <Box whiteSpace="initial" wordBreak="break-word">
+      <Box whiteSpace="initial" wordBreak="break-word" display="inline">
         {props.children}
       </Box>
       {opensNewTab && (
-        <Box marginLeft="5px">
+        <Box marginLeft="5px" display="inline-flex">
           <OutlinkSmallIcon />
         </Box>
       )}
