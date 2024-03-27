@@ -3,6 +3,7 @@ name: Check Apollo docs links
 on:
   schedule:
     - cron: '50 * * * *'  
+  workflow_dispatch:
   
 jobs:
   docs-link-check:
@@ -11,15 +12,15 @@ jobs:
       - name: Install link checker
         run: npm install -g linkinator
 
-      - name: Check links
-        id: check_links
+      - name: Check docs links
+        id: check_docs_links
         continue-on-error: true
         # Check non-SDK, non-GitHub links
         run: |
           linkinator --recurse --timeout 10000 --skip "https://(www\.)?apollographql.com/docs/(react|ios|kotlin|apollo\-server)/*" --skip "https://github.com/*" --format CSV https://apollographql.com/docs > docs_link_check.txt
 
-      - name: Save link check
+      - name: Save docs link check
         uses: actions/upload-artifact@v3
         with:
-          name: link-check-results
+          name: docs-link-check-results
           path: docs_link_check.txt
