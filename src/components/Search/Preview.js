@@ -13,8 +13,8 @@ import {
   Img,
   Link,
   Tag,
+  TagLabel,
   Text,
-  chakra,
   useColorModeValue
 } from '@chakra-ui/react';
 import {ChevronRightIcon} from '../Icons';
@@ -40,12 +40,12 @@ export default function Preview({preview}) {
   const {
     url,
     type,
-    title,
     docset,
     categories,
     sectionTitle,
     ancestors = [],
-    _snippetResult
+    _snippetResult,
+    _highlightResult
   } = preview;
 
   const allAncestors = sectionTitle
@@ -68,40 +68,50 @@ export default function Preview({preview}) {
           <Box fontSize="2xl" color="primary">
             <ResultIcon result={preview} />
           </Box>
-          <chakra.span ml="2">
+          <Heading ml="2" size="md">
             {!docset
-              ? upperFirst(type)
+              ? !type
+                ? 'Glossary'
+                : upperFirst(type)
               : docset === 'technotes'
               ? 'Tech notes'
               : `${getDocsetTitle(docset)} docs`}
-          </chakra.span>
+          </Heading>
         </Flex>
-
-        <Heading size="md" mb="2">
-          <Link href={url}>{title}</Link>
-        </Heading>
+        <Text fontSize="lg" fontWeight="medium" mb="2">
+          <Link href={url}>
+            <Highlight
+              value={
+                _highlightResult.title
+                  ? _highlightResult.title.value
+                  : _highlightResult.term.value
+              }
+            />
+          </Link>
+        </Text>
         {allAncestors.length > 0 && (
           <HStack
             as="nav"
             aria-label="Breadcrumb"
             mb="2"
-            px="2"
+            pr="2"
             rounded="sm"
-            fontSize="sm"
-            bg="gray.100"
-            _dark={{
-              bg: 'gray.800'
-            }}
             spacing="1"
-            whiteSpace="nowrap"
-            maxW="full"
+            wrap="wrap"
           >
             {allAncestors.map((ancestor, index) => (
               <Fragment key={index}>
                 {index > 0 && <Box as={ChevronRightIcon} flexShrink="0" />}
-                <Link isTruncated href={ancestor.url} title={ancestor.title}>
-                  {ancestor.title}
-                </Link>
+                <Text fontSize="md" fontWeight="medium">
+                  <Link isTruncated href={ancestor.url} title={ancestor.title}>
+                    {ancestor.title === sectionTitle &&
+                    _highlightResult.sectionTitle ? (
+                      <Highlight value={_highlightResult.sectionTitle.value} />
+                    ) : (
+                      ancestor.title
+                    )}
+                  </Link>
+                </Text>
               </Fragment>
             ))}
           </HStack>
@@ -112,13 +122,19 @@ export default function Preview({preview}) {
           </Text>
         )}
         {categories && (
-          <HStack mt="4">
+          <Flex mt="4" flexWrap="wrap">
             {categories.map((category, index) => (
-              <Tag variant="outline" colorScheme="navy" key={index}>
-                {category}
+              <Tag
+                variant="outline"
+                colorScheme="navy"
+                key={index}
+                mb="2"
+                mr="2"
+              >
+                <TagLabel>{category}</TagLabel>
               </Tag>
             ))}
-          </HStack>
+          </Flex>
         )}
       </Box>
       <Img

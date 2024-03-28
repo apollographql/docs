@@ -15,8 +15,8 @@ import {createAutocomplete} from '@algolia/autocomplete-core';
 import {getAlgoliaResults} from '@algolia/autocomplete-preset-algolia';
 
 const SOURCES = {
+  [APOLLOPEDIA_INDEX]: 'Glossary',
   [DOCS_INDEX]: 'Documentation',
-  [APOLLOPEDIA_INDEX]: 'Apollopedia',
   blog: 'Blog',
   odyssey: 'Odyssey',
   [QUERY_SUGGESTIONS_INDEX]: "Can't find what you're looking for?"
@@ -42,6 +42,21 @@ function getEventName(index) {
       return 'Apollopedia term selected from Apollopedia index';
     default:
       return 'Article selected from Autocomplete';
+  }
+}
+
+function getHitsPerPage(indexName, queryLength) {
+  switch (indexName) {
+    case QUERY_SUGGESTIONS_INDEX:
+      return 4;
+    case DOCS_INDEX:
+      if (queryLength > 0) return 2;
+      else return 8;
+    case APOLLOPEDIA_INDEX:
+      if (queryLength > 0) return 2;
+      else return 0;
+    default:
+      return 2;
   }
 }
 
@@ -81,7 +96,7 @@ export default function Autocomplete({onClose, optionalFilters}) {
         plugins: [algoliaInsightsPlugin],
         onStateChange: ({state}) => setAutocompleteState(state),
         getSources: () =>
-          Object.keys(SOURCES).map((indexName, index) => ({
+          Object.keys(SOURCES).map(indexName => ({
             sourceId: indexName,
             getItemUrl: ({item}) => item.url,
             getItemInputValue: ({item}) => item.query,
@@ -94,14 +109,10 @@ export default function Autocomplete({onClose, optionalFilters}) {
                     query,
                     params: {
                       optionalFilters,
+                      filters:
+                        indexName === 'apollopedia' ? 'internalOnly:false' : '',
                       clickAnalytics: true,
-                      hitsPerPage: !index
-                        ? 8
-                        : indexName === APOLLOPEDIA_INDEX
-                        ? 10
-                        : indexName === QUERY_SUGGESTIONS_INDEX
-                        ? 4
-                        : 2,
+                      hitsPerPage: getHitsPerPage(indexName, query.length),
                       highlightPreTag: '<mark>',
                       highlightPostTag: '</mark>'
                     }

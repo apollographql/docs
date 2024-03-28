@@ -3,18 +3,30 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import ResultIcon from './ResultIcon';
 import {Box, Flex, chakra, useColorMode} from '@chakra-ui/react';
+import {ChevronRightIcon} from '../Icons';
+import {makeGlossaryTermId} from '../GlossaryPage/Results';
 
 export default function Result({item, ...props}) {
-  const {text, title, description} = item._highlightResult;
+  const {text, title, sectionTitle, description, term} = item._highlightResult;
   const {'aria-selected': isSelected} = props;
 
   const {colorMode} = useColorMode();
   const activeBg = colorMode === 'light' ? 'silver.400' : 'navy.400';
 
-  const url =
-    item.__autocomplete_indexName === 'staging_docs'
-      ? new URL(item.slug, process.env.DEPLOY_URL).toString()
-      : item.url;
+  let {url} = item;
+
+  switch (item.__autocomplete_indexName) {
+    case 'staging_docs':
+      url = new URL(item.slug, process.env.DEPLOY_URL).toString();
+      break;
+    case 'apollopedia':
+      url = new URL(
+        `/resources/glossary#${makeGlossaryTermId(item.term)}`,
+        process.env.DEPLOY_URL
+      ).toString();
+      break;
+    default:
+  }
 
   return (
     <chakra.li bg={isSelected && activeBg} {...props}>
@@ -23,9 +35,15 @@ export default function Result({item, ...props}) {
           <ResultIcon result={item} />
         </Box>
         <Box lineHeight="shorter" w="0" flexGrow="1">
-          <Box>
-            <Highlight value={title.value} />
+          <Box fontWeight="medium">
+            <Highlight value={title ? title.value : term.value} />
           </Box>
+          {sectionTitle && sectionTitle.matchedWords.length > 0 && (
+            <Box my="1" display="flex">
+              <Box as={ChevronRightIcon} flexShrink="0" />
+              <Highlight value={sectionTitle.value} />
+            </Box>
+          )}
           <Box
             fontSize="sm"
             color="gray.500"
