@@ -14,8 +14,6 @@ export default function ResultIcon({result}) {
   if (type === undefined && result.term !== undefined) {
     type = 'apollopedia';
   }
-  console.log(type, docset);
-
   switch (type) {
     case 'docs':
       if (docset in DOCSET_ICONS) {

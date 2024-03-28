@@ -2,6 +2,7 @@ import Preview from './Preview';
 import PropTypes from 'prop-types';
 import React, {useRef} from 'react';
 import Result from './Result';
+import pluralize from 'pluralize';
 import {
   Box,
   Button,
@@ -44,20 +45,26 @@ export default function Panel({sources, autocomplete, autocompleteState}) {
                   )}
                   {source.sourceId === QUERY_SUGGESTIONS_INDEX ? (
                     <Wrap px="2">
-                      {items.map(item => (
-                        <WrapItem key={item.objectID}>
-                          <Button
-                            variant="outline"
-                            onClick={() => {
-                              autocomplete.setQuery(item.query);
-                              autocomplete.refresh();
-                              scrollArea.current.scrollTo({top: 0});
-                            }}
-                          >
-                            {item.query}
-                          </Button>
-                        </WrapItem>
-                      ))}
+                      {items
+                        .filter(
+                          item =>
+                            pluralize(item.query) !==
+                            pluralize(autocompleteState.query)
+                        )
+                        .map(item => (
+                          <WrapItem key={item.objectID}>
+                            <Button
+                              variant="outline"
+                              onClick={() => {
+                                autocomplete.setQuery(item.query);
+                                autocomplete.refresh();
+                                scrollArea.current.scrollTo({top: 0});
+                              }}
+                            >
+                              {item.query}
+                            </Button>
+                          </WrapItem>
+                        ))}
                     </Wrap>
                   ) : (
                     <ul {...autocomplete.getListProps()}>
