@@ -1,40 +1,39 @@
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
-import {Button, Link} from '@chakra-ui/react';
+import {Box, Button, Link} from '@chakra-ui/react';
 import {Link as GatsbyLink, graphql, useStaticQuery} from 'gatsby';
 import {OutlinkSmallIcon} from './Icons';
 import {PathContext, isUrl} from '../utils';
 import {isAbsolute, resolve} from 'path';
 
 export const PrimaryLink = props => {
-  return props?.target === '_blank' ? (
-    <ButtonLink
-      variant="link"
+  const opensNewTab = props?.target === '_blank';
+  return (
+    <Link
       color="tertiary"
       fontWeight="medium"
       fontSize="inherit"
       _hover={{color: 'link'}}
-      iconSpacing="5px"
-      marginRight="5px"
+      display="inline"
+      alignItems="center"
+      whiteSpace="initial"
+      wordBreak="break-word"
       sx={{
         code: {
           color: 'inherit'
         }
       }}
       {...props}
-    />
-  ) : (
-    <Link
-      color="tertiary"
-      fontWeight="medium"
-      _hover={{color: 'link'}}
-      sx={{
-        code: {
-          color: 'inherit'
-        }
-      }}
-      {...props}
-    />
+    >
+      <Box whiteSpace="initial" wordBreak="break-word" display="inline">
+        {props.children}
+      </Box>
+      {opensNewTab && (
+        <Box marginLeft="5px" display="inline-flex">
+          <OutlinkSmallIcon />
+        </Box>
+      )}
+    </Link>
   );
 };
 
