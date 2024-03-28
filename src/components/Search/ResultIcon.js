@@ -1,6 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {BookIcon, DOCSET_ICONS, OdysseyIcon, RepositoryIcon} from '../Icons';
+import {
+  BookIcon,
+  DOCSET_ICONS,
+  OdysseyIcon,
+  RepositoryIcon,
+  TechnotesIcon
+} from '../Icons';
 
 export default function ResultIcon({result}) {
   let {type} = result;
@@ -8,6 +14,7 @@ export default function ResultIcon({result}) {
   if (type === undefined && result.term !== undefined) {
     type = 'apollopedia';
   }
+  console.log(type, docset);
 
   switch (type) {
     case 'docs':
@@ -22,6 +29,7 @@ export default function ResultIcon({result}) {
     case 'odyssey':
       return <OdysseyIcon />;
     default:
+      return <TechnotesIcon />;
   }
 
   return DOCSET_ICONS.default;
