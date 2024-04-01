@@ -85,7 +85,7 @@ CustomIcon.propTypes = {
 };
 
 export const ApolloKotlinIcon = () => <CustomIcon icon={Kotlin} />;
-export const ApolloMarkIcon = () => <CustomIcon icon={ApolloMark} />;
+export const ApolloMarkIcon = () => <CustomIcon icon={ApolloMark} isSolid />;
 export const ApolloClientIcon = () => <CustomIcon icon={ReactIcon} />;
 export const ApolloIOSIcon = () => <CustomIcon icon={Swift} />;
 export const ApolloServerIcon = () => <CustomIcon icon={Satellite} />;
@@ -165,6 +165,7 @@ export const DOCSET_ICONS = {
   'apollo-ios-dev': <ApolloIOSIcon />,
   'apollo-kotlin': <ApolloKotlinIcon />,
   'apollo-server': <ApolloServerIcon />,
+  community: <ApolloMarkIcon />,
   connectors: <ConnectorsIcon />,
   federation: <FederationIcon />,
   graphos: <GraphOSIcon />,
