@@ -33,17 +33,21 @@ const runReport = async () => {
   const report = {};
 
   for (const row of response.rows) {
-    const pagePathWithoutHash = decodeURIComponent(
-      row.dimensionValues[0].value
-    ).split('#')[0];
+    const pagePath = row.dimensionValues[0].value;
+    try {
+      const url = new URL(decodeURIComponent(pagePath), 'https://foo.bar');
+      const normalizedPathPath = url.pathname.replace(/\/$/, '');
 
-    const pageViews = Number(row.metricValues[0].value);
-    if (pagePathWithoutHash in report) {
-      report[pagePathWithoutHash] += pageViews;
-      continue;
+      const pageViews = Number(row.metricValues[0].value);
+      if (normalizedPathPath in report) {
+        report[normalizedPathPath] += pageViews;
+        continue;
+      }
+
+      report[normalizedPathPath] = pageViews;
+    } catch {
+      // do nothing
     }
-
-    report[pagePathWithoutHash] = pageViews;
   }
 
   console.log(report);
