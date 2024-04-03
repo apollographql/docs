@@ -10,6 +10,8 @@ const {BetaAnalyticsDataClient} = require('@google-analytics/data');
 const analyticsDataClient = new BetaAnalyticsDataClient({});
 
 const runReport = async () => {
+  // TODO: fetch all pages of data
+  // TODO: expand date range?
   const [response] = await analyticsDataClient.runReport({
     property: 'properties/363627814',
     dateRanges: [
@@ -50,10 +52,8 @@ const runReport = async () => {
     }
   }
 
-  console.log(report);
+  return report;
 };
-
-runReport();
 
 function getMdHeading(child) {
   if (child.type === 'element') {
@@ -95,11 +95,7 @@ async function transformer({data}) {
     };
   }, {});
 
-  // let allGAData = {};
-  // if (process.env.NODE_ENV !== 'test') {
-  //   const metricsFetcher = new MetricsFetcher({viewId: '163147389'});
-  //   allGAData = await metricsFetcher.fetchAll();
-  // }
+  const report = await runReport();
 
   const allPages = allMarkdownRemark.nodes.concat(allMdx.nodes);
   const records = allPages
@@ -155,7 +151,7 @@ async function transformer({data}) {
           type: 'docs',
           docset,
           slug,
-          // pageviews: allGAData[url]?.[METRICS.uniquePageViews] || 0,
+          pageviews: report[slug] ?? 0,
           categories
         }
       });
