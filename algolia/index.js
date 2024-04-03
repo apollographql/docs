@@ -7,7 +7,12 @@ const {
 } = require('apollo-algolia-transform');
 const {BetaAnalyticsDataClient} = require('@google-analytics/data');
 
-const analyticsDataClient = new BetaAnalyticsDataClient({});
+const analyticsDataClient = new BetaAnalyticsDataClient({
+  credentials: {
+    private_key: process.env.GA_PRIVATE_KEY,
+    client_email: 'ga-algolia-connect@odyssey-ga.iam.gserviceaccount.com'
+  }
+});
 
 const runReport = async () => {
   // TODO: fetch all pages of data
