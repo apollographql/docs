@@ -64,7 +64,7 @@ import {EnterpriseFeature} from './EnterpriseFeature';
 import {ExperimentalFeature} from './ExperimentalFeature';
 import {Link as GatsbyLink} from 'gatsby';
 import {Global} from '@emotion/react';
-import {HighlightKeyTerms} from '@apollo/pedia';
+import {HighlightKeyTerms, KeyTermsProvider} from '@apollo/pedia';
 import {MDXProvider} from '@mdx-js/react';
 import {MDXRenderer} from 'gatsby-plugin-mdx';
 import {MinVersion} from './MinVersion';
@@ -573,15 +573,17 @@ export default function Page({file}) {
           ) : null
         }
       >
-        <MultiCodeBlockContext.Provider value={{language, setLanguage}}>
-          {childMdx ? (
-            <MDXProvider components={mdxComponents}>
-              <MDXRenderer>{childMdx.body}</MDXRenderer>
-            </MDXProvider>
-          ) : (
-            processSync(childMarkdownRemark.html).result
-          )}
-        </MultiCodeBlockContext.Provider>
+        <KeyTermsProvider>
+          <MultiCodeBlockContext.Provider value={{language, setLanguage}}>
+            {childMdx ? (
+              <MDXProvider components={mdxComponents}>
+                <MDXRenderer>{childMdx.body}</MDXRenderer>
+              </MDXProvider>
+            ) : (
+              processSync(childMarkdownRemark.html).result
+            )}
+          </MultiCodeBlockContext.Provider>
+        </KeyTermsProvider>
       </PageContent>
       <HStack
         justify="flex-end"
