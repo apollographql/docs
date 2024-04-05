@@ -46,6 +46,7 @@ Gradle
 Grafana
 gzipped
 heatmaps?
+IdP(')?(s)?
 [Ii]nitialisms?
 [Ii]nline(d)?
 [Jj]etpack
@@ -90,6 +91,7 @@ preprod
 protobuf
 READMEs?
 Recurly
+[Rr]eauthenticat(e|ed|ing)?
 [Rr]elicensing
 [Rr]escan
 repo
