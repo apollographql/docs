@@ -1,0 +1,72 @@
+---
+title: Multi-organization SSO
+subtitle: Share SSO configurations between organizations
+---
+
+<EnterpriseFeature>
+
+Single sign-on (SSO) is available only for [Enterprise plans](https://www.apollographql.com/pricing/).
+
+Unlike most Enterprise features, this feature isn't available as part of an Enterprise trial.
+
+</EnterpriseFeature>
+
+<PreviewFeature>
+
+This feature is in invite-only [preview](/resources/product-launch-stages#preview). Please get in touch with your Apollo contact if you'd like to request access.
+
+</PreviewFeature>
+
+GraphOS organizations can share the same SSO configuration so that members can switch between them in GraphOS Studio without having to reauthenticate.
+To share SSO configurations, organizations must first configure [self-serve SSO](./self-serve).
+
+## Switching between organizations
+
+You can switch between any organizations you have access to by clicking the organization name in the top left of GraphOS Studio.
+For an organization to appear in your organization list, you must first log into that organization.
+
+## Logging in to an multi-org SSO organization
+
+To authenticate access to an organization with a shared SSO configuration, you must first log in to it using one of these identity provider (IdP) initiated methods:
+
+- Via IdP application portal (recommended)
+- Via IdP-generated link
+- Via Apollo-generated link
+
+<Note>
+
+While multi-organization SSO is in [preview](resources/product-launch-stages/#preview), all members of an organization with multi-org SSO configured must log in from their IdP. If they try to login on `studio.apollographql.com/login`, they will be receive an error message to log in via IdP.
+
+</Note>
+
+### Log in via IdP application portal
+
+<Tip>
+
+Apollo recommends application portals as the most direct way for organization members to authenticate access.
+
+</Tip>
+
+Many IdPs provide a user-facing page where you can see which applications you are assigned to. Different GraphOS organizations appear as separate applications and you can log in to each one by clicking the organization tile.
+
+<img
+  src="../../img/sso/okta-application-portal.jpg"
+  alt="Okta application portal"
+  width="500"
+  className="screenshot"
+/>
+
+For example, the screenshot above shows separate application tiles for the **Apollo GraphOS (Organization 1)** and **Apollo GraphOS (Organization 2)**.
+
+### Log in via IdP-generated link
+
+Many IdPs provide a method to generate login links—sometimes called "magic links." These can be provided directly to team members or stored in an internal wiki or document for easy access. Login link creation often requires admin permissions in an IdP. Consult your IdP's documentation for instructions.
+
+### Log in via Apollo-generated link
+
+Apollo can also generate login links on request. Please get in touch with your Apollo contact to request a magic link. Be sure to include the organization(s) you want link(s) for.
+
+## Preview limitations
+
+While this feature is in [preview](/resources/product-launch-stages#preview), members can only log in with identity provider (IdP) initiated SSO.
+When in [GA](/resources/product-launch-stages#general-availability), it will also support service-provider (SP) initiated SSO.
