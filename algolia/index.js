@@ -14,17 +14,21 @@ const analyticsDataClient = new BetaAnalyticsDataClient({
   }
 });
 
-const runReport = async () => {
-  // TODO: fetch all pages of data
-  // TODO: expand date range?
+// set the start date to 6 months ago
+const date = new Date();
+date.setMonth(date.getMonth() - 6);
+const startDate = date.toISOString().split('T').shift();
+
+const fetchReport = async (offset = 0) => {
   const [response] = await analyticsDataClient.runReport({
     property: 'properties/363627814',
     dateRanges: [
       {
-        startDate: '2024-01-01',
+        startDate,
         endDate: 'today'
       }
     ],
+    offset,
     dimensions: [
       {
         name: 'pagePath'
@@ -37,24 +41,41 @@ const runReport = async () => {
     ]
   });
 
+  return response;
+};
+
+const runReport = async () => {
   const report = {};
 
-  for (const row of response.rows) {
-    const pagePath = row.dimensionValues[0].value;
-    try {
-      const url = new URL(decodeURIComponent(pagePath), 'https://foo.bar');
-      const normalizedPathPath = url.pathname.replace(/\/$/, '');
+  let fetchedRows = 0;
+  let response = await fetchReport();
 
-      const pageViews = Number(row.metricValues[0].value);
-      if (normalizedPathPath in report) {
-        report[normalizedPathPath] += pageViews;
-        continue;
+  while (fetchedRows < response.rowCount) {
+    for (const row of response.rows) {
+      const pagePath = row.dimensionValues[0].value;
+      try {
+        const url = new URL(decodeURIComponent(pagePath), 'https://foo.bar');
+
+        // ensure that the path ends with a trailing slash
+        let normalizedPathPath = url.pathname.endsWith('/')
+          ? url.pathname
+          : url.pathname + '/';
+        normalizedPathPath = normalizedPathPath.replace(/^\/docs\//, '/');
+
+        const pageViews = Number(row.metricValues[0].value);
+        if (normalizedPathPath in report) {
+          report[normalizedPathPath] += pageViews;
+          continue;
+        }
+
+        report[normalizedPathPath] = pageViews;
+      } catch {
+        // do nothing
       }
-
-      report[normalizedPathPath] = pageViews;
-    } catch {
-      // do nothing
     }
+
+    fetchedRows += response.rows.length;
+    response = await fetchReport(fetchedRows);
   }
 
   return report;
