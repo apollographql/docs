@@ -16,7 +16,6 @@ const EditOnGitHub = term => {
       my="4"
       as="a"
       href={url}
-      // style={{display: 'flex', alignItems: 'left'}}
     >
       <GitHubIcon /> <Text style={{marginLeft: '0.5rem'}}>Edit on GitHub</Text>
     </ButtonLink>
