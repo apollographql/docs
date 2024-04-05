@@ -9,8 +9,8 @@ const {BetaAnalyticsDataClient} = require('@google-analytics/data');
 
 const analyticsDataClient = new BetaAnalyticsDataClient({
   credentials: {
-    private_key: process.env.GA_PRIVATE_KEY,
-    client_email: 'ga-algolia-connect@odyssey-ga.iam.gserviceaccount.com'
+    private_key: process.env.GOOGLE_AUTH_KEY,
+    client_email: process.env.GOOGLE_AUTH_EMAIL
   }
 });
 
