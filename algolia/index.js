@@ -11,7 +11,7 @@ const analyticsDataClient = new BetaAnalyticsDataClient({
   credentials: {
     // netlify escapes every newline (\n), so we need to unescape them
     // https://answers.netlify.com/t/long-environment-variable-with-line-breaks-n/8514
-    private_key: process.env.GOOGLE_AUTH_KEY.replace(/\\n/gm, '\n'),\
+    private_key: process.env.GOOGLE_AUTH_KEY.replace(/\\n/gm, '\n'),
     client_email: process.env.GOOGLE_AUTH_EMAIL
   }
 });
