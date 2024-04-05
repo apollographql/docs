@@ -46,7 +46,7 @@
         ]
       ],
       "Self-serve": [
-        "/sso/self-serve",
+        "/sso/setup",
         [
           "enterprise", "preview"
         ]
