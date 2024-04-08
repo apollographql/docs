@@ -1,6 +1,6 @@
 ---
 title: Multi-organization SSO
-subtitle: Share SSO configurations between organizations
+subtitle: Share SSO between GraphOS organizations
 ---
 
 <PremiumFeature>
@@ -16,15 +16,18 @@ This feature is in invite-only [preview](/resources/product-launch-stages#previe
 
 </PreviewFeature>
 
-GraphOS organizations can share the same SSO configuration so that members can switch between them in GraphOS Studio without having to reauthenticate.
-To share SSO configurations, organizations must first configure [self-serve SSO](./setup).
+GraphOS organizations can share the same identity provider (IdP) and SSO so members can switch between organizations in GraphOS Studio without reauthenticating.
+
+## Prerequisites
+
+To share SSO configurations, organizations must first individually configure [self-serve SSO](./setup).
 
 ## Switching between organizations
 
 You can switch between any organizations you have access to by clicking the organization name in the top left of GraphOS Studio.
 For an organization to appear in your organization list, you must first log into that organization.
 
-## Logging in to an multi-org SSO organization
+## Logging in to a multi-org SSO organization
 
 To authenticate access to an organization with a shared SSO configuration, you must first log in to it using one of these identity provider (IdP) initiated methods:
 
@@ -34,7 +37,7 @@ To authenticate access to an organization with a shared SSO configuration, you m
 
 <Note>
 
-While multi-organization SSO is in [preview](resources/product-launch-stages/#preview), all members of an organization with multi-org SSO configured must log in from their IdP. If they try to login on `studio.apollographql.com/login`, they will be receive an error message to log in via IdP.
+While multi-organization SSO is in [preview](resources/product-launch-stages/#preview), all members of an organization with multi-org SSO configured must log in from their IdP. If they try to log in on `studio.apollographql.com/login`, they will receive an error message directing them to log in via IdP.
 
 </Note>
 
