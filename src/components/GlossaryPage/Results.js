@@ -4,7 +4,7 @@ import InlineCode from '../InlineCode';
 import Markdown from 'react-markdown';
 import PropTypes from 'prop-types';
 import React from 'react';
-import RelativeLink, {PrimaryLink} from '../RelativeLink';
+import RelativeLink, {ButtonLink, PrimaryLink} from '../RelativeLink';
 import {ArrowRightIcon} from '../Icons';
 import {
   Box,
@@ -222,19 +222,20 @@ const Results = () => {
             )}
           {hit.learnMore ? (
             <Flex gap={10}>
-              <PrimaryLink
+              <ButtonLink
+                variant="link"
                 my="4"
-                as="a"
                 href={updateHost(hit.learnMore)}
-                style={{display: 'flex', alignItems: 'center'}}
+                color="tertiary"
+                fontWeight="medium"
+                fontSize="inherit"
+                _hover={{color: 'link'}}
+                leftIcon={<ArrowRightIcon />}
               >
-                <Text style={{marginRight: '0.5rem'}}>
-                  {hit.learnMoreText
-                    ? hit.learnMoreText
-                    : 'Learn more about this term'}
-                </Text>
-                <ArrowRightIcon />
-              </PrimaryLink>
+                {hit.learnMoreText
+                  ? hit.learnMoreText
+                  : 'Learn more about this term'}
+              </ButtonLink>
               {isInternal && <EditOnGitHub term={hit.objectID} />}
             </Flex>
           ) : (
