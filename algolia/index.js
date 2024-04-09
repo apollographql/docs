@@ -123,7 +123,9 @@ async function transformer({data}) {
     };
   }, {});
 
+  console.log('fetching GA data');
   const report = await runReport();
+  console.log(`GA data fetched: ${Object.keys(report).length} pages found`);
 
   const allPages = allMarkdownRemark.nodes.concat(allMdx.nodes);
   const records = allPages
