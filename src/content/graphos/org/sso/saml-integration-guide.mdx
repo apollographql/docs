@@ -24,9 +24,7 @@ If you use Okta or Microsoft Entra ID (formerly known as Azure Active Directory)
 
 ## Setup
 
-1. Send your Apollo contact your IdP SAML XML metadata file.
-
-   If you can't send this file, send one of the following instead:
+1. Send your Apollo contact your IdP SAML XML metadata file. If you can't send this file, send one of the following instead:
 
    - IdP entity ID
    - IdP single sign-on URL / SSO URL
@@ -36,11 +34,10 @@ If you use Okta or Microsoft Entra ID (formerly known as Azure Active Directory)
 
 3. Create a new application in your SSO environment. While doing so, set the following values:
 
-   - **App Name**: `Apollo GraphOS`
+   - **App Name**: Apollo GraphOS
    - **App logo**: [Apollo logo](../../img/sso/apollo-sk-logo.png) (optional)
 
-4. If your IdP permits it, upload the Apollo-provided SP SAML XML metadata file.
-   Otherwise, [To-do: give instructions for each individual field, maybe how they map to the fields in the XML file, or we could send them like a JSON or other format with this information]
+4. If your IdP permits it, upload the Apollo-provided SP SAML XML metadata file. Otherwise, open the XML metadata file and view the SAML configuration settings and manually enter them in your IdP.
 
 5. Set the following user attributes:
 
@@ -50,7 +47,9 @@ If you use Okta or Microsoft Entra ID (formerly known as Azure Active Directory)
    - `given_name`: `user.firstName`
    - `family_name`: `user.lastName`
 
-6. Assign users to the Apollo GraphOS application.
+6. Save your configuration once done.
+
+7. Assign users to the Apollo GraphOS application.
 
    - Reach out to your SSO or Identity & Access Management team for help assigning the relevant groups and users to `Apollo GraphOS`.
 
