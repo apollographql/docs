@@ -5,6 +5,83 @@ const {
   getMdxHeading,
   getChildrenText
 } = require('apollo-algolia-transform');
+const {BetaAnalyticsDataClient} = require('@google-analytics/data');
+
+const analyticsDataClient = new BetaAnalyticsDataClient({
+  credentials: {
+    // netlify escapes every newline (\n), so we need to unescape them
+    // https://answers.netlify.com/t/long-environment-variable-with-line-breaks-n/8514
+    private_key: process.env.GOOGLE_AUTH_KEY.replace(/\\n/g, '\n'),
+    client_email: process.env.GOOGLE_AUTH_EMAIL
+  }
+});
+
+// set the start date to 6 months ago
+const date = new Date();
+date.setMonth(date.getMonth() - 6);
+const startDate = date.toISOString().split('T').shift();
+
+const fetchReport = async (offset = 0) => {
+  const [response] = await analyticsDataClient.runReport({
+    property: 'properties/363627814',
+    dateRanges: [
+      {
+        startDate,
+        endDate: 'today'
+      }
+    ],
+    offset,
+    dimensions: [
+      {
+        name: 'pagePath'
+      }
+    ],
+    metrics: [
+      {
+        name: 'screenPageViews'
+      }
+    ]
+  });
+
+  return response;
+};
+
+const runReport = async () => {
+  const report = {};
+
+  let fetchedRows = 0;
+  let response = await fetchReport();
+
+  while (fetchedRows < response.rowCount) {
+    for (const row of response.rows) {
+      const pagePath = row.dimensionValues[0].value;
+      try {
+        const url = new URL(decodeURIComponent(pagePath), 'https://foo.bar');
+
+        // ensure that the path ends with a trailing slash
+        let normalizedPathPath = url.pathname.endsWith('/')
+          ? url.pathname
+          : url.pathname + '/';
+        normalizedPathPath = normalizedPathPath.replace(/^\/docs\//, '/');
+
+        const pageViews = Number(row.metricValues[0].value);
+        if (normalizedPathPath in report) {
+          report[normalizedPathPath] += pageViews;
+          continue;
+        }
+
+        report[normalizedPathPath] = pageViews;
+      } catch {
+        // do nothing
+      }
+    }
+
+    fetchedRows += response.rows.length;
+    response = await fetchReport(fetchedRows);
+  }
+
+  return report;
+};
 
 function getMdHeading(child) {
   if (child.type === 'element') {
@@ -46,11 +123,9 @@ async function transformer({data}) {
     };
   }, {});
 
-  // let allGAData = {};
-  // if (process.env.NODE_ENV !== 'test') {
-  //   const metricsFetcher = new MetricsFetcher({viewId: '163147389'});
-  //   allGAData = await metricsFetcher.fetchAll();
-  // }
+  console.log('fetching GA data');
+  const report = await runReport();
+  console.log(`GA data fetched: ${Object.keys(report).length} pages found`);
 
   const allPages = allMarkdownRemark.nodes.concat(allMdx.nodes);
   const records = allPages
@@ -106,7 +181,7 @@ async function transformer({data}) {
           type: 'docs',
           docset,
           slug,
-          // pageviews: allGAData[url]?.[METRICS.uniquePageViews] || 0,
+          pageviews: report[slug] ?? 0,
           categories
         }
       });
