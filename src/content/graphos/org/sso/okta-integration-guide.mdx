@@ -1,5 +1,5 @@
 ---
-title: Setting up Apollo SSO with Okta
+title: Set up Apollo SSO with Okta
 ---
 
 <PremiumFeature >
@@ -13,15 +13,30 @@ This feature is not available as part of an [Enterprise trial](../plans/#enterpr
 
 This guide walks through configuring Okta as your Apollo organization's identity provider (IdP) for SSO. Setup requires an Okta account with administrator privileges. Once you've set up your integration, you need to [assign users to it in Okta](#assign-users-in-okta) so they can access GraphOS Studio via SSO.
 
+<SSOMigrationNotice />
+
 ## Setup
 
-Apollo's latest SSO system (as of April 2024) requires you to create a custom Okta integration to configure SSO.
-Follow the steps below.
+SSO setup has two main steps:
 
-### Step 1. Create an app integration
+1. Create a custom Okta app integration for Apollo.
+2. Send your Okta app integration's SAML metadata to Apollo.
 
-1. From your Okta Administrator Dashboard, navigate to the **Applications** view.
-2. Click **Create App Integration**. The following dialog appears:
+### Step 1. Create a custom app integration
+
+1. Send a request to your Apollo contact for Apollo's service provider (SP) SAML information. Include the organization name(s) you are setting up SSO for. Your Apollo contact will respond with the following values:
+
+   - Single Sign-on URL
+   - Entity ID
+   - RelayState
+
+   <Note>
+
+   These values differ for each GraphOS organization. If setting up SSO for multiple organizations, ensure you repeat these steps for each organization using different values.
+
+   </Note>
+
+2. From your Okta Administrator Dashboard, go to the **Applications** view. Click **Create App Integration**. The following dialog appears:
 
    <img
      src="../../img/sso/okta-create-app-integration.jpg"
@@ -31,12 +46,7 @@ Follow the steps below.
 
 3. Select **SAML 2.0** as your sign-in method.
 4. Click **Next**. The **Create SAML Integration** dialog appears.
-
-### Step 2. Create a new SAML integration
-
-The **Create SAML Integration** dialog includes multiple steps:
-
-1. In the **General Settings** step, provide the following values:
+5. In the **General Settings** step, provide the following values:
 
    - **App name**: `Apollo GraphOS`
    - **App logo**: [Apollo logo](../../img/sso/apollo-sk-logo.jpg) (optional)
@@ -49,27 +59,15 @@ The **Create SAML Integration** dialog includes multiple steps:
 
    Then click **Next**.
 
-2. In the **Configure SAML** step, provide the following values:
+6. In the **Configure SAML** step, provide the following values:
 
-   - **Single sign on URL**: `https://sso.connect.pingidentity.com/sso/sp/ACS.saml2`
+   - **Single sign on URL**: Single sign-on URL provided by Apollo
      - Also check **Use this for Recipient URL and Destination URL**.
-   - **Audience URI (SP Entity ID)**: `PingConnect`
+   - **Audience URI (SP Entity ID)**: Entity ID provided by Apollo
+   - **Default RelayState**: RelayState value provided by Apollo
+   - Leave the default values for other setttings.
 
-     <Note>
-
-     If `PingConnect` already exists, use `fd76e619-6c0a-461c-912d-418278929d60`
-
-     </Note>
-
-   - **Default RelayState**: `https://pingone.com/1.0/fd76e619-6c0a-461c-912d-418278929d60`
-
-   <img
-     src="../../img/sso/okta-configure-saml.jpg"
-     alt="Okta configure SAML"
-     className="screenshot"
-   />
-
-3. Still in the **Configure SAML** step, scroll down to **Attribute Statements**. Set values for the following attributes:
+7. Still in the **Configure SAML** step, scroll down to **Attribute Statements**. Set values for the following attributes:
 
    - `sub`: `user.email`
      - The `sub` attribute should uniquely identify any particular user to GraphOS. In most cases, `user.email` provides this unique mapping.
@@ -85,21 +83,11 @@ The **Create SAML Integration** dialog includes multiple steps:
 
    Then click **Next**.
 
-4. In the **Feedback** step, provide the following values:
+8. In the **Feedback** step, select **I'm an Okta customer adding an internal app**, then click **Finish**.
 
-   - Select **I'm an Okta customer adding an internal app**.
+### Step 2. Send SAML metadata to Apollo
 
-   <img
-     src="../../img/sso/okta-feedback.jpg"
-     alt="Okta feedback"
-     className="screenshot"
-   />
-
-   Then click **Finish**.
-
-### Step 3. Send SAML metadata to Apollo
-
-1. From your new SAML integration's details page, scroll down and click **View SAML setup instructions** on the right side:
+1. From your new Okta SAML integration's details page, scroll down and click **View SAML setup instructions** on the right side:
 
    <img
      src="../../img/sso/okta-settings.jpg"
@@ -116,6 +104,8 @@ The **Create SAML Integration** dialog includes multiple steps:
    />
 
 3. Send the text file to your Apollo contact. They will complete your SSO setup.
+
+Once your SSO configuration is live, organization members must re-login to GraphOS Studio. Once you've confirmed the new configuration works as expected, remove any legacy Apollo integrations in Okta if you have them.
 
 ## Assign users in Okta
 
@@ -147,7 +137,7 @@ Okta displays every user and group you've assigned to the integration in the **A
 
 <ExpansionPanel title="Click to see legacy instructions">
 
-With the former SSO system, you could use Okta's GraphOS integration (deprecated) or create a custom SAML integration.
+With PingOne—Apollo's former SSO system—you could use Okta's GraphOS integration (now deprecated) or create a custom SAML integration.
 
 ### Using Okta's Apollo GraphOS integration (deprecated)
 
@@ -202,8 +192,6 @@ Your Apollo contact will let you know once SSO setup is complete.
 ### Using a custom integration (legacy)
 
 Beginning in April 2024, Apollo recommends using the updated instructions for [creating a custom integration](#configuration) provided above. You can refer to the instructions below if you need them for a previously created custom integration.
-
-If you previously configured SSO using the instructions below and want to use [multi-organization SSO](./multi-organization) you need to recreate your SSO connection with the [updated instructions](#configuration).
 
 #### Step 1. Create an app integration
 
