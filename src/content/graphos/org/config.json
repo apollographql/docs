@@ -45,12 +45,6 @@
           "enterprise"
         ]
       ],
-      "Self-serve": [
-        "/sso/setup",
-        [
-          "enterprise", "preview"
-        ]
-      ],
       "Multi-organization": [
         "/sso/multi-org",
         [
