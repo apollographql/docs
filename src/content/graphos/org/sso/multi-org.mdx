@@ -16,11 +16,11 @@ This feature is in invite-only [preview](/resources/product-launch-stages#previe
 
 </PreviewFeature>
 
-Different GraphOS organizations can share the same identity provider (IdP) and SSO so members can switch between organizations in GraphOS Studio without reauthenticating.
+Different GraphOS organizations can share the same identity provider (IdP) and SSO so members can switch between organizations in GraphOS Studio without needing to reauthenticate.
 
 ## Prerequisites
 
-To share SSO configurations, each organization needs to individually configure SSO according to the latest instructions (as of April 2024) for their particular IdP.
+For multi-organization SSO, each organization needs to individually configure SSO according to the latest instructions (as of April 2024) for their particular IdP:
 
 - [Okta](./okta-integration-guide)
 - [Azure AD](./azure-ad-integration-guide)
@@ -70,11 +70,10 @@ Many IdPs provide a method to generate login links—sometimes called "magic lin
 
 ### Log in via an Apollo-generated link
 
-Apollo can also generate login links on request. Please get in touch with your Apollo contact to request a magic link. Be sure to include the organization(s) you want the link(s) for.
+Apollo can also generate login links on request. Get in touch with your Apollo contact to request a magic link. Be sure to include the organization(s) you want the link(s) for.
 
 ## Preview limitations
 
-While this feature is in [preview](/resources/product-launch-stages#preview), members can only log in with IdP-initiated SSO.
-When in [GA](/resources/product-launch-stages#general-availability), it will also support service-provider-initiated (SP-initiated) SSO.
+While this feature is in [preview](/resources/product-launch-stages#preview), members can only log in with IdP-initiated SSO. Therefore, during preview, all members of an organization with multi-organization SSO must log in from their IdP. If they try to log in on `studio.apollographql.com/login`, they will receive an error message directing them to log in via IdP.
 
-Therefore, during preview, all members of an organization with multi-org SSO configured must log in from their IdP. If they try to log in on `studio.apollographql.com/login`, they will receive an error message directing them to log in via IdP.
+When in [GA](/resources/product-launch-stages#general-availability), multi-organization SSO will also support service-provider-initiated (SP-initiated) SSO.
