@@ -11,7 +11,7 @@ This feature is not available as part of an [Enterprise trial](../plans/#enterpr
 
 <SSOPreviewNotice />
 
-This guide walks through configuring a generic SAML-based identity provider (IdP) for use with Apollo SSO. These steps require administrative access to your IdP.
+This guide walks through configuring a generic SAML-based identity provider (IdP) for use with Apollo SSO.
 
 If you use Okta or Microsoft Entra ID as your identity provider, instead see the corresponding guide for your tool:
 
@@ -24,8 +24,10 @@ If you use Okta or Microsoft Entra ID as your identity provider, instead see the
 
 SSO setup has two main steps:
 
-1. Create a custom application in your IdP for Apollo.
+1. Create a custom Apollo application in your IdP.
 2. Send your application's SAML metadata to Apollo.
+
+These steps generally require administrative access to your IdP.
 
 ### Step 1. Create a custom application
 
@@ -43,7 +45,7 @@ SSO setup has two main steps:
 
 2. Create a new application in your SSO environment. While doing so, set the following values:
 
-   - **App Name**: Apollo GraphOS
+   - **App Name**: `Apollo GraphOS`
    - **App logo**: [Apollo logo](../../img/sso/apollo-sk-logo.png) (optional)
 
 3. If your IdP permits it, upload the Apollo-provided SP SAML XML metadata file. Otherwise, open the XML metadata file, view the SAML configuration settings, and manually enter them in your IdP.
@@ -73,9 +75,9 @@ SSO setup has two main steps:
 
 Send your Apollo contact your IdP SAML XML metadata file. If you can't send this file, send one of the following instead:
 
-     - IdP entity ID
-     - IdP single sign-on URL / SSO URL
-     - IdP x509 certificate
+- IdP entity ID
+- IdP single sign-on URL / SSO URL
+- IdP x509 certificate
 
 Your Apollo contact will complete your SSO setup.
 

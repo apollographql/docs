@@ -1,5 +1,5 @@
 ---
-title: Set up Apollo SSO with Microsoft Entra ID
+title: Set up Apollo SSO with Microsoft Entra ID (formerly Azure AD)
 ---
 
 <PremiumFeature>
@@ -17,37 +17,48 @@ This guide walks through configuring Microsoft Entra ID (formerly known as Azure
 
 ## Setup
 
+SSO setup has two main steps:
+
+1. Create an app registration for Apollo.
+2. Send your Entra ID's app integration's SAML metadata to Apollo.
+
+Setup requires administrator privileges.
+
 ### Step 1. Create an app registration
 
+1. Send a request to your Apollo contact for Apollo's service provider (SP) SAML information. Include the organization name(s) you are setting up SSO for. Your Apollo contact will respond with the following values:
+
+   - Single Sign-on URL
+   - Entity ID
+   - RelayState
+
+   <Note>
+
+   These values differ for each GraphOS organization. If setting up SSO for multiple organizations, ensure you repeat these steps for each organization using different values.
+
+   </Note>
+
 1. Go to your [Azure Portal](http://portal.azure.com/) and then navigate to **Microsoft Entra ID**.
-2. In the left pane, select **App Registrations**. Then in the top ribbon click **+ New Registration**.
-3. On the **Register an application** page, provide the following information:
+1. In the left navigation, select **App Registrations**. In the App Registration page's top menu, click **+ New Registration**.
+1. On the **Register an application** page, provide the following information:
 
-   - Provide a descriptive name for the app, such as **Apollo GraphOS**.
+   - Provide a descriptive name for the app, such as `Apollo GraphOS`.
    - Under **Supported account types**, select which Microsoft account types will have access.
-   - Leave **Redirect URI** empty. You'll provide this information later.
-
-   Then click **Register**.
-
-### Step 2. Retrieve your endpoint URL, client ID, and client secret
+   - Under **Redirect URI**, set **Web** as the platform and enter the [to-do]
+     Then click **Register**.
 
 1. From the **Overview** section of your newly created app registration, copy and paste your **Application (client) ID** into a local text file.
-2. Still in the **Overview** section, select **Endpoints** from the top menu.
-3. Copy and paste the **OpenID Connect metadata document** URL into the same local text file.
-4. In the **Certificates & secrets** section of your app registration, click **+ New client secret** and create a new secret.
-5. Copy and paste the secret's **Value** to the same text file you created earlier.
-6.
-
-### Step 4. Configure API permissions
-
+1. Still in the **Overview** section, select **Endpoints** from the top menu. Copy and paste the **Federation metadata document** URL into the same local text file.
+1. Open the **Certificates & secrets** section in the left navigation and click **+ New client secret** and create a new secret.
+1. Copy and paste the secret's **Value** to the same text file you created earlier.
 1. In the **API permissions** section of your app registration, check whether `User.Read` is listed by default. If isn't, add it manually:
 
-   1. Select **+ Add a permission > Microsoft Graph > Application permissions**.
-   2. Search for `Group`, expand, and select `Group.Read.All`.
-   3. **Save** your changes.
-   4. If `User.Read` was not auto created, repeat this process for `User.Read`.
+   - Select **+ Add a permission > Microsoft Graph > Application permissions**.
+   - Search for `Group`, expand, and select `Group.Read.All`.
+   - **Save** your changes.
+   - If `User.Read` was not auto created, repeat this process for `User.Read`.
 
-2. Also in the **API Permissions** section, select **Grant admin consent** next to the **+ Add a permission** button. Doing this ensures that your users don't need to grant consent during SSO.
+1. Also in the **API Permissions** section, select **Grant admin consent for Default Directory**. Doing this ensures that your users don't need to grant consent during SSO.
 
    <img
      src="../../img/sso/azure-configure-api-permissions.gif"
@@ -55,9 +66,7 @@ This guide walks through configuring Microsoft Entra ID (formerly known as Azure
      className="screenshot"
    />
 
-3. From the **Manifest** section of your app registration, find the `groupMembershipClaims` property. Change its value from `null` to either `All` or `SecurityGroup`.
-   - This ensures that the group membership claim is included in the access token during SSO.
-4. **Save** your changes.
+1. From the **Manifest** section of your app registration, find the `groupMembershipClaims` property. Change its value from `null` to either `"All"` or `"SecurityGroup"`.
 
    <img
      src="../../img/sso/azure-manifest.png"
@@ -65,7 +74,22 @@ This guide walks through configuring Microsoft Entra ID (formerly known as Azure
      className="screenshot"
    />
 
-### Step 5. Send
+   This ensures that the group membership claim is included in the access token
+   during SSO.
+
+1. **Save** your changes.
+
+### Step 2. Send SAML metadata to Apollo
+
+Send your Apollo contact your the information you saved to your local text file:
+
+- Client ID
+- Federation metadata document URL
+- Client secret value
+
+Your Apollo contact will complete your SSO setup.
+
+Once your SSO configuration is live, organization members must re-login to GraphOS Studio. Once you've confirmed the new configuration works as expected, remove any legacy Apollo applications in your IdP if you have them.
 
 ## Legacy setup
 
@@ -75,7 +99,7 @@ This guide walks through configuring Microsoft Entra ID (formerly known as Azure
 
 <Note>
 
-These steps use PingOne's email invite method, because in some cases Apollo's default entity ID (`PingConnect`) might already be used by another application in your organization.
+These steps use PingOne's email invite method, because in some cases Apollo's legacy entity ID (`PingConnect`) might already be used by another application in your organization.
 
 </Note>
 
