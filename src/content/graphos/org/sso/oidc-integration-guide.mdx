@@ -1,0 +1,65 @@
+---
+title: Set up Apollo SSO with an OIDC-based IdP
+---
+
+<PremiumFeature>
+
+Single sign-on (SSO) is available only for [Dedicated and Enterprise plans](https://www.apollographql.com/pricing#security).
+This feature is not available as part of an [Enterprise trial](../plans/#enterprise-trials).
+
+</PremiumFeature>
+
+<SSOPreviewNotice />
+
+This guide walks through configuring a generic OpenID Connect (OIDC) based identity provider (IdP) for use with Apollo SSO.
+
+<SSOMigrationNotice />
+
+# Setup
+
+SSO setup has two main steps:
+
+1. Create a custom Apollo application in your IdP.
+2. Send your application's SAML metadata to Apollo.
+
+These steps generally require administrative access to your IdP.
+
+### Step 1. Create a custom application
+
+1. Send a request to your Apollo contact to configure an OIDC SSO integration. Include the organization name(s) you are setting up SSO for, as well as the email domains you'd like to associate to the organization. Your Apollo contact will respond with the following:
+
+   - A one-time use URL with configuration details including:
+     - Client ID
+     - Client Secret
+     - Audience identifier
+     - Optionally, the discovery URL of your OIDC service
+   - The OIDC redirect URL of the integration
+
+   <Note>
+
+   These values differ for each GraphOS organization. If setting up SSO for multiple organizations, ensure you repeat the following steps for each organization using different values.
+
+   </Note>
+
+2. Create a new application in your SSO environment. While doing so, set the following values:
+
+   - **App Name**: `Apollo GraphOS`
+   - **App logo**: [Apollo logo](../../img/sso/apollo-sk-logo.png) (optional)
+
+3. Set the following claims within the ID token returned from your IdP:
+
+   - `sub`: `user.email`
+     - The `sub` attribute should uniquely identify any particular user to GraphOS. In most cases, `user.email` provides this unique mapping.
+   - `email`: `user.email`
+   - `given_name`: `user.firstName`
+   - `family_name`: `user.lastName`
+
+4. Save your configuration.
+
+5. Assign users to your new Apollo GraphOS application. For help assigning the relevant groups and users, contact your SSO or Identity & Access Management team.
+
+### Step 2. Fill out provided link
+
+To complete the configuration, fill out the Apollo-provided link with the appropriate information, and then inform your Apollo contact. They will then be able to enable SSO.
+
+Once your SSO configuration is live, organization members must re-login to GraphOS Studio. Once you've confirmed the new configuration works as expected, remove any legacy Apollo applications in your IdP if you have them.

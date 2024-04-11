@@ -45,6 +45,12 @@
           "enterprise"
         ]
       ],
+      "OIDC": [
+        "/sso/oidc-integration-guide",
+        [
+          "enterprise", "preview"
+        ]
+      ],
       "Multi-organization": [
         "/sso/multi-organization",
         [
