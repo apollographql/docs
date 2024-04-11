@@ -30,7 +30,6 @@ Setup requires administrator privileges.
 
    - Single Sign-on URL
    - Entity ID
-   - RelayState
 
    <Note>
 
@@ -47,10 +46,6 @@ Setup requires administrator privileges.
    - Under **Redirect URI**, set **Web** as the platform and enter the [to-do]
      Then click **Register**.
 
-1. From the **Overview** section of your newly created app registration, copy and paste your **Application (client) ID** into a local text file.
-1. Still in the **Overview** section, select **Endpoints** from the top menu. Copy and paste the **Federation metadata document** URL into the same local text file.
-1. Open the **Certificates & secrets** section in the left navigation and click **+ New client secret** and create a new secret.
-1. Copy and paste the secret's **Value** to the same text file you created earlier.
 1. In the **API permissions** section of your app registration, check whether `User.Read` is listed by default. If isn't, add it manually:
 
    - Select **+ Add a permission > Microsoft Graph > Application permissions**.
@@ -66,28 +61,12 @@ Setup requires administrator privileges.
      className="screenshot"
    />
 
-1. From the **Manifest** section of your app registration, find the `groupMembershipClaims` property. Change its value from `null` to either `"All"` or `"SecurityGroup"`.
-
-   <img
-     src="../../img/sso/azure-manifest.png"
-     alt="Azure manifest"
-     className="screenshot"
-   />
-
-   This ensures that the group membership claim is included in the access token
-   during SSO.
-
 1. **Save** your changes.
+1. In the **Overview** section of your app registration, select **Endpoints** from the top menu. Copy and paste the **Federation metadata document** URL into the same local text file for use in the next step.
 
 ### Step 2. Send SAML metadata to Apollo
 
-Send your Apollo contact your the information you saved to your local text file:
-
-- Client ID
-- Federation metadata document URL
-- Client secret value
-
-Your Apollo contact will complete your SSO setup.
+Send your Apollo contact the **Federation metadata document URL** you previously saved. Your Apollo contact will complete your SSO setup.
 
 Once your SSO configuration is live, organization members must re-login to GraphOS Studio. Once you've confirmed the new configuration works as expected, remove any legacy Apollo applications in your IdP if you have them.
 
