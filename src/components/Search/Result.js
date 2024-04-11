@@ -15,17 +15,8 @@ export default function Result({item, ...props}) {
 
   let {url} = item;
 
-  switch (item.__autocomplete_indexName) {
-    case 'staging_docs':
-      url = new URL(item.slug, process.env.DEPLOY_URL).toString();
-      break;
-    case 'apollopedia':
-      url = new URL(
-        `/resources/glossary#${makeGlossaryTermId(item.term)}`,
-        process.env.DEPLOY_URL
-      ).toString();
-      break;
-    default:
+  if (item.__autocomplete_indexName === 'staging_docs') {
+    url = new URL(item.slug, process.env.DEPLOY_URL).toString();
   }
 
   return (
