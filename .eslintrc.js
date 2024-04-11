@@ -53,6 +53,7 @@ module.exports = {
         SSOLegacyCaution: 'readonly',
         SSOMigrationNotice: 'readonly',
         SSOPreviewNotice: 'readonly',
+        SSOSAMLInfoRequest: 'readonly',
         StudioPages: 'readonly',
         HowSubscriptionsWork: 'readonly',
         WhatSubscriptionsAreFor: 'readonly',

@@ -26,16 +26,7 @@ Setup requires administrator privileges.
 
 ### Step 1. Create an app registration
 
-1. Send a request to your Apollo contact for Apollo's service provider (SP) SAML information. Include the organization name(s) you are setting up SSO for. Your Apollo contact will respond with the following values:
-
-   - Single Sign-on URL
-   - Entity ID
-
-   <Note>
-
-   These values differ for each GraphOS organization. If setting up SSO for multiple organizations, ensure you repeat these steps for each organization using different values.
-
-   </Note>
+<SSOSAMLInfoRequest />
 
 1. Go to your [Azure Portal](http://portal.azure.com/) and then navigate to **Microsoft Entra ID**.
 1. In the left navigation, select **App Registrations**. In the App Registration page's top menu, click **+ New Registration**.
@@ -44,7 +35,8 @@ Setup requires administrator privileges.
    - Provide a descriptive name for the app, such as `Apollo GraphOS`.
    - Under **Supported account types**, select which Microsoft account types will have access.
    - Under **Redirect URI**, set **Web** as the platform and enter the [to-do]
-     Then click **Register**.
+
+   Then click **Register**.
 
 1. In the **API permissions** section of your app registration, check whether `User.Read` is listed by default. If isn't, add it manually:
 
@@ -62,13 +54,13 @@ Setup requires administrator privileges.
    />
 
 1. **Save** your changes.
-1. In the **Overview** section of your app registration, select **Endpoints** from the top menu. Copy and paste the **Federation metadata document** URL into the same local text file for use in the next step.
+1. In the **Overview** section of your app registration, select **Endpoints** from the top menu. Copy and paste the **Federation metadata document** URL into a local text file for use in the next step.
 
 ### Step 2. Send SAML metadata to Apollo
 
 Send your Apollo contact the **Federation metadata document URL** you previously saved. Your Apollo contact will complete your SSO setup.
 
-Once your SSO configuration is live, organization members must re-login to GraphOS Studio. Once you've confirmed the new configuration works as expected, remove any legacy Apollo applications in your IdP if you have them.
+Once your SSO configuration is live, organization members must re-login to GraphOS Studio. Once you've confirmed the new configuration works as expected, remove any legacy Apollo applications in Entra ID if they exist.
 
 ## Legacy setup
 

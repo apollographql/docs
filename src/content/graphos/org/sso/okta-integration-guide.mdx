@@ -26,17 +26,7 @@ Setup requires an Okta account with administrator privileges.
 
 ### Step 1. Create a custom app integration
 
-1. Send a request to your Apollo contact for Apollo's service provider (SP) SAML information. Include the organization name(s) you are setting up SSO for. Your Apollo contact will respond with the following values:
-
-   - Single Sign-on URL
-   - Entity ID
-   - RelayState
-
-   <Note>
-
-   These values differ for each GraphOS organization. If setting up SSO for multiple organizations, ensure you repeat these steps for each organization using different values.
-
-   </Note>
+<SSOSAMLInfoRequest />
 
 2. From your Okta Administrator Dashboard, go to the **Applications** view. Click **Create App Integration**. The following dialog appears:
 
@@ -66,7 +56,6 @@ Setup requires an Okta account with administrator privileges.
    - **Single sign on URL**: Single sign-on URL provided by Apollo
      - Also check **Use this for Recipient URL and Destination URL**.
    - **Audience URI (SP Entity ID)**: Entity ID provided by Apollo
-   - **Default RelayState**: RelayState value provided by Apollo
    - Leave the default values for other settings.
 
 7. Still in the **Configure SAML** step, scroll down to **Attribute Statements**. Set values for the following attributes:

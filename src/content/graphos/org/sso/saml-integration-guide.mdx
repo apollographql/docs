@@ -31,17 +31,7 @@ These steps generally require administrative access to your IdP.
 
 ### Step 1. Create a custom application
 
-1. Send a request to your Apollo contact for Apollo's service provider (SP) SAML information. Include the organization name(s) you are setting up SSO for. Your Apollo contact will respond with the following values:
-
-   - Single Sign-on URL
-   - Entity ID
-   - RelayState
-
-   <Note>
-
-   These values differ for each GraphOS organization. If setting up SSO for multiple organizations, ensure you repeat these steps for each organization using different values.
-
-   </Note>
+<SSOSAMLInfoRequest />
 
 2. Create a new application in your SSO environment. While doing so, set the following values:
 
@@ -57,7 +47,6 @@ These steps generally require administrative access to your IdP.
      - **ACS (Consumer) URL**
 
    - Set your **Entity ID** to the value provided by your Apollo contact.
-   - Set your **RelayState** to the value provided by your Apollo contact.
 
 4. Set the following user attributes:
 
