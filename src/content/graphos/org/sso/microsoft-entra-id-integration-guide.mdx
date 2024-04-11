@@ -19,48 +19,49 @@ This guide walks through configuring Microsoft Entra ID (formerly known as Azure
 
 SSO setup has two main steps:
 
-1. Create an app registration for Apollo.
-2. Send your Entra ID's app integration's SAML metadata to Apollo.
+1. Create an enterprise application for Apollo in Entra ID.
+2. Send your Entra ID's application's SAML metadata to Apollo.
 
 Setup requires administrator privileges.
 
-### Step 1. Create an app registration
+### Step 1. Create an enterprise application
 
 <SSOSAMLInfoRequest />
 
-1. Go to your [Azure Portal](http://portal.azure.com/) and then navigate to **Microsoft Entra ID**.
-1. In the left navigation, select **App Registrations**. In the App Registration page's top menu, click **+ New Registration**.
-1. On the **Register an application** page, provide the following information:
+2. Go to your [Azure Portal](http://portal.azure.com/) and then navigate to **Microsoft Entra ID**.
+3. On the default directory page, select **+Add > Enterprise application**.
+4. In the top menu, select **+Create your own application**.
+5. Enter `Apollo GraphOS` as the name of your app. Below, keep the ** Integrate any other application you don't find in the gallery (Non-gallery)** option selected. Click **Create**.
+6. On the app's **Overview** page, select **2. Set up single sign on**.
+7. On the app's **Single sign-on** page, select **SAML** as the single sign-on method.
+8. At the top of the SAML-based Sign-on configuration page, click **Upload metadata file** and upload the file provided by your Apollo contact. Alternatively you can enter these values manually in the **Basic SAML Configuration** section:
 
-   - Provide a descriptive name for the app, such as `Apollo GraphOS`.
-   - Under **Supported account types**, select which Microsoft account types will have access.
-   - Under **Redirect URI**, set **Web** as the platform and enter the [to-do]
+   - **Identifier (Entity ID)**: Entity ID value provided by Apollo
+   - **Reply URL (Assertion Consumer Service URL)**: Single Sign-on URL provided by Apollo
 
-   Then click **Register**.
+   Click **Save**.
 
-1. In the **API permissions** section of your app registration, check whether `User.Read` is listed by default. If isn't, add it manually:
+9. In **Attributes & Claims** ensure the following **claim name**s have the corresponding **value**s:
 
-   - Select **+ Add a permission > Microsoft Graph > Application permissions**.
-   - Search for `Group`, expand, and select `Group.Read.All`.
-   - **Save** your changes.
-   - If `User.Read` was not auto created, repeat this process for `User.Read`.
+   - `sub`: `user.userprinicipalname`
+   - `email`: `user.mail`
+   - `given_name`: `user.givenname`
+   - `family_name`: `user.surname`
 
-1. Also in the **API Permissions** section, select **Grant admin consent for Default Directory**. Doing this ensures that your users don't need to grant consent during SSO.
+   Otherwise, manually enter them.
 
-   <img
-     src="../../img/sso/azure-configure-api-permissions.gif"
-     alt="Azure configure API permissions"
-     className="screenshot"
-   />
-
-1. **Save** your changes.
-1. In the **Overview** section of your app registration, select **Endpoints** from the top menu. Copy and paste the **Federation metadata document** URL into a local text file for use in the next step.
+10. Under **SAML Certificates** copy and **App Federation Metadata Url** for use in the next step.
 
 ### Step 2. Send SAML metadata to Apollo
 
 Send your Apollo contact the **Federation metadata document URL** you previously saved. Your Apollo contact will complete your SSO setup.
 
-Once your SSO configuration is live, organization members must re-login to GraphOS Studio. Once you've confirmed the new configuration works as expected, remove any legacy Apollo applications in Entra ID if they exist.
+## Assign users in Entra ID
+
+Once your Apollo application is set up, you need to assign users to it so they can access GraphOS. You can assign individual users or groups from the **User and groups** page of your Apollo application. You may want to begin by adding yourself individually and then testing single sign-on by clicking **Test** at the bottom of the **Single sign-on** page.
+
+Once you've successfully tested your own user's ability to single sign-on, add any applicable users or groups.
+When users are first assigned to the Apollo GraphOS integration, they must re-login to GraphOS Studio. Once you've confirmed the new configuration works for your users, remove any legacy Apollo applications in Entra ID or app registrations in Azure AD if you have them.
 
 ## Legacy setup
 
