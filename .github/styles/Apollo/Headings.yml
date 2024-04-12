@@ -76,6 +76,7 @@ exceptions:
   - Sandbox
   - SDL
   - SDUI
+  - Send OIDC metadata
   - Send SAML metadata
   - Studio
   - TypeScript
