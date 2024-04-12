@@ -19,14 +19,14 @@ This guide walks through configuring a generic OpenID Connect (OIDC) based ident
 
 SSO setup has two main steps:
 
-1. Create a custom Apollo application in your IdP.
-2. Send your application's SAML metadata to Apollo.
+1. Create a custom Apollo GraphOS application in your IdP.
+2. Send your application's OIDC metadata to Apollo.
 
 These steps generally require administrative access to your IdP.
 
 ### Step 1. Create a custom application
 
-1. Send a request to your Apollo contact to configure an OIDC SSO integration. Include the organization name(s) you are setting up SSO for, as well as the email domains you'd like to associate to the organization. Your Apollo contact will respond with the following:
+1. Send a request to your Apollo contact to configure an OIDC SSO integration. Include the organization name(s) you are setting up SSO for, as well as the email domains you want to associate with the organization. Your Apollo contact will respond with the following:
 
    - A one-time use URL with configuration details including:
      - Client ID
@@ -34,10 +34,11 @@ These steps generally require administrative access to your IdP.
      - Audience identifier
      - Optionally, the discovery URL of your OIDC service
    - The OIDC redirect URL of the integration
+   - A link to a form where you can submit your SSO information to Apollo
 
    <Note>
 
-   These values differ for each GraphOS organization. If setting up SSO for multiple organizations, ensure you repeat the following steps for each organization using different values.
+   SSO metadata values differ for each GraphOS organization. If setting up SSO for multiple organizations, repeat the following steps for each organization using different values.
 
    </Note>
 
@@ -58,8 +59,8 @@ These steps generally require administrative access to your IdP.
 
 5. Assign users to your new Apollo GraphOS application. For help assigning the relevant groups and users, contact your SSO or Identity & Access Management team.
 
-### Step 2. Fill out provided link
+### Step 2. Send OIDC metadata to Apollo
 
-To complete the configuration, fill out the Apollo-provided link with the appropriate information, and then inform your Apollo contact. They will then be able to enable SSO.
+To complete the configuration, complete the Apollo-provided link from step 1 with the appropriate information and inform your Apollo contact. They will then be able to enable SSO.
 
-Once your SSO configuration is live, organization members must re-login to GraphOS Studio. Once you've confirmed the new configuration works as expected, remove any legacy Apollo applications in your IdP if you have them.
+Once your SSO configuration is live, organization members must re-login to GraphOS Studio. Once you've confirmed the new configuration works as expected, remove any legacy Apollo GraphOS applications in your IdP if they exist.
