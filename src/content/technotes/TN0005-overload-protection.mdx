@@ -19,7 +19,7 @@ A common source of overload in a system is the [thundering herd problem](https:/
 - A marketing campaign or viral social media post drives high traffic to an application in a short period.
 - A newly deployed feature introduces more load on the graph than expected.
 
-A more graph-based problem is adding a entity relationship in the schema that causes a significant increase in traffic. For example in the [Star Wars schema](https://studio.apollographql.com/public/star-wars-swapi/home?variant=current), imagine if there was no link from `Person` to `Film`(though `PersonFilmsConnection`) and it was added today. Until the usage of that new connection in the schema flattens out, every deployment or event that causes traffic could cause a large amount of new load directly attributed to the change for the owner of the `Film` entity.
+A more graph-based problem is adding an entity relationship in the schema that causes a significant increase in traffic. For example in the [Star Wars schema](https://studio.apollographql.com/public/star-wars-swapi/home?variant=current), imagine if there was no link from `Person` to `Film`(though `PersonFilmsConnection`) and it was added today. Until the usage of that new connection in the schema flattens out, every deployment or event that causes traffic could cause a large amount of new load directly attributed to the change for the owner of the `Film` entity.
 
 ## Implementing in Express
 
