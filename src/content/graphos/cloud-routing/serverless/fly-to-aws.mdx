@@ -4,6 +4,10 @@ subtitle: Learn how to migrate from Fly to AWS cloud routing
 description: Learn how to migrate from Fly to AWS cloud routing
 ---
 
+<Note>
+If you created your Serverless graph on or after May 21, 2024, you can ignore this doc!
+</Note>
+
 ## What’s changing?
 Cloud Serverless is moving cloud providers from Fly.io to AWS. This will improve reliability and offer improved performance for customers running existing workloads on AWS. Initially, Serverless will only be available in us-east-1, but we plan to expand to additional regions in the future.
 
@@ -12,6 +16,12 @@ As a reminder, Serverless is designed for demos, proof-of-concepts, and small sc
 <Note>
 Cloud routers running on Fly must be migrated before July 2, 2024.
 </Note>
+
+### Who needs to migrate?
+
+Only customers using a cloud router that's running on Fly on the GraphOS Serverless plan need to migrate. You need to migrate if your graph variant shows "Fly" in the Cloud Router Details in the variant Overview:
+
+[todo: add screenshot]
 
 ## AWS vs Fly
 Serverless on AWS includes the same features as Serverless on Fly with improvements to reliability and performance. Serverless was previously hosted in Chicago but now runs on AWS in `us-east-1`. This means faster performance for customers running on AWS and especially those running subgraphs near the supported region. If you require a different AWS region, upgrade to Cloud Dedicated.
@@ -27,9 +37,9 @@ Unlike Serverless on Fly, Serverless cloud routers on AWS automatically [sleep a
 </Note>
 
 ## Timeline
-Serverless variants created on or after May 7, 2024 run on AWS and no action is required.
+Serverless variants created on or after May 21, 2024 run on AWS and no action is required.
 
-Serverless variants created before May 7, 2024 need to be manually migrated from Fly to AWS from within GraphOS Studio.
+Serverless variants created before May 21, 2024 need to be manually migrated from Fly to AWS from within GraphOS Studio.
 
 Serverless cloud routers still running on Fly as of Jul 2, 2024 will be permanently deleted.
 After this date, you’ll have limited access to existing variants in Studio. For example, you’ll be able to access your existing Schema after this date but will won’t be able to recover your cloud router config or any secrets. You also won’t be able to route traffic thru this variant any longer.
@@ -74,7 +84,7 @@ Finally, in certain circumstances Serverless on AWS offers less throughput than 
 To go live, you'll need to update the endpoint URL your clients use to query your supergraph. You can access this updated endpoint from the Overview page of your variant. 
 
 ## FAQ
-### Can I still use cloud routers running on Fly.io?
+### Can I still use cloud routers running on Fly?
 Existing cloud routers on Fly will continue to operate normally until Jul 2, 2024. After this period, cloud routers on Fly will be deleted. After this period, you’ll still be able to recover your variant’s schema but won’t be able to process traffic.
 
 ### Can I talk to someone?
