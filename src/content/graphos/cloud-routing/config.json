@@ -18,6 +18,10 @@
   "sidebar": {
     "Overview": "/",
     "Configuration": "/configuration",
+    "Cloud Serverless": {
+      "Overview": "/serverless",
+      "Migrate to AWS":"/serverless/fly-to-aws"
+    },
     "Cloud Dedicated": {
       "Overview": ["/dedicated",
       [
