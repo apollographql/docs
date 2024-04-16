@@ -20,7 +20,7 @@
     "Configuration": "/configuration",
     "Serverless": {
       "Overview": "/serverless",
-      "Migrate to AWS":"/serverless/fly-to-aws"
+      "Migrate to AWS":"/serverless/aws-migration"
     },
     "Dedicated": {
       "Overview": ["/dedicated",
