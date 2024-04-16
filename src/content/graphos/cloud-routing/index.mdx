@@ -56,7 +56,30 @@ Cloud routing for Serverless plans is only available in Chicago, USA. Apollo's i
 
 Dedicated cloud routers have a wider [variety of options](./dedicated#runs-on-aws). Region selection for cloud routers is only available on the Dedicated plan. <TrackableLink href="https://www.apollographql.com/contact-sales?type=dedicated&referrer=docs" eventName="content_contact_cloud">Contact Sales</TrackableLink> to learn more.
 
-## Router initialization
+## Cloud router status
+
+You can see your cloud router's current status in the GraphOS Studio from your supergraph's overview page on the right side under **Cloud Router Details**.
+
+<img
+  className="screenshot"
+  alt="Graph overview page in GraphOS Studio"
+  src="../img/cloud-routing/cloud-router-overview.jpg"
+  width="700"
+/>
+
+<Note>
+
+Serverless routers have additional possible statuses, including **Sleeping** and **Deleted**. Learn more on the [Serverless overview page](./serverless/#serverless-router-status).
+
+</Note>
+
+| Status           | Description                                                                                                                                               |
+| ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Initializing** | Your cloud router is being created. This process may take up to five minutes. [Learn more.](#initializing)                                                |
+| **Running**      | Your graph is operating normally.                                                                                                                         |
+| **Error**        | Your cloud router is running, but a deployment recently failed. For more information on the failure, see the graph's **Launches** page in GraphOS Studio. |
+
+### Initializing
 
 Your router is provisioned automatically whenever you create a cloud supergraph in GraphOS Studio or whenever you create a new variant for an existing cloud supergraph. Each variant has its own distinct router.
 
@@ -73,7 +96,7 @@ Once initialized, you can [configure your cloud router](./configuration).
 
 ## Cloud launches
 
-Publishing a new subgraph schema or editing a cloud router's configuration triggers a new [launch](/graphos/delivery/launches/). Every launch automatically deploys new router instances for your supergraph.
+Publishing a new subgraph schema or editing a cloud router's configuration triggers a new [launch](/graphos/delivery/launches/). Every launch automatically deploys new router instances for your graph. You can see a launch's details, including possible failures, from a graph's **Launches** page in GraphOS Studio.
 
 <Note>
 

@@ -1,6 +1,6 @@
 ---
 title: Serverless cloud router
-subtitle: Learn how serverless cloud routing works
+subtitle: Learn about Serverless cloud routing
 description: Learn how serverless cloud routing works
 ---
 
@@ -10,47 +10,46 @@ Serverless is moving to AWS. If you initialized your serverless cloud before May
 
 </Note>
 
-Serverless cloud routers run on shared infrastructure that Apollo manages. Serverless is designed for demos, proof-of-concepts, and small scale production apps that don't require more than 10 requests per second.
+GraphOS Serverless cloud routers run on shared infrastructure that Apollo manages. Serverless is designed for demos, proof-of-concepts, and small-scale production apps that don't require more than ten requests per second.
 
 ## Serverless compute limitations
 
 Serverless capacity can be exhausted in the following circumstances:
 
-- **Complex schemas** can exceed available machine memory for Serverless cloud routers. For example, Serverless cloud routers don't support schemas with over 1,000 input types.
-- **Too many simultaneous requests** can cause your Serverless cloud router to return `429` errors to your clients.
+- Complex schemas can exceed available machine memory for Serverless cloud routers. For example, Serverless cloud routers don't support schemas with over 1,000 input types.
+- Too many simultaneous requests can cause your Serverless cloud router to return `429` errors to your clients.
 
-Because Serverless has limited underlying compute resources, certain types of workloads might require you to upgrade to Dedicated. <TrackableLink href="https://www.apollographql.com/contact-sales?type=dedicated&referrer=docs" eventName="content_contact_cloud">Contact Sales</TrackableLink> for a free trial.
+Because Serverless has limited underlying compute resources, certain workloads might require you to upgrade to Dedicated. <TrackableLink href="https://www.apollographql.com/contact-sales?type=dedicated&referrer=docs" eventName="content_contact_cloud">Contact Sales</TrackableLink> for a free trial.
 
 ## Automatic deletion of unused cloud routers
 
-Apollo automatically deletes variants of Serverless cloud supergraphs that receive zero operations over 30 consecutive days. This deletes the router, along with all the variant's historical metrics.
+Apollo automatically deletes variants of Serverless cloud supergraphs that receive zero requests over 30 consecutive days.
 
 - Apollo will notify you via email whenever a Serverless variant is approaching this 30-day limit.
 - To prevent deletion, execute at least one GraphQL operation on the variant's router before the 30-day limit.
 
-Learn more about a Serverless cloud router statuses preceding deletion in the next section.
+Learn more about Serverless cloud router statuses preceding and including deletion in the next section.
 
 ## Serverless router status
 
-You can see your cloud router's current status in the GraphOS Studio from your Serverless graph's overview page under **Cloud Router Details**.
+In addition to **Initializing**, **Running**, and **Error** [statuses](../#cloud-router-status) which all cloud routers can have, Serverless cloud routers have these additional statuses:
 
-[to-do: screenshot of status section]
-
-| Status                     | Description                                                                                                                                      |
-| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Initializing               | Your cloud router is being created. This process may take up to five minutes.                                                                    |
-| Running                    | Your graph is operating normally.                                                                                                                |
-| Error                      | Your cloud router is running but a deployment recently failed. See the **Launches** page in GraphOS Studio for more information.                 |
-| Running, will sleep soon   | Your cloud router hasn't received traffic for six days and is scheduled to go to sleep soon.                                                     |
-| Sleeping                   | Your cloud router hasn't received traffic for seven days and is now sleeping. [Learn more.](#sleeping)                                           |
-| Waking                     | Your cloud router was asleep and recently received traffic. You may experience API downtime for approximately one minute and up to five minutes. |
-| Sleeping, will delete soon | Your cloud router has been asleep for almost 30 days and will be deleted soon.                                                                   |
-| Deleted                    | Your cloud router has been deleted but your studio graph variant remains. You can recreate a cloud router at anytime. [Learn more.](#deleted)    |
+| Status                         | Description                                                                                                                                       |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Running, will sleep soon**   | Your cloud router hasn't received requests for six days and is scheduled to go to sleep soon.                                                     |
+| **Sleeping**                   | Your cloud router hasn't received requests for seven days and is now sleeping. [Learn more.](#sleeping)                                           |
+| **Waking**                     | Your cloud router was asleep and recently received requests. You may experience API downtime for approximately one minute and up to five minutes. |
+| **Sleeping, will delete soon** | Your cloud router has been asleep for almost 30 days and will be deleted soon.                                                                    |
+| **Deleted**                    | Your cloud router has been deleted but your studio graph variant remains. You can recreate a cloud router at anytime. [Learn more.](#deleted)     |
 
 ### Sleeping
 
-Serverless cloud routers that haven't received traffic for seven days automatically go to sleep. While sleeping, your cloud router can't serve traffic. Sleeping cloud routers automatically wake up once they receive traffic to the `apollographos.net` endpoint. While waking, your cloud router can't process incoming requests. It typically takes about one minute to wake up.
+Serverless cloud routers that haven't received requests for seven days automatically go to sleep. While sleeping, your cloud router can't serve requests.
+
+Sleeping cloud routers automatically wake up once they receive requests to the `apollographos.net` endpoint. While waking, your cloud router can't process incoming requests. It typically takes about one minute to wake up.
 
 ### Deleted
 
-If a cloud router has been sleeping for 30 days, Apollo automatically deletes it. This doesn't delete your variant from GraphOS Studio, but it does spin down the infrastructure powering your cloud router. Deleting your cloud router deletes any secrets that were stored and these can't be recovered.
+If a cloud router has been sleeping for 30 days, Apollo automatically deletes it. Router deletion doesn't delete the graph's variant from GraphOS Studio, but it does spin down the infrastructure powering your cloud router. The variant's metrics aren't deleted, but are only retained for a day after deletion.
+
+Router deletion includes any [secrets that were stored in GraphOS Studio](../configuration/#managing-secrets). These can't be recovered.
