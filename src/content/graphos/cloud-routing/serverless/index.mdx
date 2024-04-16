@@ -14,9 +14,13 @@ This doc does not apply to Dedicated cloud routers.
 
 Serverless cloud routers that have not received traffic for 7 days will automatically go to sleep. During this time, your cloud router cannot serve traffic. Sleeping cloud routers will wake up automatically once they receive traffic to the apollographos.net endpoint. While waking, your endpoint will be unable to process incoming requests. It typically takes about 1 minute to wake up.
 
+[todo: screenshot of sleeping soon banner]
+
 ### Deleting
 
 If a cloud router has been sleeping for 30 days, it will be automatically deleted. This does not delete your variant from GraphOS Studio, but it does spin down the infrastructure powering your cloud router. Deleting resets both your cloud router config and secrets.
+
+[todo: screenshot of will deleete soon banner]
 
 ## Router states
 | Status                  | Description                                                                                                         |
