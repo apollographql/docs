@@ -51,7 +51,7 @@ Setup requires an Okta account with administrator privileges.
    - **Single sign on URL**: Single sign-on URL provided by Apollo
      - Also check **Use this for Recipient URL and Destination URL**.
    - **Audience URI (SP Entity ID)**: Entity ID provided by Apollo
-   - Leave the default values for other settings.
+   - Leave the default values for other settings, including leaving the **RelayState** blank.
 
 6. Still in the **Configure SAML** step, scroll down to **Attribute Statements**. Set values for the following attributes:
 
@@ -74,23 +74,17 @@ Setup requires an Okta account with administrator privileges.
 
 ### Step 2. Send SAML metadata to Apollo
 
-1. From your new Okta SAML integration's details page, scroll down and click **View SAML setup instructions** on the right side:
+1. In your new Okta SAML integration, go to the **Sign On > Settings > SAML 2.0 > Metadata details** section.
 
    <img
-     src="../../img/sso/okta-settings.jpg"
+     src="../../img/sso/okta-metadata-url.jpg"
      alt="Okta settings"
      className="screenshot"
+     width="500"
    />
 
-2. In the dialog that appears, copy and paste the contents of the **IDP metadata** text box into a text file:
-
-   <img
-     src="../../img/sso/okta-idp-metadata.jpg"
-     alt="Okta IdP metadata"
-     className="screenshot"
-   />
-
-3. Send the **IDP metadata** to your Apollo contact. They will complete your SSO setup.
+2. Copy and paste the contents of the **Metadata URL** text box into a text file:
+3. Send the **Metadata URL** to your Apollo contact. They will complete your SSO setup.
 
 ## Assign users in Okta
 
