@@ -1,66 +1,73 @@
 ---
-title: Migrating to AWS from Fly
+title: Migrate Serverless routers to AWS
 subtitle: Learn how to migrate from Fly to AWS cloud routing
 description: Learn how to migrate from Fly to AWS cloud routing
 ---
 
 <Note>
-  This page only applies to Serverless graphs created on or after May 21, 2024.
+
+The migration concerns and steps on this page only apply to Serverless graphs created on or before May 21, 2024. Serverless cloud routers created after this date automatically run on AWS.
+
 </Note>
 
----
-
-Previously, Serverless variants would scale to zero (hibernate) after 2 minutes of inactivity. In Serverless on AWS, this has been replaced with an extended inactivity threshold. Also new in Serverless, variants that have not received traffic for an extended period will automatically be deleted. This process preserves a variant's schema but deletes the underlying cloud router.
-
----
+Serverless cloud routers created on or before May 21, 2024 run on Fly.io infrastructure. Existing cloud routers on Fly.io will continue to operate normally until Jul 2, 2024. After this date, any cloud routers on Fly.io will be [deleted](./#deleted).
 
 ## What's changing?
 
-Cloud Serverless is moving cloud providers from Fly.io to AWS. This will improve reliability and offer improved performance for customers running existing workloads on AWS. Initially, Serverless will only be available in us-east-1, but we plan to expand to additional regions in the future.
+Cloud Serverless is moving cloud providers from Fly.io to AWS. This move improves reliability and offers improved performance for customers running existing workloads on AWS.
 
-As a reminder, Serverless is designed for demos, proof-of-concepts, and small scale production apps that don't require more than 10 requests per second. See the plan limits section for more information.
+### AWS vs Fly
 
-<Note>Cloud routers running on Fly must be migrated before July 2, 2024.</Note>
+Serverless on AWS includes the same features as Serverless on Fly with improvements to reliability and performance. Serverless was previously hosted in Chicago but now runs on AWS in `us-east-1`. This means faster performance for customers running on AWS and especially those running subgraphs near the supported region. If you require a different AWS region, upgrade to Dedicated.
 
-### Who needs to migrate?
+With this new architecture, Serverless offers additional features of the Apollo Router like coprocessor, JWT validation, and more. Going forward, Serverless will generally support all Apollo Router features when technically feasible.
 
-Only customers using a cloud router that's running on Fly on the GraphOS Serverless plan need to migrate. You need to migrate if your graph variant shows "ord - Chicago" in the Cloud Router Details in the variant Overview:
+Serverless previously supported up to 100 transactions per second but actual throughput was typically less. Serverless now supports larger schemas and offers a consistent ten requests per second and up to 10 million requests per month for free.
 
-[todo: add screenshot of migration banner]
+If you require more throughput than 10 requests per second, <TrackableLink href="https://www.apollographql.com/contact-sales?type=dedicated&referrer=docs" eventName="content_contact_cloud">upgrade</TrackableLink> to Dedicated where you have complete control over scaling.
 
-## AWS vs Fly
+### Other changes
 
-Serverless on AWS includes the same features as Serverless on Fly with improvements to reliability and performance. Serverless was previously hosted in Chicago but now runs on AWS in `us-east-1`. This means faster performance for customers running on AWS and especially those running subgraphs near the supported region. If you require a different AWS region, upgrade to Cloud Dedicated.
-
-With this new architecture, Serverless now enables more features of Apollo Router like coprocessor, JWT validation, and more. Going forward, Serverless will generally support all Apollo Router features when technically feasible.
-
-Serverless previously supported up to 100 transactions per second but actual throughput was typically less. Serverless now supports larger schemas and offers a consistent 10 requests per second and up to 10 million requests per month for free. If you require more throughput than 10 requests per second, <TrackableLink href="https://www.apollographql.com/contact-sales?type=dedicated&referrer=docs" eventName="content_contact_cloud">upgrade</TrackableLink> to Cloud Dedicated where you have complete control over scaling.
-
-<Note>
-
-Unlike Serverless on Fly, Serverless cloud routers on AWS automatically [sleep and delete after periods of inactivity](./).
-
-</Note>
+Previously, Serverless variants would hibernate after two minutes of inactivity. In Serverless on AWS, this has been replaced with an [extended inactivity threshold](./#sleeping). Also new in Serverless, variants that have not received traffic for an extended period will automatically be [deleted](./#deleted). This process preserves a variant's schema but deletes the underlying cloud router.
 
 ## Timeline
 
-Serverless variants created on or after May 21, 2024 run on AWS and no action is required.
+| Date         | Event                                                                        |
+| ------------ | ---------------------------------------------------------------------------- |
+| May 21, 2024 | All new cloud routers begin running on AWS.                                  |
+| Jul 2, 2024  | Cloud routers still running on Fly.io are permanently [deleted](./#deleted). |
 
-Serverless variants created before May 21, 2024 need to be manually migrated from Fly to AWS from within GraphOS Studio.
+This timeline means:
 
-Serverless cloud routers still running on Fly as of Jul 2, 2024 will be permanently deleted.
-After this date, you'll have limited access to existing variants in Studio. For example, you'll be able to access your existing Schema after this date but will won't be able to recover your cloud router config or any secrets. You also won't be able to route traffic thru this variant any longer.
+- Serverless variants created on or after May 21, 2024 run on AWS and no action is required.
+- Serverless variants created before May 21, 2024 need to be manually migrated to AWS from in GraphOS Studio.
 
-Dedicated variants are not impacted by this change.
+<Note>
+
+All Dedicated cloud routers have always run on AWS.
+
+</Note>
+
+## Who needs to migrate?
+
+Only customers using a cloud router that's running on Fly on the GraphOS Serverless plan need to migrate. You need to migrate if your graph variant shows `ord - Chicago` in the **Cloud Router Details** on the graph's overview page.
+
+[todo: add screenshot of migration banner]
 
 ## How to migrate
 
-Migrating to AWS from Fly is as easy as creating a new variant or graph from within Studio.
+<Tip>
+
+Reach out to [cloud@apollographql.com](mailto:cloud@apollographql.com) with any migration questions. We're happy to help!
+
+</Tip>
+
+Migrating to AWS entails creating a new variant or graph in GraphOS Studio.
 
 <Note>
-  There is no way to reuse your existing graphref. You will receive a new
-  graphref and endpoint URL during migration.
-</Note>{' '}
+  There is no way to reuse your existing graph ref. You will receive a new graph
+  ref and endpoint URL during migration.
+</Note>
 
 <Tip>
   Don't delete your existing cloud router. You will need a copy of your schema
@@ -99,13 +106,3 @@ Finally, in certain circumstances Serverless on AWS offers less throughput than 
 ### 5. Plan your go live
 
 To go live, you'll need to update the endpoint URL your clients use to query your supergraph. You can access this updated endpoint from the Overview page of your variant.
-
-## FAQ
-
-### Can I still use cloud routers running on Fly?
-
-Existing cloud routers on Fly will continue to operate normally until Jul 2, 2024. After this period, cloud routers on Fly will be deleted. After this period, you'll still be able to recover your variant's schema but won't be able to process traffic.
-
-### Can I talk to someone?
-
-Yes! Reach out to [cloud@apollographql.com](mailto:cloud@apollographql.com) with questions about this migration. We're happy to help!

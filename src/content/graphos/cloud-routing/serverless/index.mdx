@@ -40,7 +40,7 @@ In addition to **Initializing**, **Running**, and **Error** [statuses](../#cloud
 | **Sleeping**                   | Your cloud router hasn't received requests for seven days and is now sleeping. [Learn more.](#sleeping)                                           |
 | **Waking**                     | Your cloud router was asleep and recently received requests. You may experience API downtime for approximately one minute and up to five minutes. |
 | **Sleeping, will delete soon** | Your cloud router has been asleep for almost 30 days and will be deleted soon.                                                                    |
-| **Deleted**                    | Your cloud router has been deleted but your studio graph variant remains. You can recreate a cloud router at anytime. [Learn more.](#deleted)     |
+| **Deleted**                    | Your cloud router has been deleted but the associated graph variant remains. You can recreate a cloud router at anytime. [Learn more.](#deleted)  |
 
 ### Sleeping
 
@@ -50,6 +50,7 @@ Sleeping cloud routers automatically wake up once they receive requests to the `
 
 ### Deleted
 
-If a cloud router has been sleeping for 30 days, Apollo automatically deletes it. Router deletion doesn't delete the graph's variant from GraphOS Studio, but it does spin down the infrastructure powering your cloud router. The variant's metrics aren't deleted, but are only retained for a day after deletion.
+If a cloud router has been sleeping for 30 days, Apollo automatically deletes it. Deleted routers can't serve requests.
+Router deletion doesn't delete the associated graph variant from GraphOS Studio, but it does spin down the infrastructure powering your cloud router.
 
-Router deletion includes any [secrets that were stored in GraphOS Studio](../configuration/#managing-secrets). These can't be recovered.
+You can access a deleted router's variant's schema but you can't recover the [router configuration](../configuration) or any [secrets that were stored in GraphOS Studio](../configuration/#managing-secrets). The variant's metrics are only retained for a day after deletion per the [Serverless data retention policy](https://www.apollographql.com/pricing#data-retention).
