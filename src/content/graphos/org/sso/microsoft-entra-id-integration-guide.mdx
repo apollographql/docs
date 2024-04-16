@@ -39,7 +39,7 @@ Setup requires at least a [Cloud Application Administrator](https://learn.micros
      src="../../img/sso/entra-create-application.jpg"
      alt="Application creation in Microsoft Entra ID"
      className="screenshot"
-     width="700"
+     width="450"
    />
 
 6. On the app's **Overview** page, select **2. Set up single sign-on**. You'll assign users and groups later.
@@ -51,7 +51,7 @@ Setup requires at least a [Cloud Application Administrator](https://learn.micros
 
    Click **Save**.
 
-9. In **Attributes & Claims**, ensure the following **claim names** have the corresponding **values**:
+9. In **Attributes & Claims**, ensure the following claim **names** have the corresponding **source attributes**:
 
    - `email`: `user.mail`
    - `given_name`: `user.givenname`
@@ -67,7 +67,23 @@ Setup requires at least a [Cloud Application Administrator](https://learn.micros
      width="700"
    />
 
+   Claims do not need a **Namespace**.
+
+   <img
+     src="../../img/sso/entra-manage-claim.jpg"
+     alt="Application creation in Microsoft Entra ID"
+     className="screenshot"
+     width="450"
+   />
+
 10. Under **SAML Certificates**, copy the **App Federation Metadata URL** into a text file for the next step.
+
+<img
+  src="../../img/sso/entra-saml-certificates.jpg"
+  alt="Application creation in Microsoft Entra ID"
+  className="screenshot"
+  width="700"
+/>
 
 ### Step 2. Send SAML metadata to Apollo
 
