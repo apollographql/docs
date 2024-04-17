@@ -52,13 +52,17 @@ See the [pricing page](https://www.apollographql.com/pricing/) for more informat
 
 ### Cloud router regions
 
-Cloud routing for Serverless plans is only available in Chicago, USA. Apollo's infrastructure has interconnects with major public cloud providers, so latency is minimal. For example, the latency between Chicago and AWS in Virginia is approximately 10 ms.
+Cloud routing for Serverless plans is only available in the us-east-1 AWS region. Dedicated cloud routers have a wider [variety of options](./dedicated#runs-on-aws). Region selection for cloud routers is only available on the Dedicated plan. <TrackableLink href="https://www.apollographql.com/contact-sales?type=dedicated&referrer=docs" eventName="content_contact_cloud">Contact Sales</TrackableLink> to learn more.
 
-Dedicated cloud routers have a wider [variety of options](./dedicated#runs-on-aws). Region selection for cloud routers is only available on the Dedicated plan. <TrackableLink href="https://www.apollographql.com/contact-sales?type=dedicated&referrer=docs" eventName="content_contact_cloud">Contact Sales</TrackableLink> to learn more.
+<Note>
+
+Serverless cloud routers were previously hosted in Chicago, Illinois. [Learn more.](./serverless/aws-migration/#change-summary)
+
+</Note>
 
 ## Cloud router status
 
-You can see your cloud router's current status in the GraphOS Studio from your supergraph's overview page on the right side under **Cloud Router Details**.
+You can see your cloud router's current status in the GraphOS Studio on the right side of your graph's **Overview** page under **Cloud Router Details**.
 
 <img
   className="screenshot"
@@ -118,7 +122,7 @@ Opting out of router updates to cloud routers isn't currently supported. Advance
 
 ## Security and compliance
 
-The entire GraphOS platform, including its cloud routing infrastructure, is SOC2 Type 2 certified.
+The entire GraphOS platform, including its cloud routing infrastructure, is SOC 2 Type 2 certified.
 Secrets are encrypted both in transit and at rest.
 Secrets are only available inside the runtime environment, and you have total control over when those secrets are resolved in configuration.
 
@@ -126,7 +130,7 @@ The Apollo Router (the underlying technology for cloud routing) has been [tested
 
 ### GraphOS Cloud on AWS
 
-GraphOS Cloud on AWS is a managed API solution. It runs the Apollo Router on AWS infrastructure to provide a high-performance, configurable GraphQL router. All Dedicated cloud routers run on AWS.
+GraphOS Cloud on AWS is a managed API solution. It runs the Apollo Router on AWS infrastructure to provide a high-performance, configurable GraphQL router.
 
 [Download an overview of GraphOS Cloud on AWS security and compliance practices](https://www.apollographql.com/trust/request-security-report).
 For more information on Apollo's compliance and security measures, visit the [Trust Center](https://www.apollographql.com/trust/compliance-and-security).
