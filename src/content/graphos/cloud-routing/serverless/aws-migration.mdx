@@ -19,7 +19,7 @@ Cloud routers on Fly.io will continue to operate until July 2, 2024. After this 
 
 Running Serverless cloud routers on AWS offers improved reliability. On Fly.io, cloud routers supported up to 100 transactions per second (TPS) but the actual throughput was typically less. On AWS, Serverless cloud routers support larger schemas and offer a consistent ten requests per second (RPS) of throughput and up to 10 million requests per month for free.
 
-Running on AWS also increases performance. On Fly.io, cloud routers were hosted in Chicago. On AWS, they will be hosted in `us-east-1`. This means faster performance, particularly for customers running subgraph servers on AWS, especially those running subgraphs near or in `us-east-1`.
+Running on AWS also increases performance. On Fly.io, cloud routers were hosted in Chicago. On AWS, they will be hosted in us-east-1. This means faster performance, particularly for customers running subgraph servers on AWS, especially those running subgraphs near or in us-east-1.
 
 With improved reliability and performance, Serverless can offer additional features of the Apollo Router, like [JWT authentication](/router/configuration/authn-jwt), [external coprocessors](/router/customizations/coprocessor), and more. Going forward, Serverless cloud routers will generally support all Apollo Router features when technically feasible.
 
@@ -43,7 +43,7 @@ With the extended inactivity threshold, cloud routers that haven't received traf
 
 ## Who needs to migrate?
 
-Only GraphOS Serverless plan customers using a cloud router running on Fly.io need to migrate. You can check if your cloud router runs on Fly.io by looking at the region under the **Cloud Router Details** on the graph's overview page. If the region is `ord - Chicago`, you need to migrate.
+Only GraphOS Serverless plan customers using a cloud router running on Fly.io need to migrate. You can check if your cloud router runs on Fly.io by looking at the region under the **Cloud Router Details** on the graph's overview page. If the region is **ord - Chicago**, you need to migrate.
 
 [To-do: add screenshot of migration banner]
 
