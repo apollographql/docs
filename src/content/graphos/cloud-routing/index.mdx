@@ -62,26 +62,28 @@ Serverless cloud routers were previously hosted in Chicago, Illinois. [Learn mor
 
 ## Cloud router status
 
-You can see your cloud router's current status in the GraphOS Studio on the right side of your graph's **Overview** page under **Cloud Router Details**.
+Cloud routers can have the following statuses:
 
-<img
-  className="screenshot"
-  alt="Graph overview page in GraphOS Studio"
-  src="../img/cloud-routing/cloud-router-overview.jpg"
-  width="700"
-/>
+| Status           | Description                                                                                                                                       |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Initializing** | Your cloud router is being created. This process may take up to five minutes. [Learn more.](#initializing)                                        |
+| **Running**      | Your graph is operating normally.                                                                                                                 |
+| **Error**        | Your cloud router is running, but a deployment recently failed. For more information on the failure, see the **Launches** page in GraphOS Studio. |
 
 <Note>
 
-Serverless routers have additional possible statuses, including **Sleeping** and **Deleted**. Learn more on the [Serverless overview page](./serverless/#serverless-router-status).
+Serverless routers have additional statuses, including **Sleeping** and **Deleted**. Learn more on the [Serverless overview page](./serverless/#serverless-router-status).
 
 </Note>
 
-| Status           | Description                                                                                                                                               |
-| ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Initializing** | Your cloud router is being created. This process may take up to five minutes. [Learn more.](#initializing)                                                |
-| **Running**      | Your graph is operating normally.                                                                                                                         |
-| **Error**        | Your cloud router is running, but a deployment recently failed. For more information on the failure, see the graph's **Launches** page in GraphOS Studio. |
+You can see your cloud router's status in GraphOS Studio on the associated graph's **Overview** page, under the graph ref and to the right of the router's region.
+
+<img
+  className="screenshot"
+  alt="Variant overview page in GraphOS Studio"
+  src="../img/cloud-routing/graph-overview.jpg"
+  width="700"
+/>
 
 ### Initializing
 
