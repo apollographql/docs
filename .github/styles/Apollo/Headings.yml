@@ -8,6 +8,7 @@ indicators:
   - ":"
 exceptions:
   - About Apollo's reference
+  - Amazon
   - API
   - Apollo Client DevTools
   - Apollo Client Web
