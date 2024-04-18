@@ -35,15 +35,15 @@
       [
         "preview"
       ]],
-      "AWS Lattice configuration":[ "/dedicated/lattice",
+      "Configure Amazon VPC Lattice":[ "/dedicated/lattice",
       [
         "preview"
       ]],
-      "AWS Lattice troubleshooting":[ "/dedicated/lattice-troubleshooting",
+      "Amazon VPC Lattice troubleshooting":[ "/dedicated/lattice-troubleshooting",
       [
         "preview"
       ]],
-      "Migration":[ "/dedicated/migration",
+      "Migrate to Dedicated":[ "/dedicated/migration",
       [
         "preview"
       ]]
