@@ -4,7 +4,7 @@ subtitle: Learn about Apollo-managed cloud routers
 description: Learn about Apollo's managed cloud routers designed to efficiently route requests to your GraphQL APIs, ensuring optimal performance and scalability.
 ---
 
-When you create a cloud supergraph with GraphOS Studio, GraphOS automatically provisions and manages a _cloud router_ that acts as an entry point to your GraphQL APIs. In this architecture, individual GraphQL APIs are called _subgraphs_.
+When you create a cloud supergraph, GraphOS provisions and manages a _cloud router_. Routers act as entry points to your GraphQL APIs. In this architecture, individual GraphQL APIs are called _subgraphs_.
 
 ```mermaid
 flowchart LR;
@@ -23,7 +23,7 @@ flowchart LR;
   class clients secondary;
 ```
 
-Clients send operations to your router's public endpoint instead directly to your subgraphs.
+Clients send operations to your router's public endpoint instead of your subgraphs.
 
 GraphOS only hosts the runtime for your supergraph's cloud router. GraphQL servers for your subgraphs are still hosted in your infrastructure.
 
@@ -76,7 +76,7 @@ Serverless routers have additional statuses, including **Sleeping** and **Delete
 
 </Note>
 
-You can see your cloud router's status in GraphOS Studio on the associated graph's **Overview** page, under the graph ref and to the right of the router's region.
+You can see your cloud router's status in GraphOS Studio on the associated graph's **Overview** page.
 
 <img
   className="screenshot"
@@ -87,9 +87,9 @@ You can see your cloud router's status in GraphOS Studio on the associated graph
 
 ### Initializing
 
-Your router is provisioned automatically whenever you create a cloud supergraph in GraphOS Studio or whenever you create a new variant for an existing cloud supergraph. Each variant has its own distinct router.
+Your router is automatically provisioned whenever you create a cloud supergraph in GraphOS Studio or whenever you create a new variant for an existing cloud supergraph. Each variant has its own distinct router.
 
-When you first create a variant, the router provisioning process can take a few minutes. If this process hasn't completed yet for a particular variant, an **INITIATING ENDPOINT** label is shown at the top of the variant's page in Studio:
+When you first create a variant, the router provisioning process can take a few minutes. While this process completes, an **INITIATING ENDPOINT** label appears at the top of the variant's page in Studio:
 
 <img
   className="screenshot"
@@ -114,7 +114,7 @@ A router deployment might fail due to a platform incident or schema composition 
 
 Apollo manages the version of Apollo Router deployed to cloud routers. It ensures that newly released versions are deployed within 30 days of release. Some minor and patch versions may be skipped.
 
-Router releases go through rigorous testing before deployment on GraphOS Cloud. During the deployment of new versions, an Apollo engineer actively oversees the process and rolls back any cloud routers that fail to boot up. While some edge cases may arise—for example, a query planner update could result in slightly degraded performance—router updates should not disrupt your supergraphs.
+Router releases go through rigorous testing before deployment on GraphOS Cloud. An Apollo engineer oversees deployment. If any cloud routers fail to boot up, they roll back to a previous version. While some edge cases may arise—for example, a query planner update could result in slightly degraded performance—router updates should not disrupt your supergraphs.
 
 <Note>
 
@@ -126,13 +126,13 @@ Opting out of router updates to cloud routers isn't currently supported. Advance
 
 The entire GraphOS platform, including its cloud routing infrastructure, is SOC 2 Type 2 certified.
 Secrets are encrypted both in transit and at rest.
-Secrets are only available inside the runtime environment, and you have total control over when those secrets are resolved in configuration.
+Secrets are only available inside the runtime environment. You have total control over when those secrets are resolved in configuration.
 
 The Apollo Router (the underlying technology for cloud routing) has been [tested and audited by Doyensec](https://doyensec.com/resources/Doyensec_Apollo_Report_Q22022_v4_AfterRetest.pdf).
 
 ### GraphOS Cloud on AWS
 
-GraphOS Cloud on AWS is a managed API solution. It runs the Apollo Router on AWS infrastructure to provide a high-performance, configurable GraphQL router.
+GraphOS Cloud on AWS is a managed API solution. It runs the Apollo Router on AWS infrastructure to provide a high-performance, configurable router.
 
 [Download an overview of GraphOS Cloud on AWS security and compliance practices](https://www.apollographql.com/trust/request-security-report).
 For more information on Apollo's compliance and security measures, visit the [Trust Center](https://www.apollographql.com/trust/compliance-and-security).
