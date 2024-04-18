@@ -6,33 +6,33 @@ description: Learn how serverless cloud routing works
 
 <Note>
 
-Serverless is moving to AWS. If you initialized your serverless cloud before May 21, 2024, you may need to take steps to migrate. [Learn more](./aws-migration).
+Serverless is moving to AWS. If you initialized your Serverless cloud router before May 21, 2024, you need to migrate to keep your cloud router running. [Learn more](./aws-migration).
 
 </Note>
 
-GraphOS Serverless cloud routers run on shared infrastructure that Apollo manages. Serverless is designed for demos, proof-of-concepts, and small-scale production apps that don't require more than ten requests per second (RPS).
+GraphOS Serverless cloud routers run on shared infrastructure that Apollo manages. Serverless is for demos, proof-of-concepts, and small production apps that don't need more than ten requests per second (RPS).
 
 ## Serverless compute limitations
 
-Serverless capacity can be exhausted in the following circumstances:
+The following circumstances can exhaust Serverless capacity:
 
-- Complex schemas can exceed available machine memory for Serverless cloud routers. For example, Serverless cloud routers don't support schemas with over 1,000 input types.
-- Too many simultaneous requests can cause your Serverless cloud router to return `429` errors to your clients.
+- Complex schemas can exceed available machine memory for Serverless routers. For example, Serverless routers don't support schemas with over 1,000 input types.
+- Too many requests at once can overload your Serverless cloud router. It will return 429 errors to your clients.
 
-Because Serverless has limited underlying compute resources, certain workloads might require you to upgrade to Dedicated. <TrackableLink href="https://www.apollographql.com/contact-sales?type=dedicated&referrer=docs" eventName="content_contact_cloud">Contact Sales</TrackableLink> for a free trial.
+Because of these limitations, certain workloads might require you to upgrade to Dedicated. <TrackableLink href="https://www.apollographql.com/contact-sales?type=dedicated&referrer=docs" eventName="content_contact_cloud">Contact Sales</TrackableLink> for a free trial.
 
-## Automatic deletion of unused cloud routers
+## Automatic deletion of unused routers
 
-Apollo automatically deletes variants of Serverless cloud supergraphs that receive zero requests over 30 consecutive days.
+When a Serverless cloud router goes 30 days without a request, Apollo deletes the router.
 
-- Apollo will notify you via email whenever a Serverless variant is approaching this 30-day limit.
-- To prevent deletion, execute at least one GraphQL operation on the variant's router before the 30-day limit.
+- Apollo will email you when a Serverless cloud router is nearing this 30-day limit.
+- To avoid deletion, run a GraphQL operation on the router before the 30-day limit.
 
-Learn more about Serverless cloud router statuses preceding and including deletion in the next section.
+Learn more about Serverless router statuses leading up to deletion in the next section.
 
 ## Serverless router status
 
-In addition to **Initializing**, **Running**, and **Error** [statuses](../#cloud-router-status) which all cloud routers can have, Serverless cloud routers have these additional statuses:
+All cloud routers can have **Initializing**, **Running**, and **Error** [statuses](../#cloud-router-status). Serverless cloud routers have these additional statuses:
 
 | Status                         | Description                                                                                                                                       |
 | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -44,7 +44,7 @@ In addition to **Initializing**, **Running**, and **Error** [statuses](../#cloud
 
 ### Sleeping
 
-Serverless cloud routers that haven't received requests for seven days automatically go to sleep. While sleeping, your cloud router can't serve requests.
+Serverless cloud routers go to sleep if they haven't received requests for seven days. While sleeping, your cloud router can't serve requests.
 
 Sleeping cloud routers automatically wake up once they receive requests. While waking, your cloud router can't process incoming requests. It typically takes about one minute to wake up.
 
@@ -53,4 +53,4 @@ Sleeping cloud routers automatically wake up once they receive requests. While w
 If a cloud router has been sleeping for 30 days, Apollo automatically deletes it. Deleted routers can't serve requests.
 Router deletion doesn't delete the associated graph variant from GraphOS Studio, but it does spin down the infrastructure powering your cloud router.
 
-You can access a deleted router's variant's schema but you can't recover the [router configuration](../configuration) or any [secrets that were stored in GraphOS Studio](../configuration/#managing-secrets). The variant's metrics are only retained for a day after deletion per the [Serverless data retention policy](https://www.apollographql.com/pricing#data-retention).
+You can access a deleted router's variant's schema but you can't recover the [router configuration](../configuration) or any [secrets that were stored in GraphOS Studio](../configuration/#managing-secrets). The variant's metrics are only kept for a day after deletion per the [Serverless data retention policy](https://www.apollographql.com/pricing#data-retention).

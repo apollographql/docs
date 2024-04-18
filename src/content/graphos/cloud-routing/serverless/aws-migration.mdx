@@ -10,40 +10,36 @@ This page only applies to Serverless cloud routers created before May 21, 2024. 
 
 </Note>
 
-Cloud Serverless is transitioning cloud providers from Fly.io to AWS to improve reliability and performance.
+Serverless is switching cloud providers from Fly.io to AWS to improve reliability and performance.
 Serverless cloud routers created before May 21, 2024, run on Fly.io infrastructure, and you must migrate them in GraphOS Studio.
 
 Cloud routers on Fly.io will continue to operate until July 2, 2024. After this date, any cloud routers on Fly.io will be permanently deleted.
 
 ## What's changing?
 
-Running Serverless cloud routers on AWS offers improved reliability. On Fly.io, cloud routers supported up to 100 transactions per second (TPS) but the actual throughput was typically less. On AWS, Serverless cloud routers support larger schemas and offer a consistent ten requests per second (RPS) of throughput and up to 10 million requests per month for free.
+Running Serverless cloud routers on AWS offers improved reliability. On AWS, Serverless cloud routers support larger schemas and offer a consistent ten requests per second (RPS) of throughput.
 
-Running on AWS also increases performance. On Fly.io, cloud routers were hosted in Chicago. On AWS, they will be hosted in us-east-1. This means faster performance, particularly for customers running subgraph servers on AWS, especially those running subgraphs near or in us-east-1.
+Running on AWS also increases performance. On Fly.io, cloud routers were hosted in Chicago. On AWS, they will be hosted in us-east-1. This means faster performance, particularly for customers running subgraph servers on AWS, especially if they are in or near us-east-1.
 
-With improved reliability and performance, Serverless can offer additional features of the Apollo Router, like [JWT authentication](/router/configuration/authn-jwt), [external coprocessors](/router/customizations/coprocessor), and more. Going forward, Serverless cloud routers will generally support all Apollo Router features when technically feasible.
+With improved reliability and performance, Serverless can offer additional GraphOS router features. Refer to the [pricing page](https://www.apollographql.com/pricing#graphos-router) for the full list of supported features.
 
-If you require greater than 10 RPS throughput or hosting in a different AWS region, <TrackableLink href="https://www.apollographql.com/contact-sales?type=dedicated&referrer=docs" eventName="content_contact_cloud">upgrade to Dedicated</TrackableLink>.
+If you need more than 10 RPS throughput or hosting in a different AWS region, consider upgrading to Dedicated.
 
 ### Inactivity period changes
 
-Previously, Serverless cloud routers would sleep after two minutes of inactivity. Sleeping routers can't serve requests and must wake up to do so. With Serverless on AWS, cloud routers only sleep after seven days of inactivity.
+On Fly.io, Serverless cloud routers sleep after two minutes of inactivity. Sleeping routers can't serve requests and must wake up to do so. On AWS, cloud routers sleep after seven days of inactivity.
 
-With the extended inactivity threshold, cloud routers that haven't received traffic will automatically be deleted after thirty days. Deletion preserves a cloud router's associated variant's schema but deletes the underlying cloud router. Learn more in [Serverless router status](./#serverless-router-status).
+After an additional 30 days of inactivity, Apollo deletes Serverless cloud routers.
+Deletion preserves a cloud router's associated variant's schema but deletes the underlying cloud router. Learn more in [Serverless router status](./#serverless-router-status).
 
-### Change summary
-
-|                                        | Fly.io Hosted                   | AWS Hosted                            |
-| -------------------------------------- | ------------------------------- | ------------------------------------- |
-| Throughput                             | up to 100 TPS                   | up to 10 RPS                          |
-| Free operations <br/> (no change)      | up to 10M requests/month        | up to 10M requests/month              |
-| Hosting location                       | `ord` <br/> (Chicago, Illinois) | `us-east-1` <br/> (Northern Virginia) |
-| Inactivity period <br/>before sleep    | Two minutes                     | Seven days                            |
-| Inactivity period <br/>before deletion | Sixty days                      | Thirty days                           |
+|                                        | Fly.io Hosted | AWS Hosted |
+| -------------------------------------- | ------------- | ---------- |
+| Inactivity period <br/>before sleep    | Two minutes   | Seven days |
+| Inactivity period <br/>before deletion | 60 days       | 37 days    |
 
 ## Who needs to migrate?
 
-Only GraphOS Serverless plan customers using a cloud router running on Fly.io need to migrate. You can check if your cloud router runs on Fly.io by checking its region on the **Overview** page in GraphOS Studio. If the region is **ord - Chicago**, you need to migrate.
+Only GraphOS Serverless plan customers using Fly.io hosted cloud router need to migrate. You can check if your cloud router runs on Fly.io by checking its region on the **Overview** page in GraphOS Studio. If the region is **ord - Chicago**, you need to migrate.
 
 [To-do: add screenshot of migration banner]
 
@@ -55,11 +51,11 @@ Don't hesitate to contact [cloud@apollographql.com](mailto:cloud@apollographql.c
 
 ## How to migrate
 
-Migrating to AWS entails creating a new variant or graph in GraphOS Studio. Once you create a new variant or graph, you receive a new graph ref and endpoint URL to redirect client traffic to. There is no way to reuse your existing graph ref.
+Migrating to AWS entails creating a new variant or graph in GraphOS Studio. Once you create a new variant or graph, you receive a new graph ref and endpoint URL to redirect client traffic to. You can't reuse an existing graph ref.
 
 <Caution>
 
-Only delete your existing cloud router after you've created your new cloud router. To migrate, you need a copy of your schema and subgraph URLs.
+Only delete your existing cloud router after you've created your new cloud router.
 
 </Caution>
 
@@ -69,7 +65,7 @@ Only delete your existing cloud router after you've created your new cloud route
 
 To get started, create a new graph or variant in GraphOS Studio. You need at least one subgraph during this process. See the [getting started](/graphos/quickstart/cloud/#from-an-existing-account) for details on creating a new graph.
 
-Creating a new graph or variant generates a new graph ref and endpoint URL. You'll need to update wherever these values are used, including in your Rover commands and client codebase.
+Creating a new graph or variant generates a new graph ref and endpoint URL. You need to update these values wherever you use them. This includes the graph ref in your Rover commands and endpoint URL in your client codebase.
 
 ### Step 2. Add subgraphs
 
@@ -77,7 +73,7 @@ If you have multiple subgraphs, [add each subgraph](/graphos/quickstart/next-ste
 
 ### Step 3. Setup router configuration
 
-Copy and paste your old router's configuration into your new one. You can access a Serverless cloud router configuration from **Settings > Cloud Router > Router configuration YAML** in GraphOS Studio.
+Copy and paste your old router's configuration into your new one. You can access a Serverless cloud router configuration in GraphOS Studio under **Settings > Cloud Router > Router configuration YAML**.
 
 <img
   className="screenshot"
@@ -90,20 +86,20 @@ Router configuration defines important values like CORS policies and header prop
 
 <Note>
 
-If you have [secrets](../configuration/#managing-secrets) in your old cloud router configuration, you must also set them in your new configuration. Secrets can't be read once saved.
+If you have [secrets](../configuration/#managing-secrets) in your old cloud router config, you must also set them in your new one. Secrets can't be read once saved.
 
 </Note>
 
 ### Step 4. Test
 
-Once you've added all your subgraphs and set up your cloud router configuration, try running a few sample operations from [Explorer](../../explorer/).
+After you've added all your subgraphs and set up your cloud router config, try running a few sample operations from [Explorer](../../explorer/).
 You may need to enable [subgraph errors](/graphos/cloud-routing/configuration#subgraph-error-inclusion) to troubleshoot if your operations don't execute.
 
-In certain circumstances, Serverless on AWS offers less throughput than Fly.io, so you should simulate production traffic before going live. If you exceed throughput limits, your clients will receive 429 errors.
+Simulate production traffic before going live. With extremely complex schemas or operations, Serverless on AWS may offer less throughput than Fly.io. If you exceed throughput limits, your clients will receive 429 errors.
 
 <Note>
 
-It isn't possible to increase throughput on Serverless. Consider using [Cloud Dedicated](../dedicated/).
+It isn't possible to increase throughput on Serverless. Consider upgrading to [Dedicated](../dedicated/).
 
 </Note>
 
