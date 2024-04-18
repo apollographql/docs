@@ -1,7 +1,7 @@
 ---
 title: Migrate Serverless routers to AWS
-subtitle: Learn how to migrate from Fly.io to AWS cloud routing
-description: Learn how to migrate from Fly.io to AWS cloud routing
+subtitle: Learn how to migrate Serverless cloud routers from Fly.io to AWS
+description: Migrate your Apollo GraphOS Serverless cloud router to AWS for improved reliability and performance. Learn about changes, migration steps, and who needs to migrate.
 ---
 
 <Note>
@@ -12,12 +12,11 @@ This page only applies to Serverless cloud routers created before May 21, 2024. 
 
 Serverless is switching cloud providers from Fly.io to AWS to improve reliability and performance.
 Serverless cloud routers created before May 21, 2024, run on Fly.io infrastructure, and you must migrate them in GraphOS Studio.
-
 Cloud routers on Fly.io will continue to operate until July 2, 2024. After this date, any cloud routers on Fly.io will be permanently deleted.
 
 ## What's changing?
 
-Running Serverless cloud routers on AWS offers improved reliability. On AWS, Serverless cloud routers support larger schemas and offer a consistent ten requests per second (RPS) of throughput.
+Running Serverless cloud routers on AWS offers improves reliability. On AWS, Serverless cloud routers can support larger schemas and offer a consistent ten requests per second (RPS) of throughput.
 
 Running on AWS also increases performance. On Fly.io, cloud routers were hosted in Chicago. On AWS, they will be hosted in us-east-1. This means faster performance, particularly for customers running subgraph servers on AWS, especially if they are in or near us-east-1.
 
@@ -34,7 +33,7 @@ Deletion preserves a cloud router's associated variant's schema but deletes the 
 
 |                                        | Fly.io Hosted | AWS Hosted |
 | -------------------------------------- | ------------- | ---------- |
-| Inactivity period <br/>before sleep    | Two minutes   | Seven days |
+| Inactivity period <br/>before sleep    | 2 minutes     | 7 days     |
 | Inactivity period <br/>before deletion | 60 days       | 37 days    |
 
 ## Who needs to migrate?
@@ -51,7 +50,7 @@ Don't hesitate to contact [cloud@apollographql.com](mailto:cloud@apollographql.c
 
 ## How to migrate
 
-Migrating to AWS entails creating a new variant or graph in GraphOS Studio. Once you create a new variant or graph, you receive a new graph ref and endpoint URL to redirect client traffic to. You can't reuse an existing graph ref.
+Migration entails creating a new variant or graph in GraphOS Studio. Once you create a new variant or graph, you receive a new graph ref and endpoint URL to redirect client traffic to. You can't reuse an existing graph ref.
 
 <Caution>
 
