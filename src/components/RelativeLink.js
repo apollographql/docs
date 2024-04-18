@@ -25,11 +25,16 @@ export const PrimaryLink = props => {
       }}
       {...props}
     >
-      <Box whiteSpace="initial" wordBreak="break-word" display="inline">
+      <Box
+        whiteSpace="initial"
+        wordBreak="break-word"
+        display="inline"
+        as="span"
+      >
         {props.children}
       </Box>
       {opensNewTab && (
-        <Box marginLeft="5px" display="inline-flex">
+        <Box marginLeft="5px" display="inline-flex" as="span">
           <OutlinkSmallIcon />
         </Box>
       )}
