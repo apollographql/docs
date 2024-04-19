@@ -18,13 +18,14 @@ Serverless cloud routers running on Fly.io infrastructure must be migrated in Gr
 You need to migrate if:
 
 - Your organization is on a Serverless plan AND
-- You have graphs created before May 21, 2024
+- You have graphs created before May 21, 2024 AND
+- Any of your graphs' cloud routers run on Fly.io
 
-Cloud routers on Fly.io will continue to operate until July 2, 2024. After this date, any cloud routers on Fly.io will be permanently deleted and graphs using them will no longer respond to requests.
-
-You can check if any of your graphs need to be migrated from their **Overview** page in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content). If you see the migration alert, you need to migrate.
+You can check if any of your graph's use cloud routers running on Fly.io in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content. Go to a graph variant's **Overview** page and look for the migration alert.
 
 [To-do: add screenshot of migration banner]
+
+Cloud routers on Fly.io will continue to operate until July 2, 2024. After this date, any cloud routers on Fly.io will be permanently deleted and graphs using them will no longer respond to requests.
 
 <Tip>
 
@@ -39,7 +40,7 @@ With improved reliability and performance, Serverless can offer additional Graph
 
 ### Reliable throughput
 
-On AWS, Serverless cloud routers will be able to process a consistent 10 requests per second (RPS) of throughput. Cloud routers will also be able to consistently support larger schemas.
+On AWS, Serverless cloud routers will be able to process a consistent 10 requests per second (RPS) of throughput.
 
 <Note>
 
@@ -49,7 +50,7 @@ If you need more than 10 RPS throughput or have [complex schemas](./#serverless-
 
 ### Hosting region
 
-On Fly.io, cloud routers were hosted in Chicago. On AWS, they will be hosted in us-east-1. This means faster performance, particularly for customers running subgraph servers on AWS, especially if they are in or near us-east-1.
+On Fly.io, cloud routers were hosted in Chicago (ord). On AWS, they will be hosted in Northern Virginia (us-east-1). This means faster performance, particularly for customers running subgraph servers on AWS, especially if they are in or near us-east-1.
 
 <Note>
 
@@ -83,7 +84,12 @@ Don't delete the variant that houses your existing cloud router until you've cre
 
 ### Step 1. Create a new graph
 
-To get started, create a new graph or variant in GraphOS Studio. You need at least one subgraph during this process. See the [getting started](/graphos/quickstart/cloud/#from-an-existing-account) for details on creating a new graph.
+To get started, create a new graph or variant in GraphOS Studio.
+All Serverless cloud routers created on or after May 21, 2024 automatically run on AWS.
+
+[To-do: Screenshot showing AWS router]
+
+You need at least one subgraph during this process. See the [getting started](/graphos/quickstart/cloud/#from-an-existing-account) for details on creating a new graph.
 
 Creating a new graph or variant generates a new graph ref and endpoint URL. You need to update these values wherever you use them. This includes the graph ref in your Rover commands and endpoint URL in your client codebase.
 
@@ -115,7 +121,7 @@ If you have [secrets](../configuration/#managing-secrets) in your old cloud rout
 After you've added all your subgraphs and set up your cloud router config, try running a few sample operations from [Explorer](../../explorer/).
 You may need to enable [subgraph errors](/graphos/cloud-routing/configuration#subgraph-error-inclusion) to troubleshoot if your operations don't execute.
 
-Simulate production traffic before going live. With extremely complex schemas or operations, Serverless on AWS may offer less throughput than Fly.io. If you exceed throughput limits, your clients will receive 429 errors.
+Simulate production traffic before going live. Serverless on AWS offers less throughput than on Fly.io. If you exceed throughput limits, your clients will receive 429 errors.
 
 <Note>
 

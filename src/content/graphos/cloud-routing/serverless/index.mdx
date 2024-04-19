@@ -24,9 +24,7 @@ Because of these limitations, certain workloads might require you to upgrade to 
 ## Automatic deletion of unused routers
 
 When a Serverless cloud router goes 30 days without a request, Apollo deletes the router.
-
-- Apollo will email you when a Serverless cloud router is nearing this 30-day limit.
-- To avoid deletion, run a GraphQL operation on the router before the 30-day limit.
+To avoid deletion, run a GraphQL operation on the router before the 30-day limit.
 
 Learn more about Serverless router statuses leading up to deletion in the next section.
 
@@ -53,4 +51,4 @@ Sleeping cloud routers automatically wake up once they receive requests. While w
 If a cloud router has been sleeping for 30 days, Apollo automatically deletes it.
 Router deletion doesn't delete the associated graph variant from GraphOS Studio, but it does spin down the infrastructure powering your cloud router.
 
-You can access a deleted router's variant's schema but you can't recover the [router configuration](../configuration) or any [secrets that were stored in GraphOS Studio](../configuration/#managing-secrets). The variant's metrics are only kept for a day after deletion per the [Serverless data retention policy](https://www.apollographql.com/pricing#data-retention).
+You can access a deleted router's [config](../configuration) and its variant's schema, but you can't recover any [secrets that were stored in GraphOS Studio](../configuration/#managing-secrets). The variant's metrics are only kept for a day after deletion per the [Serverless data retention policy](https://www.apollographql.com/pricing#data-retention).
