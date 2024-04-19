@@ -23,7 +23,7 @@ You need to migrate if:
 Graphs created before May 21, 2024 use cloud routers running on Fly.io infrastructure.
 Cloud routers on Fly.io will continue to operate until July 2, 2024. After this date, any cloud routers on Fly.io will be permanently deleted.
 
-You can check if any particular graph needs to be migrated from its **Overview** page in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content). If you see the migration alert, you need to migrate.
+You can check if any of your graphs need to be migrated from their **Overview** page in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content). If you see the migration alert, you need to migrate.
 
 [To-do: add screenshot of migration banner]
 
@@ -35,15 +35,30 @@ Don't hesitate to contact [cloud@apollographql.com](mailto:cloud@apollographql.c
 
 ## What's changing?
 
-Running Serverless cloud routers on AWS offers improves reliability. On AWS, Serverless cloud routers can support larger schemas and offer a consistent ten requests per second (RPS) of throughput.
-
-Running on AWS also increases performance. On Fly.io, cloud routers were hosted in Chicago. On AWS, they will be hosted in us-east-1. This means faster performance, particularly for customers running subgraph servers on AWS, especially if they are in or near us-east-1.
-
+Along with improved reliability and performance, the move to AWS also includes changes to hosting region and inactivity periods.
 With improved reliability and performance, Serverless can offer additional GraphOS router features. Refer to the [pricing page](https://www.apollographql.com/pricing#graphos-router) for the full list of supported features.
 
-If you need more than 10 RPS throughput or hosting in a different AWS region, consider upgrading to Dedicated.
+### Reliable throughput
 
-### Inactivity period changes
+On AWS, Serverless cloud routers will be able to process a consistent 10 requests per second (RPS) of throughput. Cloud routers will also be able to consistently support larger schemas.
+
+<Note>
+
+If you need more than 10 RPS throughput or have [complex schemas](./#serverless-compute-limitations), consider upgrading to Dedicated.
+
+</Note>
+
+### Hosting region
+
+On Fly.io, cloud routers were hosted in Chicago. On AWS, they will be hosted in us-east-1. This means faster performance, particularly for customers running subgraph servers on AWS, especially if they are in or near us-east-1.
+
+<Note>
+
+Dedicated offers a [wider variety of AWS regions](../dedicated#runs-on-aws).
+
+</Note>
+
+### Inactivity periods
 
 On Fly.io, Serverless cloud routers sleep after two minutes of inactivity. Sleeping routers can't serve requests and must wake up to do so. On AWS, cloud routers sleep after seven days of inactivity.
 
