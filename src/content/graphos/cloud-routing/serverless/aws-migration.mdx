@@ -11,8 +11,27 @@ This page only applies to Serverless cloud routers created before May 21, 2024. 
 </Note>
 
 Serverless is switching cloud providers from Fly.io to AWS to improve reliability and performance.
-Serverless cloud routers created before May 21, 2024, run on Fly.io infrastructure, and you must migrate them in GraphOS Studio.
+Serverless cloud routers running on Fly.io infrastructure must be migrated in GraphOS Studio.
+
+## Who needs to migrate?
+
+You need to migrate if:
+
+- Your organization is on a Serverless plan AND
+- You have graphs created before May 21, 2024
+
+Graphs created before May 21, 2024 use cloud routers running on Fly.io infrastructure.
 Cloud routers on Fly.io will continue to operate until July 2, 2024. After this date, any cloud routers on Fly.io will be permanently deleted.
+
+You can check if any particular graph needs to be migrated from its **Overview** page in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content). If you see the migration alert, you need to migrate.
+
+[To-do: add screenshot of migration banner]
+
+<Tip>
+
+Don't hesitate to contact [cloud@apollographql.com](mailto:cloud@apollographql.com) with any migration questions or concerns.
+
+</Tip>
 
 ## What's changing?
 
@@ -35,18 +54,6 @@ Deletion preserves a cloud router's associated variant's schema but deletes the 
 | -------------------------------------- | ------------- | ---------- |
 | Inactivity period <br/>before sleep    | 2 minutes     | 7 days     |
 | Inactivity period <br/>before deletion | 60 days       | 37 days    |
-
-## Who needs to migrate?
-
-Only GraphOS Serverless plan customers using Fly.io hosted cloud router need to migrate. You can check if your cloud router runs on Fly.io by checking its region on the **Overview** page in GraphOS Studio. If the region is **ord - Chicago**, you need to migrate.
-
-[To-do: add screenshot of migration banner]
-
-<Tip>
-
-Don't hesitate to contact [cloud@apollographql.com](mailto:cloud@apollographql.com) with any migration questions or concerns.
-
-</Tip>
 
 ## How to migrate
 
