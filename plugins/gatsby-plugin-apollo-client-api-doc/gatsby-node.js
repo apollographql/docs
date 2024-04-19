@@ -13,8 +13,8 @@ exports.sourceNodes = async (api, options) => {
   const tempDir = fs.mkdtempSync('api-model');
   const {files} = /** @type {{files:string[]}} */ (options);
 
-  for (let file of files) {
-    try {
+  try {
+    for (let file of files) {
       if (file.includes('://')) {
         console.info('downloading api doc from url', file);
         const request = await fetch(file);
@@ -28,9 +28,9 @@ exports.sourceNodes = async (api, options) => {
       } else {
         console.info('api doc file not found, skipping', file);
       }
-    } finally {
-      fs.rmSync(tempDir, {recursive: true});
     }
+  } finally {
+    fs.rmSync(tempDir, {recursive: true});
   }
 };
 
