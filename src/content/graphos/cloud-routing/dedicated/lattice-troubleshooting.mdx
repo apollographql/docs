@@ -1,7 +1,7 @@
 ---
-title: AWS Lattice troubleshooting guide
-subtitle: Troubleshoot common issues and errors with AWS Lattice
-description: Troubleshoot common issues and errors with AWS Lattice and an Apollo Cloud Dedicated router
+title: Amazon VPC Lattice troubleshooting guide
+subtitle: Troubleshoot common issues and errors with Amazon VPC Lattice
+description: Troubleshoot common issues and errors with Amazon VPC Lattice and an Apollo Cloud Dedicated router
 ---
 
 <DedicatedPreview />
@@ -35,7 +35,7 @@ If you encounter an error or not listed below and need assistance, don't hesitat
 
 ### Overriding `host` headers
 
-AWS Lattice relies on the `host` header to properly secure and route requests. You can't change this header on Cloud Dedicated. Instead, consider using a header like `x-host`. You can rewrite an incoming `host` header as `x-host` through your [router configuration](./quickstart#step-3-inspect-and-configure-your-cloud-router) YAML:
+Amazon VPC Lattice relies on the `host` header to properly secure and route requests. You can't change this header on Cloud Dedicated. Instead, consider using a header like `x-host`. You can rewrite an incoming `host` header as `x-host` through your [router configuration](./quickstart#step-3-inspect-and-configure-your-cloud-router) YAML:
 
 ```yaml title="router.yaml"
 # ...other configuration...
