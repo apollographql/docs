@@ -11,24 +11,26 @@ const reactPreset = require('@babel/preset-react');
 /** @type {import("gatsby").GatsbyNode['sourceNodes']} */
 exports.sourceNodes = async (api, options) => {
   const tempDir = fs.mkdtempSync('api-model');
-  try {
-    let {file} = /** @type {{file:string}} */ (options);
+  const {files} = /** @type {{files:string[]}} */ (options);
 
-    if (file.includes('://')) {
-      console.info('downloading api doc from url', file);
-      const request = await fetch(file);
-      const contents = await request.text();
-      file = path.join(tempDir, 'api.json');
-      fs.writeFileSync(file, contents);
+  for (let file of files) {
+    try {
+      if (file.includes('://')) {
+        console.info('downloading api doc from url', file);
+        const request = await fetch(file);
+        const contents = await request.text();
+        file = path.join(tempDir, 'api.json');
+        fs.writeFileSync(file, contents);
+      }
+      if (fs.existsSync(file)) {
+        console.info('loading api doc from file', file);
+        loadApiDoc(file, api);
+      } else {
+        console.info('api doc file not found, skipping', file);
+      }
+    } finally {
+      fs.rmSync(tempDir, {recursive: true});
     }
-    if (fs.existsSync(file)) {
-      console.info('loading api doc from file', file);
-      loadApiDoc(file, api);
-    } else {
-      console.info('api doc file not found, skipping', file);
-    }
-  } finally {
-    fs.rmSync(tempDir, {recursive: true});
   }
 };
 
