@@ -20,8 +20,7 @@ You need to migrate if:
 - Your organization is on a Serverless plan AND
 - You have graphs created before May 21, 2024
 
-Graphs created before May 21, 2024 use cloud routers running on Fly.io infrastructure.
-Cloud routers on Fly.io will continue to operate until July 2, 2024. After this date, any cloud routers on Fly.io will be permanently deleted.
+Cloud routers on Fly.io will continue to operate until July 2, 2024. After this date, any cloud routers on Fly.io will be permanently deleted and graphs using them will no longer respond to requests.
 
 You can check if any of your graphs need to be migrated from their **Overview** page in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content). If you see the migration alert, you need to migrate.
 
@@ -72,7 +71,7 @@ Deletion preserves a cloud router's associated variant's schema but deletes the 
 
 ## How to migrate
 
-Unfortunately, we are unable to offer an in-place migration. You will need to create a new variant on your graph, or a new graph entirely. Once you create this new variant or graph, you will receive a new graph ref and endpoint URL which you can redirect your client traffic to. You can't reuse an existing graph ref.
+Apollo is unable to offer an in-place migration. To migrate, you need to create a new variant on your graph, or create a new graph entirely. Once you create this new variant or graph, you will receive a new graph ref and endpoint URL which you can redirect your client traffic to.
 
 <Caution>
 

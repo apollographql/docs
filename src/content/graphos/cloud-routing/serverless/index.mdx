@@ -50,7 +50,7 @@ Sleeping cloud routers automatically wake up once they receive requests. While w
 
 ### Deleted
 
-If a cloud router has been sleeping for 30 days, Apollo automatically deletes it. Deleted routers can't serve requests.
+If a cloud router has been sleeping for 30 days, Apollo automatically deletes it.
 Router deletion doesn't delete the associated graph variant from GraphOS Studio, but it does spin down the infrastructure powering your cloud router.
 
 You can access a deleted router's variant's schema but you can't recover the [router configuration](../configuration) or any [secrets that were stored in GraphOS Studio](../configuration/#managing-secrets). The variant's metrics are only kept for a day after deletion per the [Serverless data retention policy](https://www.apollographql.com/pricing#data-retention).
