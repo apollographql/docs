@@ -4,6 +4,47 @@ subtitle: Monitor, restrict, and remove access to subgraphs
 description: To-do
 ---
 
+## Amazon VPC Lattice monitoring
+
+To validate that traffic is flowing to your private subgraphs, you can use the metrics and access logs emitted by Amazon VPC Lattice:
+
+1. In the AWS Console for your region of choice, go to the VPC service page.
+
+2. In the menu on the left, scroll down and open **Services** in the **VPC Lattice** section.
+
+<img
+  className="screenshot"
+  alt="Amazon VPC service page left menu"
+  src="../../img/cloud-dedicated/vpc-lattice-menu.jpg"
+  width="175px"
+/>
+
+3. Click on the name of the Lattice service used by the subgraph in question.
+
+<img
+  className="screenshot"
+  alt="Amazon VPC Lattice service"
+  src="../../img/cloud-dedicated/vpc-lattice-service.png"
+/>
+
+4. Click on the **Monitoring** tab.
+
+From there, you can configure and enable access logs for your Amazon VPC Lattice service. You can also navigate to the Metrics tab to get a quick overview if traffic is flowing to your private subgraphs.
+
+<img
+  className="screenshot"
+  alt="Amazon VPC Lattice access logs"
+  src="../../img/cloud-dedicated/vpc-lattice-access-logs.png"
+/>
+
+<img
+  className="screenshot"
+  alt="Amazon VPC Lattice metrics"
+  src="../../img/cloud-dedicated/vpc-lattice-metrics.png"
+/>
+
+You can also use [Amazon CloudWatch metrics emitted by Amazon VPC Lattice](https://docs.aws.amazon.com/vpc-lattice/latest/ug/monitoring-cloudwatch.html) to set up dashboards and alarms to understand the health of your private subgraphs.
+
 ## Further restrict access to private subgraphs
 
 Once you configure an Amazon VPC Lattice service to accept traffic from the Apollo AWS Organization, it is protected by multiple security layers:
@@ -59,26 +100,7 @@ If you aren't using the Apollo Terraform module, follow these steps:
 - [Europe (Ireland) - eu-west-1](https://eu-west-1.console.aws.amazon.com/ram/home?region=eu-west-1)
 
 2. In the menu on the left, scroll down and open **Services** in the **VPC Lattice** section.
-
-{' '}
-
-<img
-  className="screenshot"
-  alt="Amazon VPC service page left menu"
-  src="../../img/cloud-dedicated/vpc-lattice-menu.jpg"
-  width="175px"
-/>
-
-3. Click the name of the Lattice service whose authorization policy you want to configure.
-
-{' '}
-
-<img
-  className="screenshot"
-  alt="Amazon VPC service page"
-  src="../../img/cloud-dedicated/select-lattice-service.jpg"
-/>
-
+3. Click the Lattice service whose authorization policy you want to configure.
 4. In the **Service access** section, update your authorization policy. You can use the following as an example&mdash;make sure to replace the account ID and graph ref with your own.
 
 ```json {13-17} showLineNumbers=false
@@ -129,26 +151,7 @@ To remove Cloud Dedicated access to private subgraphs, you need to remove both r
 - [Europe (Ireland) - eu-west-1](https://eu-west-1.console.aws.amazon.com/ram/home?region=eu-west-1)
 
 2. In the menu on the left, click **Resource shares** in the **Shared by me** section.
-
-{' '}
-
-<img
-  className="screenshot"
-  alt="Amazon VPC service page left menu"
-  src="../../img/cloud-dedicated/vpc-lattice-menu.jpg"
-  width="175px"
-/>
-
-3. Select the resource share(s) associated with Cloud Dedicated and click the **Delete** button in the top right corner.
-
-{' '}
-
-<img
-  className="screenshot"
-  alt="Amazon VPC resource share page"
-  src="../../img/cloud-dedicated/create-resource-share.jpg"
-/>
-
+3. Select the resource share(s) associated with the Apollo AWS organization and click the **Delete** button in the top right corner.
 4. Click **Delete** in the dialog that appears.
 
 ### Remove service network associations
@@ -159,29 +162,8 @@ To remove Cloud Dedicated access to private subgraphs, you need to remove both r
 - [Europe (Ireland) - eu-west-1](https://eu-west-1.console.aws.amazon.com/ram/home?region=eu-west-1)
 
 2. In the menu on the left, scroll down and open **Services** in the **VPC Lattice** section.
-
-{' '}
-
-<img
-  className="screenshot"
-  alt="Amazon VPC service page left menu"
-  src="../../img/cloud-dedicated/vpc-lattice-menu.jpg"
-  width="175px"
-/>
-
-3. Click the name of the Lattice service you want to disconnect.
-
-{' '}
-
-<img
-  className="screenshot"
-  alt="Amazon VPC service page"
-  src="../../img/cloud-dedicated/select-lattice-service.jpg"
-/>
-
+3. Click the Lattice service you want to disconnect.
 4. In the **Service network associations**, select the **graphos-cloud** service name.
-
-{' '}
 
 <img
   className="screenshot"
@@ -191,8 +173,6 @@ To remove Cloud Dedicated access to private subgraphs, you need to remove both r
 
 5. Click the **Actions** button in the top right of that section, and click **Delete network associations**.
 
-{' '}
-
 <img
   className="screenshot"
   alt="Amazon VPC service page"
@@ -201,73 +181,4 @@ To remove Cloud Dedicated access to private subgraphs, you need to remove both r
 
 6. Follow the confirmation instructions and click **Delete**.
 
-{' '}
-
-<img
-  className="screenshot"
-  alt="Amazon VPC service page"
-  src="../../img/cloud-dedicated/delete-network-associations-final.jpg"
-/>
-
-Deleting the network association can take a few seconds. Once the network association is deleted, Cloud Dedicated cannot contact your subgraphs anymore.
-
-## Amazon VPC Lattice monitoring
-
-To validate that traffic is flowing to your private subgraphs, you can use the metrics and access logs emitted by Amazon VPC Lattice:
-
-1. In the AWS Console for your region of choice, go to the VPC service page.
-
-2. In the menu on the left, scroll down and open **Services** in the **VPC Lattice** section.
-
-{' '}
-
-<img
-  className="screenshot"
-  alt="Amazon VPC service page left menu"
-  src="../../img/cloud-dedicated/vpc-lattice-menu.jpg"
-  width="175px"
-/>
-
-3. Click on the name of the Lattice service used by the subgraph in question.
-
-{' '}
-
-<img
-  className="screenshot"
-  alt="Amazon VPC Lattice service"
-  src="../../img/cloud-dedicated/vpc-lattice-service.png"
-/>
-
-4. Click on the **Monitoring** tab.
-
-From there, you can configure and enable access logs for your Amazon VPC Lattice service. You can also navigate to the Metrics tab to get a quick overview if traffic is flowing to your private subgraphs.
-
-<img
-  className="screenshot"
-  alt="Amazon VPC Lattice access logs"
-  src="../../img/cloud-dedicated/vpc-lattice-access-logs.png"
-/>
-
-{' '}
-
-<img
-  className="screenshot"
-  alt="Amazon VPC Lattice metrics"
-  src="../../img/cloud-dedicated/vpc-lattice-metrics.png"
-/>
-
-You can also use [Amazon CloudWatch metrics emitted by Amazon VPC Lattice](https://docs.aws.amazon.com/vpc-lattice/latest/ug/monitoring-cloudwatch.html) to set up dashboards and alarms to understand the health of your private subgraphs.
-
-## Frequently asked questions
-
-#### How does Cloud Dedicated prevent other users from accessing my private subgraphs?
-
-When you associate a resource share for the first time, Cloud Dedicated will scan the Lattice services contained in the resource share to retrieve their ARNs and domain names.
-
-When you add a private subgraph to one of your supergraphs, Cloud Dedicated will check that the domain for that subgraph matches one of the Lattice services you have associated with your Apollo Organization.
-
-As a second line of defense, supergraphs use AWS IAM permissions and [SigV4](https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-authenticating-requests.html) to only allow traffic to the subgraphs in the same Apollo organization.
-
-#### I want to use Amazon VPC Lattice within my own organization. Can I still use Lattice for private subgraphs?
-
-Yes. Cloud Dedicated will associate your Lattice services with its own service network, and you can associate a Lattice service with multiple service networks. You can also create multiple Lattice target groups or Lattice services for the same load balancer, IP addresses, Lambda functions, or other resources supported by Lattice target groups.
+Deleting the network association can take a few seconds. Once the network association is deleted, GraphOS cannot contact your subgraphs anymore.

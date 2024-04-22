@@ -29,8 +29,6 @@ flowchart LR;
 
 This guide shows how to create Lattice services and share them with the Apollo AWS organization that hosts cloud routers.
 
-You can only use Lattice for subgraphs in the same AWS region as your cloud router. If you need to run subgraphs in different AWS regions or run your workloads in a region not yet supported by Cloud Dedicated, please <TrackableLink href="https://www.apollographql.com/contact-sales?type=dedicated&referrer=docs" eventName="content_contact_cloud">let us know</TrackableLink>.
-
 You can provision VPC Lattice with the [Apollo Terraform module](https://github.com/apollographql/terraform-graphos-aws).
 Refer to the [module's README](https://github.com/apollographql/terraform-graphos-aws#apollo-graphos-cloud-private-subgraphs-module) for more information.
 
@@ -40,20 +38,29 @@ Using Amazon VPC Lattice incurs costs outside of your Cloud Dedicated spend. Ref
 
 </Note>
 
-## Overview
+
+## How GraphOS ensures subgraph security through Lattice
+
+When you first share Lattice services with GraphOS, it scans the Lattice services to retrieve their ARNs and domain names.
+When you add a private subgraph to one of your cloud supergraphs, GraphOS checks that the subgraph's domain matches one of the Lattice services associated with your Apollo organization.
+
+As a second line of defense, supergraphs use AWS IAM permissions and [SigV4](https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-authenticating-requests.html) to only allow traffic to the subgraphs in the same Apollo organization.
+
+## Configuration overview
 
 To allow Cloud Dedicated to send traffic to private subgraphs in an Amazon VPC, you must:
 
 1. Create one or more Lattice target groups.
 2. Create a Lattice service.
-3. Share the service with the Apollo AWS Organization.
-4. Link the service to a GraphOS router.
+3. Share the service with the Apollo AWS Organization via a resource share.
+4. Link the resource share to a GraphOS router.
 
-This guide offers step-by-step instructions for each stage.
+This guide offers instructions for each step.
 
 <Note>
 
-The AWS Console interface may differ slightly from the screenshots in this guide.
+- You can use Amazon VPC Lattice in your organization for other uses than subgraph hosting. GraphOS associates your Lattice services with its own service network, and you can associate a Lattice service with multiple service networks. You can also create multiple Lattice target groups or Lattice services for the same load balancer, IP addresses, Lambda functions, or other resources supported by Lattice target groups.
+- You can only use Lattice for subgraphs in the same AWS region as your cloud router. If you need to run subgraphs in different AWS regions or run your workloads in a region not yet supported by Cloud Dedicated, please <TrackableLink href="https://www.apollographql.com/contact-sales?type=dedicated&referrer=docs" eventName="content_contact_cloud">let us know</TrackableLink>.
 
 </Note>
 
@@ -249,7 +256,7 @@ The last step is associating your resource share a particular graph in GraphOS.
 
 </Note>
 
-## Step 4. Link service to router
+## Step 4. Link resource share to router
 
 In Step 3, you shared your Lattice services with the Apollo AWS organization. In this step, you link the service to a particular cloud router.
 The cloud router can then route requests from clients.
