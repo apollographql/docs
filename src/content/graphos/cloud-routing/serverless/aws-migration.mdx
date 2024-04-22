@@ -35,7 +35,7 @@ Don't hesitate to contact [cloud@apollographql.com](mailto:cloud@apollographql.c
 
 ## What's changing?
 
-The move to AWS will improve reliability and performance. It also changes the cloud hosting region and inactivity periods.
+The move to AWS improves reliability and performance. It also changes the cloud hosting region and inactivity periods.
 With improved reliability and performance, Serverless can offer additional GraphOS router features. Refer to the [pricing page](https://www.apollographql.com/pricing#graphos-router) for the full list of supported features.
 
 ### Reliable throughput
@@ -50,7 +50,7 @@ If you need more than 10 RPS throughput or have [complex schemas](./#serverless-
 
 ### Hosting region
 
-On Fly.io, cloud routers were hosted in Chicago (ord). On AWS, they will be hosted in Northern Virginia (us-east-1). This means faster performance, particularly for customers running subgraph servers on AWS, especially if they are in or near us-east-1.
+On Fly.io, cloud routers were hosted in Chicago (ord). On AWS, they're hosted in Northern Virginia (us-east-1). This means faster performance, particularly for customers running subgraph servers on AWS, especially if they are in or near us-east-1.
 
 <Note>
 
@@ -72,7 +72,7 @@ Deletion preserves a cloud router's associated variant's schema but deletes the 
 
 ## How to migrate
 
-Apollo is unable to offer an in-place migration. To migrate, you need to create a new variant on your graph, or create a new graph entirely. Once you create this new variant or graph, you will receive a new graph ref and endpoint URL which you can redirect your client traffic to.
+Apollo is unable to offer an in-place migration. To migrate, you need to create a new variant on your graph, or create a new graph entirely. Once you create this new variant or graph, you receive a new graph ref and endpoint URL that you must redirect your client traffic to.
 
 <Caution>
 
@@ -126,7 +126,7 @@ If you have [secrets](../configuration/#managing-secrets) in your old cloud rout
 After you've added all your subgraphs and set up your cloud router config, try running a few sample operations from [Explorer](../../explorer/).
 You may need to enable [subgraph errors](/graphos/cloud-routing/configuration#subgraph-error-inclusion) to troubleshoot if your operations don't execute.
 
-Simulate production traffic before going live. Serverless on AWS offers less but more reliable throughput than on Fly.io. If you exceed throughput limits, your clients will receive 429 errors.
+Simulate production traffic before going live. Serverless on AWS offers less but more reliable throughput than on Fly.io. If you exceed throughput limits, your clients receive 429 errors.
 
 <Note>
 
