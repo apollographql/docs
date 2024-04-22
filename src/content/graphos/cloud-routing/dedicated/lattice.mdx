@@ -6,18 +6,16 @@ description: Configure Amazon VPC Lattice to send traffic to and receive traffic
 
 <DedicatedPreview />
 
-Cloud Dedicated uses [Amazon VPC Lattice](https://aws.amazon.com/vpc/lattice/) to send traffic to your subgraphs running in an Amazon VPC without exposing them to the internet. With Lattice, you can define services and share them with the Apollo AWS organization.
-
-You can provision VPC Lattice with the [Apollo Terraform module](https://github.com/apollographql/terraform-graphos-aws). Refer to the [module's README](https://github.com/apollographql/terraform-graphos-aws#apollo-graphos-cloud-private-subgraphs-module) for more information.
+Cloud Dedicated uses [Amazon VPC Lattice](https://aws.amazon.com/vpc/lattice/) to send traffic to your subgraphs running in an Amazon VPC without exposing them to the internet.
 
 ```mermaid
 flowchart LR;
   clients(Clients);
-  subgraph "Apollo Cloud";
-    router(["Cloud <br/> Dedicated"]);
+  subgraph "GraphOS Cloud";
+    router(["Cloud <br/> Router"]);
   end;
   resourceshare["AWS RAM <br/> Resource <br/> Share"]
-  subgraph "AWS Virtual Private Cloud"
+  subgraph "Amazon Virtual Private Cloud"
     lattice[Amazon VPC <br/> Lattice <br/> Service]
     service1[Subgraph 1];
     service2[Subgraph 2];
@@ -31,6 +29,10 @@ flowchart LR;
   clients -->|Requests| router;
 ```
 
+This guide shows how to create Lattice services and share them with the Apollo AWS organization that hosts cloud routers.
+
+You can provision VPC Lattice with the [Apollo Terraform module](https://github.com/apollographql/terraform-graphos-aws). Refer to the [module's README](https://github.com/apollographql/terraform-graphos-aws#apollo-graphos-cloud-private-subgraphs-module) for more information.
+
 <Note>
 
 - You can only use Lattice for subgraphs in the same AWS region as your cloud router. If you need to run subgraphs in different AWS regions or run your workloads in a region not yet supported by Cloud Dedicated, please <TrackableLink href="https://www.apollographql.com/contact-sales?type=dedicated&referrer=docs" eventName="content_contact_cloud">let us know</TrackableLink>.
@@ -38,7 +40,7 @@ flowchart LR;
 
 </Note>
 
-## Create and share an Amazon VPC Lattice service
+## Overview
 
 To allow Cloud Dedicated to send traffic to your private subgraphs, you must:
 
@@ -55,16 +57,16 @@ The AWS Console interface may differ slightly from the screenshots in this guide
 
 </Note>
 
-### Step 1. Create Amazon VPC Lattice target groups
+## Step 1. Create Amazon VPC Lattice target groups
 
 A Lattice _target group_ is a collection of targets, or compute resources, that run your application or service. You must set these up so your Lattice services can route requests accurately. Check out the [AWS documentation](https://docs.aws.amazon.com/vpc-lattice/latest/ug/target-groups.html) to learn more.
 
 1. In the AWS Console for your region of choice, go to the VPC service page:
 
-- [US East (N. Virginia) - `us-east-1`](https://us-east-1.console.aws.amazon.com/vpc/home?region=us-east-1)
-- [Europe (Ireland) - `eu-west-1`](https://eu-west-1.console.aws.amazon.com/vpc/home?region=eu-west-1)
+- [US East (N. Virginia) - us-east-1](https://us-east-1.console.aws.amazon.com/vpc/home?region=us-east-1)
+- [Europe (Ireland) - eu-west-1](https://eu-west-1.console.aws.amazon.com/vpc/home?region=eu-west-1)
 
-2. In the menu on the left, scroll down and open **Target groups** in the **VPC Lattice** section.
+2. In the menu on the left, scroll down and open **VPC Lattice > Target groups**.
 
   <img
     className="screenshot"
@@ -123,14 +125,14 @@ A Lattice _target group_ is a collection of targets, or compute resources, that 
 
 Congratulations! You've created an Amazon VPC Lattice target group. Repeat this process for each resource you want to share with Cloud Dedicated.
 
-### Step 2. Create an Amazon VPC Lattice service
+## Step 2. Create an Amazon VPC Lattice service
 
 1. In the AWS Console for your region, go to the VPC service page:
 
-- [US East (N. Virginia) - `us-east-1`](https://us-east-1.console.aws.amazon.com/vpc/home?region=us-east-1)
-- [Europe (Ireland) - `eu-west-1`](https://eu-west-1.console.aws.amazon.com/vpc/home?region=eu-west-1)
+- [US East (N. Virginia) - us-east-1](https://us-east-1.console.aws.amazon.com/vpc/home?region=us-east-1)
+- [Europe (Ireland) - eu-west-1](https://eu-west-1.console.aws.amazon.com/vpc/home?region=eu-west-1)
 
-2. In the menu on the left, scroll down and open **Services** in the **VPC Lattice** section.
+2. In the menu on the left, scroll down and open **VPC Lattice > Services**.
 
   <img
     className="screenshot"
@@ -147,7 +149,7 @@ Congratulations! You've created an Amazon VPC Lattice target group. Repeat this 
     src="../../img/cloud-dedicated/create-service.jpg"
   />
 
-4. In the **Identifiers** section, give the name, description, and tags of your choice for the service.
+4. In the **Identifiers** section, enter the name, description, and tags the service.
 
   <img
     className="screenshot"
@@ -155,7 +157,7 @@ Congratulations! You've created an Amazon VPC Lattice target group. Repeat this 
     src="../../img/cloud-dedicated/service-identifiers.jpg"
   />
 
-5. In the **Custom domain configuration** section, leave the **Specify a custom domain configuration** checkbox **unselected**.
+5. In the **Custom domain configuration** section, leave the **Specify a custom domain configuration** checkbox unchecked.
 
   <img
     className="screenshot"
@@ -184,15 +186,15 @@ Congratulations! You've created an Amazon VPC Lattice target group. Repeat this 
   }
   ```
 
-7. (Optional) For extra security, you can audit all the traffic coming to your subgraph by enabling access logs in the **Monitoring** section.
-
-8. Once you've configured the service, click **Next** on the bottom right of the page.
+7. (Optional) For extra security, you can audit all the traffic coming to your subgraph by enabling **Access logs** in the **Monitoring** section.
 
   <img
     className="screenshot"
     alt="Amazon VPC service page"
     src="../../img/cloud-dedicated/service-monitoring.jpg"
   />
+
+8. Once you've configured the service, click **Next** on the bottom right of the page.
 
 9. Define routing information to your target groups. Set the protocol to **HTTPS** and the port to **443**.
 
@@ -242,14 +244,14 @@ Congratulations! You've created an Amazon VPC Lattice target group. Repeat this 
 
 Congratulations! You've now created a Lattice service for your subgraphs.
 
-### Step 3. Share the Amazon VPC Lattice service with Cloud Dedicated
+## Step 3. Share the Amazon VPC Lattice service with Cloud Dedicated
 
 1. In the AWS Console for your region of choice, go to the Resource Access Manager service page:
 
 - [US East (N. Virginia) - us-east-1](https://us-east-1.console.aws.amazon.com/ram/home?region=us-east-1)
 - [Europe (Ireland) - eu-west-1](https://eu-west-1.console.aws.amazon.com/ram/home?region=eu-west-1)
 
-2. In the menu on the left, click **Resource shares** in the **Shared by me** section.
+2. In the menu on the left, scroll down and open **Shared by me > Resource shares**.
 
   <img
     className="screenshot"
@@ -274,7 +276,7 @@ Congratulations! You've now created a Lattice service for your subgraphs.
     src="../../img/cloud-dedicated/resource-share-name.jpg"
   />
 
-5. In the **Resources section**, select the resource type **VPC Lattice Services**.
+5. In the **Resources section**, select the **VPC Lattice Services** resource type.
 6. Select all the Lattice services that contain your subgraphs.
 
   <img
@@ -329,14 +331,14 @@ The last step is associating your resource share with the Apollo Organization ac
 
 </Note>
 
-### Step 4. Associate your resource share with your Apollo Organization
+## Step 4. Associate your resource share with your Apollo Organization
 
 1. In the AWS Console for your region of choice, go to the Resource Access Manager service page:
 
 - [US East (N. Virginia) - us-east-1](https://us-east-1.console.aws.amazon.com/ram/home?region=us-east-1)
 - [Europe (Ireland) - eu-west-1](https://eu-west-1.console.aws.amazon.com/ram/home?region=eu-west-1)
 
-2. In the menu on the left, click **Resource shares** in the **Shared by me** section.
+2. In the menu on the left, scroll down and open **Shared by me > Resource shares**.
 
   <img
     className="screenshot"
@@ -360,9 +362,9 @@ The last step is associating your resource share with the Apollo Organization ac
     src="../../img/cloud-dedicated/resource-share-summary.jpg"
   />
 
-Setup from this point differs based on whether this is [your first private subgraph](#setup-for-new-private-subgraphs) or if you're adding this [service to an existing graph](#setup-for-existing-graphs).
+The next steps differ based on whether this is [your first private subgraph](#setup-for-new-private-subgraphs) or if you're adding this [service to an existing graph](#setup-for-existing-graphs).
 
-#### Setup for new private subgraphs
+### Setup for new private subgraphs
 
 1. Go to [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content).
 2. Click the **Create New Graph** tab at the top right of the screen.
@@ -408,7 +410,7 @@ When your AWS resource is set to private, it isn't accessible by external servic
 
 Congratulations! You've now created a GraphOS cloud router with a private subgraph.
 
-#### Setup for existing graphs
+### Setup for existing graphs
 
 1. Go to the graph you want to connect in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content).
 2. From the left sidebar, open the **Subgraphs** tab of your graph.
@@ -436,243 +438,8 @@ When your AWS resource is set to private, it isn't accessible by external servic
 
 Congratulations! You've now added a private subgraph to your GraphOS cloud router.
 
-## Further restrict access to private subgraphs
+## Next steps
 
-Once you configure an Amazon VPC Lattice service to accept traffic from the Apollo AWS Organization, it is protected by multiple security layers:
+After you've shared your VPC lattice services with Apollo's AWS organization, you may want to set up monitoring to validate that traffic is flowing. Refer to the [Lattice management page](./lattice-management) for more information on this, how to further restrict access to subgraphs, and remove resource shares.
 
-- The Amazon VPC Lattice service network only allows traffic with a valid signature and over HTTPS.
-- The Lattice service's configured authorization policy ensures traffic only comes from Apollo's AWS accounts. (This is the authorization policy you configured in step 6 [when creating your Lattice service](#step-2-create-an-aws-vpc-lattice-service).)
-- Apollo cloud router provisioning compares subgraphs in a supergraph's configuration against the list of known private subgraphs in its Apollo account. It refuses to create or update cloud routers with unknown private subgraphs.
-- Cloud routers only have permission to invoke private subgraphs listed in their supergraph configuration.
-
-You can further restrict access to your private subgraphs by configuring additional [conditions](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_condition.html) in your service's authorization policy.
-Specifically, you can add conditions to restrict traffic based on your organization's Apollo account ID or your supergraph's graph ref.
-
-
-### Update Lattice service authorization policy
-
-To update a Lattice service's authorization policy with additional restrictions, you first need the **Apollo account ID** and/or **graph ref** to which you want to restrict subgraph access.
-
-#### Obtain account ID and graph ref
-
-- <TrackableLink href="https://www.apollographql.com/contact-sales?type=dedicated&referrer=docs" eventName="content_contact_cloud">Contact Apollo</TrackableLink> to obtain your account ID. Specify you would like the account ID needed to update your Lattice service's authorization policy.
-
-  <Note>
-
-  The Apollo account ID you specify in your authorization policy is not the Apollo organization ID you can find in GraphOS Studio.
-
-  </Note>
-
-- You can find your supergraph's graph ref in your Apollo account:
-    - Log in to [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content).
-    - Click on a graph variant on the **Graphs** page. The graph ref will be at the top of the page—click it to copy.
-
-
-If you want to provide subgraph access to multiple Apollo accounts or supergraphs, you can specify multiple account IDs and graph refs when updating your policy.
-
-#### Update policy
-
-If you are using the [Apollo Terraform module](https://github.com/apollographql/terraform-graphos-aws), you can set the  [`apollo_account_ids` and `apollo_graph_refs` variables](https://github.com/apollographql/terraform-graphos-aws#usage) to update your authorization policy. Provide one or more Apollo account IDs or graph refs:
-
-```txt showLineNumbers=false disableCopy=true
-apollo_account_ids = ["my_account_id", "another_account_id"]
-apollo_graph_refs  = ["my-graph@my-variant", "another-graph@my-variant"]
-```
-
-If you aren't using the Apollo Terraform module, follow these steps:
-
-1. In the AWS Console for your region of choice, go to the VPC service page:
-
-- [US East (N. Virginia) - us-east-1](https://us-east-1.console.aws.amazon.com/ram/home?region=us-east-1)
-- [Europe (Ireland) - eu-west-1](https://eu-west-1.console.aws.amazon.com/ram/home?region=eu-west-1)
-
-2. In the menu on the left, scroll down and open **Services** in the **VPC Lattice** section.
-
-  <img
-    className="screenshot"
-    alt="Amazon VPC service page left menu"
-    src="../../img/cloud-dedicated/vpc-lattice-menu.jpg"
-    width="175px"
-  />
-
-3. Click the name of the Lattice service whose authorization policy you want to configure.
-
-  <img
-    className="screenshot"
-    alt="Amazon VPC service page"
-    src="../../img/cloud-dedicated/select-lattice-service.jpg"
-  />
-
-4. In the **Service access** section, update your authorization policy. You can use the following as an example&mdash;make sure to replace the account ID and graph ref with your own.
-
-  ```json {13-17} showLineNumbers=false
-  {
-    "Version": "2012-10-17",
-    "Statement": [
-      {
-        "Effect": "Allow",
-        "Principal": "*",
-        "Action": "vpc-lattice-svcs:Invoke",
-        "Resource": "*",
-        "Condition": {
-          "ForAnyValue:StringLike": {
-            "aws:PrincipalOrgPaths": "o-9vaxczew6u/*/ou-leyb-l9pccq2t/ou-leyb-fvqz35yo/*"
-          },
-          // Restrict traffic based on Apollo account IDs or graphRefs
-          "StringEquals": {
-            "aws:PrincipalTag/Apollo:accountId": "my_account_id_xezf34",
-            "aws:PrincipalTag/Apollo:graphRef": "my-graph@my-variant"
-          }
-        }
-      }
-    ]
-  }
-  ```
-
-If there are multiple supergraphs which should have access to the subgraph, use a comma-separated string of graph refs for `aws:PrincipalTag/Apollo:graphRef`. For example:
-
-```json showLineNumbers=false disableCopy=true
-"aws:PrincipalTag/Apollo:graphRef": "my-graph@my-variant, my-graph@another-variant, another-graph@another-variant"
-```
-
-Similarly, you can use a comma-separated string of account IDs for `aws:PrincipalTag/Apollo:accountId`:
-
-```json showLineNumbers=false disableCopy=true
-"aws:PrincipalTag/Apollo:accountId": "my_account_id_xezf34", "my_account_id_dehs56"
-```
-
-## Remove access to private subgraphs
-
-To remove Cloud Dedicated access to private subgraphs, you need to remove both resource shares and service network associations. Keep in mind that any existing supergraph that sends traffic to your private subgraphs will stop working once you remove access.
-
-### Remove resource shares
-
-1. In the AWS Console for your region of choice, go to the Resource Access Manager service page:
-
-- [US East (N. Virginia) - us-east-1](https://us-east-1.console.aws.amazon.com/ram/home?region=us-east-1)
-- [Europe (Ireland) - eu-west-1](https://eu-west-1.console.aws.amazon.com/ram/home?region=eu-west-1)
-
-2. In the menu on the left, click **Resource shares** in the **Shared by me** section.
-
-  <img
-    className="screenshot"
-    alt="Amazon VPC service page left menu"
-    src="../../img/cloud-dedicated/vpc-lattice-menu.jpg"
-    width="175px"
-  />
-
-3. Select the resource share(s) associated with Cloud Dedicated and click the **Delete** button in the top right corner.
-
-  <img
-    className="screenshot"
-    alt="Amazon VPC resource share page"
-    src="../../img/cloud-dedicated/create-resource-share.jpg"
-  />
-
-4. Click **Delete** in the dialog that appears.
-
-### Remove service network associations
-
-1. In the AWS Console for your region of choice, go to the VPC service page:
-
-- [US East (N. Virginia) - us-east-1](https://us-east-1.console.aws.amazon.com/ram/home?region=us-east-1)
-- [Europe (Ireland) - eu-west-1](https://eu-west-1.console.aws.amazon.com/ram/home?region=eu-west-1)
-
-2. In the menu on the left, scroll down and open **Services** in the **VPC Lattice** section.
-
-  <img
-    className="screenshot"
-    alt="Amazon VPC service page left menu"
-    src="../../img/cloud-dedicated/vpc-lattice-menu.jpg"
-    width="175px"
-  />
-
-3. Click the name of the Lattice service you want to disconnect.
-
-  <img
-    className="screenshot"
-    alt="Amazon VPC service page"
-    src="../../img/cloud-dedicated/select-lattice-service.jpg"
-  />
-
-4. In the **Service network associations**, select the **graphos-cloud** service name.
-
-  <img
-    className="screenshot"
-    alt="Amazon VPC service page"
-    src="../../img/cloud-dedicated/graphos-service.jpg"
-  />
-
-5. Click the **Actions** button in the top right of that section, and click **Delete network associations**.
-
-  <img
-    className="screenshot"
-    alt="Amazon VPC service page"
-    src="../../img/cloud-dedicated/delete-network-associations.jpg"
-  />
-
-6. Follow the confirmation instructions and click **Delete**.
-
-  <img
-    className="screenshot"
-    alt="Amazon VPC service page"
-    src="../../img/cloud-dedicated/delete-network-associations-final.jpg"
-  />
-
-Deleting the network association can take a few seconds. Once the network association is deleted, Cloud Dedicated cannot contact your subgraphs anymore.
-
-## Amazon VPC Lattice monitoring
-
-To validate that traffic is flowing to your private subgraphs, you can use the metrics and access logs emitted by Amazon VPC Lattice:
-
-1. In the AWS Console for your region of choice, go to the VPC service page.
-
-2. In the menu on the left, scroll down and open **Services** in the **VPC Lattice** section.
-
-  <img
-    className="screenshot"
-    alt="Amazon VPC service page left menu"
-    src="../../img/cloud-dedicated/vpc-lattice-menu.jpg"
-    width="175px"
-  />
-
-3. Click on the name of the Lattice service used by the subgraph in question.
-
-  <img
-    className="screenshot"
-    alt="Amazon VPC Lattice service"
-    src="../../img/cloud-dedicated/vpc-lattice-service.png"
-  />
-
-4. Click on the **Monitoring** tab.
-
-From there, you can configure and enable access logs for your Amazon VPC Lattice service. You can also navigate to the Metrics tab to get a quick overview if traffic is flowing to your private subgraphs.
-
-  <img
-    className="screenshot"
-    alt="Amazon VPC Lattice access logs"
-    src="../../img/cloud-dedicated/vpc-lattice-access-logs.png"
-  />
-
-  <img
-    className="screenshot"
-    alt="Amazon VPC Lattice metrics"
-    src="../../img/cloud-dedicated/vpc-lattice-metrics.png"
-  />
-
-You can also use [Amazon CloudWatch metrics emitted by Amazon VPC Lattice](https://docs.aws.amazon.com/vpc-lattice/latest/ug/monitoring-cloudwatch.html) to set up dashboards and alarms to understand the health of your private subgraphs.
-
-## Frequently asked questions
-
-#### How does Cloud Dedicated prevent other users from accessing my private subgraphs?
-
-When you associate a resource share for the first time, Cloud Dedicated will scan the Lattice services contained in the resource share to retrieve their ARNs and domain names.
-
-When you add a private subgraph to one of your supergraphs, Cloud Dedicated will check that the domain for that subgraph matches one of the Lattice services you have associated with your Apollo Organization.
-
-As a second line of defense, supergraphs use AWS IAM permissions and [SigV4](https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-authenticating-requests.html) to only allow traffic to the subgraphs in the same Apollo organization.
-
-#### I want to use Amazon VPC Lattice within my own organization. Can I still use Lattice for private subgraphs?
-
-Yes. Cloud Dedicated will associate your Lattice services with its own service network, and you can associate a Lattice service with multiple service networks. You can also create multiple Lattice target groups or Lattice services for the same load balancer, IP addresses, Lambda functions, or other resources supported by Lattice target groups.
-
+If you're running into issues with your Lattice setup, see the [troubleshooting guide](./lattice-troubleshooting).

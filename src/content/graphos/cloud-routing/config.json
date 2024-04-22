@@ -39,6 +39,10 @@
       [
         "preview"
       ]],
+      "Amazon VPC Lattice management":[ "/dedicated/lattice-management",
+      [
+        "preview"
+      ]],
       "Amazon VPC Lattice troubleshooting":[ "/dedicated/lattice-troubleshooting",
       [
         "preview"
