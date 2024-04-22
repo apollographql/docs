@@ -1,41 +1,41 @@
 ---
-title: Lattice service management
+title: Amazon VPC Lattice management
 subtitle: Monitor, restrict, and remove access to subgraphs
 description: To-do
 ---
+
+<DedicatedPreview />
+
+This guide covers:
+
+- How to monitor traffic flowing through Amazon VPC Lattice to your subgraphs.
+- How to add access restrictions to your subgraphs
+- How to remove GraphOS access to your subgraphs
+
+<Tip>
+
+If you haven't configured Amazon VPC Lattice yet or need to add new subgraphs, follow the [configuration guide](./lattice).
+
+</Tip>
 
 ## Amazon VPC Lattice monitoring
 
 To validate that traffic is flowing to your private subgraphs, you can use the metrics and access logs emitted by Amazon VPC Lattice:
 
 1. In the AWS Console for your region of choice, go to the VPC service page.
+2. In the menu on the left, scroll down and open **VPC Lattice > Services**.
+3. Click the Lattice service used by the subgraph in question.
+4. Click the **Monitoring** tab.
 
-2. In the menu on the left, scroll down and open **Services** in the **VPC Lattice** section.
-
-<img
-  className="screenshot"
-  alt="Amazon VPC service page left menu"
-  src="../../img/cloud-dedicated/vpc-lattice-menu.jpg"
-  width="175px"
-/>
-
-3. Click on the name of the Lattice service used by the subgraph in question.
-
-<img
-  className="screenshot"
-  alt="Amazon VPC Lattice service"
-  src="../../img/cloud-dedicated/vpc-lattice-service.png"
-/>
-
-4. Click on the **Monitoring** tab.
-
-From there, you can configure and enable access logs for your Amazon VPC Lattice service. You can also navigate to the Metrics tab to get a quick overview if traffic is flowing to your private subgraphs.
+From there, you can configure and enable access logs for your Amazon VPC Lattice service.
 
 <img
   className="screenshot"
   alt="Amazon VPC Lattice access logs"
   src="../../img/cloud-dedicated/vpc-lattice-access-logs.png"
 />
+
+You can also use the **Metrics** tab to get a quick overview if traffic is flowing to your private subgraphs.
 
 <img
   className="screenshot"
@@ -45,7 +45,7 @@ From there, you can configure and enable access logs for your Amazon VPC Lattice
 
 You can also use [Amazon CloudWatch metrics emitted by Amazon VPC Lattice](https://docs.aws.amazon.com/vpc-lattice/latest/ug/monitoring-cloudwatch.html) to set up dashboards and alarms to understand the health of your private subgraphs.
 
-## Further restrict access to private subgraphs
+## Further restrict access
 
 Once you configure an Amazon VPC Lattice service to accept traffic from the Apollo AWS Organization, it is protected by multiple security layers:
 
@@ -139,9 +139,9 @@ Similarly, you can use a comma-separated string of account IDs for `aws:Principa
 "aws:PrincipalTag/Apollo:accountId": "my_account_id_xezf34", "my_account_id_dehs56"
 ```
 
-## Remove access to private subgraphs
+## Remove access
 
-To remove Cloud Dedicated access to private subgraphs, you need to remove both resource shares and service network associations. Keep in mind that any existing supergraph that sends traffic to your private subgraphs will stop working once you remove access.
+To remove GraphOS access to private subgraphs, you need to remove both resource shares and service network associations. Keep in mind that any existing supergraph that sends traffic to your private subgraphs will stop working once you remove access.
 
 ### Remove resource shares
 

@@ -40,7 +40,7 @@
         "preview"
       ]],
       "Amazon VPC Lattice": {
-        "Configure Lattice":[ "/dedicated/lattice",
+        "Lattice configuration":[ "/dedicated/lattice",
         [
           "preview"
         ]],

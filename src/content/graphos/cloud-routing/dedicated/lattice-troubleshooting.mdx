@@ -76,24 +76,8 @@ This error is likely to occur when your cloud router tries to send traffic to a 
 You can validate that your Lattice services are configured to receive traffic on the right port by navigating to the service routing page:
 
 1. In the AWS Console for your region of choice, go to the VPC service page.
-
-2. In the menu on the left, scroll down and open **Services** in the **VPC Lattice** section.
-
-<img
-  className="screenshot"
-  alt="AWS VPC service page left menu"
-  src="../../img/cloud-dedicated/vpc-lattice-menu.jpg"
-  width="175px"
-/>
-
-3. Click the name of the Lattice service leveraged by the subgraph in question.
-
-<img
-  className="screenshot"
-  alt="AWS VPC Lattice service"
-  src="../../img/cloud-dedicated/vpc-lattice-service.png"
-/>
-
+2. In the menu on the left, scroll down and open **VPC Lattice > Services**.
+3. Click the Lattice service use by the subgraph in question.
 4. Click the **Routing** tab.
 
 <img
@@ -105,6 +89,7 @@ You can validate that your Lattice services are configured to receive traffic on
 5. Validate that you have a listener with a `protocol:port` configuration of **HTTPS:443**.
 
 If this is not the case, you must create a new listener by clicking on the **Add listener** button at the top left of this section.
+Refer to step 10 of [Create a Lattice service](index/#step-2-create-a-lattice-service) for more details.
 
 ### HTTP fetch failed from '_subgraph_': 403: Forbidden
 
@@ -122,26 +107,9 @@ Subscriptions over WebSockets are not supported in AWS VPC Lattice, as the platf
 You can validate that your Lattice services are configured to allow traffic from Apollo GraphOS Cloud by navigating to the service access page:
 
 1. In the AWS Console for your region of choice, go to the VPC service page.
-
-2. In the menu on the left, scroll down and open **Services** in the **VPC Lattice** section.
-
-<img
-  className="screenshot"
-  alt="AWS VPC service page left menu"
-  src="../../img/cloud-dedicated/vpc-lattice-menu.jpg"
-  width="175px"
-/>
-
-3. Click the name of the Lattice service leveraged by the subgraph in question.
-
-<img
-  className="screenshot"
-  alt="AWS VPC Lattice service"
-  src="../../img/cloud-dedicated/vpc-lattice-service.png"
-/>
-
+2. In the menu on the left, scroll down and open **VPC Lattice > Services**.
+3. Click the Lattice service used by the subgraph in question.
 4. Click the **Access** tab.
-
 5. Ensure that the Auth type is set to **IAM** and that the policy looks like this:
 
 ```json
