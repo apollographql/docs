@@ -37,17 +37,17 @@
       "Daily reports": "/notifications/daily-reports",
       "Schema changes": "/notifications/schema-change-integration",
       "Schema proposals": "/notifications/schema-proposal-integration",
-      "Performance alerts": [
-        "/notifications/performance-alerts",
-        [
-          "experimental"
-        ]
-      ],
       "Build status": [
         "/notifications/build-status-notification",
         [
           "enterprise",
           "preview"
+        ]
+      ],
+      "Performance alerts": [
+        "/notifications/performance-alerts",
+        [
+          "experimental"
         ]
       ]
     }

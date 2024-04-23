@@ -22,16 +22,16 @@ GraphOS supports the following notification types:
 - [Schema proposal notifications](./schema-proposal-integration) whenever a schema proposal is created or revised, or if its status changes
 - [Build status notifications](./build-status-notification) whenever Apollo attempts to compose a supergraph schema for your federated graph (this preview feature is [enterprise only](https://www.apollographql.com/pricing/))
 
-Refer to the specific notification type doc for setup instructions.
+Refer to the specific notification type page for setup instructions.
 
 ## Supported channels
 
-GraphOS can send each of these notification types to the channel(s) indicated:
+GraphOS can send motification types to the indicated channels:
 
-| Notification Type                            | Slack | PagerDuty | Custom Webhook |
-| :------------------------------------------- | :---: | :-------: | :------------: |
-| Daily reports                                |   ✓   |           |                |
-| Performance alerts (paid, experimental)      |   ✓   |     ✓     |                |
-| Schema change notifications                  |   ✓   |           |       ✓        |
-| Schema proposal notifications                |       |           |       ✓        |
-| Build status notifications (enterprise only) |       |           |       ✓        |
+| Notification Type             | Slack | PagerDuty | Custom Webhook |
+| :---------------------------- | :---: | :-------: | :------------: |
+| Daily reports                 |   ✓   |           |                |
+| Schema change notifications   |   ✓   |           |       ✓        |
+| Schema proposal notifications |       |           |       ✓        |
+| Build status notifications    |       |           |       ✓        |
+| Performance alerts            |   ✓   |     ✓     |                |

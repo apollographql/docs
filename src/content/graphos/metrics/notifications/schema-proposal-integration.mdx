@@ -1,20 +1,22 @@
 ---
 title: Schema proposals notifications
-subtitle: Receive alerts whenever a schema proposal is created or revised
+subtitle: Receive alerts when a schema proposal is created or revised
 description: Set up Apollo GraphOS notifications for GraphQL schema proposals. Receive real-time alerts whenever schema proposals are created or revised, or if their status changes.
 ---
 
-You can [configure GraphOS](./notification-setup) to notify your team whenever whenever schema proposals are created or revised, or if their status changes.
-
-You can configure separate proposal notifications for each [variant](../../graphs/#variants) of your graph.
+Configure GraphOS to send notifications to a custom webhook whenever schema proposals are created or revised, or if their status changes.
 
 ## Setup
 
-See [Setting up GraphOS Notifications](./notification-setup).
+<CreateNotification />
+
+## Configuring a new channel
+
+<ConfigureWebhookNotification />
 
 ## Webhook format
 
-If you receive schema change notifications via a [custom webhook](./notification-setup/#custom-webhooks-enterprise-only), notification details are provided as a JSON object in the request body.
+Custom webhook notification details are provided as a JSON object in the request body.
 
 The JSON object conforms to the structure of the `ResponseShape` interface:
 

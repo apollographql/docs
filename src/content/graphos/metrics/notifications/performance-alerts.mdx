@@ -1,7 +1,7 @@
 ---
 title: Performance alerts from GraphOS
-subtitle: Receive notifications whenever metrics exceed defined thresholds
-description: Configure alerts to receive notifications in Slack or PagerDuty instance when specific operation metrics surpass defined thresholds.
+subtitle: Receive notifications when metrics exceed defined thresholds
+description: Configure alerts to receive notifications in Slack or PagerDuty instance when specific request and error metrics surpass defined thresholds.
 ---
 
 <Note>
@@ -35,12 +35,30 @@ Each performance alert you define can apply to either a specific operation or an
 
 ## Setup
 
+<Note>
+
+If you want to receive notifications via both Slack and PagerDuty, you need to repeat these setup steps for both.
+
+</Note>
+
 1. Go to your graph's Settings page in [GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content).
 2. Select the **Reporting** tab.
 3. Find the **Performance Alerts** card and click **Add a new alert**.
 4. Configure the alert's **Operation Name**, **Trigger**, and **Trigger Value** to suit your needs.
 5. Select a **Channel** to send alerts to. You can select **New Channel** from the dropdown if you haven't yet configured the Slack channel or PagerDuty instance you want to use.
 6. Click **Create**.
+
+## Configuring a new channel
+
+You can send performance alerts via Slack, PagerDuty, or both.
+
+### Slack
+
+<ConfigureSlackNotification />
+
+### PagerDuty
+
+<ConfigurePagerDutyNotification />
 
 ## Threshold window
 

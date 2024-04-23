@@ -1,10 +1,10 @@
 ---
 title: Schema change notifications
-subtitle: Receive alerts whenever changes are made to your graph's schema
+subtitle: Receive alerts when changes are made to your graph's schema
 description: Set up Apollo GraphOS notifications for GraphQL schema changes. Receive real-time alerts whenever your registered schema is modified.
 ---
 
-You can [configure GraphOS](./notification-setup) to notify your team whenever any changes (additions, deprecations, removals, etc.) are made to your graph's registered schema:
+Configure GraphOS to notify your team whenever any changes are made to your graph's registered schema. Receive notifications via Slack, custom webhook, or both.
 
 <img
   className="screenshot"
@@ -13,15 +13,31 @@ You can [configure GraphOS](./notification-setup) to notify your team whenever a
   width="400"
 />
 
-You can configure separate change notifications for each [variant](../../graphs/#variants) of your graph.
-
 ## Setup
 
-See [Setting up GraphOS Notifications](./notification-setup).
+<Note>
+
+If you want to receive notifications via both Slack and webhook, you need to repeat these setup steps for both.
+
+</Note>
+
+<CreateNotification />
+
+## Configuring a new channel
+
+You can send schema notifications via Slack, custom webhook, or both.
+
+### Slack
+
+<ConfigureSlackNotification />
+
+### Webhook
+
+<ConfigureWebhookNotification />
 
 ## Webhook format
 
-If you receive schema change notifications via a [custom webhook](./notification-setup/#custom-webhooks-enterprise-only), notification details are provided as a JSON object in the request body.
+Custom webhook notification details are provided as a JSON object in the request body.
 
 The JSON object conforms to the structure of the `ResponseShape` interface:
 
