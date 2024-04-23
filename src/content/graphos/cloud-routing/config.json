@@ -40,15 +40,15 @@
         "preview"
       ]],
       "Amazon VPC Lattice": {
-        "Lattice configuration":[ "/dedicated/lattice",
+        "Configuration":[ "/dedicated/lattice",
         [
           "preview"
         ]],
-        "Lattice management":[ "/dedicated/lattice-management",
+        "Management":[ "/dedicated/lattice-management",
         [
           "preview"
         ]],
-        "Lattice troubleshooting":[ "/dedicated/lattice-troubleshooting",
+        "Troubleshooting":[ "/dedicated/lattice-troubleshooting",
         [
           "preview"
         ]]
