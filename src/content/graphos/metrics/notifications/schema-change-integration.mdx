@@ -6,7 +6,12 @@ description: Set up Apollo GraphOS notifications for GraphQL schema changes. Rec
 
 You can [configure GraphOS](./notification-setup) to notify your team whenever any changes (additions, deprecations, removals, etc.) are made to your graph's registered schema:
 
-<img class="screenshot" src="../../img/integrations/schema-notification.jpg" alt="Schema notification Slack message." width="400" />
+<img
+  className="screenshot"
+  src="../../img/integrations/schema-notification.jpg"
+  alt="Schema notification Slack message."
+  width="400"
+/>
 
 You can configure separate change notifications for each [variant](../../graphs/#variants) of your graph.
 
@@ -26,7 +31,7 @@ interface Change {
 }
 
 interface ResponseShape {
-  eventType: "SCHEMA_PUBLISH"; // Currently, only SCHEMA_PUBLISH webhooks are supported
+  eventType: 'SCHEMA_PUBLISH'; // Currently, only SCHEMA_PUBLISH webhooks are supported
   eventID: string;
   changes: Change[]; // Set of schema changes that occurred
   schemaURL: string; // See description below
