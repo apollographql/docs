@@ -49,7 +49,10 @@
       "Reference Architecture": "/reference-architecture",
       "Supergraph Architecture Framework": {
         "Overview": "/supergraph-architecture-framework",
-        "Reliability": "/reliability"
+        "Operational Excellence": "/supergraph-architecture-framework/operational-excellence",
+        "Security": "/supergraph-architecture-framework/security",
+        "Reliability": "/supergraph-architecture-framework/reliability",
+        "Performance": "/supergraph-architecture-framework/performance"
       }
     }
   }

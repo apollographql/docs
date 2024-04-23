@@ -1,0 +1,20 @@
+---
+title: Performance
+description: Build a high performing graph by proactively monitoring and improving it over time
+---
+
+The runtime performance and efficiency of your digital ecosystem can either make or break your business. An under performing application stack is one that offers a poor user experience or one that utilizes its resources inefficiently. A supergraph architecture is a new layer in this stack, one which presents both new opportunities to improve the real and perceived performance of existing systems, and new performance bottlenecks if we aren't careful. The Supergraph Architecture Framework performance pillar focuses on addressing what is in place to enable developers to address the common bottlenecks that they'll encounter in a supergraph architecture. The north star of performance for a supergraph platform is not only to deliver a great user experience, but also to provide ways for its developers and users to proactively look for opportunities to improve performance or efficiency, with the documentation and tools they'll need to ship and measure those changes effectively.
+
+## Principles
+
+### Enable developers to improve perceived end-user latency
+
+Improving perceived end-user latency is crucial for businesses that rely on digital services. Slow loading times can lead to high bounce rates and decreased conversion rates, which ultimately impact revenue. To combat this, there are several techniques that developers can use to improve perceived end-user latency, such as using response compression, prioritizing data with `@defer`, and utilizing subscription/real-time GraphQL features. Providing field-level latency information to consumers can also help them make informed choices about operation shapes. Additionally, configuring trace sampling and using persisted queries can help reduce request sizes and latency. By implementing these techniques, businesses can improve the overall user experience and ultimately increase their bottom line.
+
+### Enable subgraph developers to improve performance of the graph
+
+Contributors to subgraphs can also help improve the performance of the supergraph as a whole by optimizing their subgraph's performance. This can include leveraging caching to improve the performance of operations and resolvers, using dataloaders in resolvers, and implementing Automatic Persisted Queries (APQs) to improve subgraph request latency. By optimizing their subgraphs, contributors can reduce the load on the supergraph and ultimately improve the overall performance of the graph.
+
+### Find opportunities to improve performance
+
+Observability tools can be incredibly helpful in identifying opportunities for improving the performance of the supergraph. By collecting metrics on resolver executions and using distributed traces, engineers can gain insight into the performance of individual components and identify areas for optimization. Additionally, operation traces can help identify bottlenecks and inefficiencies across the entire system. By leveraging these observability tools, teams can proactively identify and address performance issues before they become a problem for end-users.
