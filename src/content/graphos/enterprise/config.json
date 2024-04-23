@@ -52,7 +52,8 @@
         "Operational Excellence": "/supergraph-architecture-framework/operational-excellence",
         "Security": "/supergraph-architecture-framework/security",
         "Reliability": "/supergraph-architecture-framework/reliability",
-        "Performance": "/supergraph-architecture-framework/performance"
+        "Performance": "/supergraph-architecture-framework/performance",
+        "Developer Experience": "/supergraph-architecture-framework/developer-experience"
       }
     }
   }
