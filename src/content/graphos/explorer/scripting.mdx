@@ -54,7 +54,7 @@ graph LR
 
 <Note>
 
-For [protected variants](../graphs/studio-features/#protected-variants-enterprise-only), only organization members with the **Graph Admin** role can create or edit a variant's preflight script.
+For [protected variants](../graphs/management/#protected-variants-enterprise-only), only organization members with the **Graph Admin** role can create or edit a variant's preflight script.
 
 For non-protected variants, members with the **Contributor** role can also modify the preflight script.
 
@@ -64,25 +64,11 @@ To create a preflight script:
 
 1. [Open GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content) and then open the Explorer for the graph and variant you want to create a script for.
 
-2. Open the Explorer's Settings tab and scroll down to the **Preflight Script** section:
+2. Open the Explorer's Settings tab and scroll down to the **Preflight Script**.
 
-   <img
-     class="screenshot"
-     src="../img/preflight-script.png"
-     alt="Preflight script settings in the Explorer"
-     width="500"
-   />
+3. Click **+ Add script**. A script editor dialog appears.
 
-3. Click **+ Add script**. The following dialog appears:
-
-   <img
-     class="screenshot"
-     src="../img/preflight-script-edit.jpg"
-     alt="Editing preflight scripts in the Explorer"
-     width="600"
-   />
-
-4. Click **Show snippets** to display a list of common helpful actions you can perform from your preflight script. Examples include sending HTTP requests and interacting with Explorer environment variables.
+4. Click **Show snippets** on the bottom left of the editor to display a list of common helpful actions you can perform from your preflight script. Examples include sending HTTP requests and interacting with Explorer environment variables.
 
 5. Develop your script in the **Script editor** panel. As you develop, you can click **Test script** to test its execution. Console messages are printed in the **Console output** panel.
 
@@ -92,16 +78,7 @@ That's it! After you save your script, it's automatically loaded for any team me
 
 ### Turn off preflight scripts
 
-By default, a variant's preflight script runs automatically before every GraphQL operation that's executed in the Explorer. Team members can turn off the script for their individual Explorer usage from the **Personal Settings > Scripts** section of the Explorer's Settings tab:
-
-<img
-  class="screenshot"
-  src="../img/preflight-script-disable.png"
-  alt="Turn off preflight scripts in the Explorer"
-  width="500"
-/>
-
-To do so, toggle the **Preflight script** switch to **OFF**.
+By default, a variant's preflight script runs automatically before every GraphQL operation that's executed in the Explorer. Team members can turn off the script for their individual Explorer usage from the **Personal Settings > Scripts** section of the Explorer's Settings tab. To do so, toggle the **Preflight script** switch to **OFF**.
 
 ## Operation scripts
 
@@ -115,33 +92,8 @@ Only organization members [with edit access](../org/members/#role-permissions) t
 
 </Note>
 
-1. From the Explorer, open an operation from the Operation Collections menu:
-
-   <img
-     class="screenshot"
-     src="../img/select-operation.png"
-     alt="Selecting an operation"
-     width="400"
-   />
-
-2. From the Explorer's bottom panel, select the **Pre-Operation Script** or **Post-Operation Script** tab and click **+ Add Script**:
-
-   <img
-     class="screenshot"
-     src="../img/new-operation-scripts-tab.png"
-     alt="Adding a new operation script"
-     width="500"
-   />
-
-   The following modal appears:
-
-   <img
-     class="screenshot"
-     src="../img/op-preflight-script-modal.png"
-     alt="Editing operation scripts in the Explorer"
-     width="600"
-   />
-
+1. From the Explorer, open an operation from the **Operation Collections** menu:
+2. From the Explorer's bottom panel, select the **Pre-Operation Script** or **Post-Operation Script** tab and click **+ Add Script**. A script creation dialog appears.
 3. Create, test, and save your script.
 
    - For details on script creation, see steps 4 and 5 of [Add preflight scripts](#add-preflight-scripts).
@@ -153,25 +105,9 @@ After you save an operation script, make sure to [turn it on](#turn-on-operation
 
 The operation script modal has a **Mocked Operation Response** area so you can test post-operation scripts before saving them. Scripts can access any JSON GraphQL response you add in the **Mocked Operation Response** via the [`explorer.response.body`](#explorerresponsebody) variable.
 
-<img
-  class="screenshot"
-  src="../img/op-postflight-script-modal.png"
-  alt="Editing operation scripts in the Explorer"
-  width="600"
-/>
-
 ### Turn on operation scripts
 
-By default, operation scripts are **off** for each individual team member. Team members can turn on operation scripts for their individual Explorer usage from the **Personal Settings > Scripts** section of the Explorer's Settings tab:
-
-<img
-  class="screenshot"
-  src="../img/op-switch.png"
-  alt="Editing operation scripts in the Explorer"
-  width="500"
-/>
-
-To do so, toggle the **Operation script** switch to **ON**.
+By default, operation scripts are **off** for each individual team member. Team members can turn on operation scripts for their individual Explorer usage from the **Personal Settings > Scripts** section of the Explorer's Settings tab. To do so, toggle the **Operation script** switch to **ON**.
 
 ## Chaining operations
 
@@ -474,6 +410,8 @@ const transformedShips = exampleTransform( allShips, filterFn, mapFn);
 // Log the result
 console.log(transformedShips);
 ```
+
+You can view the logged results in the **Console output** section of the Explorer.
 
 <img
   class="screenshot"

@@ -26,14 +26,7 @@ GraphOS Studio is the primary web interface for interacting with the GraphOS pla
 <Note>
 
 If you already have an Apollo account, you can skip to [creating your first supergraph](#2-create-your-first-supergraph).
-If your account is part of an organization created prior to October 2022, you might need to **create a new organization** to create cloud supergraphs:
-
-<img
-  src="../../img/organization-list.jpg"
-  className="screenshot"
-  alt="Studio organization list"
-  width="300"
-/>
+If your account is part of an organization created before October 2022, you might need to [create a new organization](../org/#creating-an-organization) to create cloud supergraphs.
 
 Some legacy organizations can upgrade to a current plan. [See details.](../org/plans#upgrading-to-a-current-plan)
 
@@ -41,16 +34,7 @@ Some legacy organizations can upgrade to a current plan. [See details.](../org/p
 
 1. Go to [studio.apollographql.com](https://studio.apollographql.com/?referrer=docs-content) and click **Let's get started**.
 
-2. Choose a signup method—either using GitHub or with an email and password.
-
-   Studio then shows a signup form. Its details vary depending on your signup method:
-
-   <img
-     src="../../img/signup-form.jpg"
-     class="screenshot"
-     alt="Studio signup form"
-     width="300"
-   />
+2. Choose a signup method—either using GitHub or with an email and password. Studio then shows a signup form. Its details vary depending on your signup method.
 
 3. Complete the form, and click **Create Account**. By default, your account is on the [Serverless (Free) plan](../org/plans/#current-plans).
 
@@ -87,21 +71,7 @@ Otherwise, continue with the steps below.
 
 1. Studio prompts you to **Connect your API** or **Try a demo graph**. If you have the URL of your running GraphQL server, select **Connect API**. Otherwise, you can select **Try a demo graph**, and Apollo creates a demo graph for you to play with.
 
-   <img
-     src="../../img/start-building-with-graphos.jpg"
-     className="screenshot"
-     alt="Studio signup form"
-     width="500"
-   />
-
-2. Provide your **GraphQL API's Endpoint URL**. This is the same URL that client applications currently use to query your API. After you provide the URL, Studio attempts to fetch your API's schema from it via introspection. The result of that fetch is shown beneath the text box:
-
-   <img
-     src="../../img/supergraph-schema-fetch.jpg"
-     class="screenshot"
-     alt="Displayed result of API schema fetch"
-     width="500"
-   />
+2. Provide your **GraphQL API's Endpoint URL**. This is the same URL that client applications currently use to query your API. After you provide the URL, Studio attempts to fetch your API's schema from it via introspection. The result of that fetch is shown beneath the text box.
 
    - If your GraphQL server requires certain HTTP headers for Studio to introspect it, click **Provide HTTP Headers** to specify them.
 
@@ -118,13 +88,6 @@ Otherwise, continue with the steps below.
    - If the **Continue** button is inactive, Studio hasn't obtained your API's schema. If necessary you can bypass introspection by **uploading your schema**. By selecting this option, you can manually copying and pasting your schema, or dragging and dropping a `.gql` or `.graphql` file.
 
 5. Provide a name and ID for your new graph.
-
-   <img
-     src="../../img/supergraph-name-id.jpg"
-     class="screenshot"
-     alt="Entering a name and id"
-     width="500"
-   />
 
    - The name is displayed throughout Studio and helps your team distinguish between your different graphs. You can change your graph's name at any time.
    - The ID is immutable and must be unique across all of Apollo. Make sure it starts with a letter and contains only letters, numbers, and dashes. You'll use the ID to reference your graph from various tools, such as the Rover CLI.
@@ -146,36 +109,13 @@ Skip to [the next step](#3-learn-about-your-variant) to learn about **variants**
 ### From an existing account
 
 1. From your account in [GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content), navigate to the **Graphs** tab if it isn't already open. Select **+ Create New Graph** in the top right.
-
-<img
-  src="../../img/supergraph-list.jpg"
-  className="screenshot"
-  alt="An organization's list of cloud supergraphs"
-  width="700"
-/>
-
-2. Click **Connect your GraphQL API**. The following dialog appears:
-
-   <img
-     src="../../img/supergraph-create-dialog.jpg"
-     class="screenshot"
-     alt="Supergraph creation dialog"
-     width="400"
-   />
-
-3. Provide your GraphQL API's **Endpoint URL**.
+2. Click **Connect your GraphQL API**.
+3. In the dialog that appears, provide your GraphQL API's **Endpoint URL**.
 
    - This is the same URL that client applications currently use to query your API.
    - If you don't have a URL, you can use `https://flyby-locations-sub.herokuapp.com/` as an example.
 
    After you provide the URL, Studio attempts to fetch your API's schema from it via introspection. Once the fetch succeeds, the input shows a green check.
-
-   <img
-     src="../../img/supergraph-schema-fetch-existing.jpg"
-     class="screenshot"
-     alt="Displayed result of API schema fetch"
-     width="400"
-   />
 
 4. (Optional) You can click **Advanced options** for the following scenarios:
 
@@ -197,16 +137,7 @@ Skip to [the next step](#3-learn-about-your-variant) to learn about **variants**
 
    - If the **Next** button is inactive, Studio hasn't obtained your API's schema! Make sure to provide it using one of the methods described in steps 3 and 4.
 
-   The following dialog appears:
-
-   <img
-     src="../../img/supergraph-id-name-existing.jpg"
-     class="screenshot"
-     alt="Setting a name and ID for a new supergraph"
-     width="400"
-   />
-
-7. Provide a name and ID for your new supergraph.
+7. In the dialog that appears, provide a name and ID for your new supergraph.
 
    - The name is displayed throughout Studio and helps your team distinguish between your different graphs. You can change your graph's name at any time.
    - The ID is immutable and must be unique across all of Apollo. Make sure it starts with a letter and contains only letters, numbers, and dashes. You'll use the ID to reference your graph from various tools, such as the Rover CLI.
@@ -234,15 +165,7 @@ From your **Graphs** tab, click your graph's `current` variant. This opens the v
 
 The README is great for documenting your supergraph so team members can learn the basics of how to work with it. It supports Markdown syntax like a typical README in a Git repository.
 
-While you're viewing any page for a variant, the following navigation is shown on the left side:
-
-<img
-  src="../../img/variant-pages.jpg"
-  className="screenshot"
-  alt="List of pages for a graph variant in Studio"
-  width="100"
-/>
-
+When viewing any page for a variant, you can navigate to other pages from the navigation on the left side.
 You can collapse this navigation to show only icons.
 
 We'll cover some of these pages in later steps, but feel free to click around and see what each provides. You can also expand the summary table below.
@@ -340,14 +263,7 @@ If the value of any required header includes a secure credential (such as an acc
 
 On the **Cloud Router** page, click **Save a secret**. The following dialog appears:
 
-<img
-  className="screenshot"
-  alt="Adding a secret to your router"
-  src="../../img/cloud-routing/add-secret.jpg"
-  width="500"
-/>
-
-Enter a name and value for your secret. You can't view a secret's value after you save it, so make sure that the value is correct before saving. When you're ready, click **Save secret**.
+In the dialog that appears, enter a name and value for your secret. You can't view a secret's value after you save it, so make sure that the value is correct before saving. When you're ready, click **Save secret**.
 
 Your secret is encrypted and stored. Now you can use the secret's value in your router's configuration YAML.
 
@@ -384,13 +300,7 @@ Make sure you save any [router-specific secrets](#creating-secrets) before you u
 
 Let's try executing a query against your new supergraph! To do that, we'll use one of Studio's most powerful features: the Explorer. The Explorer is a GraphQL IDE that provides visibility into your supergraph's entire schema and helps you build and run queries against it.
 
-From your organization's **Graphs** tab, select your new variant and then open its Explorer page from the left navigation. The Explorer looks like this:
-
-<img
-  src="../../img/explorer-new-graph.jpg"
-  className="screenshot"
-  alt="The default Explorer view for a new supergraph"
-/>
+From your organization's **Graphs** tab, select your new variant and then open its **Explorer** page from the left navigation.
 
 Try building a couple of queries and running them against your supergraph. Notice that the supergraph supports the exact same query structures as your underlying GraphQL API.
 
@@ -439,7 +349,7 @@ Similarly, any new client applications should use your router's URL.
 
 </Note>
 
-Your router's URL is available from the top of your variant's README page:
+Your router's URL is available from the top of your variant's **README** page, directly below the variant's graph ref.
 
 <img
   src="../../img/router-url.jpg"
@@ -447,8 +357,6 @@ Your router's URL is available from the top of your variant's README page:
   alt="Router URL shown on the README page"
   width="500"
 />
-
-Every router URL is on a subdomain of `apollographos.net`.
 
 ## Next steps
 

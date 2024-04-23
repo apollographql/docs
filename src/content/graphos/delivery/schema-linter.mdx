@@ -31,19 +31,12 @@ To navigate to your linter configuration:
 
 1. In [GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content), go to your graph's **Checks** page.
 2. Click **Configuration** in the upper right to open the checks configuration page.
-3. From the checks configuration page, open the **Linter** section:
-
-    <img
-      src="../img/linter-configuration.jpg"
-      class="screenshot"
-      alt="Linter configuration page in GraphOS Studio"
-      width="700"
-    />
+3. From the checks configuration page, open the **Linter** section.
 
 This page organizes linter options into the following categories:
 
 - **General Linter Configuration** provides high-level options, including disabling the linter entirely.
-- **Approved @tag names** enables you to specify approved values for the `name` argument of the `@tag` directive. This directive is used most commonly with [GraphOS contracts](./contracts/).
+- **Approved `@tag` names** enables you to specify approved values for the `name` argument of the `@tag` directive. This directive is used most commonly with [GraphOS contracts](./contracts/).
   - If you don't use the `@tag` directive, you can ignore this category.
   - Using a non-approved value for `name` raises the [`TAG_DIRECTIVE_USES_UNKNOWN_NAME`](./linter-rules#tag_directive_uses_unknown_name) violation.
 - **Rule Severity Configuration** enables you to [set the severity level](#setting-severity-levels) for violations of each rule.
@@ -52,16 +45,7 @@ If you view this configuration for a single variant, each category displays a **
 
 ### Setting severity levels
 
-The **Rules Severity Configuration** category of your linter configuration displays all predefined rules and the current **severity** level for each:
-
-<img
-    src="../img/linter-rules-list.jpg"
-    class="screenshot"
-    alt="Linter configuration page in GraphOS Studio"
-    width="500"
-/>
-
-Click a rule's severity to set it to any of the following:
+The **Rules Severity Configuration** category of your linter configuration displays all predefined rules and the current **severity** level for each. Click a rule's severity to set it to any of the following:
 
 - **Error**: Any violation of this rule causes the associated linter check to fail.
     - This in turn causes the entire schema checks run to fail, which is useful for failing builds in CI.
@@ -76,7 +60,8 @@ Schema linting runs automatically as part of your graph's [schema checks](#linti
 
 ### Linting via schema checks
 
-If you set up [schema checks](./schema-checks) for your graph, schema linting automatically runs as a separate check type alongside build and operation checks. You can view the results of all check types from your graph's **Checks** page in Studio:
+If you set up [schema checks](./schema-checks) for your graph, schema linting automatically runs as a separate check type alongside build and operation checks. You can view the results of all check types from your graph's **Checks** page in Studio.
+For example, the screenshot below shows successful build and operations checks with a failed linting check.
 
 <img
     src="../img/linter-check-results.jpg"

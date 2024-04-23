@@ -10,7 +10,7 @@ For example, here's an embedded Explorer for an Apollo example graph. Try it out
 
 ## Embedding on the Apollo Server landing page
 
-In Apollo Server [v3.8.0](https://github.com/apollographql/apollo-server/blob/main/CHANGELOG.md#v380) and later, you can use a built-in plugin to embed the Explorer directly on your server's landing page.
+In Apollo Server [v3.8.0](https://github.com/apollographql/apollo-server/blob/main/CHANGELOG_historical.md#v380) and later, you can use a built-in plugin to embed the Explorer directly on your server's landing page.
 
 You use the `ApolloServerPluginLandingPageLocalDefault` plugin to configure the landing page in your local development environment, and you use `ApolloServerPluginLandingPageProductionDefault` for production environments:
 
@@ -42,11 +42,7 @@ For more information, see the [landing page plugin API reference](/apollo-server
 
 2. Go to the variant's Explorer page.
 
-3. Under the Explorer's Settings tab, find **Embed Explorer** and click **Copy code snippet**.
-
-   The following dialog appears:
-
-   <img class="screenshot" src="../img/embed-explorer-modal.jpg" alt="Explorer embed dialog" width="600" />
+3. Under the Explorer's Settings tab, find **Embed Explorer** and click **Copy code snippet**. A dialog with options and code snippets appears.
 
 4. Use the options on the left side of the dialog to customize the embedded Explorer's appearance and behavior to your liking.
 
@@ -88,11 +84,9 @@ Open the share dropdown in the Explorer and select **Share as embed**:
 
 ### Authorization
 
-If you're embedding a [public variant](../graphs/studio-features/#public-variants), anyone with access to the embedded Explorer can view your schema and make queries against your variant.
+If you're embedding a [public variant](../graphs/management/#public-variants), anyone with access to the embedded Explorer can view your schema and make queries against your variant.
 
-If you're embedding a private variant, the embedded Explorer first asks users to authenticate by signing in to Studio. Authenticated users are then asked to authorize their Studio account to be used on the embedding webpage:
-
-<img class="screenshot" src="../img/embed-authorize.jpg" alt="Explorer authorization screen" width="400" />
+If you're embedding a private variant, the embedded Explorer first asks users to authenticate by signing in to GraphOS Studio. Authenticated users are then asked to authorize their Studio account to be used on the embedding webpage.
 
 After authorizing, users can access the embedded Explorer, which includes schema navigation and visible operation collections.
 
@@ -195,7 +189,7 @@ The endpoint URL of the variant you want to use the embedded Explorer with. This
 </td>
 <td>
 
-If the graph you are embedding is a [private variant](../graphs/studio-features/#public-variants), we will by default only allow folks in your org to see the embedded Explorer. You can specify that you want anyone who visits your embedded Explorer to be automatically invited to your org with this config object. When you are grabbing the embed code from the Explorer settings in Studio, you have the option to select the role you want folks to be invited as, and the `inviteToken` and `accountId` will automatically populate.
+If the graph you are embedding is a [private variant](../graphs/management/#public-variants), we will by default only allow folks in your org to see the embedded Explorer. You can specify that you want anyone who visits your embedded Explorer to be automatically invited to your org with this config object. When you are grabbing the embed code from the Explorer settings in Studio, you have the option to select the role you want folks to be invited as, and the `inviteToken` and `accountId` will automatically populate.
 
 If the graph you are embedding belongs to an SSO organization, folks will be able to log in with their SSO account and are automatically invited as the role you specify in the Org Settings page in Studio. Passing this in the embed config for a graph that belongs to an SSO account will not change any behavior. New users to your organization will always be invited as the role you specify in the Org Settings page in Studio.
 

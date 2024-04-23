@@ -45,7 +45,7 @@ export const MarkdownInAdmonitions = ({children}) => {
           <ListItem
             sx={{
               '>': {
-                ':not(:last-child)': {
+                ':not(a):not(:last-child)': {
                   mb: 3
                 }
               }

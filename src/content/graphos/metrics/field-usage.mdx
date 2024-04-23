@@ -26,40 +26,6 @@ The Insights page presents operation and field metrics. It has two main sections
 
 This guide focuses on field metrics and information. Refer to [Operation metrics in GraphOS](./operations) for more information on the other metrics on this page, including [resolver-level traces](./operations#resolver-level-traces).
 
-## Field navigation
-
-By default, the left sidebar shows a paginated list of all fields. 
-
-To hone in on certain fields:
-
-- Search for a particular field by its name or parent type
-- Filter fields by whether they are unused or deprecated
-
-<img
-  src="../img/field-sidebar-search-filter.jpg"
-  className="screenshot"
-  alt="The Insights page in GraphOS Studio"
-  width="300"
-/>
-
-- Sort fields (descending or ascending):
-
-  - Alphabetically
-  - By total requests (count)
-  - By request rate in requests per minute (rpm)
-  - By executions (count)
-  - By total errors, error %, or error rate
-  - By p50, p90, p95, and p99 latency in milliseconds, seconds, or minutes (ms, s, min)
-
-<img
-  src="../img/field-sidebar-sort.jpg"
-  className="screenshot"
-  alt="The Insights page in GraphOS Studio"
-  width="300"
-/>
-
-Click a field name in the sidebar to learn more about its usage.
-
 ## Field details
 
 When you click a field name, you open detailed information for that field in the main insights view. This includes when the field first and last received traffic, any applied [tags](../graphs/federated-graphs/#schema-tagging), and the subgraphs that provide the field.

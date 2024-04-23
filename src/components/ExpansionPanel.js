@@ -11,7 +11,7 @@ import {
   Stack,
   useDisclosure
 } from '@chakra-ui/react';
-import {CheckIcon, ChevronDownIcon, ChevronUpIcon} from './Icons'
+import {CheckIcon, ChevronDownIcon, ChevronUpIcon} from './Icons';
 
 function ExpansionPanelLine(props) {
   return <Box w="px" mx="auto" bg="current" {...props} />;

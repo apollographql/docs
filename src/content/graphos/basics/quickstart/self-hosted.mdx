@@ -321,7 +321,7 @@ To publish our subgraph schema, we'll first use Rover to introspect the running 
 
     - If the command fails, make sure you've [authenticated Rover with GraphOS](#authenticate-rover-with-graphos). All Rover commands that interact with GraphOS require a valid API key.
 
-    If you open your graph's details in Studio now, you'll see types and fields from the `locations` subgraph listed on the Schema page:
+    If you open your graph's details in Studio now, you'll see types and fields from the `locations` subgraph listed on the **Schema** page:
 
     <img class="screenshot" alt="locations subgraph schema in Studio" src="../../img/qs-studio-schema.jpg" width="300"/>
 
@@ -356,7 +356,7 @@ We recommend that you create a separate API key for each system that communicate
 
     If you have an Enterprise plan, set the API key's role according to the following:
 
-    - If your router will use a [protected variant](../graphs/studio-features/#protected-variants-enterprise-only), choose **Graph Admin**.
+    - If your router will use a [protected variant](../graphs/management/#protected-variants-enterprise-only), choose **Graph Admin**.
     - Otherwise, choose **Contributor**.
 
     <Tip>
@@ -441,7 +441,7 @@ The exact details for deploying the router depend on which platform you use, but
 3. Set the `APOLLO_KEY` and `APOLLO_GRAPH_REF` environment variables in the router's deployment environment, as we did locally in [this step](#6-connect-the-router-to-graphos).
     - Keep in mind that `APOLLO_KEY` is a secret, so use an appropriate mechanism for storing it in your deployment environment.
 
-4. If your platform expects the router to listen on a particular port, set this port in the [`router.yaml`](https://github.com/dbanty/enterprise-router-test/blob/main/router.yaml) file included with the template:
+4. If your platform expects the router to listen on a particular port, set this port in the `router.yaml` file included with the template:
 
     ```yaml title="router.yaml"
     supergraph:

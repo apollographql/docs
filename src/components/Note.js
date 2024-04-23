@@ -10,10 +10,9 @@ export const Note = ({children, ...props}) => {
       py="1"
       borderLeftWidth="4px"
       borderColor="gray.400"
-      fontSize="lg"
       sx={{
         '>': {
-          ':not(:last-child)': {
+          ':not(a):not(:last-child)': {
             mb: 2
           }
         }

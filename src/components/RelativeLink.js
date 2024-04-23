@@ -1,23 +1,46 @@
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
-import {Button, Link} from '@chakra-ui/react';
+import {Box, Button, Link} from '@chakra-ui/react';
 import {Link as GatsbyLink, graphql, useStaticQuery} from 'gatsby';
-import {OutlinkIcon} from './Icons';
+import {OutlinkSmallIcon} from './Icons';
 import {PathContext, isUrl} from '../utils';
 import {isAbsolute, resolve} from 'path';
 
-export const PrimaryLink = props => (
-  <Link
-    color="tertiary"
-    sx={{
-      code: {
-        color: 'inherit',
-        textDecoration: 'underline'
-      }
-    }}
-    {...props}
-  />
-);
+export const PrimaryLink = props => {
+  const opensNewTab = props?.target === '_blank';
+  return (
+    <Link
+      color="tertiary"
+      fontWeight="medium"
+      fontSize="inherit"
+      _hover={{color: 'link'}}
+      display="inline"
+      alignItems="center"
+      whiteSpace="initial"
+      wordBreak="break-word"
+      sx={{
+        code: {
+          color: 'inherit'
+        }
+      }}
+      {...props}
+    >
+      <Box
+        whiteSpace="initial"
+        wordBreak="break-word"
+        display="inline"
+        as="span"
+      >
+        {props.children}
+      </Box>
+      {opensNewTab && (
+        <Box marginLeft="5px" display="inline-flex" as="span">
+          <OutlinkSmallIcon />
+        </Box>
+      )}
+    </Link>
+  );
+};
 
 function useLinkProps(href) {
   const {path} = useContext(PathContext);
@@ -61,11 +84,19 @@ function useLinkProps(href) {
   const isExternal = isUrl(href);
   const isHash = href.startsWith('#');
   const isFile = /\.[a-z]+$/.test(href);
+  if (
+    isExternal &&
+    href.startsWith('https://www.apollographql.com/') &&
+    !href.includes('referrer')
+  ) {
+    href += href.includes('?')
+      ? '&referrer=docs-content'
+      : '?referrer=docs-content';
+  }
   if (isExternal || isHash || isFile) {
     return {
       href,
-      target: isExternal || (isFile && !isHash) ? '_blank' : null,
-      rightIcon: <OutlinkIcon />
+      target: isExternal || (isFile && !isHash) ? '_blank' : null
     };
   }
 
@@ -91,7 +122,15 @@ RelativeLink.propTypes = {
 
 export function ButtonLink({href, ...props}) {
   const linkProps = useLinkProps(href);
-  return <Button as="a" {...linkProps} {...props} />;
+  const isExternal = isUrl(href);
+  return (
+    <Button
+      as="a"
+      {...linkProps}
+      {...props}
+      rightIcon={isExternal && <OutlinkSmallIcon />}
+    />
+  );
 }
 
 ButtonLink.propTypes = {

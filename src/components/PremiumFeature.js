@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {Box, Center, Flex, Text, chakra} from '@chakra-ui/react';
 import RelativeLink from './RelativeLink';
+import {Box, Center, Flex, Text, chakra} from '@chakra-ui/react';
 import {EnterpriseIcon} from './Icons';
 
 export const PremiumFeature = ({linkWithAnchor, children}) => {
@@ -11,10 +11,9 @@ export const PremiumFeature = ({linkWithAnchor, children}) => {
       py="1"
       borderLeftWidth="2px"
       borderColor="primary"
-      fontSize="lg"
       sx={{
         '>': {
-          ':not(:last-child)': {
+          ':not(a):not(:last-child)': {
             mb: 2
           }
         }
@@ -31,11 +30,19 @@ export const PremiumFeature = ({linkWithAnchor, children}) => {
           <Text pl="1">{children}</Text>
         ) : (
           <Text pl="1">
-              <strong>This feature is only available with a GraphOS Dedicated or Enterprise plan.</strong>
-              <br/>To compare GraphOS feature support across all plan types, see the{' '}
+            <strong>
+              This feature is only available with a GraphOS Dedicated or
+              Enterprise plan.
+            </strong>
+            <br />
+            To compare GraphOS feature support across all plan types, see the{' '}
             <RelativeLink
               color={'tertiary'}
-              href={linkWithAnchor ? linkWithAnchor : "https://www.apollographql.com/pricing/"}
+              href={
+                linkWithAnchor
+                  ? linkWithAnchor
+                  : 'https://www.apollographql.com/pricing/'
+              }
             >
               pricing page
             </RelativeLink>

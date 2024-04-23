@@ -10,10 +10,9 @@ export const Tip = ({children, ...props}) => {
       py="1"
       borderLeftWidth="4px"
       borderColor="green.400"
-      fontSize="lg"
       sx={{
         '>': {
-          ':not(:last-child)': {
+          ':not(a):not(:last-child)': {
             mb: 2
           }
         }

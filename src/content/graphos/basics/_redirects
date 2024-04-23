@@ -33,7 +33,7 @@
 /client-awareness/ /docs/graphos/metrics/client-awareness/
 /explorer/explorer/ /docs/graphos/explorer/
 /embed-explorer/ /docs/graphos/explorer/embed-explorer/
-/graph-access-permissions/ /docs/graphos/studio-graph-features/#managing-access-permissions
+/graph-access-permissions/ /docs/graphos/graphs/management/#managing-access-permissions
 
 # Move managed federation docs into Federation docset
 /managed-federation/overview/ /docs/federation/managed-federation/overview/

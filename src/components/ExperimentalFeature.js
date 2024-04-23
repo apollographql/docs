@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {Box, Center, Flex, Text, chakra} from '@chakra-ui/react';
 import RelativeLink from './RelativeLink';
+import {Box, Center, Flex, Text, chakra} from '@chakra-ui/react';
 import {FlaskIcon} from './Icons';
 
 import {MarkdownInAdmonitions} from './MarkdownInAdmonitions';
@@ -17,10 +17,9 @@ export const ExperimentalFeature = ({
       py="1"
       borderLeftWidth="2px"
       borderColor="primary"
-      fontSize="lg"
       sx={{
         '>': {
-          ':not(:last-child)': {
+          ':not(a):not(:last-child)': {
             mb: 2
           }
         }

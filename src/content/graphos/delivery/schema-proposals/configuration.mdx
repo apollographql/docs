@@ -10,19 +10,14 @@ description: Fine-tune the GraphQL schema proposal workflow by configuring permi
 
 | Configuration                | Description                                                                              |
 | ---------------------------- | ---------------------------------------------------------------------------------------- |
-| [**Permissions**](#configure-permissions-and-approvals)                     | Which roles can create and edit proposals                                             |
-| [**Default reviewers**](#default-reviewers)               | Which team members are default reviewers and whether default reviewer approval is required |
-| [**Required approvals**](#required-approvals)                       | The minimum number of approvals needed for a proposal to achieve [**Approved** status](./#proposal-statuses) |
-| [**Schema checks**](#configure-schema-checks)                   | Whether and how [schema checks](../schema-checks) incorporate proposals                                    |
-| [**Notifications**](#notifications)                  | Whether to send email notifications for proposal activity                              |
+| [Permissions](#configure-permissions-and-approvals)                     | Which roles can create and edit proposals                                             |
+| [Default reviewers](#default-reviewers)               | Which team members are default reviewers and whether default reviewer approval is required |
+| [Required approvals](#required-approvals)                       | The minimum number of approvals needed for a proposal to achieve [**Approved** status](./#proposal-statuses) |
+| [Description template](#configure-description-template)                   | An editable description that prepopulates every new proposal created for the graph |
+| [Schema checks](#configure-schema-checks)                   | Whether and how [schema checks](../schema-checks) incorporate proposals                                    |
+| [Notifications](#notifications)                  | Whether to send email notifications for proposal activity                              |
 
 Configurations are available on a graph's **Settings** page in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content).
-
-<img
-  src="../../img/schema-proposals/schema-proposal-settings.jpg"
-  className="screenshot"
-  alt="Schema proposals settings in GraphOS Studio"
-/>
 
 <Note>
 
@@ -147,11 +142,20 @@ Changing the number of required approvals may update the status of existing prop
 By default, any team member's approval can contribute to the [minimum number of required approvals](#required-approvals).
 Once you've added [**default reviewers**](#default-reviewers), you can require at least one approval to come from a default reviewer by selecting **Require at least one default reviewer for all proposals on this graph.**
 
+## Configure description template
+
+When you [create a proposal](./creation#start-a-proposal), you can optionally include a description that appears on the proposal's **Overview** tab. Proposal descriptions support Markdown.
+
+Setting a graph's **Description template** prepopulates the description for every new proposal any team member creates for the graph. Templates can help ensure that all proposal descriptions follow a particular format.
+
 <img
-  src="../../img/schema-proposals/require-default-reviewer-approval.jpg"
+  src="../../img/schema-proposals/proposal-description-template.jpg"
   className="screenshot"
-  alt="Requiring a default reviewer for schema proposals in GraphOS Studio"
+  width="500"
+  alt="Creating a description template for schema proposals in GraphOS Studio"
 />
+
+You can edit a prepopulated description during proposal creation and throughout the proposal process.
 
 ## Configure schema checks
 

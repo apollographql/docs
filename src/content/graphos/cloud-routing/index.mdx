@@ -1,7 +1,7 @@
 ---
 title: Cloud routing for supergraphs
 subtitle: Learn about Apollo-managed cloud routers
-description: Learn about Apollo's managed cloud routers designed to efficiently route requests to your GraphQL APIs, ensuring optimal performance and scalability.
+description: Learn about Apollo's managed cloud routers to efficiently route requests to your GraphQL APIs, ensuring optimal performance and scalability.
 ---
 
 When you create a cloud supergraph with GraphOS Studio, GraphOS automatically provisions and manages a _router_ that acts as an entry point to your GraphQL APIs. In this architecture, individual GraphQL APIs are called _subgraphs_. Clients send operations to your router's public endpoint, instead of sending them directly to your subgraphs.
@@ -104,11 +104,12 @@ Apollo automatically deletes variants of Serverless cloud supergraphs that recei
 - Apollo will notify you via email whenever a Serverless variant is approaching this 60-day limit.
 - To prevent deletion, execute at least one GraphQL operation on the variant's router before the 60-day limit.
 
-## Out of memory errors
+## Limited compute on Serverless
 
-You may receive out of memory errors when using cloud routers on the Serverless plan. Since the Serverless plan offers limited underlying compute resources, Serverless cloud routing offers a fixed amount of throughput capacity.
+Serverless has limited underlying compute resources, so certain types of workloads might require you to upgrade to Dedicated. Serverless capacity can be exhausted in the following circumstances:
 
-Complex schemas may exceed available machine memory for Serverless cloud routers. For example, Serverless cloud routers don't support schemas with over 1,000 input types. Additionally, complex queries that return too much data or query too many subgraphs simultaneously may fail.
+- **Complex schemas** can exceed available machine memory for Serverless cloud routers. For example, Serverless cloud routers don't support schemas with over 1,000 input types.
+- **Too many simultaneous requests** can cause your Serverless cloud router to return `429` errors to your clients.
 
 You can upgrade to Dedicated for control over scaling and performance. <TrackableLink href="https://www.apollographql.com/contact-sales?type=dedicated&referrer=docs" eventName="content_contact_cloud">Contact Sales</TrackableLink> for a free trial.
 

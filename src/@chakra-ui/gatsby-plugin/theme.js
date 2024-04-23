@@ -22,10 +22,9 @@ const theme = extendTheme({
       },
       code: {
         fontSize: 'sm',
-        color: 'blue.400',
+        color: 'text',
         bgColor: 'silver.400',
         _dark: {
-          color: 'navy.100',
           bgColor: 'black.200'
         }
       },
@@ -73,6 +72,10 @@ const theme = extendTheme({
       tertiary: {
         default: 'blue.400',
         _dark: 'navy.100'
+      },
+      link: {
+        default: 'gray.800',
+        _dark: 'gray.100'
       }
     }
   },
@@ -86,8 +89,7 @@ const theme = extendTheme({
     },
     Text: {
       baseStyle: {
-        lineHeight: '1.8rem',
-        fontSize: 'lg'
+        lineHeight: '1.5rem'
       }
     },
     Table: {

@@ -72,14 +72,7 @@ query ($id: ID!) {
 
 ## File upload
 
-The Explorer supports file upload for servers that support the [GraphQL multipart request spec](https://github.com/jaydenseric/graphql-multipart-request-spec). To run an operation that requires files as input, click **+ Add files** in the Explorer's **Variables** tab:
-
-<img
-  className="screenshot"
-  src="../img/explorer-file-upload.jpg"
-  alt="File upload in the Explorer"
-  width="500"
-/>
+The Explorer supports file upload for servers that support the [GraphQL multipart request spec](https://github.com/jaydenseric/graphql-multipart-request-spec). To run an operation that requires files as input, click **+ Add files** at the bottom of the Explorer's **Variables** tab.
 
 You can then set the name of the variable and select the files you want to upload. Note that if your operation supports providing multiple files via a single variable, you need to select the toggle for that variable to enable the multi-file protocol.
 
@@ -95,14 +88,32 @@ You can pause introspection polling at any time. To do so, open the Explorer Set
 
 ### Query plans for supergraphs
 
-If you're working with a supergraph in Studio, the Explorer dynamically calculates example query plans for your operations in the right-hand panel (click **Response** and select **Query Plan Preview** from the dropdown):
+If you're working with a supergraph in Studio, the Explorer dynamically calculates example query plans for your operations in the right-hand panel. You can toggle to view the query plan instead of request response by clicking **Response** and selecting **Query Plan Preview**.
 
-<img
-  className="screenshot"
-  src="../img/explorer-query-plan.jpg"
-  alt="Query plan in the Explorer"
-  width="300"
-/>
+An example query plan may look something like this:
+
+```
+QueryPlan {
+  Parallel {
+    Fetch(service: "locations") {
+      {
+        locations {
+          id
+          name
+        }
+      }
+    },
+    Fetch(service: "reviews") {
+      {
+        latestReviews {
+          id
+          comment
+        }
+      }
+    },
+  },
+}
+```
 
 <Tip>
 
@@ -118,18 +129,11 @@ The Explorer might not use the exact same query planning logic as your router! T
 
 </Note>
 
-There are two display modes for query plans. You can switch between **Show plan as text** and **Show plan as chart** by clicking the icons next to **Query Plan Preview**:
-
-<img
-  className="screenshot"
-  src="../img/explorer-query-plan-diagram.jpg"
-  alt="Query plan diagram in the Explorer"
-  width="600"
-/>
+There are two display modes for query plans. You can switch between **Show plan as text** and **Show plan as chart** by clicking the icons next to **Query Plan Preview**.
 
 ## Embedding
 
-If you've enabled [public access to a variant of your graph](../graphs/studio-features/#public-variants), you can embed the Explorer in a webpage that you can then provide to your graph's consumers. This enables those consumers to test out operations from your own website.
+If you've enabled [public access to a variant of your graph](../graphs/management/#public-variants), you can embed the Explorer in a webpage that you can then provide to your graph's consumers. This enables those consumers to test out operations from your own website.
 
 See [Embedding the Explorer](./embed-explorer).
 

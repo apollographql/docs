@@ -1,7 +1,7 @@
 ---
 title: Cloud router configuration
 subtitle: Learn how to configure cloud routers in GraphOS Studio
-description: Learn how to configure cloud routers and manage secrets in GraphOS Studio
+description: Learn about cloud router configurations including HTTP header rules, CORSs settings, secret management, and more in GraphOS Studio.
 ---
 
 After you create a cloud supergraph, you can view and manage its router's configuration from GraphOS Studio.
@@ -34,16 +34,9 @@ This page shows the following information:
 
 You can store secret string values that you can then use in your router's [YAML configuration](#router-configuration-yaml). For example, you might store an authorization token that the router needs to include in each of its request to a subgraph.
 
-To add a new secret, click **Save a secret**. The following dialog appears:
+To add a new secret, click **Save a secret**.
 
-<img
-  className="screenshot"
-  alt="Adding a secret to your router"
-  src="../img/cloud-routing/add-secret.jpg"
-  width="500"
-/>
-
-Enter a name and value for your secret. You can't view a secret's value after you save it, so make sure that the value is correct before saving. When you're ready, click **Save secret**.
+In the dialog that appears, enter a name and value for your secret. You can't view a secret's value after you save it, so make sure that the value is correct before saving. When you're ready, click **Save secret**.
 
 Your secret is encrypted and stored. You can then use the secret's value in your router's YAML configuration.
 

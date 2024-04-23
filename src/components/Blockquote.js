@@ -10,10 +10,9 @@ export default function Blockquote({children, ...props}) {
       py="1"
       borderLeftWidth="2px"
       borderColor="primary"
-      fontSize="lg"
       sx={{
         '>': {
-          ':not(:last-child)': {
+          ':not(a):not(:last-child)': {
             mb: 2
           }
         }

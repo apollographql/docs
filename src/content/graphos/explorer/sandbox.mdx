@@ -50,7 +50,7 @@ https://flyby-locations-sub.herokuapp.com/
 
 If you log in to GraphOS Studio from Sandbox, you can diff your Sandbox schema against any subgraph or monolith graph you have access to in the GraphOS schema registry.
 
-From [Sandbox](https://studio.apollographql.com/sandbox/), open the **Schema Diff** page from the left navigation panel. Then use the dropdown menus to select any accessible organization, graph, and variant to compare against:
+From [Sandbox](https://studio.apollographql.com/sandbox/), open the **Schema Diff** page from the left navigation panel. Then use the dropdown menus to select any accessible organization, graph, and variant to compare against.
 
 <img class="screenshot" src="../img/sandbox-diff.jpg" alt="Schema diff in Sandbox" />
 
@@ -72,15 +72,9 @@ Organization members with the [**Consumer** role](../org/members/#organization-w
 
 </Note>
 
-From [Sandbox](https://studio.apollographql.com/sandbox/), open the **Checks** page from the left navigation panel:
-
-<img class="screenshot" src="../img/sandbox-checks-select.jpg" alt="Sandbox select variant for checks" width="400" />
-
-Select any accessible organization, graph, and variant to check against and click **Run a check**. When the check completes, Sandbox displays a result summary:
-
-<img class="screenshot" src="../img/sandbox-checks-result.jpg" alt="Sandbox checks result" width="400" />
-
-To view the result's full details in Studio, click **Go to details**.
+From [Sandbox](https://studio.apollographql.com/sandbox/), open the **Checks** page from the left navigation panel.
+A dialog appears where you can select the organization, graph, and variant to run a check against and click **Run a check**.
+When the check completes, Sandbox displays a result summary. To view the result's full details in Studio, click **Go to details**.
 
 ### Subgraph checks
 
@@ -94,13 +88,6 @@ You can run subgraph checks on supergraphs. If you're using Sandbox with a subgr
 />
 
 When you click **Run a check**, Sandbox first performs a build check using your local subgraph schema and the published schemas of your other subgraphs. If composition succeeds, Sandbox then performs operation checks as usual and displays the results of all checks. If composition fails, Sandbox does not perform operation checks and displays the composition error.
-
-<img
-  class="screenshot"
-  src="../img/subgraph-sandbox-one-check-failed.jpg"
-  alt="Sandbox subgraph check result"
-  width="500"
-/>
 
 ## Offline Sandbox
 
@@ -151,14 +138,14 @@ The example URL above opens Sandbox with the following initial state:
   class="screenshot"
   src="../img/sandbox-url-parameters-1.jpg"
   alt="Sandbox with endpoint, document, and variables pre-populated"
-  width="500"
+  width="600"
 />
 
 <img
   class="screenshot"
   src="../img/sandbox-url-parameters-2.jpg"
   alt="Sandbox with headers pre-populated"
-  width="500"
+  width="400"
 />
 
 ## Embedding Sandbox
@@ -171,11 +158,7 @@ You can embed Sandbox on your own website. This can be useful for interacting wi
      Open Sandbox.
    </a>
 
-2. Under the Explorer's Settings tab, find **Embed Sandbox** and click **Copy code snippet**.
-
-   The following dialog appears:
-
-   <img class="screenshot" src="../img/embed-sandbox-modal.jpg" alt="Sandbox embed dialog" width="600" />
+2. Under the Explorer's Settings tab, find **Embed Sandbox** and click **Copy code snippet**. A dialog with options and code snippets appears.
 
 3. In the dialog, use the tabs to select the code snippet for your use case:
 
@@ -215,7 +198,7 @@ The URL of the GraphQL endpoint that Sandbox introspects on initial load. Sandbo
 The default value is `http://localhost:4000`.
 
 You should only pass non-production endpoints to Sandbox. Sandbox is powered by schema introspection, and we recommend [disabling introspection in production](https://www.apollographql.com/blog/graphql/security/why-you-should-disable-graphql-introspection-in-production/).
-To provide a "Sandbox-like" experience for production endpoints, we recommend using either a [public variant](../graphs/studio-features/#public-variants) or the [embedded Explorer](./embed-explorer).
+To provide a "Sandbox-like" experience for production endpoints, we recommend using either a [public variant](../graphs/management/#public-variants) or the [embedded Explorer](./embed-explorer).
 
 </Property>
 <Property name="handleRequest" type="(url, options) => Promise">

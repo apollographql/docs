@@ -1,3 +1,10 @@
+import '@fontsource/fira-code/400.css';
+import '@fontsource/fira-code/600.css';
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/500.css';
+import '@fontsource/inter/600.css';
+import '@fontsource/inter/700.css';
+
 import {withPrefix} from 'gatsby';
 export {wrapPageElement} from './gatsby-ssr';
 
@@ -64,7 +71,23 @@ const redirects = {
   '/graphos/delivery/contracts/#special-cases-for-filtering':
     '/graphos/delivery/contract-reference#special-cases-for-filtering',
   '/graphos/delivery/contracts/#error-types':
-    '/graphos/delivery/contract-reference#errors'
+    '/graphos/delivery/contract-reference#errors',
+  '/graphos/graphs/studio-features#creating-graphs':
+    '/graphos/graphs/management#creating-graphs',
+  '/graphos/graphs/studio-features#managing-access-permissions':
+    '/graphos/graphs/management#managing-access-permissions',
+  '/graphos/graphs/studio-features#public-variants':
+    '/graphos/graphs/management#public-variants',
+  '/graphos/graphs/studio-features#protected-variants-enterprise-only':
+    '/graphos/graphs/management#protected-variants-enterprise-only',
+  '/graphos/graphs/studio-features#internal-graph-visibility-enterprise-only':
+    '/graphos/graphs/management#internal-graph-visibility-enterprise-only',
+  '/graphos/graphs/studio-features#dangerous-actions':
+    '/graphos/graphs/management#dangerous-actions',
+  '/graphos/graphs/studio-features#transferring-graph-ownership':
+    '/graphos/graphs/management#transferring-graph-ownership',
+  '/graphos/graphs/studio-features#deleting-a-graph':
+    '/graphos/graphs/management#deleting-a-graph'
 };
 
 const normalizeUrl = url => {
