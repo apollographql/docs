@@ -6,24 +6,30 @@ description: Set up notifications for your GraphQL graph's performance, schema c
 
 GraphOS can notify your team about changes to your graph and its performance. These notifications help you stay up to date and address issues as they arise.
 
+<Tip>
+
 If you don't have a GraphOS organization yet, you can [get started here](../../quickstart/cloud/).
+
+</Tip>
 
 ## Supported notifications and channels
 
 GraphOS can send your team the following notification types:
 
 - [Daily reports](./daily-reports) of your graph's request rate, error rate, and latency
-- [Schema change notifications](./schema-change-integration) whenever your graph's schema is updated
 - [Performance alerts](./performance-alerts) whenever a metric such as error percentage or request latency exceeds a particular threshold (this experimental feature requires a [paid plan](https://www.apollographql.com/pricing/))
+- [Schema change notifications](./schema-change-integration) whenever your graph's schema is updated
+- [Schema proposal notifications](./schema-proposal-integration) whenever a schema proposal is created or revised, or if its status changes
 - [Build status notifications](./build-status-notification) whenever Apollo attempts to compose a supergraph schema for your federated graph (this preview feature is [enterprise only](https://www.apollographql.com/pricing/))
 
-Currently, GraphOS can send each of these notification types to the channel(s) indicated:
+GraphOS can send each of these notification types to the channel(s) indicated:
 
 | Notification Type                            | Slack | PagerDuty | Custom Webhook |
 | :------------------------------------------- | :---: | :-------: | :------------: |
 | Daily reports                                |   ✓   |           |                |
-| Schema change notifications                  |   ✓   |           |       ✓        |
 | Performance alerts (paid, experimental)      |   ✓   |     ✓     |                |
+| Schema change notifications                  |   ✓   |           |       ✓        |
+| Schema proposal notifications                |       |           |       ✓        |
 | Build status notifications (enterprise only) |       |           |       ✓        |
 
 ## Creating a notification
@@ -34,10 +40,10 @@ For performance alerts, see [Performance alerts setup](./performance-alerts/#set
 
 </Note>
 
-1. Go to your graph's Settings page in [GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content).
+1. Go to your graph's **Settings** page in [GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content).
 2. Select the **Reporting** tab.
 3. Click **Add notification** in the upper right.
-4. Select a notification type, either **Daily Report**, **Schema Change**, or **Build Status** and click **Next**:
+4. Select a notification type, either **Daily Report**, **Schema Change**, **Schema Proposal**, or **Build Status** and click **Next**:
 5. In the dropdown, select which [variant](../../graphs/#variants) of your graph you want to receive notifications for.
 6. Select an existing configured channel to send notifications to, or select which [type of new channel](#supported-notifications-and-channels) you want to configure.
 7. Click **Next**.
