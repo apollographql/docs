@@ -41,18 +41,139 @@ Custom webhook notification details are provided as a JSON object in the request
 The JSON object conforms to the structure of the `ResponseShape` interface:
 
 ```javascript
-interface Change {
-  description: string;
+enum ProposalStatus {
+  OPEN
+  DRAFT
+  IMPLEMENTED
+  APPROVED
 }
 
 interface ResponseShape {
-  eventType: 'SCHEMA_PUBLISH';
-  eventID: string;
-  graphID: string;
-  variantID: string; // See description below
-  proposalID: string; // See description below
-  timestamp: string; // ISO 8601 Date string
+  "eventType": string;
+  "eventID": string;
+  "graphID": string;
+  "variantID": string;
+  "proposalID": string;
+  "change": {
+    "status": ProposalStatus | undefined
+    "previousStatus": ProposalStatus | undefined
+    "revisionId": string | undefined
+  },
+  "timestamp": string;
 }
 ```
 
-- The value of `variantID` is in the format `graphID@variantName` (for example, `mygraph@staging`).
+
+#### Field descriptions
+
+<table className="field-table">
+<thead>
+<tr>
+<th style={{ minWidth: 200 }}>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+
+<tr>
+<td>
+
+##### `eventType`
+
+</td>
+<td>
+
+The schema proposal event, either `APOLLO_PROPOSAL_CREATED`, `APOLLO_PROPOSAL_STATUS_CHANGE`, or `PROPOSAL_REVISION_SAVED`
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `eventId`
+
+</td>
+<td>
+
+A unique event ID
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `proposalID`
+
+</td>
+<td>
+
+A unique proposal ID
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `change`
+
+</td>
+<td>
+
+- For `APOLLO_PROPOSAL_STATUS_CHANGE` events, the current `status` and `previousStatus` of the proposal.
+See [proposal statuses](../../delivery/schema-proposals#proposal-statuses) for more information.
+
+- For `PROPOSAL_REVISION_SAVED` events, the unique `revisionID` of the revision.
+
+- This field isn't present for `APOLLO_PROPOSAL_CREATED` events.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `graphID`
+
+</td>
+<td>
+
+A unique graph ID
+
+</td>
+</tr>
+
+
+<tr>
+<td>
+
+
+##### `variantID`
+
+
+</td>
+<td>
+
+  An unique ID in the graph ref format `graphID@variantName`
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `timestamp`
+
+</td>
+<td>
+
+An ISO 8601 Date string indicating when the event occurred
+
+</td>
+</tr>
+
+</tbody>
+</table>
+

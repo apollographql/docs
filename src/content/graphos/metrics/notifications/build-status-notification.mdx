@@ -39,17 +39,137 @@ interface Location {
 interface ResponseShape {
   eventType: 'BUILD_PUBLISH_EVENT';
   eventID: string;
-  supergraphSchemaURL: string | undefined; // See description below
+  supergraphSchemaURL: string | undefined;
   buildSucceeded: boolean;
-  buildErrors: BuildError[] | undefined; // See description below
+  buildErrors: BuildError[] | undefined;
   graphID: string;
-  variantID: string; // See description below
-  timestamp: string; // ISO 8601 Date string
+  variantID: string;
+  timestamp: string;
 }
 ```
 
-- If the build succeeds, the value of `supergraphSchemaURL` is a short-lived (24-hour) URL that enables you to fetch the supergraph schema without authenticating (such as with an API key). Otherwise, this field is not present.
+#### Field descriptions
 
-- If the build fails, `buildErrors` is an array of `BuildError` objects that describe the errors that occurred during the build. Otherwise, this field is not present.
+<table className="field-table">
+<thead>
+<tr>
+<th style={{ minWidth: 200 }}>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
 
-- The value of `variantID` is in the format `graphID@variantName` (for example, `mygraph@staging`). This format is known as a [graph ref](/rover/conventions/#graph-refs).
+<tr>
+<td>
+
+##### `eventType`
+
+</td>
+<td>
+
+The build status event name; currently, always `BUILD_PUBLISH_EVENT`
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `eventId`
+
+</td>
+<td>
+
+A unique event ID
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `supergraphSchemaURL`
+
+</td>
+<td>
+
+If the build succeeded, a short-lived (24-hour) URL that enables you to fetch the supergraph
+schema without authenticating (such as with an API key).
+
+If the build fails, this field isn't present.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `buildSucceeded`
+
+</td>
+<td>
+
+Whether ot not the build succeeded
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `buildErrors`
+
+</td>
+<td>
+
+If the build failed, an array of `builderError` objects that describe the errors that occurred during the build.
+
+If the build succeeded, this field isn't present.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `graphID`
+
+</td>
+<td>
+
+A unique graph ID
+
+</td>
+</tr>
+
+
+<tr>
+<td>
+
+
+##### `variantID`
+
+
+</td>
+<td>
+
+  An unique ID in the graph ref format `graphID@variantName`
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `timestamp`
+
+</td>
+<td>
+
+An ISO 8601 Date string indicating when the event occurred
+
+</td>
+</tr>
+
+</tbody>
+</table>
