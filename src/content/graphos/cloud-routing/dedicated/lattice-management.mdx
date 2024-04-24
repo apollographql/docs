@@ -35,7 +35,7 @@ From there, you can configure and enable access logs for your Amazon VPC Lattice
   src="../../img/cloud-dedicated/vpc-lattice-access-logs.png"
 />
 
-You can also use the **Metrics** tab to get a quick overview of traffic flowing to your private subgraphs.
+Use the **Metrics** tab to get a quick overview of traffic flowing to your private subgraphs.
 
 <img
   className="screenshot"
@@ -50,7 +50,7 @@ You can also use [Amazon CloudWatch metrics emitted by Amazon VPC Lattice](https
 Once you configure an Amazon VPC Lattice service to accept traffic from GraphOS, it's protected by multiple security layers:
 
 - The Amazon VPC Lattice service network only allows traffic with a valid signature over HTTPS.
-- The Lattice service's configured authorization policy allows traffic only from Apollo AWS accounts. (This is the authorization policy you configured in step 6 [when creating your Lattice service](#step-2-create-a-lattice-service).)
+- The Lattice service's configured authorization policy allows traffic only from Apollo AWS accounts. (This is the authorization policy you configured in step 6 [when creating your Lattice service](./lattice/#step-2-create-a-lattice-service).)
 - GraphOS cloud router provisioning compares subgraphs in a supergraph's configuration against the list of known private subgraphs in its Apollo account. It refuses to create or update cloud routers with unknown private subgraphs.
 - Cloud routers can only invoke private subgraphs listed in their supergraph configuration.
 
