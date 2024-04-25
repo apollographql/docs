@@ -10,11 +10,12 @@ Schema proposals are only available with a [GraphOS Enterprise plan](https://www
 
 </EnterpriseFeature>
 
-Configure GraphOS to send notifications to a custom webhook whenever schema proposals are created or revised, or if their status changes.
+Configure GraphOS to send notifications to a webhook whenever schema proposals are created or revised or if their status changes.
 
 ## Setup
 
-1. Select the **Reporting** tab.
+1. Go to your graph's **Settings** page in [GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content).
+1. Open the **Reporting** tab.
 2. Click **Add notification** in the upper right.
 3. Select **Schema proposal** and click **Next**.
 4. Select the schema proposal event(s) you want to receive notifications for:
@@ -27,14 +28,16 @@ Configure GraphOS to send notifications to a custom webhook whenever schema prop
 
 ## Configure webhook
 
-Custom webhooks require you to set up an HTTPS endpoint that is accessible via the public internet. Webhook notifications are sent to this endpoint as POST requests. Notification details are provided as JSON in the request body, as described in the next section.
+Custom webhooks require you to set up an HTTPS endpoint accessible via the public internet.
+GraphOS sends webhook notifications to this endpoint as `POST` requests.
+Notification details are provided as JSON in the request body, as described in the next section.
 
 1. Specify an **Endpoint name**. This name must be unique among all your graph's notification channels, including Slack channels.
 2. In the **Webhook URL** field, provide the URL of your HTTP(S) endpoint.
 3. Optionally, enter a **Secret Token**, which will be sent as an `x-apollo-signature` header in the notification payload.
 4. Click **Next**.
 
-## Webhook format
+#### Webhook format
 
 Custom webhook notification details are provided as a JSON object in the request body.
 
@@ -125,7 +128,7 @@ A unique proposal ID
 - For `APOLLO_PROPOSAL_STATUS_CHANGE` events, the current `status` and `previousStatus` of the proposal.
 See [proposal statuses](../../delivery/schema-proposals#proposal-statuses) for more information.
 
-- For `PROPOSAL_REVISION_SAVED` events, the unique `revisionID` of the revision.
+- For `PROPOSAL_REVISION_SAVED` events, the unique `revisionID` of the saved revision.
 
 - This field isn't present for `APOLLO_PROPOSAL_CREATED` events.
 
@@ -156,7 +159,7 @@ A unique graph ID
 </td>
 <td>
 
-  An unique ID in the graph ref format `graphID@variantName`
+An unique ID in the graph ref format, for example, `graphID@variantName`
 
 </td>
 </tr>

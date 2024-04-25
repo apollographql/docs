@@ -4,7 +4,8 @@ subtitle: Receive alerts when changes are made to your graph's schema
 description: Set up Apollo GraphOS notifications for GraphQL schema changes. Receive real-time alerts whenever your registered schema is modified.
 ---
 
-Configure GraphOS to notify your team whenever any changes are made to your graph's registered schema. Receive notifications via Slack, custom webhook, or both.
+Configure GraphOS to notify your team whenever your graph's registered schema changes.
+ You can receive notifications via Slack, custom webhook, or both.
 
 <img
   className="screenshot"
@@ -39,7 +40,7 @@ Sending notifications via webhook is only available with a [GraphOS Enterprise p
 
 <ConfigureWebhookNotification />
 
-## Webhook format
+#### Webhook format
 
 Custom webhook notification details are provided as a JSON object in the request body.
 
@@ -120,9 +121,9 @@ The set of schema changes that occurred
 </td>
 <td>
 
-  A short-lived (24-hour) URL that enables you to fetch the published
-  schema without authenticating (such as with an API key). The URL expires
-  at the time indicated by `schemaURLExpiresAt`.
+A short-lived (24-hour) URL that enables you to fetch the published
+schema without authenticating (such as with an API key). The URL expires
+at the time indicated by `schemaURLExpiresAt`.
 
 </td>
 </tr>
@@ -164,7 +165,7 @@ A unique graph ID
 </td>
 <td>
 
-  An unique ID in the graph ref format `graphID@variantName`
+An unique ID in the graph ref format, for example, `graphID@variantName`
 
 </td>
 </tr>
