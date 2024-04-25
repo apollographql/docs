@@ -3,6 +3,7 @@ APIs?
 [Aa]pprovers?
 APQs?
 APM('s)?
+[Aa]rchitected
 ARNs?
 async
 auditable
