@@ -41,8 +41,8 @@ Notification details are provided as JSON in the request body, as described in t
 #### Webhook format
 
 Custom webhook notification details are provided as a JSON object in the request body.
-To avoid including sensitive information, payloads contain IDs—for example, proposal ID and revision ID, rather than objects containing details about the proposal or revision.
-You can use the [Platform API](/graphos/platform-api/) to fetch full objects using IDs sent by webhook.
+To avoid including sensitive information, payloads contain IDs—for example, proposal ID and revision ID—rather than objects containing details about the proposal or revision.
+You can use the [Platform API](/graphos/platform-api/) to fetch full objects using the IDs in the webhook payload
 
 The JSON object conforms to the structure of the `ResponseShape` interface:
 
