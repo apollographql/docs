@@ -11,6 +11,7 @@ Schema proposals are only available with a [GraphOS Enterprise plan](https://www
 </EnterpriseFeature>
 
 Configure GraphOS to send notifications to a webhook whenever schema proposals are created or revised or if their status changes.
+These webhooks are useful for automating workflows, like opening a draft pull request in your codebase whenever a proposal's status changes to **Approved**.
 
 ## Setup
 
@@ -40,6 +41,8 @@ Notification details are provided as JSON in the request body, as described in t
 #### Webhook format
 
 Custom webhook notification details are provided as a JSON object in the request body.
+To avoid including sensitive information, payloads contain IDs—for example, proposal ID and revision ID, rather than objects containing details about the proposal or revision.
+You can use the [Platform API](/graphos/platform-api/) to fetch full objects using IDs sent by webhook.
 
 The JSON object conforms to the structure of the `ResponseShape` interface:
 
