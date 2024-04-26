@@ -1,20 +1,44 @@
 ---
 title: Performance
-description: Build a high performing graph by proactively monitoring and improving it over time
+subtitle: Boost performance with proactive monitoring and continuous improvement
+description: Enhance federated GraphQL API performance with optimization techniques including subscriptions, caching, and observability tools.
 ---
 
-The **Performance** pillar focuses on improving the runtime performance and efficiency of your supergraph. A well architected supergraph platform not only delivers a great end-user experience, but also provides ways for its developers and contributors to proactively look for opportunities to improve both real and perceived performance, with the documentation and tools they'll need to ship and measure those changes effectively.
+The **Performance** pillar focuses on improving your supergraph's runtime performance and efficiency.
+A well-architected supergraph platform not only delivers a great end-user experience.
+It also provides ways for its developers to proactively improve both real and perceived performance.
+Additionally, it gives developers the documentation and tools they need to ship and measure those changes effectively.
 
 ## Principles
 
-### Enable developers to improve perceived end-user latency
+### Enable client developers to improve perceived end-user latency
 
-Improving perceived end-user latency is crucial for businesses that rely on digital services. Slow loading times can lead to high bounce rates and decreased conversion rates, which ultimately impact revenue. To combat this, there are several techniques that developers can use to improve perceived end-user latency, such as using response compression, prioritizing data with `@defer`, and utilizing subscription/real-time GraphQL features. Providing field-level latency information to consumers can also help them make informed choices about operation shapes. Additionally, configuring trace sampling and using persisted queries can help reduce request sizes and latency. By implementing these techniques, businesses can improve the overall user experience and ultimately increase their bottom line.
+Improving perceived end-user latency is crucial for organizations that rely on digital services.
+Slow loading times can cause high bounce rates and lower conversion rates, hurting revenue.
+Developers can use the following techniques to improve perceived end-user latency:
 
-### Enable subgraph developers to improve performance of the graph
+- Using response compression
+- Prioritizing data with `@defer`
+- Using subscription/real-time GraphQL features
 
-Contributors to subgraphs can also help improve the performance of the supergraph as a whole by optimizing their subgraph's performance. This can include leveraging caching to improve the performance of operations and resolvers, using dataloaders in resolvers, and implementing Automatic Persisted Queries (APQs) to improve subgraph request latency. By optimizing their subgraphs, contributors can reduce the load on the supergraph and ultimately improve the overall performance of the graph.
+Providing graph consumers with field-level latency information can also help them make informed choices about operation shapes.
+Configuring trace sampling and using persisted queries can also help reduce request sizes and latency.
+By using these techniques, organizations can improve their user experience and ultimately increase their bottom line.
+
+### Enable subgraph developers to improve graph performance
+
+Subgraph developers can also help improve the overall performance of the supergraph by optimizing their subgraph's performance.
+Techniques include:
+
+- Leveraging caching to improve the performance of operations and resolvers
+- Using dataloaders in resolvers
+- Implementing Automatic Persisted Queries (APQs) to improve subgraph request latency
+
+By optimizing their subgraphs, developers can reduce the load on the supergraph and improve its performance.
 
 ### Find opportunities to improve performance
 
-Observability tools can be incredibly helpful in identifying opportunities for improving the performance of the supergraph. By collecting metrics on resolver executions and using distributed traces, engineers can gain insight into the performance of individual components and identify areas for optimization. Additionally, operation traces can help identify bottlenecks and inefficiencies across the entire system. By leveraging these observability tools, teams can proactively identify and address performance issues before they become a problem for end-users.
+Observability tools can be helpful in identifying opportunities to improve the supergraph's performance.
+Resolver execution metrics and distributed traces can help developers can understand and optimize the performance of individual components.
+Additionally, operation traces can help identify bottlenecks and inefficiencies across the system.
+By leveraging these observability tools, teams can proactively identify and address performance issues before they impact end-users.
