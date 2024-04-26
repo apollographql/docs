@@ -41,6 +41,7 @@ docstrings?
 Documenters
 Doyensec
 Dynatrace
+[Ee]nablement
 (?i)enums?
 GCUs?
 Gradle
