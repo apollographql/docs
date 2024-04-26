@@ -11,7 +11,7 @@ This makes it even more critical to use an enterprise-grade GraphQL platform lik
 
 ## Principles
 
-### Apply a defense-in-depth approach to protecting the graph and data
+### Apply a defense-in-depth approach
 
 To effectively protect a GraphQL API, it's crucial to combine a variety of approaches.
 You can start by using existing security measures.
@@ -20,14 +20,14 @@ These include enforcing authentication and authorization in both the graph and u
 However, it's also important to prevent data leakage at the "front door" with tools like the Apollo Router.
 Combining approaches like these creates a defense-in-depth strategy that maximizes security and protects your data.
 
-### Protect the supergraph infrastructure
+### Protect supergraph infrastructure
 
 Open subgraphs and unrestricted permissions can lead to unintended changes.
 You can protect your supergraph infrastructure by following these best practices:
 
 - Assigning and reviewing GraphOS roles and permissions
 - Locking down publishing to production variants
-- Allowing only the graph router to access subgraphs subgraph
+- Allowing only the graph router to access subgraphs
 
 ### Prevent data leakage within the supergraph
 
@@ -36,13 +36,17 @@ Limiting exposure can prevent potential attackers from gaining access to sensiti
 This includes using standard API best practices to prevent injection attacks and other security vulnerabilities.
 
 With GraphQL, the schema itself can reveal your API surface area to attackers.
-This principle's best practices let you strengthen your supergraph's security and stop data leaks.
+That's why it's important to turn off introspection in production and follow other GraphQL-specific best practices.
+This principle's practices strengthen your supergraph's security and stop data leaks.
 
 ### Protect upstream resources in the supergraph
 
 Enterprise supergraphs connect clients to many different APIs.
 With all these connections, the risk of unintentional service degradation increases.
+
 Some API teams might not have needed to think about exposing data outside their organization.
 Subsequently, they may not have considered the volume of traffic they might have to handle.
+This principle's best practice build awareness about these topics.
+
 Ensuring that incidents don't affect other services connected to the supergraph is also crucial.
 Operation safelisting, circuit breakers, and rate limiting are effective techniques for ensuring that resources can cope with the expected API usage.
