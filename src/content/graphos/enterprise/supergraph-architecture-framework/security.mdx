@@ -1,24 +1,48 @@
 ---
 title: Security
-description: Protect your data and infrastructure with a defense-in-depth approach
+subtitle: Protect your data and infrastructure with a defense-in-depth approach
+description: Secure your federated GraphQL API with Apollo GraphOS and a defense-in-depth approach. Prevent data leakage and protect upstream resources.
 ---
 
-The **Security** pillar focuses on ways you can make sure your API is secure, even while using the new paradigms of GraphQL, and how they can operate with your existing organization's standards. Traditional HTTP-based tools often lack support for GraphQL, which makes it even more critical to use an enterprise-grade GraphQL Platform like Apollo GraphOS to run your supergraph.
+The **Security** pillar focuses on ensuring your federated GraphQL API is secure.
+It also outlines how new GraphQL paradigms can work with your organization's existing standards.
+Traditional HTTP-based tools often lack GraphQL support.
+This makes it even more critical to use an enterprise-grade GraphQL platform like Apollo GraphOS to run your supergraph.
 
 ## Principles
 
 ### Apply a defense-in-depth approach to protecting the graph and data
 
-To effectively protect a GraphQL API, it is important to combine a variety of approaches. Utilizing existing security implementations, such as enforcing authentication and authorization in both the graph and upstream systems, is a good starting point. However, it is also crucial to prevent data leakage at the "front door" with tools like Apollo Router. By combining these approaches, you can create a defense-in-depth strategy that maximizes security and ensures the protection of your graph and data.
+To effectively protect a GraphQL API, it's crucial to combine a variety of approaches.
+You can start by using existing security measures.
+These include enforcing authentication and authorization in both the graph and upstream systems.
+
+However, it's also important to prevent data leakage at the "front door" with tools like the Apollo Router.
+Combining approaches like these creates a defense-in-depth strategy that maximizes security and protects your data.
 
 ### Protect the supergraph infrastructure
 
-It is important to avoid unintended changes to your supergraph or allowing access to data via open subgraphs. This can be achieved by following best practices such as assigning and reviewing GraphOS roles and permissions,locking down publishing to production variants, and limiting subgraph access to only the graph router. By implementing these measures, you can ensure that your supergraph infrastructure remains secure and protected from unauthorized access or modifications.
+Open subgraphs and unrestricted permissions can lead to unintended changes.
+You can protect your supergraph infrastructure by following these best practices:
+
+- Assigning and reviewing GraphOS roles and permissions
+- Locking down publishing to production variants
+- Allowing only the graph router to access subgraphs subgraph
 
 ### Prevent data leakage within the supergraph
 
-The supergraph is a central place where data of all different types and quantity flows through. By limiting the exposure and the data returned, you can prevent potential attackers from gaining access to sensitive information. We also want to ensure that we are using standard API best practices to prevent injection attacks and other security vulnerabilities. Specific to GraphQL the schema itself can provide insights to malicious actors what your API surface area covers. By implementing these best practices you can help ensure the security of your supergraph and prevent data leaks.
+The supergraph serves as a central data channel for your organization.
+Limiting exposure can prevent potential attackers from gaining access to sensitive information.
+This includes using standard API best practices to prevent injection attacks and other security vulnerabilities.
+
+With GraphQL, the schema itself can reveal your API surface area to attackers.
+This principle's best practices let you strengthen your supergraph's security and stop data leaks.
 
 ### Protect upstream resources in the supergraph
 
-Enterprise supergraphs will connect clients to many different APIs and with all those connections, the risk for unintentional service impacts increase. API teams that previously may have not had to think about the dangers of exposing their data to other outside their team or organization, may not have though about the amount of traffic volume they need to handle. We also want to prevent any accident from propagating to impacting other services connected to the supergraph. Using tools like operation safelisting, circuit breakers, and rate limiting can make sure our resources are given the chance to handle expected usage of their API.
+Enterprise supergraphs connect clients to many different APIs.
+With all these connections, the risk of unintentional service degradation increases.
+Some API teams might not have needed to think about exposing data outside their organization.
+Subsequently, they may not have considered the volume of traffic they might have to handle.
+Ensuring that incidents don't affect other services connected to the supergraph is also crucial.
+Operation safelisting, circuit breakers, and rate limiting are effective techniques for ensuring that resources can cope with the expected API usage.
