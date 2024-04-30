@@ -62,13 +62,13 @@ Dedicated offers a [wider variety of AWS regions](../dedicated#runs-on-aws).
 
 On Fly.io, Serverless cloud routers sleep after two minutes of inactivity. Sleeping routers can't serve requests and must wake up to do so. On AWS, cloud routers sleep after seven days of inactivity.
 
-After an additional 30 days of inactivity, Apollo deletes Serverless cloud routers.
+After a total 30 days of inactivity, Apollo deletes Serverless cloud routers.
 Deletion preserves a cloud router's associated variant's schema but deletes the underlying cloud router. Learn more in [Serverless router status](./#serverless-router-status).
 
 |                                        | Fly.io Hosted | AWS Hosted |
 | -------------------------------------- | ------------- | ---------- |
 | Inactivity period <br/>before sleep    | 2 minutes     | 7 days     |
-| Inactivity period <br/>before deletion | 60 days       | 37 days    |
+| Inactivity period <br/>before deletion | 30 days       | 30 days    |
 
 ## How to migrate
 
