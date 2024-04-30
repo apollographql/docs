@@ -1,47 +1,49 @@
 ---
 title: Operational Excellence
 subtitle: Efficiently operate, monitor, and manage your supergraph
-description: Learn best practices for GraphQL schema design, organization structure, standards enforcement, and supergraph scaling and health maintenace.
+description: Learn best practices for GraphQL schema design, organization structure, standards enforcement, and supergraph scaling and health maintenance.
 ---
 
 The **Operational Excellence** pillar focuses on empowering subgraph and stewardship teams.
-This pillar's best practices outline how to effectively build and manage GraphQL schema and how to create governance programs.
-These practices and programs build trust in the graph for both subgraph and client developers alike.
+A well architected graph is not only technically excellent, but operationally as well.
+
+Processes and tools should be in place to ensure that the supergraph is easy to use, understand, and maintain, and helps ensure that the graph is a successful tool for building new experiences quickly.
 
 ## Principles
 
 ### Design an effective GraphQL schema
 
-GraphQL schemas are the cornerstone of GraphQL.
-Schemas enable both front- and backend teams to understand the available data.
-They also describe how clients request the data they care about.
-It's important that schemas are well-designed to avoid developer frustration.
-This principle's best practices encompass essential guidelines for optimal schema design.
+GraphQL schemas are the cornerstone of GraphQL—it enables both frontend and backend teams to understand the data that is available to be sent, and how clients request the data they care about.
+It's important that schemas are built well to avoid developer frustration, and to ensure that the graph is easy to use and understand.
+
+Designing an effective schema can be done through processes that include common practices like schema-first development, schema validation, and schema evolution, among others.
 
 ### Structure the organization to support best practices
 
-As organizations grow their federated graph, scaling issues may arise.
-This can happen due to the multitude of teams contributing to the graph.
-Whether issues stem from schema design evolution or graph ownership, they can create friction and hamper developer velocity.
+As organizations grow their federated graph, scaling issues may arise as a result of the multitude of teams contributing to it.
+Whether it's related to schema design evolution or graph ownership, these issues create friction and affect developer velocity negatively.
 
-The best practices in this principle cover how to enable graph stewardship teams and make them effective.
-They also explain how to think about the supergraph as a product, rather than a shared service.
+Having a well-structured organization can help alleviate issues before they materialize. This includes having clear ownership of subgraphs, a well-defined process for schema changes, and a clear understanding of how the supergraph is used. It can also include having the right tools in place to help teams come together to build the supergraph and scale education across the organization.
+It's also important to have a clear understanding of how the supergraph is owned by the organization, and how it can be used to drive business value.
 
 ### Scale the supergraph
 
 GraphQL Federation is a new concept for many organizations.
-It's important for teams to deeply understand implementation and scaling.
-The best practices in this principle help organizations understand how to build and maintain the supergraph so that it's a successful tool for building new experiences quickly.
+It's important for teams to understand ownership and how they are a part of the supergraph and how the supergraph is served.
+
+Leveraging tools like GraphOS's schema registry and schema checks can help teams understand how their subgraph fits into the supergraph, and how a graph router helps create a consolidated graph for clients to consume.
 
 ### Enforce subgraph standards and best practices
 
-Enforcing standards is a critical part of stewardship.
-Standards ensure that the supergraph schema is consistent for graph consumers.
-The best practices in this principle show how to effectively enforce standards—ensuring a consistent and user-friendly supergraph schema.
+Enforcing standards is a critical part of any stewardship effort.
+Standards ensure that the supergraph schema is consistent for graph consumers, helping avoid issues like breaking changes and naming consistency.
+
+Creating processes and best practice documentation alongside utilizing tooling can help subgraph teams build a more consistent and reliable supergraph.
 
 ### Improve supergraph health over time
 
 The creation of a supergraph isn't confined to a single instance in time.
 Instead, as with GraphQL as a whole, it's intended to evolve.
 Subgraph teams should be thinking about not only how they build today, but how they may need to build in the future, and how changes may affect graph consumers.
-This principle's best practices help teams build effective processes and tools to understand their supergraph's health.
+
+It's important to consider processes for monitoring and maintaining the supergraph, including how to handle breaking changes, how to monitor performance, and how to ensure that the supergraph is always available for clients to consume. These processes can help ensure that the supergraph is a reliable and efficient tool for building new experiences.
