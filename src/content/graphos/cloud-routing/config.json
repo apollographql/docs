@@ -39,18 +39,24 @@
       [
         "preview"
       ]],
-      "Configure Amazon VPC Lattice":[ "/dedicated/lattice",
-      [
-        "preview"
-      ]],
-      "Amazon VPC Lattice troubleshooting":[ "/dedicated/lattice-troubleshooting",
-      [
-        "preview"
-      ]],
       "Migrate to Dedicated":[ "/dedicated/migration",
       [
         "preview"
-      ]]
+      ]],
+      "Amazon VPC Lattice": {
+        "Configuration":[ "/dedicated/lattice",
+        [
+          "preview"
+        ]],
+        "Management":[ "/dedicated/lattice-management",
+        [
+          "preview"
+        ]],
+        "Troubleshooting":[ "/dedicated/lattice-troubleshooting",
+        [
+          "preview"
+        ]]
+      }
     }
   }
 }
