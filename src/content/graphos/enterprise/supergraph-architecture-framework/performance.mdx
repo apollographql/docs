@@ -1,0 +1,51 @@
+---
+title: Performance
+subtitle: Improve your supergraph's request and response performance
+description: Enhance federated GraphQL API performance with optimization techniques including subscriptions, caching, and observability tools.
+---
+
+The **Performance** pillar focuses on improving your supergraph's runtime performance.
+A well-architected supergraph platform not only delivers a great end-user experience.
+It also provides ways for its developers to proactively improve both real and perceived performance.
+Additionally, it gives developers the documentation and tools they need to ship and measure those changes effectively.
+
+## Principles
+
+### Enable developers to improve perceived end-user latency
+
+Improving perceived end-user latency is crucial for organizations that rely on digital services.
+Slow loading times can cause high bounce rates and lower conversion rates, hurting revenue.
+These are some techniques developers can use to improve perceived end-user latency:
+
+- Using response compression
+- Prioritizing data with `@defer`
+- Using subscription/real-time GraphQL features
+
+Configuring trace sampling and using persisted queries can further also help reduce request sizes and latency.
+Field-level latency metrics can also help graph consumers make informed choices about operation shapes.
+
+### Enable subgraph developers to improve graph performance
+
+Subgraph developers can also help improve the performance of the supergraph by optimizing their subgraph's performance.
+Best practices include:
+
+- Leveraging caching to improve the performance of operations and resolvers
+- Using dataloaders in resolvers
+- Implementing Automatic Persisted Queries (APQs) to improve subgraph request latency
+
+### Find opportunities to improve performance
+
+Observability tools can be invaluable in identifying opportunities to improve the supergraph's performance.
+Resolver execution metrics and distributed traces aid in optimizing the performance of individual components.
+Additionally, operation traces can help identify bottlenecks and inefficiencies across the system.
+By leveraging these observability tools, teams can proactively address performance issues before they impact end-users.
+
+<br />
+<TrackableButton
+  size="md"
+  colorScheme="navy"
+  href="https://saf.apollographql.com/"
+  eventName="content_saf"
+>
+  Learn more with the SAF assessment
+</TrackableButton>
