@@ -1,7 +1,7 @@
 ---
 title: Securing Subgraphs
-subtitles: Restrict access to your supergraph using secrets
-description: With GraphOS
+subtitle: Restrict access to your cloud supergraph using secrets
+description: Generate a shared secret and configure your graph router and subgraphs to secure your federated GraphQL API.
 ---
 
 To keep your supergraph secure, it's important that your individual subgraphs are [queried only by your router](/federation/building-supergraphs/subgraphs-overview/#securing-your-subgraphs). That's because your subgraphs expose powerful fields that the router uses to execute operations across them. External clients should not have access to these fields.
@@ -14,7 +14,7 @@ As with all changes, we recommend first performing these steps for a non-product
 
 </Tip>
 
-## 1. Generate a shared secret
+## Step 1. Generate a shared secret
 
 To restrict subgraph communication to only your router, we recommend creating a separate shared secret for each of your subgraphs. Whenever your router queries a subgraph, it includes that subgraph's corresponding secret in an HTTP header.
 
@@ -26,7 +26,7 @@ Here are some shell commands that generate a suitably random secret if you have 
 - `python -c "import secrets; print(secrets.token_urlsafe(256))"`
 - `node -e "console.log(require('crypto').randomBytes(256).toString('base64'));"`
 
-## 2. Add the secret to your router config
+## Step 2. Add the secret to your router config
 
 Your cloud supergraph's router needs to know the shared secret so it can include it in all requests to the corresponding subgraph. You add the secret in the **Cloud Routing** section of your graph variant's Settings page.
 
@@ -53,7 +53,7 @@ headers:
             value: '${env.USERS_SUBGRAPH_SECRET}'
 ```
 
-## 3. Configure the subgraph to require the secret
+## Step 3. Configure the subgraph to require the secret
 
 The exact steps you take to require the shared secret in your subgraph depend on:
 
@@ -70,7 +70,7 @@ If you have an existing subgraph that wasn't created from a template, you can ch
 
 </Note>
 
-## 4. Test the configuration
+## Step 4. Test the configuration
 
 After adding the shared secret to both your router and subgraph, do the following to confirm that communication has been secured as intended:
 
