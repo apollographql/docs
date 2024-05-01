@@ -36,7 +36,7 @@
     },
     "GraphOS Studio features": {
       "Graph exploration": "/graphs/studio-features",
-      "Supergraph-specific Studio features": "/graphs/federated-graphs"
+      "Supergraph-specific features": "/graphs/federated-graphs"
     },
     "Graph Administration": {
       "API keys": "/api-keys",

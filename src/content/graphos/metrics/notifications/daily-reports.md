@@ -1,5 +1,5 @@
 ---
-title: Daily reports from GraphOS Studio
+title: Daily Reports from GraphOS Studio
 subtitle: Learn how to act on daily summaries of your graph's activity
 description: Receive daily GraphQL activity summaries with Apollo GraphOS notifications. Analyze metrics to identify and resolve issues.
 ---

@@ -1,5 +1,5 @@
 ---
-title: Schema change notifications
+title: Schema Change Notifications
 subtitle: Receive alerts whenever changes are made to your graph's schema
 description: Set up Apollo GraphOS notifications for GraphQL schema changes. Receive real-time alerts whenever your registered schema is modified.
 ---
