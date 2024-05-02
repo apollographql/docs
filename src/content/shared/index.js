@@ -7,7 +7,7 @@ export {default as CreateSelfHostedSupergraph} from './create-self-hosted-superg
 export {CreateNotification} from './create-notification.js';
 export {default as ConfigurePagerDutyNotification} from './configure-pagerduty-notification.mdx';
 export {default as ConfigureSlackNotification} from './configure-slack-notification.mdx';
-export {default as ConfigureWebhookNotification} from './configure-webhook-notification.mdx';
+export {ConfigureWebhookNotification} from './configure-webhook-notification.js';
 export {default as DedicatedPreview} from './dedicated-preview.mdx';
 export {default as DirectiveCompositionRules} from './directive-composition-rules.mdx';
 export {default as Disclaimer} from './disclaimer.mdx';

@@ -28,8 +28,8 @@ export const CreateNotification = ({notificationType}) => {
         notifications for.
       </ListItem>
       <ListItem>
-        Select an existing channel to send notifications to, or select which
-        type of new channel you want to configure. Click <strong>Next</strong>.
+        Select either an existing notification channel or select which type of
+        new channel you want to configure. Click <strong>Next</strong>.
       </ListItem>
       <ListItem>
         If you&apos;re configuring a new channel, complete the steps in the next

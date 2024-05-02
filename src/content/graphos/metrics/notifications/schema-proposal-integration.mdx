@@ -25,20 +25,13 @@ These webhooks are useful for automating workflows. For example, your organizati
    - **Proposal revision**
    - **Proposal status change**
 
-5. Configure the webhook as described in the next section.
+5. Select either an existing webhook notification channel or to create a new one. If creating a new one, configure the webhook as described in the next section.
 
 ## Configure webhook
 
-Custom webhooks require you to set up an HTTPS endpoint accessible via the public internet.
-GraphOS sends webhook notifications to this endpoint as `POST` requests.
-Notification details are provided as JSON in the request body, as described in the next section.
+<ConfigureWebhookNotification notificationType="Proposal" />
 
-1. Specify an **Endpoint name**. This name must be unique among all your graph's notification channels, including Slack channels.
-2. In the **Webhook URL** input, provide the URL of your HTTP(S) endpoint.
-3. Optionally, enter a **Secret Token**, which will be sent as an `x-apollo-signature` header in the notification payload.
-4. Click **Next**.
-
-#### Webhook format
+### Webhook format
 
 Custom webhook notification details are provided as a JSON object in the request body.
 To avoid including sensitive information, payloads contain IDs—for example, proposal ID and revision ID—rather than objects containing details about the proposal or revision.
