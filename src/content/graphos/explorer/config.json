@@ -18,12 +18,12 @@
   "sidebar": {
     "Launch Sandbox": "https://studio.apollographql.com/sandbox/explorer?referrer=docs-nav",
     "Overview": "/",
-    "Sandbox (no account required)": "/sandbox",
-    "GraphQL subscription support": "/subscriptions-explorer",
-    "Connecting and authenticating": "/connecting-authenticating",
-    "Custom scripts": "/scripting",
+    "Sandbox": "/sandbox",
+    "GraphQL Subscription Support": "/subscriptions-explorer",
+    "Connecting and Authenticating": "/connecting-authenticating",
+    "Custom Scripts": "/scripting",
     "Embedding": "/embed-explorer",
-    "Operation collections": "/operation-collections",
-    "Additional features": "/additional-features"
+    "Operation Collections": "/operation-collections",
+    "Additional Features": "/additional-features"
   }
 }

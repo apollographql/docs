@@ -17,40 +17,40 @@
   ],
   "sidebar": {
     "Overview": "/",
-    "Schema checks": {
+    "Schema Checks": {
       "Overview": "/schema-checks",
-      "Configure schema checks": "/check-configurations",
+      "Configure Schema Checks": "/check-configurations",
       "Connect to GitHub": "/github-integration"
     },
-    "Schema linting": {
+    "Schema Linting": {
       "Overview": "/schema-linter",
-      "Linter rules": "/linter-rules"
+      "Linter Rules": "/linter-rules"
     },
-    "Schema proposals": {
+    "Schema Proposals": {
       "Overview": ["/schema-proposals",
       [
         "enterprise"
       ]],
-      "Configure proposals":[ "/schema-proposals/configuration",
+      "Configure Proposals":[ "/schema-proposals/configuration",
       [
         "enterprise"
       ]],
 
-      "Propose changes":[ "/schema-proposals/creation",
+      "Propose Changes":[ "/schema-proposals/creation",
       [
         "enterprise"
       ]],
-      "Review proposals":[ "/schema-proposals/review",
+      "Review Proposals":[ "/schema-proposals/review",
       [
         "enterprise"
       ]],
-      "Implement proposals":[ "/schema-proposals/implementation",
+      "Implement Proposals":[ "/schema-proposals/implementation",
       [
         "enterprise"
       ]]
     },
-    "Schema delivery": {
-      "Publish schemas": "/publishing-schemas",
+    "Schema Delivery": {
+      "Publish Schemas": "/publishing-schemas",
       "Launches": "/launches",
       "Contracts":
       {
@@ -60,7 +60,7 @@
             "enterprise"
           ]
         ],
-        "Creating and using contracts": [
+        "Creating and Using Contracts": [
           "/contract-setup",
           [
             "enterprise"
