@@ -16,11 +16,11 @@
     ]
   ],
   "sidebar": {
-    "GraphOS organizations": "/",
-    "Members, roles, and permissions": "/members",
-    "Plans and billing": "/plans",
-    "User account": "/account",
-    "Audit log": [
+    "GraphOS Organizations": "/",
+    "Members, Roles, and Permissions": "/members",
+    "Plans and Billing": "/plans",
+    "User Account": "/account",
+    "Audit Log": [
       "/audit-log",
       [
         "enterprise"

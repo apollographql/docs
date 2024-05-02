@@ -17,30 +17,30 @@
       "Setup": "https://www.apollographql.com/docs/graphos/quickstart/self-hosted",
       "Apollo Router Features": {
         "Overview": "https://www.apollographql.com/docs/router/enterprise-features",
-        "GraphQL subscriptions": "https://www.apollographql.com/docs/router/executing-operations/subscription-support",
-        "Distributed caching": "https://www.apollographql.com/docs/router/configuration/distributed-caching",
-        "Entity caching": ["https://www.apollographql.com/docs/router/configuration/entity-caching", ["preview"]],
+        "GraphQL Subscriptions": "https://www.apollographql.com/docs/router/executing-operations/subscription-support",
+        "Distributed Caching": "https://www.apollographql.com/docs/router/configuration/distributed-caching",
+        "Entity Caching": ["https://www.apollographql.com/docs/router/configuration/entity-caching", ["preview"]],
         "JWT Authentication": "https://www.apollographql.com/docs/router/configuration/authn-jwt",
         "Authorization": "https://www.apollographql.com/docs/router/configuration/authorization",
-        "Incremental subgraph migration": "https://www.apollographql.com/docs/federation/entities-advanced/#incremental-migration-with-progressive-override",
-        "Safelisting with persisted queries": "https://www.apollographql.com/docs/router/configuration/persisted-queries",
-        "Operation limits": "https://www.apollographql.com/docs/router/configuration/operation-limits",
-        "External coprocessing": "https://www.apollographql.com/docs/router/customizations/coprocessor"
+        "Incremental Subgraph Migration": "https://www.apollographql.com/docs/federation/entities-advanced/#incremental-migration-with-progressive-override",
+        "Safelisting with Persisted Queries": "https://www.apollographql.com/docs/router/configuration/persisted-queries",
+        "Operation Limits": "https://www.apollographql.com/docs/router/configuration/operation-limits",
+        "External Coprocessing": "https://www.apollographql.com/docs/router/customizations/coprocessor"
       }
     },
     "Schema Pipeline": {
-      "Schema proposals": "https://www.apollographql.com/docs/graphos/delivery/schema-proposals",
+      "Schema Proposals": "https://www.apollographql.com/docs/graphos/delivery/schema-proposals",
       "Contracts": "https://www.apollographql.com/docs/graphos/delivery/contracts"
     },
     "Org Management & SSO": {
-      "Audit log": "https://www.apollographql.com/docs/graphos/org/audit-log",
+      "Audit Log": "https://www.apollographql.com/docs/graphos/org/audit-log",
       "Okta SSO": "https://www.apollographql.com/docs/graphos/org/sso/okta-integration-guide",
       "Azure AD SSO": "https://www.apollographql.com/docs/graphos/org/sso/azure-ad-integration-guide",
       "SAML SSO": "https://www.apollographql.com/docs/graphos/org/sso/saml-integration-guide"
     },
     "Metrics & Reporting": {
-      "Datadog forwarding": "https://www.apollographql.com/docs/graphos/metrics/datadog-integration",
-      "Build status notifications": [
+      "Datadog Forwarding": "https://www.apollographql.com/docs/graphos/metrics/datadog-integration",
+      "Build Status Notifications": [
         "https://www.apollographql.com/docs/graphos/metrics/notifications/build-status-notification",
         ["experimental"]
       ]

@@ -17,34 +17,34 @@
   ],
   "sidebar": {
     "Intro to GraphOS": "/",
-    "Graphs and variants": "/graphs",
+    "Graphs and Variants": "/graphs",
     "Routing": "/routing",
     "Get Started": {
-      "Cloud setup": "/quickstart/cloud",
-      "Self-hosted setup": [
+      "Cloud Setup": "/quickstart/cloud",
+      "Self-Hosted Setup": [
         "/quickstart/self-hosted",
         [
           "enterprise"
         ]
       ],
-      "Next steps": "/quickstart/next-steps"
+      "Next Steps": "/quickstart/next-steps"
     },
     "Graph Development": {
-      "Creating a new subgraph": "/graphs/creating-a-subgraph",
-      "Local subgraph development": "/graphs/local-development",
-      "Updating your graph": "/graphs/updating"
+      "Creating a New Subgraph": "/graphs/creating-a-subgraph",
+      "Local Subgraph Development": "/graphs/local-development",
+      "Updating Your Graph": "/graphs/updating"
     },
-    "GraphOS Studio features": {
-      "Graph exploration": "/graphs/studio-features",
-      "Supergraph-specific features": "/graphs/federated-graphs"
+    "GraphOS Studio Features": {
+      "Graph Exploration": "/graphs/studio-features",
+      "Supergraph-Specific Features": "/graphs/federated-graphs"
     },
     "Graph Administration": {
-      "API keys": "/api-keys",
-      "Graph management": "/graphs/management"
+      "API Keys": "/api-keys",
+      "Graph Management": "/graphs/management"
     },
     "Graph Security": {
-      "Securing subgraphs": "/graphs/securing-a-subgraph",
-      "Safelisting with persisted queries": [
+      "Securing Subgraphs": "/graphs/securing-a-subgraph",
+      "Safelisting with Persisted Queries": [
         "/operations/persisted-queries",
         [
           "enterprise"
@@ -53,7 +53,7 @@
     },
     "Client Operations": {
       "Using @defer": "/operations/defer",
-      "GraphQL subscriptions": [
+      "GraphQL Subscriptions": [
         "/operations/subscriptions",
         [
           "preview"
@@ -65,9 +65,9 @@
       "Rover CLI": "https://apollographql.com/docs/rover/",
       "Platform API": "/platform-api"
     },
-    "Platform data processing": {
-      "Data privacy / GDPR": "/data-privacy",
-      "Sub-processors": "/sub-processors"
+    "Platform Data Processing": {
+      "Data Privacy / GDPR": "/data-privacy",
+      "Sub-Processors": "/sub-processors"
     }
   }
 }
