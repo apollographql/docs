@@ -1,0 +1,62 @@
+---
+title: Security
+subtitle: Protect your data and infrastructure with a defense-in-depth approach
+description: Secure your federated GraphQL API with Apollo GraphOS and a defense-in-depth approach. Prevent data leakage and protect upstream resources.
+---
+
+The **Security** pillar focuses on protecting your federated GraphQL API from malicious actors and unintended changes.
+It also outlines how new GraphQL paradigms can work with your organization's existing standards.
+
+Traditional HTTP-based tools often lack GraphQL support.
+This makes it even more critical to use an enterprise-grade GraphQL platform like Apollo GraphOS to run your supergraph.
+
+## Principles
+
+### Apply a defense-in-depth approach
+
+To effectively protect a GraphQL API, it's crucial to combine a variety of approaches.
+You can start by using existing security measures.
+These include enforcing authentication and authorization in both the graph and upstream systems.
+
+It's also important to prevent data leakage at the "front door" with tools like the Apollo Router.
+Combining approaches like these creates a defense-in-depth strategy that maximizes security and protects your data.
+
+### Protect supergraph infrastructure
+
+Open subgraphs and unrestricted permissions can lead to unintended changes.
+You can protect your supergraph infrastructure by following best practices such as:
+
+- Assigning and reviewing roles and permissions in your graph platform
+- Locking down publishing to production variants
+- Allowing only the graph router to access subgraphs
+
+### Prevent data leakage
+
+The supergraph serves as a central data channel for your organization.
+Limiting exposure can prevent potential attackers from gaining access to sensitive information.
+This includes using standard API best practices to prevent injection attacks and other security vulnerabilities.
+
+With GraphQL, the schema itself can reveal your API surface area to attackers.
+That's why it's important to turn off introspection in production and follow other GraphQL-specific best practices.
+
+### Protect upstream resources in the supergraph
+
+Enterprise supergraphs connect clients to many different APIs.
+With all these connections, the risk of unintentional service degradation increases.
+
+Some API teams might not have needed to think about exposing data outside their organization.
+Subsequently, they may not have considered the volume of traffic they might have to handle.
+This principle's best practice build awareness about these topics.
+
+Ensuring that incidents don't affect other services connected to the supergraph is also crucial.
+Operation safelisting, circuit breaking, and rate limiting are effective techniques for ensuring that resources can cope with the expected API usage.
+
+<br />
+<TrackableButton
+  size="md"
+  colorScheme="navy"
+  href="https://saf.apollographql.com/"
+  eventName="content_saf"
+>
+  Learn more with the SAF assessment
+</TrackableButton>

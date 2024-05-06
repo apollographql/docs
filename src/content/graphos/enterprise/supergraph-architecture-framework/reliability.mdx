@@ -1,0 +1,65 @@
+---
+title: Reliability
+subtitle: Design your supergraph for scale and high availability
+description: Boost your federated GraphQL API's reliability via effective testing, efficient resource usage, and preventing issues before they reach production.
+---
+
+The **Reliability** pillar focuses on making your supergraph resilient to change.
+That means ensuring it's appropriately resourced, observable, and generally production-ready.
+These pillar's best practices build confidence in your supergraph's availability for graph consumers.
+They also ensure your graph is a trusted source of data in your organization.
+
+## Principles
+
+### Understand graph usage
+
+This principle's practices promote an understanding of how your system is being used.
+Knowing which clients use which fields and how their operations use upstream resources is crucial for ensuring system reliability.
+This understanding lets you make informed decisions about optimizing and improving reliability.
+
+### Enable effective testing in the supergraph
+
+Graph contributors should test their changes in the supergraph.
+To do so, they need clear guidance on testing best practices for both subgraphs and entity resolvers.
+
+End-to-end testing of the supergraph is also crucial for ensuring reliability.
+Providing clear instructions on how to test changes across supergraph components helps catch potential issues before they impact users.
+
+### Use compute resources efficiently
+
+When using the Apollo Router and subgraph services, balancing performance with efficiency is key.
+By monitoring pod metrics and graph execution metrics, you can identify optimization opportunities and maintain efficient system performance.
+
+### Catch problems before they go into production
+
+One of the best ways to avoid production outages is to catch potential problems early in the development lifecycle.
+This approach lets you address issues before they impact production, ensuring system stability.
+These proactive measures can save time and resources and help avoid costly downtime and unhappy customers.
+
+### Identify issues in production
+
+Lowering mean-time-to-recover (MTTR) in your supergraph is crucial for maintaining the system reliability.
+By proactively monitoring and addressing issues, you can minimize the impact of downtime on your users.
+Additionally, tracking and analyzing metrics such as error rates and response times can identify potential issues before they become critical problems.
+
+### Minimize risks in production
+
+Making the right infrastructure and process choices is key to preventing production outages.
+It's important to consider any potential issues and take steps to prevent them.
+Best practices include:
+
+- Performing risk assessments
+- Conducting regular audits
+- Staying up-to-date with the latest industry trends and best practices
+
+Teams can minimize the risk of production outages by being proactive about infrastructure and process choices.
+
+<br />
+<TrackableButton
+  size="md"
+  colorScheme="navy"
+  href="https://saf.apollographql.com/"
+  eventName="content_saf"
+>
+  Learn more with the SAF assessment
+</TrackableButton>

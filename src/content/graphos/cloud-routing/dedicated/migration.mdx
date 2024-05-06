@@ -1,7 +1,7 @@
 ---
-title: Migration considerations
-subtitle: Learn what to consider when migrating to a cloud graph
-description: Migrate your self-hosted GraphQL APIs to a federated cloud supergraph with a pre-provisioned router.
+title: Migrate to Dedicated
+subtitle: Learn what to consider when migrating to a Dedicated cloud router
+description: Migrate your self-hosted GraphQL APIs to a federated cloud supergraph with a pre-provisioned router on dedicated infrastructure.
 ---
 
 <DedicatedPreview />
@@ -36,6 +36,7 @@ As a managed service, cloud routers don't support running custom binaries. Cloud
 Therefore, you must migrate any customizations to [external coprocessors](/router/customizations/coprocessor/) or built-in router features to use cloud routing.
 
 Built-in router features that you may have previously supported with customizations include:
+
 - [Authentication](/router/configuration/authn-jwt)
 - [Telemetry and monitoring](/router/configuration/telemetry/overview)
 - [Traffic shaping](/router/configuration/traffic-shaping)
@@ -44,7 +45,7 @@ See the [Apollo Router documentation](/router/) for a full list of features.
 
 ## Migration
 
-Once your implementation is ready to run on the Apollo Router, including customizations, you can follow the [Dedicated quickstart](./quickstart) to get started. 
+Once your implementation is ready to run on the Apollo Router, including customizations, you can follow the [Dedicated quickstart](./quickstart) to get started.
 
 ## Pricing considerations
 

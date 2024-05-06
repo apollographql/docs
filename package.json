@@ -15,7 +15,8 @@
     "build": "gatsby build",
     "serve": "gatsby serve",
     "test": "jest",
-    "postinstall": "npx playwright install"
+    "postinstall": "npx playwright install",
+    "clean": "gatsby clean"
   },
   "dependencies": {
     "@algolia/autocomplete-core": "^1.5.2",
