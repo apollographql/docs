@@ -29,11 +29,10 @@ const EYEBROW_HEIGHT = 32; // 0;
 const HEADER_HEIGHT = 60;
 const HEADER_BORDER_WIDTH = 1;
 export const TOTAL_HEADER_HEIGHT =
-  // EYEBROW_HEIGHT +
-  HEADER_HEIGHT + HEADER_BORDER_WIDTH;
+  EYEBROW_HEIGHT + HEADER_HEIGHT + HEADER_BORDER_WIDTH;
 
 function Eyebrow({children}) {
-  const bgHover = useColorModeValue('navy.100', 'navy.500');
+  const bgHover = useColorModeValue('navy.100', 'navy.400');
   return (
     <Center
       bg="navy.50"
@@ -70,12 +69,9 @@ export function Header({children, algoliaFilters}) {
 
   return (
     <Box pos="sticky" top="0" zIndex="2">
-      {/* <Eyebrow>
-        Join us for GraphQL Summit, October 10-12 in San Diego.{' '}
-        <Text as="span" display={{base: 'none', md: 'inline'}}>
-          Use promo code ODYSSEY for $400 off your pass.
-        </Text>
-      </Eyebrow> */}
+      <Eyebrow>
+        Join us for GraphQL Summit, October 8-10 in New York City.{' '}
+      </Eyebrow>
       <Flex
         align="center"
         as="header"
