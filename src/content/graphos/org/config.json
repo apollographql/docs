@@ -28,36 +28,36 @@
     ],
     "Single Sign-On (SSO)": {
       "SAML": {
-        "Generic SAML Setup": [
-          "/sso/saml-integration-guide",
-          [
-            "enterprise"
-          ]
-        ],
         "Okta": [
           "/sso/okta-integration-guide",
           [
             "enterprise"
           ]
         ],
-        "Microsoft Entra ID": [
+        "Microsoft Entra ID (SAML)": [
           "/sso/microsoft-entra-id-integration-saml-guide",
+          [
+            "enterprise"
+          ]
+        ],
+        "Generic SAML Setup": [
+          "/sso/saml-integration-guide",
           [
             "enterprise"
           ]
         ]
       },
       "OIDC": {
+        "Microsoft Entra ID (OIDC)": [
+          "/sso/microsoft-entra-id-integration-oidc-guide",
+          [
+            "enterprise"
+          ]
+        ],
         "Generic OIDC Setup": [
           "/sso/oidc-integration-guide",
           [
             "enterprise", "preview"
-          ]
-        ],
-        "Microsoft Entra ID": [
-          "/sso/microsoft-entra-id-integration-oidc-guide",
-          [
-            "enterprise"
           ]
         ]
       },
