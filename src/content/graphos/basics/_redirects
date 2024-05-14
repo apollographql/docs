@@ -88,4 +88,4 @@
 /routing/cloud-dedicated/lattice-troubleshooting /docs/graphos/cloud-routing/dedicated/lattice-troubleshooting
 
 # Rename Azure SSO doc
-/org/sso/azure-ad-integration-guide  /docs/graphos/org/sso/microsoft-entra-id-integration-guide
+/org/sso/azure-ad-integration-guide  /docs/graphos/org/sso/microsoft-entra-id-integration-oidc-guide
