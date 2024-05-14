@@ -25,17 +25,24 @@ export const PrimaryLink = props => {
       }}
       {...props}
     >
-      <Box whiteSpace="initial" wordBreak="break-word" display="inline">
+      <Box
+        whiteSpace="initial"
+        wordBreak="break-word"
+        display="inline"
+        as="span"
+      >
         {props.children}
       </Box>
       {opensNewTab && (
-        <Box marginLeft="5px" display="inline-flex">
+        <Box marginLeft="5px" display="inline-flex" as="span">
           <OutlinkSmallIcon />
         </Box>
       )}
     </Link>
   );
 };
+
+const PROD_DOMAIN = 'https://www.apollographql.com';
 
 function useLinkProps(href) {
   const {path} = useContext(PathContext);
@@ -56,10 +63,7 @@ function useLinkProps(href) {
   if (process.env.CONTEXT !== 'production') {
     // fix up absolute urls pointing to the docs
     // for netlify previews and localhost
-    href = href.replace(
-      'https://www.apollographql.com/docs',
-      process.env.DEPLOY_URL
-    );
+    href = href.replace(PROD_DOMAIN + '/docs', process.env.DEPLOY_URL);
   }
 
   try {
@@ -67,10 +71,10 @@ function useLinkProps(href) {
     const url = new URL(href);
     if (
       url.host === window.location.host &&
-      href.startsWith('https://www.apollographql.com/docs/') &&
+      href.startsWith(PROD_DOMAIN + '/docs') &&
       !href.includes('/ios/docc/')
     ) {
-      href = url.pathname;
+      href = href.slice(PROD_DOMAIN.length);
     }
   } catch {
     // it's okay if this fails, then it probably wasn't a full url
@@ -81,7 +85,7 @@ function useLinkProps(href) {
   const isFile = /\.[a-z]+$/.test(href);
   if (
     isExternal &&
-    href.startsWith('https://www.apollographql.com/') &&
+    href.startsWith(PROD_DOMAIN + '/') &&
     !href.includes('referrer')
   ) {
     href += href.includes('?')

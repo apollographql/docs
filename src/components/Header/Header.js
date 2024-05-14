@@ -29,23 +29,23 @@ const EYEBROW_HEIGHT = 32; // 0;
 const HEADER_HEIGHT = 60;
 const HEADER_BORDER_WIDTH = 1;
 export const TOTAL_HEADER_HEIGHT =
-  // EYEBROW_HEIGHT +
-  HEADER_HEIGHT + HEADER_BORDER_WIDTH;
+  EYEBROW_HEIGHT + HEADER_HEIGHT + HEADER_BORDER_WIDTH;
 
 function Eyebrow({children}) {
-  const bgHover = useColorModeValue('navy.100', 'navy.500');
   return (
     <Center
-      bg="navy.50"
+      bg="navy.300"
+      color="white"
       _dark={{
-        bg: 'black.200'
+        bg: 'black.200',
+        _hover: {bg: 'primary'}
       }}
-      _hover={{bg: bgHover}}
+      _hover={{bg: 'primary'}}
       css={{height: EYEBROW_HEIGHT}}
       fontSize="sm"
       fontWeight="semibold"
       as="a"
-      href="https://summit.graphql.com/?utm_campaign=2023-08-21_GraphQLSummit&utm_medium=website&utm_source=apollo"
+      href="https://reg.summit.graphql.com/flow/apollo/summit24/speaker-landing-page/page/home?utm_campaign=2024-05-14_GraphQLSummit&utm_medium=website&utm_source=docs"
       target="_blank"
       rel="noopener noreferrer"
       px="3"
@@ -70,12 +70,10 @@ export function Header({children, algoliaFilters}) {
 
   return (
     <Box pos="sticky" top="0" zIndex="2">
-      {/* <Eyebrow>
-        Join us for GraphQL Summit, October 10-12 in San Diego.{' '}
-        <Text as="span" display={{base: 'none', md: 'inline'}}>
-          Use promo code ODYSSEY for $400 off your pass.
-        </Text>
-      </Eyebrow> */}
+      <Eyebrow>
+        Here&apos;s your chance to speak at GraphQL Summit in New York City,
+        October 8 - 10, 2024! 🏙️ Submit your proposal by May 20.
+      </Eyebrow>
       <Flex
         align="center"
         as="header"
