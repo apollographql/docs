@@ -34,10 +34,11 @@ export const TOTAL_HEADER_HEIGHT =
 function Eyebrow({children}) {
   return (
     <Center
-      bg="navy.200"
+      bg="navy.300"
       color="white"
       _dark={{
-        bg: 'black.200'
+        bg: 'black.200',
+        _hover: {bg: 'primary'}
       }}
       _hover={{bg: 'primary'}}
       css={{height: EYEBROW_HEIGHT}}
