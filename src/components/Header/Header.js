@@ -72,7 +72,7 @@ export function Header({children, algoliaFilters}) {
     <Box pos="sticky" top="0" zIndex="2">
       <Eyebrow>
         Here&apos;s your chance to speak at GraphQL Summit in New York City,
-        October 8 - 10, 2024! 🏙️ Submit your proposal by May 20.
+        October 8 - 10, 2024! 🏙️ Submit your proposal by May 31.
       </Eyebrow>
       <Flex
         align="center"
