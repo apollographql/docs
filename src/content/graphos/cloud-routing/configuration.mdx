@@ -6,19 +6,23 @@ description: Learn about cloud router configurations including HTTP header rules
 
 After you create a cloud supergraph, you can manage its router configuration from the **Cloud Router** page in [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content).
 
-<img
-  className="screenshot"
-  alt="The Cloud Router page in GraphOS Studio"
-  src="../img/cloud-dedicated/dedicated-configuration.png"
-/>
-
-This page shows the following information:
+The **General** tab shows the following information:
 
 - The URL of your router's GraphQL endpoint
   - Every cloud router's URL is on a subdomain of `apollographos.net`.
 - Your router's current status and [launch history](../delivery/launches#launch-status)
-- Any [secrets](#managing-secrets) you've added
+
+From the **Configuration** tab, you can manage the following:
+
+- [Secrets](#managing-secrets)
 - Your router's [YAML-based configuration](#router-configuration-yaml)
+
+<img
+  className="screenshot"
+  alt="The Cloud Router page in GraphOS Studio"
+  src="../img/cloud-routing/cloud-router-configuration.jpg"
+  width="700"
+/>
 
 ## Managing secrets
 
