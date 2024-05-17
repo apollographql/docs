@@ -34,7 +34,7 @@
             "enterprise"
           ]
         ],
-        "Microsoft Entra ID (SAML)": [
+        "Microsoft Entra ID": [
           "/sso/microsoft-entra-id-integration-saml-guide",
           [
             "enterprise"
@@ -48,7 +48,7 @@
         ]
       },
       "OIDC": {
-        "Microsoft Entra ID (OIDC)": [
+        "Microsoft Entra ID": [
           "/sso/microsoft-entra-id-integration-oidc-guide",
           [
             "enterprise"

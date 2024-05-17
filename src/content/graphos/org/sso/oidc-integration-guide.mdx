@@ -6,14 +6,14 @@ description: Configure a OpenID Connect (OIDC) based identity provider as your A
 
 <SSOPremiumFeature />
 
-<SSOPreviewNotice />
-
 This guide walks through configuring a generic OpenID Connect (OIDC) based identity provider (IdP) for use with Apollo SSO.
 If you use Microsoft Entra ID as your IdP, instead see [this guide](./microsoft-entra-id-integration-oidc-guide/).
 
 <SSOMigrationNotice />
 
 # Setup
+
+<SSOPreviewNotice />
 
 SSO setup has two main steps:
 
@@ -45,6 +45,14 @@ These steps generally require administrative access to your IdP.
 - **Client ID**: this should be a specific **Application ID**
 - **Client Secret**: a secret value you may need to first create in your IdP
 - **Issuer**: the issuer value from a **OpenID Connect metadata document** found in your IdP
+
+4. If your IdP permits it, set the following user attributes:
+
+   - `sub`: `user.email`
+     - The `sub` attribute should uniquely identify any particular user to GraphOS. In most cases, `user.email` provides this unique mapping.
+   - `email`: `user.email`
+   - `given_name`: `user.firstName`
+   - `family_name`: `user.lastName`
 
 ### Step 2. Send OIDC metadata to Apollo
 

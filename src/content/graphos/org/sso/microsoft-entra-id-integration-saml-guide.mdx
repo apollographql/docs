@@ -6,15 +6,15 @@ description: Configure Microsoft Entra ID (formerly Azure AD) as your Apollo Gra
 
 <SSOPremiumFeature />
 
-<SSOPreviewNotice />
-
 This guide walks through configuring Microsoft Entra ID (formerly known as Azure Active Directory) as your GraphOS organization's identity provider (IdP) for SAML-based SSO.
 
 <SSOMigrationNotice />
 
 ## Setup
 
-SSO setup has two main steps:
+<SSOPreviewNotice />
+
+SAML-based SSO setup has two main steps:
 
 1. Create an enterprise application for Apollo GraphOS in Entra ID.
 2. Send your Entra ID's application's SAML metadata to Apollo.
@@ -98,7 +98,9 @@ You may want to begin by adding yourself individually and then testing SSO by cl
 />
 
 Once you've successfully tested your own user's ability to use SSO, add any applicable users or groups.
-When users are first assigned to the Apollo GraphOS application, they must re-login to GraphOS Studio. Once you've confirmed the new configuration works for your users, remove any legacy Apollo GraphOS applications in Entra ID or app registrations in Azure AD if you have them.
+When users are first assigned to the Apollo GraphOS application, they must re-login to GraphOS Studio.
+
+Once you've confirmed the new configuration works for your users, remove any legacy Apollo GraphOS applications in Entra ID or app registrations in Azure AD if you have them.
 
 ## Legacy setup
 

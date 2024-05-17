@@ -6,13 +6,13 @@ description: Configure Microsoft Entra ID (formerly Azure AD) as your Apollo Gra
 
 <SSOPremiumFeature />
 
-<SSOPreviewNotice />
-
 This guide walks through configuring Microsoft Entra ID (formerly known as Azure Active Directory) as your GraphOS organization's identity provider (IdP) for OIDC-based SSO.
 
 <SSOMigrationNotice />
 
 ## Setup
+
+<SSOPreviewNotice />
 
 OIDC-based SSO setup in Entra ID has these steps:
 
@@ -50,9 +50,9 @@ Setup requires at least a [Cloud Application Administrator](https://learn.micros
 
 1. From the **Overview** section of your newly created app registration, copy and paste your **Application (client) ID** into a local text file.
 2. Next to **Client credentials**, click **Add a certificate or secret** and create a new secret.
-3. Copy and paste the secret's **Value** field to the same text file you created earlier.
+3. Copy and paste the secret's **Value** to the same text file you created earlier.
 4. Back in the **Overview** section, select **Endpoints** from the top menu.
-5. Copy and open the **OpenID Connect metadata document** URL in and find the **"issuer"** value. It should have a format like `https://login.microsoftonline.com/unique-value/vx.x`. Copy and paste this into your text file.
+5. Copy and open the **OpenID Connect metadata document** URL in a new browser tab. Find the **`issuer`** value. It should have a format like `https://login.microsoftonline.com/unique-value/vx.x`. Copy and paste this URL into your text file.
 
 ### Step 3. Configure API permissions
 
@@ -78,8 +78,6 @@ To complete the configuration, complete the Apollo-provided link provided in ste
 
 Once submitted, inform your Apollo contact. They will then be able to enable SSO.
 
-Once your SSO configuration is live, organization members must re-login to GraphOS Studio. Once you've confirmed the new configuration works as expected, remove any legacy Apollo GraphOS applications in your IdP if they exist.
-
 ## Assign users in Entra ID
 
 Once your Apollo GraphOS application is set up in Entra ID, you need to assign users to it so they can access GraphOS. You can assign individual users or groups from the **User and groups** page of your Apollo GraphOS application in Entra ID.
@@ -94,7 +92,9 @@ You may want to begin by adding yourself individually and then testing SSO by cl
 />
 
 Once you've successfully tested your own user's ability to use SSO, add any applicable users or groups.
-When users are first assigned to the Apollo GraphOS application, they must re-login to GraphOS Studio. Once you've confirmed the new configuration works for your users, remove any legacy Apollo GraphOS applications in Entra ID or app registrations in Azure AD if you have them.
+When users are first assigned to the Apollo GraphOS application, they must re-login to GraphOS Studio.
+
+Once you've confirmed the new configuration works for your users, remove any legacy Apollo GraphOS applications in Entra ID or app registrations in Azure AD if you have them.
 
 ## Legacy setup
 
