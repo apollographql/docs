@@ -160,9 +160,11 @@ However, you should not rely on this! Ideally, your sensitive data should never 
 ## Logging signatures at runtime
 
 ### Apollo Router
-Since Apollo Router [v1.43.1](https://github.com/apollographql/router/releases/tag/v1.43.1), the operation signature is added to the context in the key `apollo_operation_signature`. You can read the context in either Rhai scripts or a coprocessor, or using the logging features of Router, you can log context values as [trace attributes](/docs/router/configuration/telemetry/instrumentation/selectors).
+
+Since Apollo Router [v1.43.1](https://github.com/apollographql/router/releases/tag/v1.43.1), the router adds operation signatures to request contexts in the `apollo_operation_signature` key. You can also use the router's native logging features to log context values as [trace attributes](/router/configuration/telemetry/instrumentation/selectors) or you can read the context via [Rhai scripts](/router/customizations/rhai#manipulating-headers-and-the-request-context) or [coprocessors](/router/customizations/coprocessor). 
 
 ### Apollo Server
+
 To view operation signature hashes in your own logging tools, you can create an [Apollo Server plugin](/apollo-server/integrations/plugins/) that accesses hash values from the shared `context`. The relevant values are available in the `queryHash` and `operationName` properties:
 
 <MultiCodeBlock>
