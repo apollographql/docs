@@ -16,12 +16,19 @@ Serverless cloud routers running on Fly.io infrastructure must be migrated in Gr
 
 ## Who needs to migrate?
 
-You may need to migrate if:
+You need to migrate if:
 
-- Your organization is on a Serverless plan AND
-- You have graphs created before May 21, 2024
+- Your organization is on a Serverless plan **AND**
+- In [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content), the **Cloud Router Details** section on the **Overview** page shows **ord - US (Chicago)** as the **Region** for your graph
 
-To check if any of your graphs use cloud routers running on Fly.io, go to [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content) and look for the migration alert on the graph's **Overview** page.
+  <img
+    className="screenshot"
+    alt="Cloud router region showing ord - US (Chicago) in GraphOS Studio"
+    src="../../img/cloud-routing/cloud-router-region-ord.jpg"
+    width="300"
+  />
+
+If a graph has a cloud router running on Fly.io, its **Overview** page also shows a migration banner.
 
 <Caution>
 
