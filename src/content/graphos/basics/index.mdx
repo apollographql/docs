@@ -3,93 +3,128 @@ title: Introduction to Apollo GraphOS
 description: The GraphQL developer platform
 ---
 
-Apollo GraphOS is the platform for building, managing, and scaling a _supergraph_: a network of your microservices and their data sources—all composed into a unified GraphQL API.
+Apollo GraphOS is the platform for building, managing, and scaling a _supergraph_: a unified network of your services and data—all composed into a single distributed GraphQL API.
+In a supergraph, the individual services are called subgraphs.
 
 ```mermaid
-flowchart LR;
-  clients("GraphQL<br/>Clients");
-  subgraph "<b>Apollo GraphOS</b>";
-  registry(["Schema<br/>Registry"]);
-  router(["Graph<br/>Router"]);
-  studio(["Studio UI"]);
-  end;
-  subgraph "Your infrastructure";
-  products["GraphQL API<br/>A"];
-  reviews["GraphQL API<br/>B"];
-  router -->|Sub-query| products & reviews
-  dbA[( )];
-  dbB[( )];
-  products --- dbA;
-  reviews --- dbB;
-  end;
-  clients -.->|Query| router;
+graph LR;
+  clients(Clients);
+  subgraph Supergraph
+    runtime([Unified<br/>GraphQL API]);
+    serviceA[Subgraph A <br/>A];
+    serviceB[Subgraph A <br/>B];
+    serviceC[Subgraph A <br/>C];
+    dbA[( )];
+    dbB[( )];
+    dbC[( )];
+    serviceA --- dbA;
+    serviceB --- dbB;
+    serviceC --- dbC;
+    runtime --- serviceA & serviceB & serviceC;
+  end
+  clients -.- runtime;
   class clients secondary;
 ```
 
-<p>
-  <ButtonLink
-    colorScheme="navy"
-    href="/graphos/quickstart/cloud/"
-    style={{
-      marginRight: '10px'
-    }}
-  >
-    Create your first supergraph!
-  </ButtonLink>
-  <ButtonLink colorScheme="gray" href="/intro/platform/">
-    What's a supergraph?
-  </ButtonLink>
-</p>
+The federated supergraph enables clients to interact with multiple APIs through a single request.
+Clients query the supergraph with a powerful language called GraphQL, which enables them to retrieve exactly the data they need, with no overfetching.
 
 ## What's in GraphOS?
 
-The GraphOS platform provides an ever-growing collection of tools and services to help you build your supergraph and scale it safely:
+The GraphOS platform provides an ever-growing collection of tools and services to help you build your supergraph and scale it safely.
+Its main components are:
 
-### Core features
+- Schema pipeline tools
+- The GraphOS Federation Runtime
+- Various interfaces, including the GraphOS Studio UI
 
-These features (along with many others) are available to organizations on Apollo [Serverless and Dedicated plans](https://www.apollographql.com/pricing/):
+### Schema pipeline tools
 
-- Cloud routing
-  - GraphOS automatically provisions and hosts a router for each of your supergraphs. Clients query your router instead of individual subgraphs, enabling the router to automatically collect operation metrics that you can then [visualize in GraphOS Studio](./metrics/).
-- The schema registry
-  - GraphOS tracks the GraphQL schemas for all your individual subgraphs, and it also handles composing those subgraph schemas into one supergraph schema for your router.
-- Safe schema delivery
-  - The [schema checks](./delivery/schema-checks/) feature of GraphOS enables you to verify whether proposed changes to a subgraph will cause an issue with other subgraphs, or with any of your existing clients.
+GraphOS provides schema pipeline tools to develop and deploy changes to your graph schemas.
+
+- **Schema governance** tools let you manage, validate, and enforce standards in your schemas. These include:
+
+  - Schema registries track the GraphQL schemas for all your individual subgraphs.
+  - Schema checks identify breaking changes before you publish them. They can also determine when a potentially dangerous change is, in fact, safe.
+  - Schema linting ensures consistent, well-formed schemas. Automated linting lowers maintenance overheads and improves developer productivity.
+  - Schema proposals provide GraphOS-native schema change management. Team members propose changes to subgraph schemas, and others review and approve them before they're implemented.
+
+- **Schema delivery** tools let you integrate schema publication into your DevOps workflows.
   - Whenever you update a subgraph schema, GraphOS composes a new supergraph schema for your router. If composition succeeds, your router automatically begins using its new schema.
   - You can view the results of each [launch](./delivery/launches/) that takes place whenever you update a subgraph schema, helping you resolve any issues that might occur.
-- An interface for every use case
-  - [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content) is the primary web interface for GraphOS. Among other capabilities, you use Studio to create your organization and its supergraphs, view [schemas](./graphs/studio-features/#the-schema-page) and [metrics](./metrics/), and test out operations in [the Explorer](./explorer/).
-  - [The Rover CLI](/rover/getting-started/) is the primary command-line interface for GraphOS. Among other capabilities, you use Rover to publish subgraph schemas to the registry, run schema checks from CI, and test out your supergraph within your development environment.
-  - If you want to automate your own workflows outside of Studio or Rover, you can use the official [GraphOS Platform API](./platform-api) to do so. We'll expose more GraphOS capabilities through the Platform API over time.
 
-### Enterprise features
+### Federation Runtime
 
-<Tip>
+A key component of the supergraph is the unified endpoint it presents to clients. The GraphOS Federation Runtime makes this possible.
+The runtime intelligently orchestrates and distributes the request across your APIs and returns a unified response.
 
-Test out these features for free with an [Enterprise trial](./org/plans/#enterprise-trials).
+```mermaid
+graph LR;
+  clients(Clients);
+  subgraph Supergraph
+    runtime([GraphOS <br/>Runtime]);
+    serviceA[Service <br/>A];
+    serviceB[Service <br/>B];
+    serviceC[Service <br/>C];
+    runtime -->|Sub-query| serviceA;
+    runtime -->|Sub-query| serviceB;
+    runtime -->|Sub-query| serviceC;
+  end
+  clients -.->|Query| runtime;
+  class clients secondary;
+```
 
-</Tip>
+For a client, the request and response cycle of querying the runtime looks the same as querying any GraphQL server.
 
-Additional GraphOS features are available to organizations on an Enterprise plan:
+With GraphOS, you can choose for Apollo to provision and manage a cloud-hosted runtime for you:
 
-- [Connect your self-hosted router to GraphOS](./quickstart/self-hosted/)
-  - Apollo Router is available as a free and source-available runtime for Apollo Federation. Connecting your self-hosted router to GraphOS requires an Enterprise plan.
-  - Deploy GraphOS-managed routers inside your own infrastructure, enabling you to maximize performance and fully customize their behavior. Self-hosted routers use [the same powerful technology](/router/) that cloud routing uses under the hood.
-  - Enable [advanced features](/router/enterprise-features/) for your router fleet, such as operation limits and Redis-backed distributed caching.
-- Supergraph filtering with [contracts](./delivery/contracts/)
-  - Deploy multiple instances of your router that each use a different filtered subset of your supergraph's schema. Different clients can then communicate with different routers, limiting them to whichever parts of your supergraph they should have access to.
-- Enhanced user management
-  - Assign fine-grained [user roles](./org/members/) to organization members, and optionally override those roles on a graph-by-graph basis.
-  - Set up single sign-on (SSO) with your identity provider.
-  - Export [audit logs](./org/audit-log/) of all material events that occurred within your organization over a time period.
-- Extended data retention
-  - Your supergraph's historical operation metrics are available for visualization in Studio longer than with other plans. See the pricing page's [section on data retention](https://www.apollographql.com/pricing#data-retention) for details.
+```mermaid
+flowchart LR;
+  clients(Clients);
+  subgraph "GraphOS Cloud"
+    runtime([GraphOS <br/>Runtime]);
+  end;
+  subgraph YourInfra["Your infrastructure"];
+    subgraphA[Subgraph A];
+    subgraphB[Subgraph B];
+  end;
+  clients -.- runtime;
+  runtime --- subgraphA & subgraphB;
+  classDef padding padding-left:1em, padding-right:1em
+  YourInfra:::padding
+  class clients secondary;
+```
 
-An Enterprise plan also provides access to our Graph Champions community and a dedicated support channel for your team to connect with Apollo supergraph experts. We'll work with you to customize a query volume limit and support package that's right for you.
+Or you can choose to self-host your runtime:
 
-If you're interested in Enterprise features, please <TrackableLink href="https://www.apollographql.com/contact-sales" eventName="content_contact_sales">get in touch with us</TrackableLink>! You can also test out these features with a free [Enterprise trial](./org/plans/#enterprise-trials).
+```mermaid
+flowchart LR;
+  clients(Clients);
+  subgraph "Your infrastructure";
+  runtime([GraphOS <br/>Runtime]);
+  serviceB[Subgraph A];
+  serviceC[Subgraph B];
+  runtime --- serviceB & serviceC;
+  end;
+  clients -.- runtime;
+  class clients secondary;
+```
+
+Cloud and self-hosted runtimes are both powered by the Apollo Router—a high-performance routing runtime packaged as a [standalone binary](https://github.com/apollographql/router).
+
+### An interface for every use case
+
+GraphOS offers a UI, command-line tool, and Platform API to address your organizations needs.
+
+| Interface                                                                | Description                                                                                                                                                                                                                                        |
+| ------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content) | GraphOS Studio is the primary web interface for GraphOS. Among other capabilities, you use Studio to create your organization and its supergraphs, view schemas and metrics, and test out operations in the Explorer.                              |
+| [The Rover CLI](/rover/getting-started/)                                 | The Rover CLI is the primary command-line interface for GraphOS. Among other capabilities, you use Rover to publish subgraph schemas to the registry, run schema checks from CI, and test out your supergraph within your development environment. |
+| [GraphOS Platform API](./platform-api)                                   | If you want to automate your own workflows outside of Studio or Rover, you can use the official GraphOS Platform API to do so.                                                                                                                     |
 
 ---
+
+## Next steps
 
 Ready to create your first supergraph?
 
