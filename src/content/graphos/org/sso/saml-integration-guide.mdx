@@ -54,8 +54,6 @@ These steps generally require administrative access to your IdP.
 
 5. Save your configuration.
 
-6. Assign users to your new Apollo GraphOS application. For help assigning the relevant groups and users, contact your SSO or Identity & Access Management team.
-
 ### Step 2. Send SAML metadata to Apollo
 
 Send your Apollo contact your IdP SAML XML metadata file. If you can't send this file, send one of the following instead:
@@ -64,9 +62,11 @@ Send your Apollo contact your IdP SAML XML metadata file. If you can't send this
 - IdP single sign-on URL / SSO URL
 - IdP x509 certificate
 
-Your Apollo contact will complete your SSO setup.
+Your Apollo contact will then be able to complete your SSO setup.
 
-Once your SSO configuration is live, organization members must re-login to GraphOS Studio. Once you've confirmed the new configuration works as expected, remove any legacy Apollo GraphOS applications in your IdP if they exist.
+Once your SSO setup is live, assign users to your new Apollo GraphOS application in your IdP. For help assigning the relevant groups and users, contact your SSO or Identity & Access Management team. If organizations members could previously login before you implemented SSO, they must re-login to GraphOS Studio with SSO.
+
+Once you've confirmed the new setup works as expected, remove any legacy Apollo GraphOS applications in your IdP.
 
 ## Legacy setup
 
