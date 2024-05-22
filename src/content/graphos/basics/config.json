@@ -18,7 +18,7 @@
   "sidebar": {
     "Intro to GraphOS": "/",
     "Graphs and variants": "/graphs",
-    "Routing": "/routing",
+    "Federation Runtime": "/runtime",
     "Get Started": {
       "Cloud setup": "/quickstart/cloud",
       "Self-hosted setup": [

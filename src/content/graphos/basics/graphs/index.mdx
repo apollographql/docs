@@ -46,7 +46,7 @@ Description
 
 A supergraph consisting of:
 
-- A GraphOS-hosted router
+- A GraphOS-hosted runtime
 - One or more subgraphs hosted in your infrastructure
 
 Recommended for all organizations getting started with GraphOS.
@@ -66,10 +66,10 @@ Recommended for all organizations getting started with GraphOS.
 
 A supergraph consisting of:
 
-- A router hosted in your infrastructure
+- A runtime hosted in your infrastructure
 - One or more subgraphs hosted in your infrastructure
 
-Recommended for enterprise organizations that require full customization of their router, usually for advanced performance or data compliance reasons.
+Recommended for enterprise organizations that require full customization of their runtime, usually for advanced performance or data compliance reasons.
 
 </td>
 </tr>
@@ -84,7 +84,7 @@ Recommended for enterprise organizations that require full customization of thei
 </td>
 <td>
 
-A single GraphQL service hosted in your infrastructure with no router.
+A single GraphQL service hosted in your infrastructure with no runtime.
 
 ⚠️ Not recommended.
 
@@ -103,23 +103,23 @@ Cloud supergraphs require an Apollo organization on the Serverless (free or paid
 
 </Note>
 
-Cloud supergraphs are recommended for every organization that's getting started with GraphOS. For every variant of a cloud supergraph, GraphOS provisions and manages a router that acts as the variant's public endpoint. Application clients communicate with this endpoint instead of communicating directly with your GraphQL server(s):
+Cloud supergraphs are recommended for every organization that's getting started with GraphOS. For every variant of a cloud supergraph, GraphOS provisions and manages a runtime that acts as the variant's public endpoint. Application clients communicate with this endpoint instead of communicating directly with your GraphQL server(s):
 
 ```mermaid
 flowchart LR;
   clients(Clients);
   subgraph "GraphOS";
-  router(["Router"]);
+  runtime(["Federation<br/>Runtime"]);
   end;
   subgraph "Your infrastructure";
   api["Your GraphQL<br/>server"];
-  router --- api
+  runtime --- api
   end;
-  clients -.- router;
+  clients -.- runtime;
   class clients secondary;
 ```
 
-The router automatically reports certain operation metrics to GraphOS, so you don't need to configure this reporting in your GraphQL servers.
+The runtime automatically reports certain operation metrics to GraphOS, so you don't need to configure this reporting in your GraphQL servers.
 
 <Tip>
 
@@ -127,20 +127,20 @@ The router automatically reports certain operation metrics to GraphOS, so you do
 
 </Tip>
 
-Cloud supergraphs use an architecture called [Apollo Federation](/federation/). With federation, you can distribute your supergraph's capabilities across multiple GraphQL services, which are known as subgraphs. The router executes client operations across multiple subgraphs as needed:
+Cloud supergraphs use an architecture called [Apollo Federation](/federation/). With federation, you can distribute your supergraph's capabilities across multiple GraphQL services, which are known as subgraphs. The runtime executes client operations across multiple subgraphs as needed:
 
 ```mermaid
 flowchart LR;
   clients(Clients);
   subgraph "GraphOS";
-  router(["Router"]);
+  runtime(["Federation<br/>Runtime"]);
   end;
   subgraph "Your infrastructure";
   products[Products subgraph];
   reviews[Reviews subgraph]
-  router --- products & reviews
+  runtime --- products & reviews
   end;
-  clients -.- router;
+  clients -.- runtime;
   class clients secondary;
 ```
 
@@ -165,24 +165,24 @@ Self-hosted supergraphs are an [Enterprise feature](/graphos/enterprise/) for or
 
 </EnterpriseFeature>
 
-With a self-hosted supergraph, GraphOS does not provision a router for your supergraph. Instead, you host your supergraph's router in your own infrastructure:
+With a self-hosted supergraph, GraphOS does not provision a runtime for your supergraph. Instead, you host your supergraph's runtime in your own infrastructure:
 
 ```mermaid
 flowchart LR;
   clients(Clients);
   subgraph "Your infrastructure"
-  router(["Router"]);
+  runtime(["Federation<br/>Runtime"]);
   serviceA[Products subgraph];
   serviceB[Reviews subgraph];
-  router --- serviceA & serviceB;
+  runtime --- serviceA & serviceB;
   end;
-  clients -.- router;
+  clients -.- runtime;
   class clients secondary;
 ```
 
-Your self-hosted router is an instance of [the Apollo Router](/router/) (cloud supergraphs use the Apollo Router under the hood).
+Your self-hosted runtime is an instance of [the Apollo Router](/router/) (cloud supergraphs use the Apollo Router under the hood).
 
-Self-hosted supergraphs provide full control over your router, but they also require handling its deployment and management. Before you adopt this graph type, make sure you have the necessary team structure to properly manage an additional service in your infrastructure.
+Self-hosted supergraphs provide full control over your runtime, but they also require handling its deployment and management. Before you adopt this graph type, make sure you have the necessary team structure to properly manage an additional service in your infrastructure.
 
 <p>
   <ButtonLink
@@ -203,7 +203,7 @@ Monographs require an Apollo organization on the Enterprise plan.
 
 </EnterpriseFeature>
 
-A monograph is a graph that consists of a single GraphQL server with no router:
+A monograph is a graph that consists of a single GraphQL server with no runtime:
 
 ```mermaid
 flowchart LR;
@@ -219,7 +219,7 @@ flowchart LR;
 
 Apollo strongly recommends against monographs. A monograph introduces technical and logistical scaling issues as more teams contribute to your graph and its schema.
 
-Additionally, the router provides essential GraphOS functionality beyond support for multiple subgraphs. It also enables powerful features like [`@defer` support](/router/executing-operations/defer-support/) and straightforward [metrics reporting](../metrics/).
+Additionally, the runtime provides essential GraphOS functionality beyond support for multiple subgraphs. It also enables powerful features like [`@defer` support](/router/executing-operations/defer-support/) and straightforward [metrics reporting](../metrics/).
 
 </Caution>
 

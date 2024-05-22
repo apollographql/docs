@@ -57,12 +57,13 @@ GraphOS provides schema pipeline tools to develop and deploy changes to your gra
 
 A key component of the supergraph is the unified endpoint it presents to clients. The GraphOS Federation Runtime makes this possible.
 The runtime intelligently orchestrates and distributes the request across your APIs and returns a unified response.
+For a client, the request and response cycle of querying the runtime looks the same as querying any GraphQL server.
 
 ```mermaid
 graph LR;
   clients(Clients);
   subgraph Supergraph
-    runtime([GraphOS <br/>Runtime]);
+    runtime([Federation <br/>Runtime]);
     serviceA[Service <br/>A];
     serviceB[Service <br/>B];
     serviceC[Service <br/>C];
@@ -74,43 +75,7 @@ graph LR;
   class clients secondary;
 ```
 
-For a client, the request and response cycle of querying the runtime looks the same as querying any GraphQL server.
-
-With GraphOS, you can choose for Apollo to provision and manage a cloud-hosted runtime for you:
-
-```mermaid
-flowchart LR;
-  clients(Clients);
-  subgraph "GraphOS Cloud"
-    runtime([GraphOS <br/>Runtime]);
-  end;
-  subgraph YourInfra["Your infrastructure"];
-    subgraphA[Subgraph A];
-    subgraphB[Subgraph B];
-  end;
-  clients -.- runtime;
-  runtime --- subgraphA & subgraphB;
-  classDef padding padding-left:1em, padding-right:1em
-  YourInfra:::padding
-  class clients secondary;
-```
-
-Or you can choose to self-host your runtime:
-
-```mermaid
-flowchart LR;
-  clients(Clients);
-  subgraph "Your infrastructure";
-  runtime([GraphOS <br/>Runtime]);
-  serviceB[Subgraph A];
-  serviceC[Subgraph B];
-  runtime --- serviceB & serviceC;
-  end;
-  clients -.- runtime;
-  class clients secondary;
-```
-
-Cloud and self-hosted runtimes are both powered by the Apollo Router—a high-performance routing runtime packaged as a [standalone binary](https://github.com/apollographql/router).
+The GraphOS Federation Runtime is powered by the Apollo Router—a high-performance routing runtime packaged as a [standalone binary](https://github.com/apollographql/router).
 
 ### An interface for every use case
 
