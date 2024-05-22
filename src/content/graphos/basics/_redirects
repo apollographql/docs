@@ -86,3 +86,6 @@
 /routing/cloud-dedicated /docs/graphos/cloud-routing/dedicated
 /routing/cloud-dedicated/lattice /docs/graphos/cloud-routing/dedicated/lattice
 /routing/cloud-dedicated/lattice-troubleshooting /docs/graphos/cloud-routing/dedicated/lattice-troubleshooting
+
+# Rename Azure SSO doc
+/org/sso/azure-ad-integration-guide  /docs/graphos/org/sso/microsoft-entra-id-integration-oidc-guide

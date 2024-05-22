@@ -20,7 +20,7 @@ exceptions:
   - Apollo Router
   - Apollo Server
   - AWS
-  - Azure
+  - Azure (AD)?
   - Bookmark Apps?
   - CI(/CD)?
   - CLI
@@ -32,6 +32,7 @@ exceptions:
   - CORS
   - Cosmos
   - Create an Apollo account
+  - Create an Azure AD app registration
   - Datadog Metrics Explorer
   - Docker
   - Emmet
@@ -77,6 +78,7 @@ exceptions:
   - Sandbox
   - SDL
   - SDUI
+  - Send OIDC metadata
   - Send SAML metadata
   - Studio
   - TypeScript
