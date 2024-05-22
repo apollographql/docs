@@ -25,6 +25,7 @@ export {default as SchemaProposalImplementationNote} from './schema-proposal-imp
 export {default as SchemaProposalPublicationMermaid} from './schema-proposal-publication-mermaid.mdx';
 export {default as SchemaProposalReviewMermaid} from './schema-proposal-review-mermaid.mdx';
 export {default as SetApolloVCSCommit} from './set-apollo-vcs-commit.mdx';
+export {default as SSOEntraIDAssignUsers} from './sso-entra-id-assign-users.mdx';
 export {default as SSOLegacyCaution} from './sso-legacy-caution.mdx';
 export {default as SSOMigrationNotice} from './sso-migration-notice.mdx';
 export {default as SSOPreviewNotice} from './sso-preview-notice.mdx';

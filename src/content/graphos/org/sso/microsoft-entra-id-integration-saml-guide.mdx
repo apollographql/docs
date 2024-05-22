@@ -85,26 +85,12 @@ Setup requires at least a [Cloud Application Administrator](https://learn.micros
 Send your Apollo contact the **App Federation Metadata URL** you previously copied.
 They will then be able to complete your SSO setup.
 
-Once your SSO setup is finalized, team members who previously had access to GraphOS will need to log back in via the new SSO setup.
+Once your SSO setup is finalized, team members who previously had access to GraphOS must log back in via the new SSO setup.
 To give them access, you first need to assign them in Entra.
 
 ## Assign users in Entra ID
 
-Once your Apollo GraphOS application is set up in Entra ID, you need to assign users to it so they can access GraphOS. You can assign individual users or groups from the **User and groups** page of your Apollo GraphOS application in Entra ID.
-
-You may want to begin by adding yourself individually and then testing SSO by clicking **Test** at the bottom of the **Single sign-on** page.
-
-<img
-  src="../../img/sso/entra-sso-test.jpg"
-  alt="SSO testing in Microsoft Entra ID"
-  className="screenshot"
-  width="700"
-/>
-
-Once you've successfully tested your own user's ability to use SSO, add any applicable users or groups.
-When users are first assigned to the Apollo GraphOS application, they must re-login to GraphOS Studio.
-
-Once you've confirmed the new configuration works for your users, remove any legacy Apollo GraphOS applications in Entra ID or app registrations in Azure AD if you have them.
+<SSOEntraIDAssignUsers />
 
 ## Legacy setup
 
