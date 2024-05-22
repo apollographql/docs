@@ -97,7 +97,7 @@ Recurly
 repo
 Rhai
 rollouts?
-runtimes
+[Rr]untime('?s)?
 [Ss]afelist(ed|ing)?
 [Ss]anitization
 schema's
