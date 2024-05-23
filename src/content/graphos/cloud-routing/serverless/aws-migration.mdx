@@ -16,26 +16,23 @@ Serverless cloud routers running on Fly.io infrastructure must be migrated in Gr
 
 ## Who needs to migrate?
 
-You need to migrate if:
+You may need to migrate if:
 
-- Your organization is on a Serverless plan **AND**
-- In [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content), the **Cloud Router Details** section on the **Overview** page shows **ord - US (Chicago)** as the **Region** for your graph
+- Your organization is on a Serverless plan OR
+- Your organization is on a Dedicated plan but uses Serverless variants for non-production environments
 
-  <img
-    className="screenshot"
-    alt="Cloud router region showing ord - US (Chicago) in GraphOS Studio"
-    src="../../img/cloud-routing/cloud-router-region-ord.jpg"
-    width="300"
-  />
+To check if you need to migrate, go to [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content).
+If a graph's **Cloud Router Details** on the **Overview** page shows **ord - US (Chicago)** as the **Region**, you need to migrate it.
 
-If a graph has a cloud router running on Fly.io, its **Overview** page also shows a migration banner.
-
-<Caution>
+<img
+  className="screenshot"
+  alt="Cloud router region showing ord - US (Chicago) in GraphOS Studio"
+  src="../../img/cloud-routing/cloud-router-region-ord.jpg"
+  width="300"
+/>
 
 Cloud routers on Fly.io will continue to operate until June 27, 2024. After this date, any cloud routers on Fly.io will be permanently deleted and graphs using them will no longer respond to requests.
 Don't hesitate to contact [cloud@apollographql.com](mailto:cloud@apollographql.com) with any migration questions or concerns.
-
-</Caution>
 
 ## What's changing?
 
@@ -89,6 +86,15 @@ To avoid downtime for clients querying your graph, don't delete the variant that
 ### Step 1. Create a new graph
 
 To get started, create a new graph or variant in GraphOS Studio. See the [getting started](/graphos/quickstart/cloud/#from-an-existing-account) for details on creating a new graph.
+
+<Note>
+
+**For Dedicated customers with Serverless variants**:
+
+You can't migrate Serverless variants on a Dedicated plan from Studio. Instead, you must publish a new variant or graph using the [Rover CLI](/rover/commands/subgraphs#publishing-a-subgraph-schema-to-graphos).
+All variants created via Rover default to Serverless, even if your organization is on the Dedicated plan.
+
+</Note>
 
 All Serverless cloud routers created on or after May 21, 2024 automatically run on AWS.
 You can confirm your new router is running on AWS by checking that the router region is **AWS us-east-1** on the variant's **Overview** page under **Cloud Router Details**.
@@ -152,8 +158,5 @@ To go live, update the endpoint URL your clients use to query your graph. You ca
 If you use any Rover commands in your CI/CD, update the graph ref.
 
 Once you've updated your client codebase and Rover commands, you can delete the variant housing your Fly.io cloud router.
-
-## Serverless on AWS for Dedicated Customers
-Dedicated customers who are running Serverless tier variants for their non production environments need to migrate their Fly cloud routers to AWS. This cannot be accmplished from the Studio UI. Instead, you can publish a new variant or graph from [rover](https://www.apollographql.com/docs/rover/commands/subgraphs#publishing-a-subgraph-schema-to-graphos). Any variants created via rover default to Serverless (even if you're on the Dedicated plan).
 
 <!-- vale Apollo.Headings = YES -->
