@@ -6,11 +6,7 @@ import {PreviewIcon} from './Icons';
 
 import {MarkdownInAdmonitions} from './MarkdownInAdmonitions';
 
-export const PreviewFeature = ({
-  discordLink = 'https://discord.gg/yFZJH2QYrK',
-  appendText = '',
-  children
-}) => {
+export const PreviewFeature = ({appendText = '', discordLink, children}) => {
   return (
     <Box
       pl="2"
@@ -36,23 +32,24 @@ export const PreviewFeature = ({
             children
           ) : (
             <>
-              <b>
-                This feature is in{' '}
-                <RelativeLink
-                  color={'tertiary'}
-                  href="https://www.apollographql.com/docs/resources/product-launch-stages#preview"
-                >
-                  preview
-                </RelativeLink>
-                .
-              </b>{' '}
-              Your questions and feedback are highly valued{'—'}don&apos;t
-              hesitate to get in touch with your Apollo contact or on the
-              official
-              <RelativeLink color={'tertiary'} href={discordLink}>
-                {' '}
-                Apollo GraphQL Discord
+              This feature is in{' '}
+              <RelativeLink
+                color={'tertiary'}
+                href="https://www.apollographql.com/docs/resources/product-launch-stages#preview"
+              >
+                preview
               </RelativeLink>
+              . Your questions and feedback are highly valued{'—'}don&apos;t
+              hesitate to get in touch with your Apollo contact
+              {discordLink && (
+                <>
+                  or on the official
+                  <RelativeLink color={'tertiary'} href={discordLink}>
+                    {' '}
+                    Apollo GraphQL Discord
+                  </RelativeLink>
+                </>
+              )}
               .{' '}
               {appendText.length > 0 && (
                 <MarkdownInAdmonitions>{appendText}</MarkdownInAdmonitions>

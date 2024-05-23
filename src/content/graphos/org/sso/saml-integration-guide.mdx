@@ -1,24 +1,78 @@
 ---
-title: Setting up Apollo SSO with a SAML-based IdP
+title: Set up SSO with a SAML-based IdP
+subtitle: Configure a SAML-based identity provider
+description: Configure a SAML-based identity provider as your Apollo GraphOS organization's SSO provider.
 ---
 
-<PremiumFeature>
+<SSOPremiumFeature />
 
-Single sign-on (SSO) is available only for [Dedicated and Enterprise plans](https://www.apollographql.com/pricing#security).
-This feature is not available as part of an [Enterprise trial](../plans/#enterprise-trials).
-
-</PremiumFeature>
-
-This guide walks through configuring a generic SAML-based identity provider (IdP) for use with Apollo single sign-on (SSO). These steps require administrative access to your IdP.
-
-<Note>
-
-If you use Okta or Azure Active Directory as your identity provider, instead see the corresponding guide for your tool:
+This guide walks through configuring a generic SAML-based identity provider (IdP) for use with Apollo SSO.
+If you use Okta or Microsoft Entra ID as your IdP, instead see the corresponding guide for your IdP:
 
 - [Okta](./okta-integration-guide/)
-- [Azure AD](./azure-ad-integration-guide/)
+- [Microsoft Entra ID](./microsoft-entra-id-integration-saml-guide/) (formerly known as Azure Active Directory)
 
-</Note>
+<SSOMigrationNotice />
+
+## Setup
+
+<SSOPreviewNotice />
+
+SAML-based SSO setup has two main steps:
+
+1. Create a custom Apollo GraphOS application in your IdP.
+2. Send your application's SAML metadata to Apollo.
+
+These steps generally require administrative access to your IdP.
+
+### Step 1. Create a custom application
+
+<SSOSAMLInfoRequest />
+
+2. Create a new application in your SSO environment. While doing so, set the following values:
+
+   - **App Name**: `Apollo GraphOS`
+   - **App logo**: [Apollo logo](../../img/sso/apollo-sk-logo.png) (optional)
+
+3. If your IdP permits it, upload the Apollo-provided SP SAML XML metadata file. Otherwise, open the XML metadata file, view the SAML metadata values, and manually enter them in your IdP.
+
+   - Set your **Single Sign-on URL** or **ACS URL** to the Single Sign-on URL. You can also use this value for the following fields:
+
+     - **Recipient**
+     - **ACS (Consumer) URL Validator**
+     - **ACS (Consumer) URL**
+
+   - Set your **Entity ID** to the Entity ID value.
+
+4. Set the following user attributes:
+
+   - `sub`: `user.email`
+     - The `sub` attribute should uniquely identify any particular user to GraphOS. In most cases, `user.email` provides this unique mapping.
+   - `email`: `user.email`
+   - `given_name`: `user.firstName`
+   - `family_name`: `user.lastName`
+
+5. Save your configuration.
+
+### Step 2. Send SAML metadata to Apollo
+
+Send your Apollo contact your IdP SAML XML metadata file. If you can't send this file, send one of the following instead:
+
+- IdP entity ID
+- IdP single sign-on URL / SSO URL
+- IdP x509 certificate
+
+Your Apollo contact will then be able to complete your SSO setup.
+
+Once your SSO setup is live, assign users to your new Apollo GraphOS application in your IdP. For help assigning the relevant groups and users, contact your SSO or Identity & Access Management team. If organizations members could previously login before you implemented SSO, they must re-login to GraphOS Studio with SSO.
+
+Once you've confirmed the new setup works as expected, remove any legacy Apollo GraphOS applications in your IdP.
+
+## Legacy setup
+
+<SSOLegacyCaution />
+
+<ExpansionPanel title="Click to see legacy instructions">
 
 1. Create a new application in your SSO environment. While doing so, set the following values:
 
@@ -73,3 +127,5 @@ If you use Okta or Azure Active Directory as your identity provider, instead see
    - IdP x509 certificate
 
 9. Your Apollo contact will complete your SSO setup.
+
+</ExpansionPanel>
