@@ -153,4 +153,7 @@ If you use any Rover commands in your CI/CD, update the graph ref.
 
 Once you've updated your client codebase and Rover commands, you can delete the variant housing your Fly.io cloud router.
 
+## Serverless on AWS for Dedicated Customers
+Dedicated customers who are running Serverless tier variants for their non production environments need to migrate their Fly cloud routers to AWS. This cannot be accmplished from the Studio UI. Instead, you can publish a new variant or graph from [rover](https://www.apollographql.com/docs/rover/commands/subgraphs#publishing-a-subgraph-schema-to-graphos). Any variants created via rover default to Serverless (even if you're on the Dedicated plan).
+
 <!-- vale Apollo.Headings = YES -->
