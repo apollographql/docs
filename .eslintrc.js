@@ -52,6 +52,7 @@ module.exports = {
         SetApolloVCSCommit: 'readonly',
         SSOEntraIDAssignUsers: 'readonly',
         SSOLegacyCaution: 'readonly',
+        SSOLegacyUsers: 'readonly',
         SSOMigrationNotice: 'readonly',
         SSOPreviewNotice: 'readonly',
         SSOPremiumFeature: 'readonly',

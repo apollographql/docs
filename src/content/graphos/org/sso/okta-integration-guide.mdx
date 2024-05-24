@@ -87,8 +87,7 @@ To use the latest version of Apollo's SSO, ensure you are _creating a custom app
 2. Copy and paste the contents of the **Metadata URL** text box into a text file.
 3. Send the **Metadata URL** to your Apollo contact. They will complete your SSO setup.
 
-Once your SSO setup is finalized, team members who previously had access to GraphOS must log back in via the new SSO setup.
-To give them access, you first need to assign them in Okta.
+Once your SSO setup is finalized, you need to assign users to your custom app in Okta.
 
 ## Assign users in Okta
 
@@ -108,7 +107,9 @@ Once your SSO is set up, you need to assign users to it so they can access Graph
 Repeat these steps whenever you want to grant GraphOS Studio access to a new user or group.
 Okta displays every user and group you've assigned to the integration in the **Assignments** tab.
 
-When users are first assigned to the Apollo GraphOS integration, they must re-login to GraphOS Studio. Once you've confirmed the new configuration works as expected, remove any legacy Apollo integrations in Okta if you have them.
+<SSOLegacyUsers />
+
+Once you've confirmed the new configuration works as expected, remove any legacy Apollo integrations in Okta if you have them.
 
 ## Legacy setup
 
