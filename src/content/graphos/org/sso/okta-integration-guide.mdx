@@ -12,23 +12,22 @@ This guide walks through configuring Okta as your GraphOS organization's identit
 
 ## Setup
 
-<Note>
-
-Setup requires:
-
-- An Okta user account with administrator privileges
-- A GraphOS user account with [to-do: role]
-
-</Note>
-
 SAML-based SSO setup has these main steps:
 
 1. Share you SSO details with Apollo
 2. Create a custom Okta app integration for Apollo GraphOS
 3. Share your Okta app integration's SAML metadata with Apollo
 4. Verify your your Okta app integration's details in GraphOS
+5. Enable SSO
 
 The SSO setup wizard in GraphOS Studio guides you through these steps.
+
+### Prerequisites
+
+Setup requires:
+
+- An Okta user account with administrator privileges
+- A GraphOS user account with the [**Org Admin** role](../members/#organization-wide-member-roles)
 
 ### Step 1. Share you SSO details
 
@@ -94,7 +93,7 @@ The SSO setup wizard in GraphOS Studio guides you through these steps.
    Then click **Next**.
 
 7. In the **Feedback** step, select **I'm an Okta customer adding an internal app**. Click **Finish**.
-8. Back in the setup wizard in GraphOS Studio, click **Continue** to share SSO metadata with Apollo.
+8. Back in the setup wizard in GraphOS Studio, click **Continue**.
 
 ### Step 3. Share SAML metadata with Apollo
 
@@ -107,14 +106,20 @@ The SSO setup wizard in GraphOS Studio guides you through these steps.
      width="500"
    />
 
-2. Copy and paste the contents of the **Metadata URL** text box into the setup wizard in GraphOS Studio and click **Continue**.
+2. Copy and paste the contents of the **Metadata URL** text box into the setup wizard in GraphOS Studio. Click **Continue**.
 
 ### Step 4. Verify details
 
-1. The GraphOS Studio setup wizard populates your SSO metadata based on the **Metadata URL** you entered in the last step. Verify the values are correct and click **Continue**.
-2. On the **Enable SSO** step of the wizard, click **Continue** to enable SSO in GraphOS Studio.
+The GraphOS Studio setup wizard populates your SSO metadata based on the **Metadata URL** you entered in the last step. Verify the values are correct and click **Continue**.
 
-Once your SSO setup is finalized, you need to assign users to your custom app in Okta.
+### Step 5. Enable SSO
+
+On the **Enable SSO** step of the wizard, click the **Enable SSO** button to finalize setup.
+Once your SSO setup is finalized, you need to [assign users](#assign-users-in-okta) to your custom app in Okta for them to have access.
+
+<SSOLegacyUsers />
+
+Once you've confirmed the new configuration works as expected, remove any legacy Apollo integrations in Okta if you have them.
 
 ## Assign users in Okta
 
@@ -133,10 +138,6 @@ Once your SSO is set up, you need to assign users to it so they can access Graph
 
 Repeat these steps whenever you want to grant GraphOS Studio access to a new user or group.
 Okta displays every user and group you've assigned to the integration in the **Assignments** tab.
-
-<SSOLegacyUsers />
-
-Once you've confirmed the new configuration works as expected, remove any legacy Apollo integrations in Okta if you have them.
 
 ## Legacy setup
 
