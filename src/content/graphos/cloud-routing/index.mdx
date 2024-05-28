@@ -4,7 +4,7 @@ subtitle: Learn about Apollo-managed cloud routers
 description: Learn about Apollo's managed cloud routers to efficiently route requests to your GraphQL APIs, ensuring optimal performance and scalability.
 ---
 
-When you create a cloud supergraph with GraphOS Studio, GraphOS automatically provisions and manages a _router_ that acts as an entry point to your GraphQL APIs. In this architecture, individual GraphQL APIs are called _subgraphs_. Clients send operations to your router's public endpoint, instead of sending them directly to your subgraphs.
+When you create a cloud supergraph, GraphOS provisions and manages a _cloud router_. Routers act as entry points to your GraphQL APIs. Individual GraphQL APIs are called _subgraphs_ in this architecture.
 
 ```mermaid
 flowchart LR;
@@ -23,7 +23,9 @@ flowchart LR;
   class clients secondary;
 ```
 
-GraphOS only hosts the runtime for your supergraph's cloud router. GraphQL servers for your individual subgraphs are still hosted in your infrastructure.
+Clients send operations to your router's public endpoint instead of your subgraphs.
+
+GraphOS only hosts the runtime for your supergraph's cloud router. GraphQL servers for your subgraphs are still hosted in your infrastructure.
 
 <p>
   <ButtonLink
@@ -36,22 +38,60 @@ GraphOS only hosts the runtime for your supergraph's cloud router. GraphQL serve
   </ButtonLink>
 </p>
 
-<Note>
-
-Cloud supergraphs are only available to organizations with Serverless and Dedicated plans.
-They aren't available with an Enterprise plan or a legacy Free or Team plan.
-
-</Note>
-
 ## Federation and subgraph compatibility
 
 Cloud supergraphs use [Apollo Federation 2](/federation/) for their core architecture. [Many GraphQL server libraries](/federation/building-supergraphs/supported-subgraphs/) support Federation 2. Your GraphQL API doesn't already need to be using Apollo Federation to add it to a cloud supergraph.
 
-## Initializing your router
+## Cloud router types and availability
 
-Your router is provisioned automatically whenever you create a cloud supergraph in GraphOS Studio, or whenever you create a new variant for an existing cloud supergraph. Each variant has its own distinct router.
+Cloud supergraphs are only available to organizations with Serverless and Dedicated plans.
+They aren't available with Enterprise or legacy Free or Team plans.
 
-When you first create a variant, the router provisioning process can take a few minutes. If this process hasn't completed yet for a particular variant, an **INITIATING ENDPOINT** label is shown at the top of the variant's page in Studio:
+Serverless cloud routers run on shared infrastructure. Dedicated cloud routers run on dedicated infrastructure that you control and scale.
+See the [pricing page](https://www.apollographql.com/pricing/) for more information.
+
+## Cloud router regions
+
+Serverless cloud routers are hosted in the us-east-1 AWS region. Dedicated cloud routers have a wider [variety of options](./dedicated#runs-on-aws). Region selection for cloud routers is only available on the Dedicated plan. <TrackableLink href="https://www.apollographql.com/contact-sales?type=dedicated&referrer=docs" eventName="content_contact_cloud">Contact Sales</TrackableLink> to learn more.
+You can view a cloud router's region on its graph's **Overview** page under **Cloud Router Details**.
+
+<img
+  className="screenshot"
+  alt="Variant overview page in GraphOS Studio"
+  src="../img/cloud-routing/cloud-router-details.jpg"
+  width="300"
+/>
+
+<Caution>
+
+Some legacy Serverless cloud routers are hosted in Chicago, Illinois.
+If your cloud router is hosted in Chicago, you need to [migrate](./serverless/aws-migration/) by June 27, 2024.
+
+</Caution>
+
+## Cloud router status
+
+Cloud routers can have the following statuses:
+
+| Status           | Description                                                                                                                                       |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Initializing** | Your cloud router is being created. This process may take up to five minutes. [Learn more.](#initializing)                                        |
+| **Running**      | Your graph is operating normally.                                                                                                                 |
+| **Error**        | Your cloud router is running, but a deployment recently failed. For more information on the failure, see the **Launches** page in GraphOS Studio. |
+
+<Note>
+
+Serverless routers have additional statuses, including **Sleeping** and **Deleted**. Learn more on the [Serverless overview page](./serverless/#serverless-router-status).
+
+</Note>
+
+You can see your cloud router's status in GraphOS Studio on the associated graph's **Overview** page under **Cloud Router Details**.
+
+### Initializing
+
+Apollo provisions a router whenever you create a cloud supergraph in GraphOS Studio or whenever you create a new variant for an existing cloud supergraph. Each variant has its own distinct router.
+
+When you first create a variant, the router provisioning process can take a few minutes. While this process completes, an **INITIATING ENDPOINT** label appears at the top of the variant's page in Studio:
 
 <img
   className="screenshot"
@@ -62,15 +102,9 @@ When you first create a variant, the router provisioning process can take a few 
 
 Once initialized, you can [configure your cloud router](./configuration).
 
-### Cloud router regions
-
-Cloud routing for Serverless plans is only available in Chicago, USA. Apollo's infrastructure has interconnects with major public cloud providers, so latency is minimal. For example, latency between Chicago and AWS in Virginia is approximately 10 ms.
-
-Dedicated cloud routers have a wider [variety of options](./dedicated#runs-on-aws). Region selection for cloud routers is only available on the Dedicated plan. <TrackableLink href="https://www.apollographql.com/contact-sales?type=dedicated&referrer=docs" eventName="content_contact_cloud">Contact Sales</TrackableLink> to learn more.
-
 ## Cloud launches
 
-Publishing a new subgraph schema or editing a cloud router's configuration triggers a new [launch](/graphos/delivery/launches/). Every launch automatically deploys new router instances for your supergraph.
+Publishing a new subgraph schema or editing a cloud router's config triggers a new [launch](/graphos/delivery/launches/). Every launch automatically deploys new router instances for your graph. You can see a launch's details, including possible failures, from a graph's **Launches** page in GraphOS Studio.
 
 <Note>
 
@@ -80,9 +114,9 @@ A router deployment might fail due to a platform incident or schema composition 
 
 ## Router version updates
 
-With cloud routing, GraphOS runs a fully managed fleet of Apollo Routers for you. Apollo manages the version of Apollo Router that is deployed and ensures that newly released versions are deployed to cloud routers within 30 days of release. Some minor and patch versions may be skipped.
+Apollo manages the version of Apollo Router deployed to cloud routers. It ensures that newly released versions are deployed within 30 days of release. Some minor and patch versions may be skipped.
 
-Router releases go through rigorous testing before deployment on GraphOS Cloud. During the deployment of new versions, an Apollo engineer actively oversees the process and rolls back any cloud routers that fail to boot up. While some edge cases may arise—for example, a query planner update could result in slightly degraded performance—router updates should not disrupt your supergraphs.
+Router releases go through rigorous testing before deployment on GraphOS Cloud. An Apollo engineer oversees deployment. If any cloud routers fail to boot up, they roll back to a previous version. While some edge cases may arise—for example, a query planner update could result in slightly degraded performance—router updates should not disrupt your supergraphs.
 
 <Note>
 
@@ -90,40 +124,17 @@ Opting out of router updates to cloud routers isn't currently supported. Advance
 
 </Note>
 
-## Automatic deletion of unused routers
-
-<Note>
-
-Only cloud routers on the Serverless plan are automatically deleted.
-This doesn't apply cloud routers on the Dedicated plan.
-
-</Note>
-
-Apollo automatically deletes variants of Serverless cloud supergraphs that receive zero operations for 60 consecutive days. This deletes the router, along with all the variant's historical metrics.
-
-- Apollo will notify you via email whenever a Serverless variant is approaching this 60-day limit.
-- To prevent deletion, execute at least one GraphQL operation on the variant's router before the 60-day limit.
-
-## Limited compute on Serverless
-
-Serverless has limited underlying compute resources, so certain types of workloads might require you to upgrade to Dedicated. Serverless capacity can be exhausted in the following circumstances:
-
-- **Complex schemas** can exceed available machine memory for Serverless cloud routers. For example, Serverless cloud routers don't support schemas with over 1,000 input types.
-- **Too many simultaneous requests** can cause your Serverless cloud router to return `429` errors to your clients.
-
-You can upgrade to Dedicated for control over scaling and performance. <TrackableLink href="https://www.apollographql.com/contact-sales?type=dedicated&referrer=docs" eventName="content_contact_cloud">Contact Sales</TrackableLink> for a free trial.
-
 ## Security and compliance
 
-The entire GraphOS platform, including its cloud routing infrastructure, is SOC2 Type 2 certified.
+The entire GraphOS platform, including its cloud routing infrastructure, is SOC 2 Type 2 certified.
 Secrets are encrypted both in transit and at rest.
-Secrets are only available inside the runtime environment, and you have total control over when those secrets are resolved in configuration.
+Secrets are only available inside the runtime environment. You have total control over when those secrets are resolved in configuration.
 
 The Apollo Router (the underlying technology for cloud routing) has been [tested and audited by Doyensec](https://doyensec.com/resources/Doyensec_Apollo_Report_Q22022_v4_AfterRetest.pdf).
 
 ### GraphOS Cloud on AWS
 
-GraphOS Cloud on AWS is a managed API solution. It runs the Apollo Router on AWS infrastructure to provide a high-performance, configurable GraphQL router. All Dedicated cloud routers run on AWS.
+GraphOS Cloud on AWS is a managed API solution. It runs the Apollo Router on AWS infrastructure to provide a high-performance, configurable GraphQL router.
 
 [Download an overview of GraphOS Cloud on AWS security and compliance practices](https://www.apollographql.com/trust/request-security-report).
 For more information on Apollo's compliance and security measures, visit the [Trust Center](https://www.apollographql.com/trust/compliance-and-security).

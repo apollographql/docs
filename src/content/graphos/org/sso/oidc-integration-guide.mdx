@@ -1,0 +1,64 @@
+---
+title: Set up SSO with an OIDC-based IdP
+subtitle: Configure an OIDC-based identity provider
+description: Configure a OpenID Connect (OIDC) based identity provider as your Apollo GraphOS organization's SSO provider.
+---
+
+<SSOPremiumFeature />
+
+This guide walks through configuring a generic OpenID Connect (OIDC) based identity provider (IdP) for use with Apollo SSO.
+If you use Microsoft Entra ID as your IdP, instead see [the Entra OIDC guide](./microsoft-entra-id-integration-oidc-guide/).
+
+# Setup
+
+<SSOPreviewNotice />
+
+SSO setup has two main steps:
+
+1. Create a custom Apollo GraphOS application in your IdP.
+2. Send your application's OIDC metadata to Apollo.
+
+These steps generally require administrative access to your IdP.
+
+### Step 1. Create a custom application
+
+1. Send a request to your Apollo contact to configure an OIDC SSO integration. Include the organization name(s) you are setting up SSO for, and the email domains you want to associate with the organization. Your Apollo contact will respond with:
+
+   - A redirect URI
+   - A link to a form where you can submit your SSO information to Apollo. You'll use this form in the last setup step.
+
+   <Note>
+
+   The redirect URI differs for each GraphOS organization. If setting up SSO for multiple organizations, repeat the following steps for each organization using different values.
+
+   </Note>
+
+2. Create a new application in your SSO environment. While doing so, set the following values:
+
+   - **App Name**: `Apollo GraphOS`
+   - **App logo**: [Apollo logo](../../img/sso/apollo-sk-logo.png) (optional)
+
+3. Retrieve the following values from your SSO provider and save them in a local text file:
+
+- **Client ID**: this should be a specific **Application ID**
+- **Client Secret**: a secret value you may need to first create in your IdP
+- **Issuer**: the issuer value from a **OpenID Connect metadata document** found in your IdP
+
+4. If your IdP permits it, set the following user attributes:
+
+   - `sub`: `user.email`
+     - The `sub` attribute should uniquely identify any particular user to GraphOS. In most cases, `user.email` provides this unique mapping.
+   - `email`: `user.email`
+   - `given_name`: `user.firstName`
+   - `family_name`: `user.lastName`
+
+### Step 2. Send OIDC metadata to Apollo
+
+To complete the setup, complete the Apollo-provided link from step 1 with the appropriate information and inform your Apollo contact.
+They will then be able to complete your SSO setup.
+
+Once your SSO setup is live, assign users to your new Apollo GraphOS application in your IdP. For help assigning the relevant groups and users, contact your SSO or Identity & Access Management team.
+
+<SSOLegacyUsers />
+
+Once you've confirmed the new setup works as expected, remove any legacy Apollo GraphOS applications in your IdP.
