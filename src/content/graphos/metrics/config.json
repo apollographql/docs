@@ -39,7 +39,8 @@
       "Schema proposals": [
         "/notifications/schema-proposal-integration",
         [
-          "enterprise"
+          "enterprise",
+          "preview"
         ]
       ],
       "Build status": [
