@@ -1,9 +1,7 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import RelativeLink from '../../components/RelativeLink';
 import {ListItem, OrderedList, Text} from '@chakra-ui/react';
 
-export const ConfigureWebhookNotification = ({notificationType}) => {
+export const ConfigureWebhookNotification = () => {
   return (
     <>
       <Text>
@@ -22,22 +20,6 @@ export const ConfigureWebhookNotification = ({notificationType}) => {
           In the <strong>Webhook URL</strong> input, provide the URL of your
           HTTP(S) endpoint.
         </ListItem>
-        {notificationType === 'Proposal' && (
-          <ListItem>
-            Optionally, enter a <strong>Secret Token</strong>. If you enter a
-            token, each notification request includes an{' '}
-            <code>x-apollo-signature</code> header whose value is a{' '}
-            <RelativeLink href="https://en.wikipedia.org/wiki/HMAC">
-              Hash Message Authentication Code (HMAC)
-            </RelativeLink>{' '}
-            generated using the token, the SHA-256 hash algorithm, and the
-            request body as the message. Refer to this{' '}
-            <RelativeLink href="https://www.okta.com/identity-101/hmac/">
-              guide from Okta
-            </RelativeLink>{' '}
-            to learn more about implementation and see additional resources.
-          </ListItem>
-        )}
         <ListItem>
           Click <strong>Next</strong> and complete any remaining steps in the
           dialog.
@@ -45,8 +27,4 @@ export const ConfigureWebhookNotification = ({notificationType}) => {
       </OrderedList>
     </>
   );
-};
-
-ConfigureWebhookNotification.propTypes = {
-  notificationType: PropTypes.string
 };
