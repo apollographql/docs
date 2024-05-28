@@ -1,0 +1,184 @@
+---
+title: Schema proposals notifications
+subtitle: Receive alerts when a schema proposal is created or revised
+description: Set up Apollo GraphOS notifications for GraphQL schema proposals. Receive real-time alerts whenever schema proposals are created or revised, or if their status changes.
+---
+
+<EnterpriseFeature>
+
+Schema proposals are only available with a [GraphOS Enterprise plan](https://www.apollographql.com/pricing?referrer=docs-content).
+
+</EnterpriseFeature>
+
+<PreviewFeature>
+
+This feature is in invite-only [preview](/resources/product-launch-stages#preview). Please get in touch with your Apollo contact if you'd like to request access.
+
+</PreviewFeature>
+
+Configure GraphOS to send notifications to a webhook whenever schema proposals are created or revised or if their status changes.
+These webhooks are useful for automating workflows. For example, your organization may want to open a draft pull request in your codebase whenever a proposal's status changes to **Approved**.
+
+## Setup
+
+1. Go to your graph's **Settings** page in [GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content).
+1. Open the **Reporting** tab.
+2. Click **Add notification** in the upper right.
+3. Select **Schema proposal** and click **Next**.
+4. Select the schema proposal event(s) you want to receive notifications for:
+
+   - **Proposal creation**
+   - **Proposal revision**
+   - **Proposal status change**
+
+5. Select either an existing webhook notification channel or to create a new one. If creating a new one, configure the webhook as described in the next section.
+
+## Configure webhook
+
+<ConfigureWebhookNotification notificationType="Proposal" />
+
+### Webhook format
+
+Custom webhook notification details are provided as a JSON object in the request body.
+To avoid including sensitive information, payloads contain IDs—for example, proposal ID and revision ID—rather than objects containing details about the proposal or revision.
+You can use the [Platform API](/graphos/platform-api/) to fetch full objects using the IDs in the webhook payload.
+
+The JSON object conforms to the structure of the `ResponseShape` interface:
+
+```javascript
+enum ProposalStatus {
+  OPEN
+  DRAFT
+  IMPLEMENTED
+  APPROVED
+}
+
+interface ResponseShape {
+  "eventType": string;
+  "eventID": string;
+  "graphID": string;
+  "variantID": string;
+  "proposalID": string;
+  "change": {
+    "status": ProposalStatus | undefined
+    "previousStatus": ProposalStatus | undefined
+    "revisionId": string | undefined
+  },
+  "timestamp": string;
+}
+```
+
+
+#### Field descriptions
+
+<table className="field-table">
+<thead>
+<tr>
+<th style={{ minWidth: 200 }}>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+
+<tr>
+<td>
+
+##### `eventType`
+
+</td>
+<td>
+
+The schema proposal event, either `APOLLO_PROPOSAL_CREATED`, `PROPOSAL_REVISION_SAVED`, or `APOLLO_PROPOSAL_STATUS_CHANGE`
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `eventId`
+
+</td>
+<td>
+
+A unique event ID
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `proposalID`
+
+</td>
+<td>
+
+A unique proposal ID
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `change`
+
+</td>
+<td>
+
+- This field isn't present for `APOLLO_PROPOSAL_CREATED` events.
+
+- For `PROPOSAL_REVISION_SAVED` events, the unique `revisionID` of the saved revision.
+
+- For `APOLLO_PROPOSAL_STATUS_CHANGE` events, the current `status` and `previousStatus` of the proposal.
+See [proposal statuses](../../delivery/schema-proposals#proposal-statuses) for more information.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `graphID`
+
+</td>
+<td>
+
+A unique graph ID
+
+</td>
+</tr>
+
+
+<tr>
+<td>
+
+
+##### `variantID`
+
+
+</td>
+<td>
+
+An unique ID in the graph ref format, for example, `graphID@variantName`
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### `timestamp`
+
+</td>
+<td>
+
+An ISO 8601 Date string indicating when the event occurred
+
+</td>
+</tr>
+
+</tbody>
+</table>
+

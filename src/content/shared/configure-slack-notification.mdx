@@ -1,0 +1,27 @@
+To set up Slack notifications, you must:
+
+1. Create an incoming webhook in Slack.
+2. Provide that webhook's URL to GraphOS Studio.
+
+#### 1. Create an incoming Slack hook
+
+To create an incoming Slack hook:
+
+1. From the [Incoming Hooks](https://slack.com/apps/A0F7XDUAZ-incoming-webhooks) page of the Slack App Directory, sign in and click **Add to Slack**.
+2. Select the Slack channel that should receive notifications. Then, click **Add Incoming WebHooks integration**.
+3. Copy the **Webhook URL** to use in the next step. It should have a format like `https://hooks.slack.com/services/...`.
+
+You can repeat this process to create webhook URLs for different Slack channels.
+
+#### 2. Provide the Slack hook to Studio
+
+1. In [GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content), specify a name for this notification channel in the **Channel Name** field.
+
+   - This name must be unique among your graph's notification channels.
+   - This name doesn't have to match the name of the Slack channel, but it's recommended for simplicity.
+
+2. In the **Slack Webhook URL** field, paste the webhook URL you obtained in [Create an incoming Slack hook](#1-create-an-incoming-slack-hook).
+3. Click **Next**.
+4. After you finish setup, check that your Slack channel gets a confirmation from Studio.
+
+To configure multiple Slack channels, repeat this process. Use a different webhook URL for each channel.

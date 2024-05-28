@@ -7,7 +7,7 @@ import {FlaskIcon} from './Icons';
 import {MarkdownInAdmonitions} from './MarkdownInAdmonitions';
 
 export const ExperimentalFeature = ({
-  discordLink = 'https://discord.gg/yFZJH2QYrK',
+  discordLink,
   appendText = '',
   children
 }) => {
@@ -36,23 +36,24 @@ export const ExperimentalFeature = ({
             children
           ) : (
             <>
-              <b>
-                This feature is{' '}
-                <RelativeLink
-                  color={'tertiary'}
-                  href="https://www.apollographql.com/docs/resources/product-launch-stages#experimental-features"
-                >
-                  experimental
-                </RelativeLink>
-                .
-              </b>{' '}
-              Your questions and feedback are highly valued{'—'}don&apos;t
-              hesitate to get in touch with your Apollo contact or on the
-              official
-              <RelativeLink color={'tertiary'} href={discordLink}>
-                {' '}
-                Apollo GraphQL Discord
+              This feature is{' '}
+              <RelativeLink
+                color={'tertiary'}
+                href="https://www.apollographql.com/docs/resources/product-launch-stages#experimental-features"
+              >
+                experimental
               </RelativeLink>
+              . Your questions and feedback are highly valued{'—'}don&apos;t
+              hesitate to get in touch with your Apollo contact
+              {discordLink && (
+                <>
+                  or on the official
+                  <RelativeLink color={'tertiary'} href={discordLink}>
+                    {' '}
+                    Apollo GraphQL Discord
+                  </RelativeLink>
+                </>
+              )}
               .{' '}
               {appendText.length > 0 && (
                 <MarkdownInAdmonitions>{appendText}</MarkdownInAdmonitions>

@@ -1,0 +1,51 @@
+---
+title: GraphOS notifications
+subtitle: Learn about supported notification types and channels
+description: Set up notifications for your GraphQL API's performance, schema changes, and more. Stay updated and address issues effectively using custom alerts.
+---
+
+GraphOS can notify your team about changes to your graph and its performance.
+These notifications help you stay up-to-date and address issues as they arise.
+
+<Tip>
+
+If you don't have a GraphOS organization yet, [get started here](../../quickstart/cloud/).
+
+</Tip>
+
+## Notification types
+
+GraphOS supports the following notification types:
+
+- [Daily reports](./daily-reports) of your graph's request rate, error rate, and latency
+- [Performance alerts](./performance-alerts) whenever metrics like error percentage or request latency exceed a threshold
+- [Schema change notifications](./schema-change-integration) whenever your graph's schema is updated
+- [Schema proposal notifications](./schema-proposal-integration) whenever a schema proposal is created or revised, or if its status changes
+- [Build status notifications](./build-status-notification) whenever GraphOS attempts to compose a supergraph schema
+
+Refer to notification type pages for setup instructions.
+
+## Supported notification channels
+
+GraphOS can send notifications to the indicated channels:
+
+| Notification Type             | Slack | PagerDuty | Custom Webhook |
+| :---------------------------- | :---: | :-------: | :------------: |
+| Daily reports                 |   ✓   |           |                |
+| Schema change notifications   |   ✓   |           |       ✓        |
+| Schema proposal notifications |       |           |       ✓        |
+| Build status notifications    |       |           |       ✓        |
+| Performance alerts            |   ✓   |     ✓     |                |
+
+## Notification availability
+
+### Plan availability
+
+- Custom webhooks are only available with an Enterprise plan.
+- Schema proposals and notifications about them are only available with an Enterprise plan.
+- Performance alerts are only available with a paid plan.
+
+### Release stage
+
+- Schema proposal and build status notifications are in [preview](/resources/product-launch-stages#preview).
+- Performance alerts are [experimental](/resources/product-launch-stages#experimental-features).

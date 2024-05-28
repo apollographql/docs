@@ -19,6 +19,10 @@ module.exports = {
         // shared content
         CalloutCard: 'readonly',
         CreateSelfHostedSupergraph: 'readonly',
+        CreateNotification: 'readonly',
+        ConfigurePagerDutyNotification: 'readonly',
+        ConfigureSlackNotification: 'readonly',
+        ConfigureWebhookNotification: 'readonly',
         ClientPQDifferences: 'readonly',
         ClientPQImplementation: 'readonly',
         ClientPQIntro: 'readonly',
