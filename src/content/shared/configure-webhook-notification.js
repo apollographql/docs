@@ -25,12 +25,17 @@ export const ConfigureWebhookNotification = ({notificationType}) => {
         {notificationType === 'Proposal' && (
           <ListItem>
             Optionally, enter a <strong>Secret Token</strong>. If you enter a
-            token, the <code>x-apollo-signature</code> header in the
-            notification request payload will include a{' '}
+            token, each notification request includes an{' '}
+            <code>x-apollo-signature</code> header whose value is a{' '}
             <RelativeLink href="https://en.wikipedia.org/wiki/HMAC">
               Hash Message Authentication Code (HMAC)
             </RelativeLink>{' '}
-            generated using the token and SHA-256 hash algorithm.
+            generated using the token, the SHA-256 hash algorithm, and the
+            request body as the message. Refer to this{' '}
+            <RelativeLink href="https://www.okta.com/identity-101/hmac/">
+              guide from Okta
+            </RelativeLink>{' '}
+            to learn more about implementation and see additional resources.
           </ListItem>
         )}
         <ListItem>
