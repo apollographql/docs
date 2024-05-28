@@ -48,6 +48,7 @@ module.exports = {
         PublishPQMs: 'readonly',
         RegisterCLI: 'readonly',
         RegisterFederatedCLI: 'readonly',
+        SAMLSetupSteps: 'readonly',
         SchemaProposalCreationMermaid: 'readonly',
         SchemaProposalReviewMermaid: 'readonly',
         SchemaProposalImplementationMermaid: 'readonly',
