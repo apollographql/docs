@@ -7,8 +7,8 @@ export const ConfigureWebhookNotification = () => {
       <Text>
         Custom webhooks require you to set up an HTTPS endpoint accessible via
         the public internet. GraphOS sends webhook notifications to this
-        endpoint as `POST` requests. Notification details are provided as JSON
-        in the request body, as described in the next section.
+        endpoint as <code>POST</code> requests. Notification details are
+        provided as JSON in the request body, as described in the next section.
       </Text>
       <OrderedList spacing="4">
         <ListItem>
