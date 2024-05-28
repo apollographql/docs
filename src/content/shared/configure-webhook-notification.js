@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import RelativeLink from '../../components/RelativeLink';
 import {ListItem, OrderedList, Text} from '@chakra-ui/react';
 
 export const ConfigureWebhookNotification = ({notificationType}) => {
@@ -23,9 +24,13 @@ export const ConfigureWebhookNotification = ({notificationType}) => {
         </ListItem>
         {notificationType === 'Proposal' && (
           <ListItem>
-            Optionally, enter a <strong>Secret Token</strong>, which will be
-            sent as an <code>x-apollo-signature</code> header in the
-            notification payload.
+            Optionally, enter a <strong>Secret Token</strong>. If you enter a
+            token, the <code>x-apollo-signature</code> header in the
+            notification request payload will include a{' '}
+            <RelativeLink href="https://en.wikipedia.org/wiki/HMAC">
+              Hash Message Authentication Code (HMAC)
+            </RelativeLink>{' '}
+            generated using the token and SHA-256 hash algorithm.
           </ListItem>
         )}
         <ListItem>
