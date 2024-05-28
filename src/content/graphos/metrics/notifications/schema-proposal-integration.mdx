@@ -41,7 +41,7 @@ Custom webhooks require you to set up an HTTPS endpoint accessible via the publi
 2. In the **Webhook URL** input, provide the URL of your HTTP(S) endpoint.
 3. Optionally, enter a **Secret Token**.
 
-  If you enter a token, each notification HTTP request includes an `x-apollo-signature` header whose value is a [Hash Message Authentication Code (HMAC)](https://en.wikipedia.org/wiki/HMAC) generated using the token, the SHA256 hash function, and the request body as the message.
+  If you enter a token, each notification HTTP request includes an `x-apollo-signature` header whose value is a [Hash Message Authentication Code (HMAC)](https://en.wikipedia.org/wiki/HMAC) generated using the token, the request body as the message, and the SHA256 hash function. The `x-apollo-signature` header has the format `sha256=hmac-value`.
 
   <ExpansionPanel title="See an example">
 
@@ -49,12 +49,12 @@ Custom webhooks require you to set up an HTTPS endpoint accessible via the publi
 
   **Secret token** (key): `your_secret_token`
 
-  **Hash function**: SHA256
-
-    **Request body** (message):
+  **Request body** (message):
   ```
   {"eventType":"APOLLO_PROPOSAL_STATUS_CHANGE","eventId":"00000000-0000-0000-0000-00000000","graphId":"graphId","variantId":"p-1","proposalId":"00000000-0000-0000-0000-00000000","change":{"status":"OPEN","previousStatus":"DRAFT"},"timestamp":"1970-01-01T00:00:00+0000"}
   ```
+
+  **Hash function**: SHA256
 
   The `x-apollo-header` value would be `sha256=25e21615f12995b82833d3dfabcb207dfb16e97226b5a0696b24624b1031f1ca`.
   </ExpansionPanel>
