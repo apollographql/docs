@@ -12,47 +12,43 @@ This guide walks through configuring Microsoft Entra ID (formerly known as Azure
 
 ## Setup
 
-<SSOPreviewNotice />
-
 OIDC-based SSO setup in Entra ID has these steps:
 
+1. Share your SSO details with Apollo in GraphOS Studio.
 1. Create an app registration for Apollo GraphOS in Entra ID.
-1. Retrieve your Entra client ID, client secret, and issuer.
 1. Configure API permissions in Entra ID.
-1. Send your Entra ID's app registration's OIDC metadata to Apollo.
+1. Enable SSO.
 
-Setup requires at least a [Cloud Application Administrator](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/permissions-reference#cloud-application-administrator) role.
+### Prerequisites
 
-### Step 1. Create an Entra ID app registration
+Setup requires:
 
-1. Send a request to your Apollo contact to configure an OIDC SSO integration. Include the organization name(s) you are setting up SSO for and the email domains you want to associate with the organization. Your Apollo contact will respond with:
+- An Entra ID user account with at least the [Cloud Application Administrator](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/permissions-reference#cloud-application-administrator) role
+- A GraphOS user account with the [**Org Admin** role](../members/#organization-wide-member-roles)
 
-   - A redirect URI
-   - A link to a form where you can submit your SSO information to Apollo. You'll use this form in the last setup step.
+<!-- vale Apollo.Headings = NO -->
 
-   <Note>
+### Step 1. Share your SSO details
 
-   The redirect URI differs for each GraphOS organization. If setting up SSO for multiple organizations, repeat the following steps for each organization using different values.
+<SSOShareDetails />
 
-   </Note>
+### Step 2. Create an Entra ID app registration
 
-2. Go to your [Microsoft Entra admin center](https://entra.microsoft.com/). Alternatively, you can sign in to the [Azure Portal](http://portal.azure.com/) and then go to **Microsoft Entra ID**.
-3. In Entra, go to **Identity > Applications > App registrations**. If accessing Entra from the Azure Portal, go to **Manage > App registrations**. Select **+New registration** in the top menu.
-4. On the **Register an application** page, provide the following information:
+1. Once you reach **Step 2: Your IdP and Apollo** in the wizard, go to your [Microsoft Entra admin center](https://entra.microsoft.com/). Alternatively, you can sign in to the [Azure Portal](http://portal.azure.com/) and then navigate to **Microsoft Entra ID**.
+2. In Entra, go to **Identity > Applications > App registrations**. If accessing Entra from the Azure Portal, go to **Manage > App registrations**. Select **+New registration** in the top menu.
+3. On the **Register an application** page, provide the following information:
 
    - Enter a descriptive name for your application, such as `Apollo GraphOS`.
    - Under **Supported account types**, select which Microsoft account types should have access to GraphOS.
-   - For **Redirect URI**, select **Web** and enter the redirect URI provided by your Apollo contact.
+   - For **Redirect URI**, select **Web** and enter the redirect URI provided by the setup wizard.
 
-5. Click **Register**.
-
-### Step 2. Retrieve app registration data
-
-1. From the **Overview** section of your newly created app registration, copy and paste your **Application (client) ID** into a local text file.
-2. Next to **Client credentials**, click **Add a certificate or secret** and create a new secret.
-3. Copy and paste the secret's **Value** to the text file you created earlier.
-4. Back in the **Overview** section, select **Endpoints** from the top menu.
-5. Copy and open the **OpenID Connect metadata document** URL in a new browser tab. Find the **`issuer`** value. It should be formatted like `https://login.microsoftonline.com/unique-value/vx.x`. Copy and paste this URL into your text file.
+4. Click **Register**.
+5. From the **Overview** section of your newly created app registration, copy and paste your **Application (client) ID** into the **Client ID** field in the setup wizard.
+6. Next to **Client credentials**, click **Add a certificate or secret** and create a new secret.
+7. Copy and paste the secret's **Value** into the **Client Secret** field in the setup wizard.
+8. Back in the **Overview** section, select **Endpoints** from the top menu.
+9. Copy and open the **OpenID Connect metadata document** URL in a new browser tab. Find the **`issuer`** value. It should be formatted like `https://login.microsoftonline.com/unique-value/vx.x`. Copy and paste this URL into into the **Issuer** field in the setup wizard.
+10. Click **Continue**.
 
 ### Step 3. Configure API permissions
 
@@ -66,19 +62,11 @@ Setup requires at least a [Cloud Application Administrator](https://learn.micros
 3. From the **Manifest** section of your app registration, find the `groupMembershipClaims` property. Change its value from `null` to either `"All"` or `"SecurityGroup"`. These values ensure that the access token includes the group membership claim during SSO.
 4. **Save** your changes.
 
-### Step 4. Send OIDC metadata to Apollo
+### Step 4. Enable SSO
 
-To complete the configuration, complete the Apollo-provided link provided in step 1 with the appropriate information:
+<!-- vale Apollo.Headings = YES -->
 
-- **Client ID**: the **Application (client) ID** you copied
-- **Client Secret**: the secret value you copied
-  - Apollo encrypts this value and stores it securely.
-- **Issuer**: the issuer value you copied from the **OpenID Connect metadata document**
-- **Discovery URL**: you don't need to enter this since the **OpenID Connect metadata document** URL follows the standard `/.well-known/openid-configuration` format
-
-Once submitted, inform your Apollo contact. They will then be able to complete your SSO setup.
-
-Once your SSO setup is finalized, you need to assign users to your GraphOS app in Entra.
+<SSOLegacyUsers idp="Entra ID" appType="app registration" />
 
 ## Assign users in Entra ID
 
