@@ -184,7 +184,7 @@ const RouterResourceEstimator = () => {
               <Box flex="1">
                 <InputGroup size="sm">
                   <NumberInput
-                    precision={0}
+                    precision={1}
                     step={1}
                     min={1}
                     w="100%"
