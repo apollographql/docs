@@ -7,10 +7,10 @@ export const SAMLSetupSteps = ({idp}) => {
     <>
       <Text>SAML-based SSO setup has these steps:</Text>
       <OrderedList spacing="4">
-        <ListItem>Share your SSO details with Apollo</ListItem>
-        <ListItem>Create a custom {idp} for Apollo GraphOS</ListItem>
-        <ListItem>Share your {idp}&apos;s SAML metadata with Apollo</ListItem>
-        <ListItem>Verify your {idp}&apos;s details in GraphOS</ListItem>
+        <ListItem>Share your SSO details with Apollo.</ListItem>
+        <ListItem>Create a custom {idp} for Apollo GraphOS.</ListItem>
+        <ListItem>Share your {idp}&apos;s SAML metadata with Apollo.</ListItem>
+        <ListItem>Verify your {idp}&apos;s details in GraphOS.</ListItem>
         <ListItem>Enable SSO</ListItem>
       </OrderedList>
       <Text>

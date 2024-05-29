@@ -25,14 +25,7 @@ Setup requires:
 
 ### Step 1. Share your SSO details
 
-1. Go to [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content). Open the **Settings** page from the top navigation. Open the **Org management** tab from the left sidebar and click **Enable SSO**. A setup wizard appears.
-
-   <Note>
-
-   If you are migrating from SSO set up before April 2024, you still need to click **Enable SSO**. The **Update domain** button is only for those who've already set up SSO with this self-serve method and need to update it.
-
-   </Note>
-
+1. Go to [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content). Open the **Settings** page from the top navigation. Open the **Org management** tab from the left sidebar and click **Enable SSO** or **Reconfigure SSO** if you are migrating from the legacy setup. A setup wizard appears.
 2. Enter the **Email domain**(s) you are setting SSO up for. Click **Continue**.
 3. Select **SAML** as the setup type. Click **Continue**.
 
@@ -48,6 +41,14 @@ Setup requires:
    </Note>
 
 3. In the dialog that appears, select **SAML 2.0** as your sign-in method. Click **Next**.
+
+   <img
+     src="../../img/sso/okta-create-app-integration.jpg"
+     alt="Okta create app integration modal"
+     className="screenshot"
+     width="700"
+   />
+
 4. The **Create SAML Integration** dialog appears. In the **General Settings** step, provide the following values:
 
    - **App name**: `Apollo GraphOS`
@@ -57,7 +58,7 @@ Setup requires:
      src="../../img/sso/okta-create-saml-integration.jpg"
      alt="Okta create SAML integration step"
      className="screenshot"
-     width="800"
+     width="700"
    />
 
    Then click **Next**.
@@ -111,7 +112,13 @@ The GraphOS Studio setup wizard populates your SSO metadata based on the **Metad
 <!-- vale Apollo.Headings = YES -->
 
 In the setup wizard, click the **Enable SSO** button to finalize setup.
-Once your SSO setup is finalized, you must [assign users](#assign-users-in-okta) to your custom app in Okta to give them access.
+
+<Caution>
+
+Enabling SSO ends any active login sessions and removes any non-SSO users from your organization.
+You must [assign users](#assign-users-in-okta) to your custom app in Okta to give them access.
+
+</Caution>
 
 <SSOLegacyUsers />
 
