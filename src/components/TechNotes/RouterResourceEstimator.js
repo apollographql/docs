@@ -31,6 +31,7 @@ const RouterResourceEstimator = () => {
   const [peakRequestRatePerSecond, setPeakRequestRatePerSecond] = useState('');
   const [baselineSubgraphLatency, setBaselineSubgraphLatency] = useState('100');
   const [clientRequestSize, setClientRequestSize] = useState('0.1');
+  const [averageQueryPlanFetchNodes, setAverageQueryPlanFetchNodes] = useState('1');
   const [clientResponseSize, setClientResponseSize] = useState('0.1');
   const [numberOfInstances, setNumberOfInstances] = useState('3');
   const [baseMemory, setBaseMemory] = useState('100');
@@ -42,6 +43,8 @@ const RouterResourceEstimator = () => {
   const Ls = parseFloat(baselineSubgraphLatency) / 1000;
   const Sreq = parseFloat(clientRequestSize);
   const Sres = parseFloat(clientResponseSize);
+  // If you average more than 2 subgraphs fetches add a multiplier
+  const Sqp = parseFloat(averageQueryPlanFetchNodes) / 2 + 1;
   const I = parseFloat(numberOfInstances);
   const Mb = parseFloat(baseMemory);
   const Mq = parseFloat(queryPlannerMemory);
@@ -60,7 +63,7 @@ const RouterResourceEstimator = () => {
   // Rate per vcpu, assuming 80% utilization
   const Rc = 0.8 / (L - Ls);
   // Memory usage per vcpu
-  const Mc = (Sreq + Sres) * Rc * L;
+  const Mc = (Sreq * Sqp + Sres) * Rc * L;
   // Number of vCPUs needed
   const vBaseline = Math.max(Math.round(R / Rc), 1);
   // Number of vCPUs needed for peak traffic
@@ -170,6 +173,30 @@ const RouterResourceEstimator = () => {
                 </InputGroup>
                 <FormHelperText>
                   The size of a typical client request in Megabytes (MB)
+                </FormHelperText>
+              </Box>
+            </Flex>
+          </FormControl>
+          // Client Request Query Plan Size
+          <FormControl>
+            <Flex w="100%">
+              <FormLabel flex="1">Average Request Query Plan Size</FormLabel>
+              <Box flex="1">
+                <InputGroup size="sm">
+                  <NumberInput
+                    precision={0}
+                    step={1}
+                    min={1}
+                    w="100%"
+                    value={averageQueryPlanFetchNodes}
+                    onChange={value => setAverageQueryPlanFetchNodes(value)}
+                  >
+                    <NumberInputField placeholder={1} />
+                  </NumberInput>
+                  <InputRightAddon children="Fetch nodes" />
+                </InputGroup>
+                <FormHelperText>
+                  The average number of fetch nodes (subgraph calls) in your query plans
                 </FormHelperText>
               </Box>
             </Flex>
