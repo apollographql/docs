@@ -20,8 +20,6 @@ export const SAMLSetupSteps = ({idp}) => {
       </OrderedList>
       <Text>
         The SSO setup wizard in GraphOS Studio guides you through these steps.
-        Once you enable SSO, you must assign users to your {idp} to give them
-        access to GraphOS Studio.
       </Text>
     </>
   );
