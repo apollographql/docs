@@ -32,11 +32,12 @@ export {default as SchemaProposalReviewMermaid} from './schema-proposal-review-m
 export {default as SetApolloVCSCommit} from './set-apollo-vcs-commit.mdx';
 export {default as SSOEntraIDAssignUsers} from './sso-entra-id-assign-users.mdx';
 export {default as SSOLegacyCaution} from './sso-legacy-caution.mdx';
-export {default as SSOLegacyUsers} from './sso-legacy-users.mdx';
+export {SSOLegacyUsers} from './sso-legacy-users.js';
 export {default as SSOMigrationNotice} from './sso-migration-notice.mdx';
 export {default as SSOPreviewNotice} from './sso-preview-notice.mdx';
 export {default as SSOPremiumFeature} from './sso-premium-feature.mdx';
 export {default as SSOSAMLInfoRequest} from './sso-saml-info-request.mdx';
+export {default as SSOShareDetails} from './sso-share-details.mdx';
 export {default as StudioPages} from './studio-pages.mdx';
 export {default as HowSubscriptionsWork} from './how-subscriptions-work.mdx';
 export {default as WhatSubscriptionsAreFor} from './what-subscriptions-are-for.mdx';

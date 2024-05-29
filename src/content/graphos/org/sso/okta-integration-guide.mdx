@@ -25,9 +25,7 @@ Setup requires:
 
 ### Step 1. Share your SSO details
 
-1. Go to [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content). Open the **Settings** page from the top navigation. Open the **Org management** tab from the left sidebar and click **Enable SSO** or **Reconfigure SSO** if you are migrating from the legacy setup. A setup wizard appears.
-2. Enter the **Email domain**(s) you are setting SSO up for. Click **Continue**.
-3. Select **SAML** as the setup type. Click **Continue**.
+<SSOShareDetails />
 
 ### Step 2. Create a custom Okta app integration
 
@@ -88,7 +86,7 @@ Setup requires:
    Then click **Next**.
 
 7. In the **Feedback** step, select **I'm an Okta customer adding an internal app**. Click **Finish**.
-8. Back in the setup wizard in GraphOS Studio, click **Continue**.
+8. Back in the setup wizard in GraphOS Studio, select that your IdP requires signing an AuthNRequest. Then click **Continue**.
 
 ### Step 3. Share SAML metadata with Apollo
 
@@ -105,24 +103,27 @@ Setup requires:
 
 ### Step 4. Verify details
 
-The GraphOS Studio setup wizard populates your SSO metadata based on the **Metadata URL** you entered in the last step. Verify the values are correct and click **Continue**.
+The GraphOS Studio setup wizard populates your SSO metadata based on the URL you entered in the last step. Verify the values are correct.
+
+You can find them in your Okta Administrator Dashboard in the app integration you created for GraphOS.
+
+- You can find your app integration's **Entity ID** in the **Sign On** tab. Scroll down to the **SAML 2.0** section and look for a field labeled **Issuer**. This field contains the Entity ID. It has a URL format: `http://www.okta.com/<unique-id>`.
+- You can find the **SSO URL** in the same **SAML 2.0** section in a field labeled **Sign on URL**.
+
+<img
+  src="../../img/sso/okta-verify-details.jpg"
+  alt="Okta SSO details"
+  className="screenshot"
+  width="500"
+/>
+
+Once you've verified the values or corrected them, click **Continue**.
 
 ### Step 5. Enable SSO
 
 <!-- vale Apollo.Headings = YES -->
 
-In the setup wizard, click the **Enable SSO** button to finalize setup.
-
-<Caution>
-
-Enabling SSO ends any active login sessions and removes any non-SSO users from your organization.
-You must [assign users](#assign-users-in-okta) to your custom app in Okta to give them access.
-
-</Caution>
-
-<SSOLegacyUsers />
-
-Once you've confirmed the new configuration works as expected, remove any legacy Apollo integrations in Okta if you have them.
+<SSOLegacyUsers idp="Okta" appType="custom app integration" />
 
 ## Assign users in Okta
 
