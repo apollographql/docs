@@ -16,59 +16,66 @@ If you use Okta or Microsoft Entra ID as your IdP, instead see the corresponding
 
 ## Setup
 
-<SSOPreviewNotice />
+<SAMLSetupSteps idp="application" />
 
-SAML-based SSO setup has two main steps:
+### Prerequisites
 
-1. Create a custom Apollo GraphOS application in your IdP.
-2. Send your application's SAML metadata to Apollo.
+Setup requires:
 
-These steps generally require administrative access to your IdP.
+- Administrative access to your IdP
+- A GraphOS user account with the [**Org Admin** role](../members/#organization-wide-member-roles)
 
-### Step 1. Create a custom application
+<!-- vale Apollo.Headings = NO -->
 
-<SSOSAMLInfoRequest />
+### Step 1. Share your SSO details
 
-2. Create a new application in your SSO environment. While doing so, set the following values:
+<SSOShareDetails />
+
+### Step 2. Create a custom application
+
+1. Once you reach **Step 2: Your IdP and Apollo** in the wizard, open your IdP's admin dashboard in a separate browser tab.
+2. Create a new application. While doing so, set the following values:
 
    - **App Name**: `Apollo GraphOS`
    - **App logo**: [Apollo logo](../../img/sso/apollo-sk-logo.png) (optional)
 
-3. If your IdP permits it, upload the Apollo-provided SP SAML XML metadata file. Otherwise, open the XML metadata file, view the SAML metadata values, and manually enter them in your IdP.
+3. If your IdP permits it, upload the SP SAML XML metadata file provided by the GraphOS setup wizardz. Otherwise, open the XML metadata file, view the SAML metadata values, and manually enter them in your IdP.
 
-   - Set your **Single Sign-on URL** or **ACS URL** to the Single Sign-on URL. You can also use this value for the following fields:
+   - Set your **Single Sign-on URL** or **ACS URL** to the Single Sign-on URL provided by the wizard. You can also use this value for the following fields:
 
      - **Recipient**
      - **ACS (Consumer) URL Validator**
      - **ACS (Consumer) URL**
 
-   - Set your **Entity ID** to the Entity ID value.
+   - Set your **Entity ID** to the Entity ID value provided by the wizard.
 
 4. Set the following user attributes:
 
    - `sub`: `user.email`
-     - The `sub` attribute should uniquely identify any particular user to GraphOS. In most cases, `user.email` provides this unique mapping.
-   - `email`: `user.email`
-   - `given_name`: `user.firstName`
-   - `family_name`: `user.lastName`
+     - The `sub` attribute should uniquely identify any particular user to GraphOS. In most cases, `user.email` or `user.mail` provides this unique mapping.
+   - `email`: Your IdP's email attribute, often something like `user.email`
+   - `given_name`: Your IdP's first name attribute, often something like `user.firstName`
+   - `family_name`: Your IdP's last name attribute,often something like `user.lastName`
 
 5. Save your configuration.
 
-### Step 2. Send SAML metadata to Apollo
+### Step 3. Share SAML metadata with Apollo
 
-Send your Apollo contact your IdP SAML XML metadata file. If you can't send this file, send one of the following instead:
+In the setup wizard, enter your application's metadata URL or metadata file.
+Consult your IdP's documentation if you need assistance finding it.
+Click **Continue**.
 
-- IdP entity ID
-- IdP single sign-on URL / SSO URL
-- IdP x509 certificate
+### Step 4. Verify details
 
-Your Apollo contact will then be able to complete your SSO setup.
+The GraphOS Studio setup wizard populates your SSO metadata based on the URL you entered in the last step. Verify the values are correct. Consult your IdP's documentation if you need assistance finding them.
 
-Once your SSO setup is live, assign users to your new Apollo GraphOS application in your IdP. For help assigning the relevant groups and users, contact your SSO or Identity & Access Management team.
+Once you've verified the values or corrected them, click **Continue**.
 
-{/* <SSOLegacyUsers /> */}
+### Step 5. Enable SSO
 
-Once you've confirmed the new setup works as expected, remove any legacy Apollo GraphOS applications in your IdP.
+<!-- vale Apollo.Headings = YES -->
+
+<SSOLegacyUsers idp="your IdP" appType="application" />
 
 ## Legacy setup
 

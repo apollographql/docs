@@ -5,9 +5,8 @@ import {Box, Text} from '@chakra-ui/react';
 import {Caution} from '../../components/Caution';
 
 export const SSOLegacyUsers = ({idp, appType}) => {
-  const anchor = idp
-    ? `#assign-users-in-${idp.toLowerCase()}`
-    : '#assign-users';
+  const anchor =
+    idp !== 'your IdP' ? `#assign-users-in-${idp.toLowerCase()}` : undefined;
   return (
     <Box>
       <Text mb={4}>
@@ -17,21 +16,24 @@ export const SSOLegacyUsers = ({idp, appType}) => {
 
       <Caution>
         Enabling SSO ends all active login sessions and removes non-SSO users
-        from your organization. Personal API keys associated with non-SSO users
-        will be lost. You must{' '}
-        <RelativeLink href={anchor}>assign users</RelativeLink> to your{' '}
-        {appType} in {idp} to give them access. Additionally, you must reassign
-        any{' '}
-        <RelativeLink href="/graphos/org/members/#organization-wide-member-roles">
-          GraphOS roles
-        </RelativeLink>{' '}
-        associated with their previous GraphOS user.
+        from your GraphOS organization. You must{' '}
+        {anchor ? (
+          <RelativeLink href={anchor}>assign users</RelativeLink>
+        ) : (
+          'assign users'
+        )}{' '}
+        to your {appType} in {idp} to give them access.
       </Caution>
       <br />
       <Text mb={4}>
         If team members could previously login before you implemented SSO, they
         must re-login to GraphOS Studio via SSO. Signing in creates a new user
-        profile for them.
+        profile for them. Personal API keys associated with non-SSO users will
+        be lost. Additionally, you must reassign any{' '}
+        <RelativeLink href="/graphos/org/members/#organization-wide-member-roles">
+          GraphOS roles
+        </RelativeLink>{' '}
+        associated with non-SSO users.
       </Text>
 
       <Text>

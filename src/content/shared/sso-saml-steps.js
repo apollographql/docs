@@ -10,7 +10,10 @@ export const SAMLSetupSteps = ({idp}) => {
         <ListItem>
           Share your SSO details with Apollo in GraphOS Studio.
         </ListItem>
-        <ListItem>Create a custom {idp} for Apollo GraphOS.</ListItem>
+        <ListItem>
+          Create a custom {idp} for Apollo GraphOS
+          {idp === 'application' ? ' in your IdP' : ''}.
+        </ListItem>
         <ListItem>Share your {idp}&apos;s SAML metadata with Apollo.</ListItem>
         <ListItem>Verify your {idp}&apos;s details in GraphOS Studio.</ListItem>
         <ListItem>Enable SSO.</ListItem>
