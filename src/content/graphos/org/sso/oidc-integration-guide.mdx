@@ -11,14 +11,17 @@ If you use Microsoft Entra ID as your IdP, instead see [the Entra OIDC guide](./
 
 <SSOMigrationNotice />
 
-# Setup
+## Setup
 
 OIDC-based SSO setup has these steps:
 
 1. Share your SSO details with Apollo in GraphOS Studio.
-1. Create an app registration for Apollo GraphOS in your IdP.
-1. Configure API permissions in your IdP.
+1. Create an application for Apollo GraphOS in your IdP.
+1. Configure OIDC to work with Apollo.
 1. Enable SSO in GraphOS Studio.
+
+The SSO setup wizard in GraphOS Studio guides you through these steps.
+Once you enable SSO, you must assign users to your application in your IdP to give them access to GraphOS Studio.
 
 ### Prerequisites
 
@@ -62,3 +65,9 @@ If your IdP permits it, set the following user attributes:
 <!-- vale Apollo.Headings = YES -->
 
 <SSOLegacyUsers idp="your IdP" appType="application" />
+
+## Assign users in your IdP
+
+Once your SSO setup is live, assign users to your new Apollo GraphOS application in your IdP.
+Consult your IdP documentation if necessary.
+For help assigning the relevant groups and users, contact your SSO or Identity & Access Management team.

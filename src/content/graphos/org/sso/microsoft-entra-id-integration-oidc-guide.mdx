@@ -19,6 +19,9 @@ OIDC-based SSO setup in Entra ID has these steps:
 1. Configure API permissions in Entra ID.
 1. Enable SSO in GraphOS Studio.
 
+The SSO setup wizard in GraphOS Studio guides you through these steps.
+Once you enable SSO, you must assign users to your Entra ID app to give them access to GraphOS Studio.
+
 ### Prerequisites
 
 Setup requires:
@@ -34,7 +37,7 @@ Setup requires:
 
 ### Step 2. Create an Entra ID app registration
 
-1. Once you reach **Step 2: Your IdP and Apollo** in the wizard, go to your [Microsoft Entra admin center](https://entra.microsoft.com/). Alternatively, you can sign in to the [Azure Portal](http://portal.azure.com/) and then navigate to **Microsoft Entra ID**.
+1. Once you reach **Step 2: Your IdP and Apollo** in the wizard, go to your [Microsoft Entra admin center](https://entra.microsoft.com/). Alternatively, you can sign in to the [Azure Portal](http://portal.azure.com/) and then go to **Microsoft Entra ID**.
 2. In Entra, go to **Identity > Applications > App registrations**. If accessing Entra from the Azure Portal, go to **Manage > App registrations**. Select **+New registration** in the top menu.
 3. On the **Register an application** page, provide the following information:
 

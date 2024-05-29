@@ -29,7 +29,7 @@ Setup requires:
 
 ### Step 2. Create an Entra ID enterprise application
 
-1. Once you reach **Step 2: Your IdP and Apollo** in the wizard, go to your [Microsoft Entra admin center](https://entra.microsoft.com/). Alternatively, you can sign in to the [Azure Portal](http://portal.azure.com/) and then navigate to **Microsoft Entra ID**.
+1. Once you reach **Step 2: Your IdP and Apollo** in the wizard, go to your [Microsoft Entra admin center](https://entra.microsoft.com/). Alternatively, you can sign in to the [Azure Portal](http://portal.azure.com/) and then go to **Microsoft Entra ID**.
 2. Go to **Identity > Applications > Enterprise applications** and select **+New application** in the top menu.
 3. In the top menu, select **+Create your own application**.
 4. Enter `Apollo GraphOS` as the name of your app. Below, keep the **Integrate any other application you don't find in the gallery (Non-gallery)** option selected. Click **Create**.
@@ -43,7 +43,7 @@ Setup requires:
 
 5. On the app's **Overview** page, select **2. Set up single sign-on**. You'll assign users and groups later.
 6. On the app's **Single sign-on** page, select **SAML** as the single sign-on method.
-7. At the top of the **SAML-based Sign-on** page, click **Upload metadata file** and upload the file provided by GraphOS setup wizard. Alternatively, you can enter these values manually in the **Basic SAML Configuration** section:
+7. At the top of the **SAML-based Sign-on** page, click **Upload metadata file** and upload the file provided by the GraphOS setup wizard. Alternatively, you can enter these values manually in the **Basic SAML Configuration** section:
 
    - **Identifier (Entity ID)**: Entity ID value provided by the setup wizard
    - **Reply URL (Assertion Consumer Service URL)**: Single Sign-on URL provided by the setup wizard
@@ -84,7 +84,7 @@ Setup requires:
   width="700"
 />
 
-10. Back in the setup wizard in GraphOS Studio, select that your IdP requires signing an AuthNRequest. Then click **Continue**.
+10. In the setup wizard in GraphOS Studio, select that your IdP requires signing an AuthNRequest. Then click **Continue**.
 
 ### Step 3. Share SAML metadata with Apollo
 
@@ -95,10 +95,10 @@ Click **Continue**.
 
 The GraphOS Studio setup wizard populates your SSO metadata based on the URL you entered in the last step. Verify the values are correct.
 
-You can find them in Entra ID, in **Identity > Applications > Enterprise applications** in the application you created for GraphOS.
+You can find them in Entra ID, **Identity > Applications > Enterprise applications**, in the application you created for GraphOS.
 
-- You can find your application's **Entity ID** in the **Single sign-on** tab. Scroll down to the **Basic SAML Configuration** section and look for a field labeled **Identifier (Entity ID)**. This field contains the Entity ID. It has the following format: `urn:<unique>.<region>.auth0.com`.
-- You can find the **SSO URL** in the same **Basic SAML Configuration** section in a field labeled **Sign on URL**.
+- Your application's **Entity ID** is in the **Single sign-on** tab. Scroll down to the **Basic SAML Configuration** section and look for a field labeled **Identifier (Entity ID)**. This field contains the Entity ID. It has the following format: `urn:<unique>.<region>.auth0.com`.
+- The **SSO URL** is also in thee **Basic SAML Configuration** section in the **Sign on URL** field.
 
 Once you've verified the values or corrected them, click **Continue**.
 

@@ -15,13 +15,11 @@ export const SAMLSetupSteps = ({idp}) => {
           {idp === 'application' ? ' in your IdP' : ''}.
         </ListItem>
         <ListItem>Share your {idp}&apos;s SAML metadata with Apollo.</ListItem>
-        <ListItem>Verify your {idp}&apos;s details in GraphOS Studio.</ListItem>
+        <ListItem>Verify your {idp} details in GraphOS Studio.</ListItem>
         <ListItem>Enable SSO.</ListItem>
       </OrderedList>
       <Text>
         The SSO setup wizard in GraphOS Studio guides you through these steps.
-      </Text>
-      <Text>
         Once you enable SSO, you must assign users to your {idp} to give them
         access to GraphOS Studio.
       </Text>

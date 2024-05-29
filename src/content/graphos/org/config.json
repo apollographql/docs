@@ -57,7 +57,7 @@
         "Generic OIDC Setup": [
           "/sso/oidc-integration-guide",
           [
-            "enterprise", "preview"
+            "enterprise"
           ]
         ]
       },

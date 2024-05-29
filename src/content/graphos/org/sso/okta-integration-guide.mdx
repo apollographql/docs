@@ -34,7 +34,7 @@ Setup requires:
 
    <Note>
 
-   To use the latest version of Apollo's SSO, ensure you are _creating a custom app integration_ in Okta rather than using the GraphOS app in the Okta Application Network.
+   To use the latest version of Apollo's SSO, ensure you _create a custom app integration_ in Okta rather than usie the GraphOS app in the Okta Application Network.
 
    </Note>
 
@@ -86,11 +86,11 @@ Setup requires:
    Then click **Next**.
 
 7. In the **Feedback** step, select **I'm an Okta customer adding an internal app**. Click **Finish**.
-8. Back in the setup wizard in GraphOS Studio, select that your IdP requires signing an AuthNRequest. Then click **Continue**.
+8. In the setup wizard in GraphOS Studio, select that your IdP requires signing an AuthNRequest. Then click **Continue**.
 
 ### Step 3. Share SAML metadata with Apollo
 
-1. In your Okta Administrator Dashboard go to the **Sign On > Settings > SAML 2.0 > Metadata details** section, in the app integration you just created.
+1. In your Okta Administrator Dashboard, go to the **Sign On > Settings > SAML 2.0 > Metadata details** section in the app integration you just created.
 
    <img
      src="../../img/sso/okta-metadata-url.jpg"
@@ -107,8 +107,8 @@ The GraphOS Studio setup wizard populates your SSO metadata based on the URL you
 
 You can find them in your Okta Administrator Dashboard in the app integration you created for GraphOS.
 
-- You can find your app integration's **Entity ID** in the **Sign On** tab. Scroll down to the **SAML 2.0** section and look for a field labeled **Issuer**. This field contains the Entity ID. It has a URL format: `http://www.okta.com/<unique-id>`.
-- You can find the **SSO URL** in the same **SAML 2.0** section in a field labeled **Sign on URL**.
+- Your app integration's **Entity ID** is in the **Sign On** tab. Scroll down to the **SAML 2.0** section and look for a field labeled **Issuer**. This field contains the Entity ID. It uses a URL format: `http://www.okta.com/<unique-id>`.
+- The **SSO URL** is also in the **SAML 2.0** section in a field labeled **Sign on URL**.
 
 <img
   src="../../img/sso/okta-verify-details.jpg"
