@@ -16,8 +16,8 @@ export const SSOShareDetails = ({type}) => {
           </Link>
           . Open the <strong>Settings</strong> page from the top navigation.
           Open the <strong>Org management</strong> tab from the left sidebar and
-          click <strong>Enable SSO</strong> or <strong>Reconfigure SSO</strong>{' '}
-          if you are migrating from the legacy setup. A setup wizard appears.
+          click <strong>Enable SSO</strong> or <strong>Migrate SSO</strong> if
+          you are migrating from the legacy setup. A setup wizard appears.
         </ListItem>
         <ListItem>
           Enter the <strong>Email domain</strong>(s) you are setting SSO up for.
