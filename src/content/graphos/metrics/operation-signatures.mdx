@@ -158,6 +158,13 @@ The signature algorithm's primary purpose is to group operations that differ onl
 However, you should not rely on this! Ideally, your sensitive data should never reach GraphOS Studio in the first place. Whenever possible, [use GraphQL variables](/react/data/operation-best-practices/#use-graphql-variables-to-provide-arguments) instead of in-line values for arguments. This helps you control exactly which values are reported to Apollo. For details, see [GraphOS Studio data privacy and compliance](../data-privacy/).
 
 ## Logging signatures at runtime
+
+### Apollo Router
+
+Since Apollo Router [v1.43.1](https://github.com/apollographql/router/releases/tag/v1.43.1), the router adds operation signatures to request contexts at the `apollo_operation_signature` key. You can also use the router's native logging features to log context values as [trace attributes](/router/configuration/telemetry/instrumentation/selectors) or you can read the context via [Rhai scripts](/router/customizations/rhai#manipulating-headers-and-the-request-context) or [coprocessors](/router/customizations/coprocessor). 
+
+### Apollo Server
+
 To view operation signature hashes in your own logging tools, you can create an [Apollo Server plugin](/apollo-server/integrations/plugins/) that accesses hash values from the shared `context`. The relevant values are available in the `queryHash` and `operationName` properties:
 
 <MultiCodeBlock>

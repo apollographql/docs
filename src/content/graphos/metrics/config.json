@@ -33,13 +33,14 @@
       "Segmenting by Client": "/client-awareness"
     },
     "Notifications and Alerts": {
-      "Setup": "/notifications/notification-setup",
-      "Daily Reports": "/notifications/daily-reports",
-      "Schema Changes": "/notifications/schema-change-integration",
-      "Performance Alerts": [
+      "Overview": "/notifications",
+      "Daily reports": "/notifications/daily-reports",
+      "Schema changes": "/notifications/schema-change-integration",
+      "Performance alerts": [
         "/notifications/performance-alerts",
         [
-          "experimental"
+          "enterprise",
+          "preview"
         ]
       ],
       "Build Status": [
@@ -47,6 +48,12 @@
         [
           "enterprise",
           "preview"
+        ]
+      ],
+      "Performance alerts": [
+        "/notifications/performance-alerts",
+        [
+          "experimental"
         ]
       ]
     }

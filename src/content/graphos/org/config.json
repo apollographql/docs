@@ -27,22 +27,44 @@
       ]
     ],
     "Single Sign-On (SSO)": {
-      "Okta": [
-        "/sso/okta-integration-guide",
-        [
-          "enterprise"
+      "SAML": {
+        "Okta": [
+          "/sso/okta-integration-guide",
+          [
+            "enterprise"
+          ]
+        ],
+        "Microsoft Entra ID": [
+          "/sso/microsoft-entra-id-integration-saml-guide",
+          [
+            "enterprise"
+          ]
+        ],
+        "Generic SAML Setup": [
+          "/sso/saml-integration-guide",
+          [
+            "enterprise"
+          ]
         ]
-      ],
-      "Azure AD": [
-        "/sso/azure-ad-integration-guide",
-        [
-          "enterprise"
+      },
+      "OIDC": {
+        "Microsoft Entra ID": [
+          "/sso/microsoft-entra-id-integration-oidc-guide",
+          [
+            "enterprise"
+          ]
+        ],
+        "Generic OIDC Setup": [
+          "/sso/oidc-integration-guide",
+          [
+            "enterprise", "preview"
+          ]
         ]
-      ],
-      "SAML": [
-        "/sso/saml-integration-guide",
+      },
+      "Multi-organization": [
+        "/sso/multi-organization",
         [
-          "enterprise"
+          "enterprise", "preview"
         ]
       ]
     }

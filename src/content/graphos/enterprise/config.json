@@ -35,7 +35,7 @@
     "Org Management & SSO": {
       "Audit Log": "https://www.apollographql.com/docs/graphos/org/audit-log",
       "Okta SSO": "https://www.apollographql.com/docs/graphos/org/sso/okta-integration-guide",
-      "Azure AD SSO": "https://www.apollographql.com/docs/graphos/org/sso/azure-ad-integration-guide",
+      "Microsoft Entra ID SSO": "https://www.apollographql.com/docs/graphos/org/sso/azure-ad-integration-guide",
       "SAML SSO": "https://www.apollographql.com/docs/graphos/org/sso/saml-integration-guide"
     },
     "Metrics & Reporting": {

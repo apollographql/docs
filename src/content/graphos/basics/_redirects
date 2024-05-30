@@ -86,3 +86,9 @@
 /routing/cloud-dedicated /docs/graphos/cloud-routing/dedicated
 /routing/cloud-dedicated/lattice /docs/graphos/cloud-routing/dedicated/lattice
 /routing/cloud-dedicated/lattice-troubleshooting /docs/graphos/cloud-routing/dedicated/lattice-troubleshooting
+
+# Move setup instructions to individual notification pages, redirect to overview
+/metrics/notifications/notification-setup /docs/graphos/metrics/notifications/
+
+# Rename Azure SSO doc
+/org/sso/azure-ad-integration-guide  /docs/graphos/org/sso/microsoft-entra-id-integration-oidc-guide
