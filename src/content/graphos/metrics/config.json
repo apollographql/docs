@@ -17,33 +17,33 @@
   ],
   "sidebar": {
     "Overview": "/",
-    "Metrics collection and forwarding": {
-      "Sending metrics to GraphOS": "/sending-operation-metrics",
-      "Operation signatures": "/operation-signatures",
-      "Datadog forwarding": [
+    "Metrics Collection and Forwarding": {
+      "Sending Metrics to GraphOS": "/sending-operation-metrics",
+      "Operation Signatures": "/operation-signatures",
+      "Datadog Forwarding": [
         "/datadog-integration",
         [
           "enterprise"
         ]
       ]
     },
-    "Insights and analysis": {
-      "Operation metrics": "/operations",
-      "Field usage": "/field-usage",
-      "Segmenting by client": "/client-awareness"
+    "Insights and Analysis": {
+      "Operation Metrics": "/operations",
+      "Field Usage": "/field-usage",
+      "Segmenting by Client": "/client-awareness"
     },
-    "Notifications and alerts": {
-      "Overview": "/notifications/",
+    "Notifications and Alerts": {
+      "Overview": "/notifications",
       "Daily reports": "/notifications/daily-reports",
       "Schema changes": "/notifications/schema-change-integration",
-      "Schema proposals": [
-        "/notifications/schema-proposal-integration",
+      "Performance alerts": [
+        "/notifications/performance-alerts",
         [
           "enterprise",
           "preview"
         ]
       ],
-      "Build status": [
+      "Build Status": [
         "/notifications/build-status-notification",
         [
           "enterprise",

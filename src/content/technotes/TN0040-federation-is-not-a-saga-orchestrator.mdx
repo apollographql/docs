@@ -1,5 +1,5 @@
 ---
-title: Federation is not a saga orchestrator
+title: Federation Is Not a Saga Orchestrator
 subtitle: Considerations for sequencing mutations and distributed orchestration
 description: Federation orchestrates mutation fields but additional considerations are necessary when handling state changes across distributed systems.
 published: 2023-04-20
@@ -58,15 +58,15 @@ const resolvers = {
 
       try {
         validate(account);
-        setAccountStatus(account, "ACTIVE");
+        setAccountStatus(account, 'ACTIVE');
       } catch (e) {
         deleteAccount(account);
-        return { success: false };
+        return {success: false};
       }
 
-      return { success: true, account };
-    },
-  },
+      return {success: true, account};
+    }
+  }
 };
 ```
 

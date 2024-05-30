@@ -1,6 +1,7 @@
 ---
-title: Deferring query response data with GraphOS
-description: Using the @defer directive
+title: Deferring Query Response Data
+subtitle: Using the @defer directive
+description: Optimize your GraphQL queries by deferring response data with the @defer directive. Learn how to enhance client experience and speed up data retrieval.
 ---
 
 With GraphOS, your supergraph's router can _defer_ returning data for certain fields in your schema. This enables a querying client to receive non-deferred data more quickly, because the router can return it immediately instead of waiting for all response data to be ready:

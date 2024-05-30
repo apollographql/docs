@@ -63,7 +63,7 @@ const plugins = [
   {
     resolve: 'gatsby-plugin-next-seo',
     options: {
-      titleTemplate: '%s - Apollo GraphQL Docs',
+      titleTemplate: '%s | Apollo GraphQL Docs',
       openGraph: {
         type: 'website',
         site_name: 'Apollo Docs'

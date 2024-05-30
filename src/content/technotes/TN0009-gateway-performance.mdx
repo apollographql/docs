@@ -1,5 +1,5 @@
 ---
-title: Improving gateway performance
+title: Improving Gateway Performance
 subtitle: Learn to adjust tracing, instrument middleware and plugins, and more
 description: Recommendations for improving your gateway's performance when using Apollo Server with the @apollo/gateway library.
 published: 2022-07-28
@@ -35,17 +35,17 @@ In `@apollo/gateway` versions prior to v0.51.0, the default `maxSockets` setting
 The following `ApolloGateway` constructor sets `maxSockets` to 50:
 
 ```js
-import { ApolloGateway, RemoteGraphQLDataSource } from "@apollo/gateway";
-import fetcher from "make-fetch-happen";
+import {ApolloGateway, RemoteGraphQLDataSource} from '@apollo/gateway';
+import fetcher from 'make-fetch-happen';
 
 const gateway = new ApolloGateway({
-  buildService({ name, url }) {
+  buildService({name, url}) {
     return new RemoteGraphQLDataSource({
       name,
       url,
-      fetcher: fetcher.defaults({ maxSockets: 50 }),
+      fetcher: fetcher.defaults({maxSockets: 50})
     });
-  },
+  }
 });
 ```
 
@@ -104,7 +104,7 @@ Query plans (the steps the Gateway takes to resolve an operation from multiple s
 
 ```js
 const gateway = new ApolloGateway({
-  debug: true, // print query plans to stdout
+  debug: true // print query plans to stdout
 });
 ```
 
