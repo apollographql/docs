@@ -30,7 +30,12 @@ exports.onCreateWebpackConfig = ({actions}) => {
         http: require.resolve('stream-http'),
         https: require.resolve('https-browserify'),
         // because we use `path` a lot
-        path: require.resolve('path-browserify')
+        path: require.resolve('path-browserify'),
+        // For Google Auth library
+        stream: require.resolve('stream-browserify'),
+        crypto: require.resolve('crypto-browserify'),
+        util: require.resolve('util/'),
+        assert: require.resolve('assert/')
       }
     }
   });

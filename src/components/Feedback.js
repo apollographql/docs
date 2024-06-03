@@ -1,28 +1,28 @@
 import React, {useState} from 'react';
+import axios from 'axios';
 import {
   Box,
   Button,
   FormControl,
   FormLabel,
-  Input,
-  Select,
+  Heading,
+  IconButton,
+  Text,
   Textarea,
   useToast
 } from '@chakra-ui/react';
-
-import {DislikeIcon, LikeIcon} from './Icons';
+import {CloseIcon, DislikeIcon, LikeIcon} from './Icons';
+import {default as ReactSelect} from 'react-select';
 
 const FeedbackWidget = () => {
   const [feedbackGiven, setFeedbackGiven] = useState(false);
   const [showSurvey, setShowSurvey] = useState(false);
   const [thumbsUp, setThumbsUp] = useState(false);
   const [surveyResponses, setSurveyResponses] = useState({
-    helpfulAspect: '',
-    easeOfUse: '',
+    positives: [],
     additionalComments: '',
-    issue: '',
-    issueDetails: '',
-    pageStructure: ''
+    issues: [],
+    issueDetails: ''
   });
 
   const toast = useToast();
@@ -47,16 +47,62 @@ const FeedbackWidget = () => {
     }));
   };
 
-  const handleSubmit = e => {
+  const handleMultiSelectChange = selectedOptions => {
+    setSurveyResponses(prevResponses => ({
+      ...prevResponses,
+      areas: selectedOptions ? selectedOptions.map(option => option.value) : []
+    }));
+  };
+
+  const handleSubmit = async e => {
     e.preventDefault();
-    console.log('Survey responses:', surveyResponses);
-    // Here you would send the surveyResponses to your backend or API.
+    try {
+      const response = await axios.post(
+        'https://sheets.googleapis.com/v4/spreadsheets/{YOUR_SPREADSHEET_ID}/values/Sheet1!A1:append?valueInputOption=RAW',
+        {
+          range: 'Sheet1!A1',
+          values: Object.values(surveyResponses)
+        },
+        {
+          params: {
+            majorDimension: 'ROWS'
+          },
+          Titles: {
+            'Content-Type': 'application/json'
+            // Authorization: `Bearer ${authClient.credentials.access_token}`
+          }
+        }
+      );
+
+      console.log('Form response sent to Google Sheet:', response.data);
+      setShowSurvey(false);
+      toast({
+        title: 'Thank you for your feedback!',
+        status: 'success',
+        duration: 3000,
+        isClosable: true
+      });
+    } catch (error) {
+      console.error('Error sending form response to Google Sheet:', error);
+      toast({
+        title: 'An error occurred!',
+        description: 'Failed to submit feedback. Please try again later.',
+        status: 'error',
+        duration: 5000,
+        isClosable: true
+      });
+    }
+  };
+
+  const handleClose = () => {
+    setFeedbackGiven(false);
     setShowSurvey(false);
-    toast({
-      title: 'Thank you for your feedback!',
-      status: 'success',
-      duration: 3000,
-      isClosable: true
+    setThumbsUp(false);
+    setSurveyResponses({
+      positives: [],
+      additionalComments: '',
+      issues: [],
+      issueDetails: ''
     });
   };
 
@@ -93,10 +139,38 @@ const FeedbackWidget = () => {
           </Button>
         </Box>
       ) : (
-        <Box textAlign="center" mb={4}>
-          {thumbsUp
-            ? 'Thank you for your feedback! Could you tell us more?'
-            : "We're sorry to hear that. Could you help us improve?"}
+        <Box>
+          {showSurvey && (
+            <Box
+              textAlign="right"
+              mb={2}
+              display="flex"
+              alignItems="center"
+              justifyContent="space-between"
+            >
+              <Heading fontSize="m" as="h3" pb="1">
+                (Optional) Survey
+              </Heading>
+              <IconButton
+                icon={<CloseIcon />}
+                onClick={handleClose}
+                variant="ghost"
+                aria-label="Close feedback form"
+              />
+            </Box>
+          )}
+          <Box mb={4}>
+            <Text fontSize="m" as="h3" pb="1">
+              {thumbsUp
+                ? 'Thank you for your feedback!'
+                : "We're sorry to hear that."}
+            </Text>
+            <Text>
+              {thumbsUp
+                ? 'Could you tell us more?'
+                : 'Could you help us improve?'}
+            </Text>
+          </Box>
         </Box>
       )}
 
@@ -107,40 +181,28 @@ const FeedbackWidget = () => {
               <>
                 <FormControl mb={4}>
                   <FormLabel>
-                    What did you find most helpful about this page?
+                    What did you find helpful about this page?
                   </FormLabel>
-                  <Select
-                    name="helpfulAspect"
-                    onChange={handleInputChange}
-                    placeholder="Select an option"
-                  >
-                    <option value="Clear instructions">
-                      Clear instructions
-                    </option>
-                    <option value="Useful examples">Useful examples</option>
-                    <option value="Concise information">
-                      Concise information
-                    </option>
-                    <option value="Other">Other</option>
-                  </Select>
-                </FormControl>
-                <FormControl mb={4}>
-                  <FormLabel>
-                    How easy was it to find the information you were looking
-                    for?
-                  </FormLabel>
-                  <Input
-                    type="number"
-                    name="easeOfUse"
-                    min="1"
-                    max="5"
-                    onChange={handleInputChange}
+                  <ReactSelect
+                    isMulti
+                    name="positives"
+                    options={[
+                      {
+                        value: 'Clear instructions',
+                        label: 'Clear instructions'
+                      },
+                      {
+                        value: 'Concise information',
+                        label: 'Concise information'
+                      },
+                      {value: 'Useful examples', label: 'Useful examples'},
+                      {value: 'Other', label: 'Other'}
+                    ]}
+                    onChange={handleMultiSelectChange}
                   />
                 </FormControl>
                 <FormControl mb={4}>
-                  <FormLabel>
-                    Any additional comments or suggestions for improvement?
-                  </FormLabel>
+                  <FormLabel>Comments or suggestions?</FormLabel>
                   <Textarea
                     name="additionalComments"
                     onChange={handleInputChange}
@@ -150,19 +212,21 @@ const FeedbackWidget = () => {
             ) : (
               <>
                 <FormControl mb={4}>
-                  <FormLabel>What was the main issue you faced?</FormLabel>
-                  <Select
-                    name="issue"
-                    onChange={handleInputChange}
-                    placeholder="Select an option"
-                  >
-                    <option value="Outdated information">
-                      Outdated information
-                    </option>
-                    <option value="Lack of clarity">Lack of clarity</option>
-                    <option value="Missing examples">Missing examples</option>
-                    <option value="Other">Other</option>
-                  </Select>
+                  <FormLabel>Which areas need improvement?</FormLabel>
+                  <ReactSelect
+                    isMulti
+                    name="issues"
+                    options={[
+                      {
+                        value: 'Incorrect information',
+                        label: 'Incorrect information'
+                      },
+                      {value: 'Lack of clarity', label: 'Lack of clarity'},
+                      {value: 'Missing examples', label: 'Missing examples'},
+                      {value: 'Other', label: 'Other'}
+                    ]}
+                    onChange={handleMultiSelectChange}
+                  />
                 </FormControl>
                 <FormControl mb={4}>
                   <FormLabel>
@@ -170,18 +234,6 @@ const FeedbackWidget = () => {
                     encountered.
                   </FormLabel>
                   <Textarea name="issueDetails" onChange={handleInputChange} />
-                </FormControl>
-                <FormControl mb={4}>
-                  <FormLabel>
-                    How would you rate the overall structure of this page?
-                  </FormLabel>
-                  <Input
-                    type="number"
-                    name="pageStructure"
-                    min="1"
-                    max="5"
-                    onChange={handleInputChange}
-                  />
                 </FormControl>
                 <FormControl mb={4}>
                   <FormLabel>Any additional comments or suggestions?</FormLabel>
@@ -192,9 +244,7 @@ const FeedbackWidget = () => {
                 </FormControl>
               </>
             )}
-            <Button type="submit" colorScheme="blue">
-              Submit
-            </Button>
+            <Button type="submit">Submit</Button>
           </form>
         </Box>
       )}
