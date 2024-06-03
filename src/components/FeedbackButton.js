@@ -1,37 +1,36 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {Button, Text} from '@chakra-ui/react';
+import {PopupButton} from '@typeform/embed-react';
 import {StarIcon} from './Icons';
-import {useUser} from '../utils';
+import {Text} from '@chakra-ui/react';
 
-export const FeedbackButton = ({title}) => {
-  const {user} = useUser();
+export const FeedbackButton = () => {
   return (
-    <Button
-      aria-label="rate this article"
-      onClick={() => {
-        window.freddyWidget?.show({
-          custom_fields: {
-            title,
-            user_id: user?.id,
-            email: user?.email
-          }
-        });
+    <PopupButton
+      id="miEpZmDw/"
+      as="a"
+      style={{
+        background: 'none',
+        border: 'none',
+        color: 'inherit',
+        cursor: 'pointer',
+        display: 'inline-flex',
+        alignItems: 'center',
+        padding: 0
       }}
-      variant="link"
-      _dark={{
-        color: 'gray.200'
-      }}
-      size="lg"
-      leftIcon={<StarIcon />}
+      className="chakra-button css-8luegd"
     >
+      <span className="chakra-button__icon css-1wh2kri">
+        <StarIcon />
+      </span>
+
       <Text as="span" display={{base: 'none', lg: 'inline'}}>
         Rate article
       </Text>
       <Text as="span" display={{base: 'inline', lg: 'none'}}>
         Rate
       </Text>
-    </Button>
+    </PopupButton>
   );
 };
 
