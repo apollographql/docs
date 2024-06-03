@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, {useRef} from 'react';
+import React from 'react';
 import {PopupButton} from '@typeform/embed-react';
 import {StarIcon} from './Icons';
 import {Text} from '@chakra-ui/react';
