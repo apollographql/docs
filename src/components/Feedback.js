@@ -10,6 +10,8 @@ import {
   useToast
 } from '@chakra-ui/react';
 
+import {DislikeIcon, LikeIcon} from './Icons';
+
 const FeedbackWidget = () => {
   const [feedbackGiven, setFeedbackGiven] = useState(false);
   const [showSurvey, setShowSurvey] = useState(false);
@@ -74,11 +76,20 @@ const FeedbackWidget = () => {
           <Box mb={2} fontWeight="bold">
             Was this page helpful?
           </Box>
-          <Button onClick={handleThumbsUp} colorScheme="green" mr={2}>
-            👍
+          <Button
+            aria-label="Like this article"
+            variant="ghost"
+            onClick={handleThumbsUp}
+            mr={2}
+          >
+            <LikeIcon />
           </Button>
-          <Button onClick={handleThumbsDown} colorScheme="red">
-            👎
+          <Button
+            aria-label="Dislike this article"
+            variant="ghost"
+            onClick={handleThumbsDown}
+          >
+            <DislikeIcon />
           </Button>
         </Box>
       ) : (

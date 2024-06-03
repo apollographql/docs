@@ -21,6 +21,7 @@ import {ReactComponent as CollapseList} from '@apollo/icons/default/IconCollapse
 import {ReactComponent as Connectors} from '@apollo/icons/default/IconConnectors.svg';
 import {ReactComponent as Discord} from '@apollo/icons/default/IconDiscord.svg';
 import {ReactComponent as Discourse} from '@apollo/icons/default/IconDiscourse.svg';
+import {ReactComponent as Dislike} from '@apollo/icons/default/IconDislikeSolid.svg';
 import {ReactComponent as Document} from '@apollo/icons/default/IconDocument.svg';
 import {ReactComponent as DoubleChevronDown} from '@apollo/icons/default/IconDoubleChevronDown.svg';
 import {ReactComponent as DoubleChevronLeft} from '@apollo/icons/default/IconDoubleChevronLeft.svg';
@@ -109,6 +110,7 @@ export const ConnectorsIcon = () => <CustomIcon icon={Connectors} />;
 export const DeliveryIcon = () => <CustomIcon icon={Pipeline} />;
 export const DiscordIcon = () => <CustomIcon icon={Discord} />;
 export const DiscourseIcon = () => <CustomIcon icon={Discourse} />;
+export const DislikeIcon = () => <CustomIcon icon={Dislike} isSolid />;
 export const DoubleChevronDownIcon = () => (
   <CustomIcon icon={DoubleChevronDown} />
 );
