@@ -6,6 +6,7 @@ import ExpansionPanel, {
   ExpansionPanelList,
   ExpansionPanelListItem
 } from './ExpansionPanel';
+import Feedback from './Feedback';
 import InlineCode from './InlineCode';
 import Pagination from './Pagination';
 import Prism from 'prismjs';
@@ -538,6 +539,7 @@ export default function Page({file}) {
                   // and we need undefined in order to make use of default props
                   headingDepth={headingDepth ?? undefined}
                 />
+                <Feedback />
               </chakra.aside>
             ) : (
               <chakra.aside
