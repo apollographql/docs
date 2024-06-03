@@ -25,7 +25,7 @@ import {
 } from '../Icons';
 import {usePageWidthContext} from '../PageWidthContext';
 
-const EYEBROW_HEIGHT = 0; // 32;
+const EYEBROW_HEIGHT = 32; // 0;
 const HEADER_HEIGHT = 60;
 const HEADER_BORDER_WIDTH = 1;
 export const TOTAL_HEADER_HEIGHT =
@@ -45,7 +45,7 @@ function Eyebrow({children}) {
       fontSize="sm"
       fontWeight="semibold"
       as="a"
-      href="https://reg.summit.graphql.com/flow/apollo/summit24/speaker-landing-page/page/home?utm_campaign=2024-05-14_GraphQLSummit&utm_medium=website&utm_source=docs"
+      href="https://summit.graphql.com/?utm_campaign=docs_eyebrow"
       target="_blank"
       rel="noopener noreferrer"
       px="3"
@@ -70,10 +70,10 @@ export function Header({children, algoliaFilters}) {
 
   return (
     <Box pos="sticky" top="0" zIndex="2">
-      {/* <Eyebrow>
-        Here&apos;s your chance to speak at GraphQL Summit in New York City,
-        October 8 - 10, 2024! 🏙️ Submit your proposal by May 31.
-      </Eyebrow> */}
+      <Eyebrow>
+        Join us from October 8-10 in New York City to learn the latest tips,
+        trends, and news about GraphQL federation and API platform engineering.
+      </Eyebrow>
       <Flex
         align="center"
         as="header"
