@@ -1,12 +1,16 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useRef} from 'react';
 import {PopupButton} from '@typeform/embed-react';
 import {StarIcon} from './Icons';
 import {Text} from '@chakra-ui/react';
 
-export const FeedbackButton = () => {
+export const FeedbackButton = ({title}) => {
   return (
     <PopupButton
+      hidden={{
+        path: window.location.pathname,
+        title
+      }}
       id="miEpZmDw/"
       as="a"
       style={{
