@@ -3,8 +3,17 @@ import React from 'react';
 import {PopupButton} from '@typeform/embed-react';
 import {StarIcon} from './Icons';
 import {Text} from '@chakra-ui/react';
+import {useUser} from '../utils';
 
 export const FeedbackButton = ({title}) => {
+  const {user} = useUser();
+  const organizations = user?.memberships.map(
+    membership => membership.account.name
+  );
+  const billingTiers = user?.memberships.map(
+    membership => membership.account.currentPlan.tier
+  );
+
   return (
     <PopupButton
       id="miEpZmDw/"
@@ -21,7 +30,10 @@ export const FeedbackButton = ({title}) => {
       className="chakra-button css-8luegd"
       hidden={{
         path: window.location.pathname,
-        title
+        title,
+        user_email: user?.name,
+        user_organizations: organizations,
+        user_tiers: billingTiers
       }}
       size={60}
     >
