@@ -6,7 +6,7 @@ import ExpansionPanel, {
   ExpansionPanelList,
   ExpansionPanelListItem
 } from './ExpansionPanel';
-import Feedback from './Feedback';
+import FeedbackButton from './FeedbackButton';
 import InlineCode from './InlineCode';
 import Pagination from './Pagination';
 import Prism from 'prismjs';
@@ -34,6 +34,7 @@ import {
   IconButton,
   ListItem,
   OrderedList,
+  Spacer,
   Table,
   Tag,
   Tbody,
@@ -63,7 +64,6 @@ import {
 } from '@apollo/chakra-helpers';
 import {EnterpriseFeature} from './EnterpriseFeature';
 import {ExperimentalFeature} from './ExperimentalFeature';
-import {FeedbackButton} from './FeedbackButton';
 import {Link as GatsbyLink} from 'gatsby';
 import {Global} from '@emotion/react';
 import {HighlightKeyTerms, KeyTermsProvider} from '@apollo/pedia';
@@ -539,7 +539,6 @@ export default function Page({file}) {
                   // and we need undefined in order to make use of default props
                   headingDepth={headingDepth ?? undefined}
                 />
-                <Feedback />
               </chakra.aside>
             ) : (
               <chakra.aside
@@ -589,7 +588,7 @@ export default function Page({file}) {
         </KeyTermsProvider>
       </PageContent>
       <HStack
-        justify="flex-end"
+        justify="space-between"
         px={{
           base: 6,
           md: 10,
@@ -605,34 +604,37 @@ export default function Page({file}) {
         }}
       >
         <FeedbackButton title={title} />
-        {editOnGitHub}
-        <Button
-          aria-label="Ask a question on our forums"
-          as="a"
-          href="https://community.apollographql.com/"
-          variant="link"
-          size="lg"
-          _dark={{
-            color: 'gray.200'
-          }}
-          leftIcon={<QuoteIcon />}
-        >
-          Forums
-        </Button>
-        <Button
-          aria-label="Join our Discord server"
-          as="a"
-          href="https://discord.gg/yFZJH2QYrK"
-          variant="link"
-          size="lg"
-          _dark={{
-            color: 'gray.200'
-          }}
-          onClick={() => window.gtag?.('event', 'discord_join_docs')}
-          leftIcon={<DiscordIcon />}
-        >
-          Discord
-        </Button>
+        <Spacer />
+        <HStack spacing="6">
+          {editOnGitHub}
+          <Button
+            aria-label="Ask a question on our forums"
+            as="a"
+            href="https://community.apollographql.com/"
+            variant="link"
+            size="lg"
+            _dark={{
+              color: 'gray.200'
+            }}
+            leftIcon={<QuoteIcon />}
+          >
+            Forums
+          </Button>
+          <Button
+            aria-label="Join our Discord server"
+            as="a"
+            href="https://discord.gg/yFZJH2QYrK"
+            variant="link"
+            size="lg"
+            _dark={{
+              color: 'gray.200'
+            }}
+            onClick={() => window.gtag?.('event', 'discord_join_docs')}
+            leftIcon={<DiscordIcon />}
+          >
+            Discord
+          </Button>
+        </HStack>
       </HStack>
     </>
   );
