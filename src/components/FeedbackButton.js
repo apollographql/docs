@@ -1,37 +1,65 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {Button, Text} from '@chakra-ui/react';
-import {StarIcon} from './Icons';
+import {LikeIcon} from './Icons';
+import {PopupButton} from '@typeform/embed-react';
+import {Text} from '@chakra-ui/react';
 import {useUser} from '../utils';
 
 export const FeedbackButton = ({title}) => {
   const {user} = useUser();
+  const organizations = user?.memberships.map(
+    membership => membership.account.name
+  );
+  const billingTiers = user?.memberships.map(
+    membership => membership.account.currentPlan.tier
+  );
+
   return (
-    <Button
-      aria-label="rate this article"
-      onClick={() => {
-        window.freddyWidget?.show({
-          custom_fields: {
-            title,
-            user_id: user?.id,
-            email: user?.email
-          }
-        });
+    <PopupButton
+      id="f67PXqDv/"
+      as="a"
+      style={{
+        background: 'none',
+        border: 'none',
+        cursor: 'pointer',
+        display: 'inline-flex',
+        alignItems: 'center',
+        padding: 0
       }}
-      variant="link"
-      _dark={{
-        color: 'gray.200'
+      className="chakra-button"
+      hidden={{
+        path: window.location.pathname,
+        title,
+        user_email: user?.name,
+        user_organizations: organizations,
+        user_tiers: billingTiers
       }}
-      size="lg"
-      leftIcon={<StarIcon />}
+      size="60"
     >
-      <Text as="span" display={{base: 'none', lg: 'inline'}}>
+      <LikeIcon color={'gray.500'} _dark={{color: 'gray.200'}} />
+      <Text
+        as="span"
+        fontSize="lg"
+        fontWeight="semibold"
+        color={'gray.500'}
+        _dark={{color: 'gray.200'}}
+        ml="0.5rem"
+        display={{base: 'none', lg: 'inline'}}
+        _hover={{textDecoration: 'underline'}}
+      >
         Rate article
       </Text>
-      <Text as="span" display={{base: 'inline', lg: 'none'}}>
+      <Text
+        as="span"
+        color={'gray.500'}
+        ml="0.2rem"
+        _dark={{color: 'gray.200'}}
+        display={{base: 'inline', lg: 'none'}}
+        _hover={{textDecoration: 'underline'}}
+      >
         Rate
       </Text>
-    </Button>
+    </PopupButton>
   );
 };
 

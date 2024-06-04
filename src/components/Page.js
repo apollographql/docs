@@ -62,6 +62,7 @@ import {
 } from '@apollo/chakra-helpers';
 import {EnterpriseFeature} from './EnterpriseFeature';
 import {ExperimentalFeature} from './ExperimentalFeature';
+import {FeedbackButton} from './FeedbackButton';
 import {Link as GatsbyLink} from 'gatsby';
 import {Global} from '@emotion/react';
 import {HighlightKeyTerms, KeyTermsProvider} from '@apollo/pedia';
@@ -601,6 +602,7 @@ export default function Page({file}) {
           height: PAGE_FOOTER_HEIGHT
         }}
       >
+        <FeedbackButton title={title} />
         {editOnGitHub}
         <Button
           aria-label="Ask a question on our forums"

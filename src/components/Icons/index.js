@@ -38,6 +38,7 @@ import {ReactComponent as Insights} from '@apollo/icons/default/IconInsights.svg
 import {ReactComponent as Java} from '@apollo/icons/default/IconJava.svg';
 import {ReactComponent as Kotlin} from '@apollo/icons/default/IconKotlin.svg';
 import {ReactComponent as LayoutModule} from '@apollo/icons/default/IconLayoutModule.svg';
+import {ReactComponent as Like} from '@apollo/icons/default/IconLikeSolid.svg';
 import {ReactComponent as Lock} from '@apollo/icons/default/IconLock.svg';
 import {ReactComponent as Menu} from '@apollo/icons/default/IconMenu.svg';
 import {ReactComponent as Moon} from '@apollo/icons/small/IconMoon.svg';
@@ -129,6 +130,7 @@ export const GridIcon = () => <CustomIcon icon={LayoutModule} />;
 export const HomeIcon = () => <CustomIcon icon={Home} />;
 export const InsightsIcon = () => <CustomIcon icon={Insights} />;
 export const JavaIcon = () => <CustomIcon icon={Java} />;
+export const LikeIcon = () => <CustomIcon icon={Like} isSolid />;
 export const LockIcon = () => <CustomIcon icon={Lock} />;
 export const MenuIcon = () => <CustomIcon icon={Menu} />;
 export const MetricsIcon = () => <CustomIcon icon={Insights} />;
