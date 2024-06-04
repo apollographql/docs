@@ -1,68 +1,257 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import {LikeIcon} from './Icons';
-import {PopupButton} from '@typeform/embed-react';
-import {Text} from '@chakra-ui/react';
-import {useUser} from '../utils';
+import React, {useState} from 'react';
+import axios from 'axios';
+import {
+  Box,
+  Button,
+  Checkbox,
+  CheckboxGroup,
+  FormControl,
+  FormLabel,
+  HStack,
+  IconButton,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Stack,
+  Text,
+  Textarea,
+  useDisclosure,
+  useToast
+} from '@chakra-ui/react';
+import {ButtonLink} from './RelativeLink';
+import {DislikeIcon, LikeIcon} from './Icons';
 
-export const FeedbackButton = ({title}) => {
-  const {user} = useUser();
-  const organizations = user?.memberships.map(
-    membership => membership.account.name
-  );
-  const billingTiers = user?.memberships.map(
-    membership => membership.account.currentPlan.tier
-  );
+const FeedbackButton = () => {
+  const [rating, setRating] = useState(null);
+  const [surveyResponses, setSurveyResponses] = useState({
+    positives: [],
+    issues: [],
+    issueDetails: '',
+    additionalComments: ''
+  });
+
+  const {isOpen, onOpen, onClose} = useDisclosure();
+  const toast = useToast();
+
+  const handleFeedback = async ratingType => {
+    setRating(ratingType);
+
+    // Send feedback type to the server
+    try {
+      await axios.post('/api/feedback', {rating: ratingType});
+      console.log('Feedback sent');
+    } catch (error) {
+      console.error('Error sending feedback:', error);
+    }
+
+    onOpen();
+  };
+
+  const handleInputChange = e => {
+    const {name, value} = e.target;
+    setSurveyResponses(prevResponses => ({
+      ...prevResponses,
+      [name]: value
+    }));
+  };
+
+  const handleCheckboxChange = (name, value) => {
+    setSurveyResponses(prevResponses => ({
+      ...prevResponses,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+    try {
+      console.log('Form response sent to Google Sheet:', surveyResponses);
+      onClose();
+      toast({
+        title: 'Thank you for your feedback!',
+        status: 'success',
+        duration: 3000,
+        isClosable: true
+      });
+    } catch (error) {
+      console.error('Error sending form response to Google Sheet:', error);
+      toast({
+        title: 'An error occurred!',
+        description: 'Failed to submit feedback. Please try again later.',
+        status: 'error',
+        duration: 5000,
+        isClosable: true
+      });
+    }
+  };
+
+  const handleClose = () => {
+    setRating(null);
+    setSurveyResponses({
+      positives: [],
+      issues: [],
+      issueDetails: '',
+      additionalComments: ''
+    });
+    onClose();
+  };
+
+  const positiveOptions = [
+    'Clear instructions',
+    'Concise information',
+    'Useful examples',
+    'Other (Please specify below)'
+  ];
+
+  const issueOptions = [
+    'Incorrect information',
+    'Lack of clarity',
+    'Missing examples',
+    'Other (Please specify below)'
+  ];
 
   return (
-    <PopupButton
-      id="f67PXqDv/"
-      as="a"
-      style={{
-        background: 'none',
-        border: 'none',
-        cursor: 'pointer',
-        display: 'inline-flex',
-        alignItems: 'center',
-        padding: 0
-      }}
-      className="chakra-button"
-      hidden={{
-        path: window.location.pathname,
-        title,
-        user_email: user?.name,
-        user_organizations: organizations,
-        user_tiers: billingTiers
-      }}
-      size="60"
-    >
-      <LikeIcon color={'gray.500'} _dark={{color: 'gray.200'}} />
-      <Text
-        as="span"
-        fontSize="lg"
-        fontWeight="semibold"
-        color={'gray.500'}
-        _dark={{color: 'gray.200'}}
-        ml="0.5rem"
-        display={{base: 'none', lg: 'inline'}}
-        _hover={{textDecoration: 'underline'}}
-      >
-        Rate article
-      </Text>
-      <Text
-        as="span"
-        color={'gray.500'}
-        ml="0.2rem"
-        _dark={{color: 'gray.200'}}
-        display={{base: 'inline', lg: 'none'}}
-        _hover={{textDecoration: 'underline'}}
-      >
-        Rate
-      </Text>
-    </PopupButton>
+    <Box pos="sticky" top="20px" zIndex="1000">
+      <Box my="4">
+        <Text
+          as="span"
+          fontSize="lg"
+          fontWeight="semibold"
+          color={'gray.500'}
+          _dark={{color: 'gray.200'}}
+          ml="0.5rem"
+          display={{base: 'none', lg: 'inline'}}
+        >
+          Was this page helpful?
+        </Text>
+        <IconButton
+          variant="link"
+          aria-label="Like page"
+          onClick={() => handleFeedback('like')}
+        >
+          <LikeIcon color={'gray.500'} _dark={{color: 'gray.200'}} />
+        </IconButton>
+        <IconButton
+          variant="link"
+          aria-label="Dislike page"
+          onClick={() => handleFeedback('dislike')}
+        >
+          <DislikeIcon color={'gray.500'} _dark={{color: 'gray.200'}} />
+        </IconButton>
+      </Box>
+
+      <Modal isOpen={isOpen} onClose={handleClose} size="3xl">
+        <ModalOverlay />
+        <ModalContent p="4">
+          <ModalHeader>
+            {rating === 'like'
+              ? 'Thank you for your feedback!'
+              : "We're sorry to hear that. Please help us improve!"}
+          </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <form onSubmit={handleSubmit}>
+              {rating === 'like' ? (
+                <>
+                  <FormControl mb={6}>
+                    <FormLabel>
+                      We&apos;d love to learn more. What did you find helpful
+                      about this page?
+                    </FormLabel>
+                    <CheckboxGroup
+                      colorScheme="green"
+                      value={surveyResponses.positives}
+                      onChange={value =>
+                        handleCheckboxChange('positives', value)
+                      }
+                    >
+                      <Stack>
+                        {positiveOptions.map(option => (
+                          <Checkbox key={option} value={option}>
+                            {option}
+                          </Checkbox>
+                        ))}
+                      </Stack>
+                    </CheckboxGroup>
+                  </FormControl>
+                  <FormControl mb={6}>
+                    <FormLabel>
+                      Any additional comments or suggestions?
+                    </FormLabel>
+                    <Textarea
+                      name="additionalComments"
+                      onChange={handleInputChange}
+                    />
+                  </FormControl>
+                </>
+              ) : (
+                <>
+                  <FormControl mb={4}>
+                    <FormLabel>Which areas need improvement?</FormLabel>
+                    <CheckboxGroup
+                      colorScheme="red"
+                      value={surveyResponses.issues}
+                      onChange={value => handleCheckboxChange('issues', value)}
+                    >
+                      <Stack>
+                        {issueOptions.map(option => (
+                          <Checkbox key={option} value={option}>
+                            {option}
+                          </Checkbox>
+                        ))}
+                      </Stack>
+                    </CheckboxGroup>
+                  </FormControl>
+                  <FormControl mb={4}>
+                    <FormLabel>
+                      Please provide more details about the problem you
+                      encountered.
+                    </FormLabel>
+                    <Textarea
+                      name="issueDetails"
+                      onChange={handleInputChange}
+                    />
+                  </FormControl>
+                  <FormControl mb={4}>
+                    <FormLabel>
+                      Any additional comments or suggestions?
+                    </FormLabel>
+                    <Textarea
+                      name="additionalComments"
+                      onChange={handleInputChange}
+                    />
+                  </FormControl>
+                </>
+              )}
+            </form>
+          </ModalBody>
+          <ModalFooter>
+            <HStack spacing={4} justify="flex-end">
+              <ButtonLink
+                colorScheme="gray"
+                href="https://support.apollographql.com/hc/en-us"
+              >
+                Need help? Contact Support
+              </ButtonLink>
+              <Button
+                colorScheme="navy"
+                _dark={{
+                  color: 'silver.300'
+                }}
+                type="submit"
+              >
+                Submit
+              </Button>
+            </HStack>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </Box>
   );
 };
 
-FeedbackButton.propTypes = {
-  title: PropTypes.string.isRequired
-};
+export default FeedbackButton;
