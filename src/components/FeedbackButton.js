@@ -6,6 +6,10 @@ import {Text} from '@chakra-ui/react';
 import {useUser} from '../utils';
 
 export const FeedbackButton = ({title}) => {
+  let path = '';
+  if (typeof window !== 'undefined') {
+    path = window.location.pathname;
+  }
   const {user} = useUser();
   const organizations = user?.memberships.map(
     membership => membership.account.name
@@ -28,7 +32,7 @@ export const FeedbackButton = ({title}) => {
       }}
       className="chakra-button"
       hidden={{
-        path: window.location.pathname,
+        path,
         title,
         user_email: user?.name,
         user_organizations: organizations,
