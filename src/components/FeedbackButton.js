@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import appendFeedback from '../utils/appendFeedback.js';
 import axios from 'axios';
 import {
   Box,
@@ -37,15 +38,21 @@ const FeedbackButton = () => {
   const {isOpen, onOpen, onClose} = useDisclosure();
   const toast = useToast();
 
-  const handleFeedback = async ratingType => {
+  const handleRating = async ratingType => {
     setRating(ratingType);
 
-    // Send feedback type to the server
     try {
-      await axios.post('/api/feedback', {rating: ratingType});
-      console.log('Feedback sent');
+      // Make a request to the authentication function
+      const authResponse = await axios.get('/.netlify/functions/googleAuth');
+      const client = authResponse.data;
+
+      // Append rating to GoogleSheet
+      await appendFeedback(client, rating);
+
+      // Open the modal
+      onOpen();
     } catch (error) {
-      console.error('Error sending feedback:', error);
+      console.error('Error handling rating:', error);
     }
 
     onOpen();
@@ -131,14 +138,14 @@ const FeedbackButton = () => {
         <IconButton
           variant="link"
           aria-label="Like page"
-          onClick={() => handleFeedback('like')}
+          onClick={() => handleRating('like')}
         >
           <LikeIcon color={'gray.500'} _dark={{color: 'gray.200'}} />
         </IconButton>
         <IconButton
           variant="link"
           aria-label="Dislike page"
-          onClick={() => handleFeedback('dislike')}
+          onClick={() => handleRating('dislike')}
         >
           <DislikeIcon color={'gray.500'} _dark={{color: 'gray.200'}} />
         </IconButton>
