@@ -7,7 +7,7 @@ import {useUser} from '../utils';
 
 export const FeedbackButton = ({title}) => {
   let path = '';
-  if (window !== 'undefined') {
+  if (typeof window !== 'undefined') {
     path = window.location.pathname;
   }
   const {user} = useUser();
