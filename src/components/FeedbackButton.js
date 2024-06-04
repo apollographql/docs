@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import {LikeIcon} from './Icons';
 import {PopupButton} from '@typeform/embed-react';
-import {StarIcon} from './Icons';
 import {Text} from '@chakra-ui/react';
 import {useUser} from '../utils';
 
@@ -16,7 +16,7 @@ export const FeedbackButton = ({title}) => {
 
   return (
     <PopupButton
-      id="miEpZmDw/"
+      id="f67PXqDv/"
       as="a"
       style={{
         background: 'none',
@@ -36,7 +36,7 @@ export const FeedbackButton = ({title}) => {
       }}
       size="60"
     >
-      <StarIcon color={'gray.500'} _dark={{color: 'gray.200'}} />
+      <LikeIcon color={'gray.500'} _dark={{color: 'gray.200'}} />
       <Text
         as="span"
         fontSize="lg"
