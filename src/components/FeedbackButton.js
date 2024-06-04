@@ -36,8 +36,7 @@ export const FeedbackButton = ({title}) => {
       }}
       size="60"
     >
-      {' '}
-      <StarIcon color={'gray.500'} _dark={{color: 'gray.200'}} />{' '}
+      <StarIcon color={'gray.500'} _dark={{color: 'gray.200'}} />
       <Text
         as="span"
         fontSize="lg"
@@ -48,9 +47,8 @@ export const FeedbackButton = ({title}) => {
         display={{base: 'none', lg: 'inline'}}
         _hover={{textDecoration: 'underline'}}
       >
-        {' '}
-        Rate article{' '}
-      </Text>{' '}
+        Rate article
+      </Text>
       <Text
         as="span"
         color={'gray.500'}
@@ -59,9 +57,8 @@ export const FeedbackButton = ({title}) => {
         display={{base: 'inline', lg: 'none'}}
         _hover={{textDecoration: 'underline'}}
       >
-        {' '}
-        Rate{' '}
-      </Text>{' '}
+        Rate
+      </Text>
     </PopupButton>
   );
 };
