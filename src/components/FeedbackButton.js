@@ -21,13 +21,12 @@ export const FeedbackButton = ({title}) => {
       style={{
         background: 'none',
         border: 'none',
-        color: 'inherit',
         cursor: 'pointer',
         display: 'inline-flex',
         alignItems: 'center',
         padding: 0
       }}
-      className="chakra-button css-8luegd"
+      className="chakra-button"
       hidden={{
         path: window.location.pathname,
         title,
@@ -35,18 +34,34 @@ export const FeedbackButton = ({title}) => {
         user_organizations: organizations,
         user_tiers: billingTiers
       }}
-      size={60}
+      size="60"
     >
-      <span className="chakra-button__icon css-1wh2kri">
-        <StarIcon />
-      </span>
-
-      <Text as="span" display={{base: 'none', lg: 'inline'}}>
-        Rate article
-      </Text>
-      <Text as="span" display={{base: 'inline', lg: 'none'}}>
-        Rate
-      </Text>
+      {' '}
+      <StarIcon color={'gray.500'} _dark={{color: 'gray.200'}} />{' '}
+      <Text
+        as="span"
+        fontSize="lg"
+        fontWeight="semibold"
+        color={'gray.500'}
+        _dark={{color: 'gray.200'}}
+        ml="0.5rem"
+        display={{base: 'none', lg: 'inline'}}
+        _hover={{textDecoration: 'underline'}}
+      >
+        {' '}
+        Rate article{' '}
+      </Text>{' '}
+      <Text
+        as="span"
+        color={'gray.500'}
+        ml="0.2rem"
+        _dark={{color: 'gray.200'}}
+        display={{base: 'inline', lg: 'none'}}
+        _hover={{textDecoration: 'underline'}}
+      >
+        {' '}
+        Rate{' '}
+      </Text>{' '}
     </PopupButton>
   );
 };
