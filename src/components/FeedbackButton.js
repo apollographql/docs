@@ -1,5 +1,4 @@
-import React, {useState} from 'react';
-import appendFeedback from '../utils/appendFeedback.js';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import {
   Box,
@@ -25,8 +24,12 @@ import {
 } from '@chakra-ui/react';
 import {ButtonLink} from './RelativeLink';
 import {DislikeIcon, LikeIcon} from './Icons';
+import {useUser} from '../utils';
 
 const FeedbackButton = () => {
+  const {user} = useUser();
+  const username = user.name;
+  const [path, setPath] = useState('');
   const [rating, setRating] = useState(null);
   const [surveyResponses, setSurveyResponses] = useState({
     positives: [],
@@ -38,24 +41,28 @@ const FeedbackButton = () => {
   const {isOpen, onOpen, onClose} = useDisclosure();
   const toast = useToast();
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setPath(window.location.pathname);
+    }
+  }, []);
+
   const handleRating = async ratingType => {
     setRating(ratingType);
 
     try {
-      // Make a request to the authentication function
-      const authResponse = await axios.get('/.netlify/functions/googleAuth');
-      const client = authResponse.data;
-
       // Append rating to GoogleSheet
-      await appendFeedback(client, rating);
+      await axios.post('/.netlify/functions/sendFeedback', {
+        path,
+        rating: ratingType,
+        username
+      });
 
       // Open the modal
       onOpen();
     } catch (error) {
       console.error('Error handling rating:', error);
     }
-
-    onOpen();
   };
 
   const handleInputChange = e => {
@@ -76,7 +83,16 @@ const FeedbackButton = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      console.log('Form response sent to Google Sheet:', surveyResponses);
+      const feedbackData = {
+        path,
+        rating,
+        ...surveyResponses,
+        username
+      };
+
+      // Send feedback data to the Netlify function
+      await axios.post('/.netlify/functions/sendFeedback', feedbackData);
+
       onClose();
       toast({
         title: 'Thank you for your feedback!',
@@ -85,7 +101,7 @@ const FeedbackButton = () => {
         isClosable: true
       });
     } catch (error) {
-      console.error('Error sending form response to Google Sheet:', error);
+      console.error('Error sending form response:', error);
       toast({
         title: 'An error occurred!',
         description: 'Failed to submit feedback. Please try again later.',
@@ -138,6 +154,10 @@ const FeedbackButton = () => {
         <IconButton
           variant="link"
           aria-label="Like page"
+          _focus={{
+            outline: 'none',
+            boxShadow: 'none'
+          }}
           onClick={() => handleRating('like')}
         >
           <LikeIcon color={'gray.500'} _dark={{color: 'gray.200'}} />
@@ -145,6 +165,10 @@ const FeedbackButton = () => {
         <IconButton
           variant="link"
           aria-label="Dislike page"
+          _focus={{
+            outline: 'none',
+            boxShadow: 'none'
+          }}
           onClick={() => handleRating('dislike')}
         >
           <DislikeIcon color={'gray.500'} _dark={{color: 'gray.200'}} />
@@ -250,6 +274,7 @@ const FeedbackButton = () => {
                   color: 'silver.300'
                 }}
                 type="submit"
+                onClick={handleSubmit}
               >
                 Submit
               </Button>
