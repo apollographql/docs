@@ -207,7 +207,7 @@ const Feedback = () => {
 
       <Modal isOpen={isOpen} onClose={handleClose} size="3xl">
         <ModalOverlay />
-        <ModalContent p="4">
+        <ModalContent p="4" mx={[4, 6, 8]} bg="bg">
           <ModalHeader>
             {rating === 'like'
               ? 'Thank you for your feedback!'
@@ -220,8 +220,7 @@ const Feedback = () => {
                 <>
                   <FormControl mb={6}>
                     <FormLabel>
-                      We&apos;d love to learn more. What did you find helpful
-                      about this page?
+                      What did you find helpful about this page?
                     </FormLabel>
                     <CheckboxGroup
                       colorScheme="green"
@@ -254,7 +253,7 @@ const Feedback = () => {
                   <FormControl mb={4}>
                     <FormLabel>Which areas need improvement?</FormLabel>
                     <CheckboxGroup
-                      colorScheme="red"
+                      colorScheme="green"
                       value={surveyResponses.issues}
                       onChange={value => handleCheckboxChange('issues', value)}
                     >
@@ -299,7 +298,8 @@ const Feedback = () => {
                 Need help? Contact Support
               </ButtonLink>
               <Button
-                colorScheme="navy"
+                bg="primary"
+                color="#FDFDFD"
                 _dark={{
                   color: 'silver.300'
                 }}
