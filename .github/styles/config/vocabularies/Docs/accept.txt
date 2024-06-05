@@ -95,7 +95,9 @@ protobuf
 READMEs?
 Recurly
 [Rr]eauthenticat(e|ed|ing)?
+[Rr]eapprov(e|ed|al)
 [Rr]elicensing
+[Rr]erequest
 [Rr]escan
 repo
 Rhai

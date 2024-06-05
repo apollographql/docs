@@ -13,7 +13,7 @@ description: Fine-tune the GraphQL schema proposal workflow by configuring permi
 | [Permissions](#configure-permissions-and-approvals)                     | Which roles can create and edit proposals                                             |
 | [Default reviewers](#default-reviewers)               | Which team members are default reviewers and whether default reviewer approval is required |
 | [Required approvals](#required-approvals)                       | The minimum number of approvals needed for a proposal to achieve [**Approved** status](./#proposal-statuses) |
-| [Require reapprovals after revisions](#require-reapprovals)                       | Whether to require reapprovals after an approved propsal is revised |
+| [Require reapprovals after revisions](#require-reapprovals)                       | Whether to require reapprovals after an approved proposal is revised |
 | [Description template](#configure-description-template)                   | An editable description that prepopulates every new proposal created for the graph |
 | [Schema checks](#configure-schema-checks)                   | Whether and how [schema checks](../schema-checks) incorporate proposals                                    |
 | [Notifications](#notifications)                  | Whether to send email notifications for proposal activity                              |
@@ -148,7 +148,7 @@ Once you've added [**default reviewers**](#default-reviewers), you can require a
 By default, if a proposal is revised after one or more approvals, the approved status stays. You can change this to withdraw approvals from revised proposals.
 
 In your proposal settings, click **Manage approval requirement**, and select **Withdraw previous approvals on new revisions**.
-With this setting enabled, reviews are re-requested automatically from anyone who previously approved.
+With this setting enabled, reviews are rerequested automatically from anyone who previously approved.
 
 ## Configure description template
 
