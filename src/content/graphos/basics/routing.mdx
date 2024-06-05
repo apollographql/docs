@@ -19,15 +19,16 @@ flowchart LR;
 
 The router intelligently executes each incoming client operation across the appropriate combination of subgraphs. It then merges subgraph responses into a single response for the client. You can configure your router's error handling, CORS settings, other security features, and more. Your configuration options depend on your router type.
 
-## GraphOS router types
+## GraphOS Router types
 
-With GraphOS, you can choose for Apollo to provision and manage a cloud-hosted router for you:
+GraphOS comes with a fully integrated router runtime called the _GraphOS Router_.
+You can choose for Apollo to provision and manage a cloud-hosted GraphOS Router for you:
 
 ```mermaid
 flowchart LR;
   clients(Clients);
-  subgraph "Apollo Cloud"
-    router(["Router"]);
+  subgraph "GraphOS Cloud"
+    router(["GraphOS Router"]);
   end;
   subgraph YourInfra["Your infrastructure"];
     subgraphA[Subgraph A];
@@ -40,13 +41,13 @@ flowchart LR;
   class clients secondary;
 ```
 
-Or you can choose to self-host your router:
+Or you can choose to self-host your GraphOS Router:
 
 ```mermaid
 flowchart LR;
   clients(Clients);
   subgraph "Your infrastructure";
-  router(["Router"]);
+  router(["GraphOS Router"]);
   serviceB[Subgraph A];
   serviceC[Subgraph B];
   router --- serviceB & serviceC;
@@ -55,17 +56,17 @@ flowchart LR;
   class clients secondary;
 ```
 
-Cloud and self-hosted routers are both powered by the Apollo Router—a high-performance routing runtime packaged as a [standalone binary](https://github.com/apollographql/router).
+Both cloud and self-hosted GraphOS Routers are powered by the Apollo Router Core—a high-performance routing runtime packaged as a [standalone binary](https://github.com/apollographql/router).
 
 <Note>
 
-Apollo also offers the [`@apollo/gateway`](/federation/v1/gateway/) library, but we recommend the Apollo Router over `@apollo/gateway` because it provides [significant performance and security improvements](https://www.apollographql.com/blog/announcement/backend/apollo-router-our-graphql-federation-runtime-in-rust/). For more information about the differences and how to migrate, see the [migration guide](/router/migrating-from-gateway/).
+Apollo also offers the [`@apollo/gateway`](/federation/v1/gateway/) library, but we recommend GraphOS Routers over `@apollo/gateway` because they provide [significant performance and security improvements](https://www.apollographql.com/blog/announcement/backend/apollo-router-our-graphql-federation-runtime-in-rust/). For more information about the differences and how to migrate, see the [migration guide](/router/migrating-from-gateway/).
 
 </Note>
 
 ### Router comparison
 
-Apollo offers the following router options, in increasing order of configurability:
+GraphOS offers the following router options, in increasing order of configurability:
 
 <table>
   <thead>
@@ -111,19 +112,19 @@ Apollo offers the following router options, in increasing order of configurabili
         <a href="/router/customizations/overview">customization options</a>
       </td>
       <td>
-        Apollo Router is available as a free and source-available runtime.
-        Connecting your self-hosted router to GraphOS requires an{' '}
+        The Apollo Core Router is available as a free and source-available
+        runtime. Connecting a self-hosted router to GraphOS requires an{' '}
         <a href="https://apollographql.com/pricing">Enterprise</a> plan.
       </td>
     </tr>
   </tbody>
 </table>
 
-### GraphOS router features
+### GraphOS Router features
 
-Although all GraphOS routers (both cloud- and self-hosted) are powered by the source-available Apollo Router binary, they offer an expanded feature set that isn't available when running the Apollo Router without connecting it to GraphOS.
+Although all GraphOS Routers (both cloud- and self-hosted) are powered by the source-available Apollo Router Core binary, they offer an expanded feature set that isn't available when running the Apollo Router Core without connecting it to GraphOS.
 
-Cloud-hosted routers automatically have access to additional GraphOS router features, while self-hosted routers must be authenticated with a GraphOS Enterprise license to gain access to these features. Refer to the [pricing page](https://www.apollographql.com/pricing#graphos-router) to compare GraphOS router features across plan types.
+Cloud-hosted routers automatically have access to GraphOS Router features, while self-hosted routers must be authenticated with a GraphOS Enterprise license to gain access to these features. Refer to the [pricing page](https://www.apollographql.com/pricing#graphos-router) to compare GraphOS Router features across plan types.
 
 ## Setup and configuration
 
