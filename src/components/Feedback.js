@@ -139,7 +139,7 @@ const Feedback = () => {
 
   return (
     <Box pos="sticky" top="20px" zIndex="1000">
-      <Box my="4">
+      <Box my="4" display="flex" alignItems="center">
         <Text
           as="span"
           fontSize="lg"
@@ -147,7 +147,7 @@ const Feedback = () => {
           color={'gray.500'}
           _dark={{color: 'gray.200'}}
           ml="0.5rem"
-          display={{base: 'none', lg: 'inline'}}
+          display={{base: 'none', xl: 'inline'}}
         >
           Was this page helpful?
         </Text>
@@ -190,12 +190,12 @@ const Feedback = () => {
               _after: {
                 content: '""',
                 position: 'absolute',
-                bottom: '-3px', // Adjust the position as needed
+                bottom: '-3px',
                 left: '50%',
                 transform: 'translateX(-50%)',
                 width: '80%',
                 height: '1.5px',
-                backgroundColor: 'currentColor' // Match the color of the icon
+                backgroundColor: 'currentColor'
               }
             }
           }}
