@@ -6,7 +6,7 @@ import ExpansionPanel, {
   ExpansionPanelList,
   ExpansionPanelListItem
 } from './ExpansionPanel';
-import FeedbackButton from './FeedbackButton';
+import Feedback from './Feedback';
 import InlineCode from './InlineCode';
 import Pagination from './Pagination';
 import Prism from 'prismjs';
@@ -603,7 +603,7 @@ export default function Page({file}) {
           height: PAGE_FOOTER_HEIGHT
         }}
       >
-        <FeedbackButton title={title} />
+        <Feedback title={title} />
         <Spacer />
         <HStack spacing="6">
           {editOnGitHub}

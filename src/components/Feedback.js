@@ -26,9 +26,9 @@ import {ButtonLink} from './RelativeLink';
 import {DislikeIcon, LikeIcon} from './Icons';
 import {useUser} from '../utils';
 
-const FeedbackButton = () => {
+const Feedback = () => {
   const {user} = useUser();
-  const username = user.name;
+  const username = user?.name;
   const [path, setPath] = useState('');
   const [rating, setRating] = useState(null);
   const [surveyResponses, setSurveyResponses] = useState({
@@ -158,6 +158,21 @@ const FeedbackButton = () => {
             outline: 'none',
             boxShadow: 'none'
           }}
+          sx={{
+            position: 'relative',
+            _hover: {
+              _after: {
+                content: '""',
+                position: 'absolute',
+                bottom: '-3px', // Adjust the position as needed
+                left: '50%',
+                transform: 'translateX(-50%)',
+                width: '80%',
+                height: '1.5px',
+                backgroundColor: 'currentColor' // Match the color of the icon
+              }
+            }
+          }}
           onClick={() => handleRating('like')}
         >
           <LikeIcon color={'gray.500'} _dark={{color: 'gray.200'}} />
@@ -168,6 +183,21 @@ const FeedbackButton = () => {
           _focus={{
             outline: 'none',
             boxShadow: 'none'
+          }}
+          sx={{
+            position: 'relative',
+            _hover: {
+              _after: {
+                content: '""',
+                position: 'absolute',
+                bottom: '-3px', // Adjust the position as needed
+                left: '50%',
+                transform: 'translateX(-50%)',
+                width: '80%',
+                height: '1.5px',
+                backgroundColor: 'currentColor' // Match the color of the icon
+              }
+            }
           }}
           onClick={() => handleRating('dislike')}
         >
@@ -286,4 +316,4 @@ const FeedbackButton = () => {
   );
 };
 
-export default FeedbackButton;
+export default Feedback;
