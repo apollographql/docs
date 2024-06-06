@@ -161,10 +161,10 @@ If you [create a cloud supergraph](/graphos/quickstart/cloud/) with GraphOS, Apo
 
 For enterprise organizations that need to run their router in their own infrastructure, Apollo provides two libraries that can act as a router:
 
-- [The Apollo Router](/router/) (strongly recommended)
-    - This is a high-performance binary written in Rust that adds [minimal latency to request processing](https://www.apollographql.com/blog/announcement/backend/apollo-router-our-graphql-federation-runtime-in-rust/), even with extremely high traffic.
-    - Because the Apollo Router is a precompiled binary, you don't need to write any boilerplate code around it to deploy it to your backend. All it needs is a configuration file for any behavior you want to customize.
-    - Cloud supergraph routers use the Apollo Router under the hood.
+- [The GraphOS Router](/router/) (strongly recommended)
+    - This GraphOS Router is powered by the Apollo Router Core—a high-performance binary written in Rust that adds [minimal latency to request processing](https://www.apollographql.com/blog/announcement/backend/apollo-router-our-graphql-federation-runtime-in-rust/), even with extremely high traffic.
+    - Because the Apollo Router Core is a precompiled binary, you don't need to write any boilerplate code around it to deploy it to your backend. All it needs is a configuration file for any behavior you want to customize.
+    - Cloud supergraph routers use the GraphOS Router under the hood.
 - [Apollo Server](/apollo-server/using-federation/apollo-gateway-setup) with `@apollo/gateway`
     - This is Apollo's open-source Node.js GraphQL server library, which you can configure to act as a supergraph gateway.
 

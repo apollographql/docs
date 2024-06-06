@@ -15,7 +15,7 @@
     "Overview": "/",
     "Self-Hosted Routing": {
       "Setup": "https://www.apollographql.com/docs/graphos/quickstart/self-hosted",
-      "Apollo Router Features": {
+      "GraphOS Router Features": {
         "Overview": "https://www.apollographql.com/docs/router/enterprise-features",
         "GraphQL Subscriptions": "https://www.apollographql.com/docs/router/executing-operations/subscription-support",
         "Distributed Caching": "https://www.apollographql.com/docs/router/configuration/distributed-caching",

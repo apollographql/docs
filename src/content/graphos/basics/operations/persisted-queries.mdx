@@ -12,7 +12,7 @@ GraphQL APIs are broadly open by design to provide flexibility and efficiency in
 
 ## Differences from automatic persisted queries
 
-The Apollo Router also supports a related feature called [automatic persisted queries](/router/configuration/in-memory-caching#caching-automatic-persisted-queries-apq) (APQ). With APQ, clients can execute a GraphQL operation by sending the SHA256 hash of its operation string instead of the full string.
+The router also supports a related feature called [automatic persisted queries](/router/configuration/in-memory-caching#caching-automatic-persisted-queries-apq) (APQ). With APQ, clients can execute a GraphQL operation by sending the SHA256 hash of its operation string instead of the full string.
 
 APQ has a few limitations compared to registered persisted queries.
 
@@ -67,7 +67,7 @@ If you only want to improve request latency and bandwidth usage, APQ addresses y
 
 ## Security levels
 
-The Apollo Router supports the following security levels, in increasing order of restrictiveness:
+The GraphOS Router supports the following security levels, in increasing order of restrictiveness:
 
 <table>
   <thead>
@@ -253,7 +253,7 @@ After you link a PQL to a variant, GraphOS makes the PQL available in [Uplink](/
 
 ### 2. Router configuration
 
-The Apollo Router is the key component that enforces safelisting.
+The GraphOS Router is the key component that enforces safelisting.
 
 <PQRouterConfiguration />
 

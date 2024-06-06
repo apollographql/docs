@@ -17,7 +17,7 @@ exceptions:
   - Apollo iOS
   - Apollo Kotlin
   - Apollo Organization
-  - Apollo Router
+  - Apollo Router Core
   - Apollo Server
   - AWS
   - Azure (AD)?

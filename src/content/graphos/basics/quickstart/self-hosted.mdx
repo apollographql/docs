@@ -4,7 +4,7 @@ subtitle: Host your supergraph in your own infrastructure
 description: Set up a self-hosted supergraph with GraphOS. Leverage the power of GraphQL in your own infrastructure. Free Enterprise Trial available.
 ---
 
-This tutorial gets you up and running with GraphOS and a self-hosted supergraph, using the Apollo Router. While you can run the router regardless of your Apollo plan, connecting the router to GraphOS requires an [Enterprise plan](https://new.apollographql.com/pricing).
+This tutorial gets you up and running with GraphOS and a self-hosted supergraph, using the GraphOS Router. While you can run the Apollo Router Core regardless of your Apollo plan, connecting the router to GraphOS requires an [Enterprise plan](https://new.apollographql.com/pricing).
 If your organization doesn't currently have an Enterprise plan, you can test out this functionality by signing up for a free [Enterprise trial](https://studio.apollographql.com/signup?type=enterprise-trial&referrer=docs-content).
 
 <Note>
@@ -93,18 +93,18 @@ Complete the first two steps of <a href="/rover/configuring/" target="_blank">Co
 
 ## 2. Clone the router project template
 
-For this quickstart, we'll use some Apollo-hosted example services as our subgraphs, and we'll set up the Apollo Router in front of them. The Apollo Router is a high-performance, precompiled Rust executable that acts as the router for a supergraph.
+For this quickstart, we'll use some Apollo-hosted example services as our subgraphs, and we'll set up the GraphOS Router in front of them. The router is a high-performance, precompiled Rust executable that acts as the router for a supergraph.
 
 First, let's create a project directory for your router:
 
-1. Open [this GitHub template](https://github.com/apollographql/router-template). It provides out-of-the box configuration for deploying and running the Apollo Router via a Dockerfile.
+1. Open [this GitHub template](https://github.com/apollographql/router-template). It provides out-of-the box configuration for deploying and running the router via a Dockerfile.
 2. On the template page, click **Use this template > Create a new repository** to copy the template into a new repository in your GitHub account.
     - If you don't use GitHub, you can instead clone the template directly via the **Code** menu.
 3. Clone your new repository to your local machine.
 
 ## 3. Start the router with Docker
 
-To run the Apollo Router locally, you need a way to build and run containers. Here are some popular options:
+To run the router locally, you need a way to build and run containers. Here are some popular options:
 
 - [Docker Desktop](https://www.docker.com/products/personal/)
 - [Rancher](https://rancherdesktop.io)

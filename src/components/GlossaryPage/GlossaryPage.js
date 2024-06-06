@@ -51,6 +51,11 @@ function HashScroll() {
   const [hasScrolled, setHasScrolled] = useState(false);
 
   useEffect(() => {
+    console.log('useEffect triggered');
+    console.log('status:', status);
+    console.log('results:', results);
+    console.log('hasScrolled:', hasScrolled);
+    console.log('window.location.hash:', window.location.hash);
     if (
       status === 'idle' &&
       results.hits.length > 0 &&

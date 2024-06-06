@@ -15,7 +15,7 @@ Not an enterprise customer? [Learn about GraphOS for Enterprise.](/graphos/enter
 
 </Tip>
 
-Testing in GraphQL may seem like it can involve more steps, but that is because your GraphQL architecture can involve many areas of your tech stack, from your frontend with Apollo Client to a backend with Apollo Server, or your infrastructure with your Apollo Router to the individual subgraphs in your supergraph. In practice, all these areas should be properly tested the same way if we were using any other API technology, but often the testing across boundaries like teams or applications can involve some new steps. By the end of this guide you should have:
+Testing in GraphQL may seem like it can involve more steps, but that is because your GraphQL architecture can involve many areas of your tech stack, from your frontend with Apollo Client to a backend with Apollo Server, or your infrastructure with your GraphOS Router to the individual subgraphs in your supergraph. In practice, all these areas should be properly tested the same way if we were using any other API technology, but often the testing across boundaries like teams or applications can involve some new steps. By the end of this guide you should have:
 
 - [Unit testing](#unit-testing) in individual subgraphs
 - [Integration testing](#integration-testing) for the individual subgraphs
@@ -30,7 +30,7 @@ We recommend creating unit tests for each of your subgraph server resolvers. Res
 Using `@faker-js/faker` to mock a return value in `jest` looks something like the following:
 
 ```js
-import { faker } from "@faker-js/faker";
+import {faker} from '@faker-js/faker';
 
 const testUser = {
   userId: faker.datatype.uuid(),
@@ -39,7 +39,7 @@ const testUser = {
   avatar: faker.image.avatar(),
   password: faker.internet.password(),
   birthdate: faker.date.birthdate(),
-  registeredAt: faker.date.past(),
+  registeredAt: faker.date.past()
 };
 
 const mockedFunction = jest.fn().mockReturnValue(testUser);

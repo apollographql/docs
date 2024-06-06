@@ -27,7 +27,7 @@ graph LR
     G -.-> F
 ```
 
-Allowing teams to independently update the components they own is a key benefit of federation. However, understanding and de-risking changes to a component can be challenging, especially because changes might require cascading changes in other components. This is especially true for GraphQL schema definitions, which must be coordinated between subgraph services and the Apollo Router.
+Allowing teams to independently update the components they own is a key benefit of federation. However, understanding and de-risking changes to a component can be challenging, especially because changes might require cascading changes in other components. This is especially true for GraphQL schema definitions, which must be coordinated between subgraph services and the router.
 
 This document will cover the basic release steps that involve changes to an existing [supergraph API](/federation/federated-types/overview). We will not go into depth on deploying changes to runtime code or the router runtime configuration. Specifically, we'll examine two scenarios, both of which involve introducing changes to an existing federated API schema
 
