@@ -3,7 +3,7 @@ import EditOnGitHub from './EditOnGitHub';
 import InlineCode from '../InlineCode';
 import Markdown from 'react-markdown';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import RelativeLink, {ButtonLink, PrimaryLink} from '../RelativeLink';
 import {ArrowRightIcon} from '../Icons';
 import {
@@ -35,8 +35,6 @@ PaddedMarkdownCodeBlock.propTypes = {
 };
 
 const ClickableHeading = ({as, fontSize, fontWeight, id, children}) => {
-  const [triggerScroll, setTriggerScroll] = useState(false);
-
   const handleCopyClick = () => {
     if (id) {
       const basePath = window.location.origin + window.location.pathname;
@@ -47,23 +45,13 @@ const ClickableHeading = ({as, fontSize, fontWeight, id, children}) => {
       const newUrl = headingLink;
       window.history.pushState({path: newUrl}, '', newUrl);
 
-      // Trigger the scroll action
-      setTriggerScroll(true);
-    }
-  };
-
-  useEffect(() => {
-    if (triggerScroll) {
       // Scroll to the heading
       const headingElement = document.getElementById(id);
       if (headingElement) {
-        headingElement.scrollIntoView({block: 'start'});
+        headingElement.scrollIntoView();
       }
-
-      // Reset the trigger
-      setTriggerScroll(false);
     }
-  }, [triggerScroll, id]);
+  };
 
   return (
     <Heading
