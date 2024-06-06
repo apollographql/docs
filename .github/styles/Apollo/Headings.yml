@@ -47,6 +47,7 @@ exceptions:
   - GitHub
   - GraphOS
   - GraphOS Cloud on AWS
+  - GraphOS Router
   - GraphOS Studio
   - GraphQL
   - GraphQL Summit
