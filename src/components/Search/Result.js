@@ -4,7 +4,6 @@ import React from 'react';
 import ResultIcon from './ResultIcon';
 import {Box, Flex, chakra, useColorMode} from '@chakra-ui/react';
 import {ChevronRightIcon} from '../Icons';
-import {makeGlossaryTermId} from '../GlossaryPage/Results';
 
 export default function Result({item, ...props}) {
   const {text, title, sectionTitle, description, term} = item._highlightResult;
