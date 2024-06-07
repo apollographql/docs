@@ -68,12 +68,14 @@ import {ReactComponent as Unlock} from '@apollo/icons/default/IconUnlock.svg';
 import {ReactComponent as WidenViewport} from '@apollo/icons/default/IconWidenViewport.svg';
 import {ReactComponent as Youtube} from '@apollo/icons/default/IconYouTubeSolid.svg';
 
-const CustomIcon = ({icon, isSolid, boxSize, ...props}) => {
+const CustomIcon = ({icon, isSolid, boxSize, style, ...props}) => {
+  console.log('props', props);
   return (
     <Box
       as={icon}
       boxSize={boxSize ? boxSize : '1em'}
       fill={isSolid ? 'current' : 'none'}
+      style={style}
       {...props}
     />
   );
@@ -82,6 +84,7 @@ const CustomIcon = ({icon, isSolid, boxSize, ...props}) => {
 CustomIcon.propTypes = {
   icon: PropTypes.elementType.isRequired,
   isSolid: PropTypes.bool,
+  style: PropTypes.string,
   boxSize: PropTypes.string
 };
 
@@ -125,7 +128,7 @@ export const FederationIcon = () => <CustomIcon icon={Federation} />;
 export const FlaskIcon = () => <CustomIcon icon={Flask} />;
 export const GitHubIcon = () => <CustomIcon isSolid icon={GitHub} />;
 export const GraphOSIcon = () => <CustomIcon icon={Schema} />;
-export const GraphQLIcon = () => <CustomIcon icon={GraphQL} />;
+export const GraphQLIcon = props => <CustomIcon icon={GraphQL} {...props} />;
 export const GridIcon = () => <CustomIcon icon={LayoutModule} />;
 export const HomeIcon = () => <CustomIcon icon={Home} />;
 export const InsightsIcon = () => <CustomIcon icon={Insights} />;
