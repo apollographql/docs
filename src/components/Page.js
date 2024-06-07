@@ -25,6 +25,15 @@ import useLocalStorage from 'react-use/lib/useLocalStorage';
 import {ReactComponent as ApolloLogo} from '@apollo/icons/logos/LogoType.svg';
 import {ReactComponent as ApolloMark} from '@apollo/icons/logos/LogoSymbol.svg';
 import {
+  ApolloMarkIcon,
+  DiscordIcon,
+  DoubleChevronLeftIcon,
+  DoubleChevronRightIcon,
+  GitHubIcon,
+  GraphQLIcon,
+  QuoteIcon
+} from './Icons';
+import {
   Box,
   Button,
   HStack,
@@ -47,13 +56,6 @@ import {
 } from '@chakra-ui/react';
 import {Caution} from './Caution';
 import {CustomHeading, MinVersionTag} from './CustomHeading';
-import {
-  DiscordIcon,
-  DoubleChevronLeftIcon,
-  DoubleChevronRightIcon,
-  GitHubIcon,
-  QuoteIcon
-} from './Icons';
 import {
   EmbeddableExplorer,
   MarkdownCodeBlock,
@@ -239,6 +241,8 @@ const mdxComponents = {
   PreviewFeature,
   ApolloLogo,
   ApolloMark,
+  GraphQLIcon,
+  ApolloMarkIcon,
   TrackableButton,
   TrackableLink,
   useApiDocContext,
