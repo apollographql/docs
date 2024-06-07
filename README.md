@@ -137,7 +137,7 @@ The docs content is written and maintained in the following places. Many of them
 - [Apollo Kotlin](https://github.com/apollographql/apollo-kotlin)
 - [Apollo Federation](https://github.com/apollographql/federation)
 - [Rover CLI](https://github.com/apollographql/rover)
-- [Apollo Router Core](https://github.com/apollographql/router)
+- [The Apollo Router Core](https://github.com/apollographql/router)
 
 ## Docset configuration
 

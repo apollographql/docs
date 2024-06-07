@@ -114,7 +114,7 @@ A router deployment might fail due to a platform incident or schema composition 
 
 ## Router version updates
 
-Apollo manages the version of Apollo Router Core deployed to cloud routers. It ensures that newly released versions are deployed within 30 days of release. Some minor and patch versions may be skipped.
+Apollo manages the Apollo Router Core version deployed to cloud routers. It ensures that newly released versions are deployed within 30 days of release. Some minor and patch versions may be skipped.
 
 Router releases go through rigorous testing before deployment on GraphOS Cloud. An Apollo engineer oversees deployment. If any cloud routers fail to boot up, they roll back to a previous version. While some edge cases may arise—for example, a query planner update could result in slightly degraded performance—router updates should not disrupt your supergraphs.
 
