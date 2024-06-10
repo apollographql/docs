@@ -28,7 +28,7 @@ export default function StudioButton() {
         });
       }}
     >
-      Launch GraphOS Studio
+      {user ? 'Launch GraphOS Studio' : 'Start for Free'}
     </Button>
   );
 }
