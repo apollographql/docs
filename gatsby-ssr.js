@@ -28,6 +28,16 @@ const headComponents = [
         `
     }}
   />,
+  //   <script type="text/javascript">
+  // 	window.ATL_JQ_PAGE_PROPS = {
+  // 		"triggerFunction": function(showCollectorDialog) {
+  // 			jQuery("#jira-issue-collector").click(function(e) {
+  // 				e.preventDefault();
+  // 				showCollectorDialog();
+  // 			});
+  // 		}
+  // 	};
+  // </script>,
   <style
     key="font-face"
     dangerouslySetInnerHTML={{
