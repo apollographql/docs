@@ -89,5 +89,6 @@ exceptions:
   - Visual
   - VS
   - WebSockets?
+  - Which types of data do the GraphOS Router and Apollo Server send to GraphOS?
   - Windows
   - Zipkin
