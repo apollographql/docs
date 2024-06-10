@@ -198,9 +198,13 @@ const components = {
   ),
   blockquote: Blockquote,
   img: props => {
+    const {noZoom, ...rest} = props;
+    if (noZoom) {
+      return <img {...rest} />;
+    }
     return (
       <Zoom>
-        <img {...props} />
+        <img {...rest} />
       </Zoom>
     );
   },
