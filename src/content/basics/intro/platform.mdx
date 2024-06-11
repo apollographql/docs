@@ -128,7 +128,7 @@ flowchart LR;
 * Backing data sources (databases, REST APIs, etc.)
     * Your subgraphs use these to populate data for incoming queries.
 
-The diagram above shows a basic supergraph with a , two subgraphs, and two corresponding data sources.
+The diagram above shows a basic supergraph with a GraphOS Router, two subgraphs, and two corresponding data sources.
 
 The following video provides a helpful visualization of how the Apollo Federation architecture helps organizations scale with their data:
 
@@ -163,7 +163,7 @@ For enterprise organizations that need to run their router in their own infrastr
 
 - [The GraphOS Router](/router/) (strongly recommended)
     - The GraphOS Router is powered by the Apollo Router Core—a high-performance binary written in Rust that adds [minimal latency to request processing](https://www.apollographql.com/blog/announcement/backend/apollo-router-our-graphql-federation-runtime-in-rust/), even with extremely high traffic.
-    - Because the Apollo Router Core is a precompiled binary, you don't need to write any boilerplate code around it to deploy it to your backend. All it needs is a configuration file for any behavior you want to customize.
+    - Because the Apollo Router Core is released as a precompiled binary, you don't need to write any boilerplate code around it to deploy it to your backend. All it needs is a configuration file for any behavior you want to customize.
     - Cloud supergraph routers use the GraphOS Router under the hood.
 - [Apollo Server](/apollo-server/using-federation/apollo-gateway-setup) with `@apollo/gateway`
     - This is Apollo's open-source Node.js GraphQL server library, which you can configure to act as a supergraph gateway.
