@@ -28,9 +28,9 @@ type User {
 }
 ```
 
-<br/>
+<br />
 Use instead:
-<br/>
+<br />
 
 ```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 type User {
@@ -55,9 +55,9 @@ type Query {
 }
 ```
 
-<br/>
+<br />
 Use instead:
-<br/>
+<br />
 
 ```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 type Query {
@@ -93,9 +93,9 @@ type streamingService { # camelCase
 }
 ```
 
-<br/>
+<br />
 Use instead:
-<br/>
+<br />
 
 ```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 # highlight-start
@@ -121,9 +121,9 @@ type TypeBook { # highlight-line
 }
 ```
 
-<br/>
+<br />
 Use instead:
-<br/>
+<br />
 
 ```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 type Book { # highlight-line
@@ -147,9 +147,9 @@ type BookType { # highlight-line
 }
 ```
 
-<br/>
+<br />
 Use instead:
-<br/>
+<br />
 
 ```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 type Book { # highlight-line
@@ -158,7 +158,6 @@ type Book { # highlight-line
 ```
 
 </RuleExpansionPanel>
-
 
 ### Objects
 
@@ -176,9 +175,9 @@ type ObjectBook { # highlight-line
 }
 ```
 
-<br/>
+<br />
 Use instead:
-<br/>
+<br />
 
 ```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 type Book { # highlight-line
@@ -202,9 +201,9 @@ type BookObject { # highlight-line
 }
 ```
 
-<br/>
+<br />
 Use instead:
-<br/>
+<br />
 
 ```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 type Book { # highlight-line
@@ -213,7 +212,6 @@ type Book { # highlight-line
 ```
 
 </RuleExpansionPanel>
-
 
 ### Interfaces
 
@@ -232,9 +230,9 @@ interface InterfaceBook { # highlight-line
 }
 ```
 
-<br/>
+<br />
 Use instead:
-<br/>
+<br />
 
 ```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 interface Book { # highlight-line
@@ -260,9 +258,9 @@ interface BookInterface { # highlight-line
 }
 ```
 
-<br/>
+<br />
 Use instead:
-<br/>
+<br />
 
 ```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 interface Book { # highlight-line
@@ -272,7 +270,6 @@ interface Book { # highlight-line
 ```
 
 </RuleExpansionPanel>
-
 
 ### Inputs and arguments
 
@@ -292,9 +289,9 @@ type Mutation {
 }
 ```
 
-<br/>
+<br />
 Use instead:
-<br/>
+<br />
 
 ```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 type Mutation {
@@ -321,9 +318,9 @@ input BlogPostDetails { #highlight-line
 }
 ```
 
-<br/>
+<br />
 Use instead:
-<br/>
+<br />
 
 ```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 input BlogPostDetailsInput { #highlight-line
@@ -352,9 +349,9 @@ enum Amenity {
 }
 ```
 
-<br/>
+<br />
 Use instead:
-<br/>
+<br />
 
 ```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 enum Amenity {
@@ -382,9 +379,9 @@ enum EnumResidence { # highlight-line
 }
 ```
 
-<br/>
+<br />
 Use instead:
-<br/>
+<br />
 
 ```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 enum Residence { # highlight-line
@@ -412,9 +409,9 @@ enum ResidenceEnum { # highlight-line
 }
 ```
 
-<br/>
+<br />
 Use instead:
-<br/>
+<br />
 
 ```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 enum Residence { # highlight-line
@@ -445,9 +442,9 @@ type Query {
 }
 ```
 
-<br/>
+<br />
 Use instead:
-<br/>
+<br />
 
 ```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 enum RoleInput { # highlight-line
@@ -481,9 +478,9 @@ type Query {
 }
 ```
 
-<br/>
+<br />
 Use instead:
-<br/>
+<br />
 
 ```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 enum Role { # highlight-line
@@ -512,9 +509,9 @@ The following example violates the rule:
 directive @SpecialField on FIELD_DEFINITION # PascalCase
 ```
 
-<br/>
+<br />
 Use instead:
-<br/>
+<br />
 
 ```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 directive @specialField on FIELD_DEFINITION # camelCase
@@ -575,15 +572,15 @@ type User {
 }
 ```
 
-<br/>
+<br />
 Use instead:
-<br/>
+<br />
 
 ```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 "Represents a user"
 type User {
- "A username must be [8-64] characters."
- username: String!
+  "A username must be [8-64] characters."
+  username: String!
 }
 ```
 
@@ -612,9 +609,9 @@ type Query {
 }
 ```
 
-<br/>
+<br />
 Use instead:
-<br/>
+<br />
 
 ```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 type Book {
@@ -662,9 +659,11 @@ query GetUsers {
 >
 
 This example shows correct `@contact` directive usage:
-<br/>
+
+<br />
 
 ```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
+"Annotate a schema with contact information for the subgraph owner"
 directive @contact(
   "Contact title of the subgraph owner"
   name: String!
@@ -699,9 +698,9 @@ type Product {
 }
 ```
 
-<br/>
+<br />
 Use instead:
-<br/>
+<br />
 
 ```graphql title="✅ schema.graphql" disableCopy=true showLineNumbers=false
 type Product {
