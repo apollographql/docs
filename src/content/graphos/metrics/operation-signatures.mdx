@@ -52,13 +52,25 @@ Apollo libraries use a [signature algorithm](#signature-algorithm) to generate t
 
 <Note>
 
-This algorithm is subject to change. This article describes the signature algorithm as of the release of Apollo Server 3.6.1. It is provided here for informational purposes, not as a canonical specification.
+This signature algorithm is subject to change. It is provided here for informational purposes, not as a canonical specification.
 
 </Note>
 
 Feel free to [jump to an example](#example-signature) or [view the source](https://github.com/apollographql/apollo-utils/blob/main/packages/usageReporting/src/signature.ts).
 
 The signature algorithm performs the following modifications on an operation to generate its signature:
+
+1. Transform in-line argument values.
+2. Remove extraneous characters.
+3. Reorder definitions.
+
+<EnterpriseFeature>
+
+Enterprise organizations using a self-hosted GraphOS Router can enable enhanced operation signature generation.
+Enhanced operation signatures include input object types and field aliases.
+See the [router configuration page](/router/configuration/overview#enhanced-operation-signature-normalization) to learn more.
+
+</EnterpriseFeature>
 
 ### 1. Transform in-line argument values
 
@@ -68,11 +80,15 @@ If an operation includes any in-line argument values, the algorithm transforms t
 - `Int` and `Float` values are replaced with `0`.
 - `String`, list, and object values are replaced with their "empty" counterpart (`""`, `[]`, or `{}`).
 
-<Note>
-
 Argument values provided as GraphQL variable names are preserved.
 
-</Note>
+<EnterpriseFeature>
+
+Enterprise organizations using a self-hosted GraphOS Router can enable enhanced operation signature generation.
+Enhanced operation signatures include the form of the input object type, while still redacting any of the actual values.
+See the [router configuration page](/router/configuration/overview#enhanced-operation-signature-normalization) to learn more.
+
+</EnterpriseFeature>
 
 ### 2. Remove extraneous characters
 
@@ -105,6 +121,13 @@ Within each of these, sorting is alphanumeric by field name or fragment name.
 ##### Field aliases
 
 All field aliases are removed. If an operation includes three instances of the same field with different aliases, then that field is listed in the signature three times with its non-aliased name.
+
+<EnterpriseFeature>
+
+Enterprise organizations using a self-hosted GraphOS Router can enable enhanced operation signature generation that does not remove field aliases.
+See the [router configuration page](/router/configuration/overview#enhanced-operation-signature-normalization) to learn more.
+
+</EnterpriseFeature>
 
 #### Directives and arguments
 
