@@ -129,6 +129,12 @@ You can use the [usage reporting plugin's `rewriteError` option](/apollo-server/
 
 The Apollo Router and Apollo Server both report a normalized string representation of each query operation to GraphOS. By default, this [normalization algorithm](/graphos/metrics/operation-signatures/) strips out string literals that are passed as arguments. However, we highly recommend that users do not include sensitive data (such as passwords or personally identifiable information) in operation strings. Instead, include this information in [GraphQL variables](#graphql-variable-values), which you can send selectively.
 
+<Note>
+
+If you enable enhanced operation signature normalization in the router, the operation signature includes the form of the input object type, while redacting any of the actual values. [Learn more.](/router/configuration/overview#enhanced-operation-signature-normalization)
+
+</Note>
+
 ### Operation traces
 
 If you're using the Apollo Router, your subgraphs can include operation trace data in each of their responses to the router. This data includes timing information for each resolver that contributed to the operation.
