@@ -26,7 +26,7 @@
         "Incremental Subgraph Migration": "https://www.apollographql.com/docs/federation/entities-advanced/#incremental-migration-with-progressive-override",
         "Safelisting with Persisted Queries": "https://www.apollographql.com/docs/router/configuration/persisted-queries",
         "Operation Limits": "https://www.apollographql.com/docs/router/configuration/operation-limits",
-        "Demand Controls": "https://www.apollographql.com/docs/router/configuration/demand-control",
+        "Demand Controls": "https://www.apollographql.com/docs/router/executing-operations/demand-control/",
         "External Coprocessing": "https://www.apollographql.com/docs/router/customizations/coprocessor"
       }
     },
