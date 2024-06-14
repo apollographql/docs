@@ -64,14 +64,6 @@ The signature algorithm performs the following modifications on an operation to 
 2. Remove extraneous characters.
 3. Reorder definitions.
 
-<EnterpriseFeature>
-
-Enterprise organizations using a self-hosted GraphOS Router can enable enhanced operation signature generation.
-Enhanced operation signatures include input object types and field aliases.
-See the [router configuration page](/router/configuration/overview#enhanced-operation-signature-normalization) to learn more.
-
-</EnterpriseFeature>
-
 ### 1. Transform in-line argument values
 
 If an operation includes any in-line argument values, the algorithm transforms those values according to their type:
@@ -82,13 +74,13 @@ If an operation includes any in-line argument values, the algorithm transforms t
 
 Argument values provided as GraphQL variable names are preserved.
 
-<EnterpriseFeature>
+<Note>
 
-Enterprise organizations using a self-hosted GraphOS Router can enable enhanced operation signature generation.
-Enhanced operation signatures include the form of the input object type, while still redacting any of the actual values.
+Organizations using the GraphOS Router can enable enhanced operation signature generation.
+Enhanced operation signatures include the input object shapes, while still redacting actual values.
 See the [router configuration page](/router/configuration/overview#enhanced-operation-signature-normalization) to learn more.
 
-</EnterpriseFeature>
+</Note>
 
 ### 2. Remove extraneous characters
 
@@ -122,12 +114,12 @@ Within each of these, sorting is alphanumeric by field name or fragment name.
 
 All field aliases are removed. If an operation includes three instances of the same field with different aliases, then that field is listed in the signature three times with its non-aliased name.
 
-<EnterpriseFeature>
+<Note>
 
-Enterprise organizations using a self-hosted GraphOS Router can enable enhanced operation signature generation that does not remove field aliases.
+Organizations using the GraphOS Router can enable enhanced operation signature generation that does not remove field aliases.
 See the [router configuration page](/router/configuration/overview#enhanced-operation-signature-normalization) to learn more.
 
-</EnterpriseFeature>
+</Note>
 
 #### Directives and arguments
 
@@ -186,7 +178,7 @@ However, you should not rely on this. Ideally, your sensitive data should never 
 
 Since Apollo Router [v1.43.1](https://github.com/apollographql/router/releases/tag/v1.43.1), the router adds operation signatures to request contexts at the `apollo_operation_signature` key. You can also use the router's native logging features to log context values as [trace attributes](/router/configuration/telemetry/instrumentation/selectors) or you can read the context via [Rhai scripts](/router/customizations/rhai#manipulating-headers-and-the-request-context) or [coprocessors](/router/customizations/coprocessor).
 
-Since router [v1.49.0](https://github.com/apollographql/router/releases/tag/v1.49.0), enterprise organizations running a self-hosted router can enable enhanced operation signature generation that includes include input object types and field aliases.
+With router [v1.49.0](https://github.com/apollographql/router/releases/tag/v1.49.0) and later, you can enable enhanced operation signature generation that includes include input object types and field aliases.
 See the [router configuration page](/router/configuration/overview#enhanced-operation-signature-normalization) to learn more.
 
 ### Apollo Server
