@@ -165,7 +165,7 @@ From your graph's **Checks** page in GraphOS Studio, you can click a particular 
 
 ## Operation checks
 
-If a [composition check](#composition-checks) succeeds, GraphOS then validates schema changes with _operation checks_. These checks use your graph's historical client operation data to determine whether any clients would be negatively affected by the proposed schema changes. For example, if changes include removing a field that multiple clients use in their queries, an operation check would flag the change.
+If a [composition check](#composition-checks) succeeds, GraphOS then validates schema changes with _operation checks_. Operation checks use your graph's historical client operation data to determine whether any clients would be negatively affected by the proposed schema changes. For example, if changes include removing a field that multiple clients use in their queries, an operation check would flag the change.
 
 ### Overriding flagged changes
 
@@ -192,7 +192,16 @@ For each operation with flagged changes, you can override those changes in the f
 - **Ignore the operation**: In this case, schema checks will completely ignore the operation when checking all changes in any future execution.
   - This option is useful when you know an operation originates only from clients or client versions that you don't actively support.
 
-#### Ignored condition settings
+You can **Undo** an override from the banner that appears on any overridden operations.
+
+<img
+  className="screenshot"
+  src="../img/schema-checks/undo-override.png"
+  alt="A banner appearing above an operation that was marked as safe. It allows users to Undo the override."
+  width="500"
+/>
+
+#### Ignored conditions settings
 
 You can update your check settings to ignore two kind of changes:
 
