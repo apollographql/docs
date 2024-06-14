@@ -6,7 +6,7 @@ description: Use GraphOS Schema checks to identify and validate potential breaki
 
 Certain changes to your graph's schema (such as removing a field or type) might break one of your application's clients. GraphOS schema checks help you identify breaking changes before you make them. They can also help you identify when a potentially dangerous change is in fact safe.
 
-You can review the results of schema checks inside GraphOS Studio from your graph's Checks page, helping you make informed decisions about evolving your graph:
+You can review the results of schema checks inside GraphOS Studio from your graph's **Checks** page, helping you make informed decisions about evolving your graph:
 
 <img
   className="screenshot"
@@ -21,15 +21,15 @@ With the exception of [contract checks](#types-of-checks), schema checks are fre
 
 GraphOS can perform the following types of schema checks:
 
-- [Composition checks](#composition-checks): For supergraphs, verify whether your proposed changes to a subgraph schema will successfully compose with your other subgraph schemas.
+- [Composition checks](#composition-checks): For supergraphs, verify whether your proposed changes to a subgraph schema successfully compose with your other subgraph schemas.
 
-- [Operation checks](#operation-checks): Compare your proposed schema changes against historical operations to verify whether the changes will break any of your graph's active clients.
+- [Operation checks](#operation-checks): Compare your proposed schema changes against historical operations to verify whether the changes break any of your graph's active clients.
 
 - [Linter checks](./schema-linter/): Analyze your proposed schema changes for violations of formatting rules and other GraphQL best practices.
 
 - [Proposals checks](./schema-proposals/configuration#configure-schema-checks) (Enterprise only): Check whether your proposed schema changes have matching and approved [schema proposals](./schema-proposals).
 
-- [Contract checks](./contract-setup/#run-contract-checks) (Enterprise only): When running schema checks on a source variant, also check whether your proposed schema changes will break any downstream contract variants.
+- [Contract checks](./contract-setup/#run-contract-checks) (Enterprise only): When running schema checks on a source variant, also check whether your proposed schema changes break any downstream contract variants.
 
 Most of this article covers composition and operation checks.
 
@@ -131,9 +131,9 @@ The output also includes a Studio URL that provides full details on the changes 
   alt="Service check page in GraphOS Studio"
 />
 
-If you've [integrated schema checks with your GitHub PRs](#integrating-with-github), the "Details" link in your GitHub check takes you to this same details page.
+If you've [integrated schema checks with your GitHub PRs](#integrating-with-github), the **Details** link in your GitHub check takes you to this same details page.
 
-If you run a check within a Git repository, `rover subgraph check` sends both the commit hash and that hash's author to GraphOS to display on the check. If you haven't [integrated schema checks with GitHub](#integrating-with-github), the author appears as "Unknown." If you want to override author, commit, or other values, you can [set environment variables in Rover](/rover/configuring/#overriding) to do so.
+If you run a check within a Git repository, `rover subgraph check` sends both the commit hash and that hash's author to GraphOS to display on the check. If you haven't [integrated schema checks with GitHub](#integrating-with-github), the author appears as **Unknown**. If you want to override author, commit, or other values, you can [set environment variables in Rover](/rover/configuring/#overriding) to do so.
 
 ### Rerunning checks
 
@@ -145,7 +145,7 @@ You can rerun checks from GraphOS Studio. Select the check and click **Rerun che
   alt="Rerun check in GraphOS Studio"
 />
 
-When you do, the new run uses the current [check configuration options](./check-configurations/), regardless of the configuration at the time of the original run. Similarly, the new run's time window is based on the current time, not the time when the original check ran.
+When you rerun a check, the new run uses the current [check configuration options](./check-configurations/), regardless of the configuration at the time of the original run. Similarly, the new run's time window is based on the current time, not the time when the original check ran.
 
 The new checks run incorporates any changes made to excluded or included clients, checked variants, and any operations marked as safe or ignored.
 
@@ -157,15 +157,15 @@ If you've [integrated schema checks with your GitHub PRs](#integrating-with-gith
 
 ## Composition checks
 
-When you run `rover subgraph check`, GraphOS performs a _composition check_ before it performs any other checks. A composition check verifies that changes you make to a subgraph schema are valid GraphQL definitions and are compatible with your other subgraph schemas, enabling them to compose into a supergraph schema for your router ([learn more](/federation/federated-types/composition/)).
+When you run `rover subgraph check`, GraphOS performs a _composition check_ before it performs any other checks. A composition check verifies that changes you make to a subgraph schema are valid GraphQL definitions and are compatible with your other subgraph schemas, enabling them to [compose](/federation/federated-types/composition/) into a supergraph schema for your router.
 
-If a composition check fails, Studio does not then perform additional checks for the provided schema.
+If a composition check fails, Studio does not perform additional checks for the provided schema.
 
-From your graph's Checks page in GraphOS Studio, you can click a particular composition check to view its result. If composition succeeded, you can view the composed supergraph schema. Regardless of success, you can view the proposed subgraph schema.
+From your graph's **Checks** page in GraphOS Studio, you can click a particular composition check to view its result. If composition succeeded, you can view the composed supergraph schema. Regardless of success, you can view the proposed subgraph schema.
 
 ## Operation checks
 
-If a [composition check](#composition-checks) succeeds, GraphOS then validates schema changes with _operation checks_. These checks use your graph's historical client operation data to determine whether any clients would be negatively affected by the proposed schema changes. For example, the changes might include removing a field that multiple clients currently include in their queries.
+If a [composition check](#composition-checks) succeeds, GraphOS then validates schema changes with _operation checks_. These checks use your graph's historical client operation data to determine whether any clients would be negatively affected by the proposed schema changes. For example, if changes include removing a field that multiple clients use in their queries, an operation check would flag the change.
 
 ### Overriding flagged changes
 
