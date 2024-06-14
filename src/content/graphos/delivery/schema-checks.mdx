@@ -12,7 +12,7 @@ You can review the results of schema checks inside GraphOS Studio from your grap
   className="screenshot"
   src="../img/schema-checks/checks-studio.jpg"
   alt="Schema check results in Studio"
-  width="300"
+  width="500"
 />
 
 With the exception of [contract checks](#types-of-checks), schema checks are free as part of [all Apollo plans](https://www.apollographql.com/pricing/).
@@ -127,8 +127,9 @@ The output also includes a Studio URL that provides full details on the changes 
 
 <img
   className="screenshot"
-  src="../img/schema-checks/service-check-page.png"
+  src="../img/schema-checks/service-check-page.jpg"
   alt="Service check page in GraphOS Studio"
+  width="700"
 />
 
 If you've [integrated schema checks with your GitHub PRs](#integrating-with-github), the **Details** link in your GitHub check takes you to this same details page.
@@ -141,8 +142,9 @@ You can rerun checks from GraphOS Studio. Select the check and click **Rerun che
 
 <img
   className="screenshot"
-  src="../img/schema-checks/rerun-check.png"
+  src="../img/schema-checks/rerun-check.jpg"
   alt="Rerun check in GraphOS Studio"
+  width="300"
 />
 
 When you rerun a check, the new run uses the current [check configuration options](./check-configurations/), regardless of the configuration at the time of the original run. Similarly, the new run's time window is based on the current time, not the time when the original check ran.
@@ -176,11 +178,11 @@ You can override flagged changes on an operation-by-operation basis or update yo
 #### Override changes per operation
 
 [**Org admins** and **Graph admins**](../org/members) can override flagged changes on an operation-by-operation basis in GraphOS Studio.
-From the associated check's details page, select the **Override** dropdown next to a flagged operation:
+From the associated check's details page, select the **Override** dropdown under a flagged operation:
 
 <img
   className="screenshot"
-  src="../img/schema-checks/mark-operation.png"
+  src="../img/schema-checks/mark-operation.jpg"
   alt="Service check page in GraphOS Studio"
   width="500"
 />
@@ -196,9 +198,9 @@ You can **Undo** an override from the banner that appears on any overridden oper
 
 <img
   className="screenshot"
-  src="../img/schema-checks/undo-override.png"
+  src="../img/schema-checks/undo-override.jpg"
   alt="A banner appearing above an operation that was marked as safe. It allows users to Undo the override."
-  width="500"
+  width="700"
 />
 
 #### Ignored conditions settings
@@ -209,6 +211,7 @@ You can update your check settings to ignore two kind of changes:
 - **Ignore default value changes**: Turning this setting on ignores any changes to default values.
 
 You enable these settings from the **Configuration** tab of your variant's **Checks** page.
+Learn about other checks settings in the [Configure Schema Checks page](./check-configurations).
 
 ## Linter checks
 
@@ -278,7 +281,7 @@ If you're using GitHub, you can install the [Apollo Studio GitHub app](https://g
 
 <img
   className="screenshot"
-  src="../img/schema-checks/github-check.png"
+  src="../img/schema-checks/github-check.jpg"
   alt="GitHub Status View"
 />
 
