@@ -36,6 +36,10 @@
       "Overview": "/notifications",
       "Daily reports": "/notifications/daily-reports",
       "Schema changes": "/notifications/schema-change-integration",
+      "Schema proposals": [
+        "/notifications/schema-proposal-integration",
+        ["enterprise"]
+    ],
       "Performance alerts": [
         "/notifications/performance-alerts",
         [
