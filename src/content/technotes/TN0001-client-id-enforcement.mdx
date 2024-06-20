@@ -1,7 +1,7 @@
 ---
 title: Client ID Enforcement
 subtitle: Require client details and operation names to help monitor schema usage
-description: Improve GraphQL operation monitoring by tagging operations with with client details. See code examples for Apollo Router and Apollo Server.
+description: Improve GraphQL operation monitoring by tagging operations with with client details. See code examples for Apollo GraphOS Router and Apollo Server.
 published: 2022-05-31
 id: TN0001
 tags: [server, observability, router]
@@ -13,9 +13,9 @@ Clients can (and should) also [name their GraphQL operations](/react/data/operat
 
 Together, these pieces of information help teams monitor their graph and make changes to it safely. We strongly encourage that your GraphQL gateway require client details and operation names from all requesting clients.
 
-## Enforcing in Apollo Router
+## Enforcing in GraphOS Router
 
-The Apollo Router supports client awareness by default if the client sets the `apollographql-client-name` and `apollographql-client-id` in their requests. These values can be overridden using the [router configuration file](/router/managed-federation/client-awareness/) directly.
+The GraphOS Router supports client awareness by default if the client sets the `apollographql-client-name` and `apollographql-client-id` in their requests. These values can be overridden using the [router configuration file](/router/managed-federation/client-awareness/) directly.
 
 Client headers can also be enforced using a [Rhai script](/router/customizations/rhai) on every incoming request.
 
@@ -128,7 +128,7 @@ If clients are already consuming your graph and are not providing client metadat
 
 If you have other existing headers in your HTTP requests that can be parsed to extract some client info, you can extract the info from there.
 
-#### Apollo Router
+#### GraphOS Router
 
 Client awareness headers should be overridden using the [router configuration file](/router/managed-federation/client-awareness/#overriding-client-awareness-headers) to use the appropriate header names.
 

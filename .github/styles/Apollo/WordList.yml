@@ -61,7 +61,7 @@ swap:
   "synch": sync
   "towards": toward
   "the CLI": the Rover CLI
-  "the Router": the Apollo Router
+  "the Router": GraphOS Router
   "the Sandbox": "Apollo Sandbox"
   "Typescript": TypeScript
   "URL": URL

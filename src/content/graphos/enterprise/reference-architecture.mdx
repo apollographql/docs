@@ -6,17 +6,17 @@ description: Learn about the fundamental concepts and configuration underlying A
 
 <EnterpriseFeature>
 
-While you can run the Apollo Router regardless of your Apollo plan, connecting the router to GraphOS requires an [Enterprise plan](https://www.apollographql.com/pricing#graphos-router). You can test it out by signing up for a free [Enterprise trial](https://studio.apollographql.com/signup?type=enterprise-trial&referrer=docs-content).
+While you can run the Apollo Router Core regardless of your Apollo plan, connecting the router to GraphOS and using a GraphOS Router requires an [Enterprise plan](https://www.apollographql.com/pricing#graphos-router). You can test it out by signing up for a free [Enterprise trial](https://studio.apollographql.com/signup?type=enterprise-trial&referrer=docs-content).
 
 </EnterpriseFeature>
 
-In this guide, learn about the fundamental concepts and configuration underlying Apollo's reference architecture for enterprise deployment of GraphOS with a self-hosted router. Use this overview as a companion reference to the [Apollo reference architecture repository](https://github.com/apollosolutions/reference-architecture).
+In this guide, learn about the fundamental concepts and configuration underlying Apollo's reference architecture for enterprise deployment of GraphOS with a self-hosted GraphOS Router. Use this overview as a companion reference to the [Apollo reference architecture repository](https://github.com/apollosolutions/reference-architecture).
 
 ## About Apollo's reference architecture
 
-In a modern cloud-native stack, your components must be scalable with high availability. The [Apollo Router](/router) is built with this in mind. The router is [much faster and less resource-intensive than the Apollo Gateway](https://www.apollographql.com/blog/announcement/backend/apollo-router-our-graphql-federation-runtime-in-rust/#apollo-router-vs-apollo-gateway-benchmarks), Apollo's original runtime.
+In a modern cloud-native stack, your components must be scalable with high availability. The Apollo Router Core is built with this in mind. The router is [much faster and less resource-intensive than the Apollo Gateway](https://www.apollographql.com/blog/announcement/backend/apollo-router-our-graphql-federation-runtime-in-rust/#apollo-router-vs-apollo-gateway-benchmarks), Apollo's original runtime.
 
-Apollo provides a reference architecture for self-hosting the router and subgraphs in an enterprise cloud environment using Kubernetes and Helm. It demonstrates how to deploy the router and subgraphs in a cloud environment, including the use of [Apollo GraphOS](/graphos) and the following enterprise features of the Apollo Router:
+Apollo provides a reference architecture for self-hosting the router and subgraphs in an enterprise cloud environment using Kubernetes and Helm. It demonstrates how to deploy the router and subgraphs in a cloud environment, including the use of [Apollo GraphOS](/graphos) and the following enterprise GraphOS Router features:
 
 - [Authentication/Authorization directives](/router/configuration/authorization) within the schema to secure your supergraph
 - [External coprocessing](/router/customizations/coprocessor) to enable complex customizations to the router
@@ -351,9 +351,9 @@ flowchart LR
 
 ## Further reading
 
-- [Apollo Router introduction](/router/)
-- [Containerizing the Apollo Router](/router/containerization/overview)
-- [Managing Apollo Router resources in Kubernetes](/technotes/TN0016-router-resource-management/)
-- [Sending Apollo Router operation metrics to GraphOS](/router/configuration/telemetry/apollo-telemetry)
-- [OpenTelemetry tracing in the Apollo Router](/router/configuration/telemetry/exporters/tracing/otlp)
-- [Enterprise features of the Apollo Router](/router/enterprise-features)
+- [Router introduction](/router/)
+- [Containerizing the router](/router/containerization/overview)
+- [Managing router resources in Kubernetes](/technotes/TN0016-router-resource-management/)
+- [Sending router operation metrics to GraphOS](/router/configuration/telemetry/apollo-telemetry)
+- [OpenTelemetry tracing in the router](/router/configuration/telemetry/exporters/tracing/otlp)
+- [Enterprise features of the router](/router/enterprise-features)

@@ -1,5 +1,5 @@
 ---
-title: Enabling HTTP Subscriptions with the Apollo Router and an API Gateway
+title: Enabling HTTP Subscriptions with the GraphOS Router and an API Gateway
 subtitle: Enable HTTP multipart subscriptions when using an API gateway in front of the router
 description: Enable HTTP multipart subscriptions when using an API gateway in front of the router.
 published: 2024-03-11
@@ -7,9 +7,9 @@ id: TN0047
 tags: [router]
 ---
 
-Learn how to configure an API gateway to support HTTP multipart subscriptions with the Apollo Router.
+Learn how to configure an API gateway to support HTTP multipart subscriptions with the GraphOS Router.
 
-Organizations can require their APIs—including [the Apollo Router](/technotes/TN0037-api-gateways)—to be fronted by an API gateway. API gateways often aren't configured to support [subscriptions over HTTP multipart](/router/executing-operations/subscription-support#http-callback-setup): API gateways by default usually buffer HTTP responses, but subscriptions over HTTP multipart require multipart responses to be streamed, not buffered.
+Organizations can require their APIs—including [the router](/technotes/TN0037-api-gateways)—to be fronted by an API gateway. API gateways often aren't configured to support [subscriptions over HTTP multipart](/router/executing-operations/subscription-support#http-callback-setup): API gateways by default usually buffer HTTP responses, but subscriptions over HTTP multipart require multipart responses to be streamed, not buffered.
 
 The rest of this article describes how to configure API gateways from different vendors to stream and not buffer HTTP responses, therefore supporting subscriptions over HTTP multipart.
 

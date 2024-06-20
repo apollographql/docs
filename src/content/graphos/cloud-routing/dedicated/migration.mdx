@@ -10,7 +10,7 @@ GraphOS supports [self-hosted and cloud graphs](../../graphs/#graph-types), each
 
 - You have multiple GraphQL APIs you want to compose into a supergraph.
 - You have one or more self-hosted GraphQL APIs and want to use GraphOS features beyond graph composition, for example, [`@defer` support](/router/executing-operations/defer-support/) or [metrics reporting](../../metrics/).
-- You have a self-hosted supergraph and want to offload the management of your router service to Apollo while retaining or gaining access to premium router features like [subscription support](/router/executing-operations/subscription-support/), [authentication](/router/configuration/authn-jwt), and [more](/router/enterprise-features). Your router service may be either the Apollo Router or the `@apollo/gateway` package.
+- You have a self-hosted supergraph and want to offload the management of your router service to Apollo while retaining or gaining access to premium router features like [subscription support](/router/executing-operations/subscription-support/), [authentication](/router/configuration/authn-jwt), and [more](/router/enterprise-features). Your router service may be either the GraphOS Router or the `@apollo/gateway` package.
 
 GraphOS offers two tiers of cloud routing: Serverless and Dedicated. This guide focuses on considerations when migrating to [Dedicated](./). Refer to [this router comparison](/graphos/routing#router-comparison) to learn about the differences.
 
@@ -22,11 +22,11 @@ Dedicated cloud routers currently support all [premium router features](/router/
 
 ## Migrating from `@apollo/gateway`
 
-Cloud routers use the same [Apollo Router binary](https://github.com/apollographql/router) that you can self-host. Therefore, migrating from [`@apollo/gateway`](/apollo-server/using-federation/api/apollo-gateway/) entails migrating to the Apollo Router. Refer to the [Gateway migration guide](/router/migrating-from-gateway/) for tips.
+Cloud routers use the same [Apollo Router Core binary](https://github.com/apollographql/router) that you can self-host. Therefore, migrating from [`@apollo/gateway`](/apollo-server/using-federation/api/apollo-gateway/) entails migrating to the Apollo Router Core. Refer to the [Gateway migration guide](/router/migrating-from-gateway/) for tips.
 
 ## Router customizations
 
-The Apollo Router supports a [few avenues for customization](/router/customizations/overview):
+The GraphOS Router supports a [few avenues for customization](/router/customizations/overview):
 
 - Custom router binaries
 - Rhai scripting
@@ -41,11 +41,11 @@ Built-in router features that you may have previously supported with customizati
 - [Telemetry and monitoring](/router/configuration/telemetry/overview)
 - [Traffic shaping](/router/configuration/traffic-shaping)
 
-See the [Apollo Router documentation](/router/) for a full list of features.
+See the [GraphOS Router documentation](/router/) for a full list of features.
 
 ## Migration
 
-Once your implementation is ready to run on the Apollo Router, including customizations, you can follow the [Dedicated quickstart](./quickstart) to get started.
+Once your implementation is ready to run on the router, including customizations, you can follow the [Dedicated quickstart](./quickstart) to get started.
 
 ## Pricing considerations
 

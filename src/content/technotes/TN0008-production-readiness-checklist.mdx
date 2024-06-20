@@ -1,7 +1,7 @@
 ---
 title: Production Readiness Checklist
 subtitle: Use this checklist to identify potential gaps before your graph handles production traffic
-description: Use this checklist—covering the Apollo Router, subgraphs, and clients—to identify potential gaps before your graph handles production traffic.
+description: Use this checklist—covering the GraphOS Router, subgraphs, and clients—to identify potential gaps before your graph handles production traffic.
 published: 2022-07-11
 id: TN0008
 tags: [sre, router, server, client, best-practices]
@@ -14,7 +14,7 @@ We recommend that you read through this checklist and identify critical features
 - Ensure that you've created multiple [variants](/graphos/graphs/#variants) to represent the different environments where your supergraph runs (for example, production, staging, and development).
 - [Protect your production variant](/graphos/graphs/studio-features#protected-variants-enterprise-only) to avoid accidental changes while working in Studio.
 
-## Apollo Router
+## GraphOS Router
 
 - Ensure that you've correctly configured [managed federation](/federation/managed-federation/setup/) and [GraphOS schema usage reporting](/router/configuration/telemetry/apollo-telemetry).
 - For security, [turn off introspection](/router/configuration/overview/#introspection) for all production routers (by default the router disables introspection, but make sure you are not using `--dev` mode).
@@ -26,7 +26,7 @@ We recommend that you read through this checklist and identify critical features
 - Enable [operation limits](/router/configuration/operation-limits) to block large and malicious requests
 - Configure additional [tracing, metrics, and logging](/router/configuration/telemetry/overview) through OpenTelemetry or Prometheus
 - Enable the operation and query plan [distributed cache](/router/configuration/distributed-caching)
-- Optionally, enable any [other features](/router/enterprise-features/) deemed critical for your deployment of Apollo Router
+- Optionally, enable any [other features](/router/enterprise-features/) deemed critical for your deployment of GraphOS Router
 
 ## Subgraphs/servers
 
