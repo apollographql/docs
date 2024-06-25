@@ -61,7 +61,7 @@ You can add an `@owner` directive to your supergraph using the [`@composeDirecti
 ```graphql title="subgraph-a.graphql"
 extend schema
   @link(url: "https://specs.apollo.dev/federation/v2.3", import: ["@key", "@composeDirective"])
-  @link(url: "https://graphql.mycompany.dev/owner/v1.0")
+  @link(url: "https://graphql.mycompany.dev/owner/v1.0", import: ["@owner"])
   @composeDirective(name: "@owner")
 
 directive @owner(team: String!) on OBJECT
@@ -74,7 +74,7 @@ type Product @key(fields: "id") @owner(team: "subgraph-a") {
 
 The `@owner` directive now appears in the supergraph. Because we did not define the directive as `repeatable`, subgraphs cannot define it with different arguments.
 
-<ExpansionPanel title="Click to view the supergraph schema">
+<ExpansionPanel title="Click to view the generated supergraph schema">
 
 ```graphql title="supergraph.graphql" {69}
 schema
