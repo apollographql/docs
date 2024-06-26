@@ -26,6 +26,16 @@ The Insights page presents operation and field metrics. It has two main sections
 
 This guide focuses on field metrics and information. Refer to [Operation metrics in GraphOS](./operations) for more information on the other metrics on this page, including [resolver-level traces](./operations#resolver-level-traces).
 
+<EnterpriseFeature>
+
+All plans have access to field usage insights for standard object fields.
+
+<br/>
+
+Organizations with an enterprise plan can view insights on input object fields and enum values in addition to object fields. To access these metrics you must use the Apollo Router to [report metrics](./sending-operation-metrics) and configure [extended reference reporting](/router/configuration/overview/#extended-reference-reporting) in your router.
+
+</EnterpriseFeature>
+
 ## Field details
 
 When you click a field name, you open detailed information for that field in the main insights view. This includes when the field first and last received traffic, any applied [tags](../graphs/federated-graphs/#schema-tagging), and the subgraphs that provide the field.
@@ -52,7 +62,13 @@ Each row in the **Clients & Operations** table displays some combination of the 
 | Requests            | How many operations sent by clients over a given time period included the field, according to [metrics provided by your servers](./sending-operation-metrics#reporting-field-usage-metrics) |
 | Executions          | How many times your servers have executed the resolver for the field over a given time period                                       |
 
-For each of these columns to appear on the Insights page, your GraphQL servers must [report the associated metrics to GraphOS](./sending-operation-metrics#reporting-field-usage). If some but not all your GraphQL servers report this data, the Insights page presents an incomplete picture of your graph's field usage.
+<Note>
+
+Execution metrics are only available for object fields, not input object fields or enum values.
+
+</Note>
+
+For each of these columns to appear on the **Insights** page, your GraphQL servers must [report the associated metrics to GraphOS](./sending-operation-metrics#reporting-field-usage). If some but not all your GraphQL servers report this data, the Insights page presents an incomplete picture of your graph's field usage.
 
 Take a look at the **Requests** and **Executions** for an example field:
 
