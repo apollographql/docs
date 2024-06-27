@@ -205,10 +205,15 @@ You can **Undo** an override from the banner that appears on any overridden oper
 
 #### Ignored conditions settings
 
-You can update your check settings to ignore two kind of changes:
+You can update your check settings so operation checks don't flag the following kinds of changes:
 
 - **Ignore breaking changes when there are no operations**: Turning this setting on ignores any potentially breaking changes when an operation check is run against zero operations.
 - **Ignore default value changes**: Turning this setting on ignores any changes to default values.
+
+  <Note>
+    This setting ignores default values changes but doesn't ignore default value
+    removals.
+  </Note>
 
 You enable these settings from the **Configuration** tab of your variant's **Checks** page.
 Learn about other checks settings on the [Configure Schema Checks page](./check-configurations).
