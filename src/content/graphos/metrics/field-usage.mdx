@@ -26,15 +26,61 @@ The Insights page presents operation and field metrics. It has two main sections
 
 This guide focuses on field metrics and information. Refer to [Operation metrics in GraphOS](./operations) for more information on the other metrics on this page, including [resolver-level traces](./operations#resolver-level-traces).
 
-<EnterpriseFeature>
+## Field usage metrics availability
 
-All plans have access to field usage insights for standard object fields.
+All plans have access to field usage metrics for standard object fields. For example, given a `User` type like this:
 
-<br/>
+```graphql showLineNumbers=false disableCopy=true
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  age: Int
+}
+```
 
-Organizations with an Enterprise plan can view insights on input object fields and enum values in addition to standard object fields. To access these metrics you must use the Apollo Router to [report metrics](./sending-operation-metrics) and configure [extended reference reporting](/router/configuration/overview/#extended-reference-reporting) in your router.
+All plans can view usage metrics for `User.id`, `User.name`, etc.
 
-</EnterpriseFeature>
+Only organizations with an Enterprise plan can view field usage metrics on input object fields and enum values.
+
+For example, given a `UserInput` input type like this:
+
+```graphql showLineNumbers=false disableCopy=true
+input UserInput {
+  name: String!
+  email: String!
+  password: String!
+  address: AddressInput
+}
+```
+
+Or enum values like this:
+
+```graphql showLineNumbers=false disableCopy=true
+enum InventoryStatus {
+  IN_STOCK
+  OUT_OF_STOCK
+  DISCONTINUED
+}
+```
+
+Only enterprise organizations can view usage metrics on `UserInput.name` or `InventoryStatus.IN_STOCK`.
+
+To access input and enum field metrics you must use the Apollo Router to [report metrics](./sending-operation-metrics) and configure [extended reference reporting](/router/configuration/overview/#extended-reference-reporting) in your router.
+
+You can filter field types by using the dropdown in the left sidebar on the **Insights** page:
+
+<img
+  src="../img/field-filters.jpg"
+  class="screenshot"
+  alt="Field Insights page"
+/>
+
+<Note>
+
+Field [execution metrics](#field-requests-and-executions) are only available for standard object fields, not input object fields or enum values.
+
+</Note>
 
 ## Field details
 
@@ -64,7 +110,7 @@ Each row in the **Clients & Operations** table displays some combination of the 
 
 <Note>
 
-Execution metrics are only available for object fields, not input object fields or enum values.
+Execution metrics are only available for standard object fields, not input object fields or enum values.
 
 </Note>
 
