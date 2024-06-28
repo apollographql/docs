@@ -50,12 +50,6 @@ Follow the steps below to create a new proposal:
 
 3. If you've started the proposal from a graph rather than a particular variant, select a **source variant**. The source variant's schema is used to start the proposal, but the proposal isn't kept in sync with any schema changes that occur while the proposal is in progress.
 
-   <Note>
-
-   It is not possible to create a proposal for a contract variant as these are automatically generated based on their source variant.
-
-   </Note>
-
    <Tip>
 
    **Apollo recommends creating schema proposals from development variants**.
@@ -63,6 +57,12 @@ Follow the steps below to create a new proposal:
    Proposing schema changes from a development variant minimizes the risks associated with making direct changes to a production schema. It allows for the earliest detection of issues and potential improvements.
 
    </Tip>
+
+   <Note>
+
+   You can't create proposals for contract variants since these are automatically generated based on their source variant.
+
+   </Note>
 
 4. Optionally, enter the rationale for the proposed changes. This rationale appears as your proposal's **Description** on the proposal's overview and gives collaborators and reviewers context for the proposed changes. This input accepts Markdown.
 
