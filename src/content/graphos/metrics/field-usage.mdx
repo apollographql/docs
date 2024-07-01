@@ -17,18 +17,35 @@ You can analyze the [field metrics sent by your graph](./sending-operation-metri
   src="../img/insights-fields.jpg"
   className="screenshot"
   alt="The Insights page in GraphOS Studio"
+  width="700"
 />
 
-The Insights page presents operation and field metrics. It has two main sections:
+The **Insights** page presents operation and field metrics. It has two main sections:
 
 - The collapsible left sidebar, where you can search, filter, and sort operations and fields
-- The main insights view, which displays [overall operations metrics](./operations#operation-metrics) by default, or field information and usage metrics for a single field once you select it from the left sidebar
+- The main insights view on the right
+  - This view displays [overall operations metrics](./operations#operation-metrics) by default, or field information and usage metrics for a single field once you select it from the left sidebar
+  - The types of fields you can access insights for [depend on your plan](#field-usage-metrics-availability)
 
 This guide focuses on field metrics and information. Refer to [Operation metrics in GraphOS](./operations) for more information on the other metrics on this page, including [resolver-level traces](./operations#resolver-level-traces).
 
 ## Field usage metrics availability
 
-All plans have access to field usage metrics for standard object fields. For example, given a `User` type like this:
+The collapsible left sidebar on the **Insights** page lets you filter field types you want to view usage metrics for:
+
+<img
+  src="../img/field-filters.jpg"
+  class="screenshot"
+  alt="Field Insights page left sidebar"
+  width="300"
+/>
+
+All organizations can view **object fields**, but only organization with an Enterprise plan can view usage metrics for **input fields** and **enum values**.
+
+
+### Object fields
+
+All organizations can access field usage metrics for standard object fields. For example, given a `User` type like this:
 
 ```graphql showLineNumbers=false disableCopy=true
 type User {
@@ -41,9 +58,13 @@ type User {
 
 All plans can view usage metrics for `User.id`, `User.name`, etc.
 
+### Input fields and enum values
+
 Only organizations with an Enterprise plan can view field usage metrics on input object fields and enum values.
 
-For example, given a `UserInput` input type like this:
+For example, given a `UserInput` input type or `InventoryStatus` enum values like these:
+
+<CodeColumns>
 
 ```graphql showLineNumbers=false disableCopy=true
 input UserInput {
@@ -54,8 +75,6 @@ input UserInput {
 }
 ```
 
-Or enum values like this:
-
 ```graphql showLineNumbers=false disableCopy=true
 enum InventoryStatus {
   IN_STOCK
@@ -64,17 +83,11 @@ enum InventoryStatus {
 }
 ```
 
-Only enterprise organizations can view usage metrics on `UserInput.name` or `InventoryStatus.IN_STOCK`.
+</CodeColumns>
+
+Only enterprise organizations can view usage metrics on `UserInput.name`, `UserInput.email`, etc., or `InventoryStatus.IN_STOCK`, `InventoryStatus.OUT_OF_STOCK`, etc.
 
 To access input and enum field metrics you must use the Apollo Router to [report metrics](./sending-operation-metrics) and configure [extended reference reporting](/router/configuration/overview/#extended-reference-reporting) in your router.
-
-You can filter field types by using the dropdown in the left sidebar on the **Insights** page:
-
-<img
-  src="../img/field-filters.jpg"
-  class="screenshot"
-  alt="Field Insights page"
-/>
 
 <Note>
 
