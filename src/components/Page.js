@@ -61,6 +61,7 @@ import {
   MultiCodeBlockContext
 } from '@apollo/chakra-helpers';
 import {EnterpriseFeature} from './EnterpriseFeature';
+import {ErrorCode} from './ErrorCode';
 import {ExperimentalFeature} from './ExperimentalFeature';
 import {FeedbackButton} from './FeedbackButton';
 import {Link as GatsbyLink} from 'gatsby';
@@ -81,6 +82,7 @@ import {PremiumFeature} from './PremiumFeature';
 import {PreviewFeature} from './PreviewFeature';
 import {Property} from './Property';
 import {PropertyList} from './PropertyList';
+import {RouterErrorCodes} from './RouterErrorCodes';
 import {TOTAL_HEADER_HEIGHT} from './Header';
 import {Tab} from './Tab';
 import {Tabs} from './Tabs';
@@ -225,6 +227,7 @@ const mdxComponents = {
   YouTube,
   Property,
   PropertyList,
+  ErrorCode,
   Tab,
   Tabs,
   WistiaEmbed,
@@ -247,7 +250,8 @@ const mdxComponents = {
   TrackableLink,
   useApiDocContext,
   PrimaryLink,
-  MDXRenderer
+  MDXRenderer,
+  RouterErrorCodes
 };
 
 const {processSync} = rehype()
