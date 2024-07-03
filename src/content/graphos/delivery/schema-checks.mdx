@@ -169,6 +169,12 @@ From your graph's **Checks** page in GraphOS Studio, you can click a particular 
 
 If a [composition check](#composition-checks) succeeds, GraphOS then validates schema changes with _operation checks_. Operation checks use your graph's historical client operation data to determine whether any clients would be negatively affected by the proposed schema changes. For example, an operation check would flag a change that removes a field that multiple clients use in their operations.
 
+<Note>
+
+If you use the Apollo Router to [report operation metrics](../metrics/sending-operation-metrics), you can configure extended reference reporting for more accurate operation checks. [Learn more.](/router/configuration/overview/#extended-reference-reporting)
+
+</Note>
+
 ### Overriding flagged changes
 
 Occasionally, schema checks might flag a change that you know is safe. For example, you might change an input type's field from nullable to non-nullable (usually a breaking change) when you're certain that your clients never provide a null value for the field.
@@ -303,6 +309,12 @@ See [Configuring schema checks](./check-configurations/).
 
 Not every change to a schema is a potentially breaking change. Additive changes (such as adding a field to a type) are usually safe and do not affect active clients. Deletions and modifications (such as removing a field or changing a return type), however, can break clients that use affected types and fields.
 
+<Note>
+
+If you use the Apollo Router to [report operation metrics](../metrics/sending-operation-metrics), you can configure extended reference reporting for more accurate schema checks. [Learn more.](/router/configuration/overview/#extended-reference-reporting)
+
+</Note>
+
 ### Potentially breaking changes
 
 #### Removals
@@ -396,6 +408,14 @@ These changes are detected by schema checks, but they are "safe." They never aff
 Operation checks will run against a maximum of 10,000 distinct operations. A warning message will display on the UI when a larger cardinality has been reached.
 
 ### Input field usage reporting
+
+<Note>
+
+The input field usage limitation applies to reporting metrics from Apollo Server and older versions of the Apollo Router.
+
+If you use the Apollo Router to [report operation metrics](../metrics/sending-operation-metrics), you can configure [enhanced operation signature normalization](/router/configuration/overview/#enhanced-operation-signature-normalization) and [extended reference reporting](/router/configuration/overview/#extended-reference-reporting) to track input field usage.
+
+</Note>
 
 GraphOS tracks operation usage. To deduplicate operations, Apollo uses [operation signatures](../metrics/operation-signatures) which denormalize the arguments and inputs. This means that the result of the operation signature does not track which fields on input types are used.
 
