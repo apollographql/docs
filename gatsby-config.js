@@ -1,4 +1,3 @@
-const {algoliaSettings} = require('apollo-algolia-transform');
 const {
   remarkTypescript,
   highlightPreservation,
@@ -147,8 +146,34 @@ const plugins = [
           query,
           transformer,
           settings: {
-            ...algoliaSettings,
-            attributesForFaceting: ['categories', 'docset', 'type']
+            searchableAttributes: [
+              'unordered(title)',
+              'unordered(sectionTitle)',
+              'unordered(ancestors)',
+              'unordered(slug)',
+              'unordered(categories)',
+              'unordered(text)',
+              'unordered(excerpt)',
+              'unordered(description)'
+            ],
+            customRanking: ['desc(pageviews)', 'asc(index)'],
+            ignorePlurals: true,
+            distinct: true,
+            attributeForDistinct: 'slug',
+            attributesToSnippet: ['text:30'],
+            attributesToHighlight: [
+              'title',
+              'sectionTitle',
+              'excerpt',
+              'description',
+              'text'
+            ],
+            queryType: 'prefixLast',
+            queryLanguages: ['en'],
+            indexLanguages: ['en'],
+            alternativesAsExact: ['ignorePlurals', 'singleWordSynonym'],
+            attributesForFaceting: ['categories', 'docset', 'type'],
+            synonyms
           }
         }
       ]
@@ -260,6 +285,102 @@ plugins.push({
 if (isSingleDocset) {
   plugins.push('gatsby-plugin-local-docs');
 }
+
+const synonyms = [
+  {
+    type: 'onewaysynonym',
+    input: 'sse',
+    synonyms: ['server-side event'],
+    objectID: 'syn-1713989610352-143'
+  },
+  {
+    type: 'onewaysynonym',
+    input: 'authz',
+    synonyms: ['authorization'],
+    objectID: 'syn-1703099013209-18'
+  },
+  {
+    type: 'synonym',
+    synonyms: ['saf', ' supergraph architecture framework'],
+    objectID: 'syn-1701703174629-19'
+  },
+  {
+    type: 'synonym',
+    synonyms: ['pql', 'persisted query'],
+    objectID: 'syn-1689713807199-23'
+  },
+  {
+    type: 'synonym',
+    synonyms: ['subgraph', 'microservice', 'service'],
+    objectID: 'syn-1686766541466-40'
+  },
+  {
+    type: 'synonym',
+    synonyms: ['linter', 'linting', 'lint'],
+    objectID: 'syn-1686766487867-21'
+  },
+  {
+    type: 'synonym',
+    synonyms: ['migrate', 'migration', 'moving'],
+    objectID: 'syn-1660955889515-21'
+  },
+  {
+    type: 'synonym',
+    synonyms: ['flatten', 'collect'],
+    objectID: 'syn-1642191466626-6'
+  },
+  {
+    type: 'synonym',
+    synonyms: ['IntrospectAndCompose', 'serviceList'],
+    objectID: 'syn-1641424543121-6'
+  },
+  {
+    type: 'synonym',
+    synonyms: ['cache', 'caching'],
+    objectID: 'syn-1633760090912-22'
+  },
+  {
+    type: 'synonym',
+    synonyms: ['query', 'queries'],
+    objectID: 'syn-1632959095300-7'
+  },
+  {
+    type: 'synonym',
+    synonyms: ['lazyquery', 'uselazyquery'],
+    objectID: 'syn-1631311702586-47'
+  },
+  {
+    type: 'onewaysynonym',
+    input: 'fetchpolicy',
+    synonyms: ['fetch policy'],
+    objectID: 'syn-1627955106787-7'
+  },
+  {
+    type: 'synonym',
+    synonyms: ['vs', 'visual studio'],
+    objectID: 'syn-1627927115017-39'
+  },
+  {
+    type: 'synonym',
+    synonyms: ['metrics', 'analytics', 'traces'],
+    objectID: 'syn-1627927097330-35'
+  },
+  {
+    type: 'synonym',
+    synonyms: ['cli', 'command', 'rover'],
+    objectID: 'syn-1627927061847-31'
+  },
+  {
+    type: 'synonym',
+    synonyms: ['apq', 'automatic persisted'],
+    objectID: 'syn-1627927041189-27'
+  },
+  {
+    type: 'synonym',
+    synonyms: ['validation', 'checks', 'validate'],
+    objectID: 'syn-1627927022997-23'
+  }
+];
 
 module.exports = {
   pathPrefix: '/docs',
