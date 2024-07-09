@@ -1,12 +1,13 @@
 The GraphOS Router supports a collection of premium features specific to GraphOS. These include:
 
 - Real-time updates via [GraphQL subscriptions](https://www.apollographql.com/docs/router/executing-operations/subscription-support/)
+- Improved performance with [query batching](https://www.apollographql.com/docs/router/executing-operations/query-batching)
 - Authentication of inbound requests via [JSON Web Token (JWT)](https://www.apollographql.com/docs/router/configuration/authn-jwt/)
 - [Authorization of specific fields and types](https://www.apollographql.com/docs/router/configuration/authorization) through the [`@requiresScopes`](https://www.apollographql.com/docs/router/configuration/authorization#requiresscopes), [`@authenticated`](https://www.apollographql.com/docs/router/configuration/authorization#authenticated), and [`@policy`](https://www.apollographql.com/docs/router/configuration/authorization#policy) directives
 - Incremental migration between subgraphs through [the progressive `@override` directive](https://www.apollographql.com/docs/federation/entities-advanced/#incremental-migration-with-progressive-override).
 - Redis-backed [distributed caching of query plans and persisted queries](https://www.apollographql.com/docs/router/configuration/distributed-caching/)
 - Redis-backed [entity caching of subgraph responses](https://www.apollographql.com/docs/router/configuration/entity-caching/)
 - Custom request handling in any language via [external coprocessing](https://www.apollographql.com/docs/router/customizations/coprocessor/)
-- Mitigation of potentially malicious requests via [operation limits](https://www.apollographql.com/docs/router/configuration/operation-limits) and [safelisting](https://www.apollographql.com/docs/graphos/operations/persisted-queries)
+- Mitigation of potentially malicious requests via [operation limits](https://www.apollographql.com/docs/router/configuration/operation-limits),[demand control](https://www.apollographql.com/docs/router/executing-operations/demand-control), and [safelisting](https://www.apollographql.com/docs/graphos/operations/persisted-queries)
 - Custom instrumentation and telemetry, including [custom attributes for spans](https://www.apollographql.com/docs/router/configuration/telemetry/instrumentation/spans/#attributes).
 - An [offline Enterprise license](https://www.apollographql.com/docs/router/enterprise-features/#offline-enterprise-license) that enables running the router with Enterprise features when disconnected from the internet.

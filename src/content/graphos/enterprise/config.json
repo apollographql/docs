@@ -18,6 +18,7 @@
       "GraphOS Router Features": {
         "Overview": "https://www.apollographql.com/docs/router/enterprise-features",
         "GraphQL Subscriptions": "https://www.apollographql.com/docs/router/executing-operations/subscription-support",
+        "Query Batching": "https://www.apollographql.com/docs/router/executing-operations/query-batching",
         "Distributed Caching": "https://www.apollographql.com/docs/router/configuration/distributed-caching",
         "Entity Caching": ["https://www.apollographql.com/docs/router/configuration/entity-caching", ["preview"]],
         "JWT Authentication": "https://www.apollographql.com/docs/router/configuration/authn-jwt",
@@ -25,6 +26,7 @@
         "Incremental Subgraph Migration": "https://www.apollographql.com/docs/federation/entities-advanced/#incremental-migration-with-progressive-override",
         "Safelisting with Persisted Queries": "https://www.apollographql.com/docs/router/configuration/persisted-queries",
         "Operation Limits": "https://www.apollographql.com/docs/router/configuration/operation-limits",
+        "Demand Controls": "https://www.apollographql.com/docs/router/executing-operations/demand-control/",
         "External Coprocessing": "https://www.apollographql.com/docs/router/customizations/coprocessor"
       }
     },

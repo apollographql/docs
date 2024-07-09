@@ -37,6 +37,7 @@ module.exports = {
         ExperimentalFeature: 'readonly',
         GraphOSEnterpriseRequired: 'readonly',
         GraphOSRouterFeatures: 'readonly',
+        HttpConnection: 'readonly',
         InconsistentCompositionRules: 'readonly',
         ObtainGraphApiKey: 'readonly',
         ObtainPersonalApiKey: 'readonly',
