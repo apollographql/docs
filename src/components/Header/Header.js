@@ -73,7 +73,7 @@ export function Header({children, algoliaFilters}) {
       <Eyebrow>
         <Text as="span" display={{base: 'none', lg: 'inline'}}>
           Join us from October 8-10 in New York City to learn the latest tips,
-          trends, and news about GraphQL federation and API platform
+          trends, and news about GraphQL Federation and API platform
           engineering.
         </Text>
         <Text as="span" display={{base: 'inline', lg: 'none'}}>
