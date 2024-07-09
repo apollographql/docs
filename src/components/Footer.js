@@ -34,7 +34,10 @@ export default function Footer() {
             />
           </a>
         </Flex>
-        <Text>&copy; Apollo Graph Inc.</Text>
+        <Text>
+          &copy; {new Date().getFullYear()} Apollo Graph Inc., d/b/a Apollo
+          GraphQL.
+        </Text>
       </div>
       {footerConfig.map(({links, title}, index) => (
         <div key={index}>
