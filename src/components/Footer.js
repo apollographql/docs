@@ -75,7 +75,10 @@ export default function Footer() {
         <Link target="_blank" href="https://www.apollographql.com">
           <Box as={ApolloLogo} aria-label="apollo-logo" fill="current" h="8" />
         </Link>
-        <Text>&copy; {new Date().getFullYear()} Apollo Graph Inc.</Text>
+        <Text>
+          &copy; {new Date().getFullYear()} Apollo Graph Inc., d/b/a Apollo
+          GraphQL.
+        </Text>
         <Link
           target="_blank"
           href="https://www.apollographql.com/privacy-policy"
