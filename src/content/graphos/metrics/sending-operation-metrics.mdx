@@ -11,10 +11,6 @@ GraphOS Studio offers visualizations of metrics like request rate, latency, and 
 - Reporting metrics from [Apollo Server](/apollo-server) or a [monograph](../graphs/#monographs) requires an [Enterprise or legacy Team plan](../org/plans).
 - Connecting a self-hosted router to GraphOS requires an [Enterprise plan](https://www.apollographql.com/pricing/).
 
-<br/>
-
-If your organization doesn't currently have an Enterprise plan, you can test it out by signing up for a free [Enterprise trial](https://studio.apollographql.com/signup?type=enterprise-trial&referrer=docs-content).
-
 </EnterpriseFeature>
 
 ## Reporting operation metrics
@@ -51,6 +47,10 @@ Consult your production environment's documentation to learn how to set its envi
 </Note>
 
 Now, when your router or server starts up, it automatically begins reporting operation metrics to GraphOS.
+
+#### Enhanced reporting with the Apollo Router
+
+If you use the Apollo Router to report operation metrics, you can configure [enhanced operation signature normalization](/router/configuration/overview/#enhanced-operation-signature-normalization) and [extended reference reporting](/router/configuration/overview/#extended-reference-reporting) for more comprehensive insights and operation checks.
 
 ### From a third-party server (advanced)
 
@@ -266,4 +266,4 @@ For example, you might want to enable field-level instrumentation more often for
 
 ### Performance considerations
 
-Calculating execution metrics can affect performance for large queries or high-traffic graphs. This is especially true for [federated graphs](/federation) because a subgraph includes each operation's full trace data in its response to the gateway.
+Calculating execution metrics can affect performance for large queries or high-traffic graphs. This is especially true for [federated graphs](/federation) because a subgraph includes each operation's full trace data in its response.
