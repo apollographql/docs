@@ -21,7 +21,7 @@ GraphQL's built-in [introspection query](https://graphql.org/learn/introspection
 
 <Note>
 
-When using the Apollo Router, introspection is turned off by default.
+When using the GraphOS Router, introspection is turned off by default.
 
 </Note>
 
@@ -35,11 +35,11 @@ For example, by default an Apollo-Server-based subgraph provides the `exception.
 
 <Note>
 
-The Apollo Router omits all error data by default.
+The GraphOS Router omits all error data by default.
 
 </Note>
 
-You might want to selectively expose error details to clients in your production environment. You can do this with a combination of the Apollo Router's [`include_subgraph_errors` option](/router/configuration/subgraph-error-inclusion) and [Rhai scripts for response manipulation](https://www.apollographql.com/docs/router/customizations/rhai).
+You might want to selectively expose error details to clients in your production environment. You can do this with a combination of the GraphOS Router's [`include_subgraph_errors` option](/router/configuration/subgraph-error-inclusion) and [Rhai scripts for response manipulation](https://www.apollographql.com/docs/router/customizations/rhai).
 
 ### Avoid autogenerating schemas
 
@@ -134,7 +134,7 @@ A well-designed GraphQL schema can also help guard against injection attacks by 
 Timeouts are another useful tool for stopping GraphQL operations that consume more server resources than expected. In a supergraph, timeouts are commonly applied at any combination of three different levels:
 
 - At the highest level, you can set a timeout on the router's HTTP server (or an idle timeout on a load balancer in front of it).
-- An an intermediate level, you can set a timeout on the router's requests to individual subgraphs. You can configure timeouts at both the HTTP and subgraph levels using the [Apollo Router's traffic shaping configuration](/router/configuration/traffic-shaping).
+- An an intermediate level, you can set a timeout on the router's requests to individual subgraphs. You can configure timeouts at both the HTTP and subgraph levels using the [GraphOS Router's traffic shaping configuration](/router/configuration/traffic-shaping).
 - At the most granular level, subgraphs can set a timeout for individual operations. The duration of the request can be checked against this timeout as each field resolver function is called. You might accomplish this using resolver middleware or an Apollo Server plugin in a subgraph.
 
 ### Use rate limiting as needed
@@ -157,7 +157,7 @@ Enforcing authentication and authorization in the router protects your underlyin
 
 Hardening access to your supergraph at the router also adds another layer of security when implementing zero-trust and defense-in-depth strategies. The router centralizes authentication and authorization logic, which downstream services can reinforce with their own checks.
 
-To enforce authentication and authorization in the Apollo Router:
+To enforce authentication and authorization in the router:
 
 - [Enable JSON Web Token (JWT) authentication](/router/configuration/authn-jwt/).
 - Control access to fields and types with [authorization directives](/router/configuration/authorization).
@@ -182,7 +182,7 @@ query {
 
 Without any restrictions in place, clients could effectively enumerate through all nodes in a single request like the one above while slipping past other brute force protections. Limiting query breadth or using query cost analysis can help protect a GraphQL API from this type of abuse.
 
-Another form of batching occurs when a client sends batches of full operations in a single request, which can be helpful for performance reasons in some scenarios. The Apollo Router does not support this form of batching. When operations are batched, Apollo Server receives an array of operations and sends back an array of responses to be parsed by the client (there's a batch link directly available in Apollo Client to facilitate this):
+Another form of batching occurs when a client sends batches of full operations in a single request, which can be helpful for performance reasons in some scenarios. The router does not support this form of batching. When operations are batched, Apollo Server receives an array of operations and sends back an array of responses to be parsed by the client (there's a batch link directly available in Apollo Client to facilitate this):
 
 ```graphql
 [
@@ -216,7 +216,7 @@ Apart from protecting your GraphQL API from bad actors and locking down private 
 
 To enhance the utility of traces collected in your observability tooling, it's a best practice to require every client to identify itself and assign a name to every operation it executes. The web and mobile versions of Apollo Client provide straightforward APIs for setting custom headers for a client's name and version. These help you [segment traces and metrics in GraphOS by client](/graphos/metrics/client-awareness/). Other API clients can set the `apollographql-client-name` and `apollographql-client-version` request headers manually to provide client awareness. (As a bonus, client awareness also helps you identify which clients might be impacted by a proposed breaking change to your API when running schema checks.)
 
-Additionally, tracing data in GraphOS can help you monitor API performance and errors. You can configure alerts to push notifications to your team when something goes wrong, whether it's an increase in requests per minute, changes in your p50, p95, or p99 response times, or errors in operations run against your graph. For example, a notification about a sudden increase in the error percentage might indicate that a bad actor is trying to circumvent introspection that's been turned off and learn about a graph's schema by rapidly guessing and testing different field names. And if you want to leverage error data outside of GraphOS as well, you can also use the Apollo Router's support for [OpenTelemetry](/router/configuration/telemetry/exporters/tracing/overview) to integrate with other APM tools.
+Additionally, tracing data in GraphOS can help you monitor API performance and errors. You can configure alerts to push notifications to your team when something goes wrong, whether it's an increase in requests per minute, changes in your p50, p95, or p99 response times, or errors in operations run against your graph. For example, a notification about a sudden increase in the error percentage might indicate that a bad actor is trying to circumvent introspection that's been turned off and learn about a graph's schema by rapidly guessing and testing different field names. And if you want to leverage error data outside of GraphOS as well, you can also use GraphOS Router's support for [OpenTelemetry](/router/configuration/telemetry/exporters/tracing/overview) to integrate with other APM tools.
 
 ### Restrict write access to your graph
 

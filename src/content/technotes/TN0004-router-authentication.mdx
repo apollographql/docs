@@ -1,7 +1,7 @@
 ---
-title: Authenticating Requests with the Apollo Router
+title: Authenticating Requests with the GraphOS Router
 subtitle: Use authorization and authentication strategies to secure your graph
-description: Combine authorization and authentication strategies with the Apollo Router to secure your graph through defense in depth.
+description: Combine authorization and authentication strategies with the GraphOS Router to secure your graph through defense in depth.
 published: 2022-06-13
 id: TN0004
 tags: [server, router, auth]
@@ -9,7 +9,7 @@ tags: [server, router, auth]
 
 <EnterpriseFeature>
 
-Self-hosting the Apollo Router is limited to [GraphOS Enterprise plans](/graphos/enterprise/). Other plan types use [managed cloud routing with GraphOS](/graphos/cloud-routing). Check out the [pricing page](https://www.apollographql.com/pricing#graphos-router) to learn more.
+Self-hosting the GraphOS Router is limited to [GraphOS Enterprise plans](/graphos/enterprise/). Other plan types use [managed cloud routing with GraphOS](/graphos/cloud-routing). Check out the [pricing page](https://www.apollographql.com/pricing#graphos-router) to learn more.
 
 </EnterpriseFeature>
 
@@ -21,7 +21,7 @@ Not an enterprise customer? [Learn about GraphOS for Enterprise.](/graphos/enter
 
 </Tip>
 
-When using the Apollo Router as the entry point to your federated supergraph, you have a few options for authenticating incoming client requests:
+When using the router as the entry point to your federated supergraph, you have a few options for authenticating incoming client requests:
 
 - [Use authorization directives](#use-authorization-directives)
 - [Delegate authentication to your subgraphs.](#authenticate-in-subgraphs)
@@ -37,7 +37,7 @@ This allows you to authorize requests prior to them hitting your subgraphs savin
 
 <EnterpriseFeature>
 
-This is an [Enterprise feature](/router/enterprise-features) of the Apollo Router.
+This is an [Enterprise feature](/router/enterprise-features) of the GraphOS Router.
 It requires an organization with a [GraphOS Enterprise plan](https://www.apollographql.com/pricing/).
 
 </EnterpriseFeature>
@@ -109,7 +109,7 @@ headers:
 
 ## Use the JWT Authentication plugin
 
-As of Apollo Router v1.13, you can use the [JWT Authentication plugin](/router/configuration/authn-jwt) to validate JWT-based authentication tokens in your supergraph.
+As of router v1.13, you can use the [JWT Authentication plugin](/router/configuration/authn-jwt) to validate JWT-based authentication tokens in your supergraph.
 
 <PremiumFeature linkWithAnchor="https://www.apollographql.com/pricing#graphos-router" />
 

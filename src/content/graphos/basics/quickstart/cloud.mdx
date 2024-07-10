@@ -41,7 +41,7 @@ Some legacy organizations can upgrade to a current plan. [See details.](../org/p
 ## 2. Create your first supergraph
 
 You now have a GraphOS Studio account, but it doesn't contain any graphs yet. The next steps guide you to create a _cloud supergraph_.
-A cloud supergraph automatically provisions a GraphOS-managed _router_ in front of your API. Clients query your router instead of querying your API directly.
+A cloud supergraph automatically provisions a GraphOS Router in front of your API. Clients query your router instead of querying your API directly.
 
 With this architecture, you can combine multiple APIs into a single graph, all orchestrated by the router:
 
@@ -296,7 +296,7 @@ From your organization's **Graphs** tab, select your new variant and then open i
 
 Try building a couple of queries and running them against your supergraph. Notice that the supergraph supports the exact same query structures as your underlying GraphQL API.
 
-Because you've created a cloud supergraph, operations you run in the Explorer are sent to the GraphOS-managed **router** that sits in front of your API. Application clients will also query the router instead of querying your API directly.
+Because you've created a cloud supergraph, operations you run in the Explorer are sent to the GraphOS Router that sits in front of your API. Application clients will also query the router instead of querying your API directly.
 
 <Note>
 
@@ -313,7 +313,7 @@ If the Explorer returns errors for all operations, GraphOS might not be finished
 
 ## 6. View operation and field metrics
 
-Here's a powerful benefit of a cloud supergraph: because clients execute operations against your GraphOS-managed router, the router automatically collects metrics on those operations and their fields. You can then visualize those metrics in Studio.
+Here's a powerful benefit of a cloud supergraph: because clients execute operations against your GraphOS Router, the router automatically collects metrics on those operations and their fields. You can then visualize those metrics in Studio.
 
 Go to your variant's **Insights** page, which looks like this:
 

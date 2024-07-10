@@ -17,14 +17,83 @@ You can analyze the [field metrics sent by your graph](./sending-operation-metri
   src="../img/insights-fields.jpg"
   className="screenshot"
   alt="The Insights page in GraphOS Studio"
+  width="700"
 />
 
-The Insights page presents operation and field metrics. It has two main sections:
+The **Insights** page presents operation and field metrics. It has two main sections:
 
 - The collapsible left sidebar, where you can search, filter, and sort operations and fields
-- The main insights view, which displays [overall operations metrics](./operations#operation-metrics) by default, or field information and usage metrics for a single field once you select it from the left sidebar
+  - The types of fields you can access insights for [depend on your plan](#field-usage-metrics-availability)
+- The main insights view on the right
+  - This view displays [overall operations metrics](./operations#operation-metrics) by default, or field information and usage metrics for a single field once you select it from the left sidebar
 
 This guide focuses on field metrics and information. Refer to [Operation metrics in GraphOS](./operations) for more information on the other metrics on this page, including [resolver-level traces](./operations#resolver-level-traces).
+
+## Field usage metrics availability
+
+The collapsible left sidebar on the **Insights** page lets you filter field types you want to view usage metrics for:
+
+<img
+  src="../img/field-filters.jpg"
+  class="screenshot"
+  alt="Field Insights page left sidebar"
+  width="300"
+/>
+
+All organizations can view **object fields**, but only organizations with an Enterprise plan can view usage metrics for **input fields** and **enum values**.
+
+
+### Object fields
+
+All organizations can access field usage metrics for standard object fields. For example, given a `User` type like this:
+
+```graphql showLineNumbers=false disableCopy=true
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  age: Int
+}
+```
+
+All plans can view usage metrics for `User.id`, `User.name`, etc.
+
+### Input fields and enum values
+
+Only organizations with an Enterprise plan can view field usage metrics on input object fields and enum values.
+
+For example, given a `UserInput` input type or `InventoryStatus` enum values like these:
+
+<CodeColumns>
+
+```graphql showLineNumbers=false disableCopy=true
+input UserInput {
+  name: String!
+  email: String!
+  password: String!
+  address: AddressInput
+}
+```
+
+```graphql showLineNumbers=false disableCopy=true
+enum InventoryStatus {
+  IN_STOCK
+  OUT_OF_STOCK
+  DISCONTINUED
+}
+```
+
+</CodeColumns>
+
+Only enterprise organizations can view usage metrics on `UserInput.name`, `UserInput.email`, etc., or `InventoryStatus.IN_STOCK`, `InventoryStatus.OUT_OF_STOCK`, etc.
+
+To access input and enum field metrics you must use the GraphOS Router to [report metrics](./sending-operation-metrics) and configure [extended reference reporting](/router/configuration/overview/#extended-reference-reporting) in your router.
+
+<Note>
+
+Field [execution metrics](#field-requests-and-executions) are only available for standard object fields, not input object fields or enum values.
+
+</Note>
 
 ## Field details
 
@@ -52,7 +121,13 @@ Each row in the **Clients & Operations** table displays some combination of the 
 | Requests            | How many operations sent by clients over a given time period included the field, according to [metrics provided by your servers](./sending-operation-metrics#reporting-field-usage-metrics) |
 | Executions          | How many times your servers have executed the resolver for the field over a given time period                                       |
 
-For each of these columns to appear on the Insights page, your GraphQL servers must [report the associated metrics to GraphOS](./sending-operation-metrics#reporting-field-usage). If some but not all your GraphQL servers report this data, the Insights page presents an incomplete picture of your graph's field usage.
+<Note>
+
+Execution metrics are only available for [standard object fields](#object-fields), not [input object fields or enum values](#input-fields-and-enum-values).
+
+</Note>
+
+For each of these columns to appear on the **Insights** page, your GraphQL servers must [report the associated metrics to GraphOS](./sending-operation-metrics#reporting-field-usage). If some but not all your GraphQL servers report this data, the **Insights** page presents an incomplete picture of your graph's field usage.
 
 Take a look at the **Requests** and **Executions** for an example field:
 

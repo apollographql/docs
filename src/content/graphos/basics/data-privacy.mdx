@@ -9,11 +9,11 @@ Our top priority is ensuring the privacy and security of your data and your cust
 
 ## Does GraphOS store operation result data returned by my graph?
 
-No. Your graph's operation results never even reach any Apollo-managed service, with one important exception: [cloud supergraphs](#which-types-of-data-are-collected-by-a-cloud-supergraph) use a GraphOS-managed router, which passes results directly from your subgraphs to requesting clients, without logging, persisting, or sending those results to any other system (other data like operation metrics are persisted).
+No. Your graph's operation results never even reach any Apollo-managed service, with one important exception: [cloud supergraphs](#which-types-of-data-are-collected-by-a-cloud-supergraph) use a GraphOS Router, which passes results directly from your subgraphs to requesting clients, without logging, persisting, or sending those results to any other system (other data like operation metrics are persisted).
 
 ## Which tools send data to GraphOS?
 
-The [Apollo Router](/router/), [Apollo Server](/apollo-server/), the [Rover CLI](/rover/), and the legacy [Apollo CLI](/devtools/cli/) have opt-in features that send data to GraphOS.
+The [GraphOS Router](/router/), [Apollo Server](/apollo-server/), the [Rover CLI](/rover/), and the legacy [Apollo CLI](/devtools/cli/) have opt-in features that send data to GraphOS.
 
 The Rover CLI also collects anonymous usage data by default. [You can turn this off.](/rover/privacy/)
 
@@ -29,18 +29,18 @@ All data sent to GraphOS is sent to an endpoint with one of the following base U
 
 ### Current URLs
 
-| Base URL                                               | Used by                                                                                                                                                                                                                                                                          |
-| ------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `https://usage-reporting.api.apollographql.com`        | Metrics reporting from the [Apollo Router](/router/configuration/telemetry/apollo-telemetry) (v0.1.0+), [Apollo Server](./metrics/sending-operation-metrics/) (v2.18.0+), and third-party API servers                                                                            |
-| `https://rover.apollo.dev`                             | The [Rover CLI](/rover/)—all commands if [telemetry is enabled](/rover/privacy), `rover supergraph compose` when fetching new plugin versions, all `rover template` commands, and once per day to check for version updates                                                      |
-| `https://api.apollographql.com/graphql`                | All [Rover CLI](/rover/) (v0.6+) commands that communicate with GraphOS, along with all requests to the [GraphOS Platform API](./platform-api/)                                                                                                                                  |
-| `https://router.apollo.dev`                            | The Apollo Router installer (all versions), along with Router (v1.9.0+) [telemetry when enabled](/router/privacy)                                                                                                                                                                |
-| `https://uplink.api.apollographql.com`                 | Apollo Router (v0.1.0+) with [managed federation](/federation/managed-federation/overview/) and/or [Enterprise features](/router/enterprise-features/) enabled, Apollo Server with Apollo Gateway (v0.34.0+) with [managed federation](/federation/managed-federation/overview/) |
-| `https://aws.uplink.api.apollographql.com`             | Apollo Router (v0.1.0+) with [managed federation](/federation/managed-federation/overview/) and/or [Enterprise features](/router/enterprise-features/) enabled, Apollo Server with Apollo Gateway (v0.45.0+) with [managed federation](/federation/managed-federation/overview/) |
-| `https://persisted-queries.api.apollographql.com/`     | Apollo Router (v1.25.0+) with [GraphOS persisted queries](./operations/persisted-queries/) enabled                                                                                                                                                                               |
-| `https://aws.persisted-queries.api.apollographql.com/` | Apollo Router (v1.25.0+) with [GraphOS persisted queries](./operations/persisted-queries/) enabled                                                                                                                                                                               |
-| `https://schema-reporting.api.apollographql.com`       | Schema registration via schema reporting in Apollo Server (v2.18.0+) and third-party API servers                                                                                                                                                                                 |
-| `https://graphql.api.apollographql.com/api/graphql`    | Anonymous usage data from the [Apollo Kotlin IDE plugin](/kotlin/v4/testing/android-studio-plugin/#privacy-and-data-collection)                                                                                                                                                  |
+| Base URL                                               | Used by                                                                                                                                                                                                                                                                           |
+| ------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `https://usage-reporting.api.apollographql.com`        | Metrics reporting from the [GraphOS Router](/router/configuration/telemetry/apollo-telemetry) (v0.1.0+), [Apollo Server](./metrics/sending-operation-metrics/) (v2.18.0+), and third-party API servers                                                                            |
+| `https://rover.apollo.dev`                             | The [Rover CLI](/rover/)—all commands if [telemetry is enabled](/rover/privacy), `rover supergraph compose` when fetching new plugin versions, all `rover template` commands, and once per day to check for version updates                                                       |
+| `https://api.apollographql.com/graphql`                | All [Rover CLI](/rover/) (v0.6+) commands that communicate with GraphOS, along with all requests to the [GraphOS Platform API](./platform-api/)                                                                                                                                   |
+| `https://router.apollo.dev`                            | The GraphOS Router installer (all versions), along with GraphOS Router (v1.9.0+) [telemetry when enabled](/router/privacy)                                                                                                                                                                |
+| `https://uplink.api.apollographql.com`                 | GraphOS Router (v0.1.0+) with [managed federation](/federation/managed-federation/overview/) and/or [Enterprise features](/router/enterprise-features/) enabled, Apollo Server with Apollo Gateway (v0.34.0+) with [managed federation](/federation/managed-federation/overview/) |
+| `https://aws.uplink.api.apollographql.com`             | GraphOS Router (v0.1.0+) with [managed federation](/federation/managed-federation/overview/) and/or [Enterprise features](/router/enterprise-features/) enabled, Apollo Server with Apollo Gateway (v0.45.0+) with [managed federation](/federation/managed-federation/overview/) |
+| `https://persisted-queries.api.apollographql.com/`     | GraphOS Router (v1.25.0+) with [GraphOS persisted queries](./operations/persisted-queries/) enabled                                                                                                                                                                               |
+| `https://aws.persisted-queries.api.apollographql.com/` | GraphOS Router (v1.25.0+) with [GraphOS persisted queries](./operations/persisted-queries/) enabled                                                                                                                                                                               |
+| `https://schema-reporting.api.apollographql.com`       | Schema registration via schema reporting in Apollo Server (v2.18.0+) and third-party API servers                                                                                                                                                                                  |
+| `https://graphql.api.apollographql.com/api/graphql`    | Anonymous usage data from the [Apollo Kotlin IDE plugin](/kotlin/v4/testing/android-studio-plugin/#privacy-and-data-collection)                                                                                                                                                   |
 
 ### Active legacy URLs
 
@@ -57,13 +57,13 @@ All data sent to GraphOS is sent to an endpoint with one of the following base U
 
 If your environment uses a corporate proxy or firewall, you might need to configure it to allow outbound traffic to these domains. Note that data might be sent to multiple endpoints in a given domain.
 
-## Which types of data do the Apollo Router and Apollo Server send to GraphOS?
+## Which types of data do the GraphOS Router and Apollo Server send to GraphOS?
 
-You can configure both the Apollo Router and Apollo Server to report certain data to GraphOS for each operation resolved by these libraries. These types of data include:
+You can configure both the GraphOS Router and Apollo Server to report certain data to GraphOS for each operation resolved by these libraries. These types of data include:
 
 - Several fields besides `data` from every operation response
 
-  - Neither the Apollo Router nor Apollo Server ever sends the `data` field of an operation response to GraphOS.
+  - Neither the GraphOS Router nor Apollo Server ever sends the `data` field of an operation response to GraphOS.
 
 - The [normalized query operation string](#query-operation-strings) for every executed operation
 
@@ -77,13 +77,13 @@ In addition, you can configure a standalone instance of Apollo Server to [report
 
 <Note>
 
-All data sent to GraphOS from both the Apollo Router and Apollo Server is transmitted using HTTPS on port 443, and HTTP traffic on port 80 is turned off.
+All data sent to GraphOS from both the GraphOS Router and Apollo Server is transmitted using HTTPS on port 443, and HTTP traffic on port 80 is turned off.
 
 </Note>
 
 ### Operation response fields
 
-Let's walk through the default behaviors of the Apollo Router and Apollo Server when reporting fields in a typical GraphQL response:
+Let's walk through the default behaviors of the GraphOS Router and Apollo Server when reporting fields in a typical GraphQL response:
 
 ```json
 // GraphQL Response
@@ -95,17 +95,17 @@ Let's walk through the default behaviors of the Apollo Router and Apollo Server 
 
 #### `response.data`
 
-As mentioned, the Apollo Router and Apollo Server never send the contents of this field to GraphOS. The responses from your graph stay internal to your application.
+As mentioned, the GraphOS Router and Apollo Server never send the contents of this field to GraphOS. The responses from your graph stay internal to your application.
 
 #### `response.errors`
 
-Both the Apollo Router and Apollo Server can report certain error information to GraphOS, but the exact behavior varies:
+Both the GraphOS Router and Apollo Server can report certain error information to GraphOS, but the exact behavior varies:
 
-##### The Apollo Router
+##### The GraphOS Router
 
-Currently, the Apollo Router reports only which fields in an operation produced errors. Other error details (such as messages) are masked in reports to GraphOS.
+Currently, the GraphOS Router reports only which fields in an operation produced errors. Other error details (such as messages) are masked in reports to GraphOS.
 
-You cannot currently configure the Apollo Router to report any additional error details.
+You cannot currently configure the GraphOS Router to report any additional error details.
 
 ##### Apollo Server 4
 
@@ -127,7 +127,7 @@ You can use the [usage reporting plugin's `rewriteError` option](/apollo-server/
 
 ### Query operation strings
 
-The Apollo Router and Apollo Server both report a normalized string representation of each query operation to GraphOS. By default, this [normalization algorithm](/graphos/metrics/operation-signatures/) strips out string literals that are passed as arguments. However, we highly recommend that users do not include sensitive data (such as passwords or personally identifiable information) in operation strings. Instead, include this information in [GraphQL variables](#graphql-variable-values), which you can send selectively.
+The GraphOS Router and Apollo Server both report a normalized string representation of each query operation to GraphOS. By default, this [normalization algorithm](/graphos/metrics/operation-signatures/) strips out string literals that are passed as arguments. However, we highly recommend that users do not include sensitive data (such as passwords or personally identifiable information) in operation strings. Instead, include this information in [GraphQL variables](#graphql-variable-values), which you can send selectively.
 
 <Note>
 
@@ -137,11 +137,11 @@ If you enable [enhanced operation signature normalization](/router/configuration
 
 ### Operation traces
 
-If you're using the Apollo Router, your subgraphs can include operation trace data in each of their responses to the router. This data includes timing information for each resolver that contributed to the operation.
+If you're using the GraphOS Router, your subgraphs can include operation trace data in each of their responses to the router. This data includes timing information for each resolver that contributed to the operation.
 
 To check which subgraph libraries support federated traces, consult the `FEDERATED TRACING` entry in [this table](/federation/building-supergraphs/supported-subgraphs).
 
-You can configure the Apollo Router to include this trace data in its reports to GraphOS ([learn how](/router/configuration/telemetry/apollo-telemetry#enabling-field-level-instrumentation)). By doing so, you can visualize the performance of your operations in GraphOS Studio, [broken down by resolver](./metrics/operations#resolver-level-traces).
+You can configure the GraphOS Router to include this trace data in its reports to GraphOS ([learn how](/router/configuration/telemetry/apollo-telemetry#enabling-field-level-instrumentation)). By doing so, you can visualize the performance of your operations in GraphOS Studio, [broken down by resolver](./metrics/operations#resolver-level-traces).
 
 If you're using a standalone instance of Apollo Server, you can also configure it to [report operation traces to GraphOS](/apollo-server/api/plugin/inline-trace).
 
@@ -162,11 +162,11 @@ variable values are sent to GraphOS by default.
 
 If you're using an earlier version of Apollo Server, it's recommended that you update. If you can't update for whatever reason, you can use the [`privateVariables` reporting option](/apollo-server/v2/migration-engine-plugins/#options-for-apolloserverpluginusagereporting) to specify the names of variables that should not be sent to GraphOS. You can also set this option to `false` to prevent all variables from being sent. This reporting option is deprecated and will not be available in future versions of Apollo Server.
 
-#### Apollo Router
+#### GraphOS Router
 
-By default, the Apollo Router does not send an operation's GraphQL variable values to GraphOS.
+By default, the GraphOS Router does not send an operation's GraphQL variable values to GraphOS.
 
-To enable variable value reporting in the Apollo Router, see [this section](/router/configuration/telemetry/apollo-telemetry#advanced-configuration).
+To enable variable value reporting in the GraphOS Router, see [this section](/router/configuration/telemetry/apollo-telemetry#advanced-configuration).
 
 ### HTTP headers
 
@@ -198,15 +198,15 @@ In versions of Apollo Server 2 prior to 2.7.0, all of an operation's HTTP header
 If you're using an earlier version of Apollo Server, it's recommended that you
 update. If you can't update for whatever reason, you can use the [`privateHeaders` reporting option](/apollo-server/v2/migration-engine-plugins/#options-for-apolloserverpluginusagereporting) to specify the names of variables that should not be sent to GraphOS. You can also set this option to `false` to prevent all headers from being sent. This reporting option is deprecated and will not be available in future versions of Apollo Server.
 
-#### Apollo Router
+#### GraphOS Router
 
-By default, the Apollo Router does not send an operation's HTTP header values to GraphOS.
+By default, the GraphOS Router does not send an operation's HTTP header values to GraphOS.
 
-To enable header reporting in the Apollo Router, see [this section](/router/configuration/telemetry/apollo-telemetry#advanced-configuration).
+To enable header reporting in the GraphOS Router, see [this section](/router/configuration/telemetry/apollo-telemetry#advanced-configuration).
 
 ## Which types of data are collected by a cloud supergraph?
 
-A cloud supergraph uses a GraphOS-managed router to execute operations across one or more subgraphs hosted in your infrastructure:
+A cloud supergraph uses a GraphOS Router to execute operations across one or more subgraphs hosted in your infrastructure:
 
 ```mermaid
 flowchart LR;
@@ -224,9 +224,9 @@ flowchart LR;
   class clients secondary;
 ```
 
-Each GraphOS-managed router is an instance of the [Apollo Router](/router/) running in its own managed container. These instances use the same mechanisms to report operation metrics to GraphOS as an Apollo Router instance running in any other environment! The only difference is that metrics reporting is always enabled for a cloud supergraph's router.
+Each instance of GraphOS Router runs in its own managed container. These instances use the same mechanisms to report operation metrics to GraphOS as a GraphOS Router or Apollo Router Core instance running in any other environment. The only difference is that metrics reporting is always enabled for a cloud supergraph's router.
 
-GraphOS-managed routers do not persist or log any response data returned by your subgraphs. They only assemble this data into responses for requesting clients.
+GraphOS Routers do not persist or log any response data returned by your subgraphs. They only assemble this data into responses for requesting clients.
 
 ## What data does GraphOS log about operations executed in the Explorer?
 
