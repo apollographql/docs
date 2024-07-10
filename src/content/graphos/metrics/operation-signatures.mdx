@@ -52,13 +52,17 @@ Apollo libraries use a [signature algorithm](#signature-algorithm) to generate t
 
 <Note>
 
-This algorithm is subject to change. This article describes the signature algorithm as of the release of Apollo Server 3.6.1. It is provided here for informational purposes, not as a canonical specification.
+This signature algorithm is subject to change. It is provided here for informational purposes, not as a canonical specification.
 
 </Note>
 
 Feel free to [jump to an example](#example-signature) or [view the source](https://github.com/apollographql/apollo-utils/blob/main/packages/usageReporting/src/signature.ts).
 
 The signature algorithm performs the following modifications on an operation to generate its signature:
+
+1. Transform in-line argument values.
+2. Remove extraneous characters.
+3. Reorder definitions.
 
 ### 1. Transform in-line argument values
 
@@ -68,9 +72,13 @@ If an operation includes any in-line argument values, the algorithm transforms t
 - `Int` and `Float` values are replaced with `0`.
 - `String`, list, and object values are replaced with their "empty" counterpart (`""`, `[]`, or `{}`).
 
+Argument values provided as GraphQL variable names are preserved.
+
 <Note>
 
-Argument values provided as GraphQL variable names are preserved.
+Organizations using the Apollo Router can enable enhanced operation signature generation.
+Enhanced operation signatures include the input object shapes, while still redacting actual values.
+See the [router configuration page](/router/configuration/overview#enhanced-operation-signature-normalization) to learn more.
 
 </Note>
 
@@ -105,6 +113,13 @@ Within each of these, sorting is alphanumeric by field name or fragment name.
 ##### Field aliases
 
 All field aliases are removed. If an operation includes three instances of the same field with different aliases, then that field is listed in the signature three times with its non-aliased name.
+
+<Note>
+
+Organizations using the Apollo Router can enable enhanced operation signature generation that does not remove field aliases.
+See the [router configuration page](/router/configuration/overview#enhanced-operation-signature-normalization) to learn more.
+
+</Note>
 
 #### Directives and arguments
 
@@ -155,13 +170,16 @@ query GetUser {
 
 The signature algorithm's primary purpose is to group operations that differ only cosmetically in terms of whitespace, field order, aliases, etc. As an additional effect, the algorithm does [remove most in-line argument values](#1-transform-in-line-argument-values), which, in theory, helps maintain data privacy.
 
-However, you should not rely on this! Ideally, your sensitive data should never reach GraphOS Studio in the first place. Whenever possible, [use GraphQL variables](/react/data/operation-best-practices/#use-graphql-variables-to-provide-arguments) instead of in-line values for arguments. This helps you control exactly which values are reported to Apollo. For details, see [GraphOS Studio data privacy and compliance](../data-privacy/).
+However, you should not rely on this. Ideally, your sensitive data should never reach GraphOS Studio in the first place. Whenever possible, [use GraphQL variables](/react/data/operation-best-practices/#use-graphql-variables-to-provide-arguments) instead of in-line values for arguments. This helps you control exactly which values are reported to Apollo. For details, see [GraphOS Studio data privacy and compliance](../data-privacy/).
 
 ## Logging signatures at runtime
 
 ### Apollo Router
 
-Since Apollo Router [v1.43.1](https://github.com/apollographql/router/releases/tag/v1.43.1), the router adds operation signatures to request contexts at the `apollo_operation_signature` key. You can also use the router's native logging features to log context values as [trace attributes](/router/configuration/telemetry/instrumentation/selectors) or you can read the context via [Rhai scripts](/router/customizations/rhai#manipulating-headers-and-the-request-context) or [coprocessors](/router/customizations/coprocessor). 
+Since Apollo Router [v1.43.1](https://github.com/apollographql/router/releases/tag/v1.43.1), the router adds operation signatures to request contexts at the `apollo_operation_signature` key. You can also use the router's native logging features to log context values as [trace attributes](/router/configuration/telemetry/instrumentation/selectors) or you can read the context via [Rhai scripts](/router/customizations/rhai#manipulating-headers-and-the-request-context) or [coprocessors](/router/customizations/coprocessor).
+
+With router [v1.49.0](https://github.com/apollographql/router/releases/tag/v1.49.0) and later, you can enable enhanced operation signature generation that includes include input object types and field aliases.
+See the [router configuration page](/router/configuration/overview#enhanced-operation-signature-normalization) to learn more.
 
 ### Apollo Server
 

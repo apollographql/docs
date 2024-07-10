@@ -14,7 +14,7 @@ Each organization member has one of the following roles:
 | ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------: |
 | **Org Admin**       | Has management access to the entire organization, including its members, graphs, and configuration.                                                                                                                                                                                                                                                 |                              All                               |
 | **Graph Admin**     | Has management access to the organization's graphs, but not to members or organization-level configuration. Intended for developers who are considered admins to the graph.                                                                                                                                                                         |                        Enterprise only                         |
-| **Contributor**     | Can push new schemas to graphs, but cannot configure graph settings or integrations. Intended for backend developers who are authorized to make changes to graphs. Cannot push schema changes to [protected variants](../graphs/management/#protected-variants-enterprise-only).                                                                    |                        Enterprise only                         |
+| **Contributor**     | Can push new schemas to graphs, but cannot configure graph settings or integrations. Intended for backend developers who are authorized to make changes to graphs. Cannot push schema changes or report metrics for [protected variants](../graphs/management/#protected-variants-enterprise-only).                                                 |                        Enterprise only                         |
 | **Documenter**      | Has all permissions of the Observer role, plus the ability to edit graph READMEs, descriptions, and similar non-operational metadata.                                                                                                                                                                                                               |                        Enterprise only                         |
 | **Observer**        | Has view-only access to the organization's graph data, such as schemas and metrics. Can also execute queries in the Explorer. Intended for backend developers who are not authorized to make changes to graphs.                                                                                                                                     |                        Enterprise only                         |
 | **Consumer**        | Has view-only access to the organization's API schemas, but not supergraph or subgraph schemas, or metrics. Can also execute queries in the Explorer. Intended for application developers building clients against a graph.<p></p>This role is available to all plan types. For plans that charge per user, Consumers do not count as billed users. |                              All                               |
@@ -71,23 +71,26 @@ When **Contributor**s in an organization create a new graph, they are automatica
 | Create new variants                              |     ✓     |      ✓      | Non-[protected](../graphs/management/#protected-variants-enterprise-only) variants only |                       |          |
 | Push schemas to a graph                          |     ✓     |      ✓      | Non-[protected](../graphs/management/#protected-variants-enterprise-only) variants only |                       |          |
 | Manage Explorer settings (URL, etc)              |     ✓     |      ✓      | Non-[protected](../graphs/management/#protected-variants-enterprise-only) variants only |                       |          |
+| Report graph usage metrics <sup>1</sup>          |     ✓     |      ✓      | Non-[protected](../graphs/management/#protected-variants-enterprise-only) variants only |                       |          |
 | See the schemas of subgraphs in federated graphs |     ✓     |      ✓      |                                            ✓                                            |           ✓           |          |
-| View graph usage metrics and traces <sup>1</sup> |     ✓     |      ✓      |                                            ✓                                            |           ✓           |          |
+| View graph usage metrics and traces <sup>2</sup> |     ✓     |      ✓      |                                            ✓                                            |           ✓           |          |
 | Edit variant READMEs                             |     ✓     |      ✓      |                                            ✓                                            |    Documenter only    |          |
 | Query graphs with the Explorer                   |     ✓     |      ✓      |                                            ✓                                            |           ✓           |    ✓     |
 | View graph schemas and changelogs                |     ✓     |      ✓      |                                            ✓                                            |           ✓           |    ✓     |
 
-<blockquote>
+<Note>
 
-<sup>1</sup> Currently, graph usage metrics and traces are not displayed to <strong>
-  Consumer
-</strong>
-s via the Studio web app, but they are not blocked at the API layer. We intend to
-remove this capability from <strong>Consumer</strong>s, but for the time being
-you should understand that <strong>Consumer</strong>s are not fully prevented from
-accessing these metrics and traces.
+1. When you [report metrics from Apollo Router or Apollo Server](../metrics/sending-operation-metrics/#from-the-apollo-router-or-apollo-server)
+   you should use a graph API key. For non-protected variants, the [graph API key role](#graph-api-key-roles)
+   must be Contributor, Org Admin, or Graph Admin. For [protected variants](/graphos/graphs/management/#protected-variants-enterprise-only),
+   only Org and Graph Admin roles can report metrics.
 
-</blockquote>
+2. Currently, graph usage metrics and traces are not displayed to Consumers
+   via the Studio web app, but they are not blocked at the API layer. We intend to
+   remove this capability from Consumers, but for the time being you should understand
+   that Consumers are not fully prevented from accessing these metrics and traces.
+
+</Note>
 
 ### Schema checks permissions
 

@@ -5,6 +5,7 @@ export {default as ClientPQImplementation} from './client-pq-implementation.mdx'
 export {default as ClientPQIntro} from './client-pq-intro.mdx';
 export {default as CreateSelfHostedSupergraph} from './create-self-hosted-supergraph.mdx';
 export {CreateNotification} from './create-notification.js';
+export {HttpConnection} from './router-http-connection.js';
 export {default as ConfigurePagerDutyNotification} from './configure-pagerduty-notification.mdx';
 export {default as ConfigureSlackNotification} from './configure-slack-notification.mdx';
 export {ConfigureWebhookNotification} from './configure-webhook-notification.js';
@@ -33,7 +34,6 @@ export {default as SSOEntraIDAssignUsers} from './sso-entra-id-assign-users.mdx'
 export {default as SSOLegacyCaution} from './sso-legacy-caution.mdx';
 export {default as SSOLegacyUsers} from './sso-legacy-users.mdx';
 export {default as SSOMigrationNotice} from './sso-migration-notice.mdx';
-export {default as SSOPreviewNotice} from './sso-preview-notice.mdx';
 export {default as SSOPremiumFeature} from './sso-premium-feature.mdx';
 export {default as SSOSAMLInfoRequest} from './sso-saml-info-request.mdx';
 export {default as StudioPages} from './studio-pages.mdx';

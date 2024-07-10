@@ -1,18 +1,18 @@
 ---
 title: Schema Checks
-subtitle: Validate all proposed changes to your schema are safe
+subtitle: Validate proposed changes to your schema are safe
 description: Use GraphOS Schema checks to identify and validate potential breaking changes in your GraphQL schema before deployment.
 ---
 
-Certain changes to your graph's schema (such as removing a field or type) might break one of your application's clients. GraphOS schema checks help you identify breaking changes before you make them. They can also help you identify when a potentially dangerous change is in fact safe.
+Certain changes to your graph's schema (such as removing a field or type) might break one of your application's clients. GraphOS schema checks help you identify breaking changes before you make them. They can also help you identify when a potentially dangerous change is, in fact, safe.
 
-You can review the results of schema checks inside GraphOS Studio from your graph's Checks page, helping you make informed decisions about evolving your graph:
+You can review the results of schema checks inside GraphOS Studio from your graph's **Checks** page, helping you make informed decisions about evolving your graph:
 
 <img
   className="screenshot"
   src="../img/schema-checks/checks-studio.jpg"
   alt="Schema check results in Studio"
-  width="300"
+  width="500"
 />
 
 With the exception of [contract checks](#types-of-checks), schema checks are free as part of [all Apollo plans](https://www.apollographql.com/pricing/).
@@ -21,27 +21,27 @@ With the exception of [contract checks](#types-of-checks), schema checks are fre
 
 GraphOS can perform the following types of schema checks:
 
-- [Composition checks](#composition-checks): For supergraphs, verify whether your proposed changes to a subgraph schema will successfully compose with your other subgraph schemas.
+- [Composition checks](#composition-checks): For supergraphs, verify whether your proposed changes to a subgraph schema successfully compose with your other subgraph schemas.
 
-- [Operation checks](#operation-checks): Compare your proposed schema changes against historical operations to verify whether the changes will break any of your graph's active clients.
+- [Operation checks](#operation-checks): Compare your proposed schema changes against historical operations to verify whether the changes break any of your graph's active clients.
 
 - [Linter checks](./schema-linter/): Analyze your proposed schema changes for violations of formatting rules and other GraphQL best practices.
 
-- [Proposals checks](./schema-proposals/configuration#configure-schema-checks) (Enterprise only): Check whether your proposed schema changes have matching and approved [schema proposals](./schema-proposals).
+- [Proposal checks](./schema-proposals/configuration#configure-schema-checks) (Enterprise only): Check whether your proposed schema changes have matching and approved [schema proposals](./schema-proposals).
 
-- [Contract checks](./contract-setup/#run-contract-checks) (Enterprise only): When running schema checks on a source variant, also check whether your proposed schema changes will break any downstream contract variants.
+- [Contract checks](./contract-setup/#run-contract-checks) (Enterprise only): When running schema checks on a source variant, also check whether your proposed schema changes break any downstream contract variants.
 
 Most of this article covers composition and operation checks.
 
 - For details on linter checks, see [Schema linting](./schema-linter/).
-- For details on proposals checks, see [Schema proposals check configuration](./schema-proposals/configuration#configure-schema-checks).
+- For details on proposal checks, see [Schema proposals check configuration](./schema-proposals/configuration#configure-schema-checks).
 - For details on contract checks, see [Contract checks](./contract-setup/#run-contract-checks).
 
 ## Prerequisites
 
 To enable schema checks for your supergraph, do the following if you haven't yet:
 
-1. Make sure you've published all your subgraph schemas to GraphOS, and that those schemas are up to date.
+1. Make sure you've published all your subgraph schemas to GraphOS and that those schemas are up to date.
    - [Learn how to publish schemas.](./)
 2. For operation checks, make sure your supergraph is sending operation metrics to GraphOS. GraphOS uses historical metrics to determine whether a potentially dangerous schema change is safe.
 
@@ -92,8 +92,8 @@ When you run `rover subgraph check`:
 
 1. GraphOS generates a diff between your local schema and the published schema for the variant you're checking against.
 2. GraphOS uses this diff to determine whether the changes affect any operations that have been executed against your supergraph within a [customizable time window](./check-configurations/) (by default, this is the last seven days).
-3. GraphOS returns the diff, along with a list of the operations that are affected by the changes.
-4. Rover prints the result of the check and returns a non-zero exit code if at least one breaking change is found.
+3. GraphOS returns the diff, along with a list of the operations affected by the changes.
+4. Rover prints the check result and returns a non-zero exit code if at least one breaking change is found.
 
 ### The check response
 
@@ -127,13 +127,14 @@ The output also includes a Studio URL that provides full details on the changes 
 
 <img
   className="screenshot"
-  src="../img/schema-checks/service-check-page.png"
+  src="../img/schema-checks/service-check-page.jpg"
   alt="Service check page in GraphOS Studio"
+  width="700"
 />
 
-If you've [integrated schema checks with your GitHub PRs](#integrating-with-github), the "Details" link in your GitHub check takes you to this same details page.
+If you've [integrated schema checks with your GitHub PRs](#integrating-with-github), the **Details** link in your GitHub check takes you to this same details page.
 
-If you run a check within a Git repository, `rover subgraph check` sends both the commit hash and that hash's author to GraphOS to display on the check. If you haven't [integrated schema checks with GitHub](#integrating-with-github), the author appears as "Unknown." If you want to override author, commit, or other values, you can [set environment variables in Rover](/rover/configuring/#overriding) to do so.
+If you run a check within a Git repository, `rover subgraph check` sends both the commit hash and that hash's author to GraphOS to display on the check. If you haven't [integrated schema checks with GitHub](#integrating-with-github), the author appears as **Unknown**. If you want to override author, commit, or other values, you can [set environment variables in Rover](/rover/configuring/#overriding) to do so.
 
 ### Rerunning checks
 
@@ -141,11 +142,12 @@ You can rerun checks from GraphOS Studio. Select the check and click **Rerun che
 
 <img
   className="screenshot"
-  src="../img/schema-checks/rerun-check.png"
+  src="../img/schema-checks/rerun-check.jpg"
   alt="Rerun check in GraphOS Studio"
+  width="300"
 />
 
-When you do, the new run uses the current [check configuration options](./check-configurations/), regardless of the configuration at the time of the original run. Similarly, the new run's time window is based on the current time, not the time when the original check ran.
+When you rerun a check, the new run uses the current [check configuration options](./check-configurations/), regardless of the configuration at the time of the original run. Similarly, the new run's time window is based on the current time, not when the original check ran.
 
 The new checks run incorporates any changes made to excluded or included clients, checked variants, and any operations marked as safe or ignored.
 
@@ -157,41 +159,70 @@ If you've [integrated schema checks with your GitHub PRs](#integrating-with-gith
 
 ## Composition checks
 
-When you run `rover subgraph check`, GraphOS performs a _composition check_ before it performs any other checks. A composition check verifies that changes you make to a subgraph schema are valid GraphQL definitions and are compatible with your other subgraph schemas, enabling them to compose into a supergraph schema for your router ([learn more](/federation/federated-types/composition/)).
+When you run `rover subgraph check`, GraphOS performs a _composition check_ before performing any other checks. A composition check verifies that changes you make to a subgraph schema are valid GraphQL definitions and are compatible with your other subgraph schemas, enabling them to [compose](/federation/federated-types/composition/) into a supergraph schema for your router.
 
-If a composition check fails, Studio does not then perform additional checks for the provided schema.
+If a composition check fails, Studio does not perform additional checks for the provided schema.
 
-From your graph's Checks page in GraphOS Studio, you can click a particular composition check to view its result. If composition succeeded, you can view the composed supergraph schema. Regardless of success, you can view the proposed subgraph schema.
+From your graph's **Checks** page in GraphOS Studio, you can click a particular composition check to view its result. If composition succeeded, you can view the composed supergraph schema. Regardless of success, you can view the proposed subgraph schema.
 
 ## Operation checks
 
-If a [composition check](#composition-checks) succeeds, GraphOS then validates schema changes with _operation checks_. These checks use your graph's historical client operation data to determine whether any clients would be negatively affected by the proposed schema changes. For example, the changes might include removing a field that multiple clients currently include in their queries.
+If a [composition check](#composition-checks) succeeds, GraphOS then validates schema changes with _operation checks_. Operation checks use your graph's historical client operation data to determine whether any clients would be negatively affected by the proposed schema changes. For example, an operation check would flag a change that removes a field that multiple clients use in their operations.
+
+<Note>
+
+If you use the Apollo Router to [report operation metrics](../metrics/sending-operation-metrics), you can configure extended reference reporting for more accurate operation checks. [Learn more.](/router/configuration/overview/#extended-reference-reporting)
+
+</Note>
 
 ### Overriding flagged changes
 
 Occasionally, schema checks might flag a change that you know is safe. For example, you might change an input type's field from nullable to non-nullable (usually a breaking change) when you're certain that your clients never provide a null value for the field.
 
-In cases like this, you can override a flagged change in GraphOS Studio from the associated check's details page:
+You can override flagged changes on an operation-by-operation basis or update your check settings to ignore certain kinds of changes.
+
+#### Override changes per operation
+
+[**Org admins** and **Graph admins**](../org/members) can override flagged changes on an operation-by-operation basis in GraphOS Studio.
+From the associated check's details page, select the **Override** dropdown under a flagged operation:
 
 <img
   className="screenshot"
-  src="../img/schema-checks/mark-operation.png"
+  src="../img/schema-checks/mark-operation.jpg"
   alt="Service check page in GraphOS Studio"
   width="500"
 />
 
-<Note>
+For each operation with flagged changes, you can override those changes in the following ways:
 
-Only [**Org admins** and **Graph admins**](../org/members) can override checks.
-
-</Note>
-
-You override flagged changes on an operation-by-operation basis. For each operation with flagged changes, you can override those changes in the following ways:
-
-- **Mark the changes as safe.** In this case, schema checks will not flag these exact changes for the operation in any future execution. This effectively "approves" the changes for the operation.
+- **Mark change as safe**: In this case, schema checks will not flag these exact changes for the operation in any future execution. This effectively "approves" the changes for the operation.
   - If a future check detects approved changes along with new unsafe changes to the operation, the new unsafe changes will be flagged.
-- **Ignore the operation.** In this case, schema checks will completely ignore the operation when checking all changes in any future execution.
-  - This option is useful when you know an operation originates only from clients or client versions that you don't actively support.
+- **Ignore the operation**: In this case, schema checks will completely ignore the operation when checking all changes in any future execution.
+  - This option is useful when you know an operation originates only from clients or client versions you don't actively support.
+
+You can **Undo** an override from the banner that appears on any overridden operations.
+
+<img
+  className="screenshot"
+  src="../img/schema-checks/undo-override.jpg"
+  alt="A banner appearing above an operation that was marked as safe. It allows users to Undo the override."
+  width="700"
+/>
+
+#### Ignored conditions settings
+
+You can update your check settings so operation checks don't flag the following kinds of changes:
+
+- **Ignore breaking changes when there are no operations**: Turning this setting on ignores any potentially breaking changes when an operation check is run against zero operations.
+- **Ignore default value changes**: Turning this setting on ignores any changes to default values.
+
+  <Note>
+    This setting ignores default values changes but doesn't ignore default value
+    removals.
+  </Note>
+
+You enable these settings from the **Configuration** tab of your variant's **Checks** page.
+Learn about other checks settings on the [Configure Schema Checks page](./check-configurations).
 
 ## Linter checks
 
@@ -263,6 +294,7 @@ If you're using GitHub, you can install the [Apollo Studio GitHub app](https://g
   className="screenshot"
   src="../img/schema-checks/github-check.png"
   alt="GitHub Status View"
+  width="700"
 />
 
 ### Integrating with other version control services
@@ -276,6 +308,12 @@ See [Configuring schema checks](./check-configurations/).
 ## Types of schema changes
 
 Not every change to a schema is a potentially breaking change. Additive changes (such as adding a field to a type) are usually safe and do not affect active clients. Deletions and modifications (such as removing a field or changing a return type), however, can break clients that use affected types and fields.
+
+<Note>
+
+If you use the Apollo Router to [report operation metrics](../metrics/sending-operation-metrics), you can configure extended reference reporting for more accurate schema checks. [Learn more.](/router/configuration/overview/#extended-reference-reporting)
+
+</Note>
 
 ### Potentially breaking changes
 
@@ -370,6 +408,14 @@ These changes are detected by schema checks, but they are "safe." They never aff
 Operation checks will run against a maximum of 10,000 distinct operations. A warning message will display on the UI when a larger cardinality has been reached.
 
 ### Input field usage reporting
+
+<Note>
+
+The input field usage limitation applies to reporting metrics from Apollo Server and older versions of the Apollo Router.
+
+If you use the Apollo Router to [report operation metrics](../metrics/sending-operation-metrics), you can configure [enhanced operation signature normalization](/router/configuration/overview/#enhanced-operation-signature-normalization) and [extended reference reporting](/router/configuration/overview/#extended-reference-reporting) to track input field usage.
+
+</Note>
 
 GraphOS tracks operation usage. To deduplicate operations, Apollo uses [operation signatures](../metrics/operation-signatures) which denormalize the arguments and inputs. This means that the result of the operation signature does not track which fields on input types are used.
 
