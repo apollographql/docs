@@ -5,6 +5,7 @@ export {default as ClientPQImplementation} from './client-pq-implementation.mdx'
 export {default as ClientPQIntro} from './client-pq-intro.mdx';
 export {default as CreateSelfHostedSupergraph} from './create-self-hosted-supergraph.mdx';
 export {CreateNotification} from './create-notification.js';
+export {HttpConnection} from './router-http-connection.js';
 export {default as ConfigurePagerDutyNotification} from './configure-pagerduty-notification.mdx';
 export {default as ConfigureSlackNotification} from './configure-slack-notification.mdx';
 export {ConfigureWebhookNotification} from './configure-webhook-notification.js';
