@@ -12,25 +12,41 @@ This guide walks through configuring Okta as your GraphOS organization's identit
 
 ## Setup
 
-SAML-based SSO setup has two main steps:
+<SAMLSetupSteps idp="Okta app integration" />
 
-1. Create a custom Okta app integration for Apollo GraphOS.
-2. Send your Okta app integration's SAML metadata to Apollo.
+### Prerequisites
 
-Setup requires an Okta account with administrator privileges.
+Setup requires:
 
-### Step 1. Create a custom app integration
+- An Okta user account with administrator privileges
+- A GraphOS user account with the [**Org Admin** role](../members/#organization-wide-member-roles)
 
-<Note>
+<!-- vale Apollo.Headings = NO -->
 
-To use the latest version of Apollo's SSO, ensure you are _creating a custom app integration_ in Okta rather than using the GraphOS app in the Okta Application Network.
+### Step 1. Enter your SSO details
 
-</Note>
+<SSOShareDetails type="SAML" />
 
-<SSOSAMLInfoRequest />
+### Step 2. Create a custom Okta app integration
 
-2. From your Okta Administrator Dashboard, go to the **Applications** view. Click **Create App Integration**.
+1. Once you reach **Step 2: Your IdP and Apollo** in the wizard, open your Okta Administrator Dashboard in a separate browser tab.
+2. In your Okta Administrator Dashboard, go to the **Applications** view and click **Create App Integration**.
+
+   <Note>
+
+   To use the latest version of Apollo's SSO, ensure you _create a custom app integration_ in Okta rather than use the GraphOS app in the Okta Application Network.
+
+   </Note>
+
 3. In the dialog that appears, select **SAML 2.0** as your sign-in method. Click **Next**.
+
+   <img
+     src="../../img/sso/okta-create-app-integration.jpg"
+     alt="Okta create app integration modal"
+     className="screenshot"
+     width="700"
+   />
+
 4. The **Create SAML Integration** dialog appears. In the **General Settings** step, provide the following values:
 
    - **App name**: `Apollo GraphOS`
@@ -40,16 +56,16 @@ To use the latest version of Apollo's SSO, ensure you are _creating a custom app
      src="../../img/sso/okta-create-saml-integration.jpg"
      alt="Okta create SAML integration step"
      className="screenshot"
-     width="800"
+     width="700"
    />
 
    Then click **Next**.
 
 5. In the **Configure SAML** step, provide the following values:
 
-   - **Single sign on URL**: Single sign-on URL provided by Apollo
+   - **Single sign on URL**: Single sign-on URL provided by the setup wizard
      - Also check **Use this for Recipient URL and Destination URL**.
-   - **Audience URI (SP Entity ID)**: Entity ID provided by Apollo
+   - **Audience URI (SP Entity ID)**: Entity ID provided by the setup wizard
    - Leave the default values for other settings, including leaving the **RelayState** blank.
 
 6. Still in the **Configure SAML** step, scroll down to **Attribute Statements**. Set values for the following attributes:
@@ -70,10 +86,12 @@ To use the latest version of Apollo's SSO, ensure you are _creating a custom app
    Then click **Next**.
 
 7. In the **Feedback** step, select **I'm an Okta customer adding an internal app**. Click **Finish**.
+8. In the setup wizard in GraphOS Studio, select whether your Okta implementation requires signing an AuthnRequest.
+9. Click **Continue**.
 
-### Step 2. Send SAML metadata to Apollo
+### Step 3. Share SAML metadata with Apollo
 
-1. In your new Okta SAML integration, go to the **Sign On > Settings > SAML 2.0 > Metadata details** section.
+1. In your Okta Administrator Dashboard, go to the **Sign On > Settings > SAML 2.0 > Metadata details** section in the app integration you just created.
 
    <img
      src="../../img/sso/okta-metadata-url.jpg"
@@ -82,10 +100,31 @@ To use the latest version of Apollo's SSO, ensure you are _creating a custom app
      width="500"
    />
 
-2. Copy and paste the contents of the **Metadata URL** text box into a text file.
-3. Send the **Metadata URL** to your Apollo contact. They will complete your SSO setup.
+2. Copy and paste the contents of the **Metadata URL** text box into the setup wizard in GraphOS Studio. Click **Continue**.
 
-Once your SSO setup is finalized, you need to assign users to your custom app in Okta.
+### Step 4. Verify details
+
+The GraphOS Studio setup wizard populates your SSO metadata based on the URL you entered in the last step. Verify the values are correct.
+
+You can find them in your Okta Administrator Dashboard in the app integration you created for GraphOS.
+
+- Your app integration's **Entity ID** is in the **Sign On** tab. Scroll down to the **SAML 2.0** section and look for a field labeled **Issuer**. This field contains the Entity ID. It uses a URL format: `http://www.okta.com/<unique-id>`.
+- The **SSO URL** is also in the **SAML 2.0** section in a field labeled **Sign on URL**.
+
+<img
+  src="../../img/sso/okta-verify-details.jpg"
+  alt="Okta SSO details"
+  className="screenshot"
+  width="500"
+/>
+
+Once you've verified the values or corrected them, click **Continue**.
+
+### Step 5. Enable SSO
+
+<!-- vale Apollo.Headings = YES -->
+
+<SSOLegacyUsers idp="Okta" appType="custom app integration" />
 
 ## Assign users in Okta
 
@@ -105,17 +144,13 @@ Once your SSO is set up, you need to assign users to it so they can access Graph
 Repeat these steps whenever you want to grant GraphOS Studio access to a new user or group.
 Okta displays every user and group you've assigned to the integration in the **Assignments** tab.
 
-<SSOLegacyUsers />
-
-Once you've confirmed the new configuration works as expected, remove any legacy Apollo integrations in Okta if you have them.
-
 ## Legacy setup
 
 <SSOLegacyCaution />
 
 <ExpansionPanel title="Click to see legacy instructions">
 
-With PingOne—Apollo's former SSO system—you could use Okta's GraphOS integration (now deprecated) or create a custom SAML integration.
+With PingOne—Apollo's former SSO service—you could use Okta's GraphOS integration (now deprecated) or create a custom SAML integration.
 
 ### Using Okta's Apollo GraphOS integration (deprecated)
 
