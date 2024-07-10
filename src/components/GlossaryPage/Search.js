@@ -14,7 +14,7 @@ function Search(props) {
 
   return (
     <InputGroup>
-      <InputLeftElement pointerEvents="none">
+      <InputLeftElement pointerEvents="none" zIndex="1">
         <SearchIcon color="gray.300" />
       </InputLeftElement>
       <Input
@@ -23,7 +23,7 @@ function Search(props) {
         value={query}
         onChange={e => refine(e.target.value)}
       />
-      <InputRightElement>
+      <InputRightElement zIndex="1">
       <IconButton
         aria-label="Clear search"
         cursor="pointer"
