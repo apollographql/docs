@@ -17,7 +17,7 @@ exceptions:
   - Apollo iOS
   - Apollo Kotlin
   - Apollo Organization
-  - Apollo Router
+  - Apollo Router Core
   - Apollo Server
   - AWS
   - Azure (AD)?
@@ -47,6 +47,7 @@ exceptions:
   - GitHub
   - GraphOS
   - GraphOS Cloud on AWS
+  - "GraphOS Router( features| setup)?"
   - GraphOS Studio
   - GraphQL
   - GraphQL Summit
@@ -88,5 +89,6 @@ exceptions:
   - Visual
   - VS
   - WebSockets?
+  - Which types of data do the GraphOS Router and Apollo Server send to GraphOS?
   - Windows
   - Zipkin

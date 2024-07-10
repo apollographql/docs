@@ -1,7 +1,7 @@
 ---
 title: Sending Metrics to GraphOS
 subtitle: Learn how to report operation and field usage metrics to GraphOS
-description: Learn how to report GraphQL operation and field usage metrics from the Apollo Router, Apollo Server, and third-party server libraries.
+description: Learn how to report GraphQL operation and field usage metrics from the Apollo GraphOS Router, Apollo Server, and third-party server libraries.
 ---
 
 GraphOS Studio offers visualizations of metrics like request rate, latency, and more to help you analyze your supergraph's performance. Studio also lets you analyze how clients are using individual fields in your GraphQL requests. To analyze operation metrics and field usage in Studio, you first need to report them to GraphOS.
@@ -15,11 +15,11 @@ GraphOS Studio offers visualizations of metrics like request rate, latency, and 
 
 ## Reporting operation metrics
 
-How you report operation metrics to GraphOS depends on whether you're [using Apollo Router or Apollo Server](#from-the-apollo-router-or-apollo-server) or whether you're [using a third-party server](#from-a-third-party-server-advanced).
+How you report operation metrics to GraphOS depends on whether you're [using the GraphOS Router or Apollo Server](#from-graphos-router-or-apollo-server) or whether you're [using a third-party server](#from-a-third-party-server-advanced).
 
-### From the Apollo Router or Apollo Server
+### From GraphOS Router or Apollo Server
 
-Both the Apollo Router and Apollo Server use the same mechanism to enable operation metrics reporting to GraphOS:
+Both the GraphOS Router and Apollo Server use the same mechanism to enable operation metrics reporting to GraphOS:
 
 1. Obtain a _graph API key_ from GraphOS Studio.
 
@@ -48,9 +48,9 @@ Consult your production environment's documentation to learn how to set its envi
 
 Now, when your router or server starts up, it automatically begins reporting operation metrics to GraphOS.
 
-#### Enhanced reporting with the Apollo Router
+#### Enhanced reporting with the GraphOS Router
 
-If you use the Apollo Router to report operation metrics, you can configure [enhanced operation signature normalization](/router/configuration/overview/#enhanced-operation-signature-normalization) and [extended reference reporting](/router/configuration/overview/#extended-reference-reporting) for more comprehensive insights and operation checks.
+If you use the GraphOS Router to report operation metrics, you can configure [enhanced operation signature normalization](/router/configuration/overview/#enhanced-operation-signature-normalization) and [extended reference reporting](/router/configuration/overview/#extended-reference-reporting) for more comprehensive insights and operation checks.
 
 ### From a third-party server (advanced)
 
@@ -172,11 +172,11 @@ Your GraphQL router or server can report one or both of the following field usag
 - **Requests**: How many times an operation that requests a particular field has been observed
 - **Executions**: How many times the resolver for a particular field has been executed
 
-How you report these metrics to GraphOS depends on whether you're using the [Apollo Router](#from-the-apollo-router) or [Apollo Server](#from-apollo-server).
+How you report these metrics to GraphOS depends on whether you're using the [GraphOS Router](#from-the-graphos-router) or [Apollo Server](#from-apollo-server).
 
-### From the Apollo Router
+### From GraphOS Router
 
-If you have a [cloud](/graphos/graphs#cloud-supergraphs) or [self-hosted supergraph](/graphos/graphs#self-hosted-supergraphs), you only need to configure your [router](/federation/building-supergraphs/router/) to [send operation metrics to GraphOS](#from-the-apollo-router-or-apollo-server), and field usage will be automatically reported. Subgraphs should not send any metrics to GraphOS directly. Instead, they can include [trace data](./operations#enabling-traces) in their responses to the router. The router then includes that data in its own reports to GraphOS.
+If you have a [cloud](/graphos/graphs#cloud-supergraphs) or [self-hosted supergraph](/graphos/graphs#self-hosted-supergraphs), you only need to configure your [router](/federation/building-supergraphs/router/) to [send operation metrics to GraphOS](#from-graphos-router-or-apollo-server), and field usage will be automatically reported. Subgraphs should not send any metrics to GraphOS directly. Instead, they can include [trace data](./operations#enabling-traces) in their responses to the router. The router then includes that data in its own reports to GraphOS.
 
 <Note>
 
@@ -188,7 +188,7 @@ Subgraphs send field tracing and error data to the router using the [federated t
 
 Apollo Server automatically reports field usage metrics as long as you follow these prerequisites:
 
-- You must first configure your server to [send operation metrics to GraphOS](#from-the-apollo-router-or-apollo-server).
+- You must first configure your server to [send operation metrics to GraphOS](#from-graphos-router-or-apollo-server).
 - To report requests:
 
   - Your GraphQL server must run Apollo Server 3.6 or later.

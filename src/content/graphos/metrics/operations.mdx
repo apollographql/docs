@@ -119,7 +119,7 @@ Low latency is crucial for real-time applications to deliver data promptly. High
 
 #### Federated subscription notification latency
 
-_Federated subscriptions_ are subscriptions that rely on data from multiple subgraphs. Federated subscriptions have an additional step after step 3: the Apollo Router must fetch data from any other necessary subgraphs before publishing an aggregated response to clients.
+_Federated subscriptions_ are subscriptions that rely on data from multiple subgraphs. Federated subscriptions have an additional step after step 3: the router must fetch data from any other necessary subgraphs before publishing an aggregated response to clients.
 
 ```mermaid
 flowchart LR;
@@ -131,7 +131,7 @@ flowchart LR;
       serviceB[Chats <br/>subgraph];
       serviceC[Users <br/>subgraph];
     end
-    router(["<b>Apollo Router</b>"]);
+    router(["<b>GraphOS Router</b>"]);
   end
   clients(Clients);
   serviceA -->|Resolver <br/> response| router;

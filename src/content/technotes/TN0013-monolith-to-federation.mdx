@@ -35,18 +35,18 @@ Start the process by making a "federated graph of one." Your existing monolith c
      --convert # necessary if you're publishing to an existing variant
    ```
 
-1. Deploy an instance of the [Apollo Router](/router/) to your environment.
+1. Deploy an instance of the GraphOS Router to your environment.
    <EnterpriseFeature>
 
-    Self-hosting the Apollo Router is limited to [GraphOS Enterprise plans](/graphos/enterprise/). Other plan types use [managed cloud routing with GraphOS](/graphos/cloud-routing). Check out the [pricing page](https://www.apollographql.com/pricing/) to learn more.
+    Self-hosting the GraphOS Router is limited to [GraphOS Enterprise plans](/graphos/enterprise/). Other plan types use [managed cloud routing with GraphOS](/graphos/cloud-routing). Check out the [pricing page](https://www.apollographql.com/pricing/) to learn more.
 
    </EnterpriseFeature>
 1. Set up [header propagation](/router/configuration/header-propagation/) so that the monolith receives any necessary headers from the router.
-1. Set up internal routing rules to redirect client requests to the Apollo Router instead of your monolith.
+1. Set up internal routing rules to redirect client requests to the router instead of your monolith.
 1. Enable usage metrics reporting to GraphOS Studio.
 1. Add [subgraph checks](/graphos/delivery/schema-checks/) to your monolith's CI pipeline.
 
-At this point, client requests go to your new Apollo Router instead of the monolith, but it's serving the same schema so clients won't know the difference.
+At this point, client requests go to your new router instead of the monolith, but it's serving the same schema so clients won't know the difference.
 
 Not only are you prepared to federate your schema, you now have field-level visibility into graph usage and breaking change detection.
 

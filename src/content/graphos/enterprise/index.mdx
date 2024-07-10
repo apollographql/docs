@@ -32,13 +32,13 @@ You can sign up for a GraphOS Enterprise trial to test out most Enterprise featu
 
 ## Self-hosted routing
 
-With GraphOS Enterprise, you can deploy your supergraph's [Apollo Router](/router/) instances into your own infrastructure, instead of using a GraphOS-provisioned cloud router:
+With GraphOS Enterprise, you can deploy your GraphOS Router instances in your own infrastructure instead of using a cloud GraphOS Router:
 
 ```mermaid
 flowchart LR;
   clients(Clients);
   subgraph "Your infrastructure";
-  router(["<b>Apollo<br/>Router</b>"]);
+  router(["<b>GraphOS<br/>Router</b>"]);
   subgraphA[Locations<br/>subgraph];
   subgraphB[Reviews<br/>subgraph];
   router --- subgraphA & subgraphB;
@@ -57,11 +57,11 @@ This architecture helps you satisfy sophisticated requirements around data compl
 
 </Tip>
 
-### Premium GraphOS router features
+### GraphOS Router features
 
 <GraphOSRouterFeatures />
 
-[Learn more about premium GraphOS features.](/router/enterprise-features/)
+[Learn more about GraphOS features.](/router/enterprise-features/)
 
 ## Schema pipeline
 

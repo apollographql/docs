@@ -134,7 +134,7 @@ A consolidated, federation-driven supergraph architecture consists of:
 flowchart TB;
   clients(Clients);
   subgraph " ";
-  gateway(["Apollo Router"]);
+  gateway(["GraphOS Router"]);
   serviceA[Users<br/>subgraph];
   serviceB[Products<br/>subgraph];
   serviceC[Reviews<br/>subgraph];
@@ -148,4 +148,4 @@ Federation uses a declarative programming model that enables each subgraph to im
 
 Many [GraphQL libraries and frameworks support the federation subgraph specification](/federation/building-supergraphs/supported-subgraphs), so you can adopt the supergraph regardless of your tech stack.
 
-[The Apollo Router](/router/) is Apollo's next-generation graph runtime that enables federated supergraphs with fast and consistent performance.
+The GraphOS Router is Apollo's next-generation graph runtime that enables federated supergraphs with fast and consistent performance.

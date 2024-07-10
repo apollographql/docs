@@ -1,5 +1,5 @@
 ---
-title: Managing Apollo Router Resources in Kubernetes
+title: Managing GraphOS Router Resources in Kubernetes
 subtitle: Recommendations and considerations for application pods
 description: Recommendations and considerations for determining the correct resource requests and limits for application pods in a Kubernetes system.
 published: 2022-10-31
@@ -9,7 +9,7 @@ tags: [router, kubernetes]
 
 <EnterpriseFeature>
 
-Self-hosting the Apollo Router is limited to [GraphOS Enterprise plans](/graphos/enterprise/). Other plan types use [managed cloud routing with GraphOS](/graphos/cloud-routing). Check out the [pricing page](https://www.apollographql.com/pricing#graphos-router) to learn more.
+Self-hosting the GraphOS Router is limited to [GraphOS Enterprise plans](/graphos/enterprise/). Other plan types use [managed cloud routing with GraphOS](/graphos/cloud-routing). Check out the [pricing page](https://www.apollographql.com/pricing#graphos-router) to learn more.
 
 </EnterpriseFeature>
 
@@ -56,4 +56,4 @@ metrics:
         averageUtilization: 90
 ```
 
-The Apollo Router starts up quickly, but when using [Managed Federation](/router/managed-federation/overview/), the router has to fetch the supergraph schema from Apollo Uplink before it can start serving traffic. We recommend measuring your router's startup time and lowering the `averageUtilization` if your startup time is longer due to Uplink latency or the size of your supergraph schema.
+The GraphOS Router starts up quickly, but when using [Managed Federation](/router/managed-federation/overview/), the router has to fetch the supergraph schema from Apollo Uplink before it can start serving traffic. We recommend measuring your router's startup time and lowering the `averageUtilization` if your startup time is longer due to Uplink latency or the size of your supergraph schema.
