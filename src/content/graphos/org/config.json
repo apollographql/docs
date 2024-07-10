@@ -61,6 +61,45 @@
           ]
         ]
       },
+      "Self-Service SSO": [{
+        "Migration Guide": "/sso/self-service/migration", 
+        "SAML": {
+          "Okta": [
+            "/sso/self-service/okta-integration-guide",
+            [
+              "enterprise"
+            ]
+          ],
+          "Microsoft Entra ID": [
+            "/sso/self-service/microsoft-entra-id-integration-saml-guide",
+            [
+              "enterprise"
+            ]
+          ],
+          "Generic SAML Setup": [
+            "/sso/self-service/saml-integration-guide",
+            [
+              "enterprise"
+            ]
+          ]
+        },
+        "OIDC": {
+          "Microsoft Entra ID": [
+            "/sso/self-service/microsoft-entra-id-integration-oidc-guide",
+            [
+              "enterprise"
+            ]
+          ],
+          "Generic OIDC Setup": [
+            "/sso/self-service/oidc-integration-guide",
+            [
+              "enterprise"
+            ]
+          ]
+        }
+      },
+      true
+    ],
       "Multi-organization": [
         "/sso/multi-organization",
         [
