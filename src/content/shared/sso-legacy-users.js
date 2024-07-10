@@ -4,7 +4,7 @@ import RelativeLink from '../../components/RelativeLink';
 import {Box, Text} from '@chakra-ui/react';
 import {Caution} from '../../components/Caution';
 
-export const SSOLegacyUsers = ({idp, appType}) => {
+export const SSOLegacyUsers = ({idp="your IdP", appType}) => {
   const anchor = `#assign-users-in-${idp.toLowerCase().replace(/\s+/g, '-')}`;
   return (
     <Box>
