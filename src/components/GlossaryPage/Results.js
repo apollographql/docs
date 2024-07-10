@@ -188,15 +188,34 @@ const Results = () => {
                       <strong>Usage instructions</strong>
                     </Text>
                     <Box pb="4">
-                      <Markdown
-                        components={{
-                          p: Text,
-                          a: PrimaryLink,
-                          code: InlineCode
-                        }}
-                      >
-                        {hit.usageInstructions}
-                      </Markdown>
+                      {Array.isArray(hit.usageInstructions) &&
+                      hit.usageInstructions.length === 1 ? (
+                        <Markdown
+                          components={{
+                            p: Text,
+                            a: PrimaryLink,
+                            code: InlineCode
+                          }}
+                        >
+                          {hit.usageInstructions[0]}
+                        </Markdown>
+                      ) : (
+                        <Box as="ul" pl="4">
+                          {hit.usageInstructions.map((instruction, index) => (
+                            <Box as="li" key={index}>
+                              <Markdown
+                                components={{
+                                  p: Text,
+                                  a: PrimaryLink,
+                                  code: InlineCode
+                                }}
+                              >
+                                {instruction}
+                              </Markdown>
+                            </Box>
+                          ))}
+                        </Box>
+                      )}
                     </Box>
                   </>
                 )}
