@@ -1,4 +1,3 @@
-const {algoliaSettings} = require('apollo-algolia-transform');
 const {
   remarkTypescript,
   highlightPreservation,
@@ -147,7 +146,32 @@ const plugins = [
           query,
           transformer,
           settings: {
-            ...algoliaSettings,
+            searchableAttributes: [
+              'unordered(title)',
+              'unordered(sectionTitle)',
+              'unordered(ancestors)',
+              'unordered(slug)',
+              'unordered(categories)',
+              'unordered(text)',
+              'unordered(excerpt)',
+              'unordered(description)'
+            ],
+            customRanking: ['desc(pageviews)', 'asc(index)'],
+            ignorePlurals: true,
+            distinct: true,
+            attributeForDistinct: 'slug',
+            attributesToSnippet: ['text:30'],
+            attributesToHighlight: [
+              'title',
+              'sectionTitle',
+              'excerpt',
+              'description',
+              'text'
+            ],
+            queryType: 'prefixLast',
+            queryLanguages: ['en'],
+            indexLanguages: ['en'],
+            alternativesAsExact: ['ignorePlurals', 'singleWordSynonym'],
             attributesForFaceting: ['categories', 'docset', 'type']
           }
         }
