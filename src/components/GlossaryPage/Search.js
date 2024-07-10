@@ -1,6 +1,7 @@
 import React from 'react';
 import {CloseIcon, SearchIcon} from '../Icons';
 import {
+  IconButton,
   Input,
   InputGroup,
   InputLeftElement,
@@ -23,7 +24,13 @@ function Search(props) {
         onChange={e => refine(e.target.value)}
       />
       <InputRightElement>
-        <CloseIcon color="gray.300" onClick={clear} />
+      <IconButton
+        aria-label="Clear search"
+        cursor="pointer"
+        variant="ghost"
+        onClick={clear}
+        icon={<CloseIcon />}
+      />
       </InputRightElement>
     </InputGroup>
   );
