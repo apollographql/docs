@@ -62,7 +62,8 @@
         ]
       },
       "Self-Service SSO": [{
-        "Migration Guide": "/sso/self-service/migration", 
+        "Migration Guide": "/sso/self-service/migration",
+        "Availability": "/sso/self-service/availability", 
         "SAML": {
           "Okta": [
             "/sso/self-service/okta-integration-guide",
