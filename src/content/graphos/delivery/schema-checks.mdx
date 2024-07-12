@@ -317,28 +317,34 @@ If you use the GraphOS Router to [report operation metrics](../metrics/sending-o
 
 ### Potentially breaking changes
 
+<Note>
+
+You can use [ignored conditions settings](#ignored-conditions-settings) to ignore all potentially breaking changes when they are detected on a variant that does not have any traffic.
+
+</Note>
+
 #### Removals
 
 These changes remove a schema element. If a removed element is actively being used by an operation, that operation will start returning an error.
 
-| Name                          | Description                                                                                                                             |
-| ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| `FIELD_REMOVED`               | A field used by at least one operation was removed.                                                                                     |
-| `TYPE_REMOVED`                | A scalar or object used by at least one operation was removed.                                                                          |
-| `ARG_REMOVED`                 | An argument used by at least one operation was removed from a field.                                                                    |
-| `TYPE_REMOVED_FROM_UNION`     | A type was removed from a union used by at least one operation.                                                                         |
-| `INPUT_FIELD_REMOVED`         | A field was removed from an input type. That field is referenced by an argument on another field that's used by at least one operation. |
-| `VALUE_REMOVED_FROM_ENUM`     | A value was removed from an enum used by at least one operation.                                                                        |
-| `TYPE_REMOVED_FROM_INTERFACE` | An object was removed from an interface used by at least one operation.                                                                 |
+| Name                              | Description                                                                                                                             |
+| --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `FIELD_REMOVED`                   | A field used by at least one operation was removed.                                                                                     |
+| `TYPE_REMOVED`                    | A scalar or object used by at least one operation was removed.                                                                          |
+| `ARG_REMOVED`                     | An argument used by at least one operation was removed from a field.                                                                    |
+| `TYPE_REMOVED_FROM_UNION`         | A type was removed from a union used by at least one operation.                                                                         |
+| `FIELD_REMOVED_FROM_INPUT_OBJECT` | A field was removed from an input type. That field is referenced by an argument on another field that's used by at least one operation. |
+| `VALUE_REMOVED_FROM_ENUM`         | A value was removed from an enum used by at least one operation.                                                                        |
+| `TYPE_REMOVED_FROM_INTERFACE`     | An object was removed from an interface used by at least one operation.                                                                 |
 
 #### Addition of required arguments
 
 These changes add a required input to a schema element. If an operation is actively using an element of your graph and doesn't add the new required input argument, the graph will return an error to affected clients.
 
-| Name                         | Description                                                                       |
-| ---------------------------- | --------------------------------------------------------------------------------- |
-| `REQUIRED_ARG_ADDED`         | A non-nullable argument was added to field that's used by at least one operation. |
-| `NON_NULL_INPUT_FIELD_ADDED` | A non-nullable field was added to an input object used by at least one operation. |
+| Name                                       | Description                                                                                               |
+| ------------------------------------------ | --------------------------------------------------------------------------------------------------------- |
+| `REQUIRED_ARG_ADDED`                       | A non-nullable argument was added to field that's used by at least one operation.                         |
+| `REQUIRED_FIELD_ADDED_TO_INPUT_OBJECT`     | A non-nullable field without a default value was added to an input object used by at least one operation. |
 
 #### In-place updates
 
@@ -350,20 +356,29 @@ In some cases, in-place updates are compatible with affected clients at runtime 
 
 </Note>
 
-| Name                       | Description                                                                                                                                            |
-| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `FIELD_CHANGED_TYPE`       | An existing field used by at least one operation changed its type.                                                                                     |
-| `INPUT_FIELD_CHANGED_TYPE` | An existing field of an input object changed its type. That field is referenced by an argument on another field that's used by at least one operation. |
-| `TYPE_CHANGED_KIND`        | An existing type used by at least one operation changed its "kind." For example, an object type was changed to a union type.                           |
-| `ARG_CHANGED_TYPE`         | An existing argument on a field used by at least one operation changed its type.                                                                       |
+| Name                                    | Description                                                                                                                                            |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `FIELD_CHANGED_TYPE`                    | An existing field used by at least one operation changed its type.                                                                                     |
+| `FIELD_ON_INPUT_OBJECT_CHANGED_TYPE`    | An existing field of an input object changed its type. That field is referenced by an argument on another field that's used by at least one operation. |
+| `TYPE_CHANGED_KIND`                     | An existing type used by at least one operation changed its "kind." For example, an object type was changed to a union type.                           |
+| `ARG_CHANGED_TYPE`                      | An existing argument on a field used by at least one operation changed its type.                                                                       |
+| `ARG_CHANGED_TYPE_OPTIONAL_TO_REQUIRED` | An existing argument on a field used by at least one operation changed from an optional type to a required type.                                       |
 
-#### Default arguments
+#### Default values
 
-These changes update the default value for an argument. If an operation is using an element of your graph and does not specify a value for this argument, the operation might get an unexpected result when the schema is updated if it was relying on the original default value.
+These changes update the default value for an argument or input type. If an operation is using an element of your graph and does not specify a value for this argument, the operation might get an unexpected result when the schema is updated if it was relying on the original default value.
 
-| Name                       | Description                                                                            |
-| -------------------------- | -------------------------------------------------------------------------------------- |
-| `ARG_DEFAULT_VALUE_CHANGE` | An existing field used by at least one operation had a default value added or changed. |
+<Note>
+
+You can use [ignored conditions settings](#ignored-conditions-settings) to ignore default value changes. Default value removals can still be breaking changes. 
+
+</Note>
+
+| Name                                       | Description                                                                                      |
+| ------------------------------------------ | ------------------------------------------------------------------------------------------------ |
+| `ARG_DEFAULT_VALUE_CHANGE`                 | An existing field used by at least one operation had a default value added, changed, or removed. |
+| `INPUT_OBJECT_FIELD_DEFAULT_VALUE_CHANGE`  | An existing input object field used by at least one operation had a default value changed.       |
+| `INPUT_OBJECT_FIELD_DEFAULT_VALUE_REMOVED` | An existing input object field used by at least one operation had a default value removed.       |
 
 ### Non-breaking changes
 
@@ -371,15 +386,16 @@ These changes are detected by schema checks, but they are "safe." They never aff
 
 #### Schema additions
 
-| Name                                   | Description                                                                                                                                                               |
-| -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `FIELD_ADDED`                          | A field was added to an existing type.                                                                                                                                    |
-| `TYPE_ADDED`                           | A type was added to the schema.                                                                                                                                           |
-| `VALUE_ADDED_TO_ENUM`                  | A value was added to an enum. If clients contain a switch statement on the enum's value and do not include a `default` case, this change might cause unexpected behavior. |
-| `TYPE_ADDED_TO_UNION`                  | A type was added to a union used by at least one operation.                                                                                                               |
-| `TYPE_ADDED_TO_INTERFACE`              | An interface was applied to an object used by at least one operation.                                                                                                     |
-| `OPTIONAL_ARG_ADDED`                   | A nullable argument was added to an existing field.                                                                                                                       |
-| `NULLABLE_FIELD_ADDED_TO_INPUT_OBJECT` | A nullable field was added to an existing input object.                                                                                                                   |
+| Name                                     | Description                                                                                                                                                               |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `FIELD_ADDED`                            | A field was added to an existing type.                                                                                                                                    |
+| `TYPE_ADDED`                             | A type was added to the schema.                                                                                                                                           |
+| `VALUE_ADDED_TO_ENUM`                    | A value was added to an enum. If clients contain a switch statement on the enum's value and do not include a `default` case, this change might cause unexpected behavior. |
+| `TYPE_ADDED_TO_UNION`                    | A type was added to a union used by at least one operation.                                                                                                               |
+| `TYPE_ADDED_TO_INTERFACE`                | An interface was applied to an object used by at least one operation.                                                                                                     |
+| `OPTIONAL_ARG_ADDED`                     | A nullable argument was added to an existing field.                                                                                                                       |
+| `OPTIONAL_FIELD_ADDED_TO_INPUT_OBJECT`   | An optional field was added to an existing input object.                                                                                                                  |
+| `INPUT_OBJECT_FIELD_DEFAULT_VALUE_ADDED` | An existing input object field used by at least one operation had a default value added.                                                                                  |
 
 #### Deprecations
 
