@@ -319,13 +319,13 @@ If you use the GraphOS Router to [report operation metrics](../metrics/sending-o
 
 <Note>
 
-You can use [ignored conditions settings](#ignored-conditions-settings) to ignore all potentially breaking changes when they are detected on a variant that does not have any traffic.
+You can use [ignored conditions settings](#ignored-conditions-settings) to ignore all potentially breaking changes when detected on a variant without traffic.
 
 </Note>
 
 #### Removals
 
-These changes remove a schema element. If a removed element is actively being used by an operation, that operation will start returning an error.
+These changes remove a schema element. If an operation is actively using a removed element, that operation will start returning an error.
 
 | Name                              | Description                                                                                                                             |
 | --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
@@ -341,10 +341,10 @@ These changes remove a schema element. If a removed element is actively being us
 
 These changes add a required input to a schema element. If an operation is actively using an element of your graph and doesn't add the new required input argument, the graph will return an error to affected clients.
 
-| Name                                       | Description                                                                                               |
-| ------------------------------------------ | --------------------------------------------------------------------------------------------------------- |
-| `REQUIRED_ARG_ADDED`                       | A non-nullable argument was added to field that's used by at least one operation.                         |
-| `REQUIRED_FIELD_ADDED_TO_INPUT_OBJECT`     | A non-nullable field without a default value was added to an input object used by at least one operation. |
+| Name                                   | Description                                                                                               |
+| -------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| `REQUIRED_ARG_ADDED`                   | A non-nullable argument was added to field that's used by at least one operation.                         |
+| `REQUIRED_FIELD_ADDED_TO_INPUT_OBJECT` | A non-nullable field without a default value was added to an input object used by at least one operation. |
 
 #### In-place updates
 
@@ -370,7 +370,7 @@ These changes update the default value for an argument or input type. If an oper
 
 <Note>
 
-You can use [ignored conditions settings](#ignored-conditions-settings) to ignore default value changes. Default value removals can still be breaking changes. 
+You can use [ignored conditions settings](#ignored-conditions-settings) to ignore default value changes. Default value removals can still be breaking changes.
 
 </Note>
 
