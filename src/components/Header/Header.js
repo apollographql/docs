@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Search from '../Search';
 import StudioButton from './StudioButton';
 import {ReactComponent as ApolloLogo} from '@apollo/icons/logos/LogoType.svg';
 import {ReactComponent as ApolloMark} from '@apollo/icons/logos/LogoSymbol.svg';
 import {
   Box,
-  Center,
+  Link,
+  Button,
   Flex,
   HStack,
   Icon,
@@ -14,46 +15,69 @@ import {
   Text,
   Tooltip,
   useColorMode,
-  useColorModeValue
 } from '@chakra-ui/react';
 import {Link as GatsbyLink} from 'gatsby';
 import {
   MoonIcon,
   NarrowViewportIcon,
   SunIcon,
-  WidenViewportIcon
+  WidenViewportIcon,
+  CloseIcon,
 } from '../Icons';
 import {usePageWidthContext} from '../PageWidthContext';
 
-const EYEBROW_HEIGHT = 32; // 0;
+const EYEBROW_HEIGHT = 36; // 0;
 const HEADER_HEIGHT = 60;
 const HEADER_BORDER_WIDTH = 1;
 export const TOTAL_HEADER_HEIGHT =
   EYEBROW_HEIGHT + HEADER_HEIGHT + HEADER_BORDER_WIDTH;
 
-function Eyebrow({children}) {
+
+const Eyebrow = ({children}) => {
+  // State to manage visibility
+  const [isVisible, setIsVisible] = useState(true);
+
+  useEffect(() => {
+    // Check localStorage on mount
+    const isEyebrowHidden = localStorage.getItem('isEyebrowHidden') === 'true';
+    setIsVisible(!isEyebrowHidden);
+  }, []);
+
+  const handleClose = () => {
+    // Hide the Eyebrow
+    setIsVisible(false);
+    // Persist state in localStorage
+    localStorage.setItem('isEyebrowHidden', 'true');
+  };
+
+  if (!isVisible) {
+    return null;
+  }
+
   return (
-    <Center
+    <Box  justifyContent="center" alignItems="center" display="flex"
       bg="navy.300"
       color="white"
       _dark={{
-        bg: 'black.200',
-        _hover: {bg: 'primary'}
+        bg: 'primary',
+        _hover: {bg: 'navy.300'}
       }}
       _hover={{bg: 'primary'}}
       css={{height: EYEBROW_HEIGHT}}
       fontSize="sm"
       fontWeight="semibold"
-      as="a"
-      href="https://summit.graphql.com/?utm_campaign=docs_eyebrow"
-      target="_blank"
-      rel="noopener noreferrer"
       px="3"
     >
-      <span>{children}</span>
-    </Center>
+      <Link
+      as={GatsbyLink}
+      href="https://summit.graphql.com/?utm_campaign=docs_eyebrow"
+      target="_blank"
+      textDecoration="underline"
+      rel="noopener noreferrer">{children}</Link>
+      <Button position="absolute" height={`${EYEBROW_HEIGHT}px`} borderRadius={0} bg="transparent" right="0" top="0" ml="auto"  onClick={handleClose}><CloseIcon/></Button>
+    </Box>
   );
-}
+};
 
 Eyebrow.propTypes = {
   children: PropTypes.node.isRequired
