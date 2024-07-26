@@ -24,7 +24,7 @@ export {default as PQSecurityLevels} from './pq-security-levels.mdx';
 export {default as PublishPQMs} from './publish-pqms.mdx';
 export {default as RegisterCLI} from './register-cli.mdx';
 export {default as RegisterFederatedCLI} from './register-federated-cli.mdx';
-export {SAMLSetupSteps} from './sso-saml-steps.js';
+export {SSOSetupSteps} from './sso-setup-steps.js';
 export {default as SchemaProposalCreationMermaid} from './schema-proposal-creation-mermaid.mdx';
 export {default as SchemaProposalImplementationMermaid} from './schema-proposal-implementation-mermaid.mdx';
 export {default as SchemaProposalImplementationNote} from './schema-proposal-implementation-note.mdx';

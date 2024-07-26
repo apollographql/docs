@@ -1,5 +1,5 @@
 ---
-title: Set up SSO with a SAML-based IdP
+title: Self-Service SSO with a SAML-based IdP
 subtitle: Configure a SAML-based identity provider
 description: Configure a SAML-based identity provider as your Apollo GraphOS organization's SSO provider.
 ---
@@ -15,12 +15,12 @@ If you are setting up SSO for the first time, please refer to [these instruction
 This guide walks through configuring a generic SAML-based identity provider (IdP) for use with Apollo SSO.
 If you use Okta or Microsoft Entra ID as your IdP, instead see the corresponding guide for your IdP:
 
-- [Okta](./okta-saml-integration-guide/)
-- [Microsoft Entra ID](./microsoft-entra-id-integration-saml-guide/) (formerly known as Azure Active Directory)
+- [Okta](./saml-okta)
+- [Microsoft Entra ID](./saml-microsoft-entra-id) (formerly known as Azure Active Directory)
 
 ## Setup
 
-<SAMLSetupSteps idp="application" />
+<SSOSetupSteps type="SAML" idp="application" />
 
 ### Prerequisites
 

@@ -2,10 +2,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {ListItem, OrderedList, Text} from '@chakra-ui/react';
 
-export const SAMLSetupSteps = ({idp}) => {
+export const SSOSetupSteps = ({type, idp}) => {
   return (
     <>
-      <Text>SAML-based SSO setup has these steps:</Text>
+      <Text>{type}-based SSO setup has these steps:</Text>
       <OrderedList spacing="4">
         <ListItem>Enter your SSO details in GraphOS Studio.</ListItem>
         <ListItem>
@@ -13,10 +13,10 @@ export const SAMLSetupSteps = ({idp}) => {
           {idp === 'application' ? ' in your IdP' : ''}.
         </ListItem>
         <ListItem>
-          Share your {idp}&apos;s SAML metadata in GraphOS Studio.
+          Share your {idp}&apos;s {type} metadata in GraphOS Studio.
         </ListItem>
         <ListItem>Verify your {idp} details.</ListItem>
-        <ListItem>Enable SSO.</ListItem>
+        <ListItem>Enable SSO in GraphOS Studio.</ListItem>
       </OrderedList>
       <Text>
         The SSO setup wizard in GraphOS Studio guides you through these steps.
@@ -25,6 +25,7 @@ export const SAMLSetupSteps = ({idp}) => {
   );
 };
 
-SAMLSetupSteps.propTypes = {
-  idp: PropTypes.string.isRequired
+SSOSetupSteps.propTypes = {
+  idp: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired
 };

@@ -66,13 +66,13 @@
         "Availability": "/sso/self-service/availability", 
         "SAML": {
           "Okta": [
-            "/sso/self-service/okta-integration-guide",
+            "/sso/self-service/saml-okta",
             [
               "enterprise"
             ]
           ],
           "Microsoft Entra ID": [
-            "/sso/self-service/microsoft-entra-id-integration-saml-guide",
+            "/sso/self-service/saml-microsoft-entra-id",
             [
               "enterprise"
             ]
@@ -85,8 +85,14 @@
           ]
         },
         "OIDC": {
+          "Okta": [
+            "/sso/self-service/oidc-okta",
+            [
+              "enterprise"
+            ]
+          ],
           "Microsoft Entra ID": [
-            "/sso/self-service/microsoft-entra-id-integration-oidc-guide",
+            "/sso/self-service/oidc-microsoft-entra-id",
             [
               "enterprise"
             ]
