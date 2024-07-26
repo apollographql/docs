@@ -35,7 +35,7 @@ Setup requires:
 
 ### Step 2. Create a custom Okta app integration
 
-1. Once you reach **Step 2: Your IdP and Apollo** in the wizard, open your Okta Administrator Dashboard in a separate browser tab.
+1. Once you reach **Step 2: Configure Your IdP** in the wizard, open your Okta Administrator Dashboard in a separate browser tab.
 2. In your Okta Administrator Dashboard, go to the **Applications** view and click **Create App Integration**.
 
    <Note>
@@ -77,10 +77,11 @@ Setup requires:
 6. Still in the **Configure SAML** step, scroll down to **Attribute Statements**. Set values for the following attributes:
 
    - `sub`: `user.email`
-     - The `sub` attribute should uniquely identify any particular user to GraphOS. In most cases, `user.email` provides this unique mapping.
    - `email`: `user.email`
    - `given_name`: `user.firstName`
    - `family_name`: `user.lastName`
+
+   Leave the **Name format** as `Unspecified`.
 
    <img
      src="../../../img/sso/okta-attribute-statements.jpg"
@@ -91,11 +92,11 @@ Setup requires:
 
    Then click **Next**.
 
-7. In the **Feedback** step, select **I'm an Okta customer adding an internal app**. Click **Finish**.
+7. In the **Help Okta Support understand how you configured this application** step, select **I'm an Okta customer adding an internal app**. Click **Finish**.
 8. In the setup wizard in GraphOS Studio, select whether your Okta implementation requires signing an AuthnRequest.
-9. Click **Continue**.
+9. Click **Next**.
 
-### Step 3. Share SAML metadata with Apollo
+### Step 3. Share SSO metadata with Apollo
 
 1. In your Okta Administrator Dashboard, go to the **Sign On > Settings > SAML 2.0 > Metadata details** section in the app integration you just created.
 
@@ -106,15 +107,15 @@ Setup requires:
      width="500"
    />
 
-2. Copy and paste the contents of the **Metadata URL** text box into the setup wizard in GraphOS Studio. Click **Continue**.
+2. Copy and paste the contents of the **Metadata URL** text box into the setup wizard in GraphOS Studio. Once the wizard shows the green success banner that says **Sucessfully parsed SAML metadata**, click **Next**.
 
 ### Step 4. Verify details
 
-The GraphOS Studio setup wizard populates your SSO metadata based on the URL you entered in the last step. Verify the values are correct.
+The GraphOS Studio setup wizard populates your SSO metadata based on the URL you entered in the last step. In this step, you verify the values are correct.
 
-You can find them in your Okta Administrator Dashboard in the app integration you created for GraphOS.
+You can find your **EntityID** and **SSO URL** in your Okta Administrator Dashboard in the app integration you created for GraphOS.
 
-- Your app integration's **Entity ID** is in the **Sign On** tab. Scroll down to the **SAML 2.0** section and look for a field labeled **Issuer**. This field contains the Entity ID. It uses a URL format: `http://www.okta.com/<unique-id>`.
+- Your app integration's **Entity ID** is in the **Sign On** tab. Scroll down to the **SAML 2.0** section and look for a field labeled **Issuer**. (You may need to click **More details** to see it.) This field contains the Entity ID. It uses a URL format: `http://www.okta.com/<unique-id>`.
 - The **SSO URL** is also in the **SAML 2.0** section in a field labeled **Sign on URL**.
 
 <img
@@ -124,9 +125,14 @@ You can find them in your Okta Administrator Dashboard in the app integration yo
   width="500"
 />
 
-Once you've verified the values or corrected them, click **Continue**.
+Once you've verified the values or corrected them, click **Next**.
 
-### Step 5. Enable SSO
+### Step 5. Verify SSO Configuration
+
+To verify that your SSO configuration works, click **Login with new SSO** in the GraphOS Studio wizard.
+This button launches a new login session in a new browser tab. Once you successfully login using your new configuration, click **Next**.
+
+### Step 6. Enable SSO
 
 <!-- vale Apollo.Headings = YES -->
 

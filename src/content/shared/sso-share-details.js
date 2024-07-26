@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {Link, ListItem, OrderedList} from '@chakra-ui/react';
+import {ListItem, OrderedList} from '@chakra-ui/react';
+import {PrimaryLink} from '../../components/RelativeLink';
 
 export const SSOShareDetails = ({type}) => {
   return (
@@ -8,23 +9,22 @@ export const SSOShareDetails = ({type}) => {
       <OrderedList spacing="4">
         <ListItem>
           Go to{' '}
-          <Link
+          <PrimaryLink
             href="https://studio.apollographql.com?referrer=docs-content"
             isExternal
           >
             GraphOS Studio
-          </Link>
+          </PrimaryLink>
           . Open the <strong>Settings</strong> page from the top navigation.
-          Open the <strong>Org management</strong> tab from the left sidebar and
-          click <strong>Enable SSO</strong> or <strong>Migrate SSO</strong> if
-          you are migrating from the legacy setup. A setup wizard appears.
+          Open the <strong>Security</strong> tab from the left sidebar and
+          click <strong>Migrate SSO</strong>. A setup wizard appears.
         </ListItem>
         <ListItem>
           Enter the <strong>Email domain</strong>(s) you are setting SSO up for.
           Click <strong>Continue</strong>.
         </ListItem>
         <ListItem>
-          Select <strong>{type}</strong> as the setup type. Click{' '}
+          Select <strong>{type}</strong> as the SSO type. Click{' '}
           <strong>Continue</strong>.
         </ListItem>
       </OrderedList>
