@@ -18,7 +18,7 @@ import {
   TagLabel,
   Text
 } from '@chakra-ui/react';
-import {Highlight, useHits} from 'react-instantsearch';
+import {Highlight, useHits, useSearchBox} from 'react-instantsearch';
 import {MarkdownCodeBlock} from '@apollo/chakra-helpers';
 import {useUser} from '../../utils';
 
@@ -90,7 +90,12 @@ const updateHost = url => {
 
 const Results = () => {
   const {hits} = useHits();
+  const {refine} = useSearchBox();
   const {isInternal} = useUser();
+
+  const handleRelatedTermClick = (term) => {
+    refine(term);
+  };
 
   return (
     <Stack divider={<StackDivider borderColor="border" />} spacing={1}>
@@ -144,7 +149,9 @@ const Results = () => {
                 </Text>
                 {hit.relatedTerms.map((term, index) => (
                   <React.Fragment key={`${hit.objectID}_${index}`}>
-                    <RelativeLink href={`#${makeGlossaryTermId(term)}`}>
+                    <RelativeLink 
+                      onClick={() => handleRelatedTermClick(term)}
+                      href={`#${makeGlossaryTermId(term)}`}>
                       {term}
                     </RelativeLink>
                     {index < hit.relatedTerms.length - 1 && ', '}

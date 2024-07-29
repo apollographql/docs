@@ -13,6 +13,7 @@
       "Product Launch Stages": "/resources/product-launch-stages",
       "Elastic License v2 FAQ": "/resources/elastic-license-v2-faq"
     },
-    "Changelogs": "changelog"
+    "Changelogs": "changelog",
+    "GraphQL Summit 2024":"https://summit.graphql.com/?utm_campaign=docs_sidebar"
   }
 }
