@@ -12,10 +12,13 @@ export const SSOSetupSteps = ({type, idp}) => {
           Create a custom {idp} for GraphOS
           {idp === 'application' ? ' in your IdP' : ''}.
         </ListItem>
+        {type === 'SAML' &&
         <ListItem>
           Share your {idp}&apos;s {type} metadata in GraphOS Studio.
         </ListItem>
-        <ListItem>Verify your {idp} configuration.</ListItem>
+        }
+        <ListItem>Verify your configuration details.</ListItem>
+        <ListItem>Verify your SSO configuration works.</ListItem>
         <ListItem>Enable SSO in GraphOS Studio.</ListItem>
       </OrderedList>
       <Text>
