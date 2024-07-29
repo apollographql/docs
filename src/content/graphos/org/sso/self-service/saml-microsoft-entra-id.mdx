@@ -91,12 +91,12 @@ Setup requires:
 />
 
 10. In the setup wizard in GraphOS Studio, select whether your Entra implementation requires signing an AuthnRequest.
-11. Click **Continue**..
+11. Click **Next**.
 
 ### Step 3. Share SAML metadata with Apollo
 
 In the setup wizard, enter the **App Federation Metadata URL** you previously copied into the **Upload metadata from URL** field.
-Click **Continue**.
+Click **Next**.
 
 ### Step 4. Verify details
 
@@ -107,9 +107,13 @@ You can find them in Entra ID, **Identity > Applications > Enterprise applicatio
 - Your application's **Entity ID** is in the **Single sign-on** tab. Scroll down to the **Basic SAML Configuration** section and look for a field labeled **Identifier (Entity ID)**. This field contains the Entity ID. It has the following format: `urn:<unique>.<region>.auth0.com`.
 - The **SSO URL** is also in thee **Basic SAML Configuration** section in the **Sign on URL** field.
 
-Once you've verified the values or corrected them, click **Continue**.
+Once you've verified the values or corrected them, click **Next**.
 
-### Step 5. Enable SSO
+### Step 5. Verify SSO Configuration
+
+<SSOVerification />
+
+### Step 6. Enable SSO
 
 <!-- vale Apollo.Headings = YES -->
 
