@@ -44,54 +44,47 @@ Setup requires:
 
    </Note>
 
-3. In the dialog that appears, select **OIDC - OpenID Connect** as your sign-in method. Click **Next**.
-4. In the **General Settings** step, provide the following values:
-
-   - **App name**: `Apollo GraphOS`
-   - **App logo**: [Apollo logo](../../../img/sso/apollo-sk-logo.jpg) (optional)
-
-   Then click **Next**.
-
-5. In the next step, enter the following values in Okta:
-
-   - **Sign-in redirect URI**: **Single sign on URL** provided by the GraphOS wizard
-   - **Login intiated by**: `App only`
-   - **Initiated login URI**: `https://studio.apollographql.com/sso/login`
-
-6. In the GraphOS wizard, enter the **Client ID**, **Client Secret**, and **Issuer** provided by Okta.
-7. In the **Help Okta Support understand how you configured this application** step, select **I'm an Okta customer adding an internal app**. Click **Finish**.
-8. In the setup wizard in GraphOS Studio, click **Next**.
-
-### Step 3. Share OIDC metadata with Apollo
-
-1. In your Okta Administrator Dashboard, go to the **Sign On > Settings > OIDC 2.0 > Metadata details** section in the app integration you just created.
+3. In the dialog that appears, select **OIDC - OpenID Connect** as your sign-in method. For the **Application type**, select **Web Application**. Click **Next**.
 
    <img
-     src="../../../img/sso/okta-metadata-url.jpg"
-     alt="Okta settings"
+     src="../../../img/sso/okta-oidc-app.jpg"
+     alt="Okta custom app creation"
      className="screenshot"
      width="500"
    />
 
-2. Copy and paste the contents of the **Metadata URL** text box into the setup wizard in GraphOS Studio. Click **Next**.
+4. In the **General Settings** section, provide the following values:
 
-### Step 4. Verify details
+   - **App integration name**: `Apollo GraphOS`
+   - **Logo**: [Apollo logo](../../../img/sso/apollo-sk-logo.jpg) (optional)
 
-The GraphOS Studio setup wizard populates your SSO metadata based on the URL you entered in the last step. Verify the values are correct.
+   Leave the other fields (for example, Proof of possesion, Grant type) as the default values.
 
-You can find them in your Okta Administrator Dashboard in the app integration you created for GraphOS.
+5. Add the following URIs:
 
-- Your app integration's **Entity ID** is in the **Sign On** tab. Scroll down to the **OIDC 2.0** section and look for a field labeled **Issuer**. This field contains the Entity ID. It uses a URL format: `http://www.okta.com/<unique-id>`.
-- The **SSO URL** is also in the **OIDC 2.0** section in a field labeled **Sign on URL**.
+- In the **Sign-in redirect URIs** section, add the Sign-in URL provided in the GraphOS wizard.
+- In the **Sign-out redirect URIs** section, add `https://studio.apollographql.com`.
+- Leave the **Base URIs** section empty.
 
-<img
-  src="../../../img/sso/okta-verify-details.jpg"
-  alt="Okta SSO details"
-  className="screenshot"
-  width="500"
-/>
+6. For **Assignments**, you can select **Skip group assignment for now** or [assign the users](#assign-users-in-okta) you want to have access to GraphOS. Click **Save**. This creates your custom app integration and brings you to its **General** tab.
 
-Once you've verified the values or corrected them, click **Next**.
+7. In the **Client Credentials** section of the **General** tab, copy the **Client ID** and paste it into the Client ID input in the GraphOS wizard. Do the same for the secret in the **Client Secrets** section.
+
+8. In Okta, while still on the app's **General tab** scroll to **General Settings** and click **Edit**. and scroll to the **Login** section. Add `https://studio.apollographql.com/sso/login` as the **Initiate login URI**. Click **Save**.
+
+9. In Okta, open the **Sign On** tab. Scroll to the **OpenID Connect ID Token** section and click **Edit**. Change the **Issuer** to be **Okta URL** and click **Save**. Copy the URL into the **Issuer** input in the GraphOS Wizard.
+
+10. In the setup wizard in GraphOS Studio, optionally enter a **Discovery URL**. Click **Next**.
+
+### Step 3. Configure OIDC
+
+1. In Okta, go back to the **General** tab of your custom app integration and confirm that the **Sign-in redirect URIs** contains the URL provided in the wizard.
+2. You don't need to make any claims configurations, since by default, custom OIDC apps in Okta include all user attributes on the app profile.
+3. Click **Next**.
+
+### Step 4. Verify SSO Configuration
+
+<SSOVerification />
 
 ### Step 5. Enable SSO
 

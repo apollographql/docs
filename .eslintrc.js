@@ -61,6 +61,7 @@ module.exports = {
         SSOMigrationNotice: 'readonly',
         SSOPremiumFeature: 'readonly',
         SSOSAMLInfoRequest: 'readonly',
+        SSOVerification: 'readonly',
         StudioPages: 'readonly',
         HowSubscriptionsWork: 'readonly',
         WhatSubscriptionsAreFor: 'readonly',
