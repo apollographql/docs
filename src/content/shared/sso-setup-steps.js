@@ -17,7 +17,7 @@ export const SSOSetupSteps = ({type, idp}) => {
           Share your {idp}&apos;s {type} metadata in GraphOS Studio.
         </ListItem>
         }
-        <ListItem>Verify your configuration details.</ListItem>
+        <ListItem>Verify and configure OIDC details.</ListItem>
         <ListItem>Verify your SSO configuration works.</ListItem>
         <ListItem>Enable SSO in GraphOS Studio.</ListItem>
       </OrderedList>

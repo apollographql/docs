@@ -27,8 +27,6 @@ Setup requires:
 
 <SSOSetupSteps type="OIDC" idp="Entra ID enterprise application" />
 
-The SSO setup wizard in GraphOS Studio guides you through these steps.
-
 <!-- vale Apollo.Headings = NO -->
 
 ### Step 1. Enter your SSO details
@@ -65,7 +63,11 @@ The SSO setup wizard in GraphOS Studio guides you through these steps.
 3. From the **Manifest** section of your app registration, find the `groupMembershipClaims` property. Change its value from `null` to either `"All"` or `"SecurityGroup"`. These values ensure that the access token includes the group membership claim during SSO.
 4. **Save** your changes.
 
-### Step 4. Enable SSO
+### Step 4. Verify SSO Configuration
+
+<SSOVerification />
+
+### Step 5. Enable SSO
 
 <!-- vale Apollo.Headings = YES -->
 
