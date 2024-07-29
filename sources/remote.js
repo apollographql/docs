@@ -30,11 +30,11 @@ module.exports = {
   },
   kotlin: {
     remote: 'https://github.com/apollographql/apollo-kotlin',
-    branch: 'release-3.x'
-  },
-  'kotlin/v4': {
-    remote: 'https://github.com/apollographql/apollo-kotlin',
     branch: 'main'
+  },
+  'kotlin/v3': {
+    remote: 'https://github.com/apollographql/apollo-kotlin',
+    branch: 'release-3.x'
   },
   'kotlin/v2': {
     remote: 'https://github.com/apollographql/apollo-kotlin',
