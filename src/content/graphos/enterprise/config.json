@@ -40,23 +40,23 @@
       "Microsoft Entra ID SSO": "https://www.apollographql.com/docs/graphos/org/sso/azure-ad-integration-guide",
       "SAML SSO": "https://www.apollographql.com/docs/graphos/org/sso/saml-integration-guide",
       "Self-Service SSO": [{
-        "Migration Guide": "/sso/self-service/migration",
-        "Availability": "/sso/self-service/availability", 
+        "Migration Guide": "https://www.apollographql.com/docs/graphos/org/sso/self-service/migration",
+        "Availability": "https://www.apollographql.com/docs/graphos/org/sso/self-service/availability", 
         "SAML": {
           "Okta": [
-            "/sso/self-service/saml-okta",
+            "https://www.apollographql.com/docs/graphos/org/sso/self-service/saml-okta",
             [
               "enterprise"
             ]
           ],
           "Microsoft Entra ID": [
-            "/sso/self-service/saml-microsoft-entra-id",
+            "https://www.apollographql.com/docs/graphos/org/sso/self-service/saml-microsoft-entra-id",
             [
               "enterprise"
             ]
           ],
           "Generic SAML Setup": [
-            "/sso/self-service/saml-integration-guide",
+            "https://www.apollographql.com/docs/graphos/org/sso/self-service/saml-integration-guide",
             [
               "enterprise"
             ]
@@ -64,19 +64,19 @@
         },
         "OIDC": {
           "Okta": [
-            "/sso/self-service/oidc-okta",
+            "https://www.apollographql.com/docs/graphos/org/sso/self-service/oidc-okta",
             [
               "enterprise"
             ]
           ],
           "Microsoft Entra ID": [
-            "/sso/self-service/oidc-microsoft-entra-id",
+            "https://www.apollographql.com/docs/graphos/org/sso/self-service/oidc-microsoft-entra-id",
             [
               "enterprise"
             ]
           ],
           "Generic OIDC Setup": [
-            "/sso/self-service/oidc-integration-guide",
+            "https://www.apollographql.com/docs/graphos/org/sso/self-service/oidc-integration-guide",
             [
               "enterprise"
             ]
@@ -86,7 +86,7 @@
       true
     ],
       "Multi-organization": [
-        "/sso/multi-organization",
+        "https://www.apollographql.com/docs/graphos/org/sso/multi-organization",
         [
           "enterprise", "preview"
         ]
