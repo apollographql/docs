@@ -38,7 +38,59 @@
       "Audit Log": "https://www.apollographql.com/docs/graphos/org/audit-log",
       "Okta SSO": "https://www.apollographql.com/docs/graphos/org/sso/okta-integration-guide",
       "Microsoft Entra ID SSO": "https://www.apollographql.com/docs/graphos/org/sso/azure-ad-integration-guide",
-      "SAML SSO": "https://www.apollographql.com/docs/graphos/org/sso/saml-integration-guide"
+      "SAML SSO": "https://www.apollographql.com/docs/graphos/org/sso/saml-integration-guide",
+      "Self-Service SSO": [{
+        "Migration Guide": "/sso/self-service/migration",
+        "Availability": "/sso/self-service/availability", 
+        "SAML": {
+          "Okta": [
+            "/sso/self-service/saml-okta",
+            [
+              "enterprise"
+            ]
+          ],
+          "Microsoft Entra ID": [
+            "/sso/self-service/saml-microsoft-entra-id",
+            [
+              "enterprise"
+            ]
+          ],
+          "Generic SAML Setup": [
+            "/sso/self-service/saml-integration-guide",
+            [
+              "enterprise"
+            ]
+          ]
+        },
+        "OIDC": {
+          "Okta": [
+            "/sso/self-service/oidc-okta",
+            [
+              "enterprise"
+            ]
+          ],
+          "Microsoft Entra ID": [
+            "/sso/self-service/oidc-microsoft-entra-id",
+            [
+              "enterprise"
+            ]
+          ],
+          "Generic OIDC Setup": [
+            "/sso/self-service/oidc-integration-guide",
+            [
+              "enterprise"
+            ]
+          ]
+        }
+      },
+      true
+    ],
+      "Multi-organization": [
+        "/sso/multi-organization",
+        [
+          "enterprise", "preview"
+        ]
+      ]
     },
     "Metrics & Reporting": {
       "Datadog Forwarding": "https://www.apollographql.com/docs/graphos/metrics/datadog-integration",
