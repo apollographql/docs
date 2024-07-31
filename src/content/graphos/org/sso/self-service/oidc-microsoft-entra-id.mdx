@@ -1,87 +1,77 @@
 ---
-title: Set up SAML SSO with Microsoft Entra ID (formerly Azure AD)
+title: Self-Service OIDC SSO with Microsoft Entra ID (formerly Azure AD)
 subtitle: Configure Entra ID as your GraphOS organization's identity provider
-description: Configure Microsoft Entra ID (formerly Azure AD) as your Apollo GraphOS organization's SAML SSO provider with this SAML setup guide.
+description: Configure Microsoft Entra ID (formerly Azure AD) as your Apollo GraphOS organization's SSO provider with this OIDC setup guide.
 ---
 
-<SSOPremiumFeature />
+<PremiumFeature>
 
-This guide walks through configuring Microsoft Entra ID (formerly known as Azure Active Directory) as your GraphOS organization's identity provider (IdP) for SAML-based SSO.
+Self-service single sign-on (SSO) is only available for organizations with Dedicated and Enterprise plans who previously set up their SSO using PingOne and need to migrate.
+If you're unsure if you need to migrate please see the [Migration Guide](./migration#who-needs-to-migrate).
+If you are setting up SSO for the first time, please refer to [these instructions](../microsoft-entra-id-integration-oidc-guide).
+
+</PremiumFeature>
+
+This guide walks through configuring Microsoft Entra ID (formerly known as Azure Active Directory) as your GraphOS organization's identity provider (IdP) for OIDC-based SSO.
+
+<SSOMigrationNotice />
+
+## Prerequisites
+
+Setup requires:
+
+- An Entra ID user account with at least the [Cloud Application Administrator](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/permissions-reference#cloud-application-administrator) role
+- A GraphOS user account with the [**Org Admin** role](../members/#organization-wide-member-roles)
 
 ## Setup
 
-SAML-based SSO setup has two main steps:
+<SSOSetupSteps type="OIDC" idp="Entra ID enterprise application" />
 
-1. Create an enterprise application for Apollo GraphOS in Entra ID.
-2. Send your Entra ID's application's SAML metadata to Apollo.
+<!-- vale Apollo.Headings = NO -->
 
-Setup requires at least a [Cloud Application Administrator](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/permissions-reference#cloud-application-administrator) role.
+### Step 1. Enter your SSO details
 
-### Step 1. Create an enterprise application
+<SSOShareDetails type="OIDC" />
 
-<SSOSAMLInfoRequest />
+### Step 2. Create an Entra ID app registration
 
-2. Go to your [Microsoft Entra admin center](https://entra.microsoft.com/). Alternatively, you can sign in to the [Azure Portal](http://portal.azure.com/) and then navigate to **Microsoft Entra ID**.
-3. Go to **Identity > Applications > Enterprise applications** and select **+New application** in the top menu.
-4. In the top menu, select **+Create your own application**.
-5. Enter `Apollo GraphOS` as the name of your app. Below, keep the **Integrate any other application you don't find in the gallery (Non-gallery)** option selected. Click **Create**.
+1. Once you reach **Step 2: Configure Your IdP** in the wizard, go to your [Microsoft Entra admin center](https://entra.microsoft.com/). Alternatively, you can sign in to the [Azure Portal](http://portal.azure.com/) and then go to **Microsoft Entra ID**.
+2. In Entra, go to **Identity > Applications > App registrations**. If accessing Entra from the Azure Portal, go to **Manage > App registrations**. Select **+New registration** in the top menu.
+3. On the **Register an application** page, provide the following information:
 
-   <img
-     src="../../img/sso/entra-create-application.jpg"
-     alt="Application creation in Microsoft Entra ID"
-     className="screenshot"
-     width="450"
-   />
+   - Enter a descriptive name for your application, such as `Apollo GraphOS`.
+   - Under **Supported account types**, select which Microsoft account types should have access to GraphOS.
+   - For **Redirect URI**, select **Web** and enter the redirect URI provided by the setup wizard.
 
-6. On the app's **Overview** page, select **2. Set up single sign-on**. You'll assign users and groups later.
-7. On the app's **Single sign-on** page, select **SAML** as the single sign-on method.
-8. At the top of the **SAML-based Sign-on** page, click **Upload metadata file** and upload the file provided by your Apollo contact. Alternatively, you can enter these values manually in the **Basic SAML Configuration** section:
+4. Click **Register**.
+5. From the **Overview** section of your newly created app registration, copy and paste your **Application (client) ID** into the **Client ID** field in the setup wizard.
+6. Next to **Client credentials**, click **Add a certificate or secret** and create a new secret.
+7. Copy and paste the secret's **Value** into the **Client Secret** field in the setup wizard.
+8. Back in the **Overview** section, select **Endpoints** from the top menu.
+9. Copy and open the **OpenID Connect metadata document** URL in a new browser tab. Find the **`issuer`** value. It should be formatted like `https://login.microsoftonline.com/unique-value/vx.x`. Copy and paste this URL into the **Issuer** field in the setup wizard.
+10. Click **Continue**.
 
-   - **Identifier (Entity ID)**: Entity ID value provided by Apollo
-   - **Reply URL (Assertion Consumer Service URL)**: Single Sign-on URL provided by Apollo
+### Step 3. Configure API permissions
 
-   Click **Save**.
+1. From the **API permissions** section of your app registration, check whether `User.Read` is listed by default. If it isn't, add it manually:
 
-9. In **Attributes & Claims**, ensure the following claim **names** have the corresponding **source attributes**:
+   1. Select **+ Add a permission > Microsoft Graph > Application permissions**.
+   2. Search for `User`, expand, and select `User.Read.All`. Click **Add permissions**.
+   3. **Save** your changes.
 
-   - `email`: `user.mail`
-   - `given_name`: `user.givenname`
-   - `family_name`: `user.surname`
-   - `sub`: `user.userprinicipalname`
+2. Also from the **API Permissions** section, select **Grant admin consent for Default Directory** next to the **+ Add a permission** button. Doing this ensures that your users don't need to grant consent during SSO.
+3. From the **Manifest** section of your app registration, find the `groupMembershipClaims` property. Change its value from `null` to either `"All"` or `"SecurityGroup"`. These values ensure that the access token includes the group membership claim during SSO.
+4. **Save** your changes.
 
-   Otherwise, manually enter them.
+### Step 4. Verify SSO Configuration
 
-   <img
-     src="../../img/sso/entra-configuration-values.jpg"
-     alt="Application creation in Microsoft Entra ID"
-     className="screenshot"
-     width="700"
-   />
+<SSOVerification />
 
-   Claims do not need a **Namespace**.
+### Step 5. Enable SSO
 
-   <img
-     src="../../img/sso/entra-manage-claim.jpg"
-     alt="Application creation in Microsoft Entra ID"
-     className="screenshot"
-     width="450"
-   />
+<!-- vale Apollo.Headings = YES -->
 
-10. Under **SAML Certificates**, copy the **App Federation Metadata URL** into a text file for the next step.
-
-<img
-  src="../../img/sso/entra-saml-certificates.jpg"
-  alt="Application creation in Microsoft Entra ID"
-  className="screenshot"
-  width="700"
-/>
-
-### Step 2. Send SAML metadata to Apollo
-
-Send your Apollo contact the **App Federation Metadata URL** you previously copied.
-They will then be able to complete your SSO setup.
-
-Once your SSO setup is finalized, you need to assign users to your GraphOS app in Entra.
+<SSOLegacyUsers idp="Entra ID" appType="app registration" />
 
 ## Assign users in Entra ID
 
@@ -110,7 +100,7 @@ These steps use PingOne's email invite method, because in some cases Apollo's le
    - Leave **Redirect URI** empty. You'll provide this information later.
 
    <img
-     src="../../img/sso/azure-app-registration.gif"
+     src="../../../img/sso/azure-app-registration.gif"
      alt="Azure App Registration"
      className="screenshot"
    />
@@ -124,7 +114,7 @@ These steps use PingOne's email invite method, because in some cases Apollo's le
 3. Copy and paste the **OpenID Connect metadata document** URL into the same local text file:
 
    <img
-     src="../../img/sso/azure-client-id-endpoint.gif"
+     src="../../../img/sso/azure-client-id-endpoint.gif"
      alt="Azure endpoint URL and client ID"
      className="screenshot"
    />
@@ -136,7 +126,7 @@ These steps use PingOne's email invite method, because in some cases Apollo's le
 2. Copy and paste the secret's **Value** field to the same text file you created earlier:
 
    <img
-     src="../../img/sso/azure-client-secret.gif"
+     src="../../../img/sso/azure-client-secret.gif"
      alt="Azure client secret"
      className="screenshot"
    />
@@ -150,20 +140,20 @@ These steps use PingOne's email invite method, because in some cases Apollo's le
    3. **Save** your changes.
    4. If `User.Read` was not auto created, repeat this process for `User.Read`.
 
-2. Also from the **API Permissions** section, select **Grant admin consent** next to the **+ Add a permission** button. Doing this ensures that your users don't need to grant consent during SSO.
+2. Also from the **API Permissions** section, select **Grant admin consent** next to the **+ Add a permission** button. This ensures your users don't need to grant consent during SSO.
 
    <img
-     src="../../img/sso/azure-configure-api-permissions.gif"
+     src="../../../img/sso/azure-configure-api-permissions.gif"
      alt="Azure configure API permissions"
      className="screenshot"
    />
 
 3. From the **Manifest** section of your app registration, find the `groupMembershipClaims` property. Change its value from `null` to either `All` or `SecurityGroup`.
-   - This ensures that the group membership claim is included in the access token during SSO.
+   - These values ensure that the group membership claim is included in the access token during SSO.
 4. **Save** your changes.
 
    <img
-     src="../../img/sso/azure-manifest.png"
+     src="../../../img/sso/azure-manifest.png"
      alt="Azure manifest"
      className="screenshot"
    />
@@ -181,7 +171,7 @@ These steps use PingOne's email invite method, because in some cases Apollo's le
    4. Click **Next**.
 
    <img
-     src="../../img/sso/azure-pingone-connection.gif"
+     src="../../../img/sso/azure-pingone-connection.gif"
      alt="Azure PingOne connection"
      className="screenshot"
    />
@@ -193,7 +183,7 @@ These steps use PingOne's email invite method, because in some cases Apollo's le
    - Back on the PingOne configuration wizard, select **Next** after copying and pasting the URI.
 
    <img
-     src="../../img/sso/azure-pingone-redirect-uri.gif"
+     src="../../../img/sso/azure-pingone-redirect-uri.gif"
      alt="Azure PingOne redirect URI"
      className="screenshot"
    />
@@ -221,7 +211,7 @@ After you successfully configure the identity bridge between Azure AD and PingOn
    </Note>
 
    <img
-     src="../../img/sso/azure-oidc-application.gif"
+     src="../../../img/sso/azure-oidc-application.gif"
      alt="PingOne OIDC application"
      className="screenshot"
    />

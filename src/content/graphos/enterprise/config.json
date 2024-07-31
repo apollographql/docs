@@ -38,7 +38,59 @@
       "Audit Log": "https://www.apollographql.com/docs/graphos/org/audit-log",
       "Okta SSO": "https://www.apollographql.com/docs/graphos/org/sso/okta-integration-guide",
       "Microsoft Entra ID SSO": "https://www.apollographql.com/docs/graphos/org/sso/azure-ad-integration-guide",
-      "SAML SSO": "https://www.apollographql.com/docs/graphos/org/sso/saml-integration-guide"
+      "SAML SSO": "https://www.apollographql.com/docs/graphos/org/sso/saml-integration-guide",
+      "Self-Service SSO": [{
+        "Migration Guide": "https://www.apollographql.com/docs/graphos/org/sso/self-service/migration",
+        "Availability": "https://www.apollographql.com/docs/graphos/org/sso/self-service/availability", 
+        "SAML": {
+          "Okta": [
+            "https://www.apollographql.com/docs/graphos/org/sso/self-service/saml-okta",
+            [
+              "enterprise"
+            ]
+          ],
+          "Microsoft Entra ID": [
+            "https://www.apollographql.com/docs/graphos/org/sso/self-service/saml-microsoft-entra-id",
+            [
+              "enterprise"
+            ]
+          ],
+          "Generic SAML Setup": [
+            "https://www.apollographql.com/docs/graphos/org/sso/self-service/saml-integration-guide",
+            [
+              "enterprise"
+            ]
+          ]
+        },
+        "OIDC": {
+          "Okta": [
+            "https://www.apollographql.com/docs/graphos/org/sso/self-service/oidc-okta",
+            [
+              "enterprise"
+            ]
+          ],
+          "Microsoft Entra ID": [
+            "https://www.apollographql.com/docs/graphos/org/sso/self-service/oidc-microsoft-entra-id",
+            [
+              "enterprise"
+            ]
+          ],
+          "Generic OIDC Setup": [
+            "https://www.apollographql.com/docs/graphos/org/sso/self-service/oidc-integration-guide",
+            [
+              "enterprise"
+            ]
+          ]
+        }
+      },
+      true
+    ],
+      "Multi-organization": [
+        "https://www.apollographql.com/docs/graphos/org/sso/multi-organization",
+        [
+          "enterprise", "preview"
+        ]
+      ]
     },
     "Metrics & Reporting": {
       "Datadog Forwarding": "https://www.apollographql.com/docs/graphos/metrics/datadog-integration",
