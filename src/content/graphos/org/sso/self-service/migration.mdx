@@ -41,9 +41,20 @@ If you aren't sure whether you need to migrate, please reach out to your Apollo 
 
 A GraphOS [Org Admin](/graphos/org/members/#organization-wide-member-roles) must create a new SSO configuration.
 You can create a new configuration while the legacy configuration continues to provide SSO for your organization.
-The GraphOS setup wizard won't let you activate your new configuration until it has confirmed that you're able to sign in with it.
 
-Once the new configuration is verified and active, you should remove any legacy configurations from your identity provider (IdP). For details, see the instructions for your IdP:
+The GraphOS setup wizard takes you through the configuration process, step-by-step.
+The wizard won't let you enable your new configuration until it has confirmed that you're able to sign in with the configuration.
+
+<img
+  src="../../../img/sso/sso-verification.jpg"
+  alt="SSO Setup Wizard showing the verification step in GraphOS Studio"
+  className="screenshot"
+  width="600"
+/>
+
+Once the new configuration is verified and enabled, you should remove any legacy configurations from your identity provider (IdP).
+
+For detailed implementation steps, see the instructions for your IdP:
 
 #### SAML-based
 
