@@ -66,3 +66,6 @@
 
 # Update glossary URL
 /resources/graphql-glossary /docs/resources/glossary
+
+# Redirect from Apollo Config docs to the VSCode extension docs
+/docs/devtools/apollo-config /docs/devtools/editor-plugins
