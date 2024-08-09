@@ -114,7 +114,7 @@ const parseKeyword = getRegexParser(
 
 const parseNumber = getRegexParser(/^\d+(\.\d+)?/, 'Number');
 
-const parseIdentifier = getRegexParser(/^[a-zA-Z]\w*/, 'Identifier');
+const parseIdentifier = getRegexParser(/^[a-zA-Z][$\w]*/, 'Identifier');
 
 /** @type {ParserFn} */
 function parseString(code, index) {
