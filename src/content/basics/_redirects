@@ -2,11 +2,11 @@
 /resources/release-stages/ /docs/resources/product-launch-stages/
 
 # Add Developer Tools category to root docset
-/resources/apollo-config/ /docs/devtools/apollo-config/
+/resources/apollo-config/ /docs/devtools/editor-plugins
 
 # Get rid of "References" category
-/references/apollo-config/ /docs/devtools/apollo-config/
-/references/apollo-config.html /docs/devtools/apollo-config/
+/references/apollo-config/ /docs/devtools/editor-plugins
+/references/apollo-config.html /docs/devtools/editor-plugins
 /references/setup-analytics/ /docs/graph-manager/setup-analytics/
 
 # Split "Apollo Engine guide" into two articles
@@ -18,7 +18,7 @@
 /guides/versioning.html /docs/platform/schema-checks#versioning
 
 # This lived here for a short period of time.
-/resources/apollo-config.html /docs/devtools/apollo-config
+/resources/apollo-config.html /docs/devtools/editor-plugins
 
 # Redirect Removed Guides to Client & Server Docs
 /guides/schema-design.html /docs/apollo-server/essentials/schema
@@ -30,7 +30,7 @@
 /guides/file-uploads.html https://www.apollographql.com/blog/graphql/file-uploads/with-apollo-server-2-0/
 
 # Move our Apollo config docs to the References section
-/platform/apollo-config.html /docs/devtools/apollo-config
+/platform/apollo-config.html /docs/devtools/editor-plugins
 /platform/setup-analytics.html /docs/references/setup-analytics
 /platform/schema-checks.html /docs/studio/schema-checks
 
@@ -66,3 +66,6 @@
 
 # Update glossary URL
 /resources/graphql-glossary /docs/resources/glossary
+
+# Redirect from Apollo Config docs to the VSCode extension docs
+/devtools/apollo-config /docs/devtools/editor-plugins

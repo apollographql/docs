@@ -28,6 +28,7 @@ The extension enables you to:
 To get all the benefits of the VS Code experience, it's best to link the schema that is being developed against before installing the extension. The best way to do that is by [publishing a schema](/graphos/delivery/publishing-schemas/) to the Apollo schema registry. After that's done:
 
 1. Create an `apollo.config.js` file at the root of the project.
+   Alternatively, you can create a `cjs`, `mjs`, or `ts` file with the same configuration.
 2. Obtain a [Personal API key](/graphos/api-keys) from GraphOS Studio.
 
 ### Setting up an Apollo config
@@ -42,7 +43,9 @@ module.exports = {
 };
 ```
 
-The `service` name here is the name of the graph you've created in [GraphOS Studio](https://studio.apollographql.com).
+The `service` name is the name of the graph you've created in [GraphOS Studio](https://studio.apollographql.com).
+
+See [additional configuration options](#additional-apollo-config-options).
 
 ### Setting up the `.env` file
 
@@ -79,11 +82,28 @@ module.exports = {
 };
 ```
 
-Linking to the local schema won't provide all features, such as switching graph variants and performance metrics. See [the Apollo config docs](./apollo-config/) for more details on configuration options.
+Linking to the local schema won't provide all features, such as switching graph variants and performance metrics.
+
+### Local schema files
+
+You might not always have a running server to link to, so the extension also supports linking to a local schema file.
+This is useful for working on a schema in isolation or for testing out new features.
+To link to a local schema file, add the following to the `apollo.config.js` file:
+
+```js
+module.exports = {
+  client: {
+    service: {
+      // can be a string pointing to a single file or an array of strings
+      localSchemaFile: './path/to/schema.graphql'
+    }
+  }
+};
+```
 
 ### Client-only schemas
 
-One of the best features of the VS Code extension is the automatic merging of remote schemas and local ones when using integrated state management with Apollo Client. This happens automatically whenever schema definitions are found within a client project. By default, the VS Code extension will look for all files under `./src` to find both the operations and schema definitions for building a complete schema for the application.
+One of the best features of the VS Code extension is the automatic merging of remote schemas and local ones when using integrated state management with Apollo Client. This happens automatically whenever schema definitions are found within a client project. By default, the VS Code extension will look for all JavaScript, TypeScript and GraphQL files under `./src` to find both the operations and schema definitions for building a complete schema for the application.
 
 Client side schema definitions can be spread throughout the client app project and will be merged together to create one single schema. The default behavior can be controlled by adding specifications to the `apollo.config.js`:
 
@@ -91,7 +111,9 @@ Client side schema definitions can be spread throughout the client app project a
 module.exports = {
   client: {
     service: 'my-graphql-app',
+    // array of glob patterns
     includes: ['./src/**/*.js'],
+    // array of glob patterns
     excludes: ['**/__tests__/**']
   }
 };
@@ -194,4 +216,23 @@ Sometimes errors will show up as a notification at the bottom of your editor. Ot
   alt="Clicking the status bar icon to open the output pane"
 />
 
-If problems persist or the error messages are unhelpful, an [issue](https://github.com/apollographql/vscode-graphql/issues) can be opened on the `apollo-tooling` repository.
+If problems persist or the error messages are unhelpful, open an [issue](https://github.com/apollographql/vscode-graphql/issues) in the `vscode-graphql` repository.
+
+## Additional Apollo config options
+
+You can add these configurations to your [Apollo config file](#setting-up-an-apollo-config).
+
+### `client.tagName`
+
+_Optional_ - custom tagged template literal.
+
+When using GraphQL with JavaScript or TypeScript projects, it is common to use the `gql` tagged template literal to write out operations. Apollo tools look through your files for the `gql` tag to extract your queries, so if you use a different template literal, you can configure it like so:
+
+```js
+module.exports = {
+  client: {
+    tagName: "graphql", // highlight-line
+    service: ...
+  }
+};
+```
