@@ -12,8 +12,6 @@ If you use Okta or Microsoft Entra ID as your IdP, instead see the corresponding
 - [Okta](./okta-integration-guide/)
 - [Microsoft Entra ID](./microsoft-entra-id-integration-saml-guide/) (formerly known as Azure Active Directory)
 
-<SSOMigrationNotice />
-
 ## Setup
 
 SAML-based SSO setup has two main steps:
@@ -30,7 +28,7 @@ These steps generally require administrative access to your IdP.
 2. Create a new application in your SSO environment. While doing so, set the following values:
 
    - **App Name**: `Apollo GraphOS`
-   - **App logo**: [Apollo logo](../../img/sso/apollo-sk-logo.png) (optional)
+   - **Logo**: [Apollo logo](../../../img/sso/apollo-sk-logo.png) (optional)
 
 3. If your IdP permits it, upload the Apollo-provided SP SAML XML metadata file. Otherwise, open the XML metadata file, view the SAML metadata values, and manually enter them in your IdP.
 
@@ -64,9 +62,7 @@ Your Apollo contact will then be able to complete your SSO setup.
 
 Once your SSO setup is live, assign users to your new Apollo GraphOS application in your IdP. For help assigning the relevant groups and users, contact your SSO or Identity & Access Management team.
 
-<SSOLegacyUsers />
-
-Once you've confirmed the new setup works as expected, remove any legacy Apollo GraphOS applications in your IdP.
+<SSONewUsers />
 
 ## Legacy setup
 
@@ -77,7 +73,7 @@ Once you've confirmed the new setup works as expected, remove any legacy Apollo 
 1. Create a new application in your SSO environment. While doing so, set the following values:
 
    - **App Name**: `Apollo GraphOS`
-   - **App logo**: [Apollo logo](../../img/sso/apollo-sk-logo.png) (optional)
+   - **App logo**: [Apollo logo](../../../img/sso/apollo-sk-logo.png) (optional)
 
 2. If possible, upload the appropriate Apollo SAML metadata for your organization:
 

@@ -47,6 +47,7 @@ exceptions:
   - GitHub
   - GraphOS
   - GraphOS Cloud on AWS
+  - From GraphOS Router
   - "GraphOS Router( features| setup)?"
   - GraphOS Studio
   - GraphQL
@@ -66,6 +67,7 @@ exceptions:
   - Marketplace
   - MongoDB
   - Notify Apollo
+  - OIDC
   - OpenTelemetry Collector
   - PingOne
   - PRs?

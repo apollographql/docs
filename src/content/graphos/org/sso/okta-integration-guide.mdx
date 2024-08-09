@@ -8,8 +8,6 @@ description: Configure Okta as your Apollo GraphOS organization's SSO provider w
 
 This guide walks through configuring Okta as your GraphOS organization's identity provider (IdP) for SAML-based SSO. Once you've set up your integration, you need to assign users to it in Okta so they can access GraphOS Studio via SSO.
 
-<SSOMigrationNotice />
-
 ## Setup
 
 SAML-based SSO setup has two main steps:
@@ -33,8 +31,8 @@ To use the latest version of Apollo's SSO, ensure you are _creating a custom app
 3. In the dialog that appears, select **SAML 2.0** as your sign-in method. Click **Next**.
 4. The **Create SAML Integration** dialog appears. In the **General Settings** step, provide the following values:
 
-   - **App name**: `Apollo GraphOS`
-   - **App logo**: [Apollo logo](../../img/sso/apollo-sk-logo.jpg) (optional)
+   - **App integration name**: `Apollo GraphOS`
+   - **Logo**: [Apollo logo](../../img/sso/apollo-sk-logo.jpg) (optional)
 
    <img
      src="../../img/sso/okta-create-saml-integration.jpg"
@@ -105,7 +103,7 @@ Once your SSO is set up, you need to assign users to it so they can access Graph
 Repeat these steps whenever you want to grant GraphOS Studio access to a new user or group.
 Okta displays every user and group you've assigned to the integration in the **Assignments** tab.
 
-<SSOLegacyUsers />
+<SSONewUsers />
 
 Once you've confirmed the new configuration works as expected, remove any legacy Apollo integrations in Okta if you have them.
 

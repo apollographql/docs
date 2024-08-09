@@ -1,0 +1,81 @@
+---
+title: Self-Service SSO with an OIDC-based IdP
+subtitle: Configure an OIDC-based identity provider
+description: Configure a OpenID Connect (OIDC) based identity provider as your Apollo GraphOS organization's SSO provider.
+---
+
+<PremiumFeature>
+
+Self-service single sign-on (SSO) is only available for organizations with Dedicated and Enterprise plans who previously set up their SSO using PingOne and need to migrate.
+If you're unsure if you need to migrate please see the [Migration Guide](./migration#who-needs-to-migrate).
+If you are setting up SSO for the first time, please refer to [these instructions](../oidc-integration-guide).
+
+</PremiumFeature>
+
+This guide walks through configuring a generic OpenID Connect (OIDC) based identity provider (IdP) for use with Apollo SSO.
+If you use Okta or Microsoft Entra ID as your IdP, instead see the corresponding guide for your IdP:
+
+- [Okta](./oidc-okta)
+- [Microsoft Entra ID](./oidc-microsoft-entra-id) (formerly known as Azure Active Directory)
+
+<SSOMigrationNotice />
+
+## Prerequisites
+
+Setup requires:
+
+- Administrative access to your IdP
+- A GraphOS user account with the [**Org Admin** role](../members/#organization-wide-member-roles)
+
+## Setup
+
+<SSOSetupSteps type="OIDC" idp="application" />
+
+<!-- vale Apollo.Headings = NO -->
+
+### Step 1. Enter your SSO details
+
+<SSOShareDetails type="OIDC" />
+
+### Step 2. Create a custom application
+
+1. Once you reach **Step 2: Configure Your IdP** in the wizard, open your IdP's admin dashboard in a separate browser tab.
+2. Create a new application in your SSO environment. While doing so, set the following values:
+
+   - **App Name**: `Apollo GraphOS`
+   - **Logo**: [Apollo logo](../../../img/sso/apollo-sk-logo.png) (optional)
+
+3. Retrieve the following values from your SSO provider and enter them in the setup wizard.
+
+- **Client ID**: this should be a specific **Application ID**
+- **Client Secret**: a secret value you may need to first create in your IdP
+- **Issuer**: the issuer value from a **OpenID Connect metadata document** found in your IdP
+
+### Step 3. Configure OIDC to work with Apollo
+
+1. Verify that the **Sign-in Redirect URL** in your application matches the one shown in the GraphOS wizard.
+2. If your IdP permits it, set the following user attributes:
+
+- `sub`: `user.email`
+  - The `sub` attribute should uniquely identify any particular user to GraphOS. In most cases, `user.email` or `user.mail` provides this unique mapping.
+- `email`: Your IdP's email attribute, often something like `user.email`
+- `given_name`: Your IdP's first name attribute, often something like `user.firstName`
+- `family_name`: Your IdP's last name attribute,often something like `user.lastName`
+
+3. Save this configuration in your IdP and click **Next** in the GraphOS wizard.
+
+### Step 4. Verify SSO Configuration
+
+<SSOVerification />
+
+### Step 5. Enable SSO
+
+<!-- vale Apollo.Headings = YES -->
+
+<SSOLegacyUsers idp="your IdP" appType="application" />
+
+## Assign users in your IdP
+
+Once your SSO setup is live, assign users to your new Apollo GraphOS application in your IdP.
+Consult your IdP documentation if necessary.
+For help assigning the relevant groups and users, contact your SSO or Identity & Access Management team.

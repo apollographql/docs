@@ -1,0 +1,28 @@
+---
+title: Self-Service SSO Availability
+---
+
+Self-service single sign-on (SSO) is currently only available for organizations with Dedicated and Enterprise plans who previously set up their SSO using PingOne and need to migrate.
+To confirm if you can use self-service SSO, visit [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content) and check for an SSO migration banner.
+
+<img
+  src="../../../img/sso/migration-banner.jpg"
+  alt="Migration banner in GraphOS Studio"
+  className="screenshot"
+  width="700"
+/>
+
+## Non-self-service setup
+
+If you don't see the migration banner, you can't use the self-service setup and must use these instructions to set up your SSO:
+
+#### SAML-based
+
+- [Okta](../okta-integration-guide/) (SAML-based)
+- [Microsoft Entra ID](../microsoft-entra-id-integration-saml-guide) (formerly known as Azure Active Directory)
+- [Generic SAML](../saml-integration-guide/)
+
+#### OIDC-based
+
+- [Microsoft Entra ID](../microsoft-entra-id-integration-oidc-guide) (formerly known as Azure Active Directory)
+- [Generic OIDC](../oidc-integration-guide/)
