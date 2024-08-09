@@ -28,7 +28,7 @@ The extension enables you to:
 To get all the benefits of the VS Code experience, it's best to link the schema that is being developed against before installing the extension. The best way to do that is by [publishing a schema](/graphos/delivery/publishing-schemas/) to the Apollo schema registry. After that's done:
 
 1. Create an `apollo.config.js` file at the root of the project.
-   Alternatively, you can also create a `cjs`, `mjs`, or `ts` file with the same configuration.
+   Alternatively, you can create a `cjs`, `mjs`, or `ts` file with the same configuration.
 2. Obtain a [Personal API key](/graphos/api-keys) from GraphOS Studio.
 
 ### Setting up an Apollo config
@@ -214,7 +214,7 @@ Sometimes errors will show up as a notification at the bottom of your editor. Ot
   alt="Clicking the status bar icon to open the output pane"
 />
 
-If problems persist or the error messages are unhelpful, an [issue](https://github.com/apollographql/vscode-graphql/issues) can be opened on the `vscode-graphql` repository.
+If problems persist or the error messages are unhelpful, open an [issue](https://github.com/apollographql/vscode-graphql/issues) in the `vscode-graphql` repository.
 
 ## Other configuration options
 
@@ -222,7 +222,7 @@ If problems persist or the error messages are unhelpful, an [issue](https://gith
 
 _Optional_ - custom tagged template literal.
 
-When using GraphQL with JavaScript or TypeScript projects, it is common to use the `gql` tagged template literal to write out operations. Apollo tools will be looking through your files for the `gql` tag to extract your queries, so if you use a different template literal, you can configure it like so:
+When using GraphQL with JavaScript or TypeScript projects, it is common to use the `gql` tagged template literal to write out operations. Apollo tools look through your files for the `gql` tag to extract your queries, so if you use a different template literal, you can configure it like so:
 
 ```js
 module.exports = {
