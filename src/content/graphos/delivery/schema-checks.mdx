@@ -175,6 +175,85 @@ If you use the GraphOS Router to [report operation metrics](../metrics/sending-o
 
 </Note>
 
+### Operation check statuses
+
+<table class="field-table">
+  <thead>
+    <tr>
+      <th>Status</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+<tbody>
+<tr>
+<td>
+
+##### Broken
+
+</td>
+<td>
+
+The operation is invalid and not executable against the new schema.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### Potentially affected
+
+</td>
+<td>
+
+The operation is valid against the new schema but may result in errors or unexpected behavior.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### Unaffected
+
+</td>
+<td>
+
+The operation is unaffected by schema change(s).
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### Safe
+
+</td>
+<td>
+
+A user has marked schema change(s) for this operation as safe.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### Ignored
+
+</td>
+<td>
+
+A user has chosen to [ignore](#overriding-flagged-changes) schema change(s) for this operation.
+
+</td>
+</tr>
+
+</tbody>
+</table>
+
+
 ### Overriding flagged changes
 
 Occasionally, schema checks might flag a change that you know is safe. For example, you might change an input type's field from nullable to non-nullable (usually a breaking change) when you're certain that your clients never provide a null value for the field.
