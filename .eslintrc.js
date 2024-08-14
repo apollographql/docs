@@ -60,6 +60,7 @@ module.exports = {
         SSOLegacyUsers: 'readonly',
         SSOMigrationNotice: 'readonly',
         SSOPremiumFeature: 'readonly',
+        SSORevokesInvitationLinks: 'readonly',
         SSOSAMLInfoRequest: 'readonly',
         SSOSetupSteps: 'readonly',
         SSOVerification: 'readonly',
