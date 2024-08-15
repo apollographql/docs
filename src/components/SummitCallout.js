@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import {Box, Text} from '@chakra-ui/react';
-import {HighlightKeyTerms} from '@apollo/pedia';
+import {PrimaryLink} from './RelativeLink'
 
-export const SummitCallout = ({topic, children, ...props}) => {
+export const SummitCallout = ({topic, workshopName, URL, ...props}) => {
   return (
     <Box
       pl="4"
@@ -20,14 +20,15 @@ export const SummitCallout = ({topic, children, ...props}) => {
       {...props}
     >
       <Text>
-      🧑‍🏫 <strong>Want to learn about {topic} in-person?</strong>
+      👥 <strong>Want to learn about {topic} in-person?</strong>
       </Text>
-      <HighlightKeyTerms>{children}</HighlightKeyTerms>
+      <Text>Don't miss out on the <PrimaryLink href={URL}>{workshopName}</PrimaryLink> workshop at this year's GraphQL Summit.</Text>
     </Box>
   );
 };
 
 SummitCallout.propTypes = {
-  children: PropTypes.node.isRequired,
-  topic: PropTypes.string.isRequired
+  topic: PropTypes.string.isRequired,
+  workshopName: PropTypes.string.isRequired,
+  URL: PropTypes.string.isRequired
 };
