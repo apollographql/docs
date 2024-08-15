@@ -93,6 +93,7 @@ PQLs?
 preprod
 protobuf
 READMEs?
+[Rr]ealtime
 Recurly
 [Rr]eauthenticat(e|ed|ing)?
 [Rr]eapprov(e|ed|al)

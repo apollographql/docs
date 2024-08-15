@@ -58,6 +58,7 @@ import {ReactComponent as Satellite} from '@apollo/icons/default/IconSatellite3.
 import {ReactComponent as Schema} from '@apollo/icons/default/IconSchema.svg';
 import {ReactComponent as Search} from '@apollo/icons/default/IconSearch.svg';
 import {ReactComponent as Star} from '@apollo/icons/default/IconStar.svg';
+import {ReactComponent as Summit} from '../../assets/icons/summit.svg'
 import {ReactComponent as Sun} from '@apollo/icons/small/IconSun.svg';
 import {ReactComponent as Swift} from '@apollo/icons/default/IconSwift.svg';
 import {ReactComponent as Team} from '@apollo/icons/default/IconTeam.svg';
@@ -153,6 +154,7 @@ export const RoverIcon = () => <CustomIcon icon={Terminal} />;
 export const RouterIcon = () => <CustomIcon icon={Router} />;
 export const SearchIcon = () => <CustomIcon icon={Search} />;
 export const StarIcon = () => <CustomIcon icon={Star} />;
+export const SummitIcon = props => <CustomIcon icon={Summit} {...props} />;
 export const SunIcon = props => <CustomIcon icon={Sun} {...props} />;
 export const TechnotesIcon = () => <CustomIcon icon={Document} />;
 export const TwitterIcon = () => <CustomIcon isSolid icon={Twitter} />;
