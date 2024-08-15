@@ -64,6 +64,7 @@ module.exports = {
         SSOSetupSteps: 'readonly',
         SSOVerification: 'readonly',
         StudioPages: 'readonly',
+        SummitCallout: 'readonly',
         HowSubscriptionsWork: 'readonly',
         WhatSubscriptionsAreFor: 'readonly',
         TopLevelAwait: 'readonly'

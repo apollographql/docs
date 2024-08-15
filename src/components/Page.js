@@ -82,6 +82,7 @@ import {PreviewFeature} from './PreviewFeature';
 import {Property} from './Property';
 import {PropertyList} from './PropertyList';
 import {TOTAL_HEADER_HEIGHT} from './Header';
+import {SummitCallout} from './SummitCallout';
 import {Tab} from './Tab';
 import {Tabs} from './Tabs';
 import {Tip} from './Tip';
@@ -234,6 +235,7 @@ const mdxComponents = {
   EmbeddableExplorer,
   RuleExpansionPanel,
   ButtonLink,
+  SummitCallout,
   Tip,
   MinVersion,
   MinVersionTag,
