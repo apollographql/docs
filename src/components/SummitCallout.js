@@ -27,7 +27,7 @@ export const SummitCallout = ({topic, workshopName, URL, ...props}) => {
           <strong>Want to learn about {topic} in-person?</strong>
         </Text>
       </Flex>
-      <Text>Don't miss out on the <RelativeLink href={URL}>{workshopName}</RelativeLink> workshop at this year's GraphQL Summit.</Text>
+      <Text>Don't miss the <RelativeLink href={URL}>{workshopName}</RelativeLink> workshop at this year's GraphQL Summit.</Text>
     </Box>
   );
 };
