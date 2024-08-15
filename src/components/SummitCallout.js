@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import {Box, Text} from '@chakra-ui/react';
-import {PrimaryLink} from './RelativeLink'
+import RelativeLink from './RelativeLink'
 
 export const SummitCallout = ({topic, workshopName, URL, ...props}) => {
   return (
@@ -22,7 +22,7 @@ export const SummitCallout = ({topic, workshopName, URL, ...props}) => {
       <Text>
       👥 <strong>Want to learn about {topic} in-person?</strong>
       </Text>
-      <Text>Don't miss out on the <PrimaryLink href={URL}>{workshopName}</PrimaryLink> workshop at this year's GraphQL Summit.</Text>
+      <Text>Don't miss out on the <RelativeLink href={URL}>{workshopName}</RelativeLink> workshop at this year's GraphQL Summit.</Text>
     </Box>
   );
 };
