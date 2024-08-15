@@ -20,7 +20,7 @@ export const SummitCallout = ({topic, children, ...props}) => {
       {...props}
     >
       <Text>
-      🧑‍🏫 <strong>Want to learn more about {topic} in-person?</strong>
+      🧑‍🏫 <strong>Want to learn about {topic} in-person?</strong>
       </Text>
       <HighlightKeyTerms>{children}</HighlightKeyTerms>
     </Box>
