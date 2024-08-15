@@ -154,7 +154,7 @@ export const RoverIcon = () => <CustomIcon icon={Terminal} />;
 export const RouterIcon = () => <CustomIcon icon={Router} />;
 export const SearchIcon = () => <CustomIcon icon={Search} />;
 export const StarIcon = () => <CustomIcon icon={Star} />;
-export const SummitIcon = props => <CustomIcon icon={Summit} {...props} isSolid />;
+export const SummitIcon = props => <CustomIcon icon={Summit} {...props} />;
 export const SunIcon = props => <CustomIcon icon={Sun} {...props} />;
 export const TechnotesIcon = () => <CustomIcon icon={Document} />;
 export const TwitterIcon = () => <CustomIcon isSolid icon={Twitter} />;

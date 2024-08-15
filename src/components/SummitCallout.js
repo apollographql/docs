@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {Box, Flex, Icon, Text} from '@chakra-ui/react';
 import RelativeLink from './RelativeLink';
-import {SummitIcon} from './icons'
+import {SummitIcon} from './Icons'
 
 export const SummitCallout = ({topic, workshopName, URL, ...props}) => {
   console.log(SummitIcon)
