@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {Box, Text} from '@chakra-ui/react';
-import RelativeLink from './RelativeLink'
+import {Box, Flex, Icon, Text} from '@chakra-ui/react';
+import RelativeLink from './RelativeLink';
+import {SummitIcon} from './icons'
 
 export const SummitCallout = ({topic, workshopName, URL, ...props}) => {
+  console.log(SummitIcon)
   return (
     <Box
       pl="4"
@@ -19,9 +21,12 @@ export const SummitCallout = ({topic, workshopName, URL, ...props}) => {
       }}
       {...props}
     >
-      <Text>
-      👥 <strong>Want to learn about {topic} in-person?</strong>
-      </Text>
+      <Flex align="center">
+        <Icon as={SummitIcon} mr={1}/>
+        <Text>
+          <strong>Want to learn about {topic} in-person?</strong>
+        </Text>
+      </Flex>
       <Text>Don't miss out on the <RelativeLink href={URL}>{workshopName}</RelativeLink> workshop at this year's GraphQL Summit.</Text>
     </Box>
   );
