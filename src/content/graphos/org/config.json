@@ -27,40 +27,13 @@
       ]
     ],
     "Single Sign-On (SSO)": {
-      "SAML": {
-        "Okta": [
-          "/sso/okta-integration-guide",
-          [
-            "enterprise"
-          ]
-        ],
-        "Microsoft Entra ID": [
-          "/sso/microsoft-entra-id-integration-saml-guide",
-          [
-            "enterprise"
-          ]
-        ],
-        "Generic SAML Setup": [
-          "/sso/saml-integration-guide",
-          [
-            "enterprise"
-          ]
+      "Overview": ["/sso/overview", ["enterprise"]],
+      "Multi-organization": [
+        "/sso/multi-organization",
+        [
+          "enterprise", "preview"
         ]
-      },
-      "OIDC": {
-        "Microsoft Entra ID": [
-          "/sso/microsoft-entra-id-integration-oidc-guide",
-          [
-            "enterprise"
-          ]
-        ],
-        "Generic OIDC Setup": [
-          "/sso/oidc-integration-guide",
-          [
-            "enterprise"
-          ]
-        ]
-      },
+      ],
       "Self-Service SSO": [{
         "Migration Guide": "/sso/self-service/migration",
         "Availability": "/sso/self-service/availability", 
@@ -107,12 +80,43 @@
       },
       true
     ],
-      "Multi-organization": [
-        "/sso/multi-organization",
-        [
-          "enterprise", "preview"
+    "Assisted SSO": [{
+      "SAML": {
+        "Okta": [
+          "/sso/okta-integration-guide",
+          [
+            "enterprise"
+          ]
+        ],
+        "Microsoft Entra ID": [
+          "/sso/microsoft-entra-id-integration-saml-guide",
+          [
+            "enterprise"
+          ]
+        ],
+        "Generic SAML Setup": [
+          "/sso/saml-integration-guide",
+          [
+            "enterprise"
+          ]
         ]
-      ]
-    }
+      },
+      "OIDC": {
+        "Microsoft Entra ID": [
+          "/sso/microsoft-entra-id-integration-oidc-guide",
+          [
+            "enterprise"
+          ]
+        ],
+        "Generic OIDC Setup": [
+          "/sso/oidc-integration-guide",
+          [
+            "enterprise"
+          ]
+        ]
+      }
+    },
+    true
+    ]}
   }
 }
