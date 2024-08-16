@@ -61,6 +61,7 @@ module.exports = {
         SSOMigrationNotice: 'readonly',
         SSOOrgAdminRequirement: 'readonly',
         SSOPremiumFeature: 'readonly',
+        SSORevokesInvitationLinks: 'readonly',
         SSOSAMLInfoRequest: 'readonly',
         SSOSetupSteps: 'readonly',
         SSOVerification: 'readonly',

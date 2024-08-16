@@ -167,14 +167,21 @@ Before January 2021, graph keys did not have roles. Keys created before that dat
 
 ## Inviting members
 
-**Org Admin**s can invite individual members by email address from your organization's Members tab in [GraphOS Studio](https://studio.apollographql.com). Organization admins can also create a persistent **invite link** from the organization's Settings tab, which can be used to invite any number of members. Using either method, an org admin can specify which role a new member receives.
-
 <Note>
 
-- If your organization uses an identity provider (IdP) for single sign-on (SSO), you should configure access in your IdP rather than via invitations. For example, with Okta, you need to [assign](./sso/okta-integration-guide#assign-users-in-okta) members to your GraphOS Studio integration to give them access. If you've configured a member to have access in your IdP, they can access GraphOS Studio without an invitation link.
-- **Do not share invite links publicly.** Anyone with the link can join your organization. If an invite link becomes compromised, an admin can replace or turn it off from the Settings tab.
+For organizations using single sign-on (SSO), access to GraphOS is exclusively managed through your identity provider (IdP).
+Any invitation links created before SSO setup will be automatically revoked and you won't be able to create new invitation links once SSO is enabled.
 
 </Note>
+
+**Org Admin**s can invite individual members by email address from your organization's **Members** tab in [GraphOS Studio](https://studio.apollographql.com). Organization admins can also create a persistent **invite link** from the organization's **Settings** tab, which can be shared to invite any number of members. Using either method, an org admin can specify which role a new member receives.
+
+<Caution>
+
+**Never share invite links publicly**. Anyone with the link can join your organization.
+If an invite link becomes compromised, an admin should revoke it from the **Settings > Invite links** section.
+
+</Caution>
 
 ## Removing members
 
