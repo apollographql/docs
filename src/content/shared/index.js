@@ -36,6 +36,7 @@ export {default as SSOLegacyCaution} from './sso-legacy-caution.mdx';
 export {SSOLegacyUsers} from './sso-legacy-users.js';
 export {SSONewUsers} from './sso-new-users.mdx';
 export {default as SSOMigrationNotice} from './sso-migration-notice.mdx';
+export {default as SSOOrgAdminRequirement} from './sso-org-admin-requirement.mdx';
 export {default as SSOPremiumFeature} from './sso-premium-feature.mdx';
 export {default as SSORevokesInvitationLinks} from './sso-revokes-invitation-links.mdx'
 export {default as SSOSAMLInfoRequest} from './sso-saml-info-request.mdx';
