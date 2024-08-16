@@ -59,6 +59,7 @@ module.exports = {
         SSOLegacyCaution: 'readonly',
         SSOLegacyUsers: 'readonly',
         SSOMigrationNotice: 'readonly',
+        SSOOrgAdminRequirement: 'readonly',
         SSOPremiumFeature: 'readonly',
         SSOSAMLInfoRequest: 'readonly',
         SSOSetupSteps: 'readonly',
