@@ -13,7 +13,7 @@ This feature is not available as part of an Enterprise trial.
 
 Single Sign-On allows your team to log into Apollo GraphOS using your organization's identity provider (IdP). This streamlines access management, improves security, and enhances the user experience by reducing the need to manage additional passwords.
 
-## SSO setup types
+## SSO setup types and methods
 
 GraphOS offers SAML- and OIDC-based SSO configurations. There are two configuration methods:
 
@@ -24,11 +24,25 @@ Self-service SSO will be available for all organizations later in 2024. For more
 
 ## Requirements
 
-Only GraphOS [Org admins](../members) can set up SSO. Additionally, you must have administrative access to your identity provider (IdP) to complete the setup.
+Only GraphOS [Org admins](../members) can set up SSO. Additionally, you must have administrative access to your identity provider (IdP) to complete setup.
 
 ## Setup instructions
 
-To get started, follow the instructions for your configuration type and method:
+To get started, follow the instructions for your configuration method and types:
+
+### Self-service setup
+
+#### SAML-based
+
+- [Okta](./self-service/saml-okta)
+- [Microsoft Entra ID](./self-service/saml-microsoft-entra-id) (formerly known as Azure Active Directory)
+- [Generic SAML](./self-service/saml-integration-guide)
+
+#### OIDC-based
+
+- [Okta](./self-service/oidc-okta)
+- [Microsoft Entra ID](./self-service/oidc-microsoft-entra-id) (formerly known as Azure Active Directory)
+- [Generic OIDC](./self-service/oidc-integration-guide/)
 
 ### Assisted setup
 
@@ -42,15 +56,3 @@ To get started, follow the instructions for your configuration type and method:
 
 - [Microsoft Entra ID](./microsoft-entra-id-oidc-integration-guide) (formerly known as Azure Active Directory)
 - [Generic OIDC](./oidc-integration-guide/)
-
-### Self-service setup
-
-- [Okta](./self-service/saml-okta)
-- [Microsoft Entra ID](./self-service/saml-microsoft-entra-id) (formerly known as Azure Active Directory)
-- [Generic SAML](./self-service/saml-integration-guide)
-
-#### OIDC-based
-
-- [Okta](./self-service/oidc-okta)
-- [Microsoft Entra ID](./self-service/oidc-microsoft-entra-id) (formerly known as Azure Active Directory)
-- [Generic OIDC](./self-service/oidc-integration-guide/)
