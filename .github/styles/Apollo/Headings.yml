@@ -8,6 +8,7 @@ indicators:
   - ":"
 exceptions:
   - About Apollo's reference
+  - Additional Apollo config options
   - Amazon
   - API
   - Apollo Client DevTools
@@ -83,6 +84,7 @@ exceptions:
   - SDUI
   - Send OIDC metadata
   - Send SAML metadata
+  - SSO
   - Studio
   - TypeScript
   - UI
