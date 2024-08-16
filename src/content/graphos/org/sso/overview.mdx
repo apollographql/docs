@@ -1,0 +1,52 @@
+---
+title: GraphOS Single Sign-On
+subtitle: Placeholder
+description: Placeholder
+---
+
+<SSOPremiumFeature />
+
+Single Sign-On allows your team to log into Apollo GraphOS using your organization's identity provider (IdP). This streamlines access management, improves security, and enhances the user experience by reducing the need to manage additional passwords.
+
+## SSO setup types
+
+GraphOS offers SAML- and OIDC-based SSO configurations. There are two configuration methods:
+
+- **Self-Service SSO:** This option is currently available to organizations that have already configured SSO and need to [migrate](./self-service/migration).
+- **Assisted SSO:** First-time GraphOS SSO setup requires assistance from Apollo Support.
+
+Self-service SSO will be available for all organizations later in 2024. For more details on self-service availability, refer to the [Availability](./self-service/availability) article. Those using self-service SSO are welcome to reach out to Apollo at any time for additional assistance.
+
+## Requirements
+
+Only GraphOS [Org admins](../members) can set up SSO. Additionally, you must have administrative access to your identity provider (IdP) to complete the setup.
+
+## Setup instructions
+
+To get started, follow the instructions for your configuration type and method:
+
+### Assisted setup
+
+#### SAML-based
+
+- [Okta](./saml-okta)
+- [Microsoft Entra ID](./saml-microsoft-entra-id) (formerly known as Azure Active Directory)
+- [Generic SAML](./saml-integration-guide)
+
+#### OIDC-based
+
+- [Okta](./oidc-okta)
+- [Microsoft Entra ID](./oidc-microsoft-entra-id) (formerly known as Azure Active Directory)
+- [Generic OIDC](./oidc-integration-guide/)
+
+### Self-service setup
+
+- [Okta](./self-service/saml-okta)
+- [Microsoft Entra ID](./self-service/saml-microsoft-entra-id) (formerly known as Azure Active Directory)
+- [Generic SAML](./self-service/saml-integration-guide)
+
+#### OIDC-based
+
+- [Okta](./self-service/oidc-okta)
+- [Microsoft Entra ID](./self-service/oidc-microsoft-entra-id) (formerly known as Azure Active Directory)
+- [Generic OIDC](./self-service/oidc-integration-guide/)

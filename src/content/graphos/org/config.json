@@ -27,6 +27,7 @@
       ]
     ],
     "Single Sign-On (SSO)": {
+      "Overview": ["/sso/overview", ["enterprise"]],
       "SAML": {
         "Okta": [
           "/sso/okta-integration-guide",
