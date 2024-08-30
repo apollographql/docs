@@ -27,6 +27,8 @@ GraphOS can perform the following types of schema checks:
 
 - [Linter checks](./schema-linter/): Analyze your proposed schema changes for violations of formatting rules and other GraphQL best practices.
 
+- [Custom checks](#custom-checks): Run custom validation on your own systems alongside each schema check.
+
 - [Proposal checks](./schema-proposals/configuration#configure-schema-checks) (Enterprise only): Check whether your proposed schema changes have matching and approved [schema proposals](./schema-proposals).
 
 - [Contract checks](./contract-setup/#run-contract-checks) (Enterprise only): When running schema checks on a source variant, also check whether your proposed schema changes break any downstream contract variants.
@@ -306,6 +308,143 @@ Learn about other checks settings on the [Configure Schema Checks page](./check-
 ## Linter checks
 
 For more info on linter checks, see [Schema linting](./schema-linter/).
+
+## Custom checks
+
+TODO
+
+On each run of a schema check, GraphOS triggers a webhook you specify with a payload containing information about what was submitted into the check. Your endpoint can then respond and indicate which parts of a submitted schema may have issues that need to be addressed.
+
+Use cases:
+- Lint schema with your own custom rules
+- Verify that the schema being submitted belongs to a particular git branch
+
+### Configuration
+- In GraphOS Studio, go to your graph's Checks page
+- Click “Configuration” in the upper right to open the checks configuration page.
+- From the checks configuration page, open the “Custom Checks” section.
+- Toggle the switch next to “Enable Custom Checks” to the “on” position
+
+- Click on the “edit” button next to “Registered webhook” and fill in the modal with the endpoint you’d like to have called along with an optional secret token that will be sent alongside each payload so that you know it’s from us.
+
+  Custom webhooks require you to set up an HTTPS endpoint accessible via the public internet. GraphOS sends webhook notifications to this endpoint as POST requests.
+
+  If you enter a secret token, each notification HTTP request includes an x-apollo-signature header whose value is a Hash Message Authentication Code (HMAC) generated using the token, the request body as the message, and the SHA256 hash function. The x-apollo-signature header has the format `sha256=<hmac-value>`.
+
+- You should now see your configured webhook in the settings page, be able to send test notifications, as well as begin to receive events at the specified endpoint
+
+### Receiving a response
+
+The registered endpoint will be called with a payload following the shape of:
+
+```json showLineNumbers=false
+{
+    "eventType": "APOLLO_CUSTOM_CHECK",
+    "TODO:version": "...",
+    "checkStep": {
+        "graphId": "string",
+        "graphVariant": "string",
+        "taskId": "UUID",
+        "workflowId": "UUID",
+        "gitContext": {
+            "branch": "string",
+            "commit": "string",
+            "committer": "string",
+            "message": "string",
+            "remoteUrl": "string"
+        }
+    },
+    "baseSchema": {
+        "hash": "string",
+        "subgraphs": [
+            {
+                "hash": "string",
+                "name": "string",
+            }
+        ]
+    },
+    "proposedSchema": {
+        "hash": "string",
+        "subgraphs": [
+            {
+                "hash": "string",
+                "name": "string",
+            }
+        ]
+    }
+}
+```
+
+When we dispatch a webhook with check information, our service has a timeout to receive a 200 response of 30 seconds. If this request times out, or does not receive a 200, it will retry up to 5 times, with an exponential backoff delay starting at 5 seconds and going up to 60 seconds.
+
+Note that schema hashes are provided rather than the text contents because schema can be very large. 
+To fetch a single supergraph or subgraph schema contents by hash, run the following graphql query against Apollo GraphOS’s Platform API. (See Platform API docs for instructions on how to make and authenticate requests to Platform API)
+
+Note: We may add additional properties in the JSON objects
+
+```graphql
+query schema($graphId: ID!, $hash: SHA256) {
+  graph(id: $graphId) {
+    doc(hash: $hash) {
+      source
+    }
+  }
+}
+```
+
+To request all subgraphs and supergraph schema in one request,
+
+```graphql
+query schema($graphId: ID!, $supergraphHash: SHA256, $subgraphAHash: SHA256, $subgraphBHash: SHA256) {
+  graph(id: $graphId) {
+    supergraph: doc(hash: $supergraphHash) {
+      source
+    }
+    subgraphA: doc(hash: $subgraphAHash) {
+      source
+    }
+    subgraphB: doc(hash: $subgraphBHash) {
+      source
+    }
+  }
+}
+```
+
+### Submitting a check result
+
+Once validation has run, make an API call to submit the results back into the triggering Check. Schema Check will wait for this response for 10 minutes and not complete until the results are returned. If 10 minutes have passed without a callback request being received, the schema check will be marked as failed.
+
+Sample request
+
+```graphql
+mutation SchemaCheckCallback($input: CustomCheckCallbackInput!, $name: String!, $graphId: ID!) {
+  graph(id: $graphId) {
+    id
+    variant(name: $name) {
+      id
+      customCheckCallback(input: $input) {
+        __typename
+        ... on CustomCheckResult {
+          violations {
+            level
+            message
+            rule
+          }
+        }
+        ... on PermissionError {
+          message
+        }
+        ... on TaskError {
+          message
+        }
+        ... on ValidationError {
+          message
+        }
+      }
+    }
+  }
+}
+```
 
 ## Proposals checks
 
