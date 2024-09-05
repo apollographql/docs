@@ -96,7 +96,7 @@ The solution is to encounter the build error much earlier in the process. As soo
 We can accomplish this by creating a special variant of our graph that tracks the `main` branch of each code repository. Apollo GraphOS provides a default variant called `current` for just this use-case, but any variant can be used for this purpose. This requires that:
 
 - Each repository immediately publishes the subgraph schema to the `current` variant each time we merge a change to the `main` branch, even if we won't release the change for a while.
-- We run build checks for a proposed change against the `current` variant (to catch build errors quickly) as well as our production variants (to run operation checks against live traffic).
+- We run build checks for a proposed change against the `current` variant (to catch build errors quickly) as well as our production variants (to run operations checks against live traffic).
 
 If the build check against the `current` variant fails, we'll need to coordinate with another subgraph team to ensure that our subgraph schemas are compatible before we attempt to release changes to production.
 

@@ -12,7 +12,7 @@ To enable schema checks for your supergraph, do the following if you haven't yet
 
 1. Make sure you've published all your subgraph schemas to GraphOS and that those schemas are up to date.
    - [Learn how to publish schemas.](./)
-2. For operation checks, make sure your supergraph is sending operation metrics to GraphOS. GraphOS uses historical metrics to determine whether a potentially dangerous schema change is safe.
+2. For operations checks, make sure your supergraph is sending operation metrics to GraphOS. GraphOS uses historical metrics to determine whether a potentially dangerous schema change is safe.
 
    <Caution>
 
@@ -134,7 +134,7 @@ You can override flagged changes on an operation-by-operation basis or update yo
 
 <Note>
 
-If you use the GraphOS Router to [report operation metrics](../metrics/sending-operation-metrics), you can configure extended reference reporting for more accurate operation checks. [Learn more.](/router/configuration/overview/#extended-reference-reporting)
+If you use the GraphOS Router to [report operation metrics](../metrics/sending-operation-metrics), you can configure extended reference reporting for more accurate operations checks. [Learn more.](/router/configuration/overview/#extended-reference-reporting)
 
 </Note>
 
@@ -168,9 +168,9 @@ You can **Undo** an override from the banner that appears on any overridden oper
 
 #### Ignored conditions settings
 
-You can update your check settings so operation checks don't flag the following kinds of changes:
+You can update your check settings so operations checks don't flag the following kinds of changes:
 
-- **Ignore breaking changes when there are no operations**: Turning this setting on ignores any potentially breaking changes when an operation check is run against zero operations.
+- **Ignore breaking changes when there are no operations**: Turning this setting on ignores any potentially breaking changes when an operations check is run against zero operations.
 - **Ignore default value changes**: Turning this setting on ignores any changes to default values.
 
   <Note>
@@ -235,7 +235,7 @@ After you enable schema checks for your graph, you can customize their behavior 
 - Exclude past operations that were executed relatively infrequently
 - Check schema changes against multiple graph variants
 - Ignore changes to default values
-- Ignore potentially breaking changes when an operation check runs against zero operations
+- Ignore potentially breaking changes when an operations check runs against zero operations
 
 ### Using GraphOS Studio (recommended)
 

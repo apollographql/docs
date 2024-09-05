@@ -43,7 +43,7 @@ schema successfully compose with other subgraph schemas.
 <tr>
 <td>
 
-#### Operation checks
+#### Operations checks
 
 </td>
 <td>
@@ -65,7 +65,7 @@ and other GraphQL best practices.
 <tr>
 <td>
 
-#### Proposal checks
+#### Proposals checks
 
 (Enterprise only)
 
@@ -78,7 +78,7 @@ Check whether your proposed schema changes have matching and approved{' '}
 <tr>
 <td>
 
-#### Contract checks
+#### (Downstream) contract checks
 
 (Enterprise only)
 
@@ -93,35 +93,43 @@ proposed schema changes break any downstream [contract](./contracts) variants.
 </tbody>
 </table>
 
-This article provides further details on composition and operation checks.
+This article provides further details on build and operations checks.
 
 - For details on linter checks, see [Schema linting](./schema-linter/).
-- For details on proposal checks, see [Schema proposals check configuration](./schema-proposals/configuration#configure-schema-checks).
+- For details on proposals checks, see [Schema proposals check configuration](./schema-proposals/configuration#configure-schema-checks).
 - For details on contract checks, see [Contract checks](./contract-setup/#run-contract-checks).
 
 ### Build checks
 
-<Note>
-
-Build checks are also known as _composition checks_.
-
-</Note>
-
-When you run a schema check, GraphOS performs a _build check_ before performing any other checks. A build check verifies that changes you make to a subgraph schema are valid GraphQL definitions and are compatible with your other subgraph schemas, enabling them to [compose](/federation/federated-types/composition/) into a supergraph schema for your router.
+When you run a schema check, GraphOS performs a _build check_ before performing any other checks. A build check verifies that changes you make to a subgraph schema are valid GraphQL definitions and are compatible with your other subgraph schemas, enabling them to [compose](/federation/federated-types/composition/) into a supergraph schema for your router. For that reason, build checks are sometimes called composition checks.
 
 If a build check fails, GraphOS does not perform any other checks for the provided schema.
 
+<img
+  className="screenshot"
+  src="../img/schema-checks/failed-build-check.jpg"
+  alt="Failed build check results in Studio"
+  width="700"
+/>
+
 From your graph's **Checks** page in GraphOS Studio, you can click a particular build check to view its result. If composition succeeded, you can view the composed supergraph schema. Regardless of success, you can view the proposed subgraph schema.
 
-### Operation checks
+### Operations checks
 
-If a build check succeeds, GraphOS then validates schema changes with _operation checks_. Operation checks use your graph's historical client operation data to determine whether any clients would be negatively affected by the proposed schema changes. For example, an operation check would flag a change that removes a field that multiple clients use in their operations.
+If a build check succeeds, GraphOS then validates schema changes with _operations checks_. Operations checks use your graph's historical client operation data to determine whether any clients would be negatively affected by the proposed schema changes. For example, an operations check would flag a change that removes a field that multiple clients use in their operations.
+
+<img
+  className="screenshot"
+  src="../img/schema-checks/failed-operations-check.jpg"
+  alt="Failed operations check results in Studio"
+  width="700"
+/>
 
 ## Limitations
 
-### Operation check cardinality
+### Operations check cardinality
 
-Operation checks will run against a maximum of 10,000 distinct operations. A warning message will display in Studio when a larger cardinality has been reached.
+Operations checks will run against a maximum of 10,000 distinct operations. A warning message will display in Studio when a larger cardinality has been reached.
 
 ### Input field usage reporting
 
@@ -156,5 +164,5 @@ type User {
 
 ## Next steps
 
-To learn how to run your first check, integrate checks into your CI pipeline, and customize checks behavior, refer to [Run schema checks](./check-configurations).
+To learn how to run your first schema check, integrate checks into your CI pipeline, and customize checks behavior, refer to [Run schema checks](./check-configurations).
 You can also [connect schema checks to GitHub](./github-integration) to add links to check results on the pull requests that initiate them. See the [Checks reference](./checks-reference) for the types of schema changes that checks detect.
