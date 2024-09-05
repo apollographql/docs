@@ -8,20 +8,19 @@ This guide covers how to run your first schema check, integrate checks into your
 
 ## Prerequisites
 
-To enable schema checks for your supergraph, do the following if you haven't yet:
+To enable schema checks for your supergraph:
 
-1. Make sure you've published all your subgraph schemas to GraphOS and that those schemas are up to date.
-   - [Learn how to publish schemas.](./)
+1. Make sure you've published all your subgraph schemas to GraphOS and that those schemas are up to date. [Learn how to publish schemas.](./)
 2. For operations checks, make sure your supergraph is sending operation metrics to GraphOS. GraphOS uses historical metrics to determine whether a potentially dangerous schema change is safe.
-
-   <Caution>
-
-   If GraphOS has no operation metrics to compare against, all potentially dangerous schema changes result in a failed check.
-
-   </Caution>
 
    - If you have a [cloud supergraph](../graphs/#cloud-supergraphs), your router reports metrics automatically.
    - [See setup for other graph types.](../metrics/sending-operation-metrics/)
+
+   <Note>
+
+   If GraphOS has no operation metrics to compare against, all potentially dangerous schema changes result in a failed check.
+
+   </Note>
 
 3. [Install the Rover CLI](/rover/getting-started/) in your development environment and [authenticate it with GraphOS](/rover/configuring/#authenticating-with-graphos).
 
@@ -31,29 +30,37 @@ Let's say you've made local changes to one of your subgraph schemas. After you [
 
 <Note>
 
-If you have a [monograph](../graphs/#monographs) (which is not recommended), use [`rover graph`](/rover/commands/graphs/#validating-schema-changes) commands instead of `rover subgraph` commands.
+If you have a [monograph](../graphs/#monographs), use [`rover graph`](/rover/commands/graphs/#validating-schema-changes) commands instead of `rover subgraph` commands.
 
 </Note>
 
-The `rover subgraph check` command looks like this:
+The `rover subgraph check` command looks something like this:
 
 ```bash showLineNumbers=false
-rover subgraph check docs-example-graph@main --name products --schema ./schema.graphql
+rover subgraph check \
+  docs-example-graph@main \
+  --name products \
+  --schema ./schema.graphql
 ```
 
 It requires the following:
 
-- Your registered graph's _graph ref_, which a string with the format `graph-id@variant-name` (for example, `docs-example-graph@main`). This is available from your supergraph's README page in GraphOS Studio.
-
+- Your registered graph's graph ref, which a string with the format `graph-id@variant-name` (for example, `docs-example-graph@main`). This is available from your supergraph's README page in GraphOS Studio.
+- The name of the subgraph with schema changes.
 - The locally modified version of your schema. In the command above, the schema is provided via a `.graphql` file.
 
   - If your schema is not in a standalone `.graphql` file, you can run your GraphQL server locally and pipe its schema directly from `rover graph introspect`, like so:
 
     ```bash showLineNumbers=false
-    rover subgraph introspect http://localhost:4000 | rover subgraph check docs-example-graph@main --name products --schema -
+
+    rover subgraph introspect http://localhost:4000 \
+     | rover subgraph check docs-example-graph@main \
+     --name products \
+     --schema -
+
     ```
 
-Try changing something in the local version of your schema and see what happens! If everything is set up correctly, the command's output looks similar to the output shown in [The check response](#the-check-response).
+Try changing something in the local version of your schema and see what happens! If everything is set up correctly, the command's output looks similar to the output shown in [the check response](#the-check-response).
 
 ### The checks lifecycle
 
@@ -61,12 +68,12 @@ When you run `rover subgraph check`:
 
 1. GraphOS generates a diff between your local schema and the published schema for the variant you're checking against.
 2. GraphOS uses this diff to determine whether the changes affect any operations that have been executed against your supergraph within a [customizable time window](./check-configurations/) (by default, this is the last seven days).
-3. GraphOS returns the diff, along with a list of the operations affected by the changes.
-4. Rover prints the check result and returns a non-zero exit code if at least one breaking change is found.
+3. GraphOS returns the diff, along with a list of operations affected by the changes.
+4. Rover prints the check result and returns a non-zero exit code if at least one breaking change is found. You can also view the check result in the Studio UI.
 
 #### The check response
 
-Running `rover subgraph check` outputs the diff of all detected schema changes and highlights breaking changes:
+Running `rover subgraph check` outputs the diff of all detected schema changes and highlights breaking changes. For example:
 
 ```console
 $ rover subgraph check docs-example-graph@current --subgraph products --schema ./schema.graphql
@@ -92,7 +99,7 @@ Because breaking changes are detected by analyzing recent operations, your graph
 
 The `rover subgraph check` command returns a nonzero result if any check fails.
 
-The output also includes a Studio URL that provides full details on the changes and their impact on existing clients and operations:
+The output includes a Studio URL that provides full details on the changes and their impact on existing clients and operations:
 
 <img
   className="screenshot"
@@ -107,8 +114,6 @@ If you run a check within a Git repository, `rover subgraph check` sends both th
 
 ### Rerunning checks
 
-When you rerun a check, the new run uses the current [check configuration options](#configuring-checks), regardless of the configuration at the time of the original run. Similarly, the new run's time window is based on the current time, not when the original check ran.
-
 You can rerun checks from GraphOS Studio. Select the check and click **Rerun check**.
 
 <img
@@ -119,6 +124,8 @@ You can rerun checks from GraphOS Studio. Select the check and click **Rerun che
 />
 
 The new checks run incorporates any changes made to excluded or included clients, checked variants, and any operations marked as safe or ignored.
+
+The new run uses the current [check configuration options](#configuring-checks), regardless of the configuration at the time of the original run. Similarly, the new run's time window is based on the current time, not when the original check ran.
 
 <Note>
 
@@ -179,7 +186,7 @@ You can update your check settings so operations checks don't flag the following
   </Note>
 
 You enable these settings from the **Configuration** tab of your variant's **Checks** page.
-Learn about other checks settings on the [Configure Schema Checks page](./check-configurations).
+Learn about other [checks settings](#configuring-checks).
 
 ## Using in CI
 
@@ -191,7 +198,7 @@ We recommend defining a separate CI job for each [variant of your schema](#check
 
 The `rover config auth` command is interactive, which means you shouldn't use it in CI environments. Instead, you can authenticate Rover with Studio by setting the `APOLLO_KEY` environment variable in CI. For details, see [Configuring Rover](/rover/configuring).
 
-### Example configuration
+### Example CI configuration
 
 The following config defines a schema check job for a CircleCI pipeline. Your config's syntax varies depending on your CI tool, but the job's steps are the same.
 
@@ -267,7 +274,10 @@ You can provide the `--validation-period` option to specify how far back in time
 This command checks schema changes against the past two weeks of operations:
 
 ```bash showLineNumbers=false
-rover subgraph check docs-example-graph@current --name products --schema ./schema.graphql --validation-period="2 weeks"
+rover subgraph check docs-example-graph@current \
+  --name products \
+  --schema ./schema.graphql \
+  --validation-period="2 weeks"
 ```
 
 Valid durations are represented as any combination of `months`, `weeks`, `days`, `min`, and `sec`:
@@ -323,7 +333,9 @@ You might want to check schema changes against multiple environments, such as pr
 You specify which variant you want to check against in the [graph ref](/rover/conventions/#graph-refs) you provide to `rover subgraph check`:
 
 ```bash showLineNumbers=false
-rover subgraph check docs-example-graph@staging --name products --schema ./schema.graphql
+rover subgraph check docs-example-graph@staging \
+  --name products \
+  --schema ./schema.graphql
 ```
 
 The graph ref `docs-example-graph@staging` specifies the `staging` variant of the `docs-example-graph` graph.
