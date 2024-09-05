@@ -32,7 +32,7 @@ GraphOS can perform the following types of schema checks:
 <tr>
 <td>
 
-#### Composition checks
+#### Build checks
 
 </td>
 <td>
@@ -99,17 +99,23 @@ This article provides further details on composition and operation checks.
 - For details on proposal checks, see [Schema proposals check configuration](./schema-proposals/configuration#configure-schema-checks).
 - For details on contract checks, see [Contract checks](./contract-setup/#run-contract-checks).
 
-### Composition checks
+### Build checks
 
-When you run a schema check, GraphOS performs a _composition check_ before performing any other checks. A composition check verifies that changes you make to a subgraph schema are valid GraphQL definitions and are compatible with your other subgraph schemas, enabling them to [compose](/federation/federated-types/composition/) into a supergraph schema for your router.
+<Note>
 
-If a composition check fails, GraphOS does not perform any other checks for the provided schema.
+Build checks are also known as _composition checks_.
 
-From your graph's **Checks** page in GraphOS Studio, you can click a particular composition check to view its result. If composition succeeded, you can view the composed supergraph schema. Regardless of success, you can view the proposed subgraph schema.
+</Note>
+
+When you run a schema check, GraphOS performs a _build check_ before performing any other checks. A build check verifies that changes you make to a subgraph schema are valid GraphQL definitions and are compatible with your other subgraph schemas, enabling them to [compose](/federation/federated-types/composition/) into a supergraph schema for your router.
+
+If a build check fails, GraphOS does not perform any other checks for the provided schema.
+
+From your graph's **Checks** page in GraphOS Studio, you can click a particular build check to view its result. If composition succeeded, you can view the composed supergraph schema. Regardless of success, you can view the proposed subgraph schema.
 
 ### Operation checks
 
-If a composition check succeeds, GraphOS then validates schema changes with _operation checks_. Operation checks use your graph's historical client operation data to determine whether any clients would be negatively affected by the proposed schema changes. For example, an operation check would flag a change that removes a field that multiple clients use in their operations.
+If a build check succeeds, GraphOS then validates schema changes with _operation checks_. Operation checks use your graph's historical client operation data to determine whether any clients would be negatively affected by the proposed schema changes. For example, an operation check would flag a change that removes a field that multiple clients use in their operations.
 
 ## Limitations
 
