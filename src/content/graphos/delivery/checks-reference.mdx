@@ -4,11 +4,98 @@ subtitle: Reference for types of schema changes that checks can detect
 description: GraphOS Schema checks reference for schema changes in your GraphQL schema.
 ---
 
+This reference describes the operation checks statuses you may see in the Studio UI and the schema change types reported by [the Rover CLI `subgraph check` response](./check-configurations#the-check-response).
+
+## Operation check statuses
+
+GraphOS classifies [operation checks](./schema-checks#types-of-checks) in Studio with the following statuses:
+
+<table class="field-table">
+  <thead>
+    <tr>
+      <th>Status</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+<tbody>
+<tr>
+<td>
+
+##### Broken
+
+</td>
+<td>
+
+The operation is invalid and not executable against the new schema.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### Potentially affected
+
+</td>
+<td>
+
+The operation is valid against the new schema but may result in errors or unexpected behavior.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### Unaffected
+
+</td>
+<td>
+
+The operation is unaffected by schema change(s).
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### Safe
+
+</td>
+<td>
+
+A user has marked schema change(s) for this operation as [safe](#overriding-flagged-changes).
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+##### Ignored
+
+</td>
+<td>
+
+A user has chosen to [ignore](#overriding-flagged-changes) schema change(s) for this operation.
+
+</td>
+</tr>
+
+</tbody>
+</table>
+
+
+## Schema change types
+
+When you [run a schema check](./check-configurations#running-checks), the check response classifies each schema change with the following codes.
+
 Not every change to a schema is a potentially breaking change. Additive changes (such as adding a field to a type) are usually safe and do not affect active clients. Deletions and modifications (such as removing a field or changing a return type), however, can break clients that use affected types and fields.
 
 If you use the GraphOS Router to [report operation metrics](../metrics/sending-operation-metrics), you can configure extended reference reporting for more accurate schema checks. [Learn more.](/router/configuration/overview/#extended-reference-reporting)
 
-## Potentially breaking changes
+### Potentially breaking changes
 
 <Note>
 
@@ -16,7 +103,7 @@ You can use [ignored conditions settings](./check-configurations#ignored-conditi
 
 </Note>
 
-### Removals
+#### Removals
 
 These changes remove a schema element. If an operation is actively using a removed element, that operation will start returning an error.
 
@@ -30,7 +117,7 @@ These changes remove a schema element. If an operation is actively using a remov
 | `VALUE_REMOVED_FROM_ENUM`         | A value was removed from an enum used by at least one operation.                                                                        |
 | `TYPE_REMOVED_FROM_INTERFACE`     | An object was removed from an interface used by at least one operation.                                                                 |
 
-### Addition of required arguments
+#### Addition of required arguments
 
 These changes add a required input to a schema element. If an operation is actively using an element of your graph and doesn't add the new required input argument, the graph will return an error to affected clients.
 
@@ -39,7 +126,7 @@ These changes add a required input to a schema element. If an operation is activ
 | `REQUIRED_ARG_ADDED`                   | A non-nullable argument was added to field that's used by at least one operation.                         |
 | `REQUIRED_FIELD_ADDED_TO_INPUT_OBJECT` | A non-nullable field without a default value was added to an input object used by at least one operation. |
 
-### In-place updates
+#### In-place updates
 
 These changes update an existing schema element. If an operation is actively using an element that is updated, the operation might start receiving an error from your graph. It also might receive an unexpected result.
 
@@ -57,7 +144,7 @@ In some cases, in-place updates are compatible with affected clients at runtime 
 | `ARG_CHANGED_TYPE`                      | An existing argument on a field used by at least one operation changed its type.                                                                       |
 | `ARG_CHANGED_TYPE_OPTIONAL_TO_REQUIRED` | An existing argument on a field used by at least one operation changed from an optional type to a required type.                                       |
 
-### Default values
+#### Default values
 
 These changes update the default value for an argument or input type. If an operation is using an element of your graph and does not specify a value for this argument, the operation might get an unexpected result when the schema is updated if it was relying on the original default value.
 
@@ -73,11 +160,11 @@ You can use [ignored conditions settings](#ignored-conditions-settings) to ignor
 | `INPUT_OBJECT_FIELD_DEFAULT_VALUE_CHANGE`  | An existing input object field used by at least one operation had a default value changed.       |
 | `INPUT_OBJECT_FIELD_DEFAULT_VALUE_REMOVED` | An existing input object field used by at least one operation had a default value removed.       |
 
-## Non-breaking changes
+### Non-breaking changes
 
 These changes are detected by schema checks, but they are "safe." They never affect the behavior of any existing clients if deployed.
 
-### Schema additions
+#### Schema additions
 
 | Name                                     | Description                                                                                                                                                               |
 | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -90,7 +177,7 @@ These changes are detected by schema checks, but they are "safe." They never aff
 | `OPTIONAL_FIELD_ADDED_TO_INPUT_OBJECT`   | An optional field was added to an existing input object.                                                                                                                  |
 | `INPUT_OBJECT_FIELD_DEFAULT_VALUE_ADDED` | An existing input object field used by at least one operation had a default value added.                                                                                  |
 
-### Deprecations
+#### Deprecations
 
 | Name                             | Description                                             |
 | -------------------------------- | ------------------------------------------------------- |
@@ -101,7 +188,7 @@ These changes are detected by schema checks, but they are "safe." They never aff
 | `ENUM_DEPRECATION_REMOVED`       | A previously deprecated enum is no longer deprecated.   |
 | `ENUM_DEPRECATED_REASON_CHANGE`  | The specified reason for an enum's deprecation changed. |
 
-### Descriptions
+#### Descriptions
 
 | Name                            | Description                                   |
 | ------------------------------- | --------------------------------------------- |
