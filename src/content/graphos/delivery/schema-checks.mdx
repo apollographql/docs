@@ -103,7 +103,7 @@ This article provides further details on composition and operation checks.
 
 When you run a schema check, GraphOS performs a _composition check_ before performing any other checks. A composition check verifies that changes you make to a subgraph schema are valid GraphQL definitions and are compatible with your other subgraph schemas, enabling them to [compose](/federation/federated-types/composition/) into a supergraph schema for your router.
 
-If a composition check fails, Studio does not perform any other checks for the provided schema.
+If a composition check fails, GraphOS does not perform any other checks for the provided schema.
 
 From your graph's **Checks** page in GraphOS Studio, you can click a particular composition check to view its result. If composition succeeded, you can view the composed supergraph schema. Regardless of success, you can view the proposed subgraph schema.
 
@@ -150,5 +150,5 @@ type User {
 
 ## Next steps
 
-To run your first check, integrate checks into your CI pipleine, and customize checks refer to [Run schema checks](./check-configurations).
+To learn how to run your first check, integrate checks into your CI pipeline, and customize checks behavior, refer to [Run schema checks](./check-configurations).
 You can also [connect schema checks to GitHub](./github-integration) to add links to check results on the pull requests that initiate them. See the [Checks reference](./checks-reference) for the types of schema changes that checks detect.
