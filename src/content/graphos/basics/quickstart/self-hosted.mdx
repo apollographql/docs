@@ -305,9 +305,7 @@ To publish our subgraph schema, we'll first use Rover to introspect the running 
 
     Each variant of a graph represents a different environment where that graph runs (such as staging and production). For this quickstart, you can keep the default suggested variant name or change it to anything else you like (for example, `quickstart`). Just make sure to provide the same graph ref to every command in this quickstart!
 
-    After you've published a schema to a particular variant, that variant's graph ref is always available at the top of its README page:
-
-    <img class="screenshot" alt="Graph ref in Studio" src="../../img/studio-graph-ref.jpg" width="300"/>
+    After you've published a schema to a particular variant, that variant's graph ref is always available at the top of its README page.
 
     </ExpansionPanel>
 
@@ -324,7 +322,7 @@ To publish our subgraph schema, we'll first use Rover to introspect the running 
 
     If you open your graph's details in Studio now, you'll see types and fields from the `locations` subgraph listed on the **Schema** page:
 
-    <img class="screenshot" alt="locations subgraph schema in Studio" src="../../img/qs-studio-schema.jpg" width="300"/>
+    <img class="screenshot" alt="locations subgraph schema in Studio" src="../../img/schema-page/reference.jpg" width="300"/>
 
 4. Do the same thing for the `reviews` subgraph, again substituting your graph ref:
 
@@ -406,7 +404,7 @@ We recommend that you create a separate API key for each system that communicate
 
 Now that our router is running, we can quickly open our browser to `localhost:4000` to explore our composed schema in Apollo Sandbox:
 
-<img src="../../img/gateway_sandbox.jpg" class="screenshot" alt="Schema view in Apollo Sandbox" width="600" />
+<img src="../../img/explorer/sandbox-gateway.jpg" class="screenshot" alt="Schema view in Apollo Sandbox" width="600" />
 
 Let's execute some test queries against the supergraph. We'll look at metrics for those test queries in the next step.
 
@@ -418,7 +416,7 @@ Because our router is connected to GraphOS, it automatically collects and report
 Return to [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content) and go to your supergraph variant's **Insights** page, which looks like this:
 
 <img
-  src="../../img/insights-quickstart.jpg"
+  src="../../img/insights/quickstart.jpg"
   className="screenshot"
   alt="The Insights page in GraphOS Studio, showing metrics for operations and their fields"
 />
