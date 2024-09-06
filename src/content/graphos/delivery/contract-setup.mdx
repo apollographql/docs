@@ -245,7 +245,7 @@ Contract checks do the following for each of a source variant's associated contr
 1. Use the source variant's proposed supergraph schema (validated by composition checks) to generate and validate an updated contract schema.
 2. Run operation checks against the updated contract schema.
 
-On your graph's **Checks** page in Studio, contract checks appear as **Downstream**:
+On your graph's **Checks** page in Studio, you can see the status of contract checks by clicking the Satellite icon:
 
 <img
   className="screenshot"
@@ -253,8 +253,18 @@ On your graph's **Checks** page in Studio, contract checks appear as **Downstrea
   src="../img/schema-checks/contract-check-ui.jpg"
 />
 
-Click the **Downstream** item in the **Tasks** column to view a summary of all contract checks that ran.
 Click a particular check to view more details.
+
+On a check's details page, the contact check appears as **Downstream** in the **Task** column.
+
+<img
+  className="screenshot"
+  alt="Downstream checks shown in Studio UI"
+  src="../img/schema-checks/contract-check-ui-2.jpg"
+  width="300px"
+/>
+
+Click **Downstream** to view a summary of all contract checks that ran.
 
 ### Failing contract checks
 
