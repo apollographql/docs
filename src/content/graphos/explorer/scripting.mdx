@@ -403,7 +403,7 @@ function exampleTransform(ships, filterFn, mapFn) {
   return mappedShips;
 }
 
-// Retrive and transform ships
+// Retrieve and transform ships
 const allShips = explorer.response.body.data.Ships;
 const transformedShips = exampleTransform( allShips, filterFn, mapFn);
 
