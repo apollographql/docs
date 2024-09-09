@@ -32,19 +32,19 @@ A proposal's ID is always prefixed with `p-` and followed by a number. You can f
 
 ## Validate changes with checks
 
-GraphOS provides [schema checks](../schema-checks) to help you identify breaking changes. You [run checks on local changes](../schema-checks#the-checks-lifecycle) before publishing them.
+GraphOS provides [schema checks](../schema-checks) to help you identify breaking changes. You [run checks on local changes](../check-configurations#the-checks-lifecycle) before publishing them.
 
 Since schema checks [run automatically on every revision](./creation#schema-checks) in a proposal, if your last revision's checks pass, any changes you implement locally from a proposal should pass too.
 Regardless, it's best to run checks before publishing changes to make sure errors haven't crept in.
 
 ### Ensure changes match an approved proposal
 
-You can [configure schema checks](./configuration/#configure-schema-checks) that run in GraphOS to include a **Proposals** task. Proposal checks verify that the changes a check is running on have matching and approved schema proposals.
+You can [configure schema checks](./configuration/#configure-schema-checks) that run in GraphOS to include a **Proposals** task. Proposals checks verify that the changes a check is running on have matching and approved schema proposals.
 
 <img
   src="../../img/schema-proposals/proposal-check-settings.jpg"
   className="screenshot"
-  alt="Proposal check settings in GraphOS Studio"
+  alt="Proposals check settings in GraphOS Studio"
 />
 
 Configuring the **Proposals** task's severity to **Error** ensures that only changes approved through the proposal process can be published. By setting the severity to **Warning** you can publish changes that haven't been approved and receive warnings about them.
