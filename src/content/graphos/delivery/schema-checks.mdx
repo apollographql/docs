@@ -6,7 +6,7 @@ description: Use GraphOS Schema checks to identify and validate potential breaki
 
 Certain changes to your graph's schema (such as removing a field or type) might break one of your application's clients. GraphOS schema checks help you identify breaking changes before you make them. They can also help you identify when a potentially dangerous change is, in fact, safe.
 
-You can review the results of schema checks inside GraphOS Studio from your graph's **Checks** page, helping you make informed decisions about evolving your graph:
+You run checks using the Rover CLI and can integrate checks into your CI pipeline. GraphOS Studio displays check results, helping you make informed decisions about evolving your graph.
 
 <img
   className="screenshot"
@@ -15,7 +15,7 @@ You can review the results of schema checks inside GraphOS Studio from your grap
   width="500"
 />
 
-With the exception of [proposal and contract checks](#types-of-checks), schema checks are free as part of [all Apollo plans](https://www.apollographql.com/pricing/).
+Except for [proposal and contract checks](#types-of-checks), schema checks are free as part of [all Apollo plans](https://www.apollographql.com/pricing/).
 
 ## Types of checks
 
@@ -36,8 +36,10 @@ GraphOS can perform the following types of schema checks:
 
 </td>
 <td>
+
 For supergraphs, verify whether proposed changes to a subgraph
-schema successfully compose with other subgraph schemas.
+schema successfully compose with other subgraph schemas. Also known as _composition checks_.
+
 </td>
 </tr>
 <tr>
@@ -58,7 +60,7 @@ verify whether the changes break any of your graph's active clients.
 
 </td>
 <td>
-Analyze your proposed schema changes for violations of formatting rules
+Analyze proposed schema changes for violations of formatting rules
 and other GraphQL best practices.
 </td>
 </tr>
@@ -85,7 +87,7 @@ Check whether your proposed schema changes have matching and approved{' '}
 </td>
 <td>
 
-When running schema checks on a source variant, also check whether your
+When running schema checks on a source variant, check whether your
 proposed schema changes break any downstream [contract](./contracts) variants.
 
 </td>
@@ -103,7 +105,9 @@ This article provides further details on build and operations checks.
 
 When you run a schema check, GraphOS performs a _build check_ before performing any other checks. A build check verifies that changes you make to a subgraph schema are valid GraphQL definitions and are compatible with your other subgraph schemas, enabling them to [compose](/federation/federated-types/composition/) into a supergraph schema for your router. For that reason, build checks are sometimes called composition checks.
 
-If a build check fails, GraphOS does not perform any other checks for the provided schema.
+If a build check fails, GraphOS performs no other checks for the provided schema.
+
+You can inspect a particular build check from your graph's **Checks** page in GraphOS Studio to view its result. If composition succeeded, you can view the composed supergraph schema. Regardless of success, you can view the proposed subgraph schema.
 
 <img
   className="screenshot"
@@ -111,8 +115,6 @@ If a build check fails, GraphOS does not perform any other checks for the provid
   alt="Failed build check results in Studio"
   width="700"
 />
-
-From your graph's **Checks** page in GraphOS Studio, you can click a particular build check to view its result. If composition succeeded, you can view the composed supergraph schema. Regardless of success, you can view the proposed subgraph schema.
 
 ### Operations checks
 
@@ -129,7 +131,7 @@ If a build check succeeds, GraphOS then validates schema changes with _operation
 
 ### Operations check cardinality
 
-Operations checks will run against a maximum of 10,000 distinct operations. A warning message will display in Studio when a larger cardinality has been reached.
+Operations checks run against a maximum of 10,000 distinct operations. GraphOS Studio displays when a larger cardinality has been reached.
 
 ### Input field usage reporting
 
@@ -141,11 +143,11 @@ If you use the GraphOS Router to [report operation metrics](../metrics/sending-o
 
 </Note>
 
-GraphOS tracks operation usage. To deduplicate operations, Apollo uses [operation signatures](../metrics/operation-signatures) which denormalize the arguments and inputs. This means that the result of the operation signature does not track which fields on input types are used.
+GraphOS tracks operation usage. To deduplicate operations, Apollo uses [operation signatures](../metrics/operation-signatures) to denormalize the arguments and inputs. However, operation signatures don't track which fields on input types are used.
 
-For example, GraphOS will not be able to track how many times the input field `GetUsersInput.firstName` is used in this schema:
+For example, by default, GraphOS doesn't track how many times the input field `GetUsersInput.firstName` is used in this schema:
 
-```graphql
+```graphql disableCopy showLineNumbers=false
 type Query {
   getUsers(filters: GetUsersInput): [User]
 }
