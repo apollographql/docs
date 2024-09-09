@@ -4,7 +4,7 @@ subtitle: Reference for types of schema changes that checks can detect
 description: GraphOS Schema checks reference for schema changes in your GraphQL schema.
 ---
 
-This reference describes the operations checks statuses you may see in the Studio UI and the schema change types reported by [the Rover CLI `subgraph check` response](./check-configurations#the-check-response).
+This reference describes the operations checks statuses you may see in GraphOS Studio and the schema change types reported by [the Rover CLI `subgraph check` response](./check-configurations#the-check-response).
 
 ## Operations check statuses
 
@@ -89,11 +89,11 @@ A user has chosen to [ignore](#overriding-flagged-changes) schema change(s) for 
 
 ## Schema change types
 
-When you [run a schema check](./check-configurations#running-checks), the check response classifies each schema change with the following codes.
+When you run a schema check, the check response classifies each schema change with the following codes.
 
 Not every change to a schema is a potentially breaking change. Additive changes (such as adding a field to a type) are usually safe and do not affect active clients. Deletions and modifications (such as removing a field or changing a return type), however, can break clients that use affected types and fields.
 
-If you use the GraphOS Router to [report operation metrics](../metrics/sending-operation-metrics), you can configure extended reference reporting for more accurate schema checks. [Learn more.](/router/configuration/overview/#extended-reference-reporting)
+If you use the GraphOS Router to [report operation metrics](../metrics/sending-operation-metrics), you can configure [extended reference reporting](/router/configuration/overview/#extended-reference-reporting) for more accurate schema checks.
 
 ### Potentially breaking changes
 
