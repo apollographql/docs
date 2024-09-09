@@ -19,8 +19,9 @@
     "Overview": "/",
     "Schema Checks": {
       "Overview": "/schema-checks",
-      "Configure Schema Checks": "/check-configurations",
-      "Connect to GitHub": "/github-integration"
+      "Run Schema Checks": "/check-configurations",
+      "Connect to GitHub": "/github-integration",
+      "Checks Reference": "/checks-reference"
     },
     "Schema Linting": {
       "Overview": "/schema-linter",

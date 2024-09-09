@@ -86,6 +86,7 @@ exceptions:
   - Send SAML metadata
   - SSO
   - Studio
+  - The Overview page
   - TypeScript
   - UI
   - URLs?
