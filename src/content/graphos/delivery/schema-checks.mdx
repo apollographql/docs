@@ -109,9 +109,23 @@ If a build check fails, GraphOS performs no other checks for the provided schema
 
 You can inspect a particular build check from your graph's **Checks** page in GraphOS Studio to view its result. If composition succeeded, you can view the composed supergraph schema. Regardless of success, you can view the proposed subgraph schema.
 
+<img
+  className="screenshot"
+  src="../img/schema-checks/failed-build-check.jpg"
+  alt="Failed build check results in Studio"
+  width="700"
+/>
+
 ### Operations checks
 
 If a build check succeeds, GraphOS then validates schema changes with _operations checks_. Operations checks use your graph's historical client operation data to determine whether any clients would be negatively affected by the proposed schema changes. For example, an operations check would flag a change that removes a field that multiple clients use in their operations.
+
+<img
+  className="screenshot"
+  src="../img/schema-checks/failed-operations-check.jpg"
+  alt="Failed operations check results in Studio"
+  width="700"
+/>
 
 ## Limitations
 
