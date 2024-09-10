@@ -108,9 +108,10 @@ proposed schema changes break any downstream [contract](./contracts) variants.
 </tbody>
 </table>
 
-This article provides further details on build, operations, and custom checks.
+This article provides further details on build and operations.
 
 - For details on linter checks, see [Schema linting](./schema-linter/).
+- For details on custom checks, see [Custom checks](./custom-checks).
 - For details on proposals checks, see [Schema proposals check configuration](./schema-proposals/configuration#configure-schema-checks).
 - For details on contract checks, see [Contract checks](./contract-setup/#run-contract-checks).
 
@@ -137,20 +138,6 @@ If a build check succeeds, GraphOS then validates schema changes with _operation
   className="screenshot"
   src="../img/schema-checks/failed-operations-check.jpg"
   alt="Failed operations check results in Studio"
-  width="700"
-/>
-
-### Custom checks
-
-Custom checks let you run custom validations, for example, enforcing custom linting rules or confirming schema changes belong to a particular git branch.
-Once you [configure custom checks](./custom-checks), GraphOS sends schema change information to a specified webhook on each schema check run.
-
-Your endpoint can then respond with any potential issues, which GraphOS Studio displays along with other check result details.
-
-<img
-  className="screenshot"
-  src="../img/schema-checks/custom-check-result.jpg"
-  alt="To-do"
   width="700"
 />
 

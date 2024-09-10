@@ -1,36 +1,62 @@
 ---
 title: Run Custom Schema Checks
-subtitle: To-do
-description: To-do
+subtitle: Extend GraphOS schema checks with custom validations
+description: Learn how to extend the GraphOS schema checks workflow by configuring custom schema checks that allow your organization to enforce unique validation rules using your own services.
 ---
 
-Custom Checks allows you to run custom validation alongside each Schema Check on your own systems.
+<EnterpriseFeature linkWithAnchor="https://www.apollographql.com/pricing#delivery-pipeline" />
 
-On each run of a Schema Check, GraphOS will trigger a webhook you specify with a payload containing information about what was submitted into the check. Your endpoint can then respond and indicate which parts of a submitted schema may have issues that need to be addressed.
+Your organization might need to enforce schema standards beyond the default [GraphOS linter rules](./linter-rules).
+Or you may require validations that depend on external data, such as ensuring schema changes are only submitted from a specific branch in version control.
 
-## Use cases
+Custom schema checks extend the GraphOS schema checks workflow by letting you running custom validations like these using your own services.
 
-Lint schema with your own custom rules
-Verify that the schema being submitted belongs to a particular git branch
+## How custom checks work
+
+Once you [configure custom checks](./custom-checks), GraphOS sends schema change information to an endpoint you specify.
+Your endpoint can then perform validations and respond with any potential issues.
+GraphOS Studio displays these flagged issues along with other check result details.
+
+<img
+  className="screenshot"
+  src="../img/schema-checks/custom-check-result.jpg"
+  alt="To-do: Schema check run showing custom check details in GraphOS Studio"
+  width="700"
+/>
+
+<Note>
+
+You can only register one endpoint, but that endpoint can perform as many different schema validations as you want.
+
+</Note>
+
+Custom checks run alongside other check types—like [operations and linter checks](./schema-checks#types-of-checks)—as part of every schema check run.
+Like those other check types, custom checks only run [after a build check has successfully completed](schema-checks#build-checks-1).
 
 ## Configuration
 
-In GraphOS Studio, go to your graph's Checks page
-Click “Configuration” in the upper right to open the checks configuration page.
-From the checks configuration page, open the “Custom Checks” section.
-Toggle the switch next to “Enable Custom Checks” to the “on” position
+Custom checks require you to set up an HTTPS endpoint that's accessible via the public internet.
+You can set secret tokens to ensure that your endpoint only responds to requests sent by GraphOS.
+Once you register your endpoint in GraphOS Studio, GraphOS sends it webhook notifications as POST requests.
 
-Click on the “edit” button next to “Registered webhook” and fill in the modal with the endpoint you’d like to have called along with an optional secret token that will be sent alongside each payload so that you know it’s from us.
+### Set up a validation endpoint
 
-Custom webhooks require you to set up an HTTPS endpoint accessible via the public internet. GraphOS sends webhook notifications to this endpoint as POST requests.
+Your validation endpoint should:
 
-If you enter a secret token, each notification HTTP request includes an `x-apollo-signature` header whose value is a Hash Message Authentication Code (HMAC) generated using the token, the request body as the message, and the SHA256 hash function. The `x-apollo-signature` header has the format `sha256=<hmac-value>`.
+1. Be able to receive and process a POST request with a payload with [the specified JSON format](#receiving-and-processing-payloads).
+1. Send a `200` response to the request.
+    - When GraphOS dispatches a webhook with check information, it has a 30-second timeout to receive a `200` response.
+    - If the request times out or doesn't receive a `200`, it will retry up to five times, with an exponential backoff delay starting at 5 seconds and going up to 60 seconds.
+1. [Submit validation check results](#submitting-a-check-result) to the GraphOS Platform API.
 
-You should now see your configured webhook in the settings page, be able to send test notifications, as well as begin to receive events at the specified endpoint
+Beyond these requirements, your endpoint can run any validations you choose.
 
-## Receiving a response
+#### Receiving and processing payloads
 
-The registered endpoint will be called with a payload following the shape of
+On every schema run, GraphOS sends your registered endpoint a POST request.
+The request has a payload with the following shape:
+
+<ExpansionPanel title="See example payload">
 
 ```json
 {
@@ -70,12 +96,24 @@ The registered endpoint will be called with a payload following the shape of
 }
 ```
 
-When we dispatch a webhook with check information, our service has a timeout to receive a 200 response of 30 seconds. If this request times out, or does not receive a 200, it will retry up to 5 times, with an exponential backoff delay starting at 5 seconds and going up to 60 seconds.
+</ExpansionPanel>
 
-Note that schema hashes are provided rather than the text contents because schema can be large.
-To fetch a single supergraph or subgraph schema contents by hash, run the following GraphQL query against the Platform API. (See Platform API docs for instructions on how to make and authenticate requests to Platform API)
+<Note>
 
-Note: We may add additional properties in the JSON objects
+Payloads may include additional properties in the future.
+
+</Note>
+
+Because schemas can be large, the payload provides schema hashes rather than full-text schemas.
+Your endpoint can request the full schema contents using the [GraphOS Platform API](/graphos/platform-api/).
+Using the schema contents and payload information, your endpoint can perform whatever validations you need.
+
+Refer to [Platform API docs](https://studio.apollographql.com/public/apollo-platform/home?variant=main) for instructions on making and authenticating requests.
+See the examples below for fetching schema contents by hash.
+
+#### Fetch a single schema
+
+To fetch a single supergraph or subgraph schema contents by hash, use the following GraphQL query on the Platform API:
 
 ```graphql
 query schema($graphId: ID!, $hash: SHA256) {
@@ -87,7 +125,9 @@ query schema($graphId: ID!, $hash: SHA256) {
 }
 ```
 
-To request all subgraphs and supergraph schema in one request,
+#### Fetch all schemas
+
+To request all subgraphs and supergraph schema in one request, use the following GraphQL query on the Platform API:
 
 ```graphql
 query schema(
@@ -112,9 +152,21 @@ query schema(
 
 #### Submitting a check result
 
-Once validation has run, make an API call to submit the results back into the triggering Check. Schema Check will wait for this response for 10 minutes and not complete until the results are returned. If 10 minutes have passed without a callback request being received, the schema check will be marked as failed.
+Once your endpoint has completed its validation, it should submit the results back to the triggering schema check run using the Platform API.
+The results should include a list of violations, each with the following:
 
-Sample request
+- Violation [severity level](./schema-linter/#setting-severity-levels), either `ERROR`, `WARN`, or `IGNORE`
+- Name of the violated rule
+- Error message
+
+To-do: Example level, rule, message
+
+The triggering schema check run waits for a response for ten minutes and doesn't complete until it receives it.
+If ten minutes pass without a response, the schema check run is marked as failed.
+
+#### Example check results mutation
+
+You can execute use the following GraphQL mutation on the Platform API to submit custom check results:
 
 ```graphql
 mutation SchemaCheckCallback(
@@ -149,3 +201,45 @@ mutation SchemaCheckCallback(
   }
 }
 ```
+
+### Enable custom checks in Studio
+
+Once your endpoint is ready, you need to register it in GraphOS Studio.
+
+1. In [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content), go to your graph's **Checks** page.
+2. Select **Configuration** in the upper right to open the checks configuration page.
+3. From the checks configuration page, open the **Custom Checks** section.
+4. Toggle on the switch next to **Enable Custom Checks**.
+5. Click the **Edit** button next to **Registered webhook** and enter the **Endpoint URL**.
+6. Optionally, enter a **Secret Token**.
+
+    If you enter a token, each notification HTTP request includes an `x-apollo-signature` header whose value is a [Hash Message Authentication Code (HMAC)](https://en.wikipedia.org/wiki/HMAC) generated using the token, the request body as the message, and the SHA256 hash function. The `x-apollo-signature` header has the format `sha256=<hmac-value>`.
+
+    <ExpansionPanel title="See an example">
+
+    Given the following inputs:
+
+    **Secret token** (key): `your_secret_token`
+
+    **Request body** (message):
+
+    ```json
+    {
+        "to":"do"
+    }
+    ```
+
+    **Hash function**: SHA256
+
+    The `x-apollo-header` value would be `sha256=to-do`.
+    </ExpansionPanel>
+
+    Refer to this [guide from Okta](https://www.okta.com/identity-101/hmac/) to learn more about implementation and see additional resources.
+
+You should now see your configured webhook on the configuration page, be able to send test notifications, and begin to receive events at the specified endpoint.
+
+## Example implementation
+
+To-do: More information on an example implementation.
+
+Refer to the [example implementation](https://github.com/apollosolutions/custom-check-examples) for a custom check that enforces eslint rules.
