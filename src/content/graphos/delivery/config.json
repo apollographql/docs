@@ -20,6 +20,7 @@
     "Schema Checks": {
       "Overview": "/schema-checks",
       "Run Schema Checks": "/run-checks",
+      "Custom Checks": "/custom-checks",
       "Check Configurations": "/check-configurations",
       "Connect to GitHub": "/github-integration",
       "Checks Reference": "/checks-reference"
