@@ -1,244 +1,10 @@
 ---
-title: Run Schema Checks
-subtitle: Run, configure, and integrate schema checks into your CI pipeline
-description: Learn how to run GraphQL schema checks against schema changes—including as part of your CI pipeline—and customize your them using Apollo GraphOS Studio or Rover CLI.
+title: Check Configurations
+subtitle: Customize schema checks to suit your use cases
+description: Configure and customize GraphOS schema checks using Apollo GraphOS Studio or Rover CLI.
 ---
 
-This guide covers running your first schema check, integrating checks into your CI pipeline, and configuring checks for your organization's use cases.
-
-## Prerequisites
-
-To enable schema checks for your supergraph:
-
-1. Ensure you've published all your subgraph schemas to GraphOS and that those schemas are up to date. [Learn how to publish schemas.](./)
-2. For operations checks, ensure your supergraph is sending operation metrics to GraphOS. GraphOS uses historical metrics to determine whether a potentially dangerous schema change is safe.
-
-   - If you have a [cloud supergraph](../graphs/#cloud-supergraphs), your router reports metrics automatically.
-   - [See setup for other graph types.](../metrics/sending-operation-metrics/)
-
-   <Note>
-
-   If GraphOS has no operation metrics to compare against, all potentially dangerous schema changes result in a failed check.
-
-   </Note>
-
-3. [Install the Rover CLI](/rover/getting-started/) in your development environment and [authenticate it with GraphOS](/rover/configuring/#authenticating-with-graphos).
-
-## Running checks
-
-Let's say you've made local changes to one of your subgraph schemas. After you [complete the prerequisites](#prerequisites), you can run schema checks against those changes with the `rover subgraph check` command.
-
-<Note>
-
-If you have a [monograph](../graphs/#monographs), use [`rover graph`](/rover/commands/graphs/#validating-schema-changes) commands instead of `rover subgraph` commands.
-
-</Note>
-
-The `rover subgraph check` command looks something like this:
-
-```bash showLineNumbers=false
-rover subgraph check \
-  docs-example-graph@main \
-  --name products \
-  --schema ./schema.graphql
-```
-
-It requires the following:
-
-- Your graph ref
-  - Your graph ref is available from your supergraph's **Overview** page in GraphOS Studio.
-- The name of the subgraph with schema changes
-- The locally modified version of your schema
-
-  - In the example command above, the schema is provided via a `.graphql` file.
-  - If your schema is not in a standalone `.graphql` file, you can run your GraphQL server locally and pipe its schema directly from `rover graph introspect`, like so:
-
-    ```bash showLineNumbers=false
-
-    rover subgraph introspect http://localhost:4000 \
-     | rover subgraph check docs-example-graph@main \
-     --name products \
-     --schema -
-
-    ```
-
-Try changing something in the local version to see a check in action. If everything is set up correctly, the command's output looks similar to the output shown in [the check response](#the-check-response).
-
-### The checks lifecycle
-
-When you run `rover subgraph check`:
-
-1. GraphOS generates a diff between your local schema and the published schema for the variant you're checking against.
-2. GraphOS uses this diff to determine whether the changes affect any operations executed against your supergraph within a [customizable time window](./check-configurations/) (by default, this is the last seven days).
-3. GraphOS returns the diff and a list of operations affected by the changes.
-4. Rover prints the check result and returns a non-zero exit code if at least one breaking change is found. You can also view the check result in the Studio UI.
-
-#### The check response
-
-Running `rover subgraph check` outputs the diff of all detected schema changes and highlights breaking changes. For example:
-
-```bash disableCopy showLineNumbers=false
-$ rover subgraph check docs-example-graph@current --subgraph products --schema ./schema.graphql
-
-Validated the proposed subgraph against metrics from docs-example-graph@current
-Compared 1 schema changes against 24 operations
-┌────────┬────────────────────┬─────────────────────────────────────────────────────────┐
-│ Change │        Code        │                       Description                       │
-├────────┼────────────────────┼─────────────────────────────────────────────────────────┤
-│ PASS   │ FIELD_CHANGED_TYPE │ field `Query.books`: type `[Book]` changed to `[Book!]` │
-└────────┴────────────────────┴─────────────────────────────────────────────────────────┘
-
-View full details at https://studio.apollographql.com/service/docs-example-graph/checks/<DETAILS>
-```
-
-Each change to the schema is labeled either `PASS` or `FAIL`. For a complete list of schema change codes, see the [Reference](./checks-reference#types-of-schema-changes).
-
-<Note>
-
-Because schema checks detect breaking changes by analyzing recent operations, your graph must [report metrics to GraphOS](#prerequisites) for operations checks to work. If there are no operation metrics to compare against, all potentially dangerous schema changes are labeled `FAIL`.
-
-</Note>
-
-The `rover subgraph check` command returns a non-zero result if any check fails.
-
-The output includes a Studio URL that provides full details on the changes and their impact on existing clients and operations:
-
-<img
-  className="screenshot"
-  src="../img/schema-checks/service-check-page.jpg"
-  alt="Service check page in GraphOS Studio"
-  width="700"
-/>
-
-If you've [integrated schema checks with your GitHub PRs](#integrating-with-github), the **Details** link in your GitHub check takes you to this same details page.
-
-If you run a check within a Git repository, `rover subgraph check` sends both the commit hash and that hash's author to GraphOS to display on the check. If you haven't [integrated schema checks with GitHub](#integrating-with-github), the author appears as **Unknown**. If you want to override author, commit, or other values, you can [set environment variables in Rover](/rover/configuring/#overriding).
-
-### Rerunning checks
-
-You can rerun checks from GraphOS Studio. Select the check and click **Rerun check**.
-
-<img
-  className="screenshot"
-  src="../img/schema-checks/rerun-check.jpg"
-  alt="Rerun check in GraphOS Studio"
-  width="300"
-/>
-
-The new checks run incorporates any changes made to excluded or included clients, checked variants, and any operations marked as safe or ignored.
-
-The new run uses the current [check configuration options](#configuring-checks), regardless of the configuration at the time of the original run. Similarly, the new run's time window is based on the current time, not when the original check ran.
-
-<Note>
-
-If you've [integrated schema checks with your GitHub PRs](#integrating-with-github), rerunning the check also updates the status of the check in GitHub.
-
-</Note>
-
-### Overriding flagged changes
-
-Occasionally, schema checks might flag a change that you know is safe. For example, you might change an input type's field from nullable to non-nullable (usually a breaking change) when you're certain your clients never provide a null value for the field.
-
-You can override flagged changes on an operation-by-operation basis or update your check settings to ignore certain kinds of changes.
-
-<Note>
-
-If you use the GraphOS Router to [report operation metrics](../metrics/sending-operation-metrics), you can configure [extended reference reporting](/router/configuration/overview/#extended-reference-reporting) for more accurate operations checks.
-
-</Note>
-
-#### Override changes per operation
-
-[**Org admins** and **Graph admins**](../org/members) can override flagged changes on an operation-by-operation basis in GraphOS Studio.
-From the associated check's details page, select the **Override** dropdown under a flagged operation:
-
-<img
-  className="screenshot"
-  src="../img/schema-checks/mark-operation.jpg"
-  alt="Service check page in GraphOS Studio"
-  width="500"
-/>
-
-For each operation with flagged changes, you can override those changes in the following ways:
-
-- **Mark change as safe**: In this case, schema checks will not flag these exact changes for the operation in future executions. This effectively "approves" the changes for the operation.
-  - If a future check detects approved changes along with new unsafe changes to the operation, the new unsafe changes will be flagged.
-- **Ignore the operation**: In this case, schema checks will completely ignore the operation when checking all changes in any future execution.
-  - This option is useful when you know an operation originates only from clients or client versions you don't actively support.
-
-You can **Undo** an override from the banner that appears on any overridden operations.
-
-<img
-  className="screenshot"
-  src="../img/schema-checks/undo-override.jpg"
-  alt="A banner appearing above an operation that was marked as safe. It allows users to Undo the override."
-  width="700"
-/>
-
-#### Ignored conditions settings
-
-You can update your check settings so operations checks don't flag the following kinds of changes:
-
-- **Ignore breaking changes when there are no operations**: This setting ignores any potentially breaking changes when an operations check is run against zero operations.
-- **Ignore default value changes**: This setting ignores changes to default values.
-
-  <Note>
-    This setting ignores default value changes but doesn't ignore default value
-    removals.
-  </Note>
-
-You enable these settings from the **Configuration** tab of your variant's **Checks** page.
-Learn about other [check settings](#configuring-checks).
-
-## Using in CI
-
-Schema checks are especially useful when you add them to your CI pipeline, such as Jenkins or CircleCI. This allows you to obtain check results and display them directly on your team's pull requests.
-
-Apollo recommends defining a separate CI job for each [variant](#checking-against-multiple-environments) (production, staging, etc.) you want to validate your changes against. The `rover subgraph check` command returns a non-zero exit code when it detects a breaking change, meaning the CI job fails when the check fails.
-
-### Authenticating Rover
-
-The `rover config auth` command is interactive, which means you shouldn't use it in CI environments. Instead, you can authenticate Rover with Studio by setting the `APOLLO_KEY` environment variable in CI. For details, see [Configuring Rover](/rover/configuring).
-
-### Example CI configuration
-
-The following config defines a schema check job for a CircleCI pipeline. Your config's syntax varies depending on your CI tool, but the job's steps are the same.
-
-```yaml {30} title="config.yml"
-version: 2
-
-jobs:
-  # ...other jobs...
-
-  # Define a separate job for each environment you validate against.
-  check_against_staging:
-    docker:
-      - image: circleci/node:12
-
-    steps:
-      - checkout
-
-      - run: npm install
-
-      # Start the GraphQL server. If a different command is used to
-      # start the server, use it in place of `npm start` here.
-      - run:
-          name: Starting server
-          command: npm start
-          background: true
-
-      # Make sure the server has enough time to start up before running
-      # commands against it.
-      - run: sleep 5
-
-      # In CI environments, this command authenticates via the `APOLLO_KEY`
-      # environment variable.
-      - run: rover subgraph check docs-example-graph@current --name products --schema ./schema.graphql
-```
-
-## Configuring checks
-
-After you enable schema checks for your graph, you can customize their behavior to suit your use case. For example, you can:
+You can configure schema checks behavior to suit your use case using either GraphOS Studio or the Rover CLI. For example, you can:
 
 - Exclude past operations executed by a particular client, such as a client you only use for testing.
 - Exclude past operations that were executed relatively infrequently.
@@ -246,7 +12,7 @@ After you enable schema checks for your graph, you can customize their behavior 
 - Ignore changes to default values.
 - Ignore potentially breaking changes when an operations check runs against zero operations.
 
-### Using GraphOS Studio (recommended)
+## Using GraphOS Studio (recommended)
 
 In [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content), you can configure default rules that are applied to every executed schema check. You define these rules from the **Configuration** tab of your variant's **Checks** page:
 
@@ -257,20 +23,20 @@ In [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content), you
   width="700"
 />
 
-#### Configuration options
+### Configuration options
 
 - **Time range**: Include all distinct operations executed within this range. The default value is 7 days ("Within the last week").
   - **Operation count threshold**: Exclude all operations executed fewer than this number of times within the specified **time range**.
 - **Included Variants**: Include all distinct operations executed against each selected variant of your graph. The default value is **Base variant**—whichever variant schema checks are being run against.
 - **Excluded Clients**: Exclude all operations executed by particular clients, such as clients used exclusively for development and testing.
 - **Excluded Operations**: Exclude specific named operations.
-- **Ignored Conditions**: Ignore certain kinds of schema changes. [Learn more.](./schema-checks/#ignored-conditions-settings)
+- **Ignored Conditions**: Ignore certain kinds of schema changes. [Learn more.](./run-checks/#ignored-conditions-settings)
 
-### Using the Rover CLI
+## Using the Rover CLI
 
 You can customize a single run of schema checks by providing options to the Rover CLI. If you've also [configured default rules](#using-graphos-studio-recommended) for schema checks, any command-line options you provide take precedence over those rules.
 
-#### Validation period
+### Validation period
 
 You can provide the `--validation-period` option to specify how far back in time Studio should look when determining the compatibility of past operations with the changes to your schema (by default, the command uses the last 7 days of operations).
 
@@ -294,7 +60,7 @@ If you specify a `--validation-period` that exceeds your organization's operatio
 
 </Note>
 
-#### Threshold values
+### Threshold values
 
 You can provide _threshold values_ to Rover to ignore historical operations that are relatively rare.
 
@@ -329,7 +95,7 @@ rover subgraph check docs-example-graph@current \
 
 To request other filtering or threshold mechanisms, please get in touch with us on the [Rover repository](https://github.com/apollographql/rover).
 
-#### Checking against multiple environments
+### Checking against multiple environments
 
 You might want to check schema changes against multiple environments, such as production, staging, and beta. Each of these environments might have a slightly different schema to support features that are experimental or in active development. In GraphOS, these schemas are represented as variants of a single graph.
 
@@ -343,28 +109,4 @@ rover subgraph check docs-example-graph@staging \
 
 The graph ref `docs-example-graph@staging` specifies the `staging` variant of the `docs-example-graph` graph.
 
-To check your schema against multiple variants, call `rover subgraph check` once for each variant. Doing so results in status checks similar to the following:
-
-<img
-  className="screenshot"
-  src="../img/schema-checks/multi-github-check.png"
-  alt="Multiple service checks running for different variants"
-  width="500"
-/>
-
-## Integrating with GitHub
-
-The Apollo Studio GitHub app enables GraphOS to send a webhook back to your GitHub project on each call to `rover subgraph check`. This provides built-in pass/fail status checks on your pull requests:
-
-<img
-  className="screenshot"
-  src="../img/schema-checks/github-check.png"
-  alt="GitHub Status View"
-  width="700"
-/>
-
-See [Connect to GitHub](./github-integration) for installation details.
-
-### Integrating with other version control services
-
-If you're using GitHub Enterprise, Bitbucket, or another version control service, we recommend setting up your CI tool to post a comment on each pull request with the results of schema checks. By surfacing schema diffs and breaking changes directly in your PR, you can avoid searching your CI logs to determine why a check failed.
+To check your schema against multiple variants, call `rover subgraph check` once for each variant.
