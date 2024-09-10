@@ -67,17 +67,6 @@ and other GraphQL best practices.
 <tr>
 <td>
 
-#### Custom checks
-
-</td>
-<td>
-Run custom validation, for example, to enforce custom linting rules or confirm
-schema changes belong to a particular git branch.
-</td>
-</tr>
-<tr>
-<td>
-
 
 #### Proposals checks
 
@@ -107,7 +96,7 @@ proposed schema changes break any downstream [contract](./contracts) variants.
 </tbody>
 </table>
 
-This article provides further details on build, operations, and custom checks.
+This article provides further details on build and operations checks.
 
 - For details on linter checks, see [Schema linting](./schema-linter/).
 - For details on proposals checks, see [Schema proposals check configuration](./schema-proposals/configuration#configure-schema-checks).
@@ -138,12 +127,6 @@ If a build check succeeds, GraphOS then validates schema changes with _operation
   alt="Failed operations check results in Studio"
   width="700"
 />
-
-### Custom checks
-
-Custom checks let you run custom validations using webhooks.
-Once you [configure custom checks](), GraphOS triggers your specified webhook on each schema check run.
-Specifically, GraphOS sends your webhook a payload with details of the schema changes submitted to the check. Your endpoint can then respond and identify any potential issues.
 
 ## Limitations
 
@@ -185,5 +168,6 @@ type User {
 ## Next steps
 
 To learn how to run your first schema check, integrate checks into your CI pipeline refer to [Run Schema Checks](./run-checks).
-For a guide on configuring and customizing checks, see [Check Configurations](./check-configurations).
-You can also [connect schema checks to GitHub](./github-integration) to add links to check results on the pull requests that initiate them. See the [Checks Reference](./checks-reference) for the types of schema changes that checks detect.
+For a guide on configuring checks, see [Check Configurations](./check-configurations).
+You can also [connect schema checks to GitHub](./github-integration) to add links to check results on the pull requests that initiate them.
+See the [Checks Reference](./checks-reference) for the types of schema changes that checks detect.

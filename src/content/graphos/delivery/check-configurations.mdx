@@ -4,7 +4,7 @@ subtitle: Customize schema checks to suit your use cases
 description: Configure and customize GraphOS schema checks using Apollo GraphOS Studio or Rover CLI.
 ---
 
-After you [enable schema checks](./run-checks) for your graph, you can customize their behavior to suit your use case. For example, you can:
+You can configure schema checks behavior to suit your use case using either GraphOS Studio or the Rover CLI. For example, you can:
 
 - Exclude past operations executed by a particular client, such as a client you only use for testing.
 - Exclude past operations that were executed relatively infrequently.
@@ -30,7 +30,7 @@ In [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content), you
 - **Included Variants**: Include all distinct operations executed against each selected variant of your graph. The default value is **Base variant**—whichever variant schema checks are being run against.
 - **Excluded Clients**: Exclude all operations executed by particular clients, such as clients used exclusively for development and testing.
 - **Excluded Operations**: Exclude specific named operations.
-- **Ignored Conditions**: Ignore certain kinds of schema changes. [Learn more.](./schema-checks/#ignored-conditions-settings)
+- **Ignored Conditions**: Ignore certain kinds of schema changes. [Learn more.](./run-checks/#ignored-conditions-settings)
 
 ## Using the Rover CLI
 
@@ -109,14 +109,7 @@ rover subgraph check docs-example-graph@staging \
 
 The graph ref `docs-example-graph@staging` specifies the `staging` variant of the `docs-example-graph` graph.
 
-To check your schema against multiple variants, call `rover subgraph check` once for each variant. Doing so results in status checks similar to the following:
-
-<img
-  className="screenshot"
-  src="../img/schema-checks/multi-github-check.png"
-  alt="Multiple service checks running for different variants"
-  width="500"
-/>
+To check your schema against multiple variants, call `rover subgraph check` once for each variant.
 
 ## Next steps
 

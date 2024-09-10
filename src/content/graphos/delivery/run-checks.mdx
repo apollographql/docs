@@ -4,7 +4,7 @@ subtitle: Manually run and integrate schema checks into your CI pipeline
 description: Learn how to run GraphOS schema checks against GraphQL schema changes—including as part of your CI pipeline.
 ---
 
-This guide covers running your first schema check and integrating checks into your CI pipeline. See [Configure Schema Checks](./check-configurations) for configuration options, including how to configure custom checks.
+This guide covers running your first schema check and integrating checks into your CI pipeline. See [Configure Schema Checks](./check-configurations) for configuration options.
 
 ## Prerequisites
 
@@ -139,7 +139,7 @@ If you've [integrated schema checks with your GitHub PRs](#integrating-with-gith
 
 Occasionally, schema checks might flag a change that you know is safe. For example, you might change an input type's field from nullable to non-nullable (usually a breaking change) when you're certain your clients never provide a null value for the field.
 
-You can override flagged changes on an operation-by-operation basis or update your check settings to ignore certain kinds of changes.
+You can override flagged changes on an operation-by-operation basis or update your check configurations to ignore certain kinds of changes.
 
 <Note>
 
@@ -177,7 +177,7 @@ You can **Undo** an override from the banner that appears on any overridden oper
 
 #### Ignored conditions settings
 
-You can update your check settings so operations checks don't flag the following kinds of changes:
+You can update your check configurations so operations checks don't flag the following kinds of changes:
 
 - **Ignore breaking changes when there are no operations**: This setting ignores any potentially breaking changes when an operations check is run against zero operations.
 - **Ignore default value changes**: This setting ignores changes to default values.
@@ -188,7 +188,7 @@ You can update your check settings so operations checks don't flag the following
   </Note>
 
 You enable these settings from the **Configuration** tab of your variant's **Checks** page.
-Learn about other [check settings](#configuring-checks).
+Learn about other [check configurations](./check-configurations).
 
 ## Using in CI
 
@@ -238,4 +238,4 @@ jobs:
 
 ## Next steps
 
-Once you've enabled schema checks, you can [configure them](./check-configurations) to suit your use case. Configurations include excluding certain historical operations from operations checks, ignoring certain types of schema changes,configuring custom checks, and more.
+Once you've enabled schema checks, you can [configure them](./check-configurations) to suit your use case. Configurations include excluding certain historical operations from operations checks, ignoring certain types of schema changes, and more.
