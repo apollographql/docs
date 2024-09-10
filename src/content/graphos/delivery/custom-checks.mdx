@@ -72,8 +72,8 @@ The registered endpoint will be called with a payload following the shape of
 
 When we dispatch a webhook with check information, our service has a timeout to receive a 200 response of 30 seconds. If this request times out, or does not receive a 200, it will retry up to 5 times, with an exponential backoff delay starting at 5 seconds and going up to 60 seconds.
 
-Note that schema hashes are provided rather than the text contents because schema can be very large.
-To fetch a single supergraph or subgraph schema contents by hash, run the following graphql query against Apollo GraphOS’s Platform API. (See Platform API docs for instructions on how to make and authenticate requests to Platform API)
+Note that schema hashes are provided rather than the text contents because schema can be large.
+To fetch a single supergraph or subgraph schema contents by hash, run the following GraphQL query against the Platform API. (See Platform API docs for instructions on how to make and authenticate requests to Platform API)
 
 Note: We may add additional properties in the JSON objects
 
