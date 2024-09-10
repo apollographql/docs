@@ -493,13 +493,6 @@ To add new operations to a PQL, you need to [publish an updated manifest using t
 
 If you want to delete an operation, you must do so from Studio. From the **Persisted Query Lists** page, click a persisted query list to open it. Then, click the **•••** menu under the **Actions** column next to a particular operation and select **Delete**.
 
-
-<img
-  className="screenshot"
-  alt="Persisted query list operation actions in Studio"
-  src="../../img/pq-operation-actions.jpg"
-/>
-
 You should only delete operations that are problematic and shouldn't be executed. Even for such operations, it's important to recognize that operation deletions can cause application errors for legitimate clients, depending on your router's [security level](#router-security-levels) and if the client is sending full operation strings or operation IDs.
 
 - Regardless of security level, if a client sends an operation ID of a deleted operation, the router rejects the operation.
