@@ -19,7 +19,8 @@
     "Overview": "/",
     "Schema Checks": {
       "Overview": "/schema-checks",
-      "Run Schema Checks": "/check-configurations",
+      "Run Schema Checks": "/run-checks",
+      "Check Configurations": "/check-configurations",
       "Connect to GitHub": "/github-integration",
       "Checks Reference": "/checks-reference"
     },
