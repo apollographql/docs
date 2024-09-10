@@ -14,7 +14,7 @@ Refer to the [pricing page](https://www.apollographql.com/pricing#data-retention
 You can analyze the [field metrics sent by your graph](./sending-operation-metrics/#reporting-field-usage) to GraphOS from any variant's **Insights** page in [GraphOS Studio](https://studio.apollographql.com/?referrer=docs-content):
 
 <img
-  src="../img/insights-fields.jpg"
+  src="../img/insights/fields.jpg"
   className="screenshot"
   alt="The Insights page in GraphOS Studio"
   width="700"
@@ -34,7 +34,7 @@ This guide focuses on field metrics and information. Refer to [Operation metrics
 The collapsible left sidebar on the **Insights** page lets you filter field types you want to view usage metrics for:
 
 <img
-  src="../img/field-filters.jpg"
+  src="../img/insights/field-filters.jpg"
   class="screenshot"
   alt="Field Insights page left sidebar"
   width="300"
@@ -102,14 +102,14 @@ When you click a field name, you open detailed information for that field in the
 Below that, you can view the field definitions within your subgraph schema.
 
 <img
-  src="../img/field-insights.jpg"
+  src="../img/insights/field-insights.jpg"
   class="screenshot"
   alt="Field Insights page"
 />
 
 Next, you see which clients and operations contribute to the field's usage. Each row in the **Clients & Operations** table shows a client that requested the field, the number of operations that used the field the client made, and the total number of requests the client made. Selecting a client shows more details about the operations that requested and executed the field.
 
-Below Clients & Operations, you can view visualizations for the field's request rate, latency distribution, and error metrics.
+Below **Clients & Operations**, you can view visualizations for the field's request rate, latency distribution, and error metrics.
 
 ### Field requests and executions
 
@@ -132,7 +132,7 @@ For each of these columns to appear on the **Insights** page, your GraphQL serve
 Take a look at the **Requests** and **Executions** for an example field:
 
 <img
-  src="../img/field-requests-executions.jpg"
+  src="../img/insights/requests-executions.jpg"
   class="screenshot"
   alt="Insights page in Studio"
   width="700"

@@ -34,7 +34,7 @@ You can use Sandbox offline and without an Apollo account. You also [embed Sandb
 
 When you open Sandbox, it automatically attempts to connect to a GraphQL server running at `http://localhost:4000`. You can use the box at the top of the Explorer to change this URL to any local or remote GraphQL endpoint that's accessible by your browser:
 
-<img class="screenshot" src="../img/sandbox-url.jpg" alt="Sandbox URL field" width="300" />
+<img class="screenshot" src="../img/explorer/sandbox-url.jpg" alt="Sandbox URL field" width="300" />
 
 You can also change the default endpoint by providing a [URL parameter](#url-parameters).
 
@@ -54,7 +54,7 @@ If you log in to GraphOS Studio from Sandbox, you can diff your Sandbox schema a
 
 From [Sandbox](https://studio.apollographql.com/sandbox/), open the **Schema Diff** page from the left navigation panel. Then use the dropdown menus to select any accessible organization, graph, and variant to compare against.
 
-<img class="screenshot" src="../img/sandbox-diff.jpg" alt="Schema diff in Sandbox" />
+<img class="screenshot" src="../img/explorer/sandbox-diff.jpg" alt="Schema diff in Sandbox" />
 
 <Note>
 
@@ -84,9 +84,9 @@ You can run subgraph checks on supergraphs. If you're using Sandbox with a subgr
 
 <img
   class="screenshot"
-  src="../img/subgraph-sandbox-check-prompt.jpg"
+  src="../img/explorer/sandbox-check-prompt.jpg"
   alt="Sandbox subgraph check prompt"
-  width="500"
+  width="600"
 />
 
 When you click **Run a check**, Sandbox first performs a build check using your local subgraph schema and the published schemas of your other subgraphs. If composition succeeds, Sandbox then performs operations checks as usual and displays the results of all checks. If composition fails, Sandbox does not perform operations checks and displays the composition error.
@@ -138,14 +138,14 @@ The example URL above opens Sandbox with the following initial state:
 
 <img
   class="screenshot"
-  src="../img/sandbox-url-parameters-1.jpg"
+  src="../img/explorer/sandbox-url-parameters-1.jpg"
   alt="Sandbox with endpoint, document, and variables pre-populated"
   width="600"
 />
 
 <img
   class="screenshot"
-  src="../img/sandbox-url-parameters-2.jpg"
+  src="../img/explorer/sandbox-url-parameters-2.jpg"
   alt="Sandbox with headers pre-populated"
   width="400"
 />

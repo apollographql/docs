@@ -76,8 +76,8 @@ After you create a [cloud supergraph](./#cloud-supergraphs) (or a new variant of
 <img
   class="screenshot"
   alt="List of subgraphs for a cloud supergraph in Studio"
-  src="../../img/subgraph-list.jpg"
-  width="600"
+  src="../../img/subgraph/list.jpg"
+  width="700"
 />
 
 The list includes each subgraph's name and routing URL, along with type and field counts for each subgraph's schema.
@@ -115,15 +115,15 @@ To add a subgraph to your supergraph with Rover, you publish the subgraph's sche
 
 ### Modifying a subgraph
 
-From your variant's Subgraphs page, you can modify an existing subgraph's routing URL:
+From your variant's **Subgraphs** page, you can modify an existing subgraph's routing URL:
 
 1. Open the **•••** menu for the subgraph you want to modify:
 
    <img
      class="screenshot"
      alt="Menu for additional subgraph options in Studio"
-     src="../../img/subgraph-menu.jpg"
-     width="450"
+     src="../../img/subgraph/menu.jpg"
+     width="300"
    />
 
 2. Click **Edit routing URL**.
@@ -167,8 +167,8 @@ You can delete an existing subgraph from a variant of your cloud supergraph. If 
    <img
      class="screenshot"
      alt="Menu for additional subgraph options in Studio"
-     src="../../img/subgraph-menu.jpg"
-     width="450"
+     src="../../img/subgraph/menu.jpg"
+     width="300"
    />
 
 3. Click **Delete subgraph**. Studio attempts to compose a new supergraph schema that doesn't include the subgraph you want to delete.
@@ -183,7 +183,7 @@ The **Schema > Reference** page in Studio displays a table of your supergraph's 
   class="screenshot"
   src="../../img/federated-graphs/schema-reference-type-row-with-subgraph-column.jpg"
   alt="Studio screenshot of Schema Reference, closeup of type row showing subgraph column"
-  width="736"
+  width="600"
 />
 
 Clicking the subgraph link for a type or field takes you to the line where it's defined in the corresponding subgraph schema:
@@ -192,7 +192,7 @@ Clicking the subgraph link for a type or field takes you to the line where it's 
   class="screenshot"
   src="../../img/federated-graphs/type-definition-in-subgraph-sdl.jpg"
   alt="Studio screenshot of Schema SDL, closeup of type definition in subgraph schema"
-  width="700"
+  width="600"
 />
 
 If you're using [the `@contact` directive](#contact-info-for-subgraphs) to specify owner contact information for your subgraphs, hovering over a subgraph name displays its contact information, enabling you to follow up with the appropriate team:
@@ -201,7 +201,7 @@ If you're using [the `@contact` directive](#contact-info-for-subgraphs) to speci
   class="screenshot"
   src="../../img/federated-graphs/schema-reference-type-row-showing-subgraph-contact-directive-tooltip.jpg"
   alt="Studio screenshot showing subgraph contact tooltip in Schema Reference subgraph column"
-  width="736"
+  width="600"
 />
 
 ## Viewing subgraph SDL
@@ -230,7 +230,7 @@ You can use the `@contact` directive to add your team's contact info to a subgra
   class="screenshot"
   src="../../img/federated-graphs/subgraph-contact-info-on-sdl-closeup.jpg"
   alt="Studio screenshot showing use of contact directive info as metadata in the Schema SDL view"
-  width="424"
+  width="350"
 />
 
 The contact info includes a name (of a team or individual), along with an optional description and custom URL.
@@ -337,7 +337,7 @@ After you publish a subgraph schema that includes the `@contact` directive, the 
   class="screenshot"
   src="../../img/federated-graphs/subgraph-contact-info-on-sdl-closeup.jpg"
   alt="Studio screenshot showing use of contact directive info as metadata in the Schema SDL view"
-  width="424"
+  width="350"
 />
 
 In the **Schema > Reference** tab, you'll also see a contact card when you hover over the subgraph link of a type or field:
@@ -346,7 +346,7 @@ In the **Schema > Reference** tab, you'll also see a contact card when you hover
   class="screenshot"
   src="../../img/federated-graphs/schema-reference-contact-directive-tooltip-closeup.jpg"
   alt="Studio screenshot showing subgraph contact tooltip in Schema Reference subgraph column"
-  width="388"
+  width="450"
 />
 
 ## Schema tagging
@@ -377,18 +377,9 @@ In the **Schema > Reference** tab, tags are shown inline with each type and fiel
 
 <img
   class="screenshot"
-  src="../../img/federated-graphs/schema-reference-tag-passthrough.png"
+  src="../../img/federated-graphs/schema-reference-tag-passthrough.jpg"
   alt="Studio screenshot showing tag directive in Schema Reference"
-  width="600"
-/>
-
-Tags are also visible in the Explorer's **Documentation** tab:
-
-<img
-  class="screenshot"
-  src="../../img/federated-graphs/explorer-tag-passthrough.png"
-  alt="Studio screenshot showing tag directive in Schema Reference"
-  width="424"
+  width="700"
 />
 
 ## Supergraph support in the Explorer
@@ -400,13 +391,4 @@ The [GraphOS Studio Explorer](../explorer/) provides enhanced support for workin
 
 ## Viewing composition errors
 
-If a supergraph's most recent set of subgraph schemas failed to compose, a **BUILD FAILED** label is shown at the top of the supergraph's page in Studio:
-
-<img
-  class="screenshot"
-  src="../../img/composition-failed.jpg"
-  alt="Studio screenshot showing a supergraph with a failed composition state"
-  width="500"
-/>
-
-You can click this label to view the errors that must be resolved before composition can succeed. Refer to the [composition error reference](/federation/errors/) for more information.
+If a supergraph's most recent set of subgraph schemas failed to compose, a **BUILD FAILED** label is shown at the top of the supergraph's page in Studio. You can click this label to view the errors that must be resolved before composition can succeed. Refer to the [composition error reference](/federation/errors/) for more information.

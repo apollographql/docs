@@ -7,13 +7,13 @@ description: Learn how Apollo generates GraphQL operation signatures to group fu
 When you're viewing your graph's [operation metrics](./operations), GraphOS Studio groups operations based on the set of fields they include, not based on operation names. That means that operations with the same name but different sets of fields are displayed separately:
 
 <img
-  src="../img/separate-operations.jpg"
+  src="../img/insights/separate-operations.jpg"
   alt="Separate operations with same name in Studio"
   className="screenshot"
   width="300"
 />
 
-Though each operation in the above example is named `MyQuery`, GraphOS treats them as different operations because they request different fields.
+Though each operation in the above example is named `ExampleQuery`, GraphOS treats them as different operations because they request different fields.
 
 To help GraphOS identify functionally identical operations, your router generates an _operation signature_ for each operation it reports to Studio. This signature is a normalized representation for an operation with deterministic field order, whitespace, and values for in-line argument values.
 
