@@ -239,3 +239,18 @@ jobs:
 ## Next steps
 
 Once you've enabled schema checks, you can [configure them](./check-configurations) to suit your use case. Configurations include excluding certain historical operations from operations checks, ignoring certain types of schema changes, and more.
+
+### Integrating with GitHub
+
+[Connecting schema checks to GitHub](./github-integration) enables GraphOS to send a webhook back to your GitHub project on each call to `rover subgraph check`. This provides built-in pass/fail status checks on your pull requests:
+
+<img
+  className="screenshot"
+  src="../img/schema-checks/github-check.png"
+  alt="GitHub Status View"
+  width="700"
+/>
+
+### Integrating with other version control services
+
+If you're using GitHub Enterprise, Bitbucket, or another version control service, we recommend setting up your CI tool to post a comment on each pull request with the results of schema checks. By surfacing schema diffs and breaking changes directly in your PR, you can avoid searching your CI logs to determine why a check failed.

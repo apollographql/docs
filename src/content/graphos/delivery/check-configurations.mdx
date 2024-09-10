@@ -110,21 +110,3 @@ rover subgraph check docs-example-graph@staging \
 The graph ref `docs-example-graph@staging` specifies the `staging` variant of the `docs-example-graph` graph.
 
 To check your schema against multiple variants, call `rover subgraph check` once for each variant.
-
-## Next steps
-
-If you haven't already, you may want to connect schema checks to GitHub.
-The Apollo Studio GitHub app enables GraphOS to send a webhook back to your GitHub project on each call to `rover subgraph check`. This provides built-in pass/fail status checks on your pull requests:
-
-<img
-  className="screenshot"
-  src="../img/schema-checks/github-check.png"
-  alt="GitHub Status View"
-  width="700"
-/>
-
-See [Connect to GitHub](./github-integration) for installation details.
-
-### Integrating with other version control services
-
-If you're using GitHub Enterprise, Bitbucket, or another version control service, we recommend setting up your CI tool to post a comment on each pull request with the results of schema checks. By surfacing schema diffs and breaking changes directly in your PR, you can avoid searching your CI logs to determine why a check failed.
