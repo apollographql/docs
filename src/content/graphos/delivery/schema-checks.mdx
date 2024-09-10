@@ -146,6 +146,23 @@ If a build check succeeds, GraphOS then validates schema changes with _operation
   width="700"
 />
 
+<<<<<<< HEAD
+=======
+### Custom checks
+
+Custom checks let you run custom validations, for example, enforcing custom linting rules or confirming schema changes belong to a particular git branch.
+Once you [configure custom checks](./custom-checks), GraphOS sends schema change information to a specified webhook on each schema check run.
+
+Your endpoint can then respond with any potential issues, which GraphOS Studio displays along with other check result details.
+
+<img
+  className="screenshot"
+  src="../img/schema-checks/custom-check-result.jpg"
+  alt="To-do"
+  width="700"
+/>
+
+>>>>>>> 89075cb2 (Add relevant pointers)
 ## Limitations
 
 ### Operations check cardinality
