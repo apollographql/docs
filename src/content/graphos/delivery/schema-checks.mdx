@@ -15,7 +15,7 @@ You run checks using the Rover CLI and can integrate checks into your CI pipelin
   width="700"
 />
 
-Except for [proposal and contract checks](#types-of-checks), schema checks are free as part of [all Apollo plans](https://www.apollographql.com/pricing/).
+[Custom, proposals, and contract checks](#types-of-checks) require an [Enterprise plan](https://www.apollographql.com/pricing/). All other schema checks are free as part of all Apollo plans.
 
 ## Types of checks
 
@@ -69,10 +69,11 @@ and other GraphQL best practices.
 
 #### Custom checks
 
+(Enterprise only)
+
 </td>
 <td>
-Run custom validation, for example, to enforce custom linting rules or confirm
-schema changes belong to a particular git branch.
+Run custom validations using your own validation service.
 </td>
 </tr>
 <tr>
@@ -141,9 +142,10 @@ If a build check succeeds, GraphOS then validates schema changes with _operation
 
 ### Custom checks
 
-Custom checks let you run custom validations using webhooks.
+Custom checks let you run custom validations, for example, enforcing custom linting rules or confirming schema changes belong to a particular git branch.
 Once you [configure custom checks](./custom-checks), GraphOS sends schema change information to a specified webhook on each schema check run.
-Your endpoint can then respond with any potential issues, which are displayed in GraphOS Studio along with other check result details.
+
+Your endpoint can then respond with any potential issues, which GraphOS Studio displays along with other check result details.
 
 <img
   className="screenshot"
@@ -193,5 +195,5 @@ type User {
 
 To learn how to run your first schema check and integrate checks into your CI pipeline, refer to [Run Schema Checks](./run-checks).
 You can also [connect schema checks to GitHub](./github-integration) to add links to check results on the pull requests that initiate them.
-For a guide on configuring checks, including enabling [custom checks](./custom-checks), see [Check Configurations](./check-configurations).
+For a guide on configuring checks, see [Check Configurations](./check-configurations).
 See the [Checks Reference](./checks-reference) for the types of schema changes that checks detect.
