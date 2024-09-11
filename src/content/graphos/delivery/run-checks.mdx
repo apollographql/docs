@@ -8,10 +8,10 @@ This guide covers running your first schema check and integrating checks into yo
 
 ## Prerequisites
 
-To enable schema checks for your supergraph:
+Before running your first schema check do the following:
 
 1. Ensure you've published all your subgraph schemas to GraphOS and that those schemas are up to date. [Learn how to publish schemas.](./)
-2. For operations checks, ensure your supergraph is sending operation metrics to GraphOS. GraphOS uses historical metrics to determine whether a potentially dangerous schema change is safe.
+2. Ensure your supergraph is sending operation metrics to GraphOS. [Operations checks](./schema-checks#operations-checks-1) uses historical metrics to determine whether a potentially dangerous schema change is safe.
 
    - If you have a [cloud supergraph](../graphs/#cloud-supergraphs), your router reports metrics automatically.
    - [See setup for other graph types.](../metrics/sending-operation-metrics/)
@@ -125,9 +125,8 @@ You can rerun checks from GraphOS Studio. Select the check and click **Rerun che
   width="300"
 />
 
-The new checks run incorporates any changes made to excluded or included clients, checked variants, and any operations marked as safe or ignored.
-
-The new run uses the current [check configuration options](./check-configurations), regardless of the configuration at the time of the original run. Similarly, the new run's time window is based on the current time, not when the original check ran.
+The new check run uses the current [check configuration options](./check-configurations), regardless of the configuration at the time of the original run.
+Similarly, the new run's time window is based on the current time, not when the original check ran.
 
 <Note>
 
