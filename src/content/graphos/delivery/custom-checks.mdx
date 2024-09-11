@@ -6,16 +6,17 @@ description: Learn how to extend the GraphOS schema checks workflow by configuri
 
 <EnterpriseFeature linkWithAnchor="https://www.apollographql.com/pricing#delivery-pipeline" />
 
-Your organization might need to enforce schema standards beyond the default [GraphOS linter rules](./linter-rules).
-Or you may require validations that depend on external data, such as ensuring schema changes are only submitted from a specific branch in version control.
+Your organization's validation needs might extend beyond default schema checks.
+For example, you might want to enforce schema standards in addition to default [GraphOS linter rules](./linter-rules).
+Or you might require validations that depend on external data, such as ensuring schema changes are only submitted from a specific branch in version control.
 
-Custom schema checks extend the GraphOS schema checks workflow by letting you running custom validations like these using your own services.
+_Custom schema checks_ let you supplement default checks by executing custom validations on your own services.
 
 ## How custom checks work
 
 Once you [configure custom checks](./custom-checks), GraphOS sends schema change information to an endpoint you specify.
-Your endpoint can then perform validations and respond with any potential issues.
-GraphOS Studio displays these flagged issues along with other check result details.
+Your endpoint can then perform validations and report potential issues back to GraphOS via the [Platform API](/graphos/platform-api/).
+GraphOS Studio displays the issues you report along with other check result details.
 
 <img
   className="screenshot"
@@ -26,7 +27,7 @@ GraphOS Studio displays these flagged issues along with other check result detai
 
 <Note>
 
-You can only register one endpoint, but that endpoint can perform as many different schema validations as you want.
+You can only register one endpoint for custom checks, but that endpoint can perform as many different schema validations as you want.
 
 </Note>
 
@@ -43,52 +44,69 @@ Once you register your endpoint in GraphOS Studio, GraphOS sends it webhook noti
 
 Your validation endpoint should:
 
-1. Be able to receive and process a POST request with a payload with [the specified JSON format](#receiving-and-processing-payloads).
+1. Be able to receive and process a POST request with a payload with [the specified JSON format](#webhook-format).
 1. Send a `200` response to the request.
     - When GraphOS dispatches a webhook with check information, it has a 30-second timeout to receive a `200` response.
     - If the request times out or doesn't receive a `200`, it will retry up to five times, with an exponential backoff delay starting at 5 seconds and going up to 60 seconds.
 1. [Submit validation check results](#submitting-a-check-result) to the GraphOS Platform API.
 
-Beyond these requirements, your endpoint can run any validations you choose.
+Outside of these requirements, you have the flexibility to implement any validations you need.
 
-#### Receiving and processing payloads
+#### Webhook format
 
 On every schema run, GraphOS sends your registered endpoint a POST request.
-The request has a payload with the following shape:
-
-<ExpansionPanel title="See example payload">
+The request has a JSON payload with the following shape:
 
 ```json
 {
+  // Type of event, indicating a custom schema check in Apollo GraphOS
   "eventType": "APOLLO_CUSTOM_CHECK",
+  // Version of the payload shape
   "TODO:version": "...",
   "checkStep": {
+    // The unique identifier of the graph being validated
     "graphId": "string",
+    // The variant of the graph (e.g., "current", "staging")
     "graphVariant": "string",
+    // A unique identifier for the specific custom check task
     "taskId": "UUID",
+    // A unique identifier for the workflow that initiated this check
     "workflowId": "UUID",
     "gitContext": {
+      // The branch from which the schema change is being submitted
       "branch": "string",
+      // The commit hash associated with the schema change
       "commit": "string",
+      // The name or email of the person who committed the change
       "committer": "string",
+      // The commit message describing the schema change
       "message": "string",
+      // The URL of the remote Git repository (e.g., GitHub or GitLab)
       "remoteUrl": "string"
     }
   },
   "baseSchema": {
+    // The hash of the current base schema
     "hash": "string",
+    // A list of subgraphs that make up the base schema (if using Apollo Federation)
     "subgraphs": [
       {
+        // The hash of the subgraph schema
         "hash": "string",
+        // The name of the subgraph
         "name": "string"
       }
     ]
   },
   "proposedSchema": {
+    // The hash of the proposed schema
     "hash": "string",
+    // A list of subgraphs in the proposed schema (if using Apollo Federation)
     "subgraphs": [
       {
+        // The hash of the subgraph schema
         "hash": "string",
+        // The name of the subgraph
         "name": "string"
       }
     ]
@@ -96,16 +114,15 @@ The request has a payload with the following shape:
 }
 ```
 
-</ExpansionPanel>
-
 <Note>
 
-Payloads may include additional properties in the future.
+The `version` attribute is included because payloads may include additional properties in the future.
 
 </Note>
 
 Because schemas can be large, the payload provides schema hashes rather than full-text schemas.
 Your endpoint can request the full schema contents using the [GraphOS Platform API](/graphos/platform-api/).
+
 Using the schema contents and payload information, your endpoint can perform whatever validations you need.
 
 Refer to [Platform API docs](https://studio.apollographql.com/public/apollo-platform/home?variant=main) for instructions on making and authenticating requests.
@@ -153,16 +170,17 @@ query schema(
 #### Submitting a check result
 
 Once your endpoint has completed its validation, it should submit the results back to the triggering schema check run using the Platform API.
-The results should include a list of violations, each with the following:
-
-- Violation [severity level](./schema-linter/#setting-severity-levels), either `ERROR`, `WARN`, or `IGNORE`
-- Name of the violated rule
-- Error message
-
-To-do: Example level, rule, message
-
 The triggering schema check run waits for a response for ten minutes and doesn't complete until it receives it.
 If ten minutes pass without a response, the schema check run is marked as failed.
+
+
+The results should include a list of violations, each with the following:
+
+- `level`: Violation [severity level](./schema-linter/#setting-severity-levels), either `ERROR`, `WARN`, or `IGNORE`
+- `rule`: Name of the violation type
+- `message`: Error message
+
+
 
 #### Example check results mutation
 
@@ -236,7 +254,7 @@ Once your endpoint is ready, you need to register it in GraphOS Studio.
 
     Refer to this [guide from Okta](https://www.okta.com/identity-101/hmac/) to learn more about implementation and see additional resources.
 
-You should now see your configured webhook on the configuration page, be able to send test notifications, and begin to receive events at the specified endpoint.
+You should now see your configured webhook on the checks configuration page and begin to receive custom check events at the specified endpoint whenever schema checks run.
 
 ## Example implementation
 
