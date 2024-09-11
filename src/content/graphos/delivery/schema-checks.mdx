@@ -4,9 +4,11 @@ subtitle: Validate proposed changes to your schema are safe
 description: Use GraphOS Schema checks to identify and validate potential breaking changes in your GraphQL schema before deployment.
 ---
 
-Certain changes to your graph's schema (such as removing a field or type) might break one of your application's clients. GraphOS schema checks help you identify breaking changes before you make them. They can also help you identify when a potentially dangerous change is, in fact, safe.
+Certain changes to your graph's schema, such as removing a field or type, might break one of your application's clients.
+GraphOS _schema checks_ help you identify breaking changes before you make them. They can also help you identify when a potentially dangerous change is, in fact, safe.
 
-You run checks using the Rover CLI and can integrate checks into your CI pipeline. GraphOS Studio displays check results, helping you make informed decisions about evolving your graph.
+You run schema checks using the Rover CLI and can integrate checks into your CI pipeline for automated validation of each schema change.
+GraphOS Studio displays check results, helping you make informed decisions about evolving your graph.
 
 <img
   className="screenshot"
@@ -15,7 +17,10 @@ You run checks using the Rover CLI and can integrate checks into your CI pipelin
   width="700"
 />
 
-[Custom, proposals, and contract checks](#types-of-checks) require an [Enterprise plan](https://www.apollographql.com/pricing/). All other schema checks are free as part of all Apollo plans.
+Each schema check run consists of several check types or _tasks_.
+By default, [build, operations, and linter checks](#types-of-checks) are included in each schema check run.
+[Custom, proposals, and contract checks](#types-of-checks) require an [Enterprise plan](https://www.apollographql.com/pricing/).
+All other schema checks are free as part of all Apollo plans.
 
 ## Types of checks
 

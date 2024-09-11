@@ -11,11 +11,13 @@ You can configure schema checks behavior to suit your use case using either Grap
 - Check schema changes against multiple graph variants.
 - Ignore changes to default values.
 - Ignore potentially breaking changes when an operations check runs against zero operations.
+- Change the [severity level](./schema-linter/#setting-severity-levels) of linter rules.
 - Enable [custom checks](./custom-checks).
 
 ## Using GraphOS Studio (recommended)
 
-In [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content), you can configure default rules that are applied to every executed schema check. You define these rules from the **Configuration** tab of your variant's **Checks** page:
+In [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content), you can configure default rules that are applied to every executed schema check.
+You define these rules from the **Configuration** tab of your variant's **Checks** page:
 
 <img
   className="screenshot"
@@ -26,6 +28,11 @@ In [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content), you
 
 ### Configuration options
 
+You configure operations, linter, and proposals checks.
+
+#### Operations check configurations
+
+- Whether operations checks are included in check runs. (On by default.)
 - **Time range**: Include all distinct operations executed within this range. The default value is 7 days ("Within the last week").
   - **Operation count threshold**: Exclude all operations executed fewer than this number of times within the specified **time range**.
 - **Included Variants**: Include all distinct operations executed against each selected variant of your graph. The default value is **Base variant**—whichever variant schema checks are being run against.
@@ -34,9 +41,19 @@ In [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content), you
 - **Ignored Conditions**: Ignore certain kinds of schema changes. [Learn more.](./run-checks/#ignored-conditions-settings)
 - **Custom Checks**: Enable custom checks. [Learn more.](./custom-checks)
 
+#### Linter check configurations
+
+Linter check configurations include whether to include linting checks (on by default) and linter rules' [severity levels](./schema-linter/#setting-severity-levels).
+See [Linter configuration](./schema-linter/#linter-configuration) for details.
+
+#### Proposals check configurations
+
+You can configure schema checks to include a Proposals task that verifies whether schema changes have matching and approved schema proposals.
+(Off by default.) [Learn more.](./schema-proposals/configuration#configure-schema-checks)
+
 ## Using the Rover CLI
 
-You can customize a single run of schema checks by providing options to the Rover CLI. If you've also [configured default rules](#using-graphos-studio-recommended) for schema checks, any command-line options you provide take precedence over those rules.
+You can customize a single schema check run by providing options to the Rover CLI. If you've also [configured default rules](#using-graphos-studio-recommended) for schema checks, any command-line options you provide take precedence over those rules.
 
 ### Validation period
 
