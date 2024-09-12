@@ -8,14 +8,13 @@ description: Learn how to extend the GraphOS schema checks workflow by configuri
 
 Your organization's validation needs might extend beyond default schema checks.
 For example, you might want to enforce schema standards in addition to default [GraphOS linter rules](./linter-rules).
-Or you might require validations that depend on external data, such as ensuring schema changes are only submitted from a specific branch in version control.
-
-_Custom schema checks_ let you supplement default checks by executing custom validations on your own services.
+You might require validations that depend on external data, such as ensuring schema changes are only submitted from a specific branch in version control.
+_Custom schema checks_ let you supplement default checks by executing custom validations using your own services.
 
 ## How custom checks work
 
 Once you [configure custom checks](./custom-checks), GraphOS sends schema change information to an endpoint you specify.
-Your endpoint can then perform validations and report potential issues back to GraphOS via the [Platform API](/graphos/platform-api/).
+Your endpoint performs validations and reports potential issues back to GraphOS via the [Platform API](/graphos/platform-api/).
 GraphOS Studio displays the issues you report along with other check result details.
 
 <img
@@ -28,11 +27,12 @@ GraphOS Studio displays the issues you report along with other check result deta
 <Note>
 
 You can only register one endpoint for custom checks, but that endpoint can perform as many different schema validations as you want.
+You can write and deploy your validation service using whatever languages and frameworks you like.
 
 </Note>
 
-Custom checks run alongside other check types—like [operations and linter checks](./schema-checks#types-of-checks)—as part of every schema check run.
-Like those other check types, custom checks only run [after a build check has successfully completed](schema-checks#build-checks-1).
+Custom checks run alongside other [check types](./schema-checks#types-of-checks) as part of every schema check run.
+Like operations, linter, other check types, custom checks only run [after a build check has successfully completed](schema-checks#build-checks-1).
 
 ## Configuration
 
@@ -122,11 +122,10 @@ The `version` attribute is included because payloads may include additional prop
 
 Because schemas can be large, the payload provides schema hashes rather than full-text schemas.
 Your endpoint can request the full schema contents using the [GraphOS Platform API](/graphos/platform-api/).
-
-Using the schema contents and payload information, your endpoint can perform whatever validations you need.
-
 Refer to [Platform API docs](https://studio.apollographql.com/public/apollo-platform/home?variant=main) for instructions on making and authenticating requests.
 See the examples below for fetching schema contents by hash.
+
+Using the schema contents and payload information, your endpoint can perform whatever validations you need.
 
 #### Fetch a single schema
 
@@ -173,14 +172,11 @@ Once your endpoint has completed its validation, it should submit the results ba
 The triggering schema check run waits for a response for ten minutes and doesn't complete until it receives it.
 If ten minutes pass without a response, the schema check run is marked as failed.
 
-
 The results should include a list of violations, each with the following:
 
 - `level`: Violation [severity level](./schema-linter/#setting-severity-levels), either `ERROR`, `WARN`, or `IGNORE`
 - `rule`: Name of the violation type
 - `message`: Error message
-
-
 
 #### Example check results mutation
 
