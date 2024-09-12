@@ -12,7 +12,7 @@ You can configure schema checks behavior to suit your use case using either Grap
 - Ignore changes to default values.
 - Ignore potentially breaking changes when an operations check runs against zero operations.
 - Change the [severity level](./schema-linter/#setting-severity-levels) of linter rules.
-- Enable [custom checks](./custom-checks).
+
 
 ## Using GraphOS Studio (recommended)
 
@@ -54,6 +54,16 @@ You can configure schema checks to include a Proposals task that verifies whethe
 #### Custom check configurations
 
 Enable custom checks and register your validation webhook. [Learn more.](./custom-checks)
+
+#### Linter check configurations
+
+Linter check configurations include whether to include linting checks (on by default) and linter rules' [severity levels](./schema-linter/#setting-severity-levels).
+See [Linter configuration](./schema-linter/#linter-configuration) for details.
+
+#### Proposals check configurations
+
+You can configure schema checks to include a Proposals task that verifies whether schema changes have matching and approved schema proposals.
+(Off by default.) [Learn more.](./schema-proposals/configuration#configure-schema-checks)
 
 ## Using the Rover CLI
 
