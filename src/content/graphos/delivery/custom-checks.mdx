@@ -189,9 +189,7 @@ mutation SchemaCheckCallback(
   $graphId: ID!
 ) {
   graph(id: $graphId) {
-    id
     variant(name: $name) {
-      id
       customCheckCallback(input: $input) {
         __typename
         ... on CustomCheckResult {
