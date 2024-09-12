@@ -34,6 +34,10 @@ You can write and deploy your validation service using whatever languages and fr
 Custom checks run alongside other [check types](./schema-checks#types-of-checks) as part of every schema check run.
 Like operations, linter, other check types, custom checks only run [after a build check has successfully completed](schema-checks#build-checks-1).
 
+## Prerequisites
+
+Custom checks require you use [Rover CLI](/rover/) version `0.27.0` or later.
+
 ## Configuration
 
 Custom checks require you to set up an HTTPS endpoint that's accessible via the public internet.
@@ -61,8 +65,10 @@ The request has a JSON payload with the following shape:
 {
   // Type of event, indicating a custom schema check in Apollo GraphOS
   "eventType": "APOLLO_CUSTOM_CHECK",
+    // The unique identifier of the event
+  "eventId": "UUID",
   // Version of the payload shape
-  "TODO:version": "...",
+  "version": "1",
   "checkStep": {
     // The unique identifier of the graph being validated
     "graphId": "string",
@@ -250,6 +256,6 @@ Once your endpoint is ready, you need to register it in GraphOS Studio.
 
 You should now see your configured webhook on the checks configuration page and begin to receive custom check events at the specified endpoint whenever schema checks run.
 
-## Example implementation
+## Example validation service implementation
 
 Refer to the [example implementation](https://github.com/apollosolutions/custom-check-examples) for a custom check validation service that enforces GraphQL ESLint rules.
