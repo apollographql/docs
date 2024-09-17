@@ -90,15 +90,12 @@ Thanks to GraphQL's [strong typing](https://graphql.org/learn/schema) and built-
 
 Apollo provides a cloud-hosted collection of tools that help you build your graph, measure its performance, and grow it safely. These tools are together known as [_Apollo GraphOS_](/graphos/).
 
-After registering your schema with GraphOS, you can use the GraphOS Studio Explorer to inspect all its types and fields. You can also build and run queries against your running server:
-
-<img src="../img/explorer/tab.jpg" alt="Studio Explorer tab" class="screenshot" />
+After registering your schema with GraphOS, you can use the GraphOS Studio Explorer to inspect all its types and fields.
+You can also build and run queries against your running server.
 
 ### Apollo Client DevTools
 
 The Apollo Client DevTools extension for [Chrome](https://chrome.google.com/webstore/detail/apollo-client-developer-t/jdkknkkbebbapilgoeccciglkfbmbnfm) and [Firefox](https://addons.mozilla.org/en-US/firefox/addon/apollo-developer-tools/) enables you to inspect your Apollo Client cache, track active queries, and view mutations. It also includes an embedded version of the Explorer, which helps you test queries while you're working on frontend code.
-
-<img src="../img/explorer/devtools.jpg" alt="Apollo DevTools" class="screenshot" />
 
 ## GraphQL is production-ready
 
