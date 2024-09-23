@@ -24,17 +24,14 @@ The extension enables you to:
 - Manage [client-only](#client-only-schemas) schemas
 - [Switch graph variants](#graph-variant-switching) to work with schemas running on different environments
 
-<h2 id="getting-started">Getting started</h2>
+## Getting started
 
 The VS Code plugin must be linked to a published or local schema. To do so, create an `apollo.config.json` file at the root of the project.
 Alternatively, you can create a `yaml`, `cjs`, `mjs`, or `ts` file with the same configuration.
 
 For the contents of this configuration file, select one of these options:
 
-<h3>
-  Configure extension for client development with schemas published to Apollo
-  GraphOS
-</h3>
+### Configure extension for client development with schemas published to Apollo GraphOS
 
 <details>
 <summary>
@@ -77,7 +74,7 @@ Afterward, reload VS Code. The Apollo integration will connect to GraphOS Studio
 
 </details>
 
-<h3>Configure extension for supergraph schema development</h3>
+### Configure extension for supergraph schema development
 
 <details>
 <summary>
@@ -115,10 +112,7 @@ Afterward, reload VS Code. The Apollo extension will start using Rover to help y
 
 </details>
 
-<h3 id="local-schemas">
-  Configure extension for client development with introspection from a locally
-  running service
-</h3>
+### Configure extension for client development with introspection from a locally running service
 
 <details>
 <summary>
@@ -142,7 +136,8 @@ Linking to local schemas won't provide all extension features, such as switching
 
 </details>
 
-<h3 id="local-schema-files">Configure extension for client development with local schema files</h3>
+### Configure extension for client development with local schema files
+
 <details>
 <summary>
 <i>Expand for instructions.</i>
@@ -165,7 +160,7 @@ To link to a local schema file, add the following to the `apollo.config.json` fi
 
 </details>
 
-<h3 id="client-only-schemas">Bonus: Adding client-only schemas</h3>
+### <span id="client-only-schemas">Bonus: Adding client-only schemas</span>
 
 <details>
 <summary>
@@ -190,7 +185,7 @@ Client-side schema definitions can be spread throughout the client app project a
 
 </details>
 
-<h3 id="get-the-extension">Get the extension</h3>
+### Get the extension
 
 Once you have a config set up and a schema published, [install the Apollo GraphQL extension](https://marketplace.visualstudio.com/items?itemName=apollographql.vscode-apollo), then try opening a file containing a GraphQL operation.
 
@@ -203,11 +198,11 @@ After opening a file, click the status bar icon to open the output window and se
   alt="Clicking the status bar icon to open the output pane"
 />
 
-<h2 id="features">Features</h2>
+## Features
 
 Apollo for VS Code offers a range of useful features for working on GraphQL projects.
 
-<h3 id="intelligent-autocomplete">Intelligent autocomplete</h3>
+### Intelligent autocomplete
 
 Once configured, VS Code has full knowledge of the schema clients are running operations against, including client-only schemas (for things like local state mutations). Because of this, it have the ability to autocomplete fields and arguments as you type.
 
@@ -218,7 +213,7 @@ Once configured, VS Code has full knowledge of the schema clients are running op
   alt="VS Code completing a field when typing"
 />
 
-<h3 id="errors-and-warnings">Inline errors and warnings</h3>
+### Inline errors and ../img/editors/warnings
 
 VS Code can use local or published schemas to validate operations before running them. **Syntax errors**, **invalid fields or arguments**, and even **deprecated fields** instantly appear as errors or warnings in your editor, ensuring your entire team is working with the most up-to-date production schemas.
 
@@ -229,7 +224,7 @@ VS Code can use local or published schemas to validate operations before running
   alt="tooltip showing a field deprecation warning and error"
 />
 
-<h3 id="field-type-info">Inline field type information</h3>
+### Inline field type information
 
 Because of GraphQL's strongly typed schema, VS Code knows not only which fields and arguments are valid, but also what types are expected. Hover over any type in a valid GraphQL operation to see what type that field returns and whether or not it can be null.
 
@@ -240,7 +235,7 @@ Because of GraphQL's strongly typed schema, VS Code knows not only which fields 
   alt="a tooltip showing a Boolean type for a field"
 />
 
-<h3 id="performance-insights">Performance insights</h3>
+### Performance insights
 
 GraphQL's flexibility can make it difficult to predict the cost of an operation. Without insight into how expensive an operation is, developers can accidentally write queries that place strain on their graph API's underlying backends. Thanks to the Apollo platform's integration with VS Code and our trace warehouse, teams can avoid these performance issues by instantly seeing the cost of a query in their editor.
 
@@ -253,11 +248,11 @@ The VS Code extension will show inline performance diagnostics when connected to
   alt="Performance annotation next to a field"
 />
 
-<h3 id="syntax-highlighting">Syntax highlighting</h3>
+### Syntax highlighting
 
 Apollo's editor extension provides syntax highlighting for all things GraphQL, including schema definitions in `.graphql` files, complex queries in TypeScript, and even client-only schema extensions. Syntax highlighting for GraphQL works out-of-the-box in GraphQL, JavaScript, TypeScript, Python, Lua, Ruby, Dart, Elixir, and ReasonML files.
 
-<h3 id="supergraph-editing">supergraph editing</h3>
+### Supergraph editing
 
 The extension provides features for supergraph editing, such as support for Federation directives, subgraph-spanning go-to-definition, and reporting composition errors directly to the **Problems** panel.
 
@@ -268,7 +263,7 @@ The extension provides features for supergraph editing, such as support for Fede
   alt="Hover on Federation directive"
 />
 
-<h3 id="navigating-projects">Navigating projects</h3>
+### Navigating projects
 
 Navigating large codebases can be difficult, but the Apollo GraphQL extension makes this easier. Right-clicking on any field in operations or schemas allows you to jump to (or peek at) definitions and find any other references to that field in your project.
 
@@ -278,11 +273,11 @@ Navigating large codebases can be difficult, but the Apollo GraphQL extension ma
   style="margin: 5%"
   alt="Using jump to definition on a fragment"
 />
-<h3 id="graph-variant-switching">Schema tag switching</h3>
+### <span id="graph-variant-switching">Schema tag switching</span>
 
 Apollo supports publishing multiple versions ([variants](https://www.apollographql.com/docs/graphos/graphs/#variants)) of a schema. This is useful for developing on a future development schema and preparing your clients to conform to that schema. To switch between graph variants, open the Command Palette (`cmd + shift + p` on mac), search "Apollo" and choose the "Apollo: Select Schema Tag" option.
 
-<h2 id="troubleshooting">Troubleshooting</h2>
+## Troubleshooting
 
 The most common errors are configuration errors, like a missing `.env` file or incorrect service information in the `apollo.config.json` file. Please see [the Apollo config docs](./apollo-config/) for more configuration guidance.
 
@@ -300,11 +295,11 @@ Sometimes, errors will appear as a notification at the bottom of your editor. Ot
 If problems persist or the error messages are unhelpful, open an [issue](https://github.com/apollographql/vscode-graphql/issues)
 in the `vscode-graphql` repository.
 
-<h2 id="additional-apollo-config-options">Additional Apollo config options</h2>
+## Additional Apollo config options
 
 You can add these configurations to your [Apollo config file](#setting-up-an-apollo-config).
 
-<h3 id="option-client-tagName">client.tagName</h3>
+### `client.tagName
 
 _Optional_ - custom tagged template literal.
 
