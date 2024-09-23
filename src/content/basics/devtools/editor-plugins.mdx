@@ -45,7 +45,7 @@ To get all the benefits of the VS Code experience, it's best to link the schema 
 
 After that's done, edit the `apollo.config.json` file to look like this:
 
-```jsonc
+```json
 {
   "client": {
     "service": "graphos-graph-name"
@@ -90,7 +90,7 @@ Ensure you've [installed](https://www.apollographql.com/docs/rover/getting-start
 
 Next edit your `apollo.config.json` to look like this:
 
-```jsonc
+```json
 {
   "rover": {
     // optional, if your rover binary is in PATH it will automatically be detected
@@ -105,7 +105,7 @@ Next edit your `apollo.config.json` to look like this:
 
 Since all these options are optional, you can specify only the `rover` key to indicate you're using Rover for schema development rather than client development:
 
-```jsonc
+```json
 {
   "rover": {}
 }
@@ -127,7 +127,7 @@ Afterward, reload VS Code. The Apollo extension will start using Rover to help y
 
 To experiment with designs under active development, you can link the editor to a locally running version of a schema. Link the `apollo.config.json` file to a local service definition like so:
 
-```jsonc
+```json
 {
   "client": {
     "service": {
@@ -152,7 +152,7 @@ You might not always have a running server to link to, so the extension also sup
 This is useful for working on a schema in isolation or for testing out new features.
 To link to a local schema file, add the following to the `apollo.config.json` file:
 
-```jsonc
+```json
 {
   "client": {
     "service": {
@@ -176,7 +176,7 @@ One of the best features of the VS Code extension is the automatic merging of re
 
 Client-side schema definitions can be spread throughout the client app project and will be merged to create one single schema. You can set the default behavior by adding specifications to the `apollo.config.json`:
 
-```jsonc
+```json
 {
   "client": {
     // "service": <your service configuration>,
@@ -310,7 +310,7 @@ _Optional_ - custom tagged template literal.
 
 When using GraphQL with JavaScript or TypeScript projects, it is common to use the `gql` tagged template literal to write out operations. Apollo tools look through your files for the `gql` tag to extract your queries, so if you use a different template literal, you can configure it like so:
 
-```jsonc
+```json
 {
   "client": {
     "tagName": "graphql",
