@@ -410,7 +410,7 @@ export default function Page({file}) {
               whiteSpace: 'normal'
             }
           },
-          '>': {
+          [['>', '> details >']]: {
             ':not(a):not(:last-child)': {
               mb: 6
             },
