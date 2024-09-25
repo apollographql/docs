@@ -224,13 +224,46 @@ Once your endpoint is ready, you need to register it in GraphOS Studio.
 
     ```json
     {
-        "to":"do"
+      "eventType": "APOLLO_CUSTOM_CHECK",
+      "eventId": "123e4567-e89b-12d3-a456-426614174000",
+      "version": "1",
+      "checkStep": {
+        "graphId": "example-graph-id",
+        "graphVariant": "staging",
+        "taskId": "9f2a8b8e-e38f-4f4c-a2ad-7e50c2f55544",
+        "workflowId": "a4b9d5c6-7b3e-40b9-a728-c98ef02e6e29",
+        "gitContext": {
+          "branch": "main",
+          "commit": "f4d3c2a17e9b234bf9b1d1d8d0e5a678e5b1a9f0",
+          "committer": "john.doe@example.com",
+          "message": "Updated schema for new feature",
+          "remoteUrl": "https://github.com/example/repo.git"
+        }
+      },
+      "baseSchema": {
+        "hash": "b1f3a79d2a73c8f6b56f5d42dbec4e9a6a7b1f00",
+        "subgraphs": [
+          {
+            "hash": "f0a1b7c4d9e7f3a5c2b98e9a6f4d2c1b0e9f4a5b",
+            "name": "users"
+          }
+        ]
+      },
+      "proposedSchema": {
+        "hash": "c1b7a6f3d9e5f2b8c3a7e5b6c1d9e0f1b2a5f6a7",
+        "subgraphs": [
+          {
+            "hash": "d9b7a5f2e3c9f8b4a1d2c7b5a3e4f6b2a1c7e5f9",
+            "name": "orders"
+          }
+        ]
+      }
     }
     ```
 
     **Hash function**: SHA256
 
-    The `x-apollo-header` value would be `sha256=to-do`.
+    The `x-apollo-header` value would be `sha256=7b678bf54081f495866b5cecc5ada7ce85088dda2b46644a7f75ef823b9d5f86`.
     </ExpansionPanel>
 
     Refer to this [guide from Okta](https://www.okta.com/identity-101/hmac/) to learn more about implementation and see additional resources.
