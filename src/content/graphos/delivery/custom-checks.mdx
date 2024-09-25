@@ -203,8 +203,6 @@ mutation SchemaCheckCallback(
 
 Once your endpoint is ready, you need to register it in GraphOS Studio.
 
-
-
 1. In [GraphOS Studio](https://studio.apollographql.com?referrer=docs-content), go to your graph's **Checks** page.
 2. Select **Configuration** in the upper right to open the checks configuration page.
 3. From the checks configuration page, open the **Custom Checks** section.
@@ -268,7 +266,16 @@ Once your endpoint is ready, you need to register it in GraphOS Studio.
 
     Refer to this [guide from Okta](https://www.okta.com/identity-101/hmac/) to learn more about implementation and see additional resources.
 
-You should now see your configured webhook on the checks configuration page and begin to receive custom check events at the specified endpoint whenever schema checks run.
+7. You should now see your configured webhook on the checks configuration page. Click **Send test notification** to test your endpoint.
+
+From now on, whenever you [run schema checks](./run-checks), a **Custom Check** task will be included.
+
+<img
+  className="screenshot"
+  src="../img/schema-checks/custom-check-run.jpg"
+  alt="Custom check run in GraphOS Studio"
+  width="600"
+/>
 
 ## Example validation service implementation
 
