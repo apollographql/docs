@@ -17,20 +17,6 @@ Once you [configure custom checks](./custom-checks), GraphOS sends schema change
 Your endpoint performs validations and reports potential issues back to GraphOS via the [Platform API](/graphos/platform-api/).
 GraphOS Studio displays the issues you report along with other check result details.
 
-<img
-  className="screenshot"
-  src="../img/schema-checks/custom-check-result.jpg"
-  alt="To-do: Schema check run showing custom check details in GraphOS Studio"
-  width="700"
-/>
-
-<Note>
-
-You can only register one endpoint for custom checks, but that endpoint can perform as many different schema validations as you want.
-You can write and deploy your validation service using whatever languages and frameworks you like.
-
-</Note>
-
 Custom checks run alongside other [check types](./schema-checks#types-of-checks) as part of every schema check run.
 Like operations, linter, other check types, custom checks only run [after a build check has successfully completed](schema-checks#build-checks-1).
 
