@@ -86,8 +86,17 @@ You can directly edit one or more subgraph schemas from a proposal's **Editor** 
   alt="Schema proposals editor in GraphOS Studio"
 />
 
-To start a new subgraph, click **+Add new** from the subgraph schema selector in the left navigation.
-You can also delete existing subgraphs and rename newly created ones by clicking the **•••** menu to the right of a subgraph's name.
+The proposals editor is backed by Apollo's language server, meaning it provides features like autocomplete, hovering over types and directives for more information, and syntax and schema validation.
+
+The editor also lets you run composition on your proposed changes to uncover composition errors before you finalize your proposal.
+To run composition, click the icon with three boxes in the top right of the editor.
+Next to the button, you can toggle on **Compose on change** so that composition automatically runs on every change.
+
+<Note>
+
+For extremely large and complex schemas, you may want to keep auto-composition off so as to not slow your browser's performance.
+
+</Note>
 
 ### Lint changes
 
