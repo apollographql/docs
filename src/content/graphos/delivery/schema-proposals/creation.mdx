@@ -86,7 +86,7 @@ You can directly edit one or more subgraph schemas from a proposal's **Editor** 
   alt="Schema proposals editor in GraphOS Studio"
 />
 
-The proposals editor is backed by Apollo's language server, meaning it provides features like autocomplete, hovering over types and directives for more information, and syntax and schema validation.
+The proposals editor provides features like autocomplete, hovering over types and directives for more information, and syntax and schema validation.
 
 The editor also lets you run composition on your proposed changes to uncover composition errors before you finalize your proposal.
 To run composition, click the icon with three boxes in the top right of the editor.
@@ -94,7 +94,8 @@ Next to the button, you can toggle on **Compose on change** so that composition 
 
 <Note>
 
-For extremely large and complex schemas, you may want to keep auto-composition off so as to not slow your browser's performance.
+For very large, complex schemas, autocomposition may affect browser performance.
+If you notice your browser lagging, consider keeping **Compose on change** off.
 
 </Note>
 
