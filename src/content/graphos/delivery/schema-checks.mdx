@@ -19,7 +19,8 @@ GraphOS Studio displays check results, helping you make informed decisions about
 
 Each schema check run consists of several check types or _tasks_.
 By default, [build, operations, and linter checks](#types-of-checks) are included in each schema check run.
-[Proposals and contract checks](#types-of-checks) require an [Enterprise plan](https://www.apollographql.com/pricing/).
+[Custom, proposals, and contract checks](#types-of-checks) require an [Enterprise plan](https://www.apollographql.com/pricing/).
+
 All other schema checks are free as part of all Apollo plans.
 
 ## Types of checks
@@ -72,6 +73,18 @@ and other GraphQL best practices.
 <tr>
 <td>
 
+#### Custom checks
+
+(Enterprise only)
+
+</td>
+<td>
+Run custom validations using your own validation service.
+</td>
+</tr>
+<tr>
+<td>
+
 
 #### Proposals checks
 
@@ -104,6 +117,7 @@ proposed schema changes break any downstream [contract](./contracts) variants.
 This article provides further details on build and operations checks.
 
 - For details on linter checks, see [Schema linting](./schema-linter/).
+- For details on custom checks, see [Custom checks](./custom-checks).
 - For details on proposals checks, see [Schema proposals check configuration](./schema-proposals/configuration#configure-schema-checks).
 - For details on contract checks, see [Contract checks](./contract-setup/#run-contract-checks).
 
