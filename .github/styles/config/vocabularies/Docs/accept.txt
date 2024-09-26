@@ -43,6 +43,7 @@ Doyensec
 Dynatrace
 Entra
 [Ee]nablement
+ESLint
 (?i)enums?
 GCUs?
 Gradle
