@@ -17,12 +17,19 @@ Once you configure custom checks, GraphOS sends schema change information to an 
 Your endpoint performs validations and reports potential issues back to GraphOS via the [Platform API](/graphos/platform-api/).
 GraphOS Studio displays the issues you report along with other check result details.
 
+<img
+  className="screenshot"
+  src="../img/schema-checks/custom-check-results.jpg"
+  alt="chema check run showing custom check errors and warnings in GraphOS Studio"
+  width="700"
+/>
+
 Custom checks run alongside other [check types](./schema-checks#types-of-checks) as part of every schema check run.
-Like operations, linter, other check types, custom checks only run [after a build check has successfully completed](schema-checks#build-checks-1).
+Like operations, linter, and other check types, custom checks only run [after a build check has successfully completed](schema-checks#build-checks-1).
 
 ## Prerequisites
 
-Custom checks require you use [Rover CLI](/rover/) version `0.27.0` or later when you [run schema checks](./run-checks).
+Custom checks require using [Rover CLI](/rover/) version `0.27.0` or later when you [run schema checks](./run-checks).
 
 ## Configuration
 
@@ -165,7 +172,7 @@ The results should include a list of violations, each with the following:
 
 #### Example check results mutation
 
-You can execute use the following GraphQL mutation on the Platform API to submit custom check results:
+You can use the following GraphQL mutation on the Platform API to submit custom check results:
 
 ```graphql
 mutation SchemaCheckCallback(
@@ -268,7 +275,7 @@ Once your endpoint is ready, you need to register it in GraphOS Studio.
 
 7. You should now see your configured webhook on the checks configuration page. Click **Send test notification** to test your endpoint.
 
-From now on, whenever you [run schema checks](./run-checks), a **Custom Check** task will be included.
+From now on, whenever you [run schema checks](./run-checks), the check run will include a **Custom Check** task.
 
 <img
   className="screenshot"
