@@ -2,17 +2,20 @@ import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 import {Box, Button} from '@chakra-ui/react';
 import {Link as GatsbyLink} from 'gatsby';
-import {PathContext, getFullPath} from '../../utils';
+import {PathContext, isUrl, getFullPath} from '../../utils';
 
 export default function PaginationButton({item, label, ...props}) {
   const {basePath} = useContext(PathContext);
+  const to = isUrl(item.path)
+    ? item.path
+    : getFullPath(item.path, basePath);
   return (
     <Button
       h="auto"
       py="2"
       variant="ghost"
       as={GatsbyLink}
-      to={getFullPath(item.path, basePath)}
+      to={to}
       {...props}
     >
       <div>
