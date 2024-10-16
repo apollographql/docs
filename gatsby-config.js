@@ -7,7 +7,7 @@ const {query, transformer} = require('./algolia');
 const yaml = require('js-yaml');
 const fs = require('fs');
 const remoteSources = require('./sources/remote');
-const {join} = require('path');
+const {join, basename} = require('path');
 
 const isProduction = process.env.CONTEXT === 'production';
 
@@ -102,9 +102,17 @@ const plugins = [
   {
     resolve: 'gatsby-plugin-apollo-client-api-doc',
     options: {
-      file: isSingleDocset
-        ? join(__dirname, 'local/public/client.api.json')
-        : 'https://apollo-client-docs.netlify.app/client.api.json'
+      files: [
+        'https://apollo-client-docs.netlify.app/client.api.json',
+        'https://main--apollo-client-nextjs-docmodel.netlify.app/client-react-streaming.api.json',
+        'https://main--apollo-client-nextjs-docmodel.netlify.app/experimental-nextjs-app-support.api.json'
+      ].map(url => {
+        if (isSingleDocset) {
+          const local = join(__dirname, 'local/public/', basename(url));
+          if (fs.existsSync(local)) return local;
+        }
+        return url;
+      })
     }
   },
   {
