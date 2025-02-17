@@ -11,6 +11,7 @@ module.exports = {
         MultiCodeBlock: 'readonly',
         YouTube: 'readonly',
         PropertyList: 'readonly',
+        ErrorCode: 'readonly',
         Property: 'readonly',
         Tabs: 'readonly',
         Tab: 'readonly',
@@ -69,7 +70,8 @@ module.exports = {
         SummitCallout: 'readonly',
         HowSubscriptionsWork: 'readonly',
         WhatSubscriptionsAreFor: 'readonly',
-        TopLevelAwait: 'readonly'
+        TopLevelAwait: 'readonly',
+        RouterErrorCodes: 'readonly'
       },
       rules: {
         'react/no-unescaped-entities': 'off'

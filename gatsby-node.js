@@ -11,7 +11,7 @@ exports.sourceNodes = ({
   store,
   cache,
   reporter
-}) =>
+}) => {
   // download Apollo Client typedoc output and save it as a file node
   createRemoteFileNode({
     url: 'https://apollo-client-docs.netlify.app/docs.json',
@@ -21,6 +21,22 @@ exports.sourceNodes = ({
     createNodeId,
     reporter
   });
+
+  const routerErrors = [
+    'https://raw.githubusercontent.com/apollographql/router/ee0e96d0c66594bd1865fb27eb83802cecc8b22a/apollo-router/resources/errors/apollo_router%3A%3Astructured_errors%3A%3Atest%3A%3ATestError.yaml'
+  ];
+
+  routerErrors.forEach(url => {
+    createRemoteFileNode({
+      url,
+      store,
+      cache,
+      createNode,
+      createNodeId,
+      reporter
+    });
+  });
+};
 
 exports.onCreateWebpackConfig = ({actions}) => {
   actions.setWebpackConfig({
@@ -40,7 +56,11 @@ exports.onCreateNode = async ({node, getNode, loadNodeContent, actions}) => {
   const {type, mediaType} = node.internal;
   switch (type) {
     case 'File':
-      if (mediaType === 'application/json' || node.base === '_redirects') {
+      if (
+        mediaType === 'application/json' ||
+        mediaType === 'text/yaml' ||
+        node.base === '_redirects'
+      ) {
         // save the raw content of JSON files as a field
         const content = await loadNodeContent(node);
         actions.createNodeField({
